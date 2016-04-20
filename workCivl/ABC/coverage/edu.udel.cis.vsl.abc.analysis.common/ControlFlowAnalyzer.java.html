@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControlFlowAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.common</a> &gt; <span class="el_source">ControlFlowAnalyzer.java</span></div><h1>ControlFlowAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.common;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import edu.udel.cis.vsl.abc.analysis.IF.Analyzer;
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.AtomicNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ChooseStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.DeclarationListNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ExpressionStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.GotoNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.IfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.JumpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LabeledStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.NullStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ReturnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.SwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.WhenNode;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * Given an AST determines successor/predecessor relationships among statements.
+ * 
+ * The strategy for building the CF edges is as follows: - top down visit of AST
+ * for each method definition - construct control flow relation as you move down
+ * - note that this relation is incorrect, but it records successors of compound
+ * statements - within a compound statement, when you want to connect to your
+ * successor you - use the enclosing compound statements successor - delete
+ * their old successor
+ * 
+ * We could follow the model of the CallAnalyzer and extend the AST with
+ * pred/succ functions that return sets of statements where &quot;null&quot; means that no
+ * information has been computed. With this approach multiple calls to compute
+ * ControlFlow for parts of the AST can be made and the results will persist for
+ * the life of the AST.
+ * 
+ * There should be no reason why this code does not operate on a whole program.
+ * We just need to visit the substructure down to the level of the method body,
+ * then switch over to the control flow collector routines.
+ * 
+ * Add to other interfaces: Functions : entryStmt Statements : preds/succs
+ * 
+ * @author dwyer
+ * 
+ */
+<span class="nc bnc" id="L59" title="All 2 branches missed.">public class ControlFlowAnalyzer implements Analyzer {</span>
+<span class="nc" id="L60">	Map&lt;StatementNode, Set&lt;StatementNode&gt;&gt; successors = new HashMap&lt;StatementNode, Set&lt;StatementNode&gt;&gt;();</span>
+<span class="nc" id="L61">	Map&lt;StatementNode, Set&lt;StatementNode&gt;&gt; predecessors = new HashMap&lt;StatementNode, Set&lt;StatementNode&gt;&gt;();</span>
+
+	/*
+	 * For a method: (1) The body of the definition is the entry statement (2) A
+	 * new dummy null statement is the distinguished exit statement
+	 */
+<span class="nc" id="L67">	StatementNode exitStmt = null;</span>
+<span class="nc" id="L68">	StatementNode currStmt = null;</span>
+
+	AST currentAST;
+
+	void addEdge(StatementNode n1, StatementNode n2) {
+<span class="nc" id="L73">		Set&lt;StatementNode&gt; succs = successors.get(n1);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (succs == null) {</span>
+<span class="nc" id="L75">			succs = new HashSet&lt;StatementNode&gt;();</span>
+<span class="nc" id="L76">			successors.put(n1, succs);</span>
+		}
+<span class="nc" id="L78">		succs.add(n2);</span>
+
+<span class="nc" id="L80">		Set&lt;StatementNode&gt; preds = predecessors.get(n2);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (preds == null) {</span>
+<span class="nc" id="L82">			preds = new HashSet&lt;StatementNode&gt;();</span>
+<span class="nc" id="L83">			predecessors.put(n2, preds);</span>
+		}
+<span class="nc" id="L85">		preds.add(n2);</span>
+<span class="nc" id="L86">	}</span>
+
+	StatementNode soleSuccessor(StatementNode node) {
+<span class="nc" id="L89">		Set&lt;StatementNode&gt; succs = successors.get(node);</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">		assert succs.size() == 1;</span>
+<span class="nc" id="L91">		return succs.iterator().next();</span>
+	}
+
+	@SuppressWarnings(&quot;unused&quot;)
+	private void collectProgram(ASTNode node) {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (node instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L97">			collectFunctionDefinitionNode((FunctionDefinitionNode) node);</span>
+<span class="nc" id="L98">		} else {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">				if (child != null)</span>
+<span class="nc" id="L101">					collectProgram(child);</span>
+			}
+		}
+<span class="nc" id="L104">	}</span>
+
+	private void collectFunctionDefinitionNode(FunctionDefinitionNode funNode) {
+<span class="nc" id="L107">		NodeFactory nf = currentAST.getASTFactory().getNodeFactory();</span>
+<span class="nc" id="L108">		exitStmt = nf.newNullStatementNode(funNode.getBody().getSource());</span>
+
+<span class="nc" id="L110">		addEdge(funNode.getBody(), exitStmt);</span>
+
+<span class="nc" id="L112">		collectCompoundStatementNode(funNode.getBody());</span>
+
+		// link exit into the AST so that it persists
+<span class="nc" id="L115">	}</span>
+
+	/*
+	 * Dispatch to statement-specific control flow edge building methods
+	 */
+	private void collectStatement(ASTNode node) {
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (node instanceof AtomicNode) {</span>
+<span class="nc" id="L122">			collectAtomicNode(node);</span>
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		} else if (node instanceof ChooseStatementNode) {</span>
+<span class="nc" id="L125">			collectChooseStatementNode(node);</span>
+
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		} else if (node instanceof CompoundStatementNode) {</span>
+<span class="nc" id="L128">			collectCompoundStatementNode((CompoundStatementNode) node);</span>
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		} else if (node instanceof DeclarationListNode) {</span>
+<span class="nc" id="L131">			collectDeclarationListNode(node);</span>
+
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		} else if (node instanceof ExpressionStatementNode) {</span>
+<span class="nc" id="L134">			collectExpressionStatementNode(node);</span>
+
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		} else if (node instanceof ForLoopNode) {</span>
+<span class="nc" id="L137">			collectForLoopNode(node);</span>
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		} else if (node instanceof GotoNode) {</span>
+<span class="nc" id="L140">			collectGotoNode(node);</span>
+
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		} else if (node instanceof IfNode) {</span>
+<span class="nc" id="L143">			collectIfNode((IfNode) node);</span>
+
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		} else if (node instanceof JumpNode) {</span>
+<span class="nc" id="L146">			collectJumpNode(node);</span>
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		} else if (node instanceof LabeledStatementNode) {</span>
+<span class="nc" id="L149">			collectLabeledStatementNode(node);</span>
+
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		} else if (node instanceof LoopNode) {</span>
+<span class="nc" id="L152">			collectLoopNode(node);</span>
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		} else if (node instanceof ReturnNode) {</span>
+<span class="nc" id="L155">			collectReturnNode(node);</span>
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		} else if (node instanceof SwitchNode) {</span>
+<span class="nc" id="L158">			collectSwitchNode(node);</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		} else if (node instanceof WhenNode) {</span>
+<span class="nc" id="L161">			collectWhenNode(node);</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		} else if (node instanceof NullStatementNode) {</span>
+<span class="nc" id="L164">			collectNullStatementNode(node);</span>
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		} else if (node instanceof CivlForNode) {</span>
+<span class="nc" id="L167">			collectCivlForNode(node);</span>
+
+<span class="nc" id="L169">		} else {</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			assert false : &quot;Unhandled statement type:&quot; + node;</span>
+		}
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (ASTNode child : node.children()) {</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (child != null)</span>
+<span class="nc" id="L175">				collectStatement(child);</span>
+		}
+<span class="nc" id="L177">	}</span>
+
+	// add functions to build edges for each type of statement
+	private void collectCompoundStatementNode(CompoundStatementNode node) {
+		// Pass at this level to construct sequential control flow
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (BlockItemNode item : node) {</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (item instanceof StatementNode) {</span>
+<span class="nc" id="L184">				StatementNode theStmt = (StatementNode) item;</span>
+<span class="nc" id="L185">				Set&lt;StatementNode&gt; succs = new HashSet&lt;StatementNode&gt;();</span>
+<span class="nc" id="L186">				Set&lt;StatementNode&gt; preds = new HashSet&lt;StatementNode&gt;();</span>
+<span class="nc" id="L187">				succs.add(theStmt);</span>
+<span class="nc" id="L188">				preds.add(currStmt);</span>
+<span class="nc" id="L189">				successors.put(currStmt, succs);</span>
+<span class="nc" id="L190">				predecessors.put(theStmt, preds);</span>
+<span class="nc" id="L191">				currStmt = theStmt;</span>
+			}
+		}
+
+		// recurse to build control flow based on statement structure
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		for (BlockItemNode item : node) {</span>
+<span class="nc" id="L197">			collectStatement(item);</span>
+		}
+
+<span class="nc" id="L200">	}</span>
+
+	private void collectChooseStatementNode(ASTNode node) {
+<span class="nc" id="L203">	}</span>
+
+	private void collectDeclarationListNode(ASTNode node) {
+<span class="nc" id="L206">	}</span>
+
+	private void collectExpressionStatementNode(ASTNode node) {
+<span class="nc" id="L209">	}</span>
+
+	private void collectForLoopNode(ASTNode node) {
+<span class="nc" id="L212">	}</span>
+
+	private void collectLoopNode(ASTNode node) {
+<span class="nc" id="L215">	}</span>
+
+	private void collectGotoNode(ASTNode node) {
+<span class="nc" id="L218">	}</span>
+
+	private void collectIfNode(IfNode node) {
+		// Record the successor of the if
+<span class="nc" id="L222">		StatementNode ifSucc = soleSuccessor(node);</span>
+
+<span class="nc" id="L224">		StatementNode trueStatement = node.getTrueBranch();</span>
+<span class="nc" id="L225">		StatementNode falseStatement = node.getFalseBranch();</span>
+<span class="nc" id="L226">		Set&lt;StatementNode&gt; succs = new HashSet&lt;StatementNode&gt;();</span>
+<span class="nc" id="L227">		Set&lt;StatementNode&gt; predsTrue = new HashSet&lt;StatementNode&gt;();</span>
+<span class="nc" id="L228">		Set&lt;StatementNode&gt; predsFalse = new HashSet&lt;StatementNode&gt;();</span>
+
+<span class="nc" id="L230">		succs.add(trueStatement);</span>
+<span class="nc" id="L231">		succs.add(falseStatement);</span>
+<span class="nc" id="L232">		predsTrue.add(node);</span>
+<span class="nc" id="L233">		predsFalse.add(node);</span>
+
+<span class="nc" id="L235">		successors.put(currStmt, succs);</span>
+<span class="nc" id="L236">		predecessors.put(trueStatement, predsTrue);</span>
+<span class="nc" id="L237">		predecessors.put(falseStatement, predsFalse);</span>
+
+<span class="nc" id="L239">		collectStatement(trueStatement);</span>
+<span class="nc" id="L240">		collectStatement(falseStatement);</span>
+
+		// Remove dummy successor
+<span class="nc" id="L243">		Set&lt;StatementNode&gt; nodeSuccs = successors.get(node);</span>
+<span class="nc" id="L244">		nodeSuccs.remove(ifSucc);</span>
+<span class="nc" id="L245">	}</span>
+
+	private void collectLabeledStatementNode(ASTNode node) {
+<span class="nc" id="L248">	}</span>
+
+	private void collectReturnNode(ASTNode node) {
+<span class="nc" id="L251">	}</span>
+
+	private void collectSwitchNode(ASTNode node) {
+<span class="nc" id="L254">	}</span>
+
+	private void collectWhenNode(ASTNode node) {
+<span class="nc" id="L257">	}</span>
+
+	private void collectAtomicNode(ASTNode node) {
+<span class="nc" id="L260">	}</span>
+
+	private void collectJumpNode(ASTNode node) {
+<span class="nc" id="L263">	}</span>
+
+	private void collectNullStatementNode(ASTNode node) {
+<span class="nc" id="L266">	}</span>
+
+	private void collectCivlForNode(ASTNode node) {
+<span class="nc" id="L269">	}</span>
+
+	@Override
+	public void clear(AST unit) {
+<span class="nc" id="L273">		successors.clear();</span>
+<span class="nc" id="L274">		predecessors.clear();</span>
+<span class="nc" id="L275">		clearNode(unit.getRootNode());</span>
+<span class="nc" id="L276">	}</span>
+
+	private void clearNode(ASTNode node) {
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		if (node != null) {</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">			if (node instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L281">				Function f = ((FunctionDefinitionNode) node).getEntity();</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">				if (f != null) {</span>
+<span class="nc" id="L283">					Set&lt;Function&gt; callers = f.getCallers();</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">					if (callers != null)</span>
+<span class="nc" id="L285">						callers.clear();</span>
+<span class="nc" id="L286">					Set&lt;Function&gt; callees = f.getCallees();</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">					if (callees != null)</span>
+<span class="nc" id="L288">						callees.clear();</span>
+				}
+			}
+<span class="nc bnc" id="L291" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc" id="L292">				clearNode(child);</span>
+			}
+		}
+<span class="nc" id="L295">	}</span>
+
+	@Override
+	public void analyze(AST unit) throws SyntaxException {
+<span class="nc" id="L299">		collectStatement(unit.getRootNode());</span>
+<span class="nc" id="L300">	}</span>
+
+<span class="nc" id="L302">	static private Set&lt;Function&gt; seen;</span>
+
+	static public void printControlFlowGraph(AST unit) {
+<span class="nc" id="L305">		System.out.println(unit.getMain().getName());</span>
+<span class="nc" id="L306">		seen = new HashSet&lt;Function&gt;();</span>
+<span class="nc" id="L307">		seen.add(unit.getMain());</span>
+<span class="nc" id="L308">		printControlFlowGraphNode(unit.getMain(), &quot; &quot;);</span>
+<span class="nc" id="L309">	}</span>
+
+	static private void printControlFlowGraphNode(Function f, String pre) {
+<span class="nc bnc" id="L312" title="All 2 branches missed.">		for (Function callee : f.getCallees()) {</span>
+<span class="nc" id="L313">			System.out.print(pre + callee.getName() + &quot; [&quot;);</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">			for (Function caller : callee.getCallers()) {</span>
+<span class="nc" id="L315">				System.out.print(&quot; &quot; + caller.getName());</span>
+			}
+<span class="nc" id="L317">			System.out.println(&quot; ]&quot;);</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">			if (!seen.contains(callee)) {</span>
+<span class="nc" id="L319">				seen.add(callee);</span>
+<span class="nc" id="L320">				printControlFlowGraphNode(callee, pre + &quot; &quot;);</span>
+<span class="nc" id="L321">				seen.remove(callee);</span>
+<span class="nc" id="L322">			} else {</span>
+<span class="nc" id="L323">				System.out.println(pre + &quot; &lt;recursion&gt;&quot;);</span>
+			}
+		}
+<span class="nc" id="L326">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ExpressionNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.expression</a> &gt; <span class="el_source">ExpressionNode.java</span></div><h1>ExpressionNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.expression;</span>
+
+import edu.udel.cis.vsl.abc.ast.conversion.IF.Conversion;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MemorySetNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.NothingNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopInitializerNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+
+/**
+ * &lt;p&gt;
+ * A node representing any kind of C expression. This is the root of a type
+ * hierarchy of expression nodes.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * This interface extends {@link InitializerNode} because an expression can be
+ * used as an initializer for a scalar variable.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * This interface extends {@link SizeableNode} because an expression can be used
+ * as an argument to the &lt;code&gt;sizeof&lt;/code&gt; operator.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * This interface extends {@link ForLoopInitializerNode} to indicate that an
+ * expression can be used as the first clause of a &quot;&lt;code&gt;for&lt;/code&gt;&quot; loop (as
+ * can a variable declaration).
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * There are many different subtypes of this interface, for the different kinds
+ * of expressions. An enumerated type {@link ExpressionKind} is provided to make
+ * it easy to identify the subtype and, for example, &lt;code&gt;switch&lt;/code&gt; on it.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Every expression has an initial type, and then some number (possibly 0) of
+ * implicit conversions. Each conversion specifies an old type and a new type.
+ * The conversions form a chain: the first conversion (conversion number 0) has
+ * as its old type the initial type of the expression. The old type of
+ * conversion n (for any n&amp;ge;1) equals the new type of conversion n-1. The new
+ * type of the last conversion is the final &quot;converted type&quot; of the expression.
+ * &lt;/p&gt;
+ * 
+ * @author siegel
+ * 
+ */
+public interface ExpressionNode extends InitializerNode, SizeableNode,
+		ForLoopInitializerNode {
+
+	/**
+	 * An enumerated type used to categorize the different kinds of expression
+	 * nodes. Every expression node belongs to exactly one of these categories.
+	 * 
+	 * @author siegel
+	 * 
+	 */
+<span class="nc" id="L60">	public enum ExpressionKind {</span>
+<span class="nc" id="L61">		/**</span>
+		 * An &lt;code&gt;_Alignof&lt;/code&gt; expression; can be cast to
+		 * {@link AlignOfNode}.
+		 */
+<span class="nc" id="L65">		ALIGNOF,</span>
+<span class="nc" id="L66">		/**</span>
+		 * An arrow (&lt;code&gt;e-&gt;f&lt;/code&gt;) expression; can be cast to
+		 * {@link ArrowNode}.
+		 */
+<span class="nc" id="L70">		ARROW, CALLS,</span>
+<span class="nc" id="L71">		/**</span>
+		 * A cast expression, which has the form &lt;code&gt;(typeName)expr&lt;/code&gt;;
+		 * can be cast to {@link CastNode}.
+		 */
+<span class="nc" id="L75">		CAST,</span>
+<span class="nc" id="L76">		/**</span>
+		 * A compound literal node; can be cast to {@link CompoundLiteralNode}.
+		 */
+<span class="nc" id="L79">		COMPOUND_LITERAL,</span>
+<span class="nc" id="L80">		/**</span>
+		 * A constant node; can be cast to {@link ConstantNode}. Note there are
+		 * many subtypes.
+		 */
+<span class="nc" id="L84">		CONSTANT, CONTRACT_VERIFY,</span>
+<span class="nc" id="L85">		/**</span>
+		 * A CIVL-C derivative expression; can be cast to
+		 * {@link DerivativeExpressionNode}.
+		 */
+<span class="nc" id="L89">		DERIVATIVE_EXPRESSION,</span>
+<span class="nc" id="L90">		/**</span>
+		 * A C dot expression, which has the form &lt;code&gt;e.f&lt;/code&gt;; can be cast
+		 * to {@link DotNode}.
+		 */
+<span class="nc" id="L94">		DOT,</span>
+<span class="nc" id="L95">		/**</span>
+		 * A function call; can be cast to {@link FunctionCallNode}.
+		 */
+<span class="nc" id="L98">		FUNCTION_CALL,</span>
+<span class="nc" id="L99">		/**</span>
+		 * Generic selection expression; can be cast to
+		 * {@link GenericSelectionNode}.
+		 */
+<span class="nc" id="L103">		GENERIC_SELECTION,</span>
+<span class="nc" id="L104">		/**</span>
+		 * An identifier used as an expression (e.g., a variable name or
+		 * function name). Can be cast to {@link IdentifierExpressionNode}.
+		 */
+<span class="nc" id="L108">		IDENTIFIER_EXPRESSION,</span>
+<span class="nc" id="L109">		/**</span>
+		 * A memory set of ACSL contracts. Can be cast to {@link MemorySetNode}.
+		 */
+<span class="nc" id="L112">		MEMORY_SET,</span>
+<span class="nc" id="L113">		/**</span>
+		 * An operator expression: this includes a large set of expressions
+		 * formed by using an operator represented by some C symbol, such as
+		 * &lt;code&gt;=&lt;/code&gt; (assignment), &lt;code&gt;+&lt;/code&gt; (plus), and so on. It
+		 * does not include any operators that form left-hand-side (lhs)
+		 * expressions. Can be cast to {@link OperatorNode}.
+		 */
+<span class="nc" id="L120">		OPERATOR,</span>
+<span class="nc" id="L121">		/**</span>
+		 * A CIVL-C expression formed using a quantifier, such as the universal
+		 * quantifier &lt;code&gt;$forall&lt;/code&gt; or the existential quantifier
+		 * &lt;code&gt;$exists&lt;/code&gt;. Can be cast to {@link QuantifiedExpressionNode}
+		 * .
+		 */
+<span class="nc" id="L127">		QUANTIFIED_EXPRESSION,</span>
+<span class="nc" id="L128">		/**</span>
+		 * A CIVL-C &quot;regular range expression&quot;, which has the form
+		 * &lt;code&gt;lo .. hi&lt;/code&gt; or &lt;code&gt;lo .. hi # step&lt;/code&gt;; can be cast to
+		 * {@link RegularRangeNode}.
+		 */
+<span class="nc" id="L133">		REGULAR_RANGE,</span>
+<span class="nc" id="L134">		/**</span>
+		 * A CIVL-C remote reference expression, which refers to a variable in a
+		 * different process. Can be cast to {@link RemoteExpressionNode}.
+		 */
+<span class="nc" id="L138">		REMOTE_REFERENCE,</span>
+<span class="nc" id="L139">		/**</span>
+		 * The CIVL-C &lt;code&gt;$result&lt;/code&gt; built-in variable, which refers to
+		 * the result returned by a function. Can be cast to {@link ResultNode}.
+		 */
+<span class="nc" id="L143">		RESULT,</span>
+<span class="nc" id="L144">		/**</span>
+		 * A CIVL-C &lt;code&gt;$scopeof(...)&lt;/code&gt; expression; can be cast to
+		 * {@link ScopeOfNode}.
+		 */
+<span class="nc" id="L148">		SCOPEOF,</span>
+<span class="nc" id="L149">		/**</span>
+		 * An expression built from the C &lt;code&gt;sizeof&lt;/code&gt; operator; can be
+		 * cast to {@link SizeofNode}.
+		 */
+<span class="nc" id="L153">		SIZEOF,</span>
+<span class="nc" id="L154">		/**</span>
+		 * A CIVL-C &lt;code&gt;$spawn&lt;/code&gt; expression; can be cast to
+		 * {@link SpawnNode}.
+		 */
+<span class="nc" id="L158">		SPAWN,</span>
+<span class="nc" id="L159">		/**</span>
+		 * A GNU C statement expression; can be cast to
+		 * {@link StatementExpressionNode}
+		 */
+<span class="nc" id="L163">		STATEMENT_EXPRESSION,</span>
+<span class="nc" id="L164">		/**</span>
+		 * An MPI-Contracts constructor expression, it can only appears in a
+		 * function contract block. see {@link MPIContractExpression}.
+		 */
+<span class="nc" id="L168">		MPI_CONTRACT_EXPRESSION,</span>
+<span class="nc" id="L169">		/**</span>
+		 * An ACSL-CIVLC wildcard expression (&lt;code&gt;...&lt;/code&gt;); can be cast to
+		 * {@link WildcardNode}.
+		 */
+<span class="nc" id="L173">		WILDCARD,</span>
+<span class="nc" id="L174">		/**</span>
+		 * An ACSL nothing expression (&lt;code&gt;&lt;/code&gt;); can be cast to
+		 * {@link NothingNode}.
+		 */
+<span class="nc" id="L178">		NOTHING</span>
+	}
+
+	/**
+	 * Adds a conversion to the sequence of conversions for this expression. The
+	 * added conversion must satisfy the following, else an
+	 * IllegalArgumentException will be thrown: (1) if this is the first
+	 * conversion (index 0) to be added, the old type of the conversion must
+	 * equal the initial type; (2) if this is not the first conversion (index &gt;
+	 * 0) to be added, the old type of the conversion must equal the newType of
+	 * the previous conversion.
+	 * 
+	 * @param conversion
+	 *            the conversion to add to the conversion chain for this
+	 *            expression
+	 */
+	void addConversion(Conversion conversion);
+
+	@Override
+	ExpressionNode copy();
+
+	/**
+	 * TODO Returns a new expression node which has the same type and
+	 * conversions and children. The type is shared between the original node
+	 * and the new node, so if the type is modified, both nodes are affected.
+	 * Currently, type is immutable except for struct or union types which can
+	 * be completed.
+	 * 
+	 * @return
+	 */
+	// ExpressionNode copyWithType();
+
+	/**
+	 * Returns the kind of this expression. Every expression belongs to exactly
+	 * one kind.
+	 * 
+	 * @return the kind of this expression
+	 */
+	ExpressionKind expressionKind();
+
+	/**
+	 * Returns the index-th conversion in the chain of types for this
+	 * expression.
+	 * 
+	 * @param index
+	 *            an integer in the range [0,numTypes-1]
+	 * @return the index-th conversion associated to this expression
+	 */
+	Conversion getConversion(int index);
+
+	/**
+	 * Returns the final converted type of the expression. This is the type the
+	 * expression has after going through all conversions in its conversion
+	 * sequence (if any). If there are no conversions, it is the same as the
+	 * initial type. Otherwise, it is the newType of the last conversion.
+	 * 
+	 * @return the final converted type of the expression
+	 */
+	Type getConvertedType();
+
+	/**
+	 * Returns the initial type of the expression. This is the type the
+	 * expression has independent of any context in which the expression occurs.
+	 * 
+	 * @return initial type of expression
+	 */
+	Type getInitialType();
+
+	/**
+	 * Returns the number of conversions in the chain leading from the initial
+	 * type of the expression to the final converted type.
+	 * 
+	 * The type of an expression may go through a number of type conversions
+	 * before arriving at its final &quot;converted type&quot;. These conversions depend
+	 * upon the context in which the expression occurs. The sequence of
+	 * conversions leading from the initial type to the final converted type
+	 * form a chain in which the &quot;newType&quot; of conversion i equals the &quot;oldType&quot;
+	 * of conversion i+1 for each i. The oldType of conversion 0 is the original
+	 * type of the expression; the newType of the last conversion is the
+	 * converted type of the expression.
+	 * 
+	 * This method returns the total number of conversions in that chain. The
+	 * method will return a nonnegative integer. If there are no conversions,
+	 * this method returns 0 and the initial and final types are equal.
+	 * 
+	 * @return the number of type conversions between the original type and the
+	 *         converted type
+	 */
+	int getNumConversions();
+
+	/**
+	 * Is this expression a &quot;constant expression&quot; in the sense of the C11
+	 * Standard?
+	 * 
+	 * @return true iff this expression is a constant expression
+	 */
+	boolean isConstantExpression();
+
+	/** Removes all conversions from this node */
+	void removeConversions();
+
+	/**
+	 * Sets the initial type of the expression. This must be set before any
+	 * conversions are added.
+	 * 
+	 * @param type
+	 *            the type that will be the initial type of this expression
+	 */
+	void setInitialType(Type type);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

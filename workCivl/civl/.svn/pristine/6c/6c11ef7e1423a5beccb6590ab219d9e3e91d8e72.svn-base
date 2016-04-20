@@ -1,0 +1,35 @@
+/* civlValueUndefined : This example lists several cases of misusage of
+   $scope, $proc and pointer types. It is used for code coverage, so
+   the program may not meaningful. */
+#include<civlc.cvh>
+#include<stdlib.h>
+$scope scope;
+double * ptr;
+
+int dummy(int x);
+$scope root = $here;
+
+void getInvalidScope() {
+  scope = $here;
+  ptr = (double*)malloc(sizeof(double));
+  free(ptr);
+}
+
+int main() {
+  $proc proc0, proc1;
+  int a = 0;
+
+  proc0 = $spawn getInvalidScope();
+  $wait(proc0);
+  proc1 = proc0;
+  //so far, scope, proc0 and proc1 are all undefined; ptr is to a
+  //memory space which belongs to an undefined scope.
+  //And, the function dummy() is "undefined" too: it only has a declaration.
+  $choose{
+    {a = scope == root;}
+    {a = proc0 == proc1;}
+    {a = ptr == (void*)0;}
+    {a = dummy(a);};
+  }
+  return 0;
+}

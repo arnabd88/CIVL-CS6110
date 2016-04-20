@@ -1,0 +1,32 @@
+/* CIVL implementation of sys/time.h */
+
+#ifndef __CIVL_SYSTIMES__
+#define __CIVL_SYSTIMES__
+
+#include<sys/times.h>
+#include<civlc.cvh>
+
+struct tms{
+  clock_t tms_utime;
+  clock_t tms_stime;
+  clock_t tms_cutime;
+  clock_t tms_cstime;
+};
+
+clock_t times(tms *timer) {
+  $abstract double _time(int count);
+  int time_count = $next_time_count();
+  double result = _time(time_count);
+  
+  if (time_count > 0) {
+    $assume(result > _time(time_count-1));
+  } else {
+    $assume(result > 0);
+  }
+  if(timer != NULL){
+    *timer->tms_utime = result;
+  }
+  return result;
+}
+
+#endif

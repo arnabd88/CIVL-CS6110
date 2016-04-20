@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ASTBuilderWorker.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.common.astgen</a> &gt; <span class="el_source">ASTBuilderWorker.java</span></div><h1>ASTBuilderWorker.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.common.astgen;
+
+import java.util.List;
+
+import org.antlr.runtime.tree.CommonTree;
+
+import antlr.ParseTree;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * An {@link ASTBuilderWorker} is used to perform specific translation tasks
+ * related to a single {@link ParseTree}. The {@link ParseTree} is associated to
+ * the worker when it is created and can never change.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc" id="L21">public abstract class ASTBuilderWorker {</span>
+
+	/**
+	 * Assuming the {@link ParseTree} associated to this worker represents an
+	 * entire translation unit, this method will translate the entire tree into
+	 * an AST tree.
+	 * 
+	 * @return the root node of the new AST tree obtained by translating the
+	 *         parse tree
+	 * @throws SyntaxException
+	 *             if any syntax error is encountered in the process of
+	 *             translation
+	 */
+	public abstract SequenceNode&lt;BlockItemNode&gt; translateRoot()
+			throws SyntaxException;
+
+	/**
+	 * Translates a single expression in the parse tree. The method takes a
+	 * parse tree node (from the parse tree) representing an expression and
+	 * produces a corresponding AST {@link ExpressionNode}.
+	 * 
+	 * @param expressionTree
+	 *            parse tree node representing an expression
+	 * @param scope
+	 *            the simple scope in which the expressionTree resides. The
+	 *            simple scopes are constructed during the translation process.
+	 * @return the new {@link ExpressionNode}
+	 * @throws SyntaxException
+	 *             if there is a syntax error in the expression
+	 */
+	public abstract ExpressionNode translateExpression(
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException;
+
+	/**
+	 * Translates an ANTLR {@link CommonTree} node of type BLOCK_ITEM. The
+	 * result is a list of {@link BlockItemNode} because it is possible for a
+	 * single ANTLR block item node to yield several AST {@link BlockItemNode}s.
+	 * This can happen for example, if the block item is a declaration such as
+	 * &lt;code&gt;int x,y&lt;/code&gt; which is translated to two AST nodes, roughly
+	 * corresponding to &lt;code&gt;int x&lt;/code&gt; and &lt;code&gt;int y&lt;/code&gt;.
+	 * 
+	 * @param blockItemTree
+	 * @param scope
+	 * @return
+	 * @throws SyntaxException
+	 */
+	public abstract List&lt;BlockItemNode&gt; translateBlockItem(
+			CommonTree blockItemTree, SimpleScope scope) throws SyntaxException;
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,487 @@
+CIVL v1.7 of 2016-03-31 -- http://vsl.cis.udel.edu/civl
+===================The program after linking and applying transformer is:===================
+//======================== civlc.cvh =======================
+$system void $assume(_Bool expr);
+$system void $assume(_Bool expr);
+//======================= dining.cvl =======================
+$input int BOUND = 2;
+$input int n;
+$assume((2 <= n) && (n <= BOUND));
+int  forks[n];
+void dine(int id)
+{
+  int left = id;
+  int right = (id + 1) % n;
+  while (1)
+  {
+    if ((id % 2) == 0)
+    {
+      $when ((forks[left]) < 0)
+      {
+        forks[left] = id;
+      }
+      $when ((forks[right]) < 0)
+      {
+        forks[right] = id;
+      }
+      forks[right] = -1;
+      forks[left] = -1;
+    }
+    else
+    {
+      $when ((forks[right]) < 0)
+      {
+        forks[right] = id;
+      }
+      $when ((forks[left]) < 0)
+      {
+        forks[left] = id;
+      }
+      forks[right] = -1;
+      forks[left] = -1;
+    }
+  }
+}
+void init()
+{
+  $for (int i: 0 .. n - 1)
+    forks[i] = -1;
+}
+void main()
+{
+  init();
+  $parfor (int i: 0 .. n - 1)
+    dine(i);
+}
+
+InitialState = State 0
+Initial Enabled-Transitions = State 0:
+p0:   0->1: BOUND = 2 at dining.cvl:9.0-20 "$input int BOUND = 2";
+
+
+CurrentState = State 0
+Enabled-Transitions from currentState = State 0:
+p0:   0->1: BOUND = 2 at dining.cvl:9.0-20 "$input int BOUND = 2";
+
+NewState = State 1
+Enabled-Transitions from newState = State 1:
+p0:   22->23: $elaborate_domain({0..(n-1)#1}) at dining.cvl:37.16-24 "0 .. n-1";
+
+
+CurrentState = State 1
+Enabled-Transitions from currentState = State 1:
+p0:   22->23: $elaborate_domain({0..(n-1)#1}) at dining.cvl:37.16-24 "0 .. n-1";
+
+NewState = State 2
+Enabled-Transitions from newState = State 2:
+p0:   23->24: LOOP_BODY_ENTER at dining.cvl:37.16-24 "0 .. n-1";
+
+
+CurrentState = State 2
+Enabled-Transitions from currentState = State 2:
+p0:   23->24: LOOP_BODY_ENTER at dining.cvl:37.16-24 "0 .. n-1";
+
+NewState = State 3
+Enabled-Transitions from newState = State 3:
+p0:   25->23: (forks)[i] = -(1) at dining.cvl:38.4-17 "forks[i] = -1";
+
+
+CurrentState = State 3
+Enabled-Transitions from currentState = State 3:
+p0:   25->23: (forks)[i] = -(1) at dining.cvl:38.4-17 "forks[i] = -1";
+
+NewState = State 4
+Enabled-Transitions from newState = State 4:
+p0:   23->24: LOOP_BODY_ENTER at dining.cvl:37.16-24 "0 .. n-1";
+
+
+CurrentState = State 4
+Enabled-Transitions from currentState = State 4:
+p0:   23->24: LOOP_BODY_ENTER at dining.cvl:37.16-24 "0 .. n-1";
+
+NewState = State 5
+Enabled-Transitions from newState = State 5:
+p0:   25->23: (forks)[i] = -(1) at dining.cvl:38.4-17 "forks[i] = -1";
+
+
+CurrentState = State 5
+Enabled-Transitions from currentState = State 5:
+p0:   25->23: (forks)[i] = -(1) at dining.cvl:38.4-17 "forks[i] = -1";
+
+NewState = State 6
+Enabled-Transitions from newState = State 6:
+p0:   23->26: LOOP_BODY_EXIT at dining.cvl:37.16-24 "0 .. n-1";
+
+
+CurrentState = State 6
+Enabled-Transitions from currentState = State 6:
+p0:   23->26: LOOP_BODY_EXIT at dining.cvl:37.16-24 "0 .. n-1";
+
+NewState = State 7
+Enabled-Transitions from newState = State 7:
+p1:   27->9: dine(i) at dining.cvl:44.4-11 "dine(i)";
+
+
+CurrentState = State 7
+Enabled-Transitions from currentState = State 7:
+p1:   27->9: dine(i) at dining.cvl:44.4-11 "dine(i)";
+
+NewState = State 8
+Enabled-Transitions from newState = State 8:
+p1:   9->10: left = id at dining.cvl:17.2-15 "int left = id";
+
+
+CurrentState = State 8
+Enabled-Transitions from currentState = State 8:
+p1:   9->10: left = id at dining.cvl:17.2-15 "int left = id";
+
+NewState = State 9
+Enabled-Transitions from newState = State 9:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 9
+Enabled-Transitions from currentState = State 9:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 10
+Enabled-Transitions from newState = State 10:
+p2:   27->9: dine(i) at dining.cvl:44.4-11 "dine(i)";
+
+
+CurrentState = State 10
+Enabled-Transitions from currentState = State 10:
+p2:   27->9: dine(i) at dining.cvl:44.4-11 "dine(i)";
+
+NewState = State 11
+Enabled-Transitions from newState = State 11:
+p2:   9->10: left = id at dining.cvl:17.2-15 "int left = id";
+
+
+CurrentState = State 11
+Enabled-Transitions from currentState = State 11:
+p2:   9->10: left = id at dining.cvl:17.2-15 "int left = id";
+
+NewState = State 12
+Enabled-Transitions from newState = State 12:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 12
+Enabled-Transitions from currentState = State 12:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 13
+Enabled-Transitions from newState = State 13:
+p1:   13->14: (forks)[left] = id at dining.cvl:22.31-47 "forks[left] = id";:
+p2:   17->18: (forks)[right] = id at dining.cvl:27.32-49 "forks[right] = id";
+
+
+CurrentState = State 13
+Enabled-Transitions from currentState = State 13:
+p1:   13->14: (forks)[left] = id at dining.cvl:22.31-47 "forks[left] = id";:
+p2:   17->18: (forks)[right] = id at dining.cvl:27.32-49 "forks[right] = id";
+
+NewState = State 14
+Enabled-Transitions from newState = State 14:
+p1:   14->15: (forks)[right] = id at dining.cvl:23.32-49 "forks[right] = id";
+
+
+CurrentState = State 14
+Enabled-Transitions from currentState = State 14:
+p1:   14->15: (forks)[right] = id at dining.cvl:23.32-49 "forks[right] = id";
+
+NewState = State 15
+Enabled-Transitions from newState = State 15:
+p1:   15->16: (forks)[right] = -(1) at dining.cvl:24.6-23 "forks[right] = -1";
+
+
+CurrentState = State 15
+Enabled-Transitions from currentState = State 15:
+p1:   15->16: (forks)[right] = -(1) at dining.cvl:24.6-23 "forks[right] = -1";
+
+NewState = State 16
+Enabled-Transitions from newState = State 16:
+p1:   16->11: (forks)[left] = -(1) at dining.cvl:25.6-22 "forks[left] = -1";
+
+
+CurrentState = State 16
+Enabled-Transitions from currentState = State 16:
+p1:   16->11: (forks)[left] = -(1) at dining.cvl:25.6-22 "forks[left] = -1";
+
+NewState = State 17
+Enabled-Transitions from newState = State 17:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 17
+Enabled-Transitions from currentState = State 17:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 13
+Enabled-Transitions from newState = State 13:
+p1:   13->14: (forks)[left] = id at dining.cvl:22.31-47 "forks[left] = id";:
+p2:   17->18: (forks)[right] = id at dining.cvl:27.32-49 "forks[right] = id";
+
+NewState = State 18
+Enabled-Transitions from newState = State 18:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 18
+Enabled-Transitions from currentState = State 18:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 19
+Enabled-Transitions from newState = State 19:
+p2:   18->19: (forks)[left] = id at dining.cvl:28.31-47 "forks[left] = id";
+
+
+CurrentState = State 19
+Enabled-Transitions from currentState = State 19:
+p2:   18->19: (forks)[left] = id at dining.cvl:28.31-47 "forks[left] = id";
+
+NewState = State 20
+Enabled-Transitions from newState = State 20:
+p2:   19->20: (forks)[right] = -(1) at dining.cvl:29.6-23 "forks[right] = -1";
+
+
+CurrentState = State 20
+Enabled-Transitions from currentState = State 20:
+p2:   19->20: (forks)[right] = -(1) at dining.cvl:29.6-23 "forks[right] = -1";
+
+NewState = State 21
+Enabled-Transitions from newState = State 21:
+p1:   13->14: (forks)[left] = id at dining.cvl:22.31-47 "forks[left] = id";:
+p2:   20->11: (forks)[left] = -(1) at dining.cvl:30.6-22 "forks[left] = -1";
+
+
+CurrentState = State 21
+Enabled-Transitions from currentState = State 21:
+p1:   13->14: (forks)[left] = id at dining.cvl:22.31-47 "forks[left] = id";:
+p2:   20->11: (forks)[left] = -(1) at dining.cvl:30.6-22 "forks[left] = -1";
+
+NewState = State 22
+Enabled-Transitions from newState = State 22:
+p2:   20->11: (forks)[left] = -(1) at dining.cvl:30.6-22 "forks[left] = -1";
+
+
+CurrentState = State 22
+Enabled-Transitions from currentState = State 22:
+p2:   20->11: (forks)[left] = -(1) at dining.cvl:30.6-22 "forks[left] = -1";
+
+NewState = State 23
+Enabled-Transitions from newState = State 23:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 23
+Enabled-Transitions from currentState = State 23:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 14
+Enabled-Transitions from newState = State 14:
+p1:   14->15: (forks)[right] = id at dining.cvl:23.32-49 "forks[right] = id";
+
+NewState = State 24
+Enabled-Transitions from newState = State 24:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 24
+Enabled-Transitions from currentState = State 24:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 15
+Enabled-Transitions from newState = State 15:
+p1:   15->16: (forks)[right] = -(1) at dining.cvl:24.6-23 "forks[right] = -1";
+
+NewState = State 25
+Enabled-Transitions from newState = State 25:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 25
+Enabled-Transitions from currentState = State 25:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 16
+Enabled-Transitions from newState = State 16:
+p1:   16->11: (forks)[left] = -(1) at dining.cvl:25.6-22 "forks[left] = -1";
+
+NewState = State 26
+Enabled-Transitions from newState = State 26:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 26
+Enabled-Transitions from currentState = State 26:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 12
+Enabled-Transitions from newState = State 12:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+NewState = State 17
+Enabled-Transitions from newState = State 17:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 25
+Enabled-Transitions from currentState = State 25:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 24
+Enabled-Transitions from currentState = State 24:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 23
+Enabled-Transitions from currentState = State 23:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 22
+Enabled-Transitions from currentState = State 22:
+p2:   20->11: (forks)[left] = -(1) at dining.cvl:30.6-22 "forks[left] = -1";
+
+
+CurrentState = State 21
+Enabled-Transitions from currentState = State 21:
+p1:   13->14: (forks)[left] = id at dining.cvl:22.31-47 "forks[left] = id";:
+p2:   20->11: (forks)[left] = -(1) at dining.cvl:30.6-22 "forks[left] = -1";
+
+NewState = State 12
+Enabled-Transitions from newState = State 12:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 20
+Enabled-Transitions from currentState = State 20:
+p2:   19->20: (forks)[right] = -(1) at dining.cvl:29.6-23 "forks[right] = -1";
+
+
+CurrentState = State 19
+Enabled-Transitions from currentState = State 19:
+p2:   18->19: (forks)[left] = id at dining.cvl:28.31-47 "forks[left] = id";
+
+
+CurrentState = State 18
+Enabled-Transitions from currentState = State 18:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 17
+Enabled-Transitions from currentState = State 17:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 16
+Enabled-Transitions from currentState = State 16:
+p1:   16->11: (forks)[left] = -(1) at dining.cvl:25.6-22 "forks[left] = -1";
+
+
+CurrentState = State 15
+Enabled-Transitions from currentState = State 15:
+p1:   15->16: (forks)[right] = -(1) at dining.cvl:24.6-23 "forks[right] = -1";
+
+
+CurrentState = State 14
+Enabled-Transitions from currentState = State 14:
+p1:   14->15: (forks)[right] = id at dining.cvl:23.32-49 "forks[right] = id";
+
+
+CurrentState = State 13
+Enabled-Transitions from currentState = State 13:
+p1:   13->14: (forks)[left] = id at dining.cvl:22.31-47 "forks[left] = id";:
+p2:   17->18: (forks)[right] = id at dining.cvl:27.32-49 "forks[right] = id";
+
+NewState = State 19
+Enabled-Transitions from newState = State 19:
+p2:   18->19: (forks)[left] = id at dining.cvl:28.31-47 "forks[left] = id";
+
+
+CurrentState = State 12
+Enabled-Transitions from currentState = State 12:
+p2:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 11
+Enabled-Transitions from currentState = State 11:
+p2:   9->10: left = id at dining.cvl:17.2-15 "int left = id";
+
+
+CurrentState = State 10
+Enabled-Transitions from currentState = State 10:
+p2:   27->9: dine(i) at dining.cvl:44.4-11 "dine(i)";
+
+
+CurrentState = State 9
+Enabled-Transitions from currentState = State 9:
+p1:   11->12: LOOP_BODY_ENTER at dining.cvl:20.9-10 "1";
+
+
+CurrentState = State 8
+Enabled-Transitions from currentState = State 8:
+p1:   9->10: left = id at dining.cvl:17.2-15 "int left = id";
+
+
+CurrentState = State 7
+Enabled-Transitions from currentState = State 7:
+p1:   27->9: dine(i) at dining.cvl:44.4-11 "dine(i)";
+
+
+CurrentState = State 6
+Enabled-Transitions from currentState = State 6:
+p0:   23->26: LOOP_BODY_EXIT at dining.cvl:37.16-24 "0 .. n-1";
+
+
+CurrentState = State 5
+Enabled-Transitions from currentState = State 5:
+p0:   25->23: (forks)[i] = -(1) at dining.cvl:38.4-17 "forks[i] = -1";
+
+
+CurrentState = State 4
+Enabled-Transitions from currentState = State 4:
+p0:   23->24: LOOP_BODY_ENTER at dining.cvl:37.16-24 "0 .. n-1";
+
+
+CurrentState = State 3
+Enabled-Transitions from currentState = State 3:
+p0:   25->23: (forks)[i] = -(1) at dining.cvl:38.4-17 "forks[i] = -1";
+
+
+CurrentState = State 2
+Enabled-Transitions from currentState = State 2:
+p0:   23->24: LOOP_BODY_ENTER at dining.cvl:37.16-24 "0 .. n-1";
+
+
+CurrentState = State 1
+Enabled-Transitions from currentState = State 1:
+p0:   22->23: $elaborate_domain({0..(n-1)#1}) at dining.cvl:37.16-24 "0 .. n-1";
+
+
+CurrentState = State 0
+Enabled-Transitions from currentState = State 0:
+p0:   0->1: BOUND = 2 at dining.cvl:9.0-20 "$input int BOUND = 2";
+workRemains = false
+
+=== Command ===
+civl verify -showProgram dining.cvl 
+
+=== Stats ===
+   time (s)            : 4.22
+   memory (bytes)      : 29143040
+   max process count   : 3
+   states              : 47
+   states saved        : 27
+   state matches       : 8
+   transitions         : 52
+   trace steps         : 34
+   valid calls         : 1391
+   provers             : z3, cvc3
+   prover calls        : 2
+
+=== Result ===
+The standard properties hold for all executions.

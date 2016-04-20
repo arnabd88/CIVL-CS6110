@@ -1,0 +1,12 @@
+#include <civlc.cvh>
+#include<string.h>
+#include<stdio.h>
+
+int main(){
+  char a[5];
+
+  memset(a, 0, 3);
+  for(int i=0; i<5; i++) printf("a[%d] = %c ", i, a[i]);
+  $assert($forall  {int k | 0<=k && k<=2 } a[k] == '\0');
+  //  $assert(($forall  {k = 0 .. 2 } a[k] == '\0'));
+}

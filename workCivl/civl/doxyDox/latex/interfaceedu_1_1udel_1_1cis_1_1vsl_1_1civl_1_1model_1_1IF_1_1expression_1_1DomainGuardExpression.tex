@@ -1,0 +1,133 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression}}
+
+
+This is the guard expression of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} for loops ({\ttfamily \$for}).  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=268pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a57ab77efc6e6ae07903f9bc585fc4bbc}{domain} ()
+\begin{DoxyCompactList}\small\item\em Returns the domain expression. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_aa7ec05b1171bee3e529740d7aa64fb6c}{dimension} ()
+\begin{DoxyCompactList}\small\item\em Returns the dimension of the domain expression. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a4e20dffbe9dec547cca494a75717b4ec}{variable\+At} (int index)
+\begin{DoxyCompactList}\small\item\em Returns the iteration variable of the given index. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a5160468a70ffc78d74b80e558657f79e}{get\+Literal\+Dom\+Counter} ()
+\begin{DoxyCompactList}\small\item\em The counter variable for iterating a literal domain step by step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is the guard expression of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} for loops ({\ttfamily \$for}). 
+
+It has the form of {\ttfamily (i, j, k, ... \+: dom)}, where {\ttfamily i, j, k ...} are iteration variables and {\ttfamily dom} is the domain expression. The number of iteration variables should be equal to the dimension of the domain. \hyperlink{structA}{A} domain guard expression is evaluated to be true if and only if there exists a subsequent element of {\ttfamily (i, j, k, ...)} in the domain.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_aa7ec05b1171bee3e529740d7aa64fb6c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression}!dimension@{dimension}}
+\index{dimension@{dimension}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression}}
+\subsubsection[{dimension}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression.\+dimension (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_aa7ec05b1171bee3e529740d7aa64fb6c}
+
+
+Returns the dimension of the domain expression. 
+
+\begin{DoxyReturn}{Returns}
+The dimension of the domain expression. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonDomainGuardExpression_ab3f7bf368b27ade90feb3825455f2c0c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Domain\+Guard\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a57ab77efc6e6ae07903f9bc585fc4bbc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression}!domain@{domain}}
+\index{domain@{domain}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression}}
+\subsubsection[{domain}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression.\+domain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a57ab77efc6e6ae07903f9bc585fc4bbc}
+
+
+Returns the domain expression. 
+
+\begin{DoxyReturn}{Returns}
+The domain expression. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonDomainGuardExpression_a074be6652b244d13afd2dc9e6d62b42f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Domain\+Guard\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a5160468a70ffc78d74b80e558657f79e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression}!get\+Literal\+Dom\+Counter@{get\+Literal\+Dom\+Counter}}
+\index{get\+Literal\+Dom\+Counter@{get\+Literal\+Dom\+Counter}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression}}
+\subsubsection[{get\+Literal\+Dom\+Counter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression.\+get\+Literal\+Dom\+Counter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a5160468a70ffc78d74b80e558657f79e}
+
+
+The counter variable for iterating a literal domain step by step. 
+
+\begin{DoxyReturn}{Returns}
+the variable expression of the counter. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonDomainGuardExpression_ad52fb2ed0b6a08396cdf3118f41c0c3a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Domain\+Guard\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a4e20dffbe9dec547cca494a75717b4ec}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression}!variable\+At@{variable\+At}}
+\index{variable\+At@{variable\+At}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Domain\+Guard\+Expression}}
+\subsubsection[{variable\+At}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Domain\+Guard\+Expression.\+variable\+At (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression_a4e20dffbe9dec547cca494a75717b4ec}
+
+
+Returns the iteration variable of the given index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the iteration variable to be returned. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The iteration variable of the given index. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonDomainGuardExpression_a00a316cf1a1ff29d85e1198fe21f894a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Domain\+Guard\+Expression}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/expression/Domain\+Guard\+Expression.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,29 @@
+/* Commandline execution:
+ *		civl verify scoping.cvl
+ * */
+#include <civlc.h>
+
+void main() {
+  int *p, *q;
+  $scope ms = $here;
+  $scope ps, qs;
+  
+  {
+     p = (int *) $malloc($here, sizeof(int));
+     ps = $here;
+  }
+  
+  {
+     ps =  $here;
+  }
+  
+  {
+     q = (int *) $malloc($here, sizeof(int));
+  }
+  
+  {
+    qs = $here;
+  }
+  $assert(ms == (ps + qs));
+  $assert(ps != qs);
+}

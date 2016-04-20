@@ -1,0 +1,144 @@
+CIVL v1.7 of 2016-03-31 -- http://vsl.cis.udel.edu/civl
+Transitions from POR : State 0:
+p0:   0->1: B = 4 at diningBad.cvl:9.0-16 "$input int B = 4";
+Transitions from POR : State 0:
+p0:   0->1: B = 4 at diningBad.cvl:9.0-16 "$input int B = 4";
+1. Curr_Bound = 0
+
+1. Stack-Size = 0
+
+1. NextStack-Size = 25
+
+2. Curr_Bound = 1
+
+2. Stack-Size = 25
+
+2. NextStack-Size = 0
+
+1. Curr_Bound = 1
+
+1. Stack-Size = 0
+
+1. NextStack-Size = 9
+
+2. Curr_Bound = 2
+
+2. Stack-Size = 9
+
+2. NextStack-Size = 0
+
+1. Curr_Bound = 2
+
+1. Stack-Size = 0
+
+1. NextStack-Size = 19
+
+2. Curr_Bound = 3
+
+2. Stack-Size = 19
+
+2. NextStack-Size = 0
+
+1. Curr_Bound = 3
+
+1. Stack-Size = 0
+
+1. NextStack-Size = 34
+
+2. Curr_Bound = 4
+
+2. Stack-Size = 34
+
+2. NextStack-Size = 0
+
+1. Curr_Bound = 4
+
+1. Stack-Size = 0
+
+1. NextStack-Size = 55
+
+2. Curr_Bound = 5
+
+2. Stack-Size = 55
+
+2. NextStack-Size = 0
+
+1. Curr_Bound = 5
+
+1. Stack-Size = 0
+
+1. NextStack-Size = 83
+
+2. Curr_Bound = 6
+
+2. Stack-Size = 83
+
+2. NextStack-Size = 0
+
+1. Curr_Bound = 6
+
+1. Stack-Size = 0
+
+1. NextStack-Size = 119
+
+2. Curr_Bound = 7
+
+2. Stack-Size = 119
+
+2. NextStack-Size = 0
+
+1. Curr_Bound = 7
+
+1. Stack-Size = 0
+
+1. NextStack-Size = 155
+
+2. Curr_Bound = 8
+
+2. Stack-Size = 155
+
+2. NextStack-Size = 0
+
+workRemains = true
+
+Violation 0 encountered at depth 154:
+CIVL execution violation (kind: DEADLOCK, certainty: PROVEABLE)
+at diningBad.cvl:31.11-12 ";":
+A deadlock is possible:
+  Path condition: true
+  Enabling predicate: false
+process p0 (id=0): false
+process p1 (id=1): false
+process p2 (id=2): false
+
+Call stacks:
+process p0 (id=0):
+  main at diningBad.cvl:31.11-12 ";"
+process p1 (id=1):
+  dine at diningBad.cvl:21.4-9 "$when" called from
+  _par_proc0 at diningBad.cvl:31.4-8 "dine"
+process p2 (id=2):
+  dine at diningBad.cvl:21.4-9 "$when" called from
+  _par_proc0 at diningBad.cvl:31.4-8 "dine"
+
+Logging new entry 0, writing trace to CIVLREP/diningBad_0.trace
+Terminating search after finding 1 violation.
+
+=== Command ===
+civl verify examples/concurrency/diningBad.cvl 
+
+=== Stats ===
+   time (s)            : 4.41
+   memory (bytes)      : 28606464
+   max process count   : 5
+   states              : 961
+   states saved        : 503
+   state matches       : 1177
+   transitions         : 2125
+   trace steps         : 1679
+   valid calls         : 10735
+   provers             : z3, cvc3
+   prover calls        : 5
+
+=== Result ===
+The program MAY NOT be correct.  See CIVLREP/diningBad_log.txt

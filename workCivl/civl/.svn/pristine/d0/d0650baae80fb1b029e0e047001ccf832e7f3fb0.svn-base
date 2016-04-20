@@ -1,0 +1,14 @@
+
+extern, sync, config: aren't these all CVT notions?  
+
+the extent thing seems a little clunky.  It is there only for 
+variables of array type.  Would it be better to have
+an ArrayVariable which extends Variable?  Or something else?
+
+
+Explanation of whole interface can be better.   It is a variable,
+but maybe say static notion of variable, declared in some static scope,
+with a type, there are variable IDs (are these IDs unique only within
+the scope, are they numbered from 0..n-1, where n is the number
+of variables in the scope, ...)
+

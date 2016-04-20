@@ -1,0 +1,18 @@
+#include<civlc.h>
+
+void main() {
+  int a;
+  int b;
+  int c;
+  int d;
+
+  a = b = c = d = 0;
+  b++;
+  a = ++b - c-- + a;
+  d = --a - c++ - --b + b;
+  b = c++;
+  $assert a == 1;
+  $assert b == 1;
+  $assert c == 2;
+  $assert d == 2;
+}

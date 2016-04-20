@@ -1,0 +1,58 @@
+/* Commandline execution:
+ *		civl verify conditionalExpression.cvl
+ * */
+#include<civlc.cvh>
+int n = 2;
+$assume n > (5 > 7 ? 1 : 0);
+
+int sum(int k){
+	int sum = 0;
+	for(int i = 1; i <= k; i++)
+		sum += i;
+	return sum;
+}
+
+void main(){
+	int i = 1;
+	
+	// This would be 
+	// Location Z:
+	// when (n > 2) s = sum(5) goto ...
+	// when (!(n > 2)) s = sum(8) goto ...
+	int s = sum(n > 2 ? 5 : 8);
+
+	$assert(s == 9 * (n > 2 ? 5 : 8) / 2);
+
+	// This should be translated into 
+	// Location X: 
+	// when(i>1) n = 1 goto ... 
+	// when (!(i>1)) n = 2
+	n = i > 1 ? 1 : 2;
+	$assert(n == 2);
+
+	// This should be translated into
+	// int v0;
+	// if(n > 1) v0 = 1; else v0 = 2;
+	// int v1;
+	// if(i < 1) v1 = 1; else v1 = 2;
+	// n = v0 + v1;
+	n = (n > 1 ? 1 : 2) + (i < 1 ? 1 : 2);
+	$assert(n == 3);
+
+	// conditional expression as the guard of a loop
+	for(int j = 0; (j < 5 ? 1 : 0); j++){
+		n = i * j;
+	}
+	$assert(n == 4);
+
+	// as the guard of when statement
+	$when(n < 1 ? 0 : 1) n = 3;
+
+	// as the guard of if statement
+	if(n < 1 ? 0 : 1) n = 5;  
+	$assert(n == 5);
+	
+	// nested conditional expression
+	s = (s < 30 ? 10 : (n < 40 ? 50 : 6));
+	$assert(s == 50);
+}

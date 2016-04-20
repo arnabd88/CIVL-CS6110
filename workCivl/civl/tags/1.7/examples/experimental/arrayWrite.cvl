@@ -1,0 +1,14 @@
+#include<civlc.cvh>
+#include<seq.cvh>
+#include<pointer.cvh>
+
+void main(){
+  int array[][];
+  int a[], b[];
+  int x = 5;
+  
+  $seq_init(&a, 0, NULL);
+  $seq_init(&b, 1, &x);
+  $seq_init(&array, 1, &a);
+  $copy(&array[0], &b);
+}

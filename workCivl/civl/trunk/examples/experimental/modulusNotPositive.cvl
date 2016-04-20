@@ -1,0 +1,5 @@
+#include <civlc.cvh>
+
+void main () {
+  int a = -10 % (-3);
+}

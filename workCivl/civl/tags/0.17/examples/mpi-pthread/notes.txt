@@ -1,0 +1,11 @@
+mpi-pthreads-pie-collective:
+  needs support of PTHREAD_MUTEX_INITIALIZER:
+  pthread_mutex_t mypi_mutex = PTHREAD_MUTEX_INITIALIZER;
+  
+mpi-pthreads-pthreads.c:
+  needs support of MPI features:
+  MPI_Init_thread, MPI_Abort, enumerators such as MPI_THREAD_MULTIPLE.
+
+mpithreads_both.c:
+  has a memory leak problem, needs to debug.
+  

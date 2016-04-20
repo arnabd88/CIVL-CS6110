@@ -1,0 +1,22 @@
+#include <civlc.cvh>
+
+void fun1(){
+  int x;
+  
+  void init(){
+    x = 0;
+  }
+}
+
+void fun2(){
+  int x;
+  
+  void init(){
+    x = 0;
+  }
+}
+
+void main(){
+  fun1();
+  fun2();
+}

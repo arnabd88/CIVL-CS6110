@@ -1,0 +1,107 @@
+\hypertarget{djb_8h}{}\section{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/djb.h File Reference}
+\label{djb_8h}\index{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/djb.\+h@{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/djb.\+h}}
+
+
+Dan Bernstein\textquotesingle{}s \char`\"{}\+Optimizing linear maps mod 2\char`\"{}.  
+
+
+{\ttfamily \#include $<$m4ri/mzd.\+h$>$}\\*
+Include dependency graph for djb.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{djb_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{djb_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structdjb__t}{djb\+\_\+t}
+\begin{DoxyCompactList}\small\item\em D\+J\+B\textquotesingle{}s optimized linear maps mod 2. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{djb_8h_aacdeb7e315169171d937f321e2936f5e}{}\#define \hyperlink{djb_8h_aacdeb7e315169171d937f321e2936f5e}{M4\+R\+I\+\_\+\+D\+J\+B\+\_\+\+B\+A\+S\+E\+\_\+\+S\+I\+Z\+E}~64\label{djb_8h_aacdeb7e315169171d937f321e2936f5e}
+
+\begin{DoxyCompactList}\small\item\em Standard allocation chunk. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{djb_8h_a45879284e74072a31534206b6ecd2b2e}{}enum \hyperlink{djb_8h_a45879284e74072a31534206b6ecd2b2e}{srctyp\+\_\+t} \{ {\bfseries source\+\_\+target}, 
+{\bfseries source\+\_\+source}
+ \}\label{djb_8h_a45879284e74072a31534206b6ecd2b2e}
+
+\begin{DoxyCompactList}\small\item\em Specify source type of addition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structdjb__t}{djb\+\_\+t} $\ast$ \hyperlink{djb_8h_a0c9cbab1b03baa4cb967e0da94d227be}{djb\+\_\+compile} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A})
+\begin{DoxyCompactList}\small\item\em Compile a new D\+J\+B linear map from \hyperlink{structA}{A}. \end{DoxyCompactList}\item 
+void \hyperlink{djb_8h_a384581be111b3045103ff8cb6701fc59}{djb\+\_\+apply\+\_\+mzd} (\hyperlink{structdjb__t}{djb\+\_\+t} $\ast$z, \hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$W, const \hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$V)
+\begin{DoxyCompactList}\small\item\em W = m$\ast$\+V. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Dan Bernstein\textquotesingle{}s \char`\"{}\+Optimizing linear maps mod 2\char`\"{}. 
+
+This code is a port of sort1.\+cpp available at \href{http://binary.cr.yp.to/linearmod2.html}{\tt http\+://binary.\+cr.\+yp.\+to/linearmod2.\+html}
+
+Given a matrix \hyperlink{structA}{A} djb\+\_\+compile(\+A) will compute a \hyperlink{structdjb__t}{djb\+\_\+t} data structure which realises \hyperlink{structA}{A} with (heuristically) (m $\ast$ n)/(log m -\/ loglog m) X\+O\+Rs.
+
+It makes use of a binary heap written by Martin Kunev which is available at \href{https://gist.github.com/martinkunev/1365481}{\tt https\+://gist.\+github.\+com/martinkunev/1365481}
+
+\begin{DoxyAuthor}{Author}
+Martin Albrecht \href{mailto:martinralbrecht@googlemail.com}{\tt martinralbrecht@googlemail.\+com} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{djb_8h_a384581be111b3045103ff8cb6701fc59}{}\index{djb.\+h@{djb.\+h}!djb\+\_\+apply\+\_\+mzd@{djb\+\_\+apply\+\_\+mzd}}
+\index{djb\+\_\+apply\+\_\+mzd@{djb\+\_\+apply\+\_\+mzd}!djb.\+h@{djb.\+h}}
+\subsubsection[{djb\+\_\+apply\+\_\+mzd}]{\setlength{\rightskip}{0pt plus 5cm}void djb\+\_\+apply\+\_\+mzd (
+\begin{DoxyParamCaption}
+\item[{{\bf djb\+\_\+t} $\ast$}]{z, }
+\item[{{\bf mzd\+\_\+t} $\ast$}]{W, }
+\item[{const {\bf mzd\+\_\+t} $\ast$}]{V}
+\end{DoxyParamCaption}
+)}\label{djb_8h_a384581be111b3045103ff8cb6701fc59}
+
+
+W = m$\ast$\+V. 
+
+Apply the linear map m to V and write the result in W.
+
+
+\begin{DoxyParams}{Parameters}
+{\em z} & D\+J\+B linear map. \\
+\hline
+{\em W} & Output matrix \\
+\hline
+{\em V} & Input matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{djb_8h_a0c9cbab1b03baa4cb967e0da94d227be}{}\index{djb.\+h@{djb.\+h}!djb\+\_\+compile@{djb\+\_\+compile}}
+\index{djb\+\_\+compile@{djb\+\_\+compile}!djb.\+h@{djb.\+h}}
+\subsubsection[{djb\+\_\+compile}]{\setlength{\rightskip}{0pt plus 5cm}{\bf djb\+\_\+t}$\ast$ djb\+\_\+compile (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A}
+\end{DoxyParamCaption}
+)}\label{djb_8h_a0c9cbab1b03baa4cb967e0da94d227be}
+
+
+Compile a new D\+J\+B linear map from \hyperlink{structA}{A}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & \\
+\hline
+\end{DoxyParams}

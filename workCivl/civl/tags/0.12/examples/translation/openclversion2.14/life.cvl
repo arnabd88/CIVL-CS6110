@@ -1,0 +1,235 @@
+
+#include "openCLshared.cvl"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+$input int ITERATIONS;
+$input int WIDTH;
+$input int HEIGHT;
+$input int INPUT;
+
+typedef struct
+{
+  int workgroup;
+  int global_id;
+  int local_id;
+  
+  //kernel variables
+  bool * input;
+  bool *output;
+  int height;
+  int width;
+  
+}args;
+
+
+cl_kernel clCreateKernel(args * argument)
+{
+  cl_kernel kernel;
+  kernel.arguments = argument;
+  
+  return kernel;
+}
+
+//kernel goes here
+void life(int workgroup, 
+  int global_id, 
+  int local_id,
+  bool * input,
+  bool* output,
+  int height,
+  int width)
+{
+  int i = global_id;
+  int rowUp = i - width;
+  int rowDown = i + width;
+  bool outOfBounds = (i < width);
+  //|= not supported in ABC yet
+  outOfBounds = (i > (width * (height-1)));
+  if (outOfBounds) 
+  { 
+    output[i] = false; return; 
+  }
+  
+  outOfBounds = (i % width == 0);
+  if (outOfBounds) 
+  { 
+    output[i] = false; return; 
+  }
+  
+  outOfBounds = (i % width == width-1);
+  if (outOfBounds) 
+  { 
+    output[i] = false; return; 
+  }
+  int neighbours = input[rowUp-1] + input[rowUp] + input[rowUp+1];
+  neighbours += input[i-1] + input[i+1];
+  neighbours += input[rowDown-1] + input[rowDown] + input[rowDown+1];
+  if (neighbours == 3 || (input[i] && neighbours == 2))
+  {
+    output[i] = true;
+  }
+  else
+  {
+    output[i] = false;
+  }
+}
+
+void workfunc(size_t local, size_t global, cl_kernel param)
+{
+  for(int i = local * param.workgroup; i < local * param.workgroup + local; i++)
+  {
+    param.local_id = i % local;
+    param.global_id = i;
+    //printf("My workgroup id is %d, my global id is %d, my local id is %d\n", param.workgroup, param.global_id, param.local_id);
+    life(param.workgroup, param.global_id, param.local_id, ((args*)param.arguments)->input, ((args*)param.arguments)->output, ((args*)param.arguments)->height, ((args*)param.arguments)->width);
+  }
+}
+
+int clEnqueueNDRangeKernel(cl_command_queue commands, cl_kernel kernel, int global, int local)
+{
+  $assert(global % local == 0);
+  cl_kernel param[global/local];
+  $proc procs[global/local];
+  for(int i = 0; i < global/local; i++)
+  {
+    param[i] = kernel;
+    param[i].workgroup = i;
+    procs[i] = $spawn workfunc(local, global, param[i]);
+  }
+  
+  //this part here is the new clFinish(commands);
+  for(int i = 0; i < global/local; i++)
+  {
+    $wait(procs[i]);
+  }
+  
+  return CL_SUCCESS;
+}
+
+
+//how to deal with own implementation of clCreateKernelFromSource?
+
+// The board
+static const size_t board_size = WIDTH * HEIGHT;
+static bool board[board_size];
+// Storage for the board.
+static bool * input;
+static bool * output;
+// OpenCL state
+static cl_command_queue queue;
+static cl_kernel kernel;
+static cl_device_id device_id;
+static cl_context context;
+
+void printBoard(void)
+{
+  unsigned i = 0;
+
+  for (unsigned y=0 ; y<HEIGHT ; y++)
+    {
+      for (unsigned x=0 ; x<WIDTH ; x++)
+        {
+	  //putc(board[i++] ? '*' : ' ', stdout);
+	      if (board[i] == 1)
+	      {
+	        printf("*");
+	      }
+	      else
+	      {
+	        printf(" ");
+	      }
+	      i++;
+        }
+      printf("\n");
+    }
+}
+
+void createQueue(void)
+{
+  int err;
+  err = clGetDeviceIDs(1, &device_id);
+
+  queue = clCreateCommandQueue(device_id);
+}
+
+void prepareKernel(void)
+{
+  input = (bool*)malloc(sizeof(board));
+  output = (bool*)malloc(sizeof(board));
+
+  ((args*)kernel.arguments)->input = input;
+  ((args*)kernel.arguments)->output = output;
+  ((args*)kernel.arguments)->height = HEIGHT;
+  ((args*)kernel.arguments)->width = WIDTH;
+}
+
+void runGame(int iterations)
+{
+  if(iterations == 0) {return;}
+  int err;
+  size_t workgroup_size;
+  workgroup_size = INPUT;
+  
+  memcpy(input, board, sizeof(board));
+  
+  for (int i = 0; i < iterations; i++)
+  {
+    err = clEnqueueNDRangeKernel(queue, kernel, board_size, workgroup_size);
+    
+    if (i < iterations - 1)
+    {
+        memcpy(output, input, sizeof(board));
+    }
+  }
+  memcpy(board, output, sizeof(board));
+}
+
+//CIVL models scanf() differently, uses symbolic expressions and loops forever here
+//Always possible for iterations > 0 
+int main(int argc, char** argv)
+{
+  args * arguments;
+  arguments = (args*)malloc(sizeof(args));
+
+/*
+  for(unsigned int i=0 ; i<board_size; i++)
+  {
+    board[i] = (i % 2);
+    //done this way because you can't see what numbers come from random, and it seems that it just does ******* anyhow
+    //printf("board[%d] is %d\n", i, board[i]);
+  }
+  */
+  for(unsigned int i=0 ; i<board_size; i = i + 2)
+  {
+    board[i] = 1;
+  }
+  //proves that the kernel "works", although it runs through multiple times
+  createQueue();
+  
+  kernel = clCreateKernel(arguments);
+  
+  prepareKernel();
+  
+
+  printBoard();
+  printf("Running for how %d iterations\n", ITERATIONS);
+  for(int i = 0; i < ITERATIONS; i++)
+  {
+    printf("Running iteration %d\n", i);
+    runGame(ITERATIONS);
+    printBoard();
+  }
+  
+  
+  free(arguments);
+  
+  free(input);
+  free(output);
+
+
+  
+  return 0;
+}

@@ -1,0 +1,146 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression}}
+
+
+\hyperlink{structA}{A} binary operation.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_1_1BINARY__OPERATOR}{B\+I\+N\+A\+R\+Y\+\_\+\+O\+P\+E\+R\+A\+T\+O\+R}
+\begin{DoxyCompactList}\small\item\em This defines all \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} binary operators\+: ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a62914961d56020caf846fb2aa8511572}{left} ()
+\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_1_1BINARY__OPERATOR}{B\+I\+N\+A\+R\+Y\+\_\+\+O\+P\+E\+R\+A\+T\+O\+R} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a960322d11a1161926b0c6fa87f045b76}{operator} ()
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a180987c431a96aa1d22871d0278e2933}{}String {\bfseries operator\+To\+String} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a180987c431a96aa1d22871d0278e2933}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a7efa824ca6b6bbf395007bd15441853d}{right} ()
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a59dabaeb17ac9a75462acc4d35df55de}{}void {\bfseries set\+Assign\+To\+Left} (boolean value)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a59dabaeb17ac9a75462acc4d35df55de}
+
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_afb4db30f174d08b283c0e3b025172ac4}{is\+Assign\+To\+Left} ()
+\begin{DoxyCompactList}\small\item\em Is the value of this binary expression going to be assigned to the left-\/hand-\/side operand? \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a02f9d50fec00223782437d56c4ce7def}{switch\+Operands} ()
+\begin{DoxyCompactList}\small\item\em Switch the left and right operands when the operator is symmetric, and return true; If the operator is not symmetric, then do nothing and return false. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} binary operation. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_afb4db30f174d08b283c0e3b025172ac4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}!is\+Assign\+To\+Left@{is\+Assign\+To\+Left}}
+\index{is\+Assign\+To\+Left@{is\+Assign\+To\+Left}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}}
+\subsubsection[{is\+Assign\+To\+Left}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression.\+is\+Assign\+To\+Left (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_afb4db30f174d08b283c0e3b025172ac4}
+
+
+Is the value of this binary expression going to be assigned to the left-\/hand-\/side operand? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonBinaryExpression_a34da73a8d4259a8c987cd0085e984ee1}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Binary\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a62914961d56020caf846fb2aa8511572}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}!left@{left}}
+\index{left@{left}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}}
+\subsubsection[{left}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression.\+left (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a62914961d56020caf846fb2aa8511572}
+\begin{DoxyReturn}{Returns}
+The left operand. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonBinaryExpression_a52387050504ffa8670668792ba148b2f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Binary\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a960322d11a1161926b0c6fa87f045b76}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}!operator@{operator}}
+\index{operator@{operator}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}}
+\subsubsection[{operator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\+I\+N\+A\+R\+Y\+\_\+\+O\+P\+E\+R\+A\+T\+O\+R} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression.\+operator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a960322d11a1161926b0c6fa87f045b76}
+\begin{DoxyReturn}{Returns}
+The binary operator 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonBinaryExpression_afc929e1d74f5288e1fa2e39c5decacb3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Binary\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a7efa824ca6b6bbf395007bd15441853d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}!right@{right}}
+\index{right@{right}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}}
+\subsubsection[{right}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression.\+right (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a7efa824ca6b6bbf395007bd15441853d}
+\begin{DoxyReturn}{Returns}
+The right operand. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonBinaryExpression_ac2628741901ed3e619ac89b02fecf57b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Binary\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a02f9d50fec00223782437d56c4ce7def}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}!switch\+Operands@{switch\+Operands}}
+\index{switch\+Operands@{switch\+Operands}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Binary\+Expression}}
+\subsubsection[{switch\+Operands}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Binary\+Expression.\+switch\+Operands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression_a02f9d50fec00223782437d56c4ce7def}
+
+
+Switch the left and right operands when the operator is symmetric, and return true; If the operator is not symmetric, then do nothing and return false. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonBinaryExpression_a603fabad63ad890d667ec4961f8d8235}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Binary\+Expression}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/expression/Binary\+Expression.\+java\end{DoxyCompactItemize}

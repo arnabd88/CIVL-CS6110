@@ -1,0 +1,16 @@
+int func()
+{
+  return 4;
+}
+
+int main(int argc, char** argv)
+{
+  int global = func();
+  int input[global];
+  
+  for(int i = 0; i < global; i++)
+  {
+    input[i] = i;
+  }
+  return 0;
+}

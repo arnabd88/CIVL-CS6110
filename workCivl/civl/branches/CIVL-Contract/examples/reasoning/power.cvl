@@ -1,0 +1,8 @@
+#include <civlc.cvh>
+
+$input double a, b;
+
+void main() {
+  $assume(b != 0 && (a/b) > 0);
+  $assert((a/b) * (a/b) >= 0);
+}

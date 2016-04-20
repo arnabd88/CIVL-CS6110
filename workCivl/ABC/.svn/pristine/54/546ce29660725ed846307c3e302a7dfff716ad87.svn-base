@@ -1,0 +1,15 @@
+#define X
+#define Y
+#undef X
+
+#ifdef X
+#error "X should not be defined!"
+#endif
+
+#ifndef Y
+#error "Y should be defined!"
+#endif
+
+/* Undefining macros which are not already defined should be a no-op...*/
+#undef X
+#undef Z

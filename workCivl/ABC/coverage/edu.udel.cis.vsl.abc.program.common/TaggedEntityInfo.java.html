@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TaggedEntityInfo.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.program.common</a> &gt; <span class="el_source">TaggedEntityInfo.java</span></div><h1>TaggedEntityInfo.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.program.common;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.TaggedEntity;
+import edu.udel.cis.vsl.abc.ast.type.IF.EnumerationType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.util.IF.Pair;
+
+/**
+ * &lt;p&gt;
+ * A TaggedEntityInfo records information about the file-scope tagged entities
+ * in different translation units sharing a common tag.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Once all the information has been added, the actions required to transform
+ * the AST are obtained from method {@link #computeActions}. There are at least
+ * two kinds of actions:
+ * &lt;ol&gt;
+ * &lt;li&gt;Renaming actions. These assign a new name to the entity.&lt;/li&gt;
+ * &lt;li&gt;Definition deletion actions. These specify nullification of the complete
+ * part of the definition of a tagged entity in a translation unit.&lt;/li&gt;
+ * &lt;/ol&gt;
+ * &lt;/p&gt;
+ * 
+ * @author siegel
+ */
+public class TaggedEntityInfo extends EntityInfo {
+
+	/**
+	 * Translation unit ID-Entity pairs for all tagged entities sharing the name
+	 * corresponding to this info object.
+	 */
+<span class="nc" id="L40">	private ArrayList&lt;Pair&lt;Integer, TaggedEntity&gt;&gt; entityPairs = new ArrayList&lt;&gt;();</span>
+
+	/**
+	 * Information about those entities using the tag and which are structs.
+	 */
+	private TagCategoryInfo structInfo;
+
+	/**
+	 * Information about those entities using the tag and which are unions.
+	 */
+	private TagCategoryInfo unionInfo;
+
+	/**
+	 * Information about those entities using the tag and which are enums.
+	 */
+	private TagCategoryInfo enumInfo;
+
+	/**
+	 * Creates a new tagged entity info object with the given tag. Initially,
+	 * all information is empty.
+	 * 
+	 * @param tag
+	 *            the tag, i.e., the name shared by the tagged entities this
+	 *            object deals with
+	 * @param numTransitionUnits
+	 *            the number of translation units under consideration
+	 */
+	public TaggedEntityInfo(String tag, int numTranslationUnits) {
+<span class="nc" id="L68">		super(tag, numTranslationUnits);</span>
+<span class="nc" id="L69">		structInfo = new TagCategoryInfo(this);</span>
+<span class="nc" id="L70">		unionInfo = new TagCategoryInfo(this);</span>
+<span class="nc" id="L71">		enumInfo = new TagCategoryInfo(this);</span>
+<span class="nc" id="L72">	}</span>
+
+	boolean isExclusive() {
+<span class="nc" id="L75">		int numEmpty = 0;</span>
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (structInfo.isEmpty())</span>
+<span class="nc" id="L78">			numEmpty++;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (unionInfo.isEmpty())</span>
+<span class="nc" id="L80">			numEmpty++;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (enumInfo.isEmpty())</span>
+<span class="nc" id="L82">			numEmpty++;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		return numEmpty &gt;= 2;</span>
+	}
+
+	ArrayList&lt;Pair&lt;Integer, TaggedEntity&gt;&gt; getEntityPairs() {
+<span class="nc" id="L87">		return entityPairs;</span>
+	}
+
+	@Override
+	protected void addEntity(int tuid, ProgramEntity entity) {
+<span class="nc" id="L92">		TaggedEntity taggedEntity = (TaggedEntity) entity;</span>
+<span class="nc" id="L93">		Pair&lt;Integer, TaggedEntity&gt; pair = new Pair&lt;&gt;(tuid, taggedEntity);</span>
+<span class="nc" id="L94">		Type type = entity.getType();</span>
+<span class="nc" id="L95">		TypeKind kind = type.kind();</span>
+
+<span class="nc" id="L97">		entityPairs.add(pair);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (kind == TypeKind.STRUCTURE_OR_UNION) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (((StructureOrUnionType) type).isStruct())</span>
+<span class="nc" id="L100">				structInfo.add(pair);</span>
+			else
+<span class="nc" id="L102">				unionInfo.add(pair);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		} else if (kind == TypeKind.ENUMERATION)</span>
+<span class="nc" id="L104">			enumInfo.add(pair);</span>
+		else
+<span class="nc" id="L106">			throw new ABCRuntimeException(&quot;Unreachable&quot;);</span>
+<span class="nc" id="L107">	}</span>
+
+	public void computeActions(Plan[] plans,
+			Map&lt;EnumerationType, Integer&gt; enumMergeMap) {
+<span class="nc" id="L111">		structInfo.addActions(plans);</span>
+<span class="nc" id="L112">		unionInfo.addActions(plans);</span>
+<span class="nc" id="L113">		enumInfo.addToEnumMergeMap(enumMergeMap);</span>
+<span class="nc" id="L114">		enumInfo.addActions(plans);</span>
+<span class="nc" id="L115">	}</span>
+
+	/**
+	 * &lt;p&gt;
+	 * This method attempts to determine which entities can be merged. Two
+	 * entities can be merged if they have the same kind (enum, struct, or
+	 * union), and their components can be merged. For example, for a struct,
+	 * the two structs must have the same number of fields, with the same names,
+	 * occurring in the same order, and the corresponding types must be the same
+	 * (perhaps after merging other types). The results of this analysis are
+	 * recorded in this object's internal state.
+	 * &lt;/p&gt;
+	 * 
+	 * @return true if at least one merge was made
+	 */
+	public boolean merge() {
+<span class="nc" id="L131">		boolean result = false;</span>
+
+<span class="nc bnc" id="L133" title="All 4 branches missed.">		result = result || enumInfo.merge();</span>
+<span class="nc bnc" id="L134" title="All 4 branches missed.">		result = result || structInfo.merge();</span>
+<span class="nc bnc" id="L135" title="All 4 branches missed.">		result = result || unionInfo.merge();</span>
+<span class="nc" id="L136">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

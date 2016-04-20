@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonQuantifiedExpressionNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.expression</a> &gt; <span class="el_source">CommonQuantifiedExpressionNode.java</span></div><h1>CommonQuantifiedExpressionNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.expression;
+
+import java.io.PrintStream;
+import java.util.Arrays;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.QuantifiedExpressionNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+/**
+ * A quantified expression consists of a quantifier, a variable bound by the
+ * quantifier, an expression restricting the values of the quantified variable,
+ * and a quantified expression. e.g. forall {int x | x &gt; 1} x &gt; 0;
+ * 
+ * @author zirkel
+ * 
+ */
+public class CommonQuantifiedExpressionNode extends CommonExpressionNode
+		implements QuantifiedExpressionNode {
+
+	private Quantifier quantifier;
+	// private VariableDeclarationNode variable;
+	// private ExpressionNode restriction;
+	private boolean isRange;
+
+	// private ExpressionNode lower;
+	// private ExpressionNode upper;
+	// private ExpressionNode expression;
+
+	/**
+	 * @param source
+	 *            The source code information for this expression.
+	 * @param quantifier
+	 *            The quantifier for this expression. One of {FORALL, EXISTS,
+	 *            UNIFORM}.
+	 * @param variable
+	 *            The quantified variable.
+	 * @param restriction
+	 *            Boolean-valued expression
+	 */
+	public CommonQuantifiedExpressionNode(Source source, Quantifier quantifier,
+			VariableDeclarationNode variable, ExpressionNode restriction,
+			ExpressionNode expression) {
+<span class="nc" id="L48">		super(source, Arrays.asList(variable, restriction, expression, null,</span>
+<span class="nc" id="L49">				null));</span>
+<span class="nc" id="L50">		this.quantifier = quantifier;</span>
+		// this.variable = variable;
+		// this.restriction = restriction;
+		// this.expression = expression;
+		// this.lower = null;
+		// this.upper = null;
+<span class="nc" id="L56">		isRange = false;</span>
+<span class="nc" id="L57">	}</span>
+
+	/**
+	 * @param source
+	 *            The source code information for this expression.
+	 * @param quantifier
+	 *            The quantifier for this expression. One of {FORALL, EXISTS,
+	 *            UNIFORM}.
+	 * @param variable
+	 *            The quantified variable.
+	 * @param lower
+	 *            Integer-valued expression for the lower bound on the
+	 *            quantified variable.
+	 * @param upper
+	 *            Integer-valued expression for the upper bound on the
+	 *            quantified variable.
+	 */
+	public CommonQuantifiedExpressionNode(Source source, Quantifier quantifier,
+			VariableDeclarationNode variable, ExpressionNode lower,
+			ExpressionNode upper, ExpressionNode expression) {
+		// super(source, variable, upper, expression);
+<span class="nc" id="L78">		super(source, Arrays.asList(variable, null, expression, lower, upper));</span>
+<span class="nc" id="L79">		this.quantifier = quantifier;</span>
+		// this.variable = variable;
+		// this.lower = lower;
+		// this.upper = upper;
+		// this.expression = expression;
+		// this.restriction = null;
+<span class="nc" id="L85">		isRange = true;</span>
+<span class="nc" id="L86">	}</span>
+
+	@Override
+	public boolean isConstantExpression() {
+<span class="nc" id="L90">		return false;</span>
+	}
+
+	@Override
+	public ExpressionNode copy() {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (isRange()) {</span>
+<span class="nc" id="L96">			return new CommonQuantifiedExpressionNode(this.getSource(),</span>
+<span class="nc" id="L97">					quantifier, variable().copy(), lower().copy(), upper()</span>
+<span class="nc" id="L98">							.copy(), expression().copy());</span>
+		}
+<span class="nc" id="L100">		return new CommonQuantifiedExpressionNode(this.getSource(), quantifier,</span>
+<span class="nc" id="L101">				variable().copy(), restriction().copy(), expression().copy());</span>
+	}
+
+	@Override
+	public Quantifier quantifier() {
+<span class="nc" id="L106">		return quantifier;</span>
+	}
+
+	@Override
+	public VariableDeclarationNode variable() {
+<span class="nc" id="L111">		return (VariableDeclarationNode) this.child(0);</span>
+	}
+
+	@Override
+	public ExpressionNode restriction() {
+<span class="nc" id="L116">		return (ExpressionNode) this.child(1);</span>
+	}
+
+	@Override
+	public ExpressionNode expression() {
+<span class="nc" id="L121">		return (ExpressionNode) this.child(2);</span>
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.udel.cis.vsl.abc.ast.node.common.CommonASTNode#printBody(java.io.
+	 * PrintStream)
+	 */
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L133">		String output = &quot;&quot;;</span>
+
+<span class="nc bnc" id="L135" title="All 4 branches missed.">		switch (quantifier) {</span>
+		case FORALL:
+<span class="nc" id="L137">			output = &quot;forall&quot;;</span>
+<span class="nc" id="L138">			break;</span>
+		case EXISTS:
+<span class="nc" id="L140">			output = &quot;exists&quot;;</span>
+<span class="nc" id="L141">			break;</span>
+		case UNIFORM:
+<span class="nc" id="L143">			output = &quot;uniform&quot;;</span>
+			break;
+		}
+<span class="nc" id="L146">		out.print(output);</span>
+<span class="nc" id="L147">	}</span>
+
+	@Override
+	public ExpressionKind expressionKind() {
+<span class="nc" id="L151">		return ExpressionKind.QUANTIFIED_EXPRESSION;</span>
+	}
+
+	@Override
+	public boolean isRange() {
+<span class="nc" id="L156">		return isRange;</span>
+	}
+
+	@Override
+	public ExpressionNode lower() {
+<span class="nc" id="L161">		return (ExpressionNode) this.child(3);</span>
+	}
+
+	@Override
+	public ExpressionNode upper() {
+<span class="nc" id="L166">		return (ExpressionNode) this.child(4);</span>
+	}
+
+	@Override
+	public boolean isSideEffectFree(boolean errorsAreSideEffects) {
+<span class="nc" id="L171">		boolean result = expression().isSideEffectFree(errorsAreSideEffects);</span>
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (this.restriction() == null) {</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			result = result</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">					&amp;&amp; this.lower().isSideEffectFree(errorsAreSideEffects)</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">					&amp;&amp; this.upper().isSideEffectFree(errorsAreSideEffects);</span>
+<span class="nc" id="L177">		} else {</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			result = result</span>
+<span class="nc" id="L179">					&amp;&amp; this.restriction()</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">							.isSideEffectFree(errorsAreSideEffects);</span>
+		}
+<span class="nc" id="L182">		return result;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (that instanceof QuantifiedExpressionNode) {</span>
+<span class="nc" id="L188">			QuantifiedExpressionNode thatQuan = (QuantifiedExpressionNode) that;</span>
+
+<span class="nc bnc" id="L190" title="All 2 branches missed.">			if (this.isRange == thatQuan.isRange()</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">					&amp;&amp; this.quantifier == thatQuan.quantifier())</span>
+<span class="nc" id="L192">				return null;</span>
+			else
+<span class="nc" id="L194">				return new DifferenceObject(this, that, DiffKind.OTHER,</span>
+<span class="nc" id="L195">						&quot;different quantifier&quot;);</span>
+		}
+<span class="nc" id="L197">		return new DifferenceObject(this, that);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

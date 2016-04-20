@@ -1,0 +1,82 @@
+In general the structure of an OMP Parallel statement looks like this:
+
+#pragma omp parallel
+ { 
+  S1
+#pragma omp ...
+  S2
+  S3
+ }
+
+Where the parallel contains regions of C code, e.g., S1, S3, that
+are executed by each thread, and OMP statements, e.g., S2, which
+control how threads are executed by threads.  OMP worksharing and
+synchronization statements have different semantics from parallel
+(and enclosing workshares), but the principle is the same.
+
+To perform an independence analysis each region of the program which
+may execute in parallel must be subjected to analysis.  
+
+This requires that the barrier semantics of OMP constructs be
+made explicit and that an analysis collects all sets of potentially
+parallel regions.  See a summary of implicit barriers and other 
+thread-ordering related OMP statements below.
+
+An interesting challenge arises due to the nesting of OMP statements
+within control flow constructs and the "shape" of the regions that
+may arise.   For example:
+
+#pragma omp parallel
+  if (c) 
+#pragma omp for    
+    S1
+  else
+    S2
+
+
+Independence comes down to whether two potentially parallel regions
+may exhibit a read-write dependence.   These dependences arise from
+accesses to shared variables including shared arrays where the index
+expressions cannot be determined to be disjoint.
+
+--------------------------------------------------
+Barrier semantics for OMP statements:
+
+parallel
+ end barrier
+
+critical
+  no barrier, but special semantics should be considered to improve
+  precision of independence analysis
+
+  region within critical will never be executed in multiple threads
+
+barrier
+  end barrier
+
+atomic
+  no barrier, but special semantics should be considered to improve
+  precision of independence analysis
+
+ordered
+  no barrier, but special semantics should be considered to improve
+  precision of independence analysis
+
+for
+ end barrier
+
+for nowait
+
+sections
+ end barrier
+
+sections nowait
+
+section
+
+single
+ end barrier
+
+single nowait
+
+

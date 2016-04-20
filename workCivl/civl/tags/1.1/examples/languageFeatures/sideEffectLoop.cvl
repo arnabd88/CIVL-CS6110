@@ -1,0 +1,15 @@
+#include<civlc.cvh>
+#include<stdio.h>
+#include<assert.h>
+
+int f(int i) {
+  return i+1;
+}
+
+void main() {
+  int i;
+
+  for (i=0; i<f(2); i++)
+    printf("i=%d\n",i);
+  assert(i==3);
+}

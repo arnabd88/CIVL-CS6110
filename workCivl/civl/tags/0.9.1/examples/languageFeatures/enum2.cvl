@@ -1,0 +1,22 @@
+#include <civlc.h>
+int main(){
+  int const x = 9;
+  enum hue { A, B = 4, C, D = B};
+  enum huf {H, I, J, K};
+  enum hue a = A, b = B, c = C, d = D;
+  enum hue h = (enum hue) J;
+  int y = x + C;
+
+  {
+    enum hf { A=10 };
+    int k = A;
+
+    $assert(k == 10);
+  }
+  $assert(a == 0);
+  $assert(b == 4);
+  $assert(c == 5);
+  $assert(d == 4);
+  $assert(h == 2);
+  $assert(y == 14);
+}

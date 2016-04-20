@@ -1,0 +1,6 @@
+      PROGRAM MAIN
+      INCLUDE 'TESTINCLUDE'
+	ZERO = 0
+	NOTZERO = 1
+      END
+      

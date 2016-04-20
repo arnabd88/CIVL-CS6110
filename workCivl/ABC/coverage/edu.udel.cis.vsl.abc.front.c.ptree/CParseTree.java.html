@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CParseTree.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.ptree</a> &gt; <span class="el_source">CParseTree.java</span></div><h1>CParseTree.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.c.ptree;
+
+
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.CommonTree;
+
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.front.c.parse.CParser.RuleKind;
+import edu.udel.cis.vsl.abc.front.common.ptree.CommonParseTree;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+
+public class CParseTree extends CommonParseTree {
+
+	private RuleKind kind;
+
+	public CParseTree(Language language, RuleKind kind,
+			CivlcTokenSource tokenSource, CommonTree root) {
+<span class="nc" id="L19">		super(language, tokenSource, root);</span>
+<span class="nc" id="L20">		this.kind = kind;</span>
+<span class="nc" id="L21">	}</span>
+
+	/**
+	 * What kind of parse tree is this?
+	 */
+	public RuleKind getKind() {
+<span class="nc" id="L27">		return kind;</span>
+	}
+
+	public CivlcToken getHiddenSubTokenSource(int endIndex) {
+<span class="nc" id="L31">		CivlcToken token, contractToken = null;</span>
+<span class="nc" id="L32">		int index = endIndex;</span>
+
+<span class="nc bnc" id="L34" title="All 2 branches missed.">		while (index &gt;= 0) {</span>
+<span class="nc" id="L35">			token = this.tokenSource.getToken(index);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">			if (token.getChannel() != Token.HIDDEN_CHANNEL)</span>
+<span class="nc" id="L37">				break;</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">			if (token.getText().startsWith(&quot;/*@&quot;)) {</span>
+<span class="nc" id="L39">				contractToken = token;</span>
+<span class="nc" id="L40">				break;</span>
+			}
+<span class="nc" id="L42">			index--;</span>
+		}
+<span class="nc" id="L44">		return contractToken;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

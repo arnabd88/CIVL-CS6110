@@ -1,0 +1,104 @@
+\hypertarget{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression}{}\section{Package edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression}
+\label{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression}}
+
+
+Submodule {\bfseries model.\+expression} defines expression in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1AbstractFunctionCallExpression}{Abstract\+Function\+Call\+Expression}
+\begin{DoxyCompactList}\small\item\em An expression representing a call of an abstract function. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1AddressOfExpression}{Address\+Of\+Expression}
+\begin{DoxyCompactList}\small\item\em This represents an address-\/of expression, which contains one operand, and has the format\+: {\ttfamily \&x}, where {\ttfamily \&} is the address-\/of operator and {\ttfamily x} is the operand. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1ArrayLiteralExpression}{Array\+Literal\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}{Binary\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} binary operation. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BooleanLiteralExpression}{Boolean\+Literal\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} literal boolean value. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BoundVariableExpression}{Bound\+Variable\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} bound variable is a variable used in a quantified expression. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1CastExpression}{Cast\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} cast of an expression to a different type. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1CharLiteralExpression}{Char\+Literal\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1ConditionalExpression}{Conditional\+Expression}
+\begin{DoxyCompactList}\small\item\em The ternary conditional expression (\char`\"{}?\char`\"{} in C). \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DereferenceExpression}{Dereference\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DerivativeCallExpression}{Derivative\+Call\+Expression}
+\begin{DoxyCompactList}\small\item\em An uninterpreted call to the derivative of an abstract function. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DomainGuardExpression}{Domain\+Guard\+Expression}
+\begin{DoxyCompactList}\small\item\em This is the guard expression of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} for loops ({\ttfamily \$for}). \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DotExpression}{Dot\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} dot expression is a reference to a field in a struct or union. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DynamicTypeOfExpression}{Dynamic\+Type\+Of\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} \char`\"{}\+Dynamic\+Type\+Of\char`\"{} expression. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}
+\begin{DoxyCompactList}\small\item\em The parent of all expressions. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1FunctionGuardExpression}{Function\+Guard\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} function guard expression is the guard expression of a function call with a function pointer. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1FunctionIdentifierExpression}{Function\+Identifier\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1HereOrRootExpression}{Here\+Or\+Root\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1InitialValueExpression}{Initial\+Value\+Expression}
+\begin{DoxyCompactList}\small\item\em An expression yielding the initial value of a variable. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1IntegerLiteralExpression}{Integer\+Literal\+Expression}
+\begin{DoxyCompactList}\small\item\em An integer literal. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} left-\/hand-\/side expression. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LiteralExpression}{Literal\+Expression}
+\begin{DoxyCompactList}\small\item\em The parent of all literal expressions. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{Memory\+Unit\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} memory unit expression is an expression that represents (part of) the memory related to some variable. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MPIContractExpression}{M\+P\+I\+Contract\+Expression}
+\begin{DoxyCompactList}\small\item\em This class represents a set of M\+P\+I contract expressions\+: \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Nothing}{Nothing}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1PointerSetExpression}{Pointer\+Set\+Expression}
+\begin{DoxyCompactList}\small\item\em This class represents a pointer set P. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1ProcnullExpression}{Procnull\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression}{Quantified\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RealLiteralExpression}{Real\+Literal\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} real literal. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RecDomainLiteralExpression}{Rec\+Domain\+Literal\+Expression}
+\begin{DoxyCompactList}\small\item\em This is a rectangular domain literal expression, which is the Cartesian product of a number of ranges, e.\+g., {\ttfamily \{range1, range2, range3, ...\}}. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression}{Regular\+Range\+Expression}
+\begin{DoxyCompactList}\small\item\em Represents a C\+I\+V\+L-\/\+C regular range expression, which has the form {\ttfamily lo . }\end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1ScopeofExpression}{Scopeof\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} scopeof expression is \char`\"{}\$scopeof(expr)\char`\"{}. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SelfExpression}{Self\+Expression}
+\begin{DoxyCompactList}\small\item\em Self expression. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SizeofExpression}{Sizeof\+Expression}
+\begin{DoxyCompactList}\small\item\em An expression of the form \char`\"{}sizeof(e)\char`\"{} where e is an expression. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SizeofTypeExpression}{Sizeof\+Type\+Expression}
+\begin{DoxyCompactList}\small\item\em An expression of the form \char`\"{}sizeof(t)\char`\"{} where t is a type. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1StructOrUnionLiteralExpression}{Struct\+Or\+Union\+Literal\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SubscriptExpression}{Subscript\+Expression}
+\begin{DoxyCompactList}\small\item\em a\mbox{[}i\mbox{]}, where \char`\"{}a\char`\"{} is an array and \char`\"{}i\char`\"{} is an expression evaluating to an integer. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SystemFunctionCallExpression}{System\+Function\+Call\+Expression}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SystemGuardExpression}{System\+Guard\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} system guard expression is a sudo guard expression for system function calls. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1UnaryExpression}{Unary\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} unary operation. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1UndefinedProcessExpression}{Undefined\+Process\+Expression}
+\begin{DoxyCompactList}\small\item\em Self expression. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1VariableExpression}{Variable\+Expression}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} use of a variable in an expression. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1WildcardExpression}{Wildcard\+Expression}
+\begin{DoxyCompactList}\small\item\em This represents the expression {\ttfamily ...}, which is used only in contracts and stands for an expression of any type whose value is ignored. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Submodule {\bfseries model.\+expression} defines expression in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}

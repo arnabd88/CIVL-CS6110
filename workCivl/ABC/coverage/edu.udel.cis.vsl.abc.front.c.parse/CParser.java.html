@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.parse</a> &gt; <span class="el_source">CParser.java</span></div><h1>CParser.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.front.c.parse;</span>
+
+import java.util.Stack;
+
+import org.antlr.runtime.CommonToken;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.TokenStream;
+import org.antlr.runtime.tree.CommonTree;
+
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.front.IF.ParseException;
+import edu.udel.cis.vsl.abc.front.IF.Parser;
+import edu.udel.cis.vsl.abc.front.IF.PreprocessorRuntimeException;
+import edu.udel.cis.vsl.abc.front.IF.RuntimeParseException;
+import edu.udel.cis.vsl.abc.front.c.ptree.CParseTree;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+import edu.udel.cis.vsl.abc.token.common.CommonCivlcToken;
+
+// why not make static methods of all these?
+/**
+ * &lt;p&gt;
+ * Simple interface for a parser of C programs. It includes a bunch of integer
+ * constants which are ID numbers of each kind of token (real or fake) that can
+ * occur in a C parse tree.
+ * &lt;/p&gt;
+ * 
+ * 
+ * @author siegel
+ * 
+ */
+public class CParser implements Parser {
+	/**
+	 * Kind of parsing rule
+	 * 
+	 * @author Manchun Zhengs
+	 *
+	 */
+<span class="nc" id="L40">	public static enum RuleKind {</span>
+<span class="nc" id="L41">		/**</span>
+		 * the rule for translating a translation unit
+		 */
+<span class="nc" id="L44">		TRANSLATION_UNIT,</span>
+<span class="nc" id="L45">		/**</span>
+		 * the rule for translating a block item
+		 */
+<span class="nc" id="L48">		BLOCK_ITEM,</span>
+<span class="nc" id="L49">		/**</span>
+		 * ACSL contracts
+		 */
+<span class="nc" id="L52">		CONTRACT</span>
+	}
+
+	/* *************************** Constructors *************************** */
+
+<span class="nc" id="L57">	public CParser() {</span>
+
+<span class="nc" id="L59">	}</span>
+
+	/* ********************** Static Helper Methods *********************** */
+
+	/**
+	 * &lt;p&gt;
+	 * Sets some fields of the tokens that occur in the tree.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * I know ANTLR is supposed to do this but I don't think it does it right.
+	 * First, the tokenIndexes are not always what I expect. For some reason,
+	 * ANTLR's CommonTokenStream sets the index of the last token (EOF) to be
+	 * one higher than it should be, so there is a gap in the indexes between
+	 * the penultimate token and the last token. I introduced my own &quot;index&quot;
+	 * field to CToken (which extends CommonToken) and set it myself correctly.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Second, ANTLR is supposed to find the range of tokens spanned by each
+	 * node in the tree (by examining all descendants of the node). However:
+	 * first, the code that does this uses ANTLR's tokenIndex, and I want to do
+	 * it using my index. Second, the ANTLR code is only correct under the
+	 * assumption that the token indices are non-decreasing as child index
+	 * increases, i.e., the token index of child i is less than or equal to that
+	 * of child i+1, for all i, for all nodes. (Hence it only has to examine the
+	 * first and last child.) There is no reason that assumption has to hold. So
+	 * I compute this correctly (and using CToken indexes) and re-set the
+	 * &quot;tokenStartIndex&quot; and &quot;tokenStopIndex&quot; fields of each tree node.
+	 * &lt;/p&gt;
+	 * 
+	 * @param tree
+	 *            a tree resulting from executing an ANTLR parser
+	 */
+	private static void postProcessTree(CommonTree tree) {
+<span class="nc" id="L94">		initPostProcess(tree);</span>
+<span class="nc" id="L95">		completePostProcess(tree);</span>
+<span class="nc" id="L96">	}</span>
+
+	/**
+	 * Marks all nodes as &quot;not yet visited&quot;---indicating by the magic number
+	 * -999 for tokenStartIndex and tokenStopIndex.
+	 * 
+	 * @param tree
+	 */
+	private static void initPostProcess(CommonTree tree) {
+<span class="nc" id="L105">		int numChildren = tree.getChildCount();</span>
+
+<span class="nc" id="L107">		tree.setTokenStartIndex(-999);</span>
+<span class="nc" id="L108">		tree.setTokenStopIndex(-999);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++)</span>
+<span class="nc" id="L110">			initPostProcess((CommonTree) tree.getChild(i));</span>
+<span class="nc" id="L111">	}</span>
+
+	/**
+	 * Computes the actual start and stop index of each node in the tree.
+	 * 
+	 * &lt;p&gt;
+	 * If there is no CToken occurring in a node or any of its descendants, the
+	 * start and stop index of that node will both be set to -1.
+	 * &lt;/p&gt;
+	 * 
+	 * @param tree
+	 */
+	private static void completePostProcess(CommonTree tree) {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (tree.getTokenStartIndex() != -999)</span>
+<span class="nc" id="L125">			return;</span>
+		else {
+<span class="nc" id="L127">			int numChildren = tree.getChildCount();</span>
+<span class="nc" id="L128">			CommonToken token = (CommonToken) tree.getToken();</span>
+			int min, max;
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			if (token instanceof CommonCivlcToken) {</span>
+<span class="nc" id="L132">				min = max = ((CommonCivlcToken) token).getIndex();</span>
+<span class="nc" id="L133">			} else {</span>
+<span class="nc" id="L134">				min = max = -1;</span>
+			}
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L137">				CommonTree child = (CommonTree) tree.getChild(i);</span>
+				int childMin, childMax;
+
+<span class="nc" id="L140">				completePostProcess(child);</span>
+<span class="nc" id="L141">				childMin = child.getTokenStartIndex();</span>
+<span class="nc" id="L142">				childMax = child.getTokenStopIndex();</span>
+<span class="nc bnc" id="L143" title="All 6 branches missed.">				if (childMin &gt;= 0 &amp;&amp; (min &lt; 0 || childMin &lt; min))</span>
+<span class="nc" id="L144">					min = childMin;</span>
+<span class="nc bnc" id="L145" title="All 6 branches missed.">				if (childMax &gt;= 0 &amp;&amp; (max &lt; 0 || childMax &gt; max))</span>
+<span class="nc" id="L146">					max = childMax;</span>
+			}
+<span class="nc" id="L148">			tree.setTokenStartIndex(min);</span>
+<span class="nc" id="L149">			tree.setTokenStopIndex(max);</span>
+		}
+<span class="nc" id="L151">	}</span>
+
+	/* ************************* CParser Methods ************************** */
+
+	/**
+	 * Returns the ANTLR CommonTree resulting from parsing the input, after some
+	 * &quot;post-processing&quot; has been done to the tree to fill in some fields.
+	 * 
+	 * @return the ANTLR tree that results from parsing
+	 * @throws ParseException
+	 *             if something goes wrong parsing the input
+	 */
+	public CParseTree parse(RuleKind rule, CivlcTokenSource tokenSource,
+			Stack&lt;ScopeSymbols&gt; symbols) throws ParseException {
+		TokenStream stream = new CommonTokenStream(tokenSource);
+<span class="nc" id="L166">		CivlCParser parser = new CivlCParser(stream);</span>
+		CommonTree root;
+
+		parser.setSymbols_stack(symbols);
+		try {
+			switch (rule) {
+			case TRANSLATION_UNIT:
+				try {
+					root = (CommonTree) parser.translationUnit().getTree();
+				} catch (PreprocessorRuntimeException ex) {
+					throw new ParseException(ex.getMessage(), ex.getToken());
+				}
+				break;
+			// case EXTERNAL_DEFINITION:
+			// root = (CommonTree) parser.externalDeclaration().getTree();
+			// break;
+			case BLOCK_ITEM:
+				root = (CommonTree) parser.blockItemWithScope().getTree();
+				break;
+			default:
+				throw new ABCRuntimeException(&quot;Unreachable&quot;);
+			}
+			postProcessTree(root);
+		} catch (RecognitionException e) {
+			throw new ParseException(e.getMessage(), e.token);
+		} catch (RuntimeParseException e) {
+			throw new ParseException(e.getMessage());
+		}
+		return new CParseTree(Language.CIVL_C, rule, tokenSource, root);
+	}
+
+	@Override
+	public CParseTree parse(CivlcTokenSource tokenSource) throws ParseException {
+<span class="nc" id="L199">		return parse(RuleKind.TRANSLATION_UNIT, tokenSource,</span>
+<span class="nc" id="L200">				new Stack&lt;ScopeSymbols&gt;());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

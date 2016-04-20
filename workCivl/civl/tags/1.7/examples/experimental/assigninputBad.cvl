@@ -1,0 +1,7 @@
+#include <civlc.cvh>
+
+$input double x;
+
+void main () {
+  x = 1.0;
+}

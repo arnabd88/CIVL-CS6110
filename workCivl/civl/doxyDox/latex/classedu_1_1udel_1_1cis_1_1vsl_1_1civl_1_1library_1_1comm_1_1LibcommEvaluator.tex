@@ -1,0 +1,250 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator@{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a2c027b6289b13d56903192846df946f7}{}{\bfseries Libcomm\+Evaluator} (String name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a972ee04104e6fe26bb927ceddb93462d}{evaluator}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ac38a7c7971f70f8c969e55538a17f016}{model\+Factory}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}{symbolic\+Util}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a7a1213c02b2d29a79f550c7090594967}{symbolic\+Analyzer}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a223e603cab7a909db88f49c256b2ce98}{civl\+Config}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} lib\+Evaluator\+Loader)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a2c027b6289b13d56903192846df946f7}
+
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_aad21a311a582cb5e0712a3d13c885962}{evaluate\+Guard} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String function, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}\mbox{[}$\,$\mbox{]} arguments)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Evaluates the guard of a system function. \end{DoxyCompactList}\item 
+List$<$ Numeric\+Expression $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_ac2e504d0dc156c0f51fb41fe5e2ede78}{get\+All\+Possible\+Sources} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Reasoner reasoner, Symbolic\+Expression gcomm, int source, int tag, Numeric\+Expression dest, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civlsource)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Seeks all possible channels of the given communicator for all available sources whose corresponding channel (which is decided by \char`\"{}destination\char`\"{} which is the process itself and the \char`\"{}source\char`\"{}) contains at least one message with a satisfied tag. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a27f4f0ec382ee290b70787711ac23752}{get\+Gcomm\+By\+Comm} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, Symbolic\+Expression comm, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civlsource)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Return the \hyperlink{}{Evaluation} of \$gcomm object by giving a \hyperlink{}{Symbolic\+Expression} of \$comm object. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a2c0b2b39791ec6ee3fcfcdde88ef65be}{get\+Comm\+By\+Comm\+Handle\+Expr} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} comm\+Handle\+Expr)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Return the \hyperlink{}{Evaluation} of \$comm object by giving a \hyperlink{}{Expression} of a \$comm handle. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a677363074014ed914c9a1f7f2d252009}{read\+Proc\+Array} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, Symbolic\+Expression proc\+Array, Numeric\+Expression index, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} wrapper function for read \$proc array in a communicator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a131a646654bd0da3b6a6f9fcda6aeb0a}{}static final int {\bfseries message\+Buffer\+Field} = 3\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a131a646654bd0da3b6a6f9fcda6aeb0a}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a0e5e9986791c5e0a0605659449d69277}{}static final int {\bfseries gcomm\+Handle\+In\+Comm\+Field} = 1\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a0e5e9986791c5e0a0605659449d69277}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_aad21a311a582cb5e0712a3d13c885962}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}!evaluate\+Guard@{evaluate\+Guard}}
+\index{evaluate\+Guard@{evaluate\+Guard}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}}
+\subsubsection[{evaluate\+Guard}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator.\+evaluate\+Guard (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{function, }
+\item[{{\bf Expression}\mbox{[}$\,$\mbox{]}}]{arguments}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_aad21a311a582cb5e0712a3d13c885962}
+
+
+Evaluates the guard of a system function. 
+
+This is an extra guard related to the particular system function, and needs to be checked in addition to the \char`\"{}regular\char`\"{} guard in the transition system.
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code information for error report. \\
+\hline
+{\em state} & The state where the evaluation happens. \\
+\hline
+{\em pid} & The P\+I\+D of the process that triggers this evaluation. \\
+\hline
+{\em function} & The name of the function. \\
+\hline
+{\em arguments} & The arguments of the function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of the guard with a possibly new state caused by side effects. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluator_a36d4bbd355cb9544feaaf0979280c70b}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Evaluator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_ac2e504d0dc156c0f51fb41fe5e2ede78}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}!get\+All\+Possible\+Sources@{get\+All\+Possible\+Sources}}
+\index{get\+All\+Possible\+Sources@{get\+All\+Possible\+Sources}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}}
+\subsubsection[{get\+All\+Possible\+Sources}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Numeric\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator.\+get\+All\+Possible\+Sources (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{Reasoner}]{reasoner, }
+\item[{Symbolic\+Expression}]{gcomm, }
+\item[{int}]{source, }
+\item[{int}]{tag, }
+\item[{Numeric\+Expression}]{dest, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{civlsource}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_ac2e504d0dc156c0f51fb41fe5e2ede78}
+
+
+Seeks all possible channels of the given communicator for all available sources whose corresponding channel (which is decided by \char`\"{}destination\char`\"{} which is the process itself and the \char`\"{}source\char`\"{}) contains at least one message with a satisfied tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em reasoner} & The reasoner used to evaluate concrete numbers \\
+\hline
+{\em gcomm} & The symbolic expression of a global communicator object \\
+\hline
+{\em source} & The integer type source number \\
+\hline
+{\em tag} & The integer type tag number \\
+\hline
+{\em dest} & The integer type destination number \\
+\hline
+{\em civlsource} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} list of all available sources 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a2c0b2b39791ec6ee3fcfcdde88ef65be}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}!get\+Comm\+By\+Comm\+Handle\+Expr@{get\+Comm\+By\+Comm\+Handle\+Expr}}
+\index{get\+Comm\+By\+Comm\+Handle\+Expr@{get\+Comm\+By\+Comm\+Handle\+Expr}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}}
+\subsubsection[{get\+Comm\+By\+Comm\+Handle\+Expr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator.\+get\+Comm\+By\+Comm\+Handle\+Expr (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf Expression}}]{comm\+Handle\+Expr}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a2c0b2b39791ec6ee3fcfcdde88ef65be}
+
+
+Return the \hyperlink{}{Evaluation} of \$comm object by giving a \hyperlink{}{Expression} of a \$comm handle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the current state \\
+\hline
+{\em pid} & the P\+I\+D of the process \\
+\hline
+{\em process} & the string identifier of the process \\
+\hline
+{\em comm\+Handle\+Expr} & the \hyperlink{}{Expression} of a \$comm handle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a27f4f0ec382ee290b70787711ac23752}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}!get\+Gcomm\+By\+Comm@{get\+Gcomm\+By\+Comm}}
+\index{get\+Gcomm\+By\+Comm@{get\+Gcomm\+By\+Comm}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}}
+\subsubsection[{get\+Gcomm\+By\+Comm}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator.\+get\+Gcomm\+By\+Comm (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{Symbolic\+Expression}]{comm, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{civlsource}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a27f4f0ec382ee290b70787711ac23752}
+
+
+Return the \hyperlink{}{Evaluation} of \$gcomm object by giving a \hyperlink{}{Symbolic\+Expression} of \$comm object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the current state \\
+\hline
+{\em pid} & the P\+I\+D of the process \\
+\hline
+{\em process} & the string identifier of the process \\
+\hline
+{\em comm} & the \hyperlink{}{Symbolic\+Expression} of \$comm object \\
+\hline
+{\em civlsource} & the \hyperlink{}{C\+I\+V\+L\+Source} of the \$comm object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a677363074014ed914c9a1f7f2d252009}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}!read\+Proc\+Array@{read\+Proc\+Array}}
+\index{read\+Proc\+Array@{read\+Proc\+Array}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Evaluator}}
+\subsubsection[{read\+Proc\+Array}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Evaluator.\+read\+Proc\+Array (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{Symbolic\+Expression}]{proc\+Array, }
+\item[{Numeric\+Expression}]{index, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEvaluator_a677363074014ed914c9a1f7f2d252009}
+
+
+\hyperlink{structA}{A} wrapper function for read \$proc array in a communicator. 
+
+Any out of bound error should reported consistently.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em process} & The String identifier of the process \\
+\hline
+{\em proc\+Array} & The \hyperlink{}{Symbolic\+Expression} of the \$proc array \\
+\hline
+{\em index} & The array reading index \\
+\hline
+{\em source} & The C\+I\+V\+L\+Source of the place that the array reading action happens \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/library/comm/Libcomm\+Evaluator.\+java\end{DoxyCompactItemize}

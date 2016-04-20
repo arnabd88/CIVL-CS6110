@@ -1,0 +1,48 @@
+/* Compare sequential and parallel sum of array */
+#include<civlc.h>
+$input int N;
+$assume N>=1 && N<=8;
+$input int P;
+$assume P>=1 && P<=4;
+$input double a[N];
+double sum_seq;
+double sum_par;
+
+void adder_seq() {
+  sum_seq = 0.0;
+  for (int i=0; i<N; i++)
+    sum_seq += a[i];
+}
+
+void adder_par() {
+  $proc workers[P];
+  int lock = 0;
+
+  void run_worker(int id) {
+    int start = (id*N)/P;
+    int stop = ((id+1)*N)/P;
+    double localSum = 0.0;
+
+    // $assume start <= id*N;
+    // $assume stop <= (id+1)*N;
+
+    for (int i=start; i<stop; i++)
+      localSum += a[i];
+    $when (lock==0) lock = 1;
+    sum_par += localSum;
+    lock = 0;
+  }
+  sum_par = 0.0;
+  // hack follows:
+  for (int i=0; i<P; i++) ;
+  for (int i=0; i<P; i++)
+    workers[i] = $spawn run_worker(i);
+  for (int i=0; i<P; i++)
+    $wait workers[i];
+}
+
+void main() {
+  adder_seq();
+  adder_par();  
+  $assert sum_seq == sum_par;
+}  

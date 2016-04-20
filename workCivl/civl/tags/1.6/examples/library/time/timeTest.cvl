@@ -1,0 +1,19 @@
+#include <civlc.cvh>
+#include <time.h>
+#include <stdio.h>
+
+$input int N;//number of processes
+
+void proc(int id){
+  time_t mytime = time(NULL);
+  
+  printf("Time of process %d is %f\n", id, mytime);
+}
+
+int main(){
+  $proc procs[N];
+  
+  for(int i = 0; i < N; i++)
+  	procs[i] = $spawn proc(i);
+  $waitall(procs, N);
+}

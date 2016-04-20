@@ -1,0 +1,173 @@
+/**
+ * This file is modified from the original pathfinder_cuda.cvl 
+ * program by the following way:
+ * First, GPU/GPU_BLOCK/GPU_THREAD no longer access global variables of 
+ * int type, but use their value (by parameter passing) instead.
+ * Second, the process that spawns GPU_BLOCK/GPU_THREAD
+ * doen't reuse itself to run GPU_BLOCK/GPU_THREAD.
+ */
+
+#include<civlc.h>
+
+//pyramid height of 0 does nothing, of 1 is normal stencil, 2 is where
+//the algorithm even kicks in
+#define pyramid_height 2
+
+//This is how many iterations of the loop (minus 1). If less than
+//the pyramid_height, then the pyramid_height does nothing.
+#define rows 3
+
+//I think this is the minimum this can be to be useful
+//(the number of cells)
+#define cols 2
+
+
+//BLOCK_SIZE must satisfy (BLOCK_SIZE > pyramid_height*2)
+#define BLOCK_SIZE 5
+#define HALO 1
+
+int borderCols     = (pyramid_height)*HALO;
+int smallBlockCol  = BLOCK_SIZE - (pyramid_height) * HALO * 2;
+int blockCols      = cols/smallBlockCol+((cols%smallBlockCol==0)?0:1);
+
+int result[cols];
+
+//GPU MEMORY (couldn't do it scoped because need references to memory
+//on host side)
+int gpuResult[2][cols];
+int gpuWall[rows*cols - cols];
+
+//$input int wall[rows][cols];
+
+#define IN_RANGE(x, min, max)   ((x)>=(min) && (x)<=(max))
+#define CLAMP_RANGE(x, min, max) x = (x<(min)) ? min : ((x>(max)) ? max : x )
+#define MIN(a, b) ((a)<=(b) ? (a) : (b))
+
+//Not implemented yet.
+//void __syncthreads() {
+//}
+
+
+
+void GPU_BLOCK(int bx, int bIteration, int bBorderCols, int src, int dst, int startStep){
+	#include "barrier.cvh"
+
+    //shared memory
+    int prev[BLOCK_SIZE];
+    int result[BLOCK_SIZE];
+    $proc thread_procs[BLOCK_SIZE];
+    int in_barrier[BLOCK_SIZE];
+    
+    void GPU_THREAD(int tx, int tbx, int tIteration, int tBorderCols, int src, int dst, int* prev, int* result, int startStep){ 
+    	int small_block_cols = BLOCK_SIZE-tIteration*HALO*2;
+    	int blkX = small_block_cols*tbx-tBorderCols;
+    	int blkXmax = blkX+BLOCK_SIZE-1;
+    	// calculate the global thread coordination
+    	int xidx = blkX+tx;
+    
+    	// effective range within this block that falls within
+    	// the valid range of the input data
+    	// used to rule out computation outside the boundary.
+    	int validXmin = (blkX < 0) ? -blkX : 0;
+    	int validXmax = (blkXmax > cols-1) ? BLOCK_SIZE-1-(blkXmax-cols+1) : BLOCK_SIZE-1;
+    	int isValid;
+    	int computed;
+    	int W = tx-1;
+    	int E = tx+1;
+    
+    	$atomic{
+    		W = (W < validXmin) ? validXmin : W;
+    		E = (E > validXmax) ? validXmax : E;
+    		isValid = IN_RANGE(tx, validXmin, validXmax);
+    	}  
+    	if(IN_RANGE(xidx, 0, cols-1)){
+    		prev[tx] = gpuResult[src][xidx];
+    	}
+    	for (int i=0; i<tIteration; i++){
+    		computed = 0;
+    		if( IN_RANGE(tx, i+1, BLOCK_SIZE-i-2) && isValid) {
+    			computed = 1;
+    			int left = prev[W];
+    			int up = prev[tx];
+    			int right = prev[E];
+    			int shortest;
+    			int index;
+    			$atomic{
+    				shortest = MIN(left, up);
+    				shortest = MIN(shortest, right);
+    				index = cols*(startStep+i)+xidx;
+    			}
+    			result[tx] = shortest + gpuWall[index];
+    		}
+    	
+    		//Break not implemented yet...
+    		/* if(i==iteration-1)  */
+    		/*   break;  */
+    		if(computed != 0)	 //Assign the computation range
+    			prev[tx]= result[tx];
+    		//__syncthreads();         // [Ronny] Added sync to avoid race on prev Aug. 14 201
+    		barrier(in_barrier, tx);
+    	}
+    
+    	// update the global memory
+    	// after the last iteration, only threads coordinated within the
+    	// small block perform the calculation and switch on ``computed''
+    	if (computed != 0) {
+    		gpuResult[dst][xidx]=result[tx];
+    	}
+	}
+	
+	$atom {
+		for(int tp = 0; tp < BLOCK_SIZE; tp++) {
+			in_barrier[tp] = 0;
+		}
+		barrier_init(in_barrier, BLOCK_SIZE);
+	}
+  
+    //Launch the threads per block
+    $atom {
+    	for (int tp = 0; tp < BLOCK_SIZE; tp++) {
+    		thread_procs[tp] = $spawn GPU_THREAD(tp, bx, bIteration, bBorderCols, src, dst, prev, result, startStep);
+    	}
+    }
+    $atomic {
+    	for (int tp = 0; tp < BLOCK_SIZE; tp++) {
+			$wait thread_procs[tp];
+    	}
+    }
+}
+
+void GPU(int iteration, int src, int dst, int startStep, int blocks, int threads, int gBorderCols) {
+	$proc block_procs[blocks];
+	
+	//Launch the blocks
+	$atom{
+		for (int b = 0; b < blocks; b++) {
+			block_procs[b] = $spawn GPU_BLOCK(b, iteration, gBorderCols, src,  dst, startStep);
+	  	}
+	}
+	$atomic{
+		for (int b = 0; b < blocks; b++) {
+			$wait block_procs[b];
+		}
+	}
+}
+
+void calc_path() {
+	int src = 1, dst = 0;
+	for (int t = 0; t < rows-1; t+=pyramid_height) {
+		int temp;
+		$atom{
+			temp = src;
+			src = dst;
+			dst = temp;
+		}
+		GPU(MIN(pyramid_height, rows-t-1), src, dst,t, blockCols, BLOCK_SIZE, borderCols);
+	}    
+}
+
+void main() {
+	$assert BLOCK_SIZE > pyramid_height*2;
+	calc_path();
+	$assert 1 == 1;
+}

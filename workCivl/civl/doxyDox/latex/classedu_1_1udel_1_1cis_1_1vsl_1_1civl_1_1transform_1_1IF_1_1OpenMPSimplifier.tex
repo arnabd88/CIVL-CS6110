@@ -1,0 +1,69 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+Open\+M\+P\+Simplifier Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+Open\+M\+P\+Simplifier@{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+Open\+M\+P\+Simplifier}}
+
+
+This transformer analyzes Open\+M\+P constructs and converts them to simpler, i.\+e., less concurrent, instances of constructs.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+Open\+M\+P\+Simplifier\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+Open\+M\+P\+Simplifier\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_a61891d4e1cc1f532beff557f14a5433b}{}{\bfseries Open\+M\+P\+Simplifier} (A\+S\+T\+Factory ast\+Factory)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_a61891d4e1cc1f532beff557f14a5433b}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_ae89afd7656cccd501d800f599611dd90}{}A\+S\+T {\bfseries transform} (A\+S\+T ast)  throws Syntax\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_ae89afd7656cccd501d800f599611dd90}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_adaa06b7c6566977df08cd3d2f2399e07}{}static final String {\bfseries C\+O\+D\+E} = \char`\"{}omp\+\_\+simplifier\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_adaa06b7c6566977df08cd3d2f2399e07}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_aff98c351fd2ed0ca9c23e82001572b01}{}static final String {\bfseries L\+O\+N\+G\+\_\+\+N\+A\+M\+E} = \char`\"{}Open\+M\+P\+Simplifier\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_aff98c351fd2ed0ca9c23e82001572b01}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_a0f359ade4da0c5b5edc67a39d6e1c882}{}static final String {\bfseries S\+H\+O\+R\+T\+\_\+\+D\+E\+S\+C\+R\+I\+P\+T\+I\+O\+N} = \char`\"{}simplifies independent C/Open\+M\+P constructs\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1OpenMPSimplifier_a0f359ade4da0c5b5edc67a39d6e1c882}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This transformer analyzes Open\+M\+P constructs and converts them to simpler, i.\+e., less concurrent, instances of constructs. 
+
+This transform operates in two phases\+:
+
+1) Analyze Open\+M\+P workshares to determine those that are provably thread-\/independent, i.\+e., execution of workshares in parallel is guaranteed to compute the same result.
+
+2) Transform Open\+M\+P constructs based on the analysis results.
+
+T\+B\+D\+: a) support nowait clauses b) support collapse clauses (confirm whether collapse uses variables or the first \char`\"{}k\char`\"{} row indices) c) what is the semantics of a parallel region with no pragma, i.\+e., do we have to reason about its independence to remove the parallel pragma d) intra-\/iteration dependences, e.\+g., x\mbox{[}i\mbox{]} = x\mbox{[}i\mbox{]} + a; e) critical, barrier, master, single and other workshares f) calling sensitive parallel workshare nesting, i.\+e., caller has parallel pragma, callee has workshare g) semantics of nowait for that continues to method return h) treatment of omp\+\_\+ calls, i.\+e., should we preserve the parallelism since the calls likely depend on it i) detect non-\/escaping heap data from within a omp pragma context, e.\+g., fig4.\+98-\/threadprivate.\+c j) default private/shared when there are explicit shared/private clauses that don\textquotesingle{}t mention the var
+
+\begin{DoxyAuthor}{Author}
+dwyer 
+\end{DoxyAuthor}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/transform/\+I\+F/Open\+M\+P\+Simplifier.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,14 @@
+#include <civlc.h>
+int N = 5; /* number of threads */
+$proc threads[N]; // the threads
+
+void run(int tid) {
+  $assert 0==1; // why isn't this run?
+  while (1==1) {
+  }
+}
+
+void main() {
+  for (int i=0; i<N; i++) threads[i] = $spawn run(i);
+  for (int i=0; i<N; i++) $wait threads[i];
+}

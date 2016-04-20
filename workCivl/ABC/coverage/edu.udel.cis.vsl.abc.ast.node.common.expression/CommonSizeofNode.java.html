@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonSizeofNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.expression</a> &gt; <span class="el_source">CommonSizeofNode.java</span></div><h1>CommonSizeofNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.expression;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeofNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonSizeofNode extends CommonExpressionNode implements
+		SizeofNode {
+
+	public CommonSizeofNode(Source source, SizeableNode argument) {
+<span class="nc" id="L14">		super(source, argument);</span>
+<span class="nc" id="L15">	}</span>
+
+	@Override
+	public SizeableNode getArgument() {
+<span class="nc" id="L19">		return (SizeableNode) child(0);</span>
+	}
+
+	@Override
+	public void setArgument(SizeableNode argument) {
+<span class="nc" id="L24">		setChild(0, argument);</span>
+<span class="nc" id="L25">	}</span>
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L29">		out.print(&quot;SizeOfNode&quot;);</span>
+<span class="nc" id="L30">	}</span>
+
+	@Override
+	public boolean isConstantExpression() {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">		return !getArgument().getType().isVariablyModified();</span>
+	}
+
+	@Override
+	public SizeofNode copy() {
+<span class="nc" id="L39">		return new CommonSizeofNode(getSource(), duplicate(getArgument()));</span>
+	}
+
+	@Override
+	public ExpressionKind expressionKind() {
+<span class="nc" id="L44">		return ExpressionKind.SIZEOF;</span>
+	}
+	
+	@Override
+	public boolean isSideEffectFree(boolean errorsAreSideEffects) {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (child(0).nodeKind() == NodeKind.EXPRESSION) {</span>
+<span class="nc" id="L50">			return ((ExpressionNode) child(0))</span>
+<span class="nc" id="L51">					.isSideEffectFree(errorsAreSideEffects);</span>
+		}
+<span class="nc" id="L53">		return true;</span>
+	}
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

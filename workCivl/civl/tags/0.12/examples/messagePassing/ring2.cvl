@@ -1,0 +1,33 @@
+/* Create nprocs processes.  Have them exchange data in a cycle.
+ * Commandline example:
+ *     civl verify -input_NP=3 ring2.cvl -simplify=false
+ */
+#include<civlc.h>
+#include<stdio.h>
+#include "mp_root2.cvh"
+
+void MPI_Process (int __rank) {
+#include "mp_proc2.cvh"
+
+// ******************* BEGIN PROGRAM SOURCE *************************
+
+  int rank, nprocs, count;
+  double x, y;
+  MPI_Status stat;
+  MPI_Comm MPI_COMM_WORLD = $comm_create($here, __MPI_Comm_World, __rank);
+  
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
+  x = rank;
+  MPI_Send(&x, 1, MPI_DOUBLE, (rank+1)%nprocs, 0, MPI_COMM_WORLD);
+  MPI_Recv(&y, 1, MPI_DOUBLE, (rank+nprocs-1)%nprocs, 0, MPI_COMM_WORLD, &stat);
+  $assert(y == (rank+nprocs-1)%nprocs);
+  MPI_Get_count(&stat, MPI_DOUBLE, &count);
+  $assert(count == 1);
+  $assert(stat.MPI_SOURCE == (rank+nprocs-1)%nprocs);
+  $assert(stat.MPI_TAG == 0);
+  $comm_destroy(MPI_COMM_WORLD);
+
+// ******************** END PROGRAM SOURCE ***************************
+
+}

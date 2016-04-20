@@ -1,0 +1,52 @@
+/* Commandline execution:
+ * 		civl verify laplace.cvl
+ */
+int TIME_BOUND = 2;
+#define nx 3 // number of x coordinates (including boundary)
+#define ny 3 // number of rows including boundary
+double epsilon = 0.01; // total error tolerance
+$input double initialValues[ny][nx]; // initial values
+$output int t;
+$output double out[ny][nx];
+
+double grid[ny][nx];	// holds values of current iteration
+
+double square(double x) { return x * x; }
+
+void init() {
+	for (int row=0; row<ny; row++)
+		for (int col=0; col<nx; col++)
+			grid[row][col] = initialValues[row][col];
+}
+
+void write_result(int time, double data[ny][nx]) {
+	t = time;
+	for (int row=ny-1; row>=0; row--)
+		for (int col=0; col<nx; col++)
+			out[row][col] = data[row][col];
+}
+
+void main() {
+	double error = epsilon;
+	int time = 0;
+	double result;
+	double tmp[ny][nx];
+	
+	init();
+	while (error >= epsilon && time < TIME_BOUND) {
+		error = 0.0;
+		for (int row=1; row<ny-1; row++) {
+			for (int col=1; col<nx-1; col++) {
+				tmp[row][col] = (grid[row-1][col]+grid[row+1][col]+
+								 grid[row][col-1]+grid[row][col+1])/4.0;
+				result = square(grid[row][col] - tmp[row][col]);
+				error += result;
+			}
+		}
+		for (int row=1; row<ny-1; row++)
+			for (int col=1; col<nx-1; col++)
+				grid[row][col] = tmp[row][col];
+		time++;
+	}
+	write_result(time, grid);
+}

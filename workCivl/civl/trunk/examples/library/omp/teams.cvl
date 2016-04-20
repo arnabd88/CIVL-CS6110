@@ -1,0 +1,18 @@
+#include <civl-omp.cvh>
+#include <stdio.h>
+
+void main() {
+  $omp_gteam gteam = $omp_gteam_create($here, 3);
+  
+  void thread(int tid) {
+    $omp_team team = $omp_team_create($here, gteam, tid);
+    
+    printf("Hello from thread %d\n", tid);
+    $omp_team_destroy(team);
+  }
+  
+  $parfor (int i: ($domain){ 0 .. 2 }) {
+    thread(i);
+  }
+  $omp_gteam_destroy(gteam);
+}

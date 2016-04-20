@@ -1,0 +1,8 @@
+# Configuration for civl.cis.udel.edu
+root=/opt/vsl
+antlr.jar=${root}/lib/antlr-complete.jar
+antlr.runtime.jar=${root}/lib/antlr-runtime.jar
+hamcrest.jar=${root}/lib/hamcrest-core-1.3.jar
+jacoco.jar=${root}/src/jacoco/lib/jacocoant.jar
+junit.jar=${root}/lib/junit-4.11.jar
+sarl.jar=/opt/repos/sarl/trunk/sarl.jar

@@ -1,0 +1,23 @@
+/* Commandline execution:
+ *		civl verify structArray.cvl
+ * */
+#include <civlc.h>
+
+typedef struct foo {
+  int* a;
+} foo;
+
+void main() {
+  foo bar[2];
+  int baz[3];
+  
+  for (int i = 0; i < 3; i++) {
+    baz[i] = i;
+  }
+  
+  bar[0].a = baz;
+  bar[1].a = &baz[1];
+  
+  $assert(bar[0].a[0] == 0);
+  $assert(bar[1].a[0] == 1);
+}

@@ -1,0 +1,64 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DynamicTypeOfExpression}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Dynamic\+Type\+Of\+Expression Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DynamicTypeOfExpression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Dynamic\+Type\+Of\+Expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Dynamic\+Type\+Of\+Expression}}
+
+
+\hyperlink{structA}{A} \char`\"{}\+Dynamic\+Type\+Of\char`\"{} expression.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Dynamic\+Type\+Of\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DynamicTypeOfExpression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Dynamic\+Type\+Of\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=279pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DynamicTypeOfExpression__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DynamicTypeOfExpression_a91fb8ae3285a807eca7211aa58f1f65a}{get\+Type} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} \char`\"{}\+Dynamic\+Type\+Of\char`\"{} expression. 
+
+Such an expression has the form Dynamic\+Type\+Of(t), where t is a (static) \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type. The type of this expression is \hyperlink{}{C\+I\+V\+L\+Dynamic\+Type}. When evaluated, it returns the dynamic type determined by the current state and the given static type. (This assumes extent expressions are stored in array types.) For example, if {\ttfamily t} is the static type {\ttfamily struct foo \{ double a\mbox{[}n\mbox{]}; \}} from the source code above, then {\ttfamily Dynamic\+Type\+Of(t)}, evaluated in the state that arises at that point in the source code, will yield the symbolic type which is a record type with one field which is an array of doubles of length 2. Now you can store that dynamic type in a variable if you want to save it.
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DynamicTypeOfExpression_a91fb8ae3285a807eca7211aa58f1f65a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Dynamic\+Type\+Of\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Dynamic\+Type\+Of\+Expression}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Dynamic\+Type\+Of\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Dynamic\+Type\+Of\+Expression}}
+\subsubsection[{get\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Dynamic\+Type\+Of\+Expression.\+get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DynamicTypeOfExpression_a91fb8ae3285a807eca7211aa58f1f65a}
+\begin{DoxyReturn}{Returns}
+The type argument 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonDynamicTypeOfExpression_ad859f652edd7b9920045de345282ce1e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Dynamic\+Type\+Of\+Expression}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/expression/Dynamic\+Type\+Of\+Expression.\+java\end{DoxyCompactItemize}

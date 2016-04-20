@@ -1,0 +1,206 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence}}
+
+
+\hyperlink{structA}{A} transition sequence contains a list of transitions and the state from which they emanate.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_aa80c2129af658f495265c5748169b267}{remove} ()
+\begin{DoxyCompactList}\small\item\em Retrieves and removes the head (first element) of this transition sequence. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a93325f566f9cca773c950342ae0a0752}{num\+Removed} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of transitions removed from this sequence since it was first created. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a51f0ffaeedfe8afaf3c2a183382a1189}{state} ()
+\begin{DoxyCompactList}\small\item\em Returns the source state from which all transitions in this sequence emanate. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a949abe24a84ed205f6508a9056e9f6c9}{add\+All} (Collection$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} $>$ transitions)
+\begin{DoxyCompactList}\small\item\em Adds transitions to this sequence. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a66ec9790e494adf1e966775fc9a208cc}{size} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of transitions contained in this sequence. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_ab3ee95eaf10a4934d8120d3670c41770}{is\+Empty} ()
+\begin{DoxyCompactList}\small\item\em Returns true iff this sequence is empty. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a58efc76c64112ac055ed8e20cd40760c}{peek} ()
+\begin{DoxyCompactList}\small\item\em Retrieves, but not removes, the head (first element) of this transition sequence. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a070009777e79c18f146997bfcd7185f1}{contains\+All\+Enabled} ()
+\begin{DoxyCompactList}\small\item\em does this set of transitions contain all enabled transitions of the given state \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_ac51145dd0e0237e07380a387d7cecb27}{}Collection$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} $>$ {\bfseries transitions} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_ac51145dd0e0237e07380a387d7cecb27}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a7e1babc0a15dc7576b9d46060da62292}{}void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a7e1babc0a15dc7576b9d46060da62292}{set\+Containing\+All\+Enabled} (boolean value)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a7e1babc0a15dc7576b9d46060da62292}
+
+\begin{DoxyCompactList}\small\item\em sets the flag that denotes if this transition sequence contains all enabled transitions of the state \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} transition sequence contains a list of transitions and the state from which they emanate. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a949abe24a84ed205f6508a9056e9f6c9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}!add\+All@{add\+All}}
+\index{add\+All@{add\+All}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}}
+\subsubsection[{add\+All}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence.\+add\+All (
+\begin{DoxyParamCaption}
+\item[{Collection$<$ {\bf Transition} $>$}]{transitions}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a949abe24a84ed205f6508a9056e9f6c9}
+
+
+Adds transitions to this sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transitions} & The transitions to be added to this sequence. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransitionSequence_ab79a5cc7068f588073d0826314890f9b}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+Sequence}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a070009777e79c18f146997bfcd7185f1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}!contains\+All\+Enabled@{contains\+All\+Enabled}}
+\index{contains\+All\+Enabled@{contains\+All\+Enabled}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}}
+\subsubsection[{contains\+All\+Enabled}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence.\+contains\+All\+Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a070009777e79c18f146997bfcd7185f1}
+
+
+does this set of transitions contain all enabled transitions of the given state 
+
+\begin{DoxyReturn}{Returns}
+true iff this set of transitions contain all enabled transitions of the given state 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransitionSequence_a9372bf5146f99ac25dfa474f108761b3}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+Sequence}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_ab3ee95eaf10a4934d8120d3670c41770}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}!is\+Empty@{is\+Empty}}
+\index{is\+Empty@{is\+Empty}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}}
+\subsubsection[{is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence.\+is\+Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_ab3ee95eaf10a4934d8120d3670c41770}
+
+
+Returns true iff this sequence is empty. 
+
+\begin{DoxyReturn}{Returns}
+Returns true iff this sequence is empty. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransitionSequence_a2d393d82341be207c6eb9854f86fa499}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+Sequence}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a93325f566f9cca773c950342ae0a0752}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}!num\+Removed@{num\+Removed}}
+\index{num\+Removed@{num\+Removed}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}}
+\subsubsection[{num\+Removed}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence.\+num\+Removed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a93325f566f9cca773c950342ae0a0752}
+
+
+Returns the number of transitions removed from this sequence since it was first created. 
+
+\begin{DoxyReturn}{Returns}
+the number of transitions removed 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransitionSequence_acd4d9eae85a09449ee0b176fa4c9dfb8}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+Sequence}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a58efc76c64112ac055ed8e20cd40760c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}!peek@{peek}}
+\index{peek@{peek}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}}
+\subsubsection[{peek}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Transition} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence.\+peek (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a58efc76c64112ac055ed8e20cd40760c}
+
+
+Retrieves, but not removes, the head (first element) of this transition sequence. 
+
+\begin{DoxyReturn}{Returns}
+The head (first element) of this transition sequence. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransitionSequence_afe96ca98b3800e1125697752757a260f}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+Sequence}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_aa80c2129af658f495265c5748169b267}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}!remove@{remove}}
+\index{remove@{remove}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Transition} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence.\+remove (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_aa80c2129af658f495265c5748169b267}
+
+
+Retrieves and removes the head (first element) of this transition sequence. 
+
+\begin{DoxyReturn}{Returns}
+The head (first element) of this transition sequence. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransitionSequence_a22766dae16c0152296195124c62355a4}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+Sequence}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a66ec9790e494adf1e966775fc9a208cc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}!size@{size}}
+\index{size@{size}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence.\+size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a66ec9790e494adf1e966775fc9a208cc}
+
+
+Returns the number of transitions contained in this sequence. 
+
+\begin{DoxyReturn}{Returns}
+The number of transitions contained in this sequence. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransitionSequence_a401bdeb41db095e2257b164b8d3cb96a}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+Sequence}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a51f0ffaeedfe8afaf3c2a183382a1189}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}!state@{state}}
+\index{state@{state}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Transition\+Sequence}}
+\subsubsection[{state}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition\+Sequence.\+state (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence_a51f0ffaeedfe8afaf3c2a183382a1189}
+
+
+Returns the source state from which all transitions in this sequence emanate. 
+
+\begin{DoxyReturn}{Returns}
+The source state from which all transitions in this sequence emanate. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransitionSequence_aa9f72f08f445a998abbe752985b616e5}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+Sequence}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/\+I\+F/Transition\+Sequence.\+java\end{DoxyCompactItemize}

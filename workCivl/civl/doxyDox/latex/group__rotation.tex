@@ -1,0 +1,87 @@
+\hypertarget{group__rotation}{}\section{Rotation of S\+H fields.}
+\label{group__rotation}\index{Rotation of S\+H fields.@{Rotation of S\+H fields.}}
+
+
+Rotation around axis other than Z should be considered of beta quality (they have been tested but may still contain bugs).  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__rotation_ga6972fa1a3352053c8d4c6570b704505e}{S\+H\+\_\+\+Zrotate} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, double alpha, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em Rotate a S\+H representation Qlm around the z-\/axis by angle alpha (in radians), which is the same as rotating the reference frame by angle -\/alpha. \end{DoxyCompactList}\item 
+void \hyperlink{group__rotation_ga0f8ccf6d430fc57c7e056effbeb245b1}{S\+H\+\_\+\+Xrotate90} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em rotate Qlm by 90 degrees around X axis and store the result in Rlm. \end{DoxyCompactList}\item 
+void \hyperlink{group__rotation_gaa8001c0f7b7377f16e29b4f69ad6485c}{S\+H\+\_\+\+Yrotate90} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em rotate Qlm by 90 degrees around Y axis and store the result in Rlm. \end{DoxyCompactList}\item 
+void \hyperlink{group__rotation_ga22c7e9932a68da1f38b2306310f0ec52}{S\+H\+\_\+\+Yrotate} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, double alpha, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em rotate Qlm around Y axis by arbitrary angle, using composition of rotations. Store the result in Rlm. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Rotation around axis other than Z should be considered of beta quality (they have been tested but may still contain bugs). 
+
+They also require {\ttfamily mmax} = {\ttfamily lmax}. They use an Algorithm inspired by the pseudospectral rotation described in Gimbutas Z. and Greengard L. 2009 \char`\"{}\+A fast and stable method for rotating spherical harmonic expansions\char`\"{} {\itshape Journal of Computational Physics}. doi\+:\href{http://dx.doi.org/10.1016/j.jcp.2009.05.014}{\tt 10.\+1016/j.jcp.\+2009.\+05.\+014}
+
+These functions do only require a call to \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create}, but not to \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid}. 
+
+\subsection{Function Documentation}
+\hypertarget{group__rotation_ga0f8ccf6d430fc57c7e056effbeb245b1}{}\index{Rotation of S\+H fields.@{Rotation of S\+H fields.}!S\+H\+\_\+\+Xrotate90@{S\+H\+\_\+\+Xrotate90}}
+\index{S\+H\+\_\+\+Xrotate90@{S\+H\+\_\+\+Xrotate90}!Rotation of S\+H fields.@{Rotation of S\+H fields.}}
+\subsubsection[{S\+H\+\_\+\+Xrotate90}]{\setlength{\rightskip}{0pt plus 5cm}void S\+H\+\_\+\+Xrotate90 (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{cplx $\ast$}]{Rlm}
+\end{DoxyParamCaption}
+)}\label{group__rotation_ga0f8ccf6d430fc57c7e056effbeb245b1}
+
+
+rotate Qlm by 90 degrees around X axis and store the result in Rlm. 
+
+Rotate S\+H representation around X axis by 90 degrees.
+
+shtns-\/$>$mres M\+U\+S\+T be 1, and lmax=mmax. \hypertarget{group__rotation_ga22c7e9932a68da1f38b2306310f0ec52}{}\index{Rotation of S\+H fields.@{Rotation of S\+H fields.}!S\+H\+\_\+\+Yrotate@{S\+H\+\_\+\+Yrotate}}
+\index{S\+H\+\_\+\+Yrotate@{S\+H\+\_\+\+Yrotate}!Rotation of S\+H fields.@{Rotation of S\+H fields.}}
+\subsubsection[{S\+H\+\_\+\+Yrotate}]{\setlength{\rightskip}{0pt plus 5cm}void S\+H\+\_\+\+Yrotate (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{double}]{alpha, }
+\item[{cplx $\ast$}]{Rlm}
+\end{DoxyParamCaption}
+)}\label{group__rotation_ga22c7e9932a68da1f38b2306310f0ec52}
+
+
+rotate Qlm around Y axis by arbitrary angle, using composition of rotations. Store the result in Rlm. 
+
+Rotate S\+H representation around Y axis by alpha (in radians). \hypertarget{group__rotation_gaa8001c0f7b7377f16e29b4f69ad6485c}{}\index{Rotation of S\+H fields.@{Rotation of S\+H fields.}!S\+H\+\_\+\+Yrotate90@{S\+H\+\_\+\+Yrotate90}}
+\index{S\+H\+\_\+\+Yrotate90@{S\+H\+\_\+\+Yrotate90}!Rotation of S\+H fields.@{Rotation of S\+H fields.}}
+\subsubsection[{S\+H\+\_\+\+Yrotate90}]{\setlength{\rightskip}{0pt plus 5cm}void S\+H\+\_\+\+Yrotate90 (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{cplx $\ast$}]{Rlm}
+\end{DoxyParamCaption}
+)}\label{group__rotation_gaa8001c0f7b7377f16e29b4f69ad6485c}
+
+
+rotate Qlm by 90 degrees around Y axis and store the result in Rlm. 
+
+Rotate S\+H representation around Y axis by 90 degrees.
+
+shtns-\/$>$mres M\+U\+S\+T be 1, and lmax=mmax. \hypertarget{group__rotation_ga6972fa1a3352053c8d4c6570b704505e}{}\index{Rotation of S\+H fields.@{Rotation of S\+H fields.}!S\+H\+\_\+\+Zrotate@{S\+H\+\_\+\+Zrotate}}
+\index{S\+H\+\_\+\+Zrotate@{S\+H\+\_\+\+Zrotate}!Rotation of S\+H fields.@{Rotation of S\+H fields.}}
+\subsubsection[{S\+H\+\_\+\+Zrotate}]{\setlength{\rightskip}{0pt plus 5cm}void S\+H\+\_\+\+Zrotate (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{double}]{alpha, }
+\item[{cplx $\ast$}]{Rlm}
+\end{DoxyParamCaption}
+)}\label{group__rotation_ga6972fa1a3352053c8d4c6570b704505e}
+
+
+Rotate a S\+H representation Qlm around the z-\/axis by angle alpha (in radians), which is the same as rotating the reference frame by angle -\/alpha. 
+
+Result is stored in Rlm (which can be the same array as Qlm). 

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ABC.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.main</a> &gt; <span class="el_source">ABC.java</span></div><h1>ABC.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.main;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import edu.udel.cis.vsl.abc.config.IF.Configuration.Architecture;
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.err.IF.ABCException;
+import edu.udel.cis.vsl.abc.front.IF.ParseException;
+import edu.udel.cis.vsl.abc.front.IF.PreprocessorException;
+import edu.udel.cis.vsl.abc.front.IF.PreprocessorRuntimeException;
+import edu.udel.cis.vsl.abc.token.IF.Macro;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.transform.IF.Transform;
+
+/**
+ * &lt;p&gt;
+ * This is the main class for ABC. It provides a simple command line interface
+ * for using ABC. Most applications will not use this class, since they will use
+ * ABC more as a library and access the functionality through the API. However,
+ * the command line is useful for debugging, &quot;seeing what is going on&quot;, and
+ * general exploration.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * By default, this command line interface will open and scan a file, preprocess
+ * it, parse it to produce an ANTLR tree, translate that tree into an ABC
+ * Abstract Syntax Tree (AST), and analyze the AST to determine scopes, types,
+ * and entities associated to every identifier. It prints out the final result
+ * in a plain text human-readable form. Various options can control how much
+ * information is printed, and can also cause various transformations to be
+ * applied to the AST. Executing with no command line arguments will print a
+ * help message describing the options.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Include paths are searched as follows: for a file included with angle
+ * brackets, first the paths occurring in the array &lt;code&gt;systemIncludes&lt;/code&gt;
+ * are searched, in order; if the file is not found there, then the built-in
+ * system include paths inside of ABC are searched. For a file included with
+ * double quotes, first the paths occurring in the array
+ * &lt;code&gt;userIncludes&lt;/code&gt; are searched (in order) and if the file is not
+ * found there, the protocol for angle brackets is followed.
+ * &lt;/p&gt;
+ * 
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc" id="L58">public class ABC {</span>
+
+	/**
+	 * The version number of this release of ABC: {@value} .
+	 */
+	public final static String version = &quot;0.2&quot;;
+
+	/**
+	 * The date of this release of ABC: {@value} .
+	 */
+	public final static String date = &quot;31-mar-2014&quot;;
+
+	/**
+	 * The default list of system include paths.
+	 */
+<span class="fc" id="L73">	public final static File[] DEFAULT_SYSTEM_INCLUDE_PATHS = new File[] {};</span>
+
+	/**
+	 * The default list of user include paths.
+	 */
+<span class="fc" id="L78">	public final static File[] DEFAULT_USER_INCLUDE_PATHS = new File[] {};</span>
+
+	/**
+	 * The default list of pre-defined macros, specifies as a mapping from
+	 * Strings (macro name) to macros.
+	 */
+<span class="fc" id="L84">	public final static Map&lt;String, Macro&gt; DEFAULT_IMPLICIT_MACROS = new TreeMap&lt;&gt;();</span>
+
+	/**
+	 * Determines language from filename. If it ends in &quot;.cvl&quot; or &quot;.cvh&quot;, it's
+	 * CIVL_C, else it's C.
+	 * 
+	 * @param name
+	 *            filename
+	 * @return CIVL_C or C
+	 */
+	private static Language getLanguageFromName(String name) {
+<span class="fc" id="L95">		int dotIndex = name.lastIndexOf('.');</span>
+
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (dotIndex &gt;= 0) {</span>
+<span class="fc" id="L98">			String suffix = name.substring(dotIndex + 1, name.length());</span>
+
+<span class="pc bpc" id="L100" title="2 of 4 branches missed.">			if (&quot;cvl&quot;.equals(suffix) || &quot;cvh&quot;.equals(suffix))</span>
+<span class="nc" id="L101">				return Language.CIVL_C;</span>
+<span class="pc bpc" id="L102" title="2 of 4 branches missed.">			else if (&quot;f&quot;.equals(suffix) || &quot;F&quot;.equals(suffix))</span>
+<span class="nc" id="L103">				return Language.FORTRAN77;</span>
+		}
+<span class="fc" id="L105">		return Language.C;</span>
+	}
+
+	/**
+	 * Prints a message to the output stream specifying the command line syntax.
+	 * 
+	 * @param out
+	 *            the stream to which the output should be printed
+	 */
+	private static void help(PrintStream out) {
+<span class="nc" id="L115">		out.println(&quot;Usage: abc [options] filename0 filename1 ...&quot;);</span>
+<span class="nc" id="L116">		out.println(&quot;Options:&quot;);</span>
+<span class="nc" id="L117">		out.println(&quot;-I &lt;path&gt;&quot;);</span>
+<span class="nc" id="L118">		out.println(&quot;  add path to system include list&quot;);</span>
+<span class="nc" id="L119">		out.println(&quot;-iquote &lt;path&gt;&quot;);</span>
+<span class="nc" id="L120">		out.println(&quot;  add path to user include list&quot;);</span>
+<span class="nc" id="L121">		out.println(&quot;-D&lt;macro&gt; or -D&lt;macro&gt;=&lt;object&gt;&quot;);</span>
+<span class="nc" id="L122">		out.println(&quot;  define a macro for compilation&quot;);</span>
+<span class="nc" id="L123">		out.println(&quot;-o &lt;filename&gt;&quot;);</span>
+<span class="nc" id="L124">		out.println(&quot;  send output to filename&quot;);</span>
+<span class="nc" id="L125">		out.println(&quot;-E&quot;);</span>
+<span class="nc" id="L126">		out.println(&quot;  preprocess only&quot;);</span>
+<span class="nc" id="L127">		out.println(&quot;-v&quot;);</span>
+<span class="nc" id="L128">		out.println(&quot;  verbose mode, show all processing steps&quot;);</span>
+<span class="nc" id="L129">		out.println(&quot;-p&quot;);</span>
+<span class="nc" id="L130">		out.println(&quot;  pretty print programs in original language (default)&quot;);</span>
+<span class="nc" id="L131">		out.println(&quot;-a&quot;);</span>
+<span class="nc" id="L132">		out.println(&quot;  print the AST(s) using a hierarchical representation&quot;);</span>
+<span class="nc" id="L133">		out.println(&quot;-t&quot;);</span>
+<span class="nc" id="L134">		out.println(&quot;  show symbol and type tables&quot;);</span>
+<span class="nc" id="L135">		out.println(&quot;-time&quot;);</span>
+<span class="nc" id="L136">		out.println(&quot;  show time for each phase&quot;);</span>
+<span class="nc" id="L137">		out.println(&quot;-diff&quot;);</span>
+<span class="nc" id="L138">		out.println(&quot;  show the difference of two ASTs&quot;);</span>
+<span class="nc" id="L139">		out.println(&quot;-svcomp&quot;);</span>
+<span class="nc" id="L140">		out.println(&quot;  turn on special setting for svcomp benchmarks&quot;);</span>
+<span class="nc" id="L141">		out.println(&quot;-gnuc&quot;);</span>
+<span class="nc" id="L142">		out.println(&quot;  support GNU C features&quot;);</span>
+<span class="nc" id="L143">		out.print(&quot;-unknownFunc&quot;);</span>
+<span class="nc" id="L144">		out.println(&quot;  print functions that are used in the program but no definition is given&quot;);</span>
+<span class="nc" id="L145">		out.println(&quot;-lang=[c|civlc]&quot;);</span>
+<span class="nc" id="L146">		out.println(&quot;  set language (default determined by file suffix)&quot;);</span>
+<span class="nc" id="L147">		out.println(&quot;-arch=[i386|amd64|unknown]&quot;);</span>
+<span class="nc" id="L148">		out.println(&quot;  set the architecture, unknown by default&quot;);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (String code : Transform.getCodes()) {</span>
+<span class="nc" id="L150">			String description = Transform.getShortDescription(code);</span>
+
+<span class="nc" id="L152">			out.println(&quot;-&quot; + code);</span>
+<span class="nc" id="L153">			out.println(&quot;  &quot; + description);</span>
+		}
+<span class="nc" id="L155">		out.println();</span>
+<span class="nc" id="L156">		out.flush();</span>
+<span class="nc" id="L157">	}</span>
+
+	private static void err(String msg) {
+<span class="nc" id="L160">		System.out.println(&quot;Error: &quot; + msg);</span>
+<span class="nc" id="L161">		System.out.println();</span>
+<span class="nc" id="L162">		help(System.out);</span>
+<span class="nc" id="L163">		System.out.flush();</span>
+<span class="nc" id="L164">		System.exit(1);</span>
+<span class="nc" id="L165">	}</span>
+
+	private static TranslationTask parseCommandLine(String[] args)
+			throws FileNotFoundException {
+<span class="fc" id="L169">		ArrayList&lt;String&gt; infileNames = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L170">		String outfileName = null;</span>
+		// the following are updated by -I
+<span class="fc" id="L172">		ArrayList&lt;File&gt; systemIncludeList = new ArrayList&lt;&gt;();</span>
+		// the following are updated by -iquote
+<span class="fc" id="L174">		ArrayList&lt;File&gt; userIncludeList = new ArrayList&lt;&gt;();</span>
+		// the following are updated by -D
+<span class="fc" id="L176">		Map&lt;String, String&gt; macros = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L177">		boolean preprocOnly = false;</span>
+<span class="fc" id="L178">		boolean verbose = false;</span>
+<span class="fc" id="L179">		boolean pretty = true;</span>
+<span class="fc" id="L180">		boolean tables = false; // show symbol and type tables</span>
+<span class="fc" id="L181">		boolean showTime = false;</span>
+<span class="fc" id="L182">		boolean showDiff = false;</span>
+<span class="fc" id="L183">		boolean gnuc = false;</span>
+<span class="fc" id="L184">		boolean silent = false;</span>
+<span class="fc" id="L185">		boolean unkownFunc = false;</span>
+<span class="fc" id="L186">		boolean svcomp = false;</span>
+<span class="fc" id="L187">		Architecture architecture = Architecture.UNKNOWN;</span>
+<span class="fc" id="L188">		List&lt;String&gt; transformCodes = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L189">		Language language = null;</span>
+<span class="fc" id="L190">		TranslationTask result = new TranslationTask();</span>
+		int nfiles;
+
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		for (int i = 0; i &lt; args.length; i++) {</span>
+<span class="fc" id="L194">			String arg = args[i];</span>
+
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">			if (arg.startsWith(&quot;-o&quot;)) {</span>
+				String name;
+
+<span class="nc bnc" id="L199" title="All 2 branches missed.">				if (arg.length() == 2) {</span>
+<span class="nc" id="L200">					i++;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">					if (i &gt;= args.length)</span>
+<span class="nc" id="L202">						err(&quot;Filename must follow -o&quot;);</span>
+<span class="nc" id="L203">					name = args[i];</span>
+<span class="nc" id="L204">				} else {</span>
+<span class="nc" id="L205">					name = arg.substring(2);</span>
+				}
+<span class="nc bnc" id="L207" title="All 2 branches missed.">				if (outfileName == null)</span>
+<span class="nc" id="L208">					outfileName = name;</span>
+				else
+<span class="nc" id="L210">					err(&quot;More than one use of -o&quot;);</span>
+<span class="pc bfc" id="L211" title="All 2 branches covered.">			} else if (arg.startsWith(&quot;-D&quot;)) {</span>
+				String name;
+<span class="fc" id="L213">				String object = &quot;&quot;;</span>
+
+<span class="fc bfc" id="L215" title="All 2 branches covered.">				if (arg.contains(&quot;=&quot;)) {</span>
+					// -D&lt;macro&gt;=&lt;object&gt;
+<span class="fc" id="L217">					int indexOfEqual = arg.indexOf('=');</span>
+
+<span class="fc" id="L219">					name = arg.substring(2, indexOfEqual);</span>
+<span class="fc" id="L220">					object = arg.substring(indexOfEqual + 1);</span>
+<span class="fc" id="L221">				} else {</span>
+					// -D&lt;macro&gt;
+<span class="fc" id="L223">					name = arg.substring(2);</span>
+				}
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">				if (macros.containsKey(name))</span>
+<span class="nc" id="L226">					err(&quot;Duplicated macro definition of &quot; + name);</span>
+				else
+<span class="fc" id="L228">					macros.put(name, object);</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">			} else if (arg.startsWith(&quot;-I&quot;)) {</span>
+				String name;
+
+<span class="nc bnc" id="L232" title="All 2 branches missed.">				if (arg.length() == 2) {</span>
+<span class="nc" id="L233">					i++;</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">					if (i &gt;= args.length)</span>
+<span class="nc" id="L235">						err(&quot;Filename must follow -I&quot;);</span>
+<span class="nc" id="L236">					name = args[i];</span>
+<span class="nc" id="L237">				} else {</span>
+<span class="nc" id="L238">					name = arg.substring(2);</span>
+				}
+<span class="nc" id="L240">				systemIncludeList.add(new File(name));</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">			} else if (arg.startsWith(&quot;-iquote&quot;)) {</span>
+				String name;
+
+<span class="nc bnc" id="L244" title="All 2 branches missed.">				if (arg.length() == &quot;-iquote&quot;.length()) {</span>
+<span class="nc" id="L245">					i++;</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">					if (i &gt;= args.length)</span>
+<span class="nc" id="L247">						err(&quot;Filename must follow -iquote&quot;);</span>
+<span class="nc" id="L248">					name = args[i];</span>
+<span class="nc" id="L249">				} else {</span>
+<span class="nc" id="L250">					name = arg.substring(&quot;-iquote&quot;.length());</span>
+				}
+<span class="nc" id="L252">				userIncludeList.add(new File(name));</span>
+<span class="pc bfc" id="L253" title="All 2 branches covered.">			} else if (arg.equals(&quot;-E&quot;)) {</span>
+<span class="fc" id="L254">				preprocOnly = true;</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">			} else if (arg.equals(&quot;-v&quot;)) {</span>
+<span class="fc" id="L256">				verbose = true;</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">			} else if (arg.equals(&quot;-p&quot;)) {</span>
+<span class="fc" id="L258">				pretty = true;</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">			} else if (arg.equals(&quot;-a&quot;)) {</span>
+<span class="nc" id="L260">				pretty = false;</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">			} else if (arg.equals(&quot;-t&quot;)) {</span>
+<span class="nc" id="L262">				tables = true;</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">			} else if (arg.equals(&quot;-time&quot;)) {</span>
+<span class="nc" id="L264">				showTime = true;</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">			} else if (arg.equals(&quot;-diff&quot;)) {</span>
+<span class="nc" id="L266">				showDiff = true;</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">			} else if (arg.equals(&quot;-gnuc&quot;)) {</span>
+<span class="nc" id="L268">				gnuc = true;</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">			} else if (arg.equals(&quot;-unknownFunc&quot;)) {</span>
+<span class="nc" id="L270">				unkownFunc = true;</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">			} else if (arg.equals(&quot;-svcomp&quot;)) {</span>
+<span class="nc" id="L272">				svcomp = true;</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">			} else if (arg.startsWith(&quot;-lang&quot;)) {</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">				if (arg.equals(&quot;-lang=C&quot;))</span>
+<span class="nc" id="L275">					language = Language.C;</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">				else if (arg.equals(&quot;-lang=civlc&quot;))</span>
+<span class="nc" id="L277">					language = Language.CIVL_C;</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">				else if (arg.equals(&quot;-lang=fortran77&quot;))</span>
+<span class="nc" id="L279">					language = Language.FORTRAN77;</span>
+				else
+<span class="nc" id="L281">					err(&quot;Unknown command line option: &quot; + arg);</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">			} else if (arg.startsWith(&quot;-arch&quot;)) {</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">				if (arg.equals(&quot;-arch=i386&quot;))</span>
+<span class="nc" id="L284">					architecture = Architecture._32_BIT;</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">				else if (arg.equals(&quot;-arch=amd64&quot;))</span>
+<span class="nc" id="L286">					architecture = Architecture._64_BIT;</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">				else if (arg.equals(&quot;-arch=unknown&quot;))</span>
+<span class="nc" id="L288">					architecture = Architecture.UNKNOWN;</span>
+				else
+<span class="nc" id="L290">					err(&quot;Unknown command line option: &quot; + arg);</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">			} else if (arg.equals(&quot;-silent&quot;)) {</span>
+<span class="nc" id="L292">				silent = true;</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">			} else if (arg.startsWith(&quot;-&quot;)) {</span>
+				// try transform code...
+<span class="nc" id="L295">				String code = arg.substring(1);</span>
+
+<span class="nc bnc" id="L297" title="All 2 branches missed.">				if (Transform.getCodes().contains(code))</span>
+<span class="nc" id="L298">					transformCodes.add(code);</span>
+				else
+<span class="nc" id="L300">					err(&quot;Unknown command line option: &quot; + arg);</span>
+<span class="nc" id="L301">			} else {</span>
+<span class="fc" id="L302">				infileNames.add(arg);</span>
+			}
+		}
+<span class="fc" id="L305">		nfiles = infileNames.size();</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">		if (nfiles == 0)</span>
+<span class="nc" id="L307">			err(&quot;No input file specified&quot;);</span>
+<span class="fc" id="L308">		result.setFiles(new File[nfiles]);</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">		for (int i = 0; i &lt; nfiles; i++)</span>
+<span class="fc" id="L310">			result.getFiles()[i] = new File(infileNames.get(i));</span>
+<span class="fc" id="L311">		result.setUserIncludes(userIncludeList.toArray(new File[0]));</span>
+<span class="fc" id="L312">		result.setSystemIncludes(systemIncludeList.toArray(new File[0]));</span>
+<span class="fc" id="L313">		result.setMacroNames(macros);</span>
+<span class="pc bpc" id="L314" title="1 of 2 branches missed.">		if (outfileName == null)</span>
+<span class="fc" id="L315">			result.setOut(System.out);</span>
+		else
+<span class="nc" id="L317">			result.setOut(new PrintStream(new File(outfileName)));</span>
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">		result.setLanguage(language == null ? getLanguageFromName(infileNames</span>
+<span class="pc" id="L319">				.get(0)) : language);</span>
+<span class="fc" id="L320">		result.setVerbose(verbose);</span>
+<span class="fc" id="L321">		result.setPrettyPrint(pretty);</span>
+<span class="fc" id="L322">		result.setShowTables(tables);</span>
+<span class="fc" id="L323">		result.setShowTime(showTime);</span>
+<span class="fc" id="L324">		result.setPreprocOnly(preprocOnly);</span>
+<span class="fc" id="L325">		result.setShowDiff(showDiff);</span>
+<span class="fc" id="L326">		result.setGnuc(gnuc);</span>
+<span class="fc" id="L327">		result.setSilent(silent);</span>
+<span class="fc" id="L328">		result.setUnkownFunc(unkownFunc);</span>
+<span class="fc" id="L329">		result.setSvcomp(svcomp);</span>
+<span class="fc" id="L330">		result.setArchitecture(architecture);</span>
+<span class="fc" id="L331">		result.addAllTransformCodes(transformCodes);</span>
+<span class="fc" id="L332">		return result;</span>
+	}
+
+	/**
+	 * Executes the commands specified by the command line.
+	 * 
+	 * @param args
+	 *            the command line arguments
+	 * @throws ABCException
+	 *             if something goes wrong when processing the file, such as a
+	 *             syntax exception
+	 * @throws IOException
+	 *             if the file cannot be opened
+	 */
+	public static void main(String[] args) {
+<span class="fc" id="L347">		TranslationTask task = null;</span>
+		FrontEnd frontEnd;
+<span class="fc" id="L349">		PrintStream err = System.err, out = System.out;</span>
+<span class="fc" id="L350">		boolean silent = false;</span>
+
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		for (String arg : args) {</span>
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">			if (arg.equals(&quot;-silent&quot;))</span>
+<span class="nc" id="L354">				silent = true;</span>
+		}
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		if (!silent)</span>
+<span class="fc" id="L357">			out.println(&quot;ABC v&quot; + version + &quot; of &quot; + date</span>
+					+ &quot; -- http://vsl.cis.udel.edu/abc\n&quot;);
+<span class="fc" id="L359">		out.flush();</span>
+		try {
+<span class="fc" id="L361">			task = parseCommandLine(args);</span>
+<span class="pc" id="L362">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L363">			err.println(e.toString());</span>
+<span class="nc" id="L364">			err.flush();</span>
+<span class="nc" id="L365">			System.exit(1);</span>
+		}
+<span class="nc" id="L367">		frontEnd = new FrontEnd(task);</span>
+		try {
+
+<span class="nc bnc" id="L370" title="All 2 branches missed.">			if (task.doShowDiff()) {</span>
+<span class="nc" id="L371">				frontEnd.compileAndCompare(task);</span>
+<span class="nc" id="L372">			} else {</span>
+<span class="nc" id="L373">				frontEnd.showTranslation(task);</span>
+			}
+<span class="nc" id="L375">		} catch (PreprocessorException e) {</span>
+<span class="nc" id="L376">			err.println(e.toString());</span>
+<span class="nc" id="L377">			err.flush();</span>
+<span class="nc" id="L378">			System.exit(2);</span>
+<span class="nc" id="L379">		} catch (PreprocessorRuntimeException e) {</span>
+<span class="nc" id="L380">			err.println(e.toString());</span>
+<span class="nc" id="L381">			err.flush();</span>
+<span class="nc" id="L382">			System.exit(2);</span>
+<span class="nc" id="L383">		} catch (ParseException e) {</span>
+<span class="nc" id="L384">			err.println(e.toString());</span>
+<span class="nc" id="L385">			err.flush();</span>
+<span class="nc" id="L386">			System.exit(3);</span>
+<span class="nc" id="L387">		} catch (SyntaxException e) {</span>
+<span class="nc" id="L388">			err.println(e.toString());</span>
+<span class="nc" id="L389">			err.flush();</span>
+<span class="nc" id="L390">			System.exit(4);</span>
+<span class="nc" id="L391">		} catch (IOException e) {</span>
+<span class="nc" id="L392">			err.println(e.toString());</span>
+<span class="nc" id="L393">			err.flush();</span>
+<span class="nc" id="L394">			System.exit(5);</span>
+		}
+<span class="nc" id="L396">		task.getOut().close();</span>
+<span class="nc" id="L397">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

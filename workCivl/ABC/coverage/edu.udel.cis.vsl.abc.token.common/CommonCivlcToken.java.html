@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonCivlcToken.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.common</a> &gt; <span class="el_source">CommonCivlcToken.java</span></div><h1>CommonCivlcToken.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.token.common;
+
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonToken;
+import org.antlr.runtime.Token;
+
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.Formation;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.token.IF.TokenUtils;
+
+/**
+ * An extension to ANTLR's generic Token implementation that adds fields to
+ * represent the origin of a token through various preprocessing stages. A
+ * history of include directives and macro invocations gives detailed
+ * information on the origin of the token.
+ * 
+ * Every token originated as some token in a source file. (Ignoring for now
+ * token creation by the preprocessor using '##'.)
+ * 
+ * These tokens have a next field, so that they can be given the structure of a
+ * linked list. Yes, I could have used Java's LinkedList class, but I don't
+ * think that supported certain operations efficiently, such as splicing one
+ * list into another in constant time.
+ * 
+ * @author Stephen F. Siegel, University of Delaware, All rights reserved
+ * 
+ */
+<span class="nc bnc" id="L29" title="All 2 branches missed.">public class CommonCivlcToken extends CommonToken implements CivlcToken {</span>
+
+	// Fields...
+
+	/**
+	 * Eclipse made me do it.
+	 */
+<span class="nc" id="L36">	private static final long serialVersionUID = -5508021210762735784L;</span>
+
+	private Formation formation;
+
+	/**
+	 * If this is an identifier node and that identifier is for a macro, setting
+	 * this bit to false means that the macro will not be expanded. This is
+	 * needed for the complex macro expansion policy described in the C99
+	 * Standard.
+	 */
+<span class="nc" id="L46">	private boolean expandable = true;</span>
+
+	/**
+	 * The CppTokens emanating from a CppTokenSource form a linked list. This is
+	 * the next element in the list.
+	 */
+<span class="nc" id="L52">	private CivlcToken next = null;</span>
+
+	/**
+	 * Index of this token in the list of tokens emanating from CppTokenSource.
+	 * First token has index 0.
+	 * 
+	 * You can't trust CommonToken's index. It gets set to weird values by
+	 * things I don't understand.
+	 */
+<span class="nc" id="L61">	private int tokenIndex = -1;</span>
+
+	/**
+	 * Created for Fortran parser which derived from OpenFortranParser. It
+	 * requires a field with a type of String.
+	 */
+<span class="nc" id="L67">	private String whiteText = &quot;&quot;;</span>
+
+	// Constructors...
+
+	/**
+	 * Creates new instance by copying fields from old one. The two histories
+	 * are set to the given arguments. Both must be non-null.
+	 * 
+	 * @param token
+	 *            any kind of Token
+	 */
+	public CommonCivlcToken(Token token, Formation formation) {
+<span class="nc" id="L79">		super(token);</span>
+<span class="nc bnc" id="L80" title="All 4 branches missed.">		assert formation != null;</span>
+<span class="nc" id="L81">		this.formation = formation;</span>
+<span class="nc" id="L82">	}</span>
+
+	public CommonCivlcToken(int type, String text, Formation formation) {
+<span class="nc" id="L85">		super(type, text);</span>
+<span class="nc" id="L86">		this.formation = formation;</span>
+<span class="nc" id="L87">	}</span>
+
+	public CommonCivlcToken(CharStream input, int type, int channel, int start,
+			int stop, Formation formation) {
+<span class="nc" id="L91">		super(input, type, channel, start, stop);</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">		assert formation != null;</span>
+<span class="nc" id="L93">		this.formation = formation;</span>
+<span class="nc" id="L94">	}</span>
+
+	// Methods...
+
+	/**
+	 * Returns the more technical string representation used in the parent class
+	 * CommonToken. Useful for debugging, not so good for the end user, and does
+	 * not include the extra information provided in this class, such as macro
+	 * and include histories.
+	 * 
+	 * @return technical string representation of the token.
+	 */
+	public String toStringOld() {
+<span class="nc" id="L107">		return super.toString();</span>
+	}
+
+	/**
+	 * Returns a string representation that is appropriate for reporting this
+	 * token and its source to the end user. It includes the text of the token,
+	 * source file, line and character index, history through macro expansion
+	 * and include directives.
+	 */
+	@Override
+	public String toString() {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (this.getType() == Token.EOF)</span>
+<span class="nc" id="L119">			return &quot;EOF&quot;;</span>
+		// TODO make a special handling for special token &quot;Program&quot;
+		else {
+			// String result = TokenUtils.quotedText(this) + &quot; in &quot;
+			// + TokenUtils.location(this, false);
+<span class="nc" id="L124">			String result = TokenUtils</span>
+<span class="nc" id="L125">					.summarizeRangeLocation(this, this, false)</span>
+<span class="nc" id="L126">					+ &quot; &quot;</span>
+<span class="nc" id="L127">					+ TokenUtils.quotedText(this);</span>
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (formation != null)</span>
+<span class="nc" id="L130">				result += formation.suffix();</span>
+<span class="nc" id="L131">			return result;</span>
+		}
+	}
+
+	/**
+	 * Is this token expandable? This is used only for identifiers that could be
+	 * macro invocations. The macro expansion procedure is complex and at a
+	 * certain phase, a macro identifier becomes non-expandable. It is mostly to
+	 * support self-referential macros.
+	 * 
+	 * Initially, every token is expandable.
+	 * 
+	 * @return value of expandable bit
+	 */
+	@Override
+	public boolean isExpandable() {
+<span class="nc" id="L147">		return expandable;</span>
+	}
+
+	/**
+	 * Sets this token's expandable bit to false.
+	 */
+	@Override
+	public void makeNonExpandable() {
+<span class="nc" id="L155">		expandable = false;</span>
+<span class="nc" id="L156">	}</span>
+
+	/**
+	 * Set this token's &quot;next&quot; field to the given token. This is used to give
+	 * tokens the structure of a linked list. Initially, this is null.
+	 * 
+	 * @param nextToken
+	 */
+	@Override
+	public void setNext(CivlcToken nextToken) {
+<span class="nc" id="L166">		this.next = nextToken;</span>
+<span class="nc" id="L167">	}</span>
+
+	/**
+	 * Get this token's &quot;next&quot; field. Could be null.
+	 * 
+	 * @return the next token
+	 */
+	@Override
+	public CivlcToken getNext() {
+<span class="nc" id="L176">		return next;</span>
+	}
+
+	@Override
+	public void setIndex(int index) {
+<span class="nc" id="L181">		this.tokenIndex = index;</span>
+<span class="nc" id="L182">	}</span>
+
+	@Override
+	public int getIndex() {
+<span class="nc" id="L186">		return tokenIndex;</span>
+	}
+
+	@Override
+	public SourceFile getSourceFile() {
+<span class="nc" id="L191">		return formation.getLastFile();</span>
+	}
+
+	@Override
+	public Formation getFormation() {
+<span class="nc" id="L196">		return formation;</span>
+	}
+
+	/* Methods for Frotran parser */
+	@Override
+	public String getWhiteText() {
+<span class="nc" id="L202">		return whiteText;</span>
+	}
+
+	@Override
+	public void setWhiteText(String text) {
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		whiteText = text == null ? &quot;&quot; : text;</span>
+<span class="nc" id="L208">	}</span>
+	/* Methods for Frotran parser */
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,143 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression}}
+
+
+\hyperlink{structA}{A} memory unit expression is an expression that represents (part of) the memory related to some variable.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=261pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ae2458303b5a1cc0d5018610b880f35ed}{scope\+Id} ()
+\begin{DoxyCompactList}\small\item\em Returns the (static) scope id of the variable. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ae8ada3e83dd23f6519d447c35f756d33}{variable\+Id} ()
+\begin{DoxyCompactList}\small\item\em Returns the variable I\+D. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_aa89f05abce40676f955e6be6f8bb956d}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} {\bfseries variable} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_aa89f05abce40676f955e6be6f8bb956d}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1reference_1_1MemoryUnitReference}{Memory\+Unit\+Reference} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ac33e0d04ac053db86c2ca07560454a63}{reference} ()
+\begin{DoxyCompactList}\small\item\em Returns the reference of this memory unit expression. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_acdb248a47fd386342f0483154e2a2902}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} {\bfseries object\+Type} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_acdb248a47fd386342f0483154e2a2902}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_a30ad108c54e899ceee77e621b0134209}{}boolean {\bfseries writable} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_a30ad108c54e899ceee77e621b0134209}
+
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_a136969d68bacdbf93e4da964df85191b}{deref} ()
+\begin{DoxyCompactList}\small\item\em shall this memory unit be dereferenced? \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} memory unit expression is an expression that represents (part of) the memory related to some variable. 
+
+There are four kinds of such expressions\+: 
+\begin{DoxyItemize}
+\item S\+E\+L\+F\+: a single variable 
+\item A\+R\+R\+A\+Y\+\_\+\+E\+L\+E\+: an element of an array 
+\item A\+R\+R\+A\+Y\+\_\+\+S\+L\+I\+C\+E\+: a slice (several elements) of an array 
+\item S\+T\+R\+U\+C\+T\+\_\+\+E\+L\+E\+: an element of a struct 
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+zmanchun 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_a136969d68bacdbf93e4da964df85191b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression}!deref@{deref}}
+\index{deref@{deref}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression}}
+\subsubsection[{deref}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression.\+deref (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_a136969d68bacdbf93e4da964df85191b}
+
+
+shall this memory unit be dereferenced? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonMemoryUnitExpression_ae052d11ee257bf5c71c371c631f468e7}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Memory\+Unit\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ac33e0d04ac053db86c2ca07560454a63}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression}!reference@{reference}}
+\index{reference@{reference}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression}}
+\subsubsection[{reference}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Memory\+Unit\+Reference} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression.\+reference (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ac33e0d04ac053db86c2ca07560454a63}
+
+
+Returns the reference of this memory unit expression. 
+
+\begin{DoxyReturn}{Returns}
+The reference of this memory unit expression. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonMemoryUnitExpression_af9eaa7d07a6f74cd84428e089ea880fe}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Memory\+Unit\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ae2458303b5a1cc0d5018610b880f35ed}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression}!scope\+Id@{scope\+Id}}
+\index{scope\+Id@{scope\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression}}
+\subsubsection[{scope\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression.\+scope\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ae2458303b5a1cc0d5018610b880f35ed}
+
+
+Returns the (static) scope id of the variable. 
+
+\begin{DoxyReturn}{Returns}
+The (static) scope id of the variable. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonMemoryUnitExpression_a7cdd0a6ec474eb1e191658ce5b535f88}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Memory\+Unit\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ae8ada3e83dd23f6519d447c35f756d33}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression}!variable\+Id@{variable\+Id}}
+\index{variable\+Id@{variable\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Memory\+Unit\+Expression}}
+\subsubsection[{variable\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Memory\+Unit\+Expression.\+variable\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression_ae8ada3e83dd23f6519d447c35f756d33}
+
+
+Returns the variable I\+D. 
+
+\begin{DoxyReturn}{Returns}
+The variable I\+D. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonMemoryUnitExpression_a3c1ae210dce078779d6d249ee1c56b82}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Memory\+Unit\+Expression}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/expression/Memory\+Unit\+Expression.\+java\end{DoxyCompactItemize}

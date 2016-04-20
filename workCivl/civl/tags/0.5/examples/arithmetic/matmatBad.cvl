@@ -1,0 +1,71 @@
+/* matmat.cvl: two matrix-matrix multiplication algorithms.
+ * The first is the standard one, the second uses a complex
+ * tiling optimization.  This model is used to determine
+ * whether the two are equivalent.   Example:
+ * 		civl verify matmatBad.cvl -inputBOUND=4
+ * or (if you want to find the minimal counterexample)
+ * 		civl verify matmatBad.cvl -inputBOUND=4 -min
+ * will verify equivalent for all matrix dimensions and tile
+ * sizes in the range 1..4.
+ */
+
+#define MIN(lhs, A, B) if ((A)<(B)) lhs=(A); else lhs=(B);
+
+$input int BOUND;
+$input int L;
+$assume 1<=L && L<=BOUND;
+$input int M;
+$assume 1<=M && M<=BOUND;
+$input int N;
+$assume 1<=N && N<=BOUND;
+$input int TILE_SIZE;
+$assume 1<=TILE_SIZE && TILE_SIZE<=BOUND;
+$input double A[L][M];
+$input double B[M][N];
+double C[L][N];  // A*B computed by standard algorithm
+double D[L][N];  // A*B computed by tiled algorithm
+
+void spec() {
+  for (int i = 0; i < L; i++) 
+    for (int j = 0; j < N; j++) {
+      C[i][j] = 0.0;
+      for (int k = 0; k < M; k++)
+        C[i][j] += A[i][k] * B[k][j]; 
+    }
+}
+
+void rowdist() {
+  int hi1, hi2, hi3;
+  
+  for (int i = 0; i < L; i++) {
+    for (int j = 0; j < N; j++) {
+      D[i][j] = 0.0;
+    }
+  }
+  
+  for (int ii = 0; ii < L; ii+=TILE_SIZE) {
+    for (int jj = 0; jj < N; jj+=TILE_SIZE) {
+      for (int kk = 0; kk < M; kk+=TILE_SIZE) {
+        MIN(hi1, ii+TILE_SIZE, L);
+        for (int i = ii; i < hi1; i++) {
+          MIN(hi2, jj+TILE_SIZE, N);
+          for (int j = jj; j < hi2; j++) {
+            MIN(hi3, kk+TILE_SIZE, M);
+            for (int k = kk; k < hi1; k++) // oops hi1->hi3
+              D[i][j] = D[i][j] + A[i][k] * B[k][j]; 
+          }
+        }
+      }
+    }
+  }
+}
+
+void main() {
+  spec();
+  rowdist();
+  for (int i = 0; i < L; i++) {
+    for (int j = 0; j < N; j++) {
+      $assert C[i][j] == D[i][j];
+    }
+  }
+}

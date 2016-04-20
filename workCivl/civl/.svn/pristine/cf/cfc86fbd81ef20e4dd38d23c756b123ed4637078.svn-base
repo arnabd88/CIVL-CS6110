@@ -1,0 +1,70 @@
+/* Basic flag barrier.  Same algorithm as barrier.cvl, but
+ * packaged to be re-used in other code.
+ * Commandline execution:
+ * 		civl verify -inputB=4 barrier2.cvl
+ */
+#include <civlc.cvh>
+
+$input int B = 4; // upper bound on number of threads
+$input int N;     // number of threads
+$assume(1<=N && N<=B);
+
+struct _CIVL_Barrier {
+  int numProcs;
+  int *in_barrier;
+  int num_in_barrier;
+  int lock;
+};
+
+typedef struct _CIVL_Barrier CIVL_Barrier;
+
+void CIVL_Barrier_init(int numProcs, CIVL_Barrier *barrier, int *array) {  
+  barrier->numProcs = numProcs;
+  barrier->num_in_barrier = 0;
+  barrier->lock = 0;
+  barrier->in_barrier = array;
+  for (int i=0; i<numProcs; i++)
+    barrier->in_barrier[i] = 0;
+}
+
+void CIVL_barrier(CIVL_Barrier *barrier, int tid) {
+  $atomic {
+    $when (barrier->lock==0) barrier->lock = 1;
+    barrier->in_barrier[tid] = 1;
+    barrier->num_in_barrier++;
+    if (barrier->num_in_barrier == barrier->numProcs) {
+      for (int i=0; i<barrier->numProcs; i++)
+        barrier->in_barrier[i] = 0;
+      barrier->num_in_barrier = 0;
+    }
+    barrier->lock = 0;
+    $when (barrier->in_barrier[tid] == 0);
+  }
+}
+
+
+void main() {
+  $proc threads[N];
+  int counter = 0;
+  CIVL_Barrier b;
+  int barrier_array[N];
+  
+  void run(int tid) {
+    while ($true) {
+      $assert((counter == 0));
+      CIVL_barrier(&b, tid);
+      counter++;
+      CIVL_barrier(&b, tid);
+      $assert((counter == N));
+      CIVL_barrier(&b, tid);
+      counter--;
+      CIVL_barrier(&b, tid);
+    }
+  }
+  
+  $atomic {
+    CIVL_Barrier_init(N, &b, barrier_array);
+    for (int i=0; i<N; i++) threads[i] = $spawn run(i);
+  }
+  $waitall(threads, N);
+}

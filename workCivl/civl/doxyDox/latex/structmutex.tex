@@ -1,0 +1,41 @@
+\hypertarget{structmutex}{}\section{mutex Struct Reference}
+\label{structmutex}\index{mutex@{mutex}}
+
+
+Collaboration diagram for mutex\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmutex__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structmutex_afdffc6a08e8f95e90a94340b79d2a039}{}atomic\+\_\+t {\bfseries count}\label{structmutex_afdffc6a08e8f95e90a94340b79d2a039}
+
+\item 
+\hypertarget{structmutex_a55ebf938a9b5ac84ee2aff30ac383710}{}\hyperlink{structspinlock}{spinlock\+\_\+t} {\bfseries wait\+\_\+lock}\label{structmutex_a55ebf938a9b5ac84ee2aff30ac383710}
+
+\item 
+\hypertarget{structmutex_a8e74e9a4fe0b2bebbc8346158ca5a8f9}{}struct \hyperlink{structlist__head}{list\+\_\+head} {\bfseries wait\+\_\+list}\label{structmutex_a8e74e9a4fe0b2bebbc8346158ca5a8f9}
+
+\item 
+\hypertarget{structmutex_a2618e881fedd671e0ea9e906261fa435}{}struct \hyperlink{structthread__info}{thread\+\_\+info} $\ast$ {\bfseries owner}\label{structmutex_a2618e881fedd671e0ea9e906261fa435}
+
+\item 
+\hypertarget{structmutex_a3811cf21c148fab214427774c348c7a7}{}char const $\ast$ {\bfseries name}\label{structmutex_a3811cf21c148fab214427774c348c7a7}
+
+\item 
+\hypertarget{structmutex_af3432821ea6f9ac1a083ad659874689d}{}void $\ast$ {\bfseries magic}\label{structmutex_af3432821ea6f9ac1a083ad659874689d}
+
+\item 
+\hypertarget{structmutex_a71e7ac54f837da85acfdc75bf4663c3a}{}struct \hyperlink{structlockdep__map}{lockdep\+\_\+map} {\bfseries dep\+\_\+map}\label{structmutex_a71e7ac54f837da85acfdc75bf4663c3a}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/svcomp17/linux-\/stable-\/af3071a-\/1-\/130\+\_\+7a-\/drivers-\/-\/hwmon-\/-\/s3c-\/hwmon.\+ko-\/entry\+\_\+point\+\_\+false-\/unreach-\/call.\+cil.\+out.\+c\end{DoxyCompactItemize}

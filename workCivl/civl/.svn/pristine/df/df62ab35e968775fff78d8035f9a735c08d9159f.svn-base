@@ -1,0 +1,29 @@
+/* This file is to demonstrate the file I/O function fscanf.
+ * A file has unconstrained length by default. If you want to
+ * specify the length of a file, you need to use the system 
+ * function $textFileLength() provided by civl-stdio.cvh.
+ *
+ * This program has no violation.
+ */
+#include<civlc.cvh>
+#include<stdio.h>
+#include<civl-stdio.cvh>
+
+int fooLength = $textFileLength("foo");
+
+$assume(fooLength == 5);
+
+void main(){
+  FILE *file = fopen("foo", "r");
+  int a[5];
+  int i = 0;
+  
+  while($true){
+    int count = fscanf(file, "%d", &a[i]);
+    
+    if(count == EOF)
+      break;
+    i++;
+  } 
+  $free(file);
+}

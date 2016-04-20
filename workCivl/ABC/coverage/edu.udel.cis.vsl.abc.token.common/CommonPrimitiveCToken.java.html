@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonPrimitiveCToken.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.common</a> &gt; <span class="el_source">CommonPrimitiveCToken.java</span></div><h1>CommonPrimitiveCToken.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.token.common;
+
+<span class="nc" id="L3">public class CommonPrimitiveCToken {</span>
+
+	// /**
+	// * Eclipse made me do it.
+	// */
+	// private static final long serialVersionUID = -5773484495225323826L;
+	//
+	//
+	// /**
+	// * Record of original of token through macro expansions. A null value is
+	// * possible and indicates the &quot;trivial&quot; expansion history. Note that the
+	// * getExpansionHistory method, however, will never return null, since it
+	// * instead generates the trivial history on the fly.
+	// */
+	// private ExpansionHistory expansionHistory;
+	//
+	// /**
+	// * Creates new instance by copying fields from old one. The two histories
+	// * are set to the given arguments. Both must be non-null.
+	// *
+	// * @param token
+	// * any kind of Token
+	// */
+	// public CommonPrimitiveCToken(Token token,
+	// ExpansionHistory expansionHistory, IncludeHistory includeHistory) {
+	// super(token);
+	// assert includeHistory != null;
+	// assert expansionHistory != null;
+	// this.includeHistory = includeHistory;
+	// this.expansionHistory = expansionHistory;
+	// }
+	//
+	// /**
+	// * Makes a new CToken with trivial expansion history. The include history
+	// * must be non-null.
+	// *
+	// * @param token
+	// * any instance of Token whose fields are used to initialize the
+	// * new token's fields. The expansion and include histories of the
+	// * given token, if present, are ignored.
+	// * @param includeHistory
+	// * the include history to be used for the new token
+	// */
+	// public CommonPrimitiveCToken(Token token, IncludeHistory includeHistory)
+	// {
+	// super(token);
+	// assert includeHistory != null;
+	// this.includeHistory = includeHistory;
+	// this.expansionHistory = null;
+	// }
+	//
+	//
+	// /**
+	// * Returns the expansion history of this token, which records the origin
+	// of
+	// * the token through a series of macro expansions.
+	// *
+	// * @return this token's macro expansion history
+	// */
+	// public ExpansionHistory getExpansionHistory() {
+	// if (expansionHistory != null)
+	// return expansionHistory;
+	// else
+	// // return &quot;trivial&quot; expansion history
+	// return new CommonExpansionHistory(this);
+	// }
+	//
+	// /**
+	// * Returns a string representation that is appropriate for reporting this
+	// * token and its source to the end user. It includes the text of the
+	// token,
+	// * source file, line and character index, history through macro expansion
+	// * and include directives.
+	// */
+	// @Override
+	// public String toString() {
+	// if (this.getType() == Token.EOF)
+	// return &quot;EOF&quot;;
+	//
+	// String result;
+	//
+	// result = TokenUtils.quotedText(this);
+	// if (expansionHistory != null &amp;&amp; !expansionHistory.isTrivial()) {
+	// result += expansionHistory.suffix();
+	// } else {
+	// result += &quot; in &quot; + TokenUtils.location(this);
+	// }
+	// if (includeHistory != null) {
+	// result += includeHistory.suffix();
+	// }
+	// return result;
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

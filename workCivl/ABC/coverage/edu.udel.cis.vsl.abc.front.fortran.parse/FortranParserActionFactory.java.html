@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FortranParserActionFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.fortran.parse</a> &gt; <span class="el_source">FortranParserActionFactory.java</span></div><h1>FortranParserActionFactory.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2005, 2006 Los Alamos National Security, LLC.
+ * This material was produced under U.S. Government contract DE-AC52-06NA25396
+ * for Los Alamos National Laboratory (LANL), which is operated by the Los Alamos
+ * National Security, LLC (LANS) for the U.S. Department of Energy. The U.S. Government has
+ * rights to use, reproduce, and distribute this software. NEITHER THE
+ * GOVERNMENT NOR LANS MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR
+ * ASSUMES ANY LIABILITY FOR THE USE OF THIS SOFTWARE. If software is modified
+ * to produce derivative works, such modified software should be clearly marked,
+ * so as not to confuse it with the version available from LANL.
+ *
+ * Additionally, this program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+package edu.udel.cis.vsl.abc.front.fortran.parse;
+
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+
+<span class="nc" id="L22">public class FortranParserActionFactory {</span>
+
+	public static final String ACTION_PRINT = &quot;PRINT&quot;;
+	public static final String ACTION_TREE = &quot;TREE&quot;;
+	public static final String ACTION_NULL = &quot;NULL&quot;;
+
+	static IFortranParserAction newAction(String[] args, IFortranParser parser,
+			String kind, String filename) {
+<span class="nc" id="L30">		IFortranParserAction action = null;</span>
+
+<span class="nc bnc" id="L32" title="All 10 branches missed.">		switch (kind) {</span>
+		case ACTION_NULL:
+<span class="nc" id="L34">			action = new FortranParserActionNull(args, parser, filename);</span>
+		case ACTION_PRINT:
+<span class="nc" id="L36">			action = new FortranParserActionPrint(args, parser, filename);</span>
+<span class="nc" id="L37">			break;</span>
+		case ACTION_TREE:
+<span class="nc" id="L39">			action = new FortranParserActionTreeMaker(args, parser, filename);</span>
+<span class="nc" id="L40">			break;</span>
+		default:
+<span class="nc" id="L42">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L43">					&quot;Unknown action kind of fortran parser&quot;);</span>
+		}
+		// /*
+		// * if (kind.compareToIgnoreCase(&quot;dump&quot;) == 0) { action = new
+		// * FortranParserActionPrint(args, parser, filename); } else if
+		// * (kind.compareToIgnoreCase(&quot;null&quot;) == 0) { action = new
+		// * FortranParserActionNull(args, parser, filename); } else {
+		// */
+		// // Look up the class name. Could be FortranParserActionPrint, or
+		// // FortranParserActionNull, or maybe something else.
+		// try {
+		// Constructor[] cons = Class.forName(kind).getDeclaredConstructors();
+		// for (int i = 0; i &lt; cons.length; i++) {
+		// Class[] types = cons[i].getParameterTypes();
+		// if (types.length == 3 &amp; types[0] == String[].class
+		// &amp; types[1] == IFortranParser.class
+		// &amp; types[2] == java.lang.String.class) {
+		// Object[] actionArgs = { args, parser, filename };
+		// action = (IFortranParserAction) cons[i]
+		// .newInstance(actionArgs);
+		// break;
+		// }
+		// }
+		// } catch (Exception e) {
+		// // InstantiationException, IllegalAccessException,
+		// // IllegalArgumentException, InvocationTargetException
+		// // ClassNotFoundException, NoSuchMethodException
+		// System.out.println(e);
+		// }
+
+		// Had to eliminate error case because we don't want to instantiate
+		// any explicit objects here.
+		/*
+		 * if (action == null) action = new FortranParserActionNull(args,
+		 * parser, filename);
+		 */
+
+<span class="nc" id="L80">		return action;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

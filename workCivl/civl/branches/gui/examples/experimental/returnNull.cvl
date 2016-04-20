@@ -1,0 +1,18 @@
+/*
+ * This example is to test executeReturn() function when it has returned
+ * without a return value  
+ * */
+#include<civlc.cvh>
+#include<stdio.h>
+
+int returnDouble(){
+  int a = 6;
+  if(a<5){
+    return 2*a;
+  }
+}
+
+void main(){
+  int x = returnDouble();
+  printf("Double is %d", x);
+}

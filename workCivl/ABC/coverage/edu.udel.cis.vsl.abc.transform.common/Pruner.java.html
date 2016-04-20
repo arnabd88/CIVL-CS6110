@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Pruner.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.transform.common</a> &gt; <span class="el_source">Pruner.java</span></div><h1>Pruner.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.transform.common;</span>
+
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTException;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.AttributeKey;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodePredicate;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.transform.IF.BaseTransformer;
+
+/**
+ * Prunes unreachable objects from an AST. Starting from the &quot;main&quot; function,
+ * this transformer performs a search of the nodes that can be reached by
+ * following children other than ordinary declarations and typedef declarations.
+ * When an identifier is encountered, the definition or declaration of the
+ * entity to which it refers is also searched. Hence only those
+ * declarations/definitions that are actually used will be enountered in the
+ * search.
+ * 
+ * Once the reachable nodes have been determined, the set of reachable nodes is
+ * &quot;closed&quot; by marking all ancestors of reachable nodes reachable.
+ * 
+ * This transformer assumes the given AST is a closed program. It also assumes
+ * that the standard analysis has been performed, so that identifiers have
+ * entities associted to them.
+ * 
+ * The AST nodes are modified and re-used. If you want to keep the original AST
+ * intact, you should clone it before performing this transformation.
+ * 
+ * The AST returned will be pruned, but will have not the standard analyses
+ * encoded in it. If you want them, they should be invoked on the new AST.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc bnc" id="L42" title="All 2 branches missed.">public class Pruner extends BaseTransformer {</span>
+
+	public final static String CODE = &quot;prune&quot;;
+	public final static String LONG_NAME = &quot;Pruner&quot;;
+<span class="nc" id="L46">	public final static String SHORT_DESCRIPTION = &quot;removes unreachable objects from the AST&quot;;</span>
+
+<span class="nc" id="L48">	public enum Reachability {</span>
+<span class="nc" id="L49">		/**</span>
+		 * Indicates this node is unreachable and can therefore be pruned from
+		 * the AST.
+		 */
+<span class="nc" id="L53">		UNREACHABLE,</span>
+<span class="nc" id="L54">		/**</span>
+		 * Indicates this node is reachable and must therefore be kept in the
+		 * AST.
+		 */
+<span class="nc" id="L58">		REACHABLE,</span>
+<span class="nc" id="L59">		/**</span>
+		 * Indicates that not only is this node reachable, but all of its
+		 * ancestors have also been marked reachable (in fact, all ancestors
+		 * have been marked reachable and closed).
+		 */
+<span class="nc" id="L64">		KEEP</span>
+	};
+
+	private AttributeKey reachedKey;
+
+	private NodePredicate reachable;
+
+	public Pruner(ASTFactory astFactory) {
+<span class="nc" id="L72">		super(CODE, LONG_NAME, SHORT_DESCRIPTION, astFactory);</span>
+<span class="nc" id="L73">		reachedKey = nodeFactory.newAttribute(&quot;reached&quot;, Reachability.class);</span>
+<span class="nc" id="L74">		reachable = new NodePredicate() {</span>
+
+			@Override
+			public boolean holds(ASTNode node) {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">				return node.getAttribute(reachedKey) == Reachability.KEEP;</span>
+			}
+
+		};
+<span class="nc" id="L82">	}</span>
+
+	private void markAllUnreachable(ASTNode node) {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (node == null)</span>
+<span class="nc" id="L86">			return;</span>
+		else {
+<span class="nc" id="L88">			Iterable&lt;ASTNode&gt; children = node.children();</span>
+
+<span class="nc" id="L90">			node.setAttribute(reachedKey, Reachability.UNREACHABLE);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			for (ASTNode child : children)</span>
+<span class="nc" id="L92">				markAllUnreachable(child);</span>
+		}
+<span class="nc" id="L94">	}</span>
+
+	/**
+	 * Change status of all reachable nodes and their ancestors to KEEP.
+	 * 
+	 * @param ast
+	 *            the AST which has already been analyzed by the worker for
+	 *            REACHABLE nodes
+	 */
+	private void close(List&lt;ASTNode&gt; reachableNodes) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (ASTNode node : reachableNodes) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			while (node != null</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">					&amp;&amp; node.getAttribute(reachedKey) != Reachability.KEEP) {</span>
+<span class="nc" id="L107">				node.setAttribute(reachedKey, Reachability.KEEP);</span>
+<span class="nc" id="L108">				node = node.parent();</span>
+			}
+		}
+<span class="nc" id="L111">	}</span>
+
+	@Override
+	public AST transform(AST ast) throws SyntaxException {
+<span class="nc" id="L115">		SequenceNode&lt;BlockItemNode&gt; root = ast.getRootNode();</span>
+<span class="nc" id="L116">		Function main = (Function) root.getScope().getOrdinaryEntity(false,</span>
+<span class="nc" id="L117">				&quot;main&quot;);</span>
+
+<span class="nc bnc" id="L119" title="All 4 branches missed.">		assert this.astFactory == ast.getASTFactory();</span>
+<span class="nc bnc" id="L120" title="All 4 branches missed.">		assert this.nodeFactory == astFactory.getNodeFactory();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (main == null)</span>
+<span class="nc" id="L122">			return ast;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (main.getDefinition() == null)</span>
+<span class="nc" id="L124">			throw new ASTException(&quot;Main function missing definition&quot;);</span>
+		else {
+			PrunerWorker worker;
+			AST newAst;
+			List&lt;ASTNode&gt; reachableNodes;
+
+<span class="nc" id="L130">			ast.release();</span>
+<span class="nc" id="L131">			markAllUnreachable(root);</span>
+<span class="nc" id="L132">			worker = new PrunerWorker(reachedKey, root);</span>
+<span class="nc" id="L133">			reachableNodes = worker.getReachableNodes();</span>
+<span class="nc" id="L134">			close(reachableNodes);</span>
+			// TODO: for variable declarations: if the initializer is reachable
+			// but not the declaration, need to replace that node with an
+			// expression statement node.
+<span class="nc" id="L138">			root.keepOnly(reachable);</span>
+<span class="nc" id="L139">			newAst = astFactory.newAST(root, ast.getSourceFiles(),</span>
+<span class="nc" id="L140">					ast.isWholeProgram());</span>
+<span class="nc" id="L141">			return newAst;</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

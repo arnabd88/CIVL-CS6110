@@ -1,0 +1,120 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Noop\+Statement Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Noop\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Noop\+Statement}}
+
+
+Marker interface for a noop statement.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Noop\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Noop\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_1_1NoopKind}{Noop\+Kind}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_1_1NoopKind}{Noop\+Kind} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_aec89669b66851864b416c81d9c270801}{noop\+Kind} ()
+\begin{DoxyCompactList}\small\item\em Returns the kind of this noop statement, which might be a if-\/else branching, loop branching, atomic entering/exiting noop statement, etc. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_ac0e1c42c24814d03f83c04f7c14b9759}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} {\bfseries expression} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_ac0e1c42c24814d03f83c04f7c14b9759}
+
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_a68057b4e3168316fceacc4ac3212c6a7}{is\+Temporary} ()
+\begin{DoxyCompactList}\small\item\em is this a temporary noop that is inserted by the model builder and should be removed from the model? \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_af06428caa2711778779e0ea5bf1ce738}{}void {\bfseries set\+Removable} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_af06428caa2711778779e0ea5bf1ce738}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_a3de4e8137498a4d8174008c985ed08f9}{}boolean {\bfseries is\+Removable} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_a3de4e8137498a4d8174008c985ed08f9}
+
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_a518708c107c967a575749dd0f0c129b9}{is\+Variable\+Declaration} ()
+\begin{DoxyCompactList}\small\item\em is this noop associating to a variable declaration? \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Marker interface for a noop statement. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_a68057b4e3168316fceacc4ac3212c6a7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement}!is\+Temporary@{is\+Temporary}}
+\index{is\+Temporary@{is\+Temporary}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement}}
+\subsubsection[{is\+Temporary}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Noop\+Statement.\+is\+Temporary (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_a68057b4e3168316fceacc4ac3212c6a7}
+
+
+is this a temporary noop that is inserted by the model builder and should be removed from the model? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement_ab71b50917e8821af03ed1944a93c9c74}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Noop\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_a518708c107c967a575749dd0f0c129b9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement}!is\+Variable\+Declaration@{is\+Variable\+Declaration}}
+\index{is\+Variable\+Declaration@{is\+Variable\+Declaration}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement}}
+\subsubsection[{is\+Variable\+Declaration}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Noop\+Statement.\+is\+Variable\+Declaration (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_a518708c107c967a575749dd0f0c129b9}
+
+
+is this noop associating to a variable declaration? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement_a66dc2cac44bf6ccdea0f0f8ed72bb063}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Noop\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_aec89669b66851864b416c81d9c270801}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement}!noop\+Kind@{noop\+Kind}}
+\index{noop\+Kind@{noop\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Noop\+Statement}}
+\subsubsection[{noop\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Noop\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Noop\+Statement.\+noop\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1NoopStatement_aec89669b66851864b416c81d9c270801}
+
+
+Returns the kind of this noop statement, which might be a if-\/else branching, loop branching, atomic entering/exiting noop statement, etc. 
+
+\begin{DoxyReturn}{Returns}
+The kind of this noop statement 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement_a25febb0b82115226e70c00fa85a4a22c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Noop\+Statement}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/statement/Noop\+Statement.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,25 @@
+/* Commandline execution:
+ *		civl verify continue.cvl
+ * */
+#include <civlc.h>
+
+void main() {
+  for (int i = 0; i < 5; i++) {
+    for (int j = 0; j < 5; j++) {
+      for (int k = 0; k < 7; k++) {
+        if (k < 4) {
+          continue;
+        }
+        $assert k >= 4;
+      }
+      if (j > 3) {
+       continue;
+      }
+      $assert j <= 3;
+    }
+    if (i <= 2) {
+      continue;
+    }
+    $assert i > 2;
+  }
+}

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonProgram.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.program.common</a> &gt; <span class="el_source">CommonProgram.java</span></div><h1>CommonProgram.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.program.common;
+
+import java.io.PrintStream;
+import java.util.LinkedList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.analysis.IF.Analyzer;
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode.NodeKind;
+import edu.udel.cis.vsl.abc.program.IF.Program;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+import edu.udel.cis.vsl.abc.transform.IF.Transform;
+import edu.udel.cis.vsl.abc.transform.IF.Transformer;
+
+public class CommonProgram implements Program {
+
+	private Analyzer standardAnalyzer;
+
+	private AST ast;
+
+<span class="nc" id="L24">	public CommonProgram(Analyzer standardAnalyzer, AST ast)</span>
+			throws SyntaxException {
+<span class="nc" id="L26">		this.standardAnalyzer = standardAnalyzer;</span>
+<span class="nc" id="L27">		this.ast = ast;</span>
+<span class="nc" id="L28">		standardAnalyzer.clear(ast);</span>
+<span class="nc" id="L29">		standardAnalyzer.analyze(ast);</span>
+<span class="nc" id="L30">	}</span>
+
+	@Override
+	public AST getAST() {
+<span class="nc" id="L34">		return ast;</span>
+	}
+
+	@Override
+	public void print(PrintStream out) {
+<span class="nc" id="L39">		ast.print(out);</span>
+<span class="nc" id="L40">	}</span>
+
+	@Override
+	public void prettyPrint(PrintStream out) {
+<span class="nc" id="L44">		ast.prettyPrint(out, false);</span>
+<span class="nc" id="L45">	}</span>
+
+	@Override
+	public void printSymbolTable(PrintStream out) {
+<span class="nc" id="L49">		ast.getRootNode().getScope().print(out);</span>
+<span class="nc" id="L50">	}</span>
+
+	@Override
+	public TokenFactory getTokenFactory() {
+<span class="nc" id="L54">		return ast.getASTFactory().getTokenFactory();</span>
+	}
+
+	@Override
+	public void apply(Transformer transformer) throws SyntaxException {
+<span class="nc" id="L59">		ast = transformer.transform(ast);</span>
+<span class="nc" id="L60">		standardAnalyzer.clear(ast);</span>
+
+		// debugging:
+		// ast.prettyPrint(System.out, true);
+
+<span class="nc" id="L65">		standardAnalyzer.analyze(ast);</span>
+<span class="nc" id="L66">	}</span>
+
+	@Override
+	public void applyTransformer(String code) throws SyntaxException {
+<span class="nc" id="L70">		Transformer transformer = Transform.newTransformer(code,</span>
+<span class="nc" id="L71">				ast.getASTFactory());</span>
+
+<span class="nc" id="L73">		apply(transformer);</span>
+<span class="nc" id="L74">	}</span>
+
+	@Override
+	public void apply(Iterable&lt;Transformer&gt; transformers)
+			throws SyntaxException {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (Transformer transformer : transformers) {</span>
+<span class="nc" id="L80">			ast = transformer.transform(ast);</span>
+<span class="nc" id="L81">			standardAnalyzer.clear(ast);</span>
+<span class="nc" id="L82">			standardAnalyzer.analyze(ast);</span>
+		}
+<span class="nc" id="L84">	}</span>
+
+	@Override
+	public void applyTransformers(Iterable&lt;String&gt; codes)
+			throws SyntaxException {
+<span class="nc" id="L89">		List&lt;Transformer&gt; transformers = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L90">		ASTFactory astFactory = ast.getASTFactory();</span>
+
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (String code : codes)</span>
+<span class="nc" id="L93">			transformers.add(Transform.newTransformer(code, astFactory));</span>
+<span class="nc" id="L94">		apply(transformers);</span>
+<span class="nc" id="L95">	}</span>
+
+	@Override
+	public boolean hasOmpPragma() {
+<span class="nc" id="L99">		return this.hasOmpPragmaInASTNode(ast.getRootNode());</span>
+	}
+
+	private boolean hasOmpPragmaInASTNode(ASTNode node) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (node.nodeKind() == NodeKind.OMP_NODE) {</span>
+//			PragmaNode pragmaNode = (PragmaNode) node;
+//			if (pragmaNode.getPragmaIdentifier().name().equals(&quot;omp&quot;))
+<span class="nc" id="L106">				return true;</span>
+		} else {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (child != null)</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">					if (this.hasOmpPragmaInASTNode(child))</span>
+<span class="nc" id="L111">						return true;</span>
+			}
+		}
+<span class="nc" id="L114">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,35 @@
+/* two_lock_queue.cvl: a "Two-Lock Concurrent
+ * Queue Algorithm", from Michael and Scott,
+ * https://www.cs.rochester.edu/research/synchronization/pseudocode/queues.html.
+ * Originally from "Simple, Fast, and
+ * Practical Non-Blocking and Blocking
+ * Concurrent Queue Algorithms", PODC96.
+ */
+#include <civlc.cvh>
+#include <assert.h>
+#include "queue.h"
+
+#define N 2
+#define T 2
+$output int RESULT[T][N];
+int A[N];
+queue_t queue;
+
+void thread(int tid){
+  for(int i=0; i<N; i++)
+    enqueue(&queue, A[i]+tid*N);
+  for(int i=0; i<N; i++)
+    dequeue(&queue, &(RESULT[tid][i]));
+}
+
+int main(){
+  for(int i=0; i<N; i++)
+    A[i] = i+1;
+  for(int i=0; i<T; i++)
+    for(int j=0; j<N; j++)
+      RESULT[i][j] = 0;
+  initialize(&queue);
+  $parfor(int i: 0 .. T-1)
+    thread(i);
+  freequeue(queue);
+}

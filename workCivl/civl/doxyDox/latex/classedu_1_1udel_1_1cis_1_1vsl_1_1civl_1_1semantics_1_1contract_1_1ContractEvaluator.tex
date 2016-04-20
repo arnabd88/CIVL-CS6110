@@ -1,0 +1,199 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Evaluator Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Evaluator@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Evaluator}}
+
+
+This class extends \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a8746c4deea2a861efa0f60966058858b}{Common\+Evaluator} with contracts evaluating semantics.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a6a0131692e56216b1911f057334a2014}{}{\bfseries Contract\+Evaluator} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_aa8c2843544334f9c4364df7538f5809c}{model\+Factory}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} state\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a38a592becbd84110bed227073b7ac748}{symbolic\+Util}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a714f874cf229bac7bf45da9f359c141e}{symbolic\+Analyzer}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Unit\+Factory, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a01fcde97a26da8cc29f2dd594e138cde}{error\+Logger}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a6a0131692e56216b1911f057334a2014}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a72379a883e9aff7355a86efa045e7982}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} {\bfseries evaluate} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a72379a883e9aff7355a86efa045e7982}
+
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Triple}{Triple}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, Symbolic\+Expression, Symbolic\+Expression $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a086f6d930c9d3aa968b31b810f65b7ac}{derive\+M\+P\+I\+Collective\+Title} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1MPICollectiveBehavior}{M\+P\+I\+Collective\+Behavior} collective, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} function)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em T\+O\+D\+O\+: Is this function useful ? \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_aa92746506992ef62eb79e214aa448269}{}final Numeric\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_aa92746506992ef62eb79e214aa448269}{F\+I\+N\+A\+L\+I\+Z\+E\+D}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_aa92746506992ef62eb79e214aa448269}
+
+\begin{DoxyCompactList}\small\item\em F\+I\+N\+A\+L\+I\+Z\+E\+D flag value for M\+P\+I system status variable. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a39e08de973e61217254afeed475edfea}{}final Numeric\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a39e08de973e61217254afeed475edfea}{I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+D}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a39e08de973e61217254afeed475edfea}
+
+\begin{DoxyCompactList}\small\item\em I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+D flag value for M\+P\+I system status variable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a8088fc507a7635366e9d42885ba3d953}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} {\bfseries evaluate\+Binary} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}{Binary\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a8088fc507a7635366e9d42885ba3d953}
+
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_ac700a32bdb919530762acd046eecfb6d}{evaluate\+Remote\+Expression} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}{Binary\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em The evaluating on a remote accessing expression follows the semantics\+: \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a908e189773e00c45755c4f5dfa17c018}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a908e189773e00c45755c4f5dfa17c018}{evaluate\+Unary} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1UnaryExpression}{Unary\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a908e189773e00c45755c4f5dfa17c018}
+
+\begin{DoxyCompactList}\small\item\em Override for adding contract specific operations evaluating implementations. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_ac6b7365276e9c4ca4e8fcd6f32435f97}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_ac6b7365276e9c4ca4e8fcd6f32435f97}{evaluate\+Dereference} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DereferenceExpression}{Dereference\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_ac6b7365276e9c4ca4e8fcd6f32435f97}
+
+\begin{DoxyCompactList}\small\item\em Override for handling non-\/concrete symbolic pointers\+: The current policy for symbolic pointers does not allow dereferencing a symbolic pointer. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a0b610055f2a7cfa3dbb49a5f26efa730}{evaluate\+M\+P\+I\+Contract\+Expression} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MPIContractExpression}{M\+P\+I\+Contract\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Loading M\+P\+I library evaluator to evaluate M\+P\+I Contract expressions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This class extends \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a8746c4deea2a861efa0f60966058858b}{Common\+Evaluator} with contracts evaluating semantics. 
+
+This is a summary of the extension or over-\/written for contracts system\+: General section\+: 
+\begin{DoxyEnumerate}
+\item (pointer set)\+: denotes a set of pointers P are valid, i.\+e. for all pointer p in P, p is dereferable. 
+\item (variable, process)\+: expresses a remote expression. \hyperlink{structA}{A} remote expression evaluates to the evaluation of the variable on the process. N\+O\+T\+E there are two restrictions on use of remote expressions\+: 
+\begin{DoxyItemize}
+\item Remote expressions currently cannot be used at requirements of function contracts 
+\item All variables v appear in the process expression of a remote expression must be declared inside the verifying function body. The verifying function is the function owns the contracts. Or v can only be constants. 
+\end{DoxyItemize}These two restrictions are suppose to avoid the difficulty of building the start state of a verifying function and more importantly non-\/sense remote expressions. 
+\item dereference\+: The dereferencing operation must be able to recognize weather undereferable pointers are concrete and not guaranteed to be valid. 
+\end{DoxyEnumerate}
+
+M\+P\+I section\+: Evaluation of M\+P\+I contract expressions and collective evaluation see \hyperlink{}{Libmpi\+Evaluator} 
+
+\begin{DoxyAuthor}{Author}
+ziqingluo 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a086f6d930c9d3aa968b31b810f65b7ac}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator}!derive\+M\+P\+I\+Collective\+Title@{derive\+M\+P\+I\+Collective\+Title}}
+\index{derive\+M\+P\+I\+Collective\+Title@{derive\+M\+P\+I\+Collective\+Title}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator}}
+\subsubsection[{derive\+M\+P\+I\+Collective\+Title}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Triple}$<${\bf State}, Symbolic\+Expression, Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Evaluator.\+derive\+M\+P\+I\+Collective\+Title (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf M\+P\+I\+Collective\+Behavior}}]{collective, }
+\item[{{\bf C\+I\+V\+L\+Function}}]{function}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a086f6d930c9d3aa968b31b810f65b7ac}
+
+
+T\+O\+D\+O\+: Is this function useful ? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+{\em process} & \\
+\hline
+{\em collective} & \\
+\hline
+{\em function} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a0b610055f2a7cfa3dbb49a5f26efa730}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator}!evaluate\+M\+P\+I\+Contract\+Expression@{evaluate\+M\+P\+I\+Contract\+Expression}}
+\index{evaluate\+M\+P\+I\+Contract\+Expression@{evaluate\+M\+P\+I\+Contract\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator}}
+\subsubsection[{evaluate\+M\+P\+I\+Contract\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Evaluator.\+evaluate\+M\+P\+I\+Contract\+Expression (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf M\+P\+I\+Contract\+Expression}}]{expression}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_a0b610055f2a7cfa3dbb49a5f26efa730}
+
+
+Loading M\+P\+I library evaluator to evaluate M\+P\+I Contract expressions. 
+
+see \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1mpi_1_1LibmpiEvaluator_a10f3fa16ac7757962f7f9d00fc65d6e0}{Libmpi\+Evaluator\#evaluate\+M\+P\+I\+Contract\+Expression(\+State, int, String, M\+P\+I\+Contract\+Expression)}
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em process} & The String identifier of the process \\
+\hline
+{\em expression} & The \hyperlink{}{M\+P\+I\+Contract\+Expression} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_ac700a32bdb919530762acd046eecfb6d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator}!evaluate\+Remote\+Expression@{evaluate\+Remote\+Expression}}
+\index{evaluate\+Remote\+Expression@{evaluate\+Remote\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Evaluator}}
+\subsubsection[{evaluate\+Remote\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Evaluator.\+evaluate\+Remote\+Expression (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf Binary\+Expression}}]{expression}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator_ac700a32bdb919530762acd046eecfb6d}
+
+
+The evaluating on a remote accessing expression follows the semantics\+: 
+
+\hyperlink{structA}{A} \hyperlink{}{B\+I\+N\+A\+R\+Y\+\_\+\+O\+P\+E\+R\+A\+T\+O\+R\#\+R\+E\+M\+O\+T\+E} operation takes two operands\+: left hand side operand represents a variable v and the right hand side operand represents a process p.
+
+The whole expression evaluates to the evaluation of the variable v on process p. It requires that at the evaluation time, v must be visible at the location where the control of p is. Such a restriction indicates that remote expression can hardly be used at other lexical locations than contract expression. The use of remote expressions in contract see \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator}{Contract\+Evaluator} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em expression} & The remote expression \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/contract/Contract\+Evaluator.\+java\end{DoxyCompactItemize}

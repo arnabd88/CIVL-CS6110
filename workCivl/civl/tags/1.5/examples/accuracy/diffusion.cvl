@@ -1,0 +1,36 @@
+/* Commandline execution:
+ *		civl verify -inputn=4 diffusion.cvl
+ * */
+#include<civlc.cvh>
+
+$input int n = 4; /* Number of points */
+$input double h;  /* Distance between points */
+$input double dt; /* Size of a time step */
+$input double k;  /* Constant for rate of diffusion */
+$input double u1[n];
+$abstract $contin(4) $real u($real x, $real t);
+$assume(h > 0);
+$assume(dt > 0);
+$assume(k > 0);
+double v[n];
+double v_new[n];
+int iter;
+
+void update() {
+	$assume($forall {j=0 .. n-1} v[j] == u(j*h, iter*dt));
+	for (int i = 1; i < n-1; i++) {
+	  v_new[i] = v[i]+dt*k*(v[i+1]-2*v[i]+v[i-1])/(h*h);
+	}
+	for (int i = 1; i < n-1; i++) {
+	  v[i] = v_new[i];
+	}	
+	$assert(($uniform{m=1 .. n-2} (u(m*h, (iter+1)*dt)-v[m])/dt-$D[u, {t, 1}](m*h, iter*dt)+k*$D[u,{x,2}](m*h, iter*dt) ==$O(dt)+$O(h*h)));
+}
+
+void main() {
+  for (int i = 0; i < n; i++) {
+    v[i] = u1[i];
+  }
+  iter = 0;
+  update();
+}

@@ -1,0 +1,877 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory}}
+
+
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type factory provides the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} primitive types, like {\ttfamily \$bool}, {\ttfamily int}, {\ttfamily float}, {\ttfamily \$scope} , etc.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a986698b91843b55b50a111614ddaee00}{boolean\+Type} ()
+\begin{DoxyCompactList}\small\item\em Get the boolean primitive type. \end{DoxyCompactList}\item 
+Symbolic\+Union\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a0e7ed6c6108da960abec6537d78f6047}{bundle\+Symbolic\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic type of the bundle type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLBundleType}{C\+I\+V\+L\+Bundle\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a6f39e2e540a2c398a2491809304561e9}{bundle\+Type} ()
+\begin{DoxyCompactList}\small\item\em Gets the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} bundle type, which is unique for a given \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ae23f8ae8d56490c3dd5b7bd6b03aab32}{char\+Type} ()
+\begin{DoxyCompactList}\small\item\em Get the char primitive type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLCompleteArrayType}{C\+I\+V\+L\+Complete\+Array\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a79570f457ac5c9416469727fe21ad959}{complete\+Array\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} element\+Type, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} extent)
+\begin{DoxyCompactList}\small\item\em Returns a new complete array type with specified extent (length expression) and element type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLCompleteDomainType}{C\+I\+V\+L\+Complete\+Domain\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ad4ca00d8ee9d2e6b27a5654546e40a82}{complete\+Domain\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ac9066abf4714e7acbfae8c30f2cdcd71}{range\+Type}, int dim)
+\begin{DoxyCompactList}\small\item\em Creates a complete regular domain type, which is has the given dimension and is composed by the given range type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLDomainType}{C\+I\+V\+L\+Domain\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a832912815c287a68e0e9eed3d1ddf707}{domain\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ac9066abf4714e7acbfae8c30f2cdcd71}{range\+Type})
+\begin{DoxyCompactList}\small\item\em This returns the universal domain type ({\ttfamily \$domain}). \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abccdc7baed85680513d89f814f30a296}{dynamic\+Type} ()
+\begin{DoxyCompactList}\small\item\em Get the dynamic type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLEnumType}{C\+I\+V\+L\+Enum\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_afeaa6cc593bcbf0658e7d63d41139dc8}{enum\+Type} (String name, Map$<$ String, Big\+Integer $>$ value\+Map)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of enumeration type with the specified name. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLFunctionType}{C\+I\+V\+L\+Function\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a7ab8d627c813f263703db4f709ebcf81}{function\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} return\+Type, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type}\mbox{[}$\,$\mbox{]} para\+Types)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of function type, which contains a return type and a list of parameter types. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLHeapType}{C\+I\+V\+L\+Heap\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a535ddc63fe176a188a785e3298ccb18d}{heap\+Type} (String name)
+\begin{DoxyCompactList}\small\item\em Returns a new, incomplete heap type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLArrayType}{C\+I\+V\+L\+Array\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a70cbdfcbd73b2c1390cbc76b9c56649d}{incomplete\+Array\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} element\+Type)
+\begin{DoxyCompactList}\small\item\em Get a new incomplete array type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af0cbefdb79635c5e81c7dc3c373c0f06}{integer\+Type} ()
+\begin{DoxyCompactList}\small\item\em Create a new location. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLHeapType}{C\+I\+V\+L\+Heap\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ad385b5ace8c88cc64c1e79d6604e83da}{heap\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} heap type, which is unique for a given \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. \end{DoxyCompactList}\item 
+Symbolic\+Tuple\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ab9d7f6737838402514c0dca3ca8a9c0c}{heap\+Symbolic\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic heap type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPointerType}{C\+I\+V\+L\+Pointer\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abd638d688c7f810bddf3f822de0a4b11}{pointer\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} base\+Type)
+\begin{DoxyCompactList}\small\item\em Get a new pointer type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a71d99fd4f10982591830075621a39dad}{process\+Type} ()
+\begin{DoxyCompactList}\small\item\em Get the process type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ac9066abf4714e7acbfae8c30f2cdcd71}{range\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the range type of the system. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_add189fcd1b9686de5451299b1404a8dd}{real\+Type} ()
+\begin{DoxyCompactList}\small\item\em Get the real primitive type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a5eafb9f1c9713661c050f9455b2e0576}{scope\+Type} ()
+\begin{DoxyCompactList}\small\item\em Get the scope primitive type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1StructOrUnionField}{Struct\+Or\+Union\+Field} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ae6c809d32543a625f0aa3a686231cadc}{struct\+Field} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type)
+\begin{DoxyCompactList}\small\item\em Returns a new struct field, used to complete a struct type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType}{C\+I\+V\+L\+Struct\+Or\+Union\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af9b1d1dc0f6cc745f0b23aa73e8a27f2}{struct\+Or\+Union\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} name, boolean is\+Struct)
+\begin{DoxyCompactList}\small\item\em Returns new incomplete struct or union type with given name. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_afff258954b19be64283001c51e1670dd}{system\+Type} (String name)
+\begin{DoxyCompactList}\small\item\em Obtains the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type by the given name. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_aff4b164f7b7a02e3173d88ac2ed9026f}{void\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the void type. \end{DoxyCompactList}\item 
+Symbolic\+Tuple\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a1028abe32689aadc390506eb441464bb}{dynamic\+Symbolic\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic type used to represent values of type C\+I\+V\+L\+Dynamic\+Type. \end{DoxyCompactList}\item 
+Symbolic\+Tuple\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a37e00dd13c46ac88572f612f2db48f49}{function\+Pointer\+Symbolic\+Type} ()
+\begin{DoxyCompactList}\small\item\em Gets the symbolic function pointer type. \end{DoxyCompactList}\item 
+Symbolic\+Tuple\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a3a7ab8c61f1b1f4a73ef63a922e83237}{pointer\+Symbolic\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic type used to represent pointers. \end{DoxyCompactList}\item 
+Symbolic\+Tuple\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a966c01334c8781bc88a8989770f1b7a1}{process\+Symbolic\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic type used to represent process reference values. \end{DoxyCompactList}\item 
+Symbolic\+Tuple\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a492187dd08fb06b6af23bf3ee0ed4c0f}{scope\+Symbolic\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic type used to represent scope values. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a8ae77a4351158e2610bb3051398b4829}{add\+Heap\+Field\+Object\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type, int id)
+\begin{DoxyCompactList}\small\item\em Add the given type as the object type of one of the heap field. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a1dbcbe0dc45560da0b35bc847ae1879d}{add\+System\+Type} (String name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type)
+\begin{DoxyCompactList}\small\item\em Added a type in map of system type, which is the map of types of system libraries, e.\+g., \$gcomm/\$comm for comm, \$file for stdio, \$gbarrier/\$barrier for concurrency, etc. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abe26d011e62a5cbfef194c28aeed51be}{complete\+Bundle\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLBundleType}{C\+I\+V\+L\+Bundle\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a6f39e2e540a2c398a2491809304561e9}{bundle\+Type}, List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} $>$ ele\+Types, Collection$<$ Symbolic\+Type $>$ types)
+\begin{DoxyCompactList}\small\item\em Completes the bundle type by specifying the list of all dynamic types which can occur as bundle elements. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af8039e88923ed7905b59426add7d5e74}{complete\+Heap\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLHeapType}{C\+I\+V\+L\+Heap\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a535ddc63fe176a188a785e3298ccb18d}{heap\+Type}, Collection$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement}{Malloc\+Statement} $>$ mallocs)
+\begin{DoxyCompactList}\small\item\em Completes the heap type. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ac0689896cc71dc61590735f807b89d31}{get\+Heap\+Field\+Id} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type)
+\begin{DoxyCompactList}\small\item\em Returns the type of the heap field of the given index. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLBundleType}{C\+I\+V\+L\+Bundle\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a4ab583c20d72f5e41df23b7a5e846475}{init\+Bundle\+Type} ()
+\begin{DoxyCompactList}\small\item\em Initializes the bundle type of the model and return the result. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type factory provides the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} primitive types, like {\ttfamily \$bool}, {\ttfamily int}, {\ttfamily float}, {\ttfamily \$scope} , etc. 
+
+It also constructs the heap type and bundle type, which are model-\/sensitive, and could be different from model to model.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a8ae77a4351158e2610bb3051398b4829}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!add\+Heap\+Field\+Object\+Type@{add\+Heap\+Field\+Object\+Type}}
+\index{add\+Heap\+Field\+Object\+Type@{add\+Heap\+Field\+Object\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{add\+Heap\+Field\+Object\+Type}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+add\+Heap\+Field\+Object\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{type, }
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a8ae77a4351158e2610bb3051398b4829}
+
+
+Add the given type as the object type of one of the heap field. 
+
+This will add one more element to the heap type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \\
+\hline
+{\em id} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_aabaccc6826ea4cfa89f4bcfd87fd46bb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a1dbcbe0dc45560da0b35bc847ae1879d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!add\+System\+Type@{add\+System\+Type}}
+\index{add\+System\+Type@{add\+System\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{add\+System\+Type}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+add\+System\+Type (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{{\bf C\+I\+V\+L\+Type}}]{type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a1dbcbe0dc45560da0b35bc847ae1879d}
+
+
+Added a type in map of system type, which is the map of types of system libraries, e.\+g., \$gcomm/\$comm for comm, \$file for stdio, \$gbarrier/\$barrier for concurrency, etc. 
+
+Each type that will be used by the system library components (e.\+g., library executor, etc) should be added explicitly by calling this method.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the type. \\
+\hline
+{\em type} & The type to be added as a system type \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a787c17d0e4633cab538d160b950a2818}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a986698b91843b55b50a111614ddaee00}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!boolean\+Type@{boolean\+Type}}
+\index{boolean\+Type@{boolean\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{boolean\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Primitive\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+boolean\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a986698b91843b55b50a111614ddaee00}
+
+
+Get the boolean primitive type. 
+
+\begin{DoxyReturn}{Returns}
+The boolean primitive type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_aa8ee23e07a39d7f796c9b3897e448b37}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a0e7ed6c6108da960abec6537d78f6047}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!bundle\+Symbolic\+Type@{bundle\+Symbolic\+Type}}
+\index{bundle\+Symbolic\+Type@{bundle\+Symbolic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{bundle\+Symbolic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Union\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+bundle\+Symbolic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a0e7ed6c6108da960abec6537d78f6047}
+
+
+Returns the symbolic type of the bundle type. 
+
+\begin{DoxyReturn}{Returns}
+the symbolic type of the bundle type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_af22a4cdefdefc62e2d791d37e8979025}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a6f39e2e540a2c398a2491809304561e9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!bundle\+Type@{bundle\+Type}}
+\index{bundle\+Type@{bundle\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{bundle\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Bundle\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+bundle\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a6f39e2e540a2c398a2491809304561e9}
+
+
+Gets the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} bundle type, which is unique for a given \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. 
+
+\hyperlink{structA}{A} bundle type is a union type of all types referenced by a given \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. \hyperlink{structA}{A} bundle type needs to be completed at the end of the construction of the model.
+
+\begin{DoxyReturn}{Returns}
+the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} bundle type of the model 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_afa56a9a4ee603374a8efc01c42857a28}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ae23f8ae8d56490c3dd5b7bd6b03aab32}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!char\+Type@{char\+Type}}
+\index{char\+Type@{char\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{char\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Primitive\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+char\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ae23f8ae8d56490c3dd5b7bd6b03aab32}
+
+
+Get the char primitive type. 
+
+\begin{DoxyReturn}{Returns}
+The char primitive type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a6a1c0040aa0843c4591adf96884cef1a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a79570f457ac5c9416469727fe21ad959}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!complete\+Array\+Type@{complete\+Array\+Type}}
+\index{complete\+Array\+Type@{complete\+Array\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{complete\+Array\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Complete\+Array\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+complete\+Array\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{element\+Type, }
+\item[{{\bf Expression}}]{extent}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a79570f457ac5c9416469727fe21ad959}
+
+
+Returns a new complete array type with specified extent (length expression) and element type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element\+Type} & the type of each element in the array \\
+\hline
+{\em extent} & the expression of integer type specifying the length of the array \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the complete array type, as specified 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a5346ed597ca905bf22bcc1e4f077d3a4}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abe26d011e62a5cbfef194c28aeed51be}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!complete\+Bundle\+Type@{complete\+Bundle\+Type}}
+\index{complete\+Bundle\+Type@{complete\+Bundle\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{complete\+Bundle\+Type}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+complete\+Bundle\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Bundle\+Type}}]{bundle\+Type, }
+\item[{List$<$ {\bf C\+I\+V\+L\+Type} $>$}]{ele\+Types, }
+\item[{Collection$<$ Symbolic\+Type $>$}]{types}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abe26d011e62a5cbfef194c28aeed51be}
+
+
+Completes the bundle type by specifying the list of all dynamic types which can occur as bundle elements. 
+
+If the collections yields a sequence of types t\+\_\+i, then the bundle symbolic type is union\+\_\+i(array(t\+\_\+i)).
+
+
+\begin{DoxyParams}{Parameters}
+{\em bundle\+Type} & an incomplete bundle type \\
+\hline
+{\em ele\+Types} & the list of types that could be the element of the bundle type \\
+\hline
+{\em types} & the set of all dynamic types which occur as bundle elements \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a0e6864d13e6b47b678009e407e133a7f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ad4ca00d8ee9d2e6b27a5654546e40a82}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!complete\+Domain\+Type@{complete\+Domain\+Type}}
+\index{complete\+Domain\+Type@{complete\+Domain\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{complete\+Domain\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Complete\+Domain\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+complete\+Domain\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{range\+Type, }
+\item[{int}]{dim}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ad4ca00d8ee9d2e6b27a5654546e40a82}
+
+
+Creates a complete regular domain type, which is has the given dimension and is composed by the given range type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em range\+Type} & the range type \\
+\hline
+{\em dim} & the dimension of the domain type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the complete regular domain type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a4bcc6810e791715c353d42b4400cbe03}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af8039e88923ed7905b59426add7d5e74}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!complete\+Heap\+Type@{complete\+Heap\+Type}}
+\index{complete\+Heap\+Type@{complete\+Heap\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{complete\+Heap\+Type}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+complete\+Heap\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Heap\+Type}}]{heap\+Type, }
+\item[{Collection$<$ {\bf Malloc\+Statement} $>$}]{mallocs}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af8039e88923ed7905b59426add7d5e74}
+
+
+Completes the heap type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em heap\+Type} & an incomplete heap type \\
+\hline
+{\em mallocs} & sequence of malloc statements that can access heaps of that type \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a97cbac737d2beb0ddce81bf7eab74bdd}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a832912815c287a68e0e9eed3d1ddf707}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!domain\+Type@{domain\+Type}}
+\index{domain\+Type@{domain\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{domain\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Domain\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+domain\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{range\+Type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a832912815c287a68e0e9eed3d1ddf707}
+
+
+This returns the universal domain type ({\ttfamily \$domain}). 
+
+It includes all the complete domain types ({\ttfamily \$domain(n)}).
+
+
+\begin{DoxyParams}{Parameters}
+{\em range\+Type} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the universal domain type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a5cc1f5f9e61ea08214a2a0f642e31dab}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a1028abe32689aadc390506eb441464bb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!dynamic\+Symbolic\+Type@{dynamic\+Symbolic\+Type}}
+\index{dynamic\+Symbolic\+Type@{dynamic\+Symbolic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{dynamic\+Symbolic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Tuple\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+dynamic\+Symbolic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a1028abe32689aadc390506eb441464bb}
+
+
+Returns the symbolic type used to represent values of type C\+I\+V\+L\+Dynamic\+Type. 
+
+\begin{DoxyReturn}{Returns}
+the symbolic type used to represent values of type C\+I\+V\+L\+Dynamic\+Type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_ad2801063395edccb9771c83a0dcdcf6d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abccdc7baed85680513d89f814f30a296}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!dynamic\+Type@{dynamic\+Type}}
+\index{dynamic\+Type@{dynamic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{dynamic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Primitive\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+dynamic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abccdc7baed85680513d89f814f30a296}
+
+
+Get the dynamic type. 
+
+\begin{DoxyReturn}{Returns}
+The dynamic type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a3073361222b38e87518e6aa9e05057b2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_afeaa6cc593bcbf0658e7d63d41139dc8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!enum\+Type@{enum\+Type}}
+\index{enum\+Type@{enum\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{enum\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Enum\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+enum\+Type (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{Map$<$ String, Big\+Integer $>$}]{value\+Map}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_afeaa6cc593bcbf0658e7d63d41139dc8}
+
+
+Creates a new instance of enumeration type with the specified name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the enumeration type to be created. \\
+\hline
+{\em value\+Map} & The map of enumerator names and their values. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new enumeration type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a0d9fcb3f4ae987b6ac6b55549ecee191}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a37e00dd13c46ac88572f612f2db48f49}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!function\+Pointer\+Symbolic\+Type@{function\+Pointer\+Symbolic\+Type}}
+\index{function\+Pointer\+Symbolic\+Type@{function\+Pointer\+Symbolic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{function\+Pointer\+Symbolic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Tuple\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+function\+Pointer\+Symbolic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a37e00dd13c46ac88572f612f2db48f49}
+
+
+Gets the symbolic function pointer type. 
+
+\begin{DoxyReturn}{Returns}
+the symbolic function pointer type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a62fcb953a06c1ffa93f4a15d6cfb5fef}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a7ab8d627c813f263703db4f709ebcf81}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!function\+Type@{function\+Type}}
+\index{function\+Type@{function\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{function\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Function\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+function\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{return\+Type, }
+\item[{{\bf C\+I\+V\+L\+Type}\mbox{[}$\,$\mbox{]}}]{para\+Types}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a7ab8d627c813f263703db4f709ebcf81}
+
+
+Creates a new instance of function type, which contains a return type and a list of parameter types. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em return\+Type} & The return type of the function type. \\
+\hline
+{\em para\+Types} & The parameter types of the function type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new function type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_ab7c4630a44524cef59b4c4e3cde5f6e7}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ac0689896cc71dc61590735f807b89d31}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!get\+Heap\+Field\+Id@{get\+Heap\+Field\+Id}}
+\index{get\+Heap\+Field\+Id@{get\+Heap\+Field\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{get\+Heap\+Field\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+get\+Heap\+Field\+Id (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ac0689896cc71dc61590735f807b89d31}
+
+
+Returns the type of the heap field of the given index. 
+
+\hyperlink{structA}{A} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model has its unique heap type, which has type of tuples of arrays of arrays of type, determined by malloc statements and handle types appear in the source program. For examples, given the following program,
+
+
+\begin{DoxyPre}
+int main()\{
+  int* p = malloc(sizeof(int)*4);
+  $gcomm gcomm = $gcomm\_create(...);
+  ...
+\}
+\end{DoxyPre}
+
+
+the heap type of the model of this program will be (int\mbox{[}\mbox{]}\mbox{[}\mbox{]}, {\bfseries gcomm}\mbox{[}\mbox{]}\mbox{[}\mbox{]}).
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & the type which is a field of the heap type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the I\+D of the type in the heap 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a1f450da91e30db9ba3f1b1f1b90e1540}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ab9d7f6737838402514c0dca3ca8a9c0c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!heap\+Symbolic\+Type@{heap\+Symbolic\+Type}}
+\index{heap\+Symbolic\+Type@{heap\+Symbolic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{heap\+Symbolic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Tuple\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+heap\+Symbolic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ab9d7f6737838402514c0dca3ca8a9c0c}
+
+
+Returns the symbolic heap type. 
+
+\begin{DoxyReturn}{Returns}
+the symbolic heap type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_af0242865e6bf093b155b112f68cd97b6}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a535ddc63fe176a188a785e3298ccb18d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!heap\+Type@{heap\+Type}}
+\index{heap\+Type@{heap\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{heap\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Heap\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+heap\+Type (
+\begin{DoxyParamCaption}
+\item[{String}]{name}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a535ddc63fe176a188a785e3298ccb18d}
+
+
+Returns a new, incomplete heap type. 
+
+The heap type must be completed later by specifying a sequence of malloc statements in method \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af8039e88923ed7905b59426add7d5e74}{complete\+Heap\+Type}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & a name to give to the new heap type\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a new incomplete heap type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_aa844143c5cd11cd4c64851d48ec3745f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ad385b5ace8c88cc64c1e79d6604e83da}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!heap\+Type@{heap\+Type}}
+\index{heap\+Type@{heap\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{heap\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Heap\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+heap\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ad385b5ace8c88cc64c1e79d6604e83da}
+
+
+Returns the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} heap type, which is unique for a given \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. 
+
+\hyperlink{structA}{A} heap type is a struct type of all types appearing in a malloc statement, plus all handled object types used by the model. \hyperlink{structA}{A} heap type needs to be completed at the end of the construction of the model.
+
+\begin{DoxyReturn}{Returns}
+the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} heap type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_aaef4f6719d304a5a15aa4211a79a6935}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a70cbdfcbd73b2c1390cbc76b9c56649d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!incomplete\+Array\+Type@{incomplete\+Array\+Type}}
+\index{incomplete\+Array\+Type@{incomplete\+Array\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{incomplete\+Array\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Array\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+incomplete\+Array\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{element\+Type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a70cbdfcbd73b2c1390cbc76b9c56649d}
+
+
+Get a new incomplete array type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element\+Type} & The type of each element in the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new array type with the given base type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a0c6c4d2a815ee532e3807f4b783afae0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a4ab583c20d72f5e41df23b7a5e846475}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!init\+Bundle\+Type@{init\+Bundle\+Type}}
+\index{init\+Bundle\+Type@{init\+Bundle\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{init\+Bundle\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Bundle\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+init\+Bundle\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a4ab583c20d72f5e41df23b7a5e846475}
+
+
+Initializes the bundle type of the model and return the result. 
+
+\begin{DoxyReturn}{Returns}
+The new initial bundle type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_ae8bc5dcf2bc379fdcc302150e65ff8f0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af0cbefdb79635c5e81c7dc3c373c0f06}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!integer\+Type@{integer\+Type}}
+\index{integer\+Type@{integer\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{integer\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Primitive\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+integer\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af0cbefdb79635c5e81c7dc3c373c0f06}
+
+
+Create a new location. 
+
+======= Get the integer primitive type. $>$$>$$>$$>$$>$$>$$>$ .r497
+
+\begin{DoxyReturn}{Returns}
+The integer primitive type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_af8edd45665c8c5a802cdea9146ee1bec}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a3a7ab8c61f1b1f4a73ef63a922e83237}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!pointer\+Symbolic\+Type@{pointer\+Symbolic\+Type}}
+\index{pointer\+Symbolic\+Type@{pointer\+Symbolic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{pointer\+Symbolic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Tuple\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+pointer\+Symbolic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a3a7ab8c61f1b1f4a73ef63a922e83237}
+
+
+Returns the symbolic type used to represent pointers. 
+
+\begin{DoxyReturn}{Returns}
+he symbolic type used to represent pointers 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a9e2f11fc8fb724f7ad6f2501645c149a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abd638d688c7f810bddf3f822de0a4b11}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!pointer\+Type@{pointer\+Type}}
+\index{pointer\+Type@{pointer\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{pointer\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Pointer\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+pointer\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{base\+Type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_abd638d688c7f810bddf3f822de0a4b11}
+
+
+Get a new pointer type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em base\+Type} & The type pointed to by the pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new pointer type with the given base type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_ac478c72bb9d5dba54955214585c1e430}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a966c01334c8781bc88a8989770f1b7a1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!process\+Symbolic\+Type@{process\+Symbolic\+Type}}
+\index{process\+Symbolic\+Type@{process\+Symbolic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{process\+Symbolic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Tuple\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+process\+Symbolic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a966c01334c8781bc88a8989770f1b7a1}
+
+
+Returns the symbolic type used to represent process reference values. 
+
+\begin{DoxyReturn}{Returns}
+the symbolic type used to represent process reference values 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a5a2e8812da8e9a7fbf107c6709fd4275}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a71d99fd4f10982591830075621a39dad}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!process\+Type@{process\+Type}}
+\index{process\+Type@{process\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{process\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Primitive\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+process\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a71d99fd4f10982591830075621a39dad}
+
+
+Get the process type. 
+
+\begin{DoxyReturn}{Returns}
+The process type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a1c04629d4e3cc454adcb6f6eaf8de732}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ac9066abf4714e7acbfae8c30f2cdcd71}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!range\+Type@{range\+Type}}
+\index{range\+Type@{range\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{range\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+range\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ac9066abf4714e7acbfae8c30f2cdcd71}
+
+
+Returns the range type of the system. 
+
+\begin{DoxyReturn}{Returns}
+the range type of the system. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a4143b4743dfb10d82884755d7edb1762}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_add189fcd1b9686de5451299b1404a8dd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!real\+Type@{real\+Type}}
+\index{real\+Type@{real\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{real\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Primitive\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+real\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_add189fcd1b9686de5451299b1404a8dd}
+
+
+Get the real primitive type. 
+
+\begin{DoxyReturn}{Returns}
+The real primitive type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_aed99db0b4761fd8a75da0465b2da7be8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a492187dd08fb06b6af23bf3ee0ed4c0f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!scope\+Symbolic\+Type@{scope\+Symbolic\+Type}}
+\index{scope\+Symbolic\+Type@{scope\+Symbolic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{scope\+Symbolic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Tuple\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+scope\+Symbolic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a492187dd08fb06b6af23bf3ee0ed4c0f}
+
+
+Returns the symbolic type used to represent scope values. 
+
+\begin{DoxyReturn}{Returns}
+the symbolic type used to represent scope values 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a25554170fdcf125206d249839640ead2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a5eafb9f1c9713661c050f9455b2e0576}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!scope\+Type@{scope\+Type}}
+\index{scope\+Type@{scope\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{scope\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Primitive\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+scope\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a5eafb9f1c9713661c050f9455b2e0576}
+
+
+Get the scope primitive type. 
+
+\begin{DoxyReturn}{Returns}
+The scope primitive type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a25550fc49ca89ad2ad9611903b5c292c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ae6c809d32543a625f0aa3a686231cadc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!struct\+Field@{struct\+Field}}
+\index{struct\+Field@{struct\+Field}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{struct\+Field}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Struct\+Or\+Union\+Field} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+struct\+Field (
+\begin{DoxyParamCaption}
+\item[{{\bf Identifier}}]{name, }
+\item[{{\bf C\+I\+V\+L\+Type}}]{type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_ae6c809d32543a625f0aa3a686231cadc}
+
+
+Returns a new struct field, used to complete a struct type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} for the name of this struct member. \\
+\hline
+{\em type} & The type of this struct member. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} struct field with the given name and type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a27f7748197906136bdcabccd96752aa6}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af9b1d1dc0f6cc745f0b23aa73e8a27f2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!struct\+Or\+Union\+Type@{struct\+Or\+Union\+Type}}
+\index{struct\+Or\+Union\+Type@{struct\+Or\+Union\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{struct\+Or\+Union\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Struct\+Or\+Union\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+struct\+Or\+Union\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf Identifier}}]{name, }
+\item[{boolean}]{is\+Struct}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_af9b1d1dc0f6cc745f0b23aa73e8a27f2}
+
+
+Returns new incomplete struct or union type with given name. 
+
+Type can be completed later using one of the \char`\"{}complete\char`\"{} methods in C\+I\+V\+L\+Struct\+Or\+Union\+Type.
+
+The struct or union returned is a new instance of struct or union type that will never be equal to another struct or union type, regardless of identifier or fields.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & identifier, usually the \char`\"{}tag\char`\"{} for this struct or union type \\
+\hline
+{\em is\+Struct} & is the new type a struct type? If false, then the new type will be a union type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a new incomplete struct or union type with given name 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a357d07b1707651f6665c8f72c02663a2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_afff258954b19be64283001c51e1670dd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!system\+Type@{system\+Type}}
+\index{system\+Type@{system\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{system\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+system\+Type (
+\begin{DoxyParamCaption}
+\item[{String}]{name}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_afff258954b19be64283001c51e1670dd}
+
+
+Obtains the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type by the given name. 
+
+This returns the type that has been added by \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_a1dbcbe0dc45560da0b35bc847ae1879d}{add\+System\+Type(\+String, C\+I\+V\+L\+Type)}, and returns null if no such type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name (key) of the type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the given name 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_a6dee7957b5032dd3ed5f15b9b6089d9b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_aff4b164f7b7a02e3173d88ac2ed9026f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}!void\+Type@{void\+Type}}
+\index{void\+Type@{void\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+C\+I\+V\+L\+Type\+Factory}}
+\subsubsection[{void\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Primitive\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+C\+I\+V\+L\+Type\+Factory.\+void\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory_aff4b164f7b7a02e3173d88ac2ed9026f}
+
+
+Returns the void type. 
+
+Used in places where a type is required syntactically but there is no type, such as function which does not return a value.
+
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} void type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonCIVLTypeFactory_aa8d6db8db663a9e9e4770e5f8af0b5b9}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+C\+I\+V\+L\+Type\+Factory}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/C\+I\+V\+L\+Type\+Factory.\+java\end{DoxyCompactItemize}

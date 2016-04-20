@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SpecialFunctionCallAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">SpecialFunctionCallAnalyzer.java</span></div><h1>SpecialFunctionCallAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import edu.udel.cis.vsl.abc.ast.conversion.IF.Conversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ConversionFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StringLiteralNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.err.IF.ABCUnsupportedException;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * This class maintains the hard-coded information of analyzes the variable
+ * parameters of some specific functions, like &lt;code&gt;scanf, fscanf&lt;/code&gt;, whose
+ * variable arguments should all be of pointer type.
+ * 
+ * @author Manchun Zheng
+ *
+ */
+<span class="nc bnc" id="L27" title="All 2 branches missed.">public class SpecialFunctionCallAnalyzer {</span>
+	// names of special functions handled in this class
+	private final static String SCANF = &quot;scanf&quot;;
+	private final static String FSCANF = &quot;fscanf&quot;;
+	private final static String PRINTF = &quot;printf&quot;;
+	private final static String FPRINTF = &quot;fprintf&quot;;
+	private final static String ACCESS = &quot;$access&quot;;
+	private final static String MODIFIED = &quot;$write&quot;;
+<span class="nc" id="L35">	private final static String READ = &quot;$read&quot;;</span>
+
+	private EntityAnalyzer entityAnalyzer;
+
+	/** the type factory, for generating types. */
+	@SuppressWarnings(&quot;unused&quot;)
+	private TypeFactory typeFactory;
+
+	/** the void pointer type (void *) */
+	private ObjectType voidPointerType;
+
+	/**
+	 * The names of functions handled by this analyzer
+	 */
+<span class="nc" id="L49">	private final Set&lt;String&gt; specialFunctioinNames = new HashSet&lt;&gt;(</span>
+<span class="nc" id="L50">			Arrays.asList(SCANF, FSCANF));</span>
+
+<span class="nc" id="L52">	private final Set&lt;String&gt; memoryTypeFunctionNames = new HashSet&lt;&gt;(</span>
+<span class="nc" id="L53">			Arrays.asList(ACCESS, MODIFIED, READ));</span>
+
+	private ConversionFactory conversionFactory;
+
+	/**
+	 * Creates a new instance of special function call analyzer.
+	 * 
+	 * @param typeFactory
+	 *            The type factory to be used.
+	 */
+<span class="nc" id="L63">	public SpecialFunctionCallAnalyzer(EntityAnalyzer entityAnalyzer,</span>
+			TypeFactory typeFactory, ConversionFactory conversionFactory) {
+<span class="nc" id="L65">		this.typeFactory = typeFactory;</span>
+<span class="nc" id="L66">		this.conversionFactory = conversionFactory;</span>
+<span class="nc" id="L67">		this.voidPointerType = typeFactory.pointerType(typeFactory.voidType());</span>
+<span class="nc" id="L68">		this.entityAnalyzer = entityAnalyzer;</span>
+<span class="nc" id="L69">	}</span>
+
+	/**
+	 * Is the given function handled in this analyzer?
+	 * 
+	 * @param function
+	 *            Name of the function
+	 * @return true iff the given function is in this analyzer
+	 */
+	boolean isSpecialFunction(String function) {
+<span class="nc" id="L79">		return this.specialFunctioinNames.contains(function);</span>
+	}
+
+	/**
+	 * checks if a fprintf/printf call has sufficient arguments as requested by
+	 * the format string. An syntax exception is thrown if arguments are
+	 * insufficient, otherwise, true is returned.
+	 * 
+	 * @param call
+	 * @param function
+	 * @param arguments
+	 * @return true if the function is not a printf/fprintf call or there are
+	 *         sufficient arguments.
+	 * @throws SyntaxException
+	 *             if arguments are insufficient
+	 */
+	boolean hasSufficientArgumentsForPrintf(FunctionCallNode call,
+			String function, SequenceNode&lt;ExpressionNode&gt; arguments)
+			throws SyntaxException {
+<span class="nc" id="L98">		boolean isPrintf = false;</span>
+<span class="nc" id="L99">		boolean isFprintf = false;</span>
+<span class="nc" id="L100">		int formatIndex = 0;</span>
+<span class="nc" id="L101">		int numArgsForPrint = arguments.numChildren() - 1;</span>
+		ExpressionNode formatString;
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (function.equals(FPRINTF))</span>
+<span class="nc" id="L105">			isFprintf = true;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		else if (function.equals(PRINTF))</span>
+<span class="nc" id="L107">			isPrintf = true;</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (!isPrintf &amp;&amp; !isFprintf)</span>
+<span class="nc" id="L109">			return true;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (isFprintf) {</span>
+<span class="nc" id="L111">			formatIndex++;</span>
+<span class="nc" id="L112">			numArgsForPrint--;</span>
+		}
+<span class="nc" id="L114">		formatString = arguments.getSequenceChild(formatIndex);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (formatString instanceof StringLiteralNode) {</span>
+<span class="nc" id="L116">			String format = ((StringLiteralNode) formatString)</span>
+<span class="nc" id="L117">					.getStringRepresentation();</span>
+			int numFormats;
+<span class="nc" id="L119">			String realFormat = format.replaceAll(&quot;%%&quot;, &quot;&quot;);</span>
+<span class="nc" id="L120">			String formatArgumentsString = &quot;arguments&quot;;</span>
+<span class="nc" id="L121">			String printArgumentsString = &quot;are&quot;;</span>
+
+<span class="nc" id="L123">			numFormats = realFormat.split(&quot;%&quot;, -1).length - 1;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (numFormats == 1)</span>
+<span class="nc" id="L125">				formatArgumentsString = &quot;argument&quot;;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			if (numArgsForPrint == 1)</span>
+<span class="nc" id="L127">				printArgumentsString = &quot;is&quot;;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (numFormats &gt; numArgsForPrint)</span>
+<span class="nc" id="L129">				throw this.entityAnalyzer.error(&quot;insufficient arguments for &quot;</span>
+<span class="nc" id="L130">						+ function + &quot;: the format string &quot; + format</span>
+<span class="nc" id="L131">						+ &quot; is requring &quot; + numFormats + &quot; subsequent &quot;</span>
+<span class="nc" id="L132">						+ formatArgumentsString + &quot; while only &quot;</span>
+<span class="nc" id="L133">						+ numArgsForPrint + &quot; &quot; + printArgumentsString</span>
+<span class="nc" id="L134">						+ &quot; provided.&quot;, call);</span>
+		}
+<span class="nc" id="L136">		return true;</span>
+	}
+
+	/**
+	 * Returns the type of a variable parameter of a certain index of the given
+	 * function.
+	 * &lt;p&gt;
+	 * Precondition: the given function is a special function handled in this
+	 * analyzer and the index-th parameter is a variable one.
+	 * 
+	 * @param function
+	 *            Name of the function
+	 * @param index
+	 *            index of the parameter whose type is to be obtained
+	 * @return
+	 */
+	ObjectType variableParameterType(String function, int index) {
+<span class="nc bnc" id="L153" title="All 4 branches missed.">		assert this.isSpecialFunction(function);</span>
+<span class="nc bnc" id="L154" title="All 7 branches missed.">		switch (function) {</span>
+		case SCANF:
+<span class="nc" id="L156">			return this.variableParameterTypeOfScanf(index);</span>
+		case FSCANF:// fscanf has one more fixed parameter than scanf
+<span class="nc" id="L158">			return this.variableParameterTypeOfScanf(index - 1);</span>
+		default:
+<span class="nc" id="L160">			throw new ABCUnsupportedException(&quot;The function &quot; + function</span>
+<span class="nc" id="L161">					+ &quot; isn't a special function that needs &quot;</span>
+<span class="nc" id="L162">					+ &quot;type checking of its variable parameters&quot;);</span>
+		}
+	}
+
+	void addConversionsForSpecialFunctions(String functionName,
+			ExpressionNode argument) throws SyntaxException {
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (memoryTypeFunctionNames.contains(functionName)) {</span>
+<span class="nc" id="L169">			this.addMemoryConversion(argument);</span>
+		}
+<span class="nc" id="L171">	}</span>
+
+	private void addMemoryConversion(ExpressionNode node)
+			throws SyntaxException {
+<span class="nc" id="L175">		Type oldType = node.getConvertedType();</span>
+<span class="nc" id="L176">		Conversion conversion = conversionFactory.memoryConversion(oldType);</span>
+
+<span class="nc" id="L178">		node.addConversion(conversion);</span>
+
+<span class="nc" id="L180">	}</span>
+
+	/**
+	 * Returns the type of the parameter of the given index for
+	 * &lt;code&gt;scanf&lt;/code&gt;. &lt;code&gt;scanf&lt;/code&gt; is expecting any parameter with
+	 * index greater than 0 to be of pointer type, i.e.:
+	 * &lt;code&gt;scanf(char*, (void*)+);&lt;/code&gt;
+	 * 
+	 * @param index
+	 *            The index of the parameter
+	 * @return the type of the parameter of the given index for scanf, which is
+	 *         always void*.
+	 */
+	private ObjectType variableParameterTypeOfScanf(int index) {
+<span class="nc bnc" id="L194" title="All 4 branches missed.">		assert index &gt; 0;</span>
+<span class="nc" id="L195">		return this.voidPointerType;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

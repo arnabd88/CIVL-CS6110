@@ -1,0 +1,8 @@
+#include<civlc.cvh>
+#include<stdio.h>
+
+$input double x;
+
+void main() {
+  printf("x=%l", x); //%l is not a valid conversion specifier, so this example will have a syntax error.
+}

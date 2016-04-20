@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonArrayTypeNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.type</a> &gt; <span class="el_source">CommonArrayTypeNode.java</span></div><h1>CommonArrayTypeNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.type;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.ArrayTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonArrayTypeNode extends CommonTypeNode implements
+		ArrayTypeNode {
+
+<span class="nc" id="L13">	private boolean unspecifiedVariableLength = false;</span>
+
+<span class="nc" id="L15">	private boolean staticExtent = false;</span>
+
+<span class="nc" id="L17">	private boolean constInBrackets = false;</span>
+
+<span class="nc" id="L19">	private boolean volatileInBrackets = false;</span>
+
+<span class="nc" id="L21">	private boolean restrictInBrackets = false;</span>
+
+<span class="nc" id="L23">	private boolean atomicInBrackets = false;</span>
+	
+<span class="nc" id="L25">	private boolean hasStartIndex = false;</span>
+
+	public CommonArrayTypeNode(Source source, TypeNode elementType,
+			ExpressionNode extent) {
+<span class="nc" id="L29">		super(source, TypeNodeKind.ARRAY, elementType, extent);</span>
+<span class="nc" id="L30">	}</span>
+
+	public CommonArrayTypeNode(Source source, TypeNode elementType,
+			ExpressionNode extent, ExpressionNode startIndex) {
+<span class="nc" id="L34">		super(source, TypeNodeKind.ARRAY, elementType, extent, startIndex);</span>
+<span class="nc" id="L35">		this.hasStartIndex = true;</span>
+<span class="nc" id="L36">	}</span>
+
+	@Override
+	public TypeNode getElementType() {
+<span class="nc" id="L40">		return (TypeNode) child(0);</span>
+	}
+
+	@Override
+	public void setElementType(TypeNode elementType) {
+<span class="nc" id="L45">		setChild(0, elementType);</span>
+<span class="nc" id="L46">	}</span>
+
+	@Override
+	public ExpressionNode getExtent() {
+<span class="nc" id="L50">		return (ExpressionNode) child(1);</span>
+	}
+
+	@Override
+	public void setExtent(ExpressionNode extent) {
+<span class="nc" id="L55">		setChild(1, extent);</span>
+<span class="nc" id="L56">	}</span>
+
+	@Override
+	public boolean hasUnspecifiedVariableLength() {
+<span class="nc" id="L60">		return unspecifiedVariableLength;</span>
+	}
+
+	@Override
+	public void setUnspecifiedVariableLength(boolean value) {
+<span class="nc" id="L65">		unspecifiedVariableLength = value;</span>
+<span class="nc" id="L66">	}</span>
+
+	@Override
+	public boolean hasStaticExtent() {
+<span class="nc" id="L70">		return staticExtent;</span>
+	}
+
+	@Override
+	public void setStaticExtent(boolean value) {
+<span class="nc" id="L75">		staticExtent = value;</span>
+<span class="nc" id="L76">	}</span>
+
+	@Override
+	public void printBody(PrintStream out) {
+<span class="nc" id="L80">		String qualifiers = qualifierString();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		boolean needSeparator = !qualifiers.isEmpty();</span>
+
+<span class="nc" id="L83">		out.print(&quot;Array[&quot; + qualifiers);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (unspecifiedVariableLength) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (needSeparator)</span>
+<span class="nc" id="L86">				out.print(&quot;, &quot;);</span>
+<span class="nc" id="L87">			out.print(&quot;unspecifiedVariableLength&quot;);</span>
+<span class="nc" id="L88">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (staticExtent) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (needSeparator)</span>
+<span class="nc" id="L92">				out.print(&quot;, &quot;);</span>
+<span class="nc" id="L93">			out.print(&quot;staticExtent&quot;);</span>
+		}
+<span class="nc" id="L95">		out.print(&quot;]&quot;);</span>
+<span class="nc" id="L96">	}</span>
+
+	@Override
+	public boolean hasConstInBrackets() {
+<span class="nc" id="L100">		return constInBrackets;</span>
+	}
+
+	@Override
+	public void setConstInBrackets(boolean value) {
+<span class="nc" id="L105">		constInBrackets = value;</span>
+<span class="nc" id="L106">	}</span>
+
+	@Override
+	public boolean hasVolatileInBrackets() {
+<span class="nc" id="L110">		return volatileInBrackets;</span>
+	}
+
+	@Override
+	public void setVolatileInBrackets(boolean value) {
+<span class="nc" id="L115">		volatileInBrackets = value;</span>
+<span class="nc" id="L116">	}</span>
+
+	@Override
+	public boolean hasRestrictInBrackets() {
+<span class="nc" id="L120">		return restrictInBrackets;</span>
+	}
+
+	@Override
+	public void setRestrictInBrackets(boolean value) {
+<span class="nc" id="L125">		restrictInBrackets = value;</span>
+<span class="nc" id="L126">	}</span>
+
+	@Override
+	public boolean hasAtomicInBrackets() {
+<span class="nc" id="L130">		return atomicInBrackets;</span>
+	}
+
+	@Override
+	public void setAtomicInBrackets(boolean value) {
+<span class="nc" id="L135">		atomicInBrackets = value;</span>
+<span class="nc" id="L136">	}</span>
+
+	@Override
+	public ArrayTypeNode copy() {
+<span class="nc" id="L140">		CommonArrayTypeNode result = new CommonArrayTypeNode(getSource(),</span>
+<span class="nc" id="L141">				duplicate(getElementType()), duplicate(getExtent()));</span>
+
+<span class="nc" id="L143">		copyData(result);</span>
+<span class="nc" id="L144">		result.setAtomicInBrackets(this.hasAtomicInBrackets());</span>
+<span class="nc" id="L145">		result.setConstInBrackets(this.hasConstInBrackets());</span>
+<span class="nc" id="L146">		result.setRestrictInBrackets(this.hasRestrictInBrackets());</span>
+<span class="nc" id="L147">		result.setStaticExtent(this.hasStaticExtent());</span>
+<span class="nc" id="L148">		result.setUnspecifiedVariableLength(this.hasUnspecifiedVariableLength());</span>
+<span class="nc" id="L149">		result.setVolatileInBrackets(this.hasVolatileInBrackets());</span>
+<span class="nc" id="L150">		return result;</span>
+	}
+
+	@Override
+	public ExpressionNode getStartIndex() {
+<span class="nc" id="L155">		return (ExpressionNode) child(2);</span>
+	}
+
+	@Override
+	public void setStartIndex(ExpressionNode startIndex) {
+<span class="nc" id="L160">		setChild(2, startIndex);</span>
+<span class="nc" id="L161">		this.hasStartIndex = true;</span>
+<span class="nc" id="L162">	}</span>
+
+	@Override
+	public boolean hasStartIndex() {
+<span class="nc" id="L166">		return hasStartIndex;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

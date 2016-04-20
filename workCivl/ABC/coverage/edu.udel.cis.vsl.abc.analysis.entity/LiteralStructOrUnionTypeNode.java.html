@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LiteralStructOrUnionTypeNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">LiteralStructOrUnionTypeNode.java</span></div><h1>LiteralStructOrUnionTypeNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+
+public class LiteralStructOrUnionTypeNode extends LiteralTypeNode {
+
+	private LiteralTypeNode[] memberNodes;
+
+	public LiteralStructOrUnionTypeNode(StructureOrUnionType type,
+			LiteralTypeNode[] memberNodes) {
+<span class="nc" id="L11">		super(type);</span>
+<span class="nc" id="L12">		this.memberNodes = memberNodes;</span>
+<span class="nc" id="L13">	}</span>
+
+	@Override
+	public StructureOrUnionType getType() {
+<span class="nc" id="L17">		return (StructureOrUnionType) super.getType();</span>
+	}
+
+	@Override
+	public boolean hasFixedLength() {
+<span class="nc" id="L22">		return true;</span>
+	}
+
+	@Override
+	public int length() {
+<span class="nc" id="L27">		return memberNodes.length;</span>
+	}
+
+	public LiteralTypeNode getMemberNode(int index) {
+<span class="nc" id="L31">		return memberNodes[index];</span>
+	}
+
+	@Override
+	public String toString() {
+		String result;
+<span class="nc" id="L37">		boolean first = true;</span>
+
+<span class="nc bnc" id="L39" title="All 2 branches missed.">		if (getType().isStruct())</span>
+<span class="nc" id="L40">			result = &quot;Struct&quot;;</span>
+		else
+<span class="nc" id="L42">			result = &quot;Union&quot;;</span>
+<span class="nc" id="L43">		result += &quot;[&quot;;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		for (LiteralTypeNode child : memberNodes) {</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">			if (first)</span>
+<span class="nc" id="L46">				first = false;</span>
+			else
+<span class="nc" id="L48">				result += &quot;,&quot;;</span>
+<span class="nc" id="L49">			result += child;</span>
+		}
+<span class="nc" id="L51">		result += &quot;]&quot;;</span>
+<span class="nc" id="L52">		return result;</span>
+	}
+
+	@Override
+	public LiteralTypeNode getChild(int index) {
+<span class="nc" id="L57">		return getMemberNode(index);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

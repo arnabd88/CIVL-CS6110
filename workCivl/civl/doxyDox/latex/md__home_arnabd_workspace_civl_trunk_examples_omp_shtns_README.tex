@@ -1,0 +1,190 @@
+{\bfseries S\+H\+Tns is a high performance library for Spherical Harmonic Transform written in C, aimed at numerical simulation (fluid flows, mhd, ...) in spherical geometries.}
+
+Copyright (c) 2010-\/2014 Centre National de la Recherche Scientifique. written by Nathanael Schaeffer (C\+N\+R\+S, I\+S\+Terre, Grenoble, France). S\+H\+Tns is distributed under the open source \href{http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html}{\tt Ce\+C\+I\+L\+L License} (G\+P\+L compatible) located in the L\+I\+C\+E\+N\+S\+E file.
+
+\subsection*{F\+E\+A\+T\+U\+R\+E\+S\+: }
+
+
+\begin{DoxyItemize}
+\item {\bfseries blazingly fast}.
+\item both {\bfseries scalar and vector transforms}.
+\item backward and forward (synthesis and analysis) functions.
+\item flexible truncation (degree, order, azimuthal periodicity).
+\item spatial data can be stored in latitude-\/major or longitude-\/major arrays.
+\item various conventions (normalization and Condon-\/\+Shortley phase).
+\item can be used from {\bfseries Fortran, c/c++, and Python} programs.
+\item a highly efficient Gauss algorithm working with Gauss nodes (based on Gauss-\/\+Legendre quadrature).
+\item support for S\+S\+E2, S\+S\+E3 and {\bfseries A\+V\+X} vectorization, as well as Xeon Phi and Blue Gene/\+Q.
+\item {\bfseries parallel transforms with Open\+M\+P} (for Gauss grid only).
+\item an algorithm using D\+C\+T for regular nodes (generalized Fejer quadrature).
+\item synthesis (inverse transform) at any coordinate (not constrained to a grid).
+\item ability to choose the optimal spatial sizes for a given spectral truncation.
+\item {\bfseries on-\/the-\/fly transforms} \+: saving memory and bandwidth, they are even faster on modern architectures.
+\item accurate up to spherical harmonic degree l=16383 (at least).
+\item rotation functions to rotate spherical harmonics (beta).
+\item special spectral operator functions that do not require a transform (multiply by cos(theta)...).
+\item scalar transforms for complex spatial fields.
+\item S\+H\+T at fixed m (without fft, aka Legendre transform -\/ beta).
+\end{DoxyItemize}
+
+\subsection*{I\+N\+S\+T\+A\+L\+L\+: }
+
+Briefly, the shell commands {\ttfamily ./configure; make; make install} should configure, build, and install this package. {\ttfamily ./configure -\/-\/help} will list available options (among which {\ttfamily -\/-\/enable-\/openmp} and {\ttfamily -\/-\/enable-\/python}). However, in order to get the best performance, it is highly recommended to compile and install the F\+F\+T\+W library yourself, because many distributions include a non-\/optimized F\+F\+T\+W library.
+
+\subsection*{D\+O\+C\+U\+M\+E\+N\+T\+A\+T\+I\+O\+N\+: }
+
+
+\begin{DoxyItemize}
+\item On-\/line doc is available\+: \href{http://users.isterre.fr/nschaeff/SHTns/}{\tt http\+://users.\+isterre.\+fr/nschaeff/\+S\+H\+Tns/}
+\item You can build it locally\+: Run {\ttfamily make docs} to generate documentation (requires doxygen). Then browse the html documentation starting with {\ttfamily doc/html/index.\+html}
+\item \hyperlink{structA}{A} related research paper has been published\+: \href{http://dx.doi.org/10.1002/ggge.20071}{\tt Efficient Spherical Harmonic Transforms aimed at pseudo-\/spectral numerical simulations}, also \href{http://arxiv.org/abs/1202.6522}{\tt available from ar\+Xiv}.
+\item If you use S\+H\+Tns for research work, please {\bfseries cite this paper}\+: \begin{DoxyVerb}  @article {shtns,
+    author = {Schaeffer, Nathanael},
+    title = {Efficient spherical harmonic transforms aimed at
+    pseudospectral numerical simulations},
+    journal = {Geochemistry, Geophysics, Geosystems},
+    doi = {10.1002/ggge.20071},
+    volume = {14}, number = {3}, pages = {751--758},
+    year = {2013},
+  }
+\end{DoxyVerb}
+
+\end{DoxyItemize}
+
+\subsection*{C\+H\+A\+N\+G\+E L\+O\+G\+: }
+
+
+\begin{DoxyItemize}
+\item v2.\+6.\+3 (9 Mar 2015)
+\begin{DoxyItemize}
+\item better default compilation flags for icc.
+\item complex transforms added to Fortran A\+P\+I (thanks to Bertrand Putigny)
+\end{DoxyItemize}
+\item v2.\+6.\+2 (30 Dec 2014)
+\begin{DoxyItemize}
+\item fix regression\+: Schmidt normalized analysis failed since v2.\+6 in some cases.
+\end{DoxyItemize}
+\item v2.\+6.\+1 (17 Dec 2014)
+\begin{DoxyItemize}
+\item new functions in python interface to control console output.
+\item fix\+: {\ttfamily \hyperlink{group__sht_gacfe564c5f554c04834c2fd02a2cbd660}{spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H()}} and {\ttfamily \hyperlink{group__sht_gace24abc96ffd0cf8dd5bc282854fa91f}{S\+H\+\_\+to\+\_\+spat\+\_\+cplx()}} were missing a (-\/1)$^\wedge$m for m$<$0 \mbox{[}issue \#16\mbox{]}.
+\item fix\+: segfault in `spat\+\_\+to\+\_\+\+S\+H\+\_\+ml()` \mbox{[}issue \#15\mbox{]}.
+\item fix a few compilation issues.
+\end{DoxyItemize}
+\item v2.\+6 (24 Oct 2014)
+\begin{DoxyItemize}
+\item support for I\+B\+M Blue Gene/\+Q (Q\+P\+X) with \mbox{[}bgclang\mbox{]}(\href{http://trac.alcf.anl.gov/projects/llvm-bgq}{\tt http\+://trac.\+alcf.\+anl.\+gov/projects/llvm-\/bgq}). Configure with `./configure -\/-\/enable-\/many-\/core C\+C=bgclang`
+\item new beta feature\+: S\+H\+T at fixed m (aka Legendre transform).
+\item faster initialization with Open\+M\+P.
+\item fix\+: in python, a rare coredump now correctly raises an exception.
+\item fix\+: a few compilation problems.
+\end{DoxyItemize}
+\item v2.\+5 (13 Mar 2014)
+\begin{DoxyItemize}
+\item new experimental support for Intel Xeon Phi (M\+I\+C) in native mode, with contributions from Vincent Boulos (Bull). For good performance icc 14 is required. Configure with `./configure -\/-\/enable-\/mic C\+C=icc`
+\item \hyperlink{fftw3_8h_source}{fftw3.\+h} included for easier compilation.
+\item fix\+: obey `\+O\+M\+P\+\_\+\+N\+U\+M\+\_\+\+T\+H\+R\+E\+A\+D\+S` environement variable
+\item fix\+: failure of fly analysis with some special (rare) sizes.
+\item add missing `shtns\+\_\+print\+\_\+cfg()` to Fortran interface
+\item new save/restore plan feature for bit-\/level reproducibility
+\end{DoxyItemize}
+\item v2.\+4.\+1 (18 Sep 2013)
+\begin{DoxyItemize}
+\item performance improvement\+: analysis with `\+S\+H\+T\+\_\+\+P\+H\+I\+\_\+\+C\+O\+N\+T\+I\+G\+U\+O\+U\+S` is now on par with synthesis (or better), even for large transforms.
+\end{DoxyItemize}
+\item v2.\+4 (5 Aug 2013)
+\begin{DoxyItemize}
+\item new scalar transforms for complex spatial fields\+: `\+S\+H\+\_\+to\+\_\+spat\+\_\+cplx()` and `spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H()`.
+\item new `shtns\+\_\+verbose()` function to control output during initialization.
+\item better M\+K\+L support (including multi-\/thread). Warning\+: M\+K\+L\textquotesingle{}s F\+F\+T\+W interface is not thread safe, S\+H\+Tns can\textquotesingle{}t be called from multiple threads if compiled with M\+K\+L.
+\item fix compatibility with c++ std\+::complex.
+\item new shallow water simulation example in examples/
+\end{DoxyItemize}
+\item v2.\+3.\+1 (10 Apr 2013)
+\begin{DoxyItemize}
+\item Open\+M\+P library is now installed as `libshtns\+\_\+omp.a`.
+\item fix detection of Open\+M\+P mutlithreaded F\+F\+T\+W.
+\item new configure option `-\/-\/enable-\/mkl` to use the F\+F\+T of the M\+K\+L library instead of F\+F\+T\+W (lower performance expected).
+\item `time\+\_\+\+S\+H\+T` can be compiled on Mac\+O\+S\+X and uses less memory.
+\item new `\+S\+H\+\_\+to\+\_\+lat()` function.
+\item a few other minor improvements and fixes.
+\end{DoxyItemize}
+\item v2.\+3 (3 Oct 2012)
+\begin{DoxyItemize}
+\item added `mi` member in `shtns\+\_\+info` structure (A\+B\+I change).
+\item added function to access the Gauss nodes.
+\item added support for special operators in spectral space (multiplication by cos(theta) and sin(theta).d/dtheta for instance).
+\item \hyperlink{shtns_8h}{shtns.\+h} is now compatible with C++.
+\item better python interface for rotations.
+\item performance improvement for Open\+M\+P code without `fftw3\+\_\+omp`.
+\item slightly faster `\+S\+H\+\_\+to\+\_\+point()` \mbox{[}5\%\mbox{]} and `\+S\+Hqst\+\_\+to\+\_\+point()` \mbox{[}20\%\mbox{]}.
+\item bugfix\+: in some rare cases, Open\+M\+P code freed unallocated memory.
+\item bugfix\+: fixed python interface compilation with clang.
+\end{DoxyItemize}
+\item v2.\+2.\+4 (25 Jun 2012)
+\begin{DoxyItemize}
+\item the previous critical bugfix had not been applied to parallel Open\+M\+P transforms.
+\end{DoxyItemize}
+\item v2.\+2.\+3 (24 Jun 2012)
+\begin{DoxyItemize}
+\item critical bugfix\+: `\+S\+Htor\+\_\+to\+\_\+spat()` and `\+S\+Hsph\+\_\+to\+\_\+spat()` gave wrong results for mmax$>$0 with on-\/the-\/fly transoforms.
+\item minor bugfix in Python interface.
+\end{DoxyItemize}
+\item v2.\+2.\+2 (21 Jun 2012)
+\begin{DoxyItemize}
+\item better Python interface\+: using {\ttfamily synth()} and {\ttfamily analys()} methods.
+\item bugfix in build system\+: can now compile python extension without openmp.
+\end{DoxyItemize}
+\item v2.\+2.\+1 (21 May 2012)
+\begin{DoxyItemize}
+\item slightly faster parallel transforms.
+\item better Python interface\+: decent error handling and keyword argument support.
+\item changes to Python interface\+: grid defaults to {\ttfamily S\+H\+T\+\_\+\+P\+H\+I\+\_\+\+C\+O\+N\+T\+I\+G\+U\+O\+U\+S}, {\ttfamily set\+\_\+grid\+\_\+auto()} removed.
+\item bugfix\+: default compilation with F\+F\+T\+W 3.\+0 to avoid \char`\"{}bad Gauss points\char`\"{} error.
+\item bugfix\+: correct alignement of gauss weights in 32 bit systems to avoid segfaults.
+\item new ./configure script for easier configuration and compilation.
+\end{DoxyItemize}
+\item v2.\+2 (23 Apr 2012)
+\begin{DoxyItemize}
+\item parallel transforms with Open\+M\+P (for Gauss grid, significant benefit for l$>$=127).
+\end{DoxyItemize}
+\item v2.\+1 (8 Mar 2012)
+\begin{DoxyItemize}
+\item support for huge spherical harmonic degree (tested up to l$>$43600).
+\item speed improvements, especially for large transforms.
+\item compilation with F\+F\+T\+W v3.\+0 or more is now possible through a configuration option (see {\ttfamily sht\+\_\+config.\+h})
+\end{DoxyItemize}
+\item v2.\+0 (9 Feb 2012)
+\begin{DoxyItemize}
+\item support for A\+V\+X instruction set (almost x2 speed-\/up on Sandy-\/\+Bridge processors).
+\item allow multiple transforms with different sizes, normalizations and grids (C interface only).
+\item changes to C interface \+: most functions now require a handle to identify the transform. (Fortran interface unchanged)
+\item transforms are accurate up to spherical harmonic degree l=2700 (at least).
+\item lots of small improvements, speed-\/ups and a few bug fixes.
+\item requires F\+F\+T\+W v3.\+3.
+\item better Python interface using Num\+Py arrays (beta).
+\item rotation functions to rotate spherical harmonics (beta).
+\end{DoxyItemize}
+\item v1.\+5 (4 May 2011)
+\begin{DoxyItemize}
+\item on-\/the-\/fly transforms which do not require huge matrices \+: save memory and bandwidth, and can be faster on some architecture.
+\item runtime selection of fastest algorithm, including on-\/the-\/fly transforms.
+\item transforms are accurate up to spherical harmonic degree l=2045 (at least).
+\item fix a bug that lead to wrong results for {\ttfamily S\+Htor\+\_\+to\+\_\+spat} and {\ttfamily S\+Hsph\+\_\+to\+\_\+spat}.
+\item a bunch of minor improvements, optimizations and fixes.
+\end{DoxyItemize}
+\item v1.\+0 (9 June 2010)
+\begin{DoxyItemize}
+\item initial release for C/\+C++ and Fortran under Ce\+C\+I\+L\+L licence (G\+P\+L compatible).
+\item scalar and vector, forward and backward transforms.
+\item support several normalization conventions.
+\item transforms are accurate up to spherical harmonic degree l=1300 (at least).
+\item flexible truncation and spatial sizes.
+\item support spatial data stored in latitude-\/major or longitude-\/major arrays.
+\item regular grid (with D\+C\+T acceleration) or Gauss grid (highly optimized).
+\item S\+S\+E2 vectorization.
+\item synthesis at any coordinate (not constrained to grid).
+\item can choose the optimal spatial size for a given spectral truncation.
+\item requires F\+F\+T\+W 3.\+0. 
+\end{DoxyItemize}
+\end{DoxyItemize}

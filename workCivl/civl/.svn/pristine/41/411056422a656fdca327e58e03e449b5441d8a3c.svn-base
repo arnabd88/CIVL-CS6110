@@ -1,0 +1,21 @@
+
+Add 
+
+DereferenceExpression (*e)
+RecordNavigationExpression (e.i, where i is an int)
+AddressOfExpression (&e)
+
+
+Would it make sense to have a subtype LHSExpression of Expression?
+VariableExpression, ArrayIndexExpression, RecordNavigationExpression
+DereferenceExpression all extend LHSExpression.
+
+Should there be a NullExpression for "null" (the null pointer)?
+
+How about a CastExpression?
+
+pointer arithmetic: p+e or e+p, and p-q.  Need additional binary
+operators for those (POINTER_ADD, POINTER_SUBTRACT)?
+
+Can the operands to the numeric expressions hav mixed types?
+(real/integer).  I hope not (use casts).

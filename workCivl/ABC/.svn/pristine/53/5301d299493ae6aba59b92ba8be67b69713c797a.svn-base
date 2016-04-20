@@ -1,0 +1,230 @@
+
+<html>
+<body>
+
+	<p>Welcome to ABC, the ANTLR-Based C front-end. ABC is a Java
+		program for parsing and manipulating programs written in C and
+		possibly some languages extending C, such as CIVL-C. It can be used to
+		perform a number of tasks, including the following:
+	<ol>
+		<li>preprocess the source file(s)</li>
+		<li>parse the preprocessed source to form an Abstract Syntax Tree
+			representation of a translation unit</li>
+		<li>analyze an AST to determine the type of every expression, the
+			entity associated to every identifier, the scope of every node, and
+			so on</li>
+		<li>merge multiple ASTs into one large AST</li>
+		<li>transform ASTs, by, for example, removing expressions with
+			side-effects, renaming entities, pruning unreachable code, etc.</li>
+	</ol>
+	In addition, it provides a framework for developing your own analyses
+	or transformations on ASTs.
+	</p>
+
+	There is a simple command-line interface for ABC (see {@link
+	edu.udel.cis.vsl.abc.ABC ABC}), but most users will want to use ABC
+	through its API. To use the API, it is helpful to have some
+	understanding of the modular structure of ABC. The ABC source code is
+	decomposed into modules, each with a well-defined interface and set of
+	responsibilities. Some of these modules are decomposed further into
+	sub-modules. The top-level modules are:
+	<ol>
+
+		<li><strong>util</strong>
+			<ol>
+				<li>responsibilities: simple general-purpose utility classes
+					that do not use other parts of ABC</li>
+				<li>uses: nothing</li>
+				<li>interface: {@link edu.udel.cis.vsl.abc.util.IF}</li>
+				<li>entry point: none</li>
+			</ol></li>
+
+		<li><strong>config</strong>
+			<ol>
+				<li>responsibilities: representation of configuration
+					parameters for ABC</li>
+				<li>uses: nothing</li>
+				<li>interface: {@link edu.udel.cis.vsl.abc.config.IF}</li>
+				<li>entry point: {@link
+					edu.udel.cis.vsl.abc.config.IF.Configurations Configurations}</li>
+			</ol></li>
+
+		<li><strong>token</strong>
+			<ol>
+				<li>responsibilities: representing tokens; keeping track of the
+					origin and history of each token through macro expansion and
+					inclusion; representing characters and strings</li>
+				<li>uses: <strong>util</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.abc.token.IF}</li>
+				<li>entry point: {@link edu.udel.cis.vsl.abc.token.IF.Tokens
+					Tokens}</li>
+			</ol></li>
+
+		<li><strong>front</strong></li>
+		<ol>
+			<li>responsibilities: preprocessing and parsing a file to
+				produce an ANTLR tree representation of a translation unit</li>
+			<li>uses: <strong>util</strong>, <strong>config</strong>, <strong>token</strong></li>
+			<li>interface: {@link edu.udel.cis.vsl.abc.front.IF},</li>
+			<li>entry point:</li>
+			<li>submodules
+				<ol>
+					<li><strong>preproc</strong>
+						<ol>
+							<li>responsibilities: preprocessing a file to generate a
+								post-preprocessor token stream</li>
+							<li>uses: <strong>util</strong>, <strong>config</strong>, <strong>token</strong></li>
+							<li>interface: {@link
+								edu.udel.cis.vsl.abc.front.c.preproc.IF}, {@link
+								edu.udel.cis.vsl.abc.front.fortran.preproc.IF}</li>
+							<li>entry point: {@link
+								edu.udel.cis.vsl.abc.front.c.preproc.IF.Preprocess Preprocess},
+								{@link edu.udel.cis.vsl.abc.front.fortran.preproc.IF.Preprocess
+								Preprocess}</li>
+						</ol></li>
+
+					<li><strong>parse</strong>
+						<ol>
+							<li>responsibilities: parsing a token stream to produce an
+								ANTLR tree representation of a translation unit</li>
+							<li>uses: <strong>util</strong>, <strong>config</strong>, <strong>token</strong></li>
+							<li>interface: {@link
+								edu.udel.cis.vsl.abc.front.c.parse.IF}, {@link
+								edu.udel.cis.vsl.abc.front.fortran.parse.IF}</li>
+							<li>entry point: {@link
+								edu.udel.cis.vsl.abc.front.c.parse.IF.Parse Parse}, {@link
+								edu.udel.cis.vsl.abc.front.fortran.parse.IF.Parse Parse}</li>
+						</ol></li>
+						<li>ptree</li>
+				</ol>
+			</li>
+		</ol>
+
+
+		<li><strong>ast</strong>
+			<ol>
+				<li>responsibilities: representation and manipulation of an
+					Abstract Syntax Tree and associated entities</li>
+				<li>uses: <strong>util</strong>, <strong>token</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.abc.ast.IF}</li>
+				<li>entry point: {@link edu.udel.cis.vsl.abc.ast.IF.ASTs ASTs}</li>
+				<li>submodules
+					<ol>
+						<li><strong>value</strong>
+							<ol>
+								<li>responsibilities: representation of concrete value,
+									such as characters, integers, floating point values</li>
+								<li>interface: {@link edu.udel.cis.vsl.abc.ast.value.IF}</li>
+								<li>entry point: {@link
+									edu.udel.cis.vsl.abc.ast.value.IF.Values Values}</li>
+							</ol></li>
+						<li><strong>type</strong>
+							<ol>
+								<li>responsibilities: representation of types</li>
+								<li>interface: {@link edu.udel.cis.vsl.abc.ast.type.IF}</li>
+								<li>entry point: {@link
+									edu.udel.cis.vsl.abc.ast.type.IF.Types Types}</li>
+							</ol></li>
+						<li><strong>entity</strong>
+							<ol>
+								<li>responsibilities: representation of abstract program
+									entities which can be named by an identifier, including
+									variables, functions, labels, scopes, structures, unions,
+									enumerations, enumerators, and typedefs</li>
+								<li>interface: {@link edu.udel.cis.vsl.abc.ast.entity.IF}</li>
+								<li>entry point: {@link
+									edu.udel.cis.vsl.abc.ast.entity.IF.Entities Entities}</li>
+							</ol></li>
+						<li><strong>conversion</strong>
+							<ol>
+								<li>responsibilities: representation of C's implicit
+									conversions, such as the conversion of an array to a pointer to
+									the first element of the array, and so on</li>
+								<li>interface: {@link
+									edu.udel.cis.vsl.abc.ast.conversion.IF}</li>
+								<li>entry point: {@link
+									edu.udel.cis.vsl.abc.ast.conversion.IF.Conversions Conversions}
+
+
+
+
+
+
+
+
+
+
+
+
+								
+							</ol></li>
+						<li><strong>node</strong>
+							<ol>
+								<li>responsibilities: representation of AST nodes</li>
+								<li>interface: {@link edu.udel.cis.vsl.abc.ast.node.IF}</li>
+								<li>entry point: {@link
+									edu.udel.cis.vsl.abc.ast.node.IF.Nodes Nodes}</li>
+							</ol></li>
+					</ol>
+				</li>
+			</ol></li>
+
+		<li><strong>astgen</strong>
+			<ol>
+				<li>responsibilities: translation of ANTLR tree to AST</li>
+				<li>uses: <strong>util</strong>, <strong>token</strong>, </strong><strong>front</strong>,
+					<strong>ast</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.abc.astgen.IF}, {@link
+					edu.udel.cis.vsl.abc.astgen.c.IF}, {@link
+					edu.udel.cis.vsl.abc.astgen.fortran.IF}</li>
+				<li>entry point: {@link
+					edu.udel.cis.vsl.abc.astgen.IF.ASTGenerator}</li>
+			</ol></li>
+
+		<li><strong>analysis</strong>
+			<ol>
+				<li>responsibilities: analyzing AST, creation of entities,
+					resolution of all identifiers, determination of all scopes, types,
+					and entities</li>
+				<li>uses: <strong>config</strong>, <strong>token</strong>, <strong>ast</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.abc.analysis.IF}</li>
+				<li>entry point: {@link
+					edu.udel.cis.vsl.abc.analysis.IF.Analysis Analysis}</li>
+			</ol></li>
+
+		<li><strong>transform</strong>
+			<ol>
+				<li>responsibilities: transformations of an AST</li>
+				<li>uses: <strong>token</strong>, <strong>ast</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.abc.transform.IF}</li>
+				<li>entry point: {@link
+					edu.udel.cis.vsl.abc.transform.IF.Transform Transform}</li>
+			</ol></li>
+
+		<li><strong>program</strong>
+			<ol>
+				<li>responsibilities: mutable representation of a program</li>
+				<li>uses: <strong>token</strong>, <strong>ast</strong>, <strong>analysis</strong>,
+					<strong>transform</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.abc.program.IF}</li>
+				<li>entry point: {@link
+					edu.udel.cis.vsl.abc.program.IF.Programs Programs}</li>
+			</ol></li>
+
+		<li><strong>main</strong>
+			<ol>
+				<li>responsibilities: command line interface, Activator class
+					for marshaling of tools in tool chain</li>
+				<li>uses: <strong>util</strong>, <strong>token</strong>, <strong>front</strong>,
+					<strong>ast</strong>, <strong>astgen</strong>, <strong>analysis</strong>,
+					<strong>transform</strong>, <strong>program</strong>
+				</li>
+				<li>interface: {@link edu.udel.cis.vsl.abc}</li>
+				<li>entry point: {@link edu.udel.cis.vsl.abc.ABC ABC}</li>
+			</ol></li>
+
+	</ol>
+
+</body>
+</html>
+

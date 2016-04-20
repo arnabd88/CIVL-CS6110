@@ -1,0 +1,66 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Log\+Entry Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Log\+Entry@{edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Log\+Entry}}
+
+
+This represents an entry in the error log of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Log\+Entry\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Log\+Entry\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_a0a0c22e06c9c3f27f6fcba9568cd4ded}{}{\bfseries C\+I\+V\+L\+Log\+Entry} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config, G\+M\+C\+Configuration gmc\+Config, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLExecutionException}{C\+I\+V\+L\+Execution\+Exception} problem)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_a0a0c22e06c9c3f27f6fcba9568cd4ded}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_a6fc09b710cd7174c5707a016fe52b8de}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLExecutionException}{C\+I\+V\+L\+Execution\+Exception} {\bfseries problem} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_a6fc09b710cd7174c5707a016fe52b8de}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_ad569a89440e6e54b2f2292ea7d528684}{}void {\bfseries print\+Body} (Print\+Stream out)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_ad569a89440e6e54b2f2292ea7d528684}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_a7923c5aa136cd308b7f009e9be1bf945}{}int {\bfseries compare\+To} (Log\+Entry that)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_a7923c5aa136cd308b7f009e9be1bf945}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_a396318c0d1c10c1a12cd9f563c69a10a}{}boolean {\bfseries equals} (Object obj)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLLogEntry_a396318c0d1c10c1a12cd9f563c69a10a}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This represents an entry in the error log of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. 
+
+Log\+Entry\textquotesingle{}s are stored in a collection that is ordered by the compare\+To method and where the equals method determines redundancy in terms of error reports.
+
+Currently these two methods consult the C\+I\+V\+L\+Configuration to determine what equivalence should be applied to error states. States that do not share the same problem kind are always inequivalent. There are three alternative criteria that are applied\+: L\+O\+C \+: require error locations in each proc to be the same for equivalence C\+A\+L\+L\+S\+T\+A\+C\+K \+: require call stacks in each proc to be the same for equivalence F\+U\+L\+L \+: require the full trace, as expressed by the path condition, to be the same for equivalence
+
+Additional equivalences are easy to implement by accessing components of the state.
+
+\begin{DoxyAuthor}{Author}
+zirkel 
+
+dwyer 
+\end{DoxyAuthor}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/log/\+I\+F/C\+I\+V\+L\+Log\+Entry.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,43 @@
+
+int y;
+$scopeDUPLICATE root;
+double x;
+
+
+
+// need to add scopes to structs too...
+
+<t> typedef struct _Node {
+  struct _Node *<t> next;
+  int id;
+} Node;
+
+
+typedef struct __heap $heap;
+
+<s> void *<s> $malloc(int size);
+
+double * g(double * p) {
+  return p;
+}
+
+<s,t> double *<s> f(double *<t> p)  {
+  return f<s,t>(f<t,s>(f<s,t>(p)));
+}
+
+void main() {
+  $scopeDUPLICATE s1;
+  double y;
+  double *<s1> p;
+  double *<root> q;
+  double * t;
+  
+  t = (double *) $malloc<s1>(8);
+  q = t;
+  p = &y;
+  q = &x;
+  q = p; // ok
+  // p = q; // syntax error
+  f<s1,s1>(p); // ok
+}
+

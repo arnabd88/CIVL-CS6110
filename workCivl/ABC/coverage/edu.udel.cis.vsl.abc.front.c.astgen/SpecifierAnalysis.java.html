@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SpecifierAnalysis.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.astgen</a> &gt; <span class="el_source">SpecifierAnalysis.java</span></div><h1>SpecifierAnalysis.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.c.astgen;
+
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.ABSTRACT;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.ALIGNAS;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.ATOMIC;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.AUTO;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.BOOL;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.CHAR;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.COMPLEX;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.CONST;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.DEVICE;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.DOMAIN;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.DOUBLE;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.ENUM;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.EXPR;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.EXTERN;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.FATOMIC;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.FLOAT;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.GLOBAL;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.INLINE;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.INPUT;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.INT;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.LONG;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.NORETURN;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.OUTPUT;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.PURE;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.RANGE;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.REAL;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.REGISTER;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.RESTRICT;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.SHARED;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.SHORT;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.SIGNED;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.STATIC;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.STRUCT;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.SYSTEM;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.THREADLOCAL;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.TYPE;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.TYPEDEF;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.TYPEDEF_NAME;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.TYPEOF_EXPRESSION;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.TYPEOF_TYPE;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.UNION;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.UNSIGNED;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.VOID;
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.VOLATILE;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.antlr.runtime.tree.CommonTree;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode.TypeNodeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.front.c.ptree.CParseTree;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * This class is used to analyze the &quot;declaration specifier&quot; section of a C
+ * declaration. The specifier information is complex and involves many different
+ * elements of the language. It consists of type specifiers and qualifiers,
+ * storage class specifiers, function specifiers, and alignment specifiers. See
+ * C11 Sections 6.7.1 through 6.7.5 for details.
+ * 
+ * Sec. 6.7.2 of the C11 Standard covers &quot;type specifiers&quot;. The set of type
+ * specifiers must fall into one of the following categories: a &quot;basic multiset&quot;
+ * (see class BasicMultiset for the enumeration of those sets); or one of the
+ * singleton sets VOID; STRUCT; UNION; ENUM; TYPEDEF_NAME; or ATOMIC. (Note that
+ * some of these are actually structured types, such as STRUCT, UNION, ENUM, and
+ * ATOMIC.) Each of these categories is represented by an element of the
+ * enumerated type TypeName.TypeNameKind. This class will determine which of the
+ * categories the given set of type specifiers belongs to, and other
+ * information.
+ * 
+ * Sec. 6.7.3 covers &quot;type qualifiers&quot;: CONST, RESTRICT, VOLATILE, ATOMIC. A
+ * qualifier can appear more than once---it is the same as appearing once. This
+ * class records whether or not each qualifier occurs.
+ * 
+ * The storage class specifiers are TYPEDEF, EXTERN, STATIC, THREADLOCAL, AUTO,
+ * and REGISTER.
+ * 
+ * The function specifiers are INLINE and NORETURN.
+ * 
+ * The alignment specifiers fall into two categories: ALIGNAS ( type ) and
+ * ALIGNAS ( expression ). There can be any number of both.
+ * 
+ * There are a lot of restrictions on the allowable combinations of specifiers.
+ * See the C11 Standard for details.
+ */
+public class SpecifierAnalysis {
+
+	// the basic type specifier keywords and VOID...
+
+	// Instance variables...
+
+	private CParseTree parseTree;
+
+	/**
+	 * The given tree node whose children are the declaration specifiers to be
+	 * analyzed.
+	 */
+	CommonTree specifierListNode;
+
+	/**
+	 * The kind of type name represented by these specifiers. One of BASIC,
+	 * VOID, STRUCTURE, UNION, ENUMERATION, TYPEDEF_NAME, or ATOMIC.
+	 */
+<span class="nc" id="L109">	TypeNodeKind typeNameKind = null;</span>
+
+	/**
+	 * If the type name kind is NOT BASIC, this variable will hold a reference
+	 * to the child of the specifierListNode that is the sole type specifier.
+	 * 
+	 * If the type name kind is BASIC, this will be null. (Reason: basic types
+	 * require a set of type specifiers, which is why the multisets are needed.)
+	 */
+<span class="nc" id="L118">	CommonTree typeSpecifierNode = null;</span>
+
+	/**
+	 * If the type name kind is BASIC, this will contain a list of the type
+	 * specifiers.
+	 */
+<span class="nc" id="L124">	List&lt;CommonTree&gt; basicSpecifierNodes = null;</span>
+
+	/**
+	 * If the typeNameKind is BASIC, this will hold the kind of BASIC type.
+	 * Otherwise it will be null.
+	 */
+<span class="nc" id="L130">	BasicTypeKind basicTypeKind = null;</span>
+
+	// multiset specifiers:
+<span class="nc" id="L133">	BasicMultiset set = new BasicMultiset();</span>
+	// other types:
+<span class="nc" id="L135">	int voidTypeCount = 0;</span>
+<span class="nc" id="L136">	int atomicTypeCount = 0; // _Atomic(typeName): has one child</span>
+<span class="nc" id="L137">	int structTypeCount = 0;</span>
+<span class="nc" id="L138">	int unionTypeCount = 0;</span>
+<span class="nc" id="L139">	int enumTypeCount = 0;</span>
+<span class="nc" id="L140">	int typedefNameCount = 0;</span>
+	// qualifiers:
+<span class="nc" id="L142">	boolean constQualifier = false;</span>
+<span class="nc" id="L143">	boolean restrictQualifier = false;</span>
+<span class="nc" id="L144">	boolean volatileQualifier = false;</span>
+<span class="nc" id="L145">	boolean atomicQualifier = false; // _Atomic: has 0 children</span>
+<span class="nc" id="L146">	boolean inputQualifier = false;</span>
+<span class="nc" id="L147">	boolean outputQualifier = false;</span>
+	// storage class specifiers
+<span class="nc" id="L149">	int typedefCount = 0;</span>
+<span class="nc" id="L150">	int externCount = 0;</span>
+<span class="nc" id="L151">	int staticCount = 0;</span>
+<span class="nc" id="L152">	int threadLocalCount = 0;</span>
+<span class="nc" id="L153">	int autoCount = 0;</span>
+<span class="nc" id="L154">	int registerCount = 0;</span>
+<span class="nc" id="L155">	int sharedCount = 0;</span>
+	// function specifiers: may appear multiple times
+<span class="nc" id="L157">	boolean inlineSpecifier = false;</span>
+<span class="nc" id="L158">	boolean noreturnSpecifier = false;</span>
+<span class="nc" id="L159">	boolean abstractSpecifier = false;</span>
+<span class="nc" id="L160">	boolean fatomicSpecifier = false;</span>
+<span class="nc" id="L161">	boolean pureSpecifier = false;</span>
+<span class="nc" id="L162">	boolean systemSpecifier = false;</span>
+	/**
+	 * CUDA specifier __global__
+	 */
+<span class="nc" id="L166">	boolean globalSpecifier = false;</span>
+	/**
+	 * CUDA specifier __device__
+	 */
+<span class="nc" id="L170">	boolean deviceSpecifier = false;</span>
+	// CIVL-C continuity for abstract functions: can occur only once
+<span class="nc" id="L172">	int continuity = 0;</span>
+	// CIVL-C domain specifier: can occur only once
+<span class="nc" id="L174">	int domainTypeCount = 0;</span>
+	// int domainDimension = -1;
+<span class="nc" id="L176">	int rangeTypeCount = 0;</span>
+	// alignment specifiers
+<span class="nc" id="L178">	List&lt;CommonTree&gt; alignmentTypeNodes = new LinkedList&lt;CommonTree&gt;();</span>
+<span class="nc" id="L179">	List&lt;CommonTree&gt; alignmentExpressionNodes = new LinkedList&lt;CommonTree&gt;();</span>
+	private Configuration configuration;
+
+	/**
+	 * Creates a new analysis object and conducts the analysis. The
+	 * specifierListNode is the root of a tree which is a list of declaration
+	 * specifiers. It may have type DECLARATION_SPECIFIERS or
+	 * SPECIFIER_QUALIFIER_LIST.
+	 * 
+	 * @param specifierListNode
+	 * @throws SyntaxException
+	 */
+<span class="nc" id="L191">	SpecifierAnalysis(CommonTree specifierListNode, CParseTree parseTree,</span>
+			Configuration configuration) throws SyntaxException {
+<span class="nc" id="L193">		this.specifierListNode = specifierListNode;</span>
+<span class="nc" id="L194">		this.parseTree = parseTree;</span>
+<span class="nc" id="L195">		this.configuration = configuration;</span>
+<span class="nc" id="L196">		analyze();</span>
+<span class="nc" id="L197">	}</span>
+
+	private SyntaxException error(String message, CommonTree tree) {
+<span class="nc" id="L200">		return parseTree.newSyntaxException(message, tree);</span>
+	}
+
+	private void analyze() throws SyntaxException {
+		int numChildren = specifierListNode.getChildCount();
+
+		if (numChildren == 0) {
+			if (this.configuration.svcomp()) {
+				typeNameKind = TypeNodeKind.BASIC;
+				basicTypeKind = BasicTypeKind.INT;
+			} else
+				error(&quot;Declaration is missing a type name&quot;, specifierListNode);
+		} else {
+			for (int i = 0; i &lt; numChildren; i++) {
+				CommonTree node = (CommonTree) specifierListNode.getChild(i);
+				int kind = node.getType();
+
+				switch (kind) {
+<span class="nc" id="L218">				case CHAR:</span>
+				case SHORT:
+				case INT:
+				case LONG:
+				case FLOAT:
+				case DOUBLE:
+				case REAL:
+				case SIGNED:
+				case UNSIGNED:
+				case BOOL:
+				case COMPLEX:
+					set.add(kind);
+					setTypeNameKind(TypeNodeKind.BASIC);
+					if (basicSpecifierNodes == null)
+						basicSpecifierNodes = new LinkedList&lt;CommonTree&gt;();
+					basicSpecifierNodes.add(node);
+					break;
+				case VOID:
+					voidTypeCount++;
+					setTypeNameKind(TypeNodeKind.VOID);
+					setTypeSpecifierNode(node);
+					break;
+				case ATOMIC:
+					if (node.getChildCount() &gt; 0) {
+						atomicTypeCount++;
+						setTypeNameKind(TypeNodeKind.ATOMIC);
+						setTypeSpecifierNode(node);
+					} else {
+						atomicQualifier = true;
+					}
+					break;
+				case STRUCT:
+					structTypeCount++;
+					setTypeNameKind(TypeNodeKind.STRUCTURE_OR_UNION);
+					setTypeSpecifierNode(node);
+					break;
+				case UNION:
+					unionTypeCount++;
+					setTypeNameKind(TypeNodeKind.STRUCTURE_OR_UNION);
+					setTypeSpecifierNode(node);
+					break;
+				case ENUM:
+					enumTypeCount++;
+					setTypeNameKind(TypeNodeKind.ENUMERATION);
+					setTypeSpecifierNode(node);
+					break;
+				case TYPEDEF_NAME:
+					typedefNameCount++;
+					setTypeNameKind(TypeNodeKind.TYPEDEF_NAME);
+					setTypeSpecifierNode(node);
+					break;
+				case TYPEOF_EXPRESSION:
+				case TYPEOF_TYPE:
+					setTypeNameKind(TypeNodeKind.TYPEOF);
+					setTypeSpecifierNode(node);
+					break;
+				case DOMAIN:
+					domainTypeCount++;
+					setTypeNameKind(TypeNodeKind.DOMAIN);
+					setTypeSpecifierNode(node);
+					// if (node.getChildCount() != 0) {
+					// CommonTree child = (CommonTree) node.getChild(0);
+					//
+					// if (child.getToken().getType() != CParser.ABSENT)
+					// domainDimension = parseInt(child);
+					// }
+					break;
+				case RANGE:
+					rangeTypeCount++;
+					setTypeNameKind(TypeNodeKind.RANGE);
+					setTypeSpecifierNode(node);
+					break;
+				case CONST:
+					constQualifier = true;
+					break;
+				case RESTRICT:
+					restrictQualifier = true;
+					break;
+				case VOLATILE:
+					volatileQualifier = true;
+					break;
+				case INPUT:
+					inputQualifier = true;
+					break;
+				case OUTPUT:
+					outputQualifier = true;
+					break;
+				case TYPEDEF:
+					typedefCount++;
+					break;
+				case EXTERN:
+					externCount++;
+					break;
+				case STATIC:
+					staticCount++;
+					break;
+				case THREADLOCAL:
+					threadLocalCount++;
+					break;
+				case AUTO:
+					autoCount++;
+					break;
+				case REGISTER:
+					registerCount++;
+					break;
+				case SHARED:
+					sharedCount++;
+					break;
+				case INLINE:
+					inlineSpecifier = true;
+					break;
+				case NORETURN:
+					noreturnSpecifier = true;
+					break;
+				case GLOBAL:
+					globalSpecifier = true;
+					break;
+				case FATOMIC:
+					fatomicSpecifier = true;
+					break;
+				case ALIGNAS: {
+					int alignKind = ((CommonTree) node.getChild(0)).getType();
+					CommonTree argument = (CommonTree) node.getChild(1);
+
+					if (alignKind == TYPE) {
+						alignmentTypeNodes.add(argument);
+					} else if (kind == EXPR) {
+						alignmentExpressionNodes.add(argument);
+					} else {
+						throw error(&quot;Unexpected kind of ALIGN_AS argument&quot;,
+								node);
+					}
+					break;
+				}
+				case ABSTRACT:
+					abstractSpecifier = true;
+					if (node.getChildCount() == 0) {
+						continuity = 0;
+					} else {
+						continuity = parseInt((CommonTree) node.getChild(0));
+					}
+					break;
+				case DEVICE:
+					this.deviceSpecifier = true;
+					break;
+				case PURE:
+					this.pureSpecifier = true;
+					break;
+				case SYSTEM:
+					this.systemSpecifier = true;
+					break;
+				default:
+					throw error(&quot;Unknown declaration specifier&quot;, node);
+				}
+			}
+			if (typeNameKind == null)
+				throw error(&quot;Declaration is missing a type name&quot;,
+						specifierListNode);
+			if (typeNameKind == TypeNodeKind.BASIC) {
+				basicTypeKind = BasicMultiset.getBasicTypeKind(set);
+				if (basicTypeKind == null)
+					throw error(&quot;Illegal type specifiers&quot;, specifierListNode);
+			}
+		}
+	}
+
+	public BasicTypeKind getBasicTypeKind() {
+<span class="nc" id="L385">		return basicTypeKind;</span>
+	}
+
+	private void setTypeNameKind(TypeNodeKind kind) throws SyntaxException {
+<span class="nc bnc" id="L389" title="All 4 branches missed.">		if (typeNameKind != null &amp;&amp; typeNameKind != kind)</span>
+<span class="nc" id="L390">			throw error(</span>
+<span class="nc" id="L391">					&quot;Two different kinds of types specified in declaration specifier list: &quot;</span>
+<span class="nc" id="L392">							+ typeNameKind + &quot; and &quot; + kind, specifierListNode);</span>
+<span class="nc" id="L393">		typeNameKind = kind;</span>
+<span class="nc" id="L394">	}</span>
+
+	private void setTypeSpecifierNode(CommonTree node) throws SyntaxException {
+<span class="nc bnc" id="L397" title="All 2 branches missed.">		if (typeSpecifierNode != null)</span>
+<span class="nc" id="L398">			throw error(</span>
+<span class="nc" id="L399">					&quot;Two type specifiers in declaration. Previous specifier was at &quot;</span>
+<span class="nc" id="L400">							+ error(&quot;&quot;, typeSpecifierNode).getSource(), node);</span>
+<span class="nc" id="L401">		typeSpecifierNode = node;</span>
+<span class="nc" id="L402">	}</span>
+
+	/**
+	 * Parses a node expected to contain an integer constant.
+	 * 
+	 * @param node
+	 *            a CommonTree node expected to contain integer constant
+	 * @return the int value of that integer constant
+	 * @throws SyntaxException
+	 *             if the text of the node cannot be parsed to yield an integer
+	 */
+	private int parseInt(CommonTree node) throws SyntaxException {
+		try {
+<span class="nc" id="L415">			int result = Integer.parseInt(node.getText());</span>
+
+<span class="nc" id="L417">			return result;</span>
+<span class="nc" id="L418">		} catch (Exception e) {</span>
+<span class="nc" id="L419">			throw error(&quot;Expected integer constant&quot;, node);</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,11 @@
+#include <assert.h>
+#include <civlc.cvh>
+#include <stdio.h>
+
+int main() {
+  int x = $choose_int(5);
+
+  printf("x=%d\n", x);
+  $assert((x < 5));
+  return 0;
+}

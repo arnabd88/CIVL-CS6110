@@ -1,0 +1,7 @@
+#include<civlc.h>
+
+$input double x;
+
+void main() {
+  printf("x=%f\n", x);
+}

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonTypeNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.type</a> &gt; <span class="el_source">CommonTypeNode.java</span></div><h1>CommonTypeNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.type;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.CommonASTNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public abstract class CommonTypeNode extends CommonASTNode implements TypeNode {
+
+	private TypeNodeKind typeNodeKind;
+
+<span class="nc" id="L15">	private boolean constQualified = false;</span>
+
+<span class="nc" id="L17">	private boolean volatileQualified = false;</span>
+
+<span class="nc" id="L19">	private boolean restrictQualified = false;</span>
+
+<span class="nc" id="L21">	private boolean atomicQualified = false;</span>
+
+<span class="nc" id="L23">	private boolean inputQualified = false;</span>
+
+<span class="nc" id="L25">	private boolean outputQualified = false;</span>
+
+	private Type type;
+
+	public CommonTypeNode(Source source, TypeNodeKind kind) {
+<span class="nc" id="L30">		super(source);</span>
+<span class="nc" id="L31">		this.typeNodeKind = kind;</span>
+<span class="nc" id="L32">	}</span>
+
+	public CommonTypeNode(Source source, TypeNodeKind kind, ASTNode child) {
+<span class="nc" id="L35">		super(source, child);</span>
+<span class="nc" id="L36">		this.typeNodeKind = kind;</span>
+<span class="nc" id="L37">	}</span>
+
+	public CommonTypeNode(Source source, TypeNodeKind kind, ASTNode child0,
+			ASTNode child1) {
+<span class="nc" id="L41">		super(source, child0, child1);</span>
+<span class="nc" id="L42">		this.typeNodeKind = kind;</span>
+<span class="nc" id="L43">	}</span>
+
+	public CommonTypeNode(Source source, TypeNodeKind kind, ASTNode child0,
+			ASTNode child1, ASTNode child2) {
+<span class="nc" id="L47">		super(source, child0, child1, child2);</span>
+<span class="nc" id="L48">		this.typeNodeKind = kind;</span>
+<span class="nc" id="L49">	}</span>
+
+	@Override
+	public TypeNodeKind kind() {
+<span class="nc" id="L53">		return typeNodeKind;</span>
+	}
+
+	@Override
+	public boolean isConstQualified() {
+<span class="nc" id="L58">		return constQualified;</span>
+	}
+
+	@Override
+	public void setConstQualified(boolean value) {
+<span class="nc" id="L63">		this.constQualified = value;</span>
+<span class="nc" id="L64">	}</span>
+
+	@Override
+	public boolean isVolatileQualified() {
+<span class="nc" id="L68">		return volatileQualified;</span>
+	}
+
+	@Override
+	public void setVolatileQualified(boolean value) {
+<span class="nc" id="L73">		this.volatileQualified = value;</span>
+<span class="nc" id="L74">	}</span>
+
+	@Override
+	public boolean isRestrictQualified() {
+<span class="nc" id="L78">		return restrictQualified;</span>
+	}
+
+	@Override
+	public void setRestrictQualified(boolean value) {
+<span class="nc" id="L83">		this.restrictQualified = value;</span>
+<span class="nc" id="L84">	}</span>
+
+	@Override
+	public boolean isAtomicQualified() {
+<span class="nc" id="L88">		return atomicQualified;</span>
+	}
+
+	@Override
+	public void setAtomicQualified(boolean value) {
+<span class="nc" id="L93">		this.atomicQualified = value;</span>
+<span class="nc" id="L94">	}</span>
+
+	@Override
+	public boolean isInputQualified() {
+<span class="nc" id="L98">		return inputQualified;</span>
+	}
+
+	@Override
+	public void setInputQualified(boolean value) {
+<span class="nc" id="L103">		this.inputQualified = value;</span>
+<span class="nc" id="L104">	}</span>
+
+	@Override
+	public boolean isOutputQualified() {
+<span class="nc" id="L108">		return outputQualified;</span>
+	}
+
+	@Override
+	public void setOutputQualified(boolean value) {
+<span class="nc" id="L113">		this.outputQualified = value;</span>
+<span class="nc" id="L114">	}</span>
+
+	@Override
+	public Type getType() {
+<span class="nc" id="L118">		return type;</span>
+	}
+
+	@Override
+	public void setType(Type type) {
+<span class="nc" id="L123">		this.type = type;</span>
+<span class="nc" id="L124">	}</span>
+
+	protected String qualifierString() {
+<span class="nc" id="L127">		String result = typeId();</span>
+<span class="nc" id="L128">		boolean needSeparator = true;</span>
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (constQualified) {</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			if (needSeparator)</span>
+<span class="nc" id="L132">				result += &quot;, &quot;;</span>
+<span class="nc" id="L133">			result = &quot;const&quot;;</span>
+<span class="nc" id="L134">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (volatileQualified) {</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (needSeparator)</span>
+<span class="nc" id="L138">				result += &quot;, &quot;;</span>
+<span class="nc" id="L139">			result += &quot;volatile&quot;;</span>
+<span class="nc" id="L140">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (restrictQualified) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (needSeparator)</span>
+<span class="nc" id="L144">				result += &quot;, &quot;;</span>
+<span class="nc" id="L145">			result += &quot;restrict&quot;;</span>
+<span class="nc" id="L146">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (atomicQualified) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (needSeparator)</span>
+<span class="nc" id="L150">				result += &quot;, &quot;;</span>
+<span class="nc" id="L151">			result += &quot;atomic&quot;;</span>
+		}
+<span class="nc" id="L153">		return result;</span>
+	}
+
+	protected String typeId() {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (type == null)</span>
+<span class="nc" id="L158">			return &quot;type=UNKNOWN&quot;;</span>
+		else
+<span class="nc" id="L160">			return &quot;type=&quot; + type.getId();</span>
+	}
+
+	protected void copyData(TypeNode node) {
+<span class="nc" id="L164">		node.setAtomicQualified(isAtomicQualified());</span>
+<span class="nc" id="L165">		node.setConstQualified(isConstQualified());</span>
+<span class="nc" id="L166">		node.setInputQualified(isInputQualified());</span>
+<span class="nc" id="L167">		node.setOutputQualified(isOutputQualified());</span>
+<span class="nc" id="L168">		node.setRestrictQualified(isRestrictQualified());</span>
+<span class="nc" id="L169">		node.setVolatileQualified(isVolatileQualified());</span>
+<span class="nc" id="L170">	}</span>
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L174">		return NodeKind.TYPE;</span>
+	}
+
+	@Override
+	public TypeNodeKind typeNodeKind() {
+<span class="nc" id="L179">		return typeNodeKind;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (that instanceof TypeNode) {</span>
+<span class="nc" id="L185">			TypeNode thatType = (TypeNode) that;</span>
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			if (this.typeNodeKind == thatType.typeNodeKind()</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">					&amp;&amp; this.atomicQualified == thatType.isAtomicQualified()</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">					&amp;&amp; this.constQualified == thatType.isConstQualified()</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">					&amp;&amp; this.inputQualified == thatType.isInputQualified()</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">					&amp;&amp; this.outputQualified == thatType.isOutputQualified()</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">					&amp;&amp; this.restrictQualified == thatType.isRestrictQualified()</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">					&amp;&amp; this.volatileQualified == thatType.isVolatileQualified())</span>
+<span class="nc" id="L194">				return null;</span>
+			else
+<span class="nc" id="L196">				return new DifferenceObject(this, that, DiffKind.OTHER,</span>
+<span class="nc" id="L197">						&quot;different qualifiers&quot;);</span>
+		}
+<span class="nc" id="L199">		return new DifferenceObject(this, that, DiffKind.KIND);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

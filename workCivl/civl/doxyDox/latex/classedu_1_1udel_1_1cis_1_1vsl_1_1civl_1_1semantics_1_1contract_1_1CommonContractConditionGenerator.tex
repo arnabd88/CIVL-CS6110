@@ -1,0 +1,398 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator}}
+
+
+This class is responsible for generating verification conditions and reasoning conditions for contract clauses.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_abeb7e9dc2f96e8bcc25ece6678b27400}{}{\bfseries Common\+Contract\+Condition\+Generator} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_aa8c2843544334f9c4364df7538f5809c}{model\+Factory}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} state\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a38a592becbd84110bed227073b7ac748}{symbolic\+Util}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a714f874cf229bac7bf45da9f359c141e}{symbolic\+Analyzer}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Unit\+Factory, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a01fcde97a26da8cc29f2dd594e138cde}{error\+Logger}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_abeb7e9dc2f96e8bcc25ece6678b27400}
+
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a9088f0200204ccc99c33475b3542e028}{set\+Valid\+Consequences} (List$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1PointerSetExpression}{Pointer\+Set\+Expression}, Integer $>$$>$ valid\+Axioms)
+\begin{DoxyCompactList}\small\item\em Re-\/organizes the given list of pairs of  operands and pointer levels into \hyperlink{}{valid\+Pointer\+Axioms}. \end{DoxyCompactList}\item 
+List$<$ Integer $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a7c02d846db29d5aab24bb54af7eda389}{get\+Ordered\+Malloc\+Id} (int vid, int depth)
+\begin{DoxyCompactList}\small\item\em Return a \char`\"{}malloc\char`\"{} id for a  operand by a pair of vid and pointer depth. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_ad2a64900b9a497600d417fba4866af0d}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} {\bfseries derive\+Contract} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionContract}{Function\+Contract} contracts)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_ad2a64900b9a497600d417fba4866af0d}
+
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a89f40d75e360363433c05492152962a1}{derive\+Expression} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Derive an \hyperlink{}{Expression} to some reasonable form. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a6623354c3bff41c28b8ea79a30a2ca65}{derive\+M\+P\+I\+Collective\+Behavior} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, int num\+Process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1MPICollectiveBehavior}{M\+P\+I\+Collective\+Behavior} collective\+Behavior)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em T\+O\+D\+O\+: experimental only. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a815b87b4a015317609c374e15a828774}{pointer\+Add} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}{Binary\+Expression} expression, Symbolic\+Expression pointer, Numeric\+Expression offset)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em This method extends \hyperlink{}{int, String, Binary\+Expression, Symbolic\+Expression, Numeric\+Expression)} to be able to handle symbolic pointers. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a5e4dcfb2aacdc50962f5d3a0ee3eb081}{deref\+On\+Pointer} (Symbolic\+Expression pointer, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} pointer\+Expr)
+\begin{DoxyCompactList}\small\item\em Encodes a symbolic pointer expression as an uninterpreted function. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_aa0ddbb742f7cf526d6ba299d8ac874c5}{initialize\+Pointer} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} pointer\+Var)
+\begin{DoxyCompactList}\small\item\em Initialize a pointer type variable v. \end{DoxyCompactList}\item 
+Boolean\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_ade21f9d246ca4247be795b330de2fa72}{pointer\+Is\+Valid} (Symbolic\+Expression base\+Pointer)
+\begin{DoxyCompactList}\small\item\em Encodes a  predicate on a symbolic pointer expression p. \end{DoxyCompactList}\item 
+Boolean\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a0e29d756b19f1936b7e425c6d2fcabbf}{pointer\+Is\+Valid\+Forall} (Symbolic\+Expression base\+Pointer, Numeric\+Expression low, Numeric\+Expression high)
+\begin{DoxyCompactList}\small\item\em Encodes a  predicate on a symbolic pointer expression p with a lower and a higher bound. \end{DoxyCompactList}\item 
+Iterator$<$ List$<$ Integer $>$ $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_ad71c756c882ae18665e40ecfa58c3d7f}{valid\+Pointers\+Iterator} ()
+\begin{DoxyCompactList}\small\item\em Returns an \hyperlink{}{Iterator} for all  clauses that is proved as a consequence of all requirements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_aa39f80878e267310690d59dc2e3a8569}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} {\bfseries evaluate\+Remote\+Expression} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}{Binary\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_aa39f80878e267310690d59dc2e3a8569}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_af48e3a0db42e704f50e785bae4fd1242}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_af48e3a0db42e704f50e785bae4fd1242}{evaluate\+Dereference} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1DereferenceExpression}{Dereference\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_af48e3a0db42e704f50e785bae4fd1242}
+
+\begin{DoxyCompactList}\small\item\em Dereferencing on symbolic pointers will be derived to an uninterpreted function {\ttfamily \$deref(ptr) where \char`\"{}ptr\char`\"{} is a symbolic pointer}; It will do concrete dereferencing if the pointer is concrete. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_af8245526311eae014bab1e2a3da19bf7}{evaluate\+Initial\+Value} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1InitialValueExpression}{Initial\+Value\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Override for pointers\+: In a contract system, a pointer will be initialized as a symbolic constant \char`\"{}\+X\+P\mbox{[}sid, vid\mbox{]}\char`\"{}, where \char`\"{}sid\char`\"{} is the lexical scope id. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a36b1206280b39025118f108e5efe781a}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a36b1206280b39025118f108e5efe781a}{evaluate\+M\+P\+I\+Contract\+Expression} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MPIContractExpression}{M\+P\+I\+Contract\+Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a36b1206280b39025118f108e5efe781a}
+
+\begin{DoxyCompactList}\small\item\em Override, because in derivation phase, it doesn\textquotesingle{}t need to consider M\+P\+I contract expression, just make them dummy expressions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This class is responsible for generating verification conditions and reasoning conditions for contract clauses. 
+
+Please read specification in \hyperlink{}{Contract\+Condition\+Generator} before read documents in this class.
+
+\begin{DoxyAuthor}{Author}
+ziqingluo 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a5e4dcfb2aacdc50962f5d3a0ee3eb081}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!deref\+On\+Pointer@{deref\+On\+Pointer}}
+\index{deref\+On\+Pointer@{deref\+On\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{deref\+On\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+deref\+On\+Pointer (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{{\bf Expression}}]{pointer\+Expr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a5e4dcfb2aacdc50962f5d3a0ee3eb081}
+
+
+Encodes a symbolic pointer expression as an uninterpreted function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & The \hyperlink{}{Symbolic\+Expression} of the pointer \\
+\hline
+{\em pointer\+Expr} & The \hyperlink{}{Expression} of the pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_ab52c6625e0b3b7130d70df4b1c5b24e0}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a89f40d75e360363433c05492152962a1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!derive\+Expression@{derive\+Expression}}
+\index{derive\+Expression@{derive\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{derive\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+derive\+Expression (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Expression}}]{expression}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a89f40d75e360363433c05492152962a1}
+
+
+Derive an \hyperlink{}{Expression} to some reasonable form. 
+
+e.\+g. an uninterpreted function. This method reuses \hyperlink{}{evaluate(\+State, int, Expression)}. Thus we use the word \char`\"{}derivation\char`\"{} for those overrided semantics by this method, \char`\"{}evaluation\char`\"{} for semantics of the super method ~\newline
+ Following is the list of explanations of the differences for some kinds of expressions between the evaluation and derivation\+: 
+
+
+\begin{DoxyEnumerate}
+\item V\+A\+L\+I\+D operations (one of the U\+N\+A\+R\+Y operations)\+: \hyperlink{structA}{A} valid operations will be derived to an uninterpreted function \$valid(ptr, offset) where \char`\"{}ptr\char`\"{} is a symbolic pointer derived by \hyperlink{}{parse\+Pointer(\+State, int, Expression)} and \char`\"{}offset\char`\"{} is evaluated. 
+\item D\+E\+R\+E\+F\+E\+R\+E\+N\+C\+E expressions\+: An expression has the form {\ttfamily $\ast$x} will be derived to an uninterpreted function if the pointer is a symbolic pointer. see \hyperlink{}{parse\+Dereference\+Pointer(\+State, int, Dereference\+Expression)} 
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+{\em expression} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_a30aba4cb2119513ae71e804e08a30e17}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a6623354c3bff41c28b8ea79a30a2ca65}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!derive\+M\+P\+I\+Collective\+Behavior@{derive\+M\+P\+I\+Collective\+Behavior}}
+\index{derive\+M\+P\+I\+Collective\+Behavior@{derive\+M\+P\+I\+Collective\+Behavior}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{derive\+M\+P\+I\+Collective\+Behavior}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+derive\+M\+P\+I\+Collective\+Behavior (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{int}]{num\+Process, }
+\item[{{\bf M\+P\+I\+Collective\+Behavior}}]{collective\+Behavior}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a6623354c3bff41c28b8ea79a30a2ca65}
+
+
+T\+O\+D\+O\+: experimental only. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+{\em num\+Process} & \\
+\hline
+{\em collective\+Behavior} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_a132c829127def092a69459db3ce2d092}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_af8245526311eae014bab1e2a3da19bf7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!evaluate\+Initial\+Value@{evaluate\+Initial\+Value}}
+\index{evaluate\+Initial\+Value@{evaluate\+Initial\+Value}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{evaluate\+Initial\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+evaluate\+Initial\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Initial\+Value\+Expression}}]{expression}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_af8245526311eae014bab1e2a3da19bf7}
+
+
+Override for pointers\+: In a contract system, a pointer will be initialized as a symbolic constant \char`\"{}\+X\+P\mbox{[}sid, vid\mbox{]}\char`\"{}, where \char`\"{}sid\char`\"{} is the lexical scope id. 
+
+\hyperlink{structA}{A} pointer will be initialized only if it\textquotesingle{}s a parameter of the verifying function or it is a global variable. \hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a7c02d846db29d5aab24bb54af7eda389}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!get\+Ordered\+Malloc\+Id@{get\+Ordered\+Malloc\+Id}}
+\index{get\+Ordered\+Malloc\+Id@{get\+Ordered\+Malloc\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{get\+Ordered\+Malloc\+Id}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Integer$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+get\+Ordered\+Malloc\+Id (
+\begin{DoxyParamCaption}
+\item[{int}]{vid, }
+\item[{int}]{pointer\+Levels}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a7c02d846db29d5aab24bb54af7eda389}
+
+
+Return a \char`\"{}malloc\char`\"{} id for a  operand by a pair of vid and pointer depth. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vid} & The I\+D of an variable \\
+\hline
+{\em pointer\+Levels} & The number of levels of pointers. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_ad2081aa7f9c25169aa899951f372a18e}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_aa0ddbb742f7cf526d6ba299d8ac874c5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!initialize\+Pointer@{initialize\+Pointer}}
+\index{initialize\+Pointer@{initialize\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{initialize\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+initialize\+Pointer (
+\begin{DoxyParamCaption}
+\item[{{\bf Variable}}]{pointer\+Var}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_aa0ddbb742f7cf526d6ba299d8ac874c5}
+
+
+Initialize a pointer type variable v. 
+
+v can only be the parameter of the function that is been verifying. v will be initialize as a lambda expression\+: {\ttfamily  v = lambda(i) ; lambda(i) \+:= ptr(pointer, i)} where the \char`\"{}pointer\char`\"{} is pointer stands for the base address and \char`\"{}i\char`\"{} is the input which stands for an offset. More details can be found at the specification of the class \hyperlink{}{Contract\+Condition\+Generator}
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer\+Var} & The pointer type variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_a37512f64b055368b06a46c1f9873671f}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a815b87b4a015317609c374e15a828774}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!pointer\+Add@{pointer\+Add}}
+\index{pointer\+Add@{pointer\+Add}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{pointer\+Add}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+pointer\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf Binary\+Expression}}]{expression, }
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{Numeric\+Expression}]{offset}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a815b87b4a015317609c374e15a828774}
+
+
+This method extends \hyperlink{}{int, String, Binary\+Expression, Symbolic\+Expression, Numeric\+Expression)} to be able to handle symbolic pointers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em process} & The string identifier of the process \\
+\hline
+{\em expression} & The addition expression \\
+\hline
+{\em pointer} & The symbolic pointer value \\
+\hline
+{\em offset} & The numeric offset value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_a4e21ef614c25a5d547a5e06ee307d7e6}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_ade21f9d246ca4247be795b330de2fa72}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!pointer\+Is\+Valid@{pointer\+Is\+Valid}}
+\index{pointer\+Is\+Valid@{pointer\+Is\+Valid}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{pointer\+Is\+Valid}]{\setlength{\rightskip}{0pt plus 5cm}Boolean\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+pointer\+Is\+Valid (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_ade21f9d246ca4247be795b330de2fa72}
+
+
+Encodes a  predicate on a symbolic pointer expression p. 
+
+The predicate states that {\ttfamily (p)}
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} boolean predicate 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_ab3926afcdb239308cf3b45f691a494d6}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a0e29d756b19f1936b7e425c6d2fcabbf}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!pointer\+Is\+Valid\+Forall@{pointer\+Is\+Valid\+Forall}}
+\index{pointer\+Is\+Valid\+Forall@{pointer\+Is\+Valid\+Forall}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{pointer\+Is\+Valid\+Forall}]{\setlength{\rightskip}{0pt plus 5cm}Boolean\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+pointer\+Is\+Valid\+Forall (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{base\+Pointer, }
+\item[{Numeric\+Expression}]{low, }
+\item[{Numeric\+Expression}]{high}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a0e29d756b19f1936b7e425c6d2fcabbf}
+
+
+Encodes a  predicate on a symbolic pointer expression p with a lower and a higher bound. 
+
+The predicate states that\+: {\ttfamily  For all integer i; lower $<$= i $<$ higher such that (p+i)}
+
+
+\begin{DoxyParams}{Parameters}
+{\em lambda\+Pointer} & \hyperlink{structA}{A} pointer symbolic expression. \\
+\hline
+{\em low} & The lower bound of a valid offset\\
+\hline
+{\em high} & The higher bound of a valid offset \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} quantified boolean predicate 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_a6d1656c5bb0c9b1217066dd7698ea5d8}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a9088f0200204ccc99c33475b3542e028}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!set\+Valid\+Consequences@{set\+Valid\+Consequences}}
+\index{set\+Valid\+Consequences@{set\+Valid\+Consequences}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{set\+Valid\+Consequences}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+set\+Valid\+Consequences (
+\begin{DoxyParamCaption}
+\item[{List$<$ {\bf Pair}$<$ {\bf Pointer\+Set\+Expression}, Integer $>$$>$}]{valid\+Axioms}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a9088f0200204ccc99c33475b3542e028}
+
+
+Re-\/organizes the given list of pairs of  operands and pointer levels into \hyperlink{}{valid\+Pointer\+Axioms}. 
+
+For how is it organized, see \hyperlink{}{valid\+Pointer\+Axioms}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em valid\+Axioms} & Pairs of  operands and pointer levels. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_a1581e8d6617d0ea28164a995ee60c112}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_ad71c756c882ae18665e40ecfa58c3d7f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}!valid\+Pointers\+Iterator@{valid\+Pointers\+Iterator}}
+\index{valid\+Pointers\+Iterator@{valid\+Pointers\+Iterator}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Common\+Contract\+Condition\+Generator}}
+\subsubsection[{valid\+Pointers\+Iterator}]{\setlength{\rightskip}{0pt plus 5cm}Iterator$<$List$<$Integer$>$ $>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator.\+valid\+Pointers\+Iterator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_ad71c756c882ae18665e40ecfa58c3d7f}
+
+
+Returns an \hyperlink{}{Iterator} for all  clauses that is proved as a consequence of all requirements. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator_a6f795c734166027b219e0e04a7e86a85}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Contract\+Condition\+Generator}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/contract/Common\+Contract\+Condition\+Generator.\+java\end{DoxyCompactItemize}

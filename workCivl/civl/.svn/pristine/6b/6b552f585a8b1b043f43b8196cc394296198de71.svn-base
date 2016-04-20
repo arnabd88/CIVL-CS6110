@@ -1,0 +1,24 @@
+#include<civlc.h>
+int *x;
+int *p;
+
+void f() {
+  int y=0;
+  {
+    int *q = p;
+    y = y + 1;
+    *q = 15;
+  }
+}
+
+void main() {
+  $proc fp;
+  
+  x = (int*) $malloc($root, sizeof(int));
+  p = x;
+  *x = 0;
+  fp = $spawn f(); 
+  $assert(*p==0);
+  $wait(fp);
+  $free(x);
+}

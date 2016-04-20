@@ -1,0 +1,12 @@
+#include<civlc.cvh>
+
+int main(){
+  int a=10;
+
+  $when(a<100){
+    $assert(a==10);
+    int a=9;
+    $assert(a==9);
+  }
+  $assert(a==10);
+}

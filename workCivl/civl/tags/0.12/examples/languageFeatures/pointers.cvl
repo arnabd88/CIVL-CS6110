@@ -1,0 +1,54 @@
+/* Commandline execution:
+ *		civl verify pointers.cvl
+ * */
+#include<civlc.h>
+
+typedef struct Node {
+  int id;
+  struct Node* next;
+} Node;
+
+void passByRef(int * array) {
+  *array = 42;
+}
+
+void main() {
+  int a;
+  int* b;
+  int c[2];
+  int* d;
+  int** g;
+  int* f;
+  int *k[5];
+  $scope myscope = $here;
+  Node head, tail;
+  Node *hp, *tp;
+    
+  tail.id = 1;
+  tail.next = NULL;
+  tp = &tail;
+  head.id = 0;
+  head.next = tp;
+  for(int i = 0; i < 3; i++){
+    k[i] = (int *) $malloc(myscope, sizeof(int));
+    *k[i] = i;
+  }
+  k[3] = &a;
+  k[4] = &c[0];
+  f = &a;
+  a = 1;
+  b = &a;
+  c[0] = 0;
+  c[1] = 1;
+  d = &c[1];
+  g = &d;
+  $assert(*b == 1);
+  $assert(*d == 1);
+  $assert(**g == 1);
+  $assert(g == &d);
+  passByRef(f);
+  $assert(*f == 42);
+  $free(k[0]);
+  $free(k[1]);
+  $free(k[2]);
+}

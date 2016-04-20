@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>StatementAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">StatementAnalyzer.java</span></div><h1>StatementAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import java.util.Iterator;
+
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ConversionFactory;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Label;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.PragmaNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.StaticAssertionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.TypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.LabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.OrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.SwitchLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpExecutableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpExecutableNode.OmpExecutableKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpFunctionReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpNode.OmpNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpParallelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpReductionNode.OmpReductionNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpWorksharingNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.AtomicNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ChooseStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.DeclarationListNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ExpressionStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.IfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.JumpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LabeledStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ReturnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode.StatementKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.SwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.WhenNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.EnumerationTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.StructureOrUnionTypeNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.DomainType;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+//import edu.udel.cis.vsl.abc.ast.node.IF.statement.AssertNode;
+
+public class StatementAnalyzer {
+
+	// ***************************** Fields *******************************
+
+	private EntityAnalyzer entityAnalyzer;
+
+	private NodeFactory nodeFactory;
+
+	private ExpressionAnalyzer expressionAnalyzer;
+
+	private TypeFactory typeFactory;
+
+	private ConversionFactory conversionFactory;
+
+	private Configuration configuration;
+
+	private AcslContractAnalyzer acslAnalyzer;
+
+	// ************************** Constructors ****************************
+
+<span class="nc" id="L86">	StatementAnalyzer(EntityAnalyzer entityAnalyzer,</span>
+			ExpressionAnalyzer expressionAnalyzer,
+			ConversionFactory conversionFactory, TypeFactory typeFactory,
+			Configuration config) {
+<span class="nc" id="L90">		this.entityAnalyzer = entityAnalyzer;</span>
+<span class="nc" id="L91">		this.nodeFactory = entityAnalyzer.nodeFactory;</span>
+<span class="nc" id="L92">		this.expressionAnalyzer = expressionAnalyzer;</span>
+<span class="nc" id="L93">		this.conversionFactory = conversionFactory;</span>
+<span class="nc" id="L94">		this.typeFactory = typeFactory;</span>
+<span class="nc" id="L95">		this.configuration = config;</span>
+<span class="nc" id="L96">		this.acslAnalyzer = new AcslContractAnalyzer(entityAnalyzer,</span>
+<span class="nc" id="L97">				conversionFactory);</span>
+<span class="nc" id="L98">	}</span>
+
+	// ************************* Private Methods **************************
+
+	private SyntaxException error(String message, ASTNode node) {
+<span class="nc" id="L103">		return entityAnalyzer.error(message, node);</span>
+	}
+
+	private SyntaxException error(UnsourcedException e, ASTNode node) {
+<span class="nc" id="L107">		return entityAnalyzer.error(e, node);</span>
+	}
+
+	private void processExpression(ExpressionNode expression)
+			throws SyntaxException {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (expression != null)</span>
+<span class="nc" id="L113">			expressionAnalyzer.processExpression(expression);</span>
+<span class="nc" id="L114">	}</span>
+
+	private void processIf(IfNode node) throws SyntaxException {
+<span class="nc" id="L117">		processExpression(node.getCondition());</span>
+<span class="nc" id="L118">		processStatement(node.getTrueBranch());</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (node.getFalseBranch() != null)</span>
+<span class="nc" id="L120">			processStatement(node.getFalseBranch());</span>
+<span class="nc" id="L121">	}</span>
+
+	private SwitchNode enclosingSwitch(SwitchLabelNode labelNode) {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (ASTNode node = labelNode.parent(); node != null; node = node</span>
+<span class="nc" id="L125">				.parent()) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			if (node instanceof SwitchNode)</span>
+<span class="nc" id="L127">				return (SwitchNode) node;</span>
+		}
+<span class="nc" id="L129">		return null;</span>
+	}
+
+	private ASTNode enclosingSwitchOrChoose(SwitchLabelNode labelNode) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		for (ASTNode node = labelNode.parent(); node != null; node = node</span>
+<span class="nc" id="L134">				.parent()) {</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (node instanceof SwitchNode</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">					|| node instanceof ChooseStatementNode)</span>
+<span class="nc" id="L137">				return node;</span>
+		}
+<span class="nc" id="L139">		return null;</span>
+	}
+
+	private void processLabeledStatement(LabeledStatementNode node)
+			throws SyntaxException {
+<span class="nc" id="L144">		LabelNode labelNode = node.getLabel();</span>
+<span class="nc" id="L145">		StatementNode statementNode = node.getStatement();</span>
+<span class="nc" id="L146">		Function function = entityAnalyzer.enclosingFunction(node);</span>
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (function == null)</span>
+<span class="nc" id="L149">			throw error(&quot;Label occurs outside of function&quot;, node);</span>
+<span class="nc" id="L150">		labelNode.setStatement(statementNode);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (labelNode instanceof OrdinaryLabelNode)</span>
+<span class="nc" id="L152">			processOrdinaryLabel((OrdinaryLabelNode) labelNode, function);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		else if (labelNode instanceof SwitchLabelNode)</span>
+<span class="nc" id="L154">			processSwitchLabel(node, (SwitchLabelNode) labelNode, function);</span>
+		else
+<span class="nc" id="L156">			throw new RuntimeException(&quot;unreachable&quot;);</span>
+<span class="nc" id="L157">		processStatement(statementNode);</span>
+
+<span class="nc" id="L159">	}</span>
+
+	private void processOrdinaryLabel(OrdinaryLabelNode node, Function function)
+			throws SyntaxException {
+<span class="nc" id="L163">		Label label = entityAnalyzer.entityFactory.newLabel(node);</span>
+
+<span class="nc" id="L165">		node.setFunction(function);</span>
+<span class="nc" id="L166">		node.setEntity(label);</span>
+<span class="nc" id="L167">		node.getIdentifier().setEntity(label);</span>
+		try {
+<span class="nc" id="L169">			function.getScope().add(label);</span>
+<span class="nc" id="L170">		} catch (UnsourcedException e) {</span>
+<span class="nc" id="L171">			throw error(e, node);</span>
+		}
+<span class="nc" id="L173">	}</span>
+
+	private void processSwitchLabel(LabeledStatementNode labeledStatement,
+			SwitchLabelNode switchLabel, Function function)
+			throws SyntaxException {
+
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (switchLabel.isDefault()) {</span>
+<span class="nc" id="L180">			ASTNode enclosing = enclosingSwitchOrChoose(switchLabel);</span>
+
+<span class="nc bnc" id="L182" title="All 2 branches missed.">			if (enclosing instanceof ChooseStatementNode) {</span>
+<span class="nc" id="L183">				ChooseStatementNode choose = (ChooseStatementNode) enclosing;</span>
+<span class="nc" id="L184">				LabeledStatementNode oldDefault = choose.getDefaultCase();</span>
+
+<span class="nc bnc" id="L186" title="All 2 branches missed.">				if (oldDefault != null)</span>
+<span class="nc" id="L187">					throw error(</span>
+<span class="nc" id="L188">							&quot;Two default cases in choose statement.  First was at &quot;</span>
+<span class="nc" id="L189">									+ oldDefault.getSource(), switchLabel);</span>
+<span class="nc" id="L190">				choose.setDefaultCase(labeledStatement);</span>
+<span class="nc" id="L191">				return;</span>
+			}
+		}
+
+<span class="nc" id="L195">		SwitchNode switchNode = enclosingSwitch(switchLabel);</span>
+
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (switchNode == null)</span>
+<span class="nc" id="L198">			throw error(&quot;Switch label occurs outside of any switch statement&quot;,</span>
+<span class="nc" id="L199">					switchLabel);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (switchLabel.isDefault()) {</span>
+<span class="nc" id="L201">			LabeledStatementNode oldDefault = switchNode.getDefaultCase();</span>
+
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (oldDefault != null)</span>
+<span class="nc" id="L204">				throw error(</span>
+<span class="nc" id="L205">						&quot;Two default cases in switch statement.  First was at &quot;</span>
+<span class="nc" id="L206">								+ oldDefault.getSource(), switchLabel);</span>
+<span class="nc" id="L207">			switchNode.setDefaultCase(labeledStatement);</span>
+<span class="nc" id="L208">		} else {</span>
+<span class="nc" id="L209">			ExpressionNode caseExpression = switchLabel.getExpression();</span>
+<span class="nc" id="L210">			Iterator&lt;LabeledStatementNode&gt; cases = switchNode.getCases();</span>
+			Value constant;
+
+<span class="nc" id="L213">			expressionAnalyzer.processExpression(caseExpression);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (!caseExpression.isConstantExpression())</span>
+<span class="nc" id="L215">				throw error(&quot;Case expression not constant&quot;, caseExpression);</span>
+<span class="nc" id="L216">			constant = nodeFactory.getConstantValue(caseExpression);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			while (cases.hasNext()) {</span>
+<span class="nc" id="L218">				SwitchLabelNode labelNode = (SwitchLabelNode) cases.next()</span>
+<span class="nc" id="L219">						.getLabel();</span>
+<span class="nc" id="L220">				ExpressionNode oldExpression = labelNode.getExpression();</span>
+<span class="nc" id="L221">				Value oldConstant = nodeFactory.getConstantValue(oldExpression);</span>
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">				if (constant.equals(oldConstant))</span>
+<span class="nc" id="L224">					throw error(</span>
+<span class="nc" id="L225">							&quot;Case constant appears twice: first time was at &quot;</span>
+<span class="nc" id="L226">									+ oldExpression, caseExpression);</span>
+			}
+<span class="nc" id="L228">			switchNode.addCase(labeledStatement);</span>
+		}
+<span class="nc" id="L230">	}</span>
+
+	private void processJump(JumpNode statement) throws SyntaxException {
+<span class="nc bnc" id="L233" title="All 3 branches missed.">		switch (statement.getKind()) {</span>
+		case RETURN: {
+<span class="nc" id="L235">			ExpressionNode expression = ((ReturnNode) statement)</span>
+<span class="nc" id="L236">					.getExpression();</span>
+<span class="nc" id="L237">			Function function = entityAnalyzer.enclosingFunction(statement);</span>
+<span class="nc" id="L238">			ObjectType returnType = function.getType().getReturnType();</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">			boolean returnTypeIsVoid = returnType.kind() == TypeKind.VOID;</span>
+
+<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (expression == null) {</span>
+<span class="nc bnc" id="L242" title="All 4 branches missed.">				if (!this.configuration.svcomp() &amp;&amp; !returnTypeIsVoid)</span>
+<span class="nc" id="L243">					throw error(&quot;Missing expression in return statement&quot;,</span>
+<span class="nc" id="L244">							statement);</span>
+			} else {
+<span class="nc bnc" id="L246" title="All 2 branches missed.">				if (returnTypeIsVoid)</span>
+<span class="nc" id="L247">					throw error(</span>
+<span class="nc" id="L248">							&quot;Argument for return in function returning void&quot;,</span>
+<span class="nc" id="L249">							statement);</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">				if (expression != null)</span>
+<span class="nc" id="L251">					processExpression(expression);</span>
+				try {
+<span class="nc" id="L253">					expressionAnalyzer</span>
+<span class="nc" id="L254">							.processAssignment(returnType, expression);</span>
+<span class="nc" id="L255">				} catch (UnsourcedException e) {</span>
+<span class="nc" id="L256">					throw error(e, expression);</span>
+				}
+			}
+		}
+		case GOTO: // taken care of later in processGotos
+		case BREAK: // nothing to do
+		case CONTINUE: // nothing to do
+<span class="nc" id="L263">			break;</span>
+		default:
+<span class="nc" id="L265">			throw new RuntimeException(&quot;Unreachable&quot;);</span>
+		}
+<span class="nc" id="L267">	}</span>
+
+	private void processLoop(LoopNode loopNode) throws SyntaxException {
+<span class="nc" id="L270">		SequenceNode&lt;ContractNode&gt; loopContracts = loopNode.loopContracts();</span>
+
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		if (loopContracts != null) {</span>
+<span class="nc" id="L273">			this.acslAnalyzer.processLoopContractNodes(loopContracts);</span>
+		}
+<span class="nc bnc" id="L275" title="All 4 branches missed.">		switch (loopNode.getKind()) {</span>
+		case WHILE:
+<span class="nc" id="L277">			processExpression(loopNode.getCondition());</span>
+<span class="nc" id="L278">			processStatement(loopNode.getBody());</span>
+			// processExpression(loopNode.getInvariant());
+<span class="nc" id="L280">			break;</span>
+		case DO_WHILE:
+<span class="nc" id="L282">			processStatement(loopNode.getBody());</span>
+<span class="nc" id="L283">			processExpression(loopNode.getCondition());</span>
+			// processExpression(loopNode.getInvariant());
+<span class="nc" id="L285">			break;</span>
+		case FOR: {
+<span class="nc" id="L287">			ForLoopNode forNode = (ForLoopNode) loopNode;</span>
+<span class="nc" id="L288">			ForLoopInitializerNode initializer = forNode.getInitializer();</span>
+
+<span class="nc bnc" id="L290" title="All 2 branches missed.">			if (initializer == null) {</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">			} else if (initializer instanceof ExpressionNode) {</span>
+<span class="nc" id="L292">				processExpression((ExpressionNode) initializer);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">			} else if (initializer instanceof DeclarationListNode) {</span>
+<span class="nc" id="L294">				DeclarationListNode declarationList = (DeclarationListNode) initializer;</span>
+
+<span class="nc bnc" id="L296" title="All 2 branches missed.">				for (VariableDeclarationNode child : declarationList) {</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">					if (child == null)</span>
+<span class="nc" id="L298">						continue;</span>
+<span class="nc" id="L299">					entityAnalyzer.declarationAnalyzer</span>
+<span class="nc" id="L300">							.processVariableDeclaration(child);</span>
+				}
+<span class="nc" id="L302">			} else</span>
+<span class="nc" id="L303">				throw error(&quot;Unknown kind of initializer clause in for loop&quot;,</span>
+<span class="nc" id="L304">						initializer);</span>
+<span class="nc" id="L305">			processExpression(loopNode.getCondition());</span>
+<span class="nc" id="L306">			processExpression(forNode.getIncrementer());</span>
+<span class="nc" id="L307">			processStatement(loopNode.getBody());</span>
+			// processExpression(loopNode.getInvariant());
+<span class="nc" id="L309">			break;</span>
+		}
+		default:
+<span class="nc" id="L312">			throw new RuntimeException(&quot;Unreachable&quot;);</span>
+		}
+<span class="nc" id="L314">	}</span>
+
+	private void processCivlFor(CivlForNode node) throws SyntaxException {
+<span class="nc" id="L317">		ExpressionNode domainNode = node.getDomain();</span>
+<span class="nc" id="L318">		int numVars = 0;</span>
+		Type domainNodeType;
+		DomainType domainType;
+		int domainDimension;
+
+<span class="nc bnc" id="L323" title="All 2 branches missed.">		for (VariableDeclarationNode child : node.getVariables()) {</span>
+			Type type;
+
+<span class="nc" id="L326">			entityAnalyzer.declarationAnalyzer</span>
+<span class="nc" id="L327">					.processVariableDeclaration(child);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">			if (child.getInitializer() != null)</span>
+<span class="nc" id="L329">				throw error(&quot;Loop variable &quot; + numVars</span>
+<span class="nc" id="L330">						+ &quot; in $for/$parfor statement has initializer&quot;, child);</span>
+<span class="nc" id="L331">			type = child.getTypeNode().getType();</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">			if (!(type instanceof IntegerType))</span>
+<span class="nc" id="L333">				throw error(&quot;Loop variable &quot; + numVars</span>
+<span class="nc" id="L334">						+ &quot; in $for/$parfor has non-integer type: &quot; + type,</span>
+<span class="nc" id="L335">						child.getTypeNode());</span>
+<span class="nc" id="L336">			numVars++;</span>
+		}
+<span class="nc" id="L338">		expressionAnalyzer.processExpression(domainNode);</span>
+<span class="nc" id="L339">		domainNodeType = domainNode.getConvertedType();</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (domainNodeType.equals(typeFactory.rangeType())) {</span>
+<span class="nc" id="L341">			domainNode.addConversion(conversionFactory</span>
+<span class="nc" id="L342">					.regularRangeToDomainConversion(</span>
+<span class="nc" id="L343">							(ObjectType) domainNodeType,</span>
+<span class="nc" id="L344">							typeFactory.domainType(1)));</span>
+<span class="nc" id="L345">			domainNodeType = domainNode.getConvertedType();</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">		} else if (!(domainNodeType instanceof DomainType))</span>
+<span class="nc" id="L347">			throw error(</span>
+<span class="nc" id="L348">					&quot;Domain expression in $for/$parfor does not have $domain type&quot;,</span>
+<span class="nc" id="L349">					domainNode);</span>
+<span class="nc" id="L350">		domainType = (DomainType) domainNodeType;</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">		if (!domainType.hasDimension())</span>
+<span class="nc" id="L352">			throw error(&quot;Use of incomplete domain type in $for/$parfor&quot;,</span>
+<span class="nc" id="L353">					domainNode);</span>
+<span class="nc" id="L354">		domainDimension = domainType.getDimension();</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">		if (domainDimension != numVars)</span>
+<span class="nc" id="L356">			throw error(&quot;Dimension of domain (&quot; + domainDimension + &quot;) &quot;</span>
+<span class="nc" id="L357">					+ &quot;does not equal number of loop variables (&quot; + numVars</span>
+<span class="nc" id="L358">					+ &quot;)&quot;, domainNode);</span>
+<span class="nc" id="L359">		processStatement(node.getBody());</span>
+<span class="nc" id="L360">		processExpression(node.getInvariant());</span>
+<span class="nc" id="L361">	}</span>
+
+	// ************************* Exported Methods **************************
+
+	void processStatement(StatementNode statement) throws SyntaxException {
+<span class="nc" id="L366">		StatementKind kind = statement.statementKind();</span>
+
+<span class="nc bnc" id="L368" title="All 15 branches missed.">		switch (kind) {</span>
+		case COMPOUND:
+<span class="nc" id="L370">			processCompoundStatement((CompoundStatementNode) statement);</span>
+<span class="nc" id="L371">			break;</span>
+		case EXPRESSION:
+<span class="nc" id="L373">			processExpression(((ExpressionStatementNode) statement)</span>
+<span class="nc" id="L374">					.getExpression());</span>
+<span class="nc" id="L375">			break;</span>
+		case IF:
+<span class="nc" id="L377">			processIf((IfNode) statement);</span>
+<span class="nc" id="L378">			break;</span>
+		case JUMP:
+<span class="nc" id="L380">			processJump((JumpNode) statement);</span>
+<span class="nc" id="L381">			break;</span>
+		case LABELED:
+<span class="nc" id="L383">			processLabeledStatement((LabeledStatementNode) statement);</span>
+<span class="nc" id="L384">			break;</span>
+		case LOOP:
+<span class="nc" id="L386">			processLoop((LoopNode) statement);</span>
+<span class="nc" id="L387">			break;</span>
+		case SWITCH:
+<span class="nc" id="L389">			processExpression(((SwitchNode) statement).getCondition());</span>
+<span class="nc" id="L390">			processStatement(((SwitchNode) statement).getBody());</span>
+<span class="nc" id="L391">			break;</span>
+		case PRAGMA:
+<span class="nc" id="L393">			entityAnalyzer.processPragma((PragmaNode) statement);</span>
+<span class="nc" id="L394">			break;</span>
+		case OMP:
+<span class="nc" id="L396">			processOmpNode((OmpNode) statement);</span>
+<span class="nc" id="L397">			break;</span>
+		case NULL:
+<span class="nc" id="L399">			break;</span>
+		case WHEN: {
+<span class="nc" id="L401">			ExpressionNode guard = ((WhenNode) statement).getGuard();</span>
+			Type guardType;
+
+<span class="nc bnc" id="L404" title="All 2 branches missed.">			if (!guard.isSideEffectFree(false))</span>
+<span class="nc" id="L405">				throw this</span>
+<span class="nc" id="L406">						.error(&quot;the guard of a $when statement is not allowed to have side effects.&quot;,</span>
+<span class="nc" id="L407">								guard);</span>
+<span class="nc" id="L408">			processExpression(guard);</span>
+<span class="nc" id="L409">			guardType = guard.getConvertedType();</span>
+			// check guardType can be converted to a boolean...
+<span class="nc bnc" id="L411" title="All 2 branches missed.">			if (!guardType.isScalar())</span>
+<span class="nc" id="L412">				throw error(&quot;Guard has non-scalar type &quot; + guardType, guard);</span>
+<span class="nc" id="L413">			processStatement(((WhenNode) statement).getBody());</span>
+<span class="nc" id="L414">			break;</span>
+		}
+		case CHOOSE: {
+<span class="nc" id="L417">			ChooseStatementNode chooseStatement = (ChooseStatementNode) statement;</span>
+
+<span class="nc bnc" id="L419" title="All 2 branches missed.">			for (StatementNode child : chooseStatement)</span>
+<span class="nc" id="L420">				processStatement(child);</span>
+<span class="nc" id="L421">			break;</span>
+		}
+		case ATOMIC:
+<span class="nc" id="L424">			processStatement(((AtomicNode) statement).getBody());</span>
+<span class="nc" id="L425">			break;</span>
+		case CIVL_FOR:
+<span class="nc" id="L427">			processCivlFor((CivlForNode) statement);</span>
+<span class="nc" id="L428">			break;</span>
+		default:
+<span class="nc" id="L430">			throw error(&quot;Unknown kind of statement&quot;, statement);</span>
+		}
+<span class="nc" id="L432">	}</span>
+
+	private void processOmpNode(OmpNode ompNode) throws SyntaxException {
+<span class="nc" id="L435">		OmpNodeKind ompKind = ompNode.ompNodeKind();</span>
+
+<span class="nc bnc" id="L437" title="All 2 branches missed.">		switch (ompKind) {</span>
+		case EXECUTABLE:
+<span class="nc" id="L439">			processOmpExecutableNode((OmpExecutableNode) ompNode);</span>
+			break;
+		case DECLARATIVE:
+		default:
+
+		}
+<span class="nc" id="L445">	}</span>
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	private void processOmpExecutableNode(OmpExecutableNode statement)
+			throws SyntaxException {
+<span class="nc" id="L450">		OmpExecutableKind kind = statement.ompExecutableKind();</span>
+<span class="nc" id="L451">		SequenceNode&lt;OmpReductionNode&gt; reductionList = (SequenceNode&lt;OmpReductionNode&gt;) statement</span>
+<span class="nc" id="L452">				.reductionList();</span>
+
+<span class="nc bnc" id="L454" title="All 2 branches missed.">		for (int i = 0; i &lt;= 5; i++) {</span>
+<span class="nc" id="L455">			SequenceNode&lt;ExpressionNode&gt; list = (SequenceNode&lt;ExpressionNode&gt;) statement</span>
+<span class="nc" id="L456">					.child(i);</span>
+
+<span class="nc bnc" id="L458" title="All 2 branches missed.">			if (list != null) {</span>
+<span class="nc" id="L459">				int count = list.numChildren();</span>
+
+<span class="nc bnc" id="L461" title="All 2 branches missed.">				for (int j = 0; j &lt; count; j++) {</span>
+<span class="nc" id="L462">					this.expressionAnalyzer.processExpression(list</span>
+<span class="nc" id="L463">							.getSequenceChild(j));</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L467" title="All 2 branches missed.">		if (reductionList != null) {</span>
+<span class="nc" id="L468">			int count = reductionList.numChildren();</span>
+
+<span class="nc bnc" id="L470" title="All 2 branches missed.">			for (int j = 0; j &lt; count; j++) {</span>
+<span class="nc" id="L471">				this.processOmpReductionNode(reductionList.getSequenceChild(j));</span>
+			}
+		}
+<span class="nc bnc" id="L474" title="All 3 branches missed.">		switch (kind) {</span>
+		case PARALLEL:
+<span class="nc" id="L476">			OmpParallelNode parallel = (OmpParallelNode) statement;</span>
+
+<span class="nc bnc" id="L478" title="All 2 branches missed.">			if (parallel.ifClause() != null)</span>
+<span class="nc" id="L479">				processExpression(parallel.ifClause());</span>
+<span class="nc bnc" id="L480" title="All 2 branches missed.">			if (parallel.numThreads() != null)</span>
+<span class="nc" id="L481">				processExpression(parallel.numThreads());</span>
+<span class="nc" id="L482">			break;</span>
+		case WORKSHARING:
+<span class="nc" id="L484">			OmpWorksharingNode workshare = (OmpWorksharingNode) statement;</span>
+
+<span class="nc bnc" id="L486" title="All 2 branches missed.">			switch (workshare.ompWorkshareNodeKind()) {</span>
+			case FOR:
+<span class="nc" id="L488">				OmpForNode forNode = (OmpForNode) statement;</span>
+<span class="nc" id="L489">				SequenceNode&lt;FunctionCallNode&gt; assertions = forNode</span>
+<span class="nc" id="L490">						.assertions();</span>
+<span class="nc" id="L491">				FunctionCallNode invariant = forNode.invariant();</span>
+<span class="nc" id="L492">				ExpressionNode chunkSize = forNode.chunkSize();</span>
+
+<span class="nc bnc" id="L494" title="All 2 branches missed.">				if (assertions != null) {</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">					for (FunctionCallNode node : assertions)</span>
+<span class="nc" id="L496">						processExpression(node);</span>
+				}
+<span class="nc bnc" id="L498" title="All 2 branches missed.">				if (invariant != null)</span>
+<span class="nc" id="L499">					processExpression(invariant);</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">				if (chunkSize != null)</span>
+<span class="nc" id="L501">					processExpression(chunkSize);</span>
+				break;
+			default:
+			}
+			break;
+		default:
+
+		}
+<span class="nc bnc" id="L509" title="All 2 branches missed.">		if (statement.statementNode() != null)</span>
+<span class="nc" id="L510">			processStatement(statement.statementNode());</span>
+<span class="nc" id="L511">	}</span>
+
+	private void processOmpReductionNode(OmpReductionNode reduction)
+			throws SyntaxException {
+<span class="nc" id="L515">		OmpReductionNodeKind kind = reduction.ompReductionOperatorNodeKind();</span>
+<span class="nc" id="L516">		SequenceNode&lt;IdentifierExpressionNode&gt; list = reduction.variables();</span>
+<span class="nc" id="L517">		int count = list.numChildren();</span>
+
+<span class="nc bnc" id="L519" title="All 2 branches missed.">		if (kind == OmpReductionNodeKind.FUNCTION) {</span>
+<span class="nc" id="L520">			this.expressionAnalyzer</span>
+<span class="nc" id="L521">					.processExpression(((OmpFunctionReductionNode) reduction)</span>
+<span class="nc" id="L522">							.function());</span>
+		}
+<span class="nc bnc" id="L524" title="All 2 branches missed.">		for (int i = 0; i &lt; count; i++) {</span>
+<span class="nc" id="L525">			this.expressionAnalyzer.processExpression(list.getSequenceChild(i));</span>
+		}
+<span class="nc" id="L527">	}</span>
+
+	/**
+	 * &lt;ul&gt;
+	 * &lt;li&gt;StatementNode&lt;/li&gt; (includes PragmaNode)
+	 * &lt;li&gt;StructureOrUnionTypeNode&lt;/li&gt;
+	 * &lt;li&gt;EnumerationTypeNode&lt;/li&gt;
+	 * &lt;li&gt;StaticAssertionNode&lt;/li&gt;
+	 * &lt;li&gt;VariableDeclarationNode&lt;/li&gt;
+	 * &lt;li&gt;FunctionDeclarationNode&lt;/li&gt; (but not a FunctionDefinitionNode)
+	 * &lt;li&gt;TypedefDeclarationNode&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	void processCompoundStatement(CompoundStatementNode node)
+			throws SyntaxException {
+<span class="nc bnc" id="L545" title="All 2 branches missed.">		for (BlockItemNode item : node) {</span>
+<span class="nc bnc" id="L546" title="All 2 branches missed.">			if (item == null)</span>
+<span class="nc" id="L547">				continue;</span>
+<span class="nc bnc" id="L548" title="All 2 branches missed.">			if (item instanceof StatementNode)</span>
+<span class="nc" id="L549">				processStatement((StatementNode) item);</span>
+<span class="nc bnc" id="L550" title="All 2 branches missed.">			else if (item instanceof StructureOrUnionTypeNode)</span>
+<span class="nc" id="L551">				entityAnalyzer.typeAnalyzer</span>
+<span class="nc" id="L552">						.processStructureOrUnionType((StructureOrUnionTypeNode) item);</span>
+<span class="nc bnc" id="L553" title="All 2 branches missed.">			else if (item instanceof EnumerationTypeNode)</span>
+<span class="nc" id="L554">				entityAnalyzer.typeAnalyzer</span>
+<span class="nc" id="L555">						.processEnumerationType((EnumerationTypeNode) item);</span>
+<span class="nc bnc" id="L556" title="All 2 branches missed.">			else if (item instanceof StaticAssertionNode)</span>
+<span class="nc" id="L557">				entityAnalyzer</span>
+<span class="nc" id="L558">						.processStaticAssertion((StaticAssertionNode) item);</span>
+<span class="nc bnc" id="L559" title="All 2 branches missed.">			else if (item instanceof VariableDeclarationNode)</span>
+<span class="nc" id="L560">				entityAnalyzer.declarationAnalyzer</span>
+<span class="nc" id="L561">						.processVariableDeclaration((VariableDeclarationNode) item);</span>
+<span class="nc bnc" id="L562" title="All 2 branches missed.">			else if (item instanceof FunctionDeclarationNode)</span>
+<span class="nc" id="L563">				entityAnalyzer.declarationAnalyzer</span>
+<span class="nc" id="L564">						.processFunctionDeclaration((FunctionDeclarationNode) item);</span>
+<span class="nc bnc" id="L565" title="All 2 branches missed.">			else if (item instanceof TypedefDeclarationNode)</span>
+<span class="nc" id="L566">				entityAnalyzer.declarationAnalyzer</span>
+<span class="nc" id="L567">						.processTypedefDeclaration((TypedefDeclarationNode) item);</span>
+			else
+<span class="nc" id="L569">				throw error(&quot;Unknown kind of block item&quot;, item);</span>
+		}
+<span class="nc" id="L571">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

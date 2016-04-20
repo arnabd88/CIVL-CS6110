@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonPragmaNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common</a> &gt; <span class="el_source">CommonPragmaNode.java</span></div><h1>CommonPragmaNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common;
+
+import java.io.PrintStream;
+import java.util.Arrays;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.PragmaNode;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSequence;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonPragmaNode extends CommonASTNode implements PragmaNode {
+
+	protected CivlcToken[] body;
+
+	protected CivlcTokenSequence tokenSequence;
+
+	protected CivlcToken newlineToken;
+
+	public CommonPragmaNode(Source source, IdentifierNode identifier,
+			CivlcTokenSequence tokenSequence, CivlcToken newlineToken) {
+<span class="nc" id="L26">		super(source, identifier);</span>
+<span class="nc" id="L27">		this.tokenSequence = tokenSequence;</span>
+<span class="nc" id="L28">		this.newlineToken = newlineToken;</span>
+<span class="nc" id="L29">		body = tokenSequence.getTokens();</span>
+<span class="nc" id="L30">	}</span>
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L34">		int numTokens = body.length;</span>
+
+<span class="nc" id="L36">		out.print(&quot;Pragma[&quot;);</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		for (int i = 0; i &lt; numTokens; i++) {</span>
+<span class="nc" id="L38">			CivlcToken token = body[i];</span>
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">			if (i &gt; 0)</span>
+<span class="nc" id="L41">				out.print(&quot; &quot;);</span>
+<span class="nc" id="L42">			out.print(token.getText());</span>
+		}
+<span class="nc" id="L44">		out.print(&quot;]&quot;);</span>
+<span class="nc" id="L45">	}</span>
+
+	@Override
+	public IdentifierNode getPragmaIdentifier() {
+<span class="nc" id="L49">		return (IdentifierNode) child(0);</span>
+	}
+
+	@Override
+	public int getNumTokens() {
+<span class="nc" id="L54">		return body.length;</span>
+	}
+
+	@Override
+	public CivlcToken getToken(int index) {
+<span class="nc" id="L59">		return body[index];</span>
+	}
+
+	@Override
+	public Iterable&lt;CivlcToken&gt; getTokens() {
+<span class="nc" id="L64">		return Arrays.asList(body);</span>
+	}
+
+	@Override
+	public PragmaNode copy() {
+<span class="nc" id="L69">		IdentifierNode identifier = getPragmaIdentifier();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		IdentifierNode identifierCopy = identifier == null ? null : identifier</span>
+<span class="nc" id="L71">				.copy();</span>
+
+<span class="nc" id="L73">		return new CommonPragmaNode(getSource(), identifierCopy, tokenSequence,</span>
+<span class="nc" id="L74">				newlineToken);</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L79">		return NodeKind.PRAGMA;</span>
+	}
+
+	@Override
+	public StatementKind statementKind() {
+<span class="nc" id="L84">		return StatementKind.PRAGMA;</span>
+	}
+
+	@Override
+	public BlockItemKind blockItemKind() {
+<span class="nc" id="L89">		return BlockItemKind.PRAGMA;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (that instanceof PragmaNode) {</span>
+<span class="nc" id="L95">			PragmaNode thatPragma = (PragmaNode) that;</span>
+<span class="nc" id="L96">			int numTokens = this.getNumTokens();</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (numTokens != thatPragma.getNumTokens())</span>
+<span class="nc" id="L99">				return new DifferenceObject(this, that,</span>
+<span class="nc" id="L100">						DiffKind.PRAGMA_NUM_TOKENS);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			for (int i = 0; i &lt; numTokens; i++) {</span>
+<span class="nc" id="L102">				String thisToken = this.getToken(i).getText(), thatToken = thatPragma</span>
+<span class="nc" id="L103">						.getToken(i).getText();</span>
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">				if (!thisToken.equals(thatToken))</span>
+<span class="nc" id="L106">					return new DifferenceObject(this, that, DiffKind.OTHER,</span>
+<span class="nc" id="L107">							&quot;the &quot; + i + &quot; token is different: &quot; + thisToken</span>
+<span class="nc" id="L108">									+ &quot; vs &quot; + thatToken);</span>
+			}
+<span class="nc" id="L110">			return null;</span>
+		}
+<span class="nc" id="L112">		return new DifferenceObject(this, that);</span>
+	}
+
+	@Override
+	public CivlcTokenSource newTokenSource() {
+<span class="nc" id="L117">		return tokenSequence.newSource();</span>
+	}
+
+	@Override
+	public CivlcToken getNewlineToken() {
+<span class="nc" id="L122">		return newlineToken;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

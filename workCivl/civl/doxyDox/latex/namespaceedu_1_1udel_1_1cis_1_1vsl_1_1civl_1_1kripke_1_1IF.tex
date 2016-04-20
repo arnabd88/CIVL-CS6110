@@ -1,0 +1,28 @@
+\hypertarget{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF}{}\section{Package edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F}
+\label{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F@{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F}}
+
+
+Module {\bfseries kripke} provides the definition of various transitions and the enabler and state manager of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep}{Atomic\+Step}
+\begin{DoxyCompactList}\small\item\em This represents an atomic execution step, which represents the execution of exactly one transition. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{Enabler}
+\begin{DoxyCompactList}\small\item\em \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{Enabler} extends \hyperlink{}{Enabler\+I\+F} for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} models. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Kripkes}{Kripkes}
+\begin{DoxyCompactList}\small\item\em This is the entry point of the module {\bfseries kripke}. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler}{Library\+Enabler}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} Library \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{Enabler} provides a method to compute the enabled transitions of system function calls at a certain state for a give process. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnablerLoader}{Library\+Enabler\+Loader}
+\begin{DoxyCompactList}\small\item\em The library enabler loader provides the mechanism for loading the library enabler of a certain library. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1StateManager}{State\+Manager}
+\begin{DoxyCompactList}\small\item\em \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1StateManager}{State\+Manager} extends \hyperlink{}{State\+Manager\+I\+F} for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} models. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1TraceStep}{Trace\+Step}
+\begin{DoxyCompactList}\small\item\em \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1TraceStep}{Trace\+Step} extends \hyperlink{}{Trace\+Step\+I\+F} for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} models. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module {\bfseries kripke} provides the definition of various transitions and the enabler and state manager of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. 

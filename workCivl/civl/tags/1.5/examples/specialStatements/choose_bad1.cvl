@@ -1,0 +1,9 @@
+#include<civlc.cvh>
+
+int main(){
+  int *ptr;
+
+  $choose{
+    ptr=(int*)$malloc($here, sizeof(int));
+  }
+}

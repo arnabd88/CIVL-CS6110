@@ -1,0 +1,47 @@
+#include<civlc.cvh>
+#include<civlc-omp.cvh>
+#include<stdio.h>
+
+#define N 6
+
+void main(){
+  int data[N];
+  $omp_gteam gteam = $omp_gteam_create($here, 3);
+  $omp_gshared gshared = $omp_gshared_create(gteam, &data); 
+  $range range = 0 .. N-1 # 1;
+  $domain(1) loop_dom = ($domain) {range}; 
+
+  void thread(int tid) {
+    int data_local[N];
+    int data_status[N];
+    $omp_team team = $omp_team_create($here, gteam, tid);
+    $omp_shared shared = $omp_shared_create(team, gshared, &data_local, &data_status);
+    $domain(1) my_iters = ($domain(1))$omp_arrive_loop(team, 0, loop_dom, ROUND_ROBIN);
+
+    printf("Hello from thread %d\n", tid);
+    $for (int i : my_iters) {
+      switch (i) {
+      case 0: {
+	$omp_write(shared, &data_local[i], &tid);
+	break;
+      }
+      default: {
+	$omp_write(shared, &data_local[i], &tid);
+      }
+      } /* end of switch */
+    } /* end of $for loop */
+    $omp_barrier_and_flush(team);
+    $omp_shared_destroy(shared);
+    $omp_team_destroy(team);
+  }
+  
+  $parfor (int i: ($domain){ 0 .. 2 }) {
+    thread(i);
+  }
+  for(int i = 0; i < N; i++){
+    $assert i % 3 == data[i];
+    //printf("*data*[%d] = %d", i, data[i]);
+  }
+  $omp_gshared_destroy(gshared);
+  $omp_gteam_destroy(gteam);
+}

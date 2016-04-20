@@ -1,0 +1,36 @@
+/* fileOpen: an example for covering CIVL code. The example may not be
+   understandable for human beings. The main purpose is testing
+   different forms of char array or pointer to char as an argument of
+   a function expecting the "char *" type. */
+#include<civlc.cvh>
+#include<stdio.h>
+#include<civl-stdio.cvh>
+
+$input int x;
+$input int y;
+$input char ncaFilename[y];
+$input char icaFilename[];
+$assume(x < 10);
+$assume(y > 10);
+void main(){
+  char filename[10] = "dummyfile";
+  char c = 'c';
+  FILE *file0 = fopen(&filename[4], "r");
+  int a[5];
+  int count = fscanf(file0, "%d", a);	
+  int fooLength = $textFileLength("foo");
+
+#ifdef NCINDEX                               //non-concrete index
+  FILE *file1 = fopen(&filename[x], "r");    
+#elif defined NCARRAY                        //array with non-concrete extent
+  FILE *file1 = fopen(&ncaFilename[2], "r");
+#elif defined NEGINDEX                       //negative index
+  FILE *file1 = fopen((&filename[-1]), "r");
+#elif defined SCHAR                          //single char
+  FILE *file1 = fopen(&c, "r");
+#else                                        //incomplete array
+  FILE *file1 = fopen(&icaFilename[2], "r");
+#endif
+  $free(file0);
+  $free(file1);
+}

@@ -1,0 +1,30 @@
+  void send(void *buf, int count, int dest, int tag, $comm comm) {
+    $message out = $message_pack(rank, dest, tag, buf, count*sizeof(double));
+    $comm_enqueue(comm, out);
+  }
+
+  void recv(void *buf, int count, int source, int tag, $comm comm) {
+    $message in = $comm_dequeue(comm, source, tag);
+    $message_unpack(in, buf, count*sizeof(double));
+  }
+
+  void sendrecv(void *sendbuf, int sendcount, int dest, int sendtag,
+	      void *recvbuf, int recvcount, int source, int recvtag, $comm comm) {
+    $message out = $message_pack(rank, dest, sendtag, sendbuf, sendcount*sizeof(double));
+    $message in;
+    _Bool probe = $comm_probe(comm, source, recvtag);
+
+    $choose {
+      $when (1){ 
+	$comm_enqueue(comm, out);
+	in = $comm_dequeue(comm, source, recvtag);
+      }
+      $when (probe){
+	in = $comm_dequeue(comm, source, recvtag);
+	$comm_enqueue(comm, out);
+      }
+    }
+    $message_unpack(in, recvbuf, recvcount*sizeof(double));
+  }
+
+  $when (__start);

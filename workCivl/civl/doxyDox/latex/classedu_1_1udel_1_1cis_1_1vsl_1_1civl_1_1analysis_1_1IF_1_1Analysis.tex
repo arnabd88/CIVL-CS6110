@@ -1,0 +1,128 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Analysis Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Analysis@{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Analysis}}
+
+
+Entry point of the module civl.\+analysis.  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_abc16319e3212abe9652642d393a28e06}{static\+Analysis} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement, List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer}{Code\+Analyzer} $>$ analyzers)
+\begin{DoxyCompactList}\small\item\em performs static analysis on the given statement to decide if any code analysis provided by the specified code analyzers is needed. \end{DoxyCompactList}\item 
+static List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer}{Code\+Analyzer} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_ade4bb6b114e04d92293c7c8934068135}{get\+Analyzers} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config, Symbolic\+Universe universe)
+\begin{DoxyCompactList}\small\item\em gets all code analyzers as required in the configuration. \end{DoxyCompactList}\item 
+static void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_a870f196b1f0a5de545cc550c2601706b}{analyze\+Call} (List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer}{Code\+Analyzer} $>$ analyzers, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} statement, Symbolic\+Expression\mbox{[}$\,$\mbox{]} arguments)
+\begin{DoxyCompactList}\small\item\em Analyzes a call statement at a certain state. \end{DoxyCompactList}\item 
+static void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_afc72487a27f280e5de05002d6483a153}{print\+Results} (List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer}{Code\+Analyzer} $>$ analyzers, Print\+Stream out)
+\begin{DoxyCompactList}\small\item\em prints the analysis result of each code analyzer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_aef5b998ec76646cc84c103365e6ad2fb}{}static final String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_aef5b998ec76646cc84c103365e6ad2fb}{A\+B\+S} = \char`\"{}abs\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_aef5b998ec76646cc84c103365e6ad2fb}
+
+\begin{DoxyCompactList}\small\item\em Name of the absolute value function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Entry point of the module civl.\+analysis. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_a870f196b1f0a5de545cc550c2601706b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis}!analyze\+Call@{analyze\+Call}}
+\index{analyze\+Call@{analyze\+Call}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis}}
+\subsubsection[{analyze\+Call}]{\setlength{\rightskip}{0pt plus 5cm}static void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Analysis.\+analyze\+Call (
+\begin{DoxyParamCaption}
+\item[{List$<$ {\bf Code\+Analyzer} $>$}]{analyzers, }
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Call\+Or\+Spawn\+Statement}}]{statement, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{arguments}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_a870f196b1f0a5de545cc550c2601706b}
+
+
+Analyzes a call statement at a certain state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em analyzers} & the list of analyzers to be applied to the statement \\
+\hline
+{\em state} & the state where the analysis happens \\
+\hline
+{\em pid} & the P\+I\+D of the process that executes the statement \\
+\hline
+{\em statement} & the call statement to be analyzed \\
+\hline
+{\em arguments} & the evaluation of the arguments of the call statement \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_ade4bb6b114e04d92293c7c8934068135}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis}!get\+Analyzers@{get\+Analyzers}}
+\index{get\+Analyzers@{get\+Analyzers}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis}}
+\subsubsection[{get\+Analyzers}]{\setlength{\rightskip}{0pt plus 5cm}static List$<${\bf Code\+Analyzer}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Analysis.\+get\+Analyzers (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{config, }
+\item[{Symbolic\+Universe}]{universe}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_ade4bb6b114e04d92293c7c8934068135}
+
+
+gets all code analyzers as required in the configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & the configuration which contains the information of what analyzers are requested \\
+\hline
+{\em universe} & the symbolic universe to be used by the analyzers \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+all code analyzers as required in the configuration 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_afc72487a27f280e5de05002d6483a153}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis}!print\+Results@{print\+Results}}
+\index{print\+Results@{print\+Results}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis}}
+\subsubsection[{print\+Results}]{\setlength{\rightskip}{0pt plus 5cm}static void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Analysis.\+print\+Results (
+\begin{DoxyParamCaption}
+\item[{List$<$ {\bf Code\+Analyzer} $>$}]{analyzers, }
+\item[{Print\+Stream}]{out}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_afc72487a27f280e5de05002d6483a153}
+
+
+prints the analysis result of each code analyzer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em analyzers} & the list of code analyzers, the result of which is to be printed \\
+\hline
+{\em out} & the output stream \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_abc16319e3212abe9652642d393a28e06}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis}!static\+Analysis@{static\+Analysis}}
+\index{static\+Analysis@{static\+Analysis}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Analysis}}
+\subsubsection[{static\+Analysis}]{\setlength{\rightskip}{0pt plus 5cm}static void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Analysis.\+static\+Analysis (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement, }
+\item[{List$<$ {\bf Code\+Analyzer} $>$}]{analyzers}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1Analysis_abc16319e3212abe9652642d393a28e06}
+
+
+performs static analysis on the given statement to decide if any code analysis provided by the specified code analyzers is needed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & the statement to be analyzed \\
+\hline
+{\em analyzers} & the list of analyzers that \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} wants to use for statements \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/analysis/\+I\+F/Analysis.\+java\end{DoxyCompactItemize}

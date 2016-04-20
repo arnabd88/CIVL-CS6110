@@ -1,0 +1,80 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor\+Loader Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor\+Loader@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor\+Loader}}
+
+
+The library executor loader provides the mechanism for loading the library executor of a certain library.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor\+Loader\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor}{Library\+Executor} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader_aab5fd9b48e16c47ce5794b78957786d8}{get\+Library\+Executor} (String name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} primary\+Executor, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Facotry, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} symbolic\+Analyzer)  throws Library\+Loader\+Exception
+\begin{DoxyCompactList}\small\item\em Obtains the library executor of the given name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The library executor loader provides the mechanism for loading the library executor of a certain library. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader_aab5fd9b48e16c47ce5794b78957786d8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Executor\+Loader@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Executor\+Loader}!get\+Library\+Executor@{get\+Library\+Executor}}
+\index{get\+Library\+Executor@{get\+Library\+Executor}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Executor\+Loader@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Executor\+Loader}}
+\subsubsection[{get\+Library\+Executor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Library\+Executor} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor\+Loader.\+get\+Library\+Executor (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{{\bf Executor}}]{primary\+Executor, }
+\item[{{\bf Model\+Factory}}]{model\+Facotry, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer}
+\end{DoxyParamCaption}
+) throws {\bf Library\+Loader\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader_aab5fd9b48e16c47ce5794b78957786d8}
+
+
+Obtains the library executor of the given name. 
+
+Given the same name, it will always return the same instance of the library executor of that name.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the library whose executor is to be obtained. \\
+\hline
+{\em primary\+Executor} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} executor of the system. \\
+\hline
+{\em model\+Facotry} & The model factory of the system. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility for manipulations of symbolic expressions. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The library executor of the given name. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryLoaderException}{Library\+Loader\+Exception}} & If the library executor of the given name cannot be found. \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonLibraryExecutorLoader_a83312b42bd8bced4590447bb1c9741bf}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Library\+Executor\+Loader}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/\+I\+F/Library\+Executor\+Loader.\+java\end{DoxyCompactItemize}

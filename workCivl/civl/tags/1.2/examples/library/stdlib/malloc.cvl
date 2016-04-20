@@ -1,0 +1,9 @@
+#include <stdlib.h>
+
+void main(){
+  int*p;
+  
+  p = (int *) malloc(sizeof(int));
+  *p = 10;
+  free(p);
+}

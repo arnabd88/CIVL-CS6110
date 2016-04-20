@@ -1,0 +1,11 @@
+#include<civlc.cvh>
+
+_Bool alwaysTrue() {
+        return $true;
+}
+
+$assume(alwaysTrue());
+
+int main() {
+        return 0;
+}

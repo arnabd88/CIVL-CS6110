@@ -1,0 +1,22 @@
+
+1. edit grammar/Command.g4: add the new option in the rule OPTION_NAME;
+
+2. in civl.config.IF.CIVLConstants: 
+(1) add the new Option object:
+    e.g.: public final static Option showTransitionsO = 
+    Option.newScalarOption("showTransitions", BOOLEAN, "print transitions", false); 
+(2) modify the method getAllOptions by adding the new option 
+    to the return array 
+
+3. in civl.config.IF.CIVLConfiguration: 
+(1) add a new field to store the value of the new option, e.g., 
+    private boolean showTransitions = false;
+(2) add a line in the constructor to initialize the value of 
+    the new field from GMCConfiguratio, e.g., 		
+    this.showTransitions = config.isTrue(CIVLConstants.showTransitionsO);
+(3) add getter and setter for the new field.
+
+3. edit the static code in civl.run.common.CIVLCommand.java: 
+add it to CIVLCommand's option categories as it should be, 
+for example, "traceO" is only applicable to replay command so just add it 
+by CIVLCommand.addReplayOption(...).

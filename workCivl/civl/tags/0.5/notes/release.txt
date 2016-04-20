@@ -1,0 +1,77 @@
+
+                   How to release a new version of CIVL
+
+1. Working with your local copy of trunk, make sure all tests pass.
+
+2. Edit the fields named "version" and "date" in class
+edu.udel.cis.vsl.civl.CIVL to use the new version and today's date.
+
+3. Commit your trunk or make sure there are no uncommitted
+modifications.
+
+4. Create the tag: to create version 0.2, for example:
+
+svn copy svn://vsl.cis.udel.edu/civl/trunk svn://vsl.cis.udel.edu/civl/tags/0.2
+
+5. Create a new config file for autotest: check out
+svn://vsl.cis.udel.edu/scripts if you have not already, or update it
+if you already have a local copy. Create a new file config_civl-0.2.sh
+(for example) based on one of the other config_civl configuration
+files. There are 3 points that must be changed: (1) BRANCH should be
+set to 0.2 (for example); this is the name that will be assigned to
+this branch, (2) REPO needs to be changed to point to the new tagged
+version, e.g. svn://vsl.cis.udel.edu/civl/tags/0.2, and (3)
+WORKER_CONFIG needs to be changed to refer to the same configuration
+file you are creating, i.e., ${WORKER_SCRIPT_DIR}/config_civl-0.2.sh
+in this example. Save this file and commit it.
+
+6. Update the autotest scripts on nikolai:
+ssh tester@nikolai.cis.udel.edu
+cd repos/scripts/
+svn update
+
+7. Update the autotest scripts on vsl:
+ssh siegel@vsl.cis.udel.edu
+cd repos/scripts/
+svn update
+
+8. On vsl.cis.udel.edu, eecis_su svn, and edit
+/home/svn/repositories/civl/hooks/post-commit by changing the second
+autotest command to refer to the new version configuration file. (You
+could also add a completely new autotest command; it will work either
+way.)
+
+9. The autotest script will create the release at the next CIVL commit
+(to any part of CIVL). If you don't want to wait, you can trigger it
+manually by executing from vsl, in repos/scripts:
+
+ ./run_manager config_civl-0.2.sh
+
+where 121 is whatever the revision number was for the release.
+
+10. On vsl, edit /home/www/vsl/civl/index.html to use
+the new release in the latest stable release section:
+
+    <li><a href="test/0.2/latest/release">Latest stable release</a></li>
+Commit the change.
+
+11. If there are any problems, you can continue to modify the branch.
+For example, to incorporate changes from the trunk, update or check
+out a fresh local copy of the whole project, change into the branch
+directory, and type svn merge svn://vsl.cis.udel.edu/civl/trunk See
+the Subversion Book for details on merging changes. Then commit these
+changes as usual. After each commit, autotest should run automatically
+and produce the new release.
+
+12. Test the release: download it from the web page, move the
+executable file "civl" somewhere in your path (e.g., /tools/bin)
+and execute it on an example, e.g., "civl examples/barrier.cvl".
+
+13. Update Trac milestones: go to https://vsl.cis.udel.edu/trac/civl/,
+log in, click on Roadmap, click on the milestone name (v0.2, for
+example), and edit it to indicate completed. You can also indicate
+that open tickes for that milestone be pushed to the next milestone.
+Update other milestones (for example, pushing the dates forward) as
+desired.
+
+14. Send an email to civl-users announcing the new release.

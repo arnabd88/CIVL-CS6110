@@ -1,0 +1,209 @@
+
+exceptions:
+
+need to log exceptions and keep going, but backtrack as soon as
+pc is unsat.
+
+need to see if pc is sat before deciding there is an error to report.
+
+Enabler: evalutes guard, forms new path condition.
+check at this point that new path condition is sat.
+
+Evaluator: in the course of evaluation, pc may change, things
+may be checked.  log errors
+
+  evaluate:
+     step 1, step 2, step 3 (check something, pc becomes unsat),
+     step 4, step 5 (check something), ..., return
+
+When check something, first check if pc is false. Skip the check
+if it is.
+
+Let us assume pc is not certainly unsat when evaluate is called.
+
+Check protocol: check condition condsat.  if consat OK, proceed.
+Otherwise:  check pc satisfiability, pcsat
+ - pcsat=YES && condsat=NO : certainty=PROVEABLE
+ - pcsat=YES && condsat=MAYBE : certainty=MAYBE
+ - pcsat=MAYBE && condsat=NO : MAYBE
+ - pcsat=MAYBE && condsat=MAYBE : MAYBE
+ - pcsat=NO: should not happen (assertion)
+Add claim to pc and check satisfiability of pc again.
+Add to the log report a note about recovery attempt:
+updating PC changed PC to MAYBE unsat, or definitely
+unsat, ...
+If pcsat=NO, throw UnsatisfiablePathConditionException.
+This gets thrown all the way up to Enabler or Executor.
+
+In Executor, the exception is caught, and the intermediate state
+(whatever the state was when the exception was thrown) with
+path condition set to false is returned.
+
+In Enabler, this happens when determining if a transition is enabled.
+I.e., in evaluating a guard, a side-effect occurred.
+Example: guard: a[i]=0.  i might be out of range, what happens?
+The error has been logged, now pc is false, so don't include
+this transition in the list of enabled ones.  No need to do
+anything with the exception.
+
+Enabler:
+
+when examining potential transition:
+form new path condition.
+check for satisfiability.
+if not certain unsat, add it.
+
+next state: after producing state, simplify and canonicalize.
+
+
+Fundamentals:
+
+expression: $length(array)
+expression: $append(array, element)
+$concatenate, $remove, 
+
+/* A system type for any segment of memory used as a buffer,
+ * formed using union types */
+typedef struct __bundle__ $bundle;
+
+/* Creates a buffer from the memory region specified by
+ * ptr and size, copying the data into the new buffer */
+$bundle $bundle_pack(void *ptr, int size);
+
+/* Copies the data out of the buffer into the region
+ * specified */
+void $bundle_unpack($bundle bundle, void *ptr, int size);
+
+/* creates a new comm from the given sequence of processes,
+ * by allocating memory and copying the process sequence;
+ * the new comm has no messages */
+$comm $comm_create(int nprocs, $proc * procs);
+
+/* adds the message to the comm */
+void $comm_enqueue($comm * comm, $message * message);
+
+/* finds the first matching message, removes it from
+ * comm, and returns pointer to message */ 
+$message * $comm_dequeue($comm * comm, int source, int dest, int tag);
+
+
+Action Plan:
+  - add a CIVLBundleType, similar to CIVLHeapType
+  - collect all types during model building
+  - complete the CIVLBundleType by giving it the list of all types,
+    and the symbolic type which is the union of array of t_i
+  - defined $bundle_pack in executor by:
+    1. let v = dereference ptr* (just first element)
+    2. let t = v.type();
+    3. array-of-t is the type of the bundle you will make by cases:
+a. is ptr to a variable, or an array element pointer, etc.
+create the new value of type array-of-t.
+    4. cast that to type bundleSymbolicType.
+    5. assign it to lhs.
+
+
+
+
+Consider CIVL-C dropping C's awful pointer-array pun.
+No automatic conversions. (Just drop them if language is CIVL-C).
+
+f(double[] a) : really takes an array of double, not pointer.
+double[] f(...) : returns an array of double
+
+To get the C behavior:
+
+f(double *p) {...}
+
+to call f: f(&a[0]);
+
+
+
+
+
+
+How hard would it be to add a new type: $sequence<T>
+to the language?  Like vector or variable length array.
+Then define functions like $append, $add, $remove,
+$subseq, blah blah: but these are all generic.
+Need concept of generic functions.  Could make them
+operations.
+
+$buffer $buffer_create(void *ptr, $type element_type, int count);
+
+$buffer $buffer_pack(void *ptr, int size);
+
+Problem: what if type of ptr is just void*.  Won't know statically
+all the types to form the union type.  Without some sort of flow
+analysis, will have to assume every type is possible.
+
+flow analysis: look at occurrences of $buffer_pack
+if type of expression ptr is void*, look at what goes into that
+expression.  pointer arithmetic: ptr argument, trace back
+through assignments, function calls. forget it.
+
+need union of all types.
+
+**** collect all types used in model ****  easy
+
+
+
+do essentially the same thing, but take different args.
+If the element type is complete (and hence can use sizeof)
+the first can be defined as
+    $buffer_pack(ptr, count*sizeof(t))
+
+
+
+Messages:
+
+$message_pack has to produce a message, but how?
+Use union type.
+Union over all types which can occur in message_pack.
+Inject.
+Need to extract value from slice of array.
+Wish I had symbolic operators for that.
+Could be single variable, entire array, slice of array
+slice of array: copy elements if concrete bounds, else
+need array - lambda (not yet implemented)
+
+stick in union type.
+
+tyedef struct __buffer__ __buffer__;
+typedef struct __message__ {
+  int source;
+  int dest;
+  int tag;
+  __buffer__ data;
+  int size;
+}
+
+Translate __buffer__ to CIVLBufferType.
+Symbolic type: symbolicBufferType:
+Union-of-array-of-t_i, where t_i ranges over all types
+occuring in message pack calls.   
+
+Implement $message_pack : just to create buffer
+
+
+How about relaxing restriction from C that element types of
+arrays must be complete?  Instead just generate error
+if you try to take sizeof such a thing. 
+Instead of 
+(double*)$malloc(&h, size)
+  how about
+$alloc(&h, typeof(double), count);
+
+void* $alloc($heap *h, $type type, int count);
+
+Add to grammar: "$typeof(sizeable)" just like sizeof, but
+don't care about completeness.
+no sizeof required.  Type of typeof is $dynamic.  Why not "type".
+---
+
+   
+Think about moving more stuff into model factory, like pointer value
+manipulation
+
+better printing of model
+
+better printing of states during execution

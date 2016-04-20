@@ -1,0 +1,21 @@
+/* Commandline execution:
+ *		civl verify atomWaitBad.cvl
+ * */
+#include <civlc.h>
+void foo() {
+  void koo() {
+    int o = 0;
+	o++;
+  }
+  
+  $proc p = $spawn koo();
+  // undesired blocked state in $atom block, 
+  // an error will be reported
+  $wait p;
+}
+
+void main() {
+  $atom {
+    foo();
+  }
+}

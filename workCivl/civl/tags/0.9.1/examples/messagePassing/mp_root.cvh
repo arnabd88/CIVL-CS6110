@@ -1,0 +1,26 @@
+
+$input int NPROCS;
+$proc __procs[NPROCS];
+_Bool __start = 0;
+$gcomm COMM_WORLD;
+
+void MPI_Process (int rank);
+
+void init() {
+  for (int i=0; i<NPROCS; i++)
+    __procs[i] = $spawn MPI_Process(i);
+}
+
+void finalize() {
+  for (int i=0; i<NPROCS; i++)
+    $wait(__procs[i]);
+}
+
+void main() {
+  $atomic{
+    init();
+    COMM_WORLD = $gcomm_create($here, NPROCS);
+    __start = 1;
+    finalize();
+  }
+}

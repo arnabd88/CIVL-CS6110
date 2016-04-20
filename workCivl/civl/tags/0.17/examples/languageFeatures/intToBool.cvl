@@ -1,0 +1,12 @@
+#include<civlc.cvh>
+#include<stdio.h>
+
+void main(){
+  int a = 9;
+  _Bool b = $true;
+  
+  if(b)
+    printf("b is true\n"); 
+  else
+    printf("b is false\n"); 
+}

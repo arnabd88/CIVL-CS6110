@@ -1,0 +1,24 @@
+/* Commandline execution:
+ *		civl verify bundleStructComponent.cvl
+ * */
+#include <civlc.cvh>
+#include<bundle.cvh>
+
+typedef struct foo {
+  int a[5];
+  int b;
+} foo;
+
+void main() {
+  int c[6];
+  foo s;
+  $bundle bun;
+  
+  for (int i = 0; i < 5; i++) {
+    s.a[i] = i*i;
+  }
+  s.b = 25;
+  bun = $bundle_pack(&(s.a), 6*sizeof(int));  // There may be padding, so this should fail.
+  $bundle_unpack(bun, &c);
+  $assert((c[5] == 25));
+}

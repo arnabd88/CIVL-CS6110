@@ -1,0 +1,40 @@
+#include "civlc.h"
+#include "cuda.cvh"
+#include "stdio.h"
+
+void _kernel_simple(dim3 gridDim, dim3 blockDim, cudaStream_t s) {
+
+    void _kernel (_kernelInstance *this, cudaEvent_t e) {
+
+        void _block (uint3 blockIdx) {
+
+            void _thread (uint3 threadIdx) {
+
+            }
+
+            _runProcs(blockDim, _thread);
+        }
+ 
+        _waitInQueue(this, e);
+        _runProcs(gridDim, _block);
+        _kernelFinish(this);
+    }
+    _enqueueKernel(s, _kernel);
+}
+
+int main ( void ) {
+
+    int _main( void ) {
+        dim3 _t1, _t2;
+        _t1 = _toDim3(1);
+        _t2 = _toDim3(1);
+        _kernel_simple(_t1, _t2, 0);
+        return 0;
+    }
+
+    _cudaInit();
+    _main();
+    _cudaFinalize();
+}
+
+

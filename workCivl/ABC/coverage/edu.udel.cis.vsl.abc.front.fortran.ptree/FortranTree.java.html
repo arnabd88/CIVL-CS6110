@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FortranTree.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.fortran.ptree</a> &gt; <span class="el_source">FortranTree.java</span></div><h1>FortranTree.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package edu.udel.cis.vsl.abc.front.fortran.ptree;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.CommonTree;
+
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.front.IF.ParseTree;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSequence;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+/**
+ * @author Wenhao Wu
+ *
+ */
+<span class="nc bnc" id="L27" title="All 2 branches missed.">public class FortranTree implements ParseTree {</span>
+
+<span class="nc" id="L29">	private Language language = Language.FORTRAN77;</span>
+
+<span class="nc" id="L31">	private static boolean TEXT_ONLY = false;</span>
+
+<span class="nc" id="L33">	private static long COUNT = 0;</span>
+
+	private long id;
+
+	private int index;
+
+	private int childIndex;
+
+	private CivlcToken[] cTokens;
+
+	private int rule;
+
+	private int type;
+
+	private String nodeName;
+
+	private FortranTree parent;
+
+	private ArrayList&lt;FortranTree&gt; children;
+
+	// Constructor
+<span class="nc" id="L54">	public FortranTree(String name, CivlcToken... cTokens) {</span>
+<span class="nc" id="L55">		id = COUNT++;</span>
+<span class="nc" id="L56">		index = -1;</span>
+<span class="nc" id="L57">		childIndex = -1;</span>
+<span class="nc" id="L58">		this.cTokens = cTokens;</span>
+<span class="nc" id="L59">		this.type = -1;</span>
+<span class="nc" id="L60">		rule = Integer.MIN_VALUE;</span>
+<span class="nc" id="L61">		this.nodeName = name;</span>
+<span class="nc" id="L62">		parent = null;</span>
+<span class="nc" id="L63">		children = new ArrayList&lt;FortranTree&gt;();</span>
+<span class="nc" id="L64">	}</span>
+
+<span class="nc" id="L66">	public FortranTree(int rule, String name, CivlcToken... cTokens) {</span>
+<span class="nc" id="L67">		id = COUNT++;</span>
+<span class="nc" id="L68">		index = -1;</span>
+<span class="nc" id="L69">		childIndex = -1;</span>
+<span class="nc" id="L70">		this.cTokens = cTokens;</span>
+<span class="nc" id="L71">		this.type = -1;</span>
+<span class="nc" id="L72">		this.rule = rule;</span>
+<span class="nc" id="L73">		this.nodeName = name;</span>
+<span class="nc" id="L74">		parent = null;</span>
+<span class="nc" id="L75">		children = new ArrayList&lt;FortranTree&gt;();</span>
+<span class="nc" id="L76">	}</span>
+
+<span class="nc" id="L78">	public FortranTree(int rule, String name, int type, CivlcToken... cTokens) {</span>
+<span class="nc" id="L79">		id = COUNT++;</span>
+<span class="nc" id="L80">		index = -1;</span>
+<span class="nc" id="L81">		childIndex = -1;</span>
+<span class="nc" id="L82">		this.cTokens = cTokens;</span>
+<span class="nc" id="L83">		this.type = type;</span>
+<span class="nc" id="L84">		this.rule = rule;</span>
+<span class="nc" id="L85">		this.nodeName = name;</span>
+<span class="nc" id="L86">		parent = null;</span>
+<span class="nc" id="L87">		children = new ArrayList&lt;FortranTree&gt;();</span>
+<span class="nc" id="L88">	}</span>
+
+	// Functions:
+	public long COUNT() {
+<span class="nc" id="L92">		return COUNT;</span>
+	}
+
+	public long id() {
+<span class="nc" id="L96">		return id;</span>
+	}
+
+	public int index() {
+<span class="nc" id="L100">		return index;</span>
+	}
+
+	public void setIndex(int index) {
+<span class="nc" id="L104">		this.index = index;</span>
+<span class="nc" id="L105">	}</span>
+
+	public int childIndex() {
+<span class="nc" id="L108">		return childIndex;</span>
+	}
+
+	public void setChildIndex(int newIndex) {
+<span class="nc" id="L112">		childIndex = newIndex;</span>
+<span class="nc" id="L113">	}</span>
+
+	public CivlcToken[] cTokens() {
+<span class="nc" id="L116">		return cTokens;</span>
+	}
+
+	public void setTokens(CivlcToken... cTokens) {
+<span class="nc" id="L120">		this.cTokens = cTokens;</span>
+<span class="nc" id="L121">	}</span>
+
+	public int type() {
+<span class="nc" id="L124">		return type;</span>
+	}
+
+	public int rule() {
+<span class="nc" id="L128">		return rule;</span>
+	}
+
+	public void setRule(int rule) {
+<span class="nc" id="L132">		this.rule = rule;</span>
+<span class="nc" id="L133">	}</span>
+
+	public String nodeName() {
+<span class="nc" id="L136">		return nodeName;</span>
+	}
+
+	public void setNodeName(String nodeName) {
+<span class="nc" id="L140">		this.nodeName = nodeName;</span>
+<span class="nc" id="L141">	}</span>
+
+	public FortranTree parent() {
+<span class="nc" id="L144">		return parent;</span>
+	}
+
+	public void setParent(FortranTree parent) {
+<span class="nc" id="L148">		this.parent = parent;</span>
+<span class="nc" id="L149">	}</span>
+
+	public Iterable&lt;FortranTree&gt; children() {
+<span class="nc" id="L152">		return children;</span>
+	}
+
+	public int numChildren() {
+<span class="nc" id="L156">		return children.size();</span>
+	}
+
+	public void addChild(int index, FortranTree newChild) {
+<span class="nc bnc" id="L160" title="All 4 branches missed.">		assert newChild != null;</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">		assert newChild.parent == null;</span>
+<span class="nc bnc" id="L162" title="All 6 branches missed.">		assert index &gt;= 0 &amp;&amp; index &lt;= children.size();</span>
+
+<span class="nc" id="L164">		newChild.parent = this;</span>
+<span class="nc" id="L165">		newChild.childIndex = index;</span>
+<span class="nc" id="L166">		children.add(index, newChild);</span>
+<span class="nc" id="L167">		index++;</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		while (index &lt; children.size()) {</span>
+<span class="nc" id="L169">			children.get(index).childIndex++;</span>
+<span class="nc" id="L170">			index++;</span>
+		}
+<span class="nc" id="L172">	}</span>
+
+	public int addChild(FortranTree newChild) {
+<span class="nc bnc" id="L175" title="All 4 branches missed.">		assert newChild != null;</span>
+<span class="nc bnc" id="L176" title="All 4 branches missed.">		assert newChild.parent == null;</span>
+
+<span class="nc" id="L178">		int index = children.size();</span>
+
+<span class="nc" id="L180">		newChild.parent = this;</span>
+<span class="nc" id="L181">		newChild.childIndex = index;</span>
+<span class="nc" id="L182">		children.add(newChild);</span>
+
+<span class="nc" id="L184">		return index;</span>
+	}
+
+	public FortranTree setChild(int index, FortranTree newChild) {
+<span class="nc bnc" id="L188" title="All 4 branches missed.">		assert newChild != null;</span>
+<span class="nc bnc" id="L189" title="All 4 branches missed.">		assert newChild.parent == null;</span>
+
+<span class="nc" id="L191">		FortranTree oldChild = null;</span>
+<span class="nc" id="L192">		int numChildren = children.size();</span>
+
+<span class="nc bnc" id="L194" title="All 6 branches missed.">		assert index &gt;= 0 &amp;&amp; index &lt; numChildren;</span>
+<span class="nc" id="L195">		index = Math.min(index, numChildren - 1);</span>
+<span class="nc" id="L196">		index = Math.max(index, 0);</span>
+<span class="nc" id="L197">		oldChild = children.get(index);</span>
+<span class="nc" id="L198">		oldChild.parent = null;</span>
+<span class="nc" id="L199">		oldChild.childIndex = -1;</span>
+<span class="nc" id="L200">		newChild.parent = this;</span>
+<span class="nc" id="L201">		newChild.childIndex = index;</span>
+<span class="nc" id="L202">		children.set(index, newChild);</span>
+<span class="nc" id="L203">		return oldChild;</span>
+	}
+
+	public void insertChildrenAt(int start,
+			List&lt;? extends FortranTree&gt; newChildren) {
+<span class="nc" id="L208">		int i = 0;</span>
+<span class="nc" id="L209">		int oldSize = children.size();</span>
+<span class="nc" id="L210">		int numNewChildren = newChildren.size();</span>
+<span class="nc" id="L211">		int newSize = oldSize + numNewChildren;</span>
+
+<span class="nc bnc" id="L213" title="All 6 branches missed.">		assert start &gt;= 0 &amp;&amp; start &lt;= oldSize;</span>
+<span class="nc" id="L214">		children.addAll(start, newChildren);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		for (i = start; i &lt; start + numNewChildren; i++) {</span>
+<span class="nc" id="L216">			FortranTree newChild = children.get(i);</span>
+
+<span class="nc bnc" id="L218" title="All 4 branches missed.">			assert newChild != null;</span>
+<span class="nc bnc" id="L219" title="All 4 branches missed.">			assert newChild.parent == null;</span>
+<span class="nc" id="L220">			newChild.parent = this;</span>
+<span class="nc" id="L221">			newChild.childIndex = i;</span>
+		}
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		for (; i &lt; newSize; i++) {</span>
+<span class="nc" id="L224">			FortranTree child = children.get(i);</span>
+
+<span class="nc bnc" id="L226" title="All 4 branches missed.">			assert child != null;</span>
+<span class="nc" id="L227">			child.childIndex = i;</span>
+		}
+<span class="nc" id="L229">	}</span>
+
+	public void remove() {
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (children != null)</span>
+<span class="nc" id="L233">			parent.removeChild(childIndex);</span>
+<span class="nc" id="L234">	}</span>
+
+	public FortranTree removeChild(int index) {
+<span class="nc" id="L237">		int numChildren = children.size();</span>
+<span class="nc" id="L238">		FortranTree oldChild = null;</span>
+
+<span class="nc bnc" id="L240" title="All 6 branches missed.">		assert index &gt;= 0 &amp;&amp; index &lt; numChildren;</span>
+<span class="nc" id="L241">		oldChild = children.get(index);</span>
+<span class="nc bnc" id="L242" title="All 4 branches missed.">		assert oldChild != null;</span>
+<span class="nc" id="L243">		oldChild.parent = null;</span>
+<span class="nc" id="L244">		oldChild.childIndex = -1;</span>
+<span class="nc" id="L245">		children.remove(index);</span>
+<span class="nc" id="L246">		return oldChild;</span>
+	}
+
+	public FortranTree getChildByIndex(int index) {
+<span class="nc" id="L250">		return children.get(index);</span>
+	}
+
+	public String toString() {
+<span class="nc" id="L254">		String result = &quot;&quot;;</span>
+
+<span class="nc" id="L256">		FortranTree temp = this;</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">		while (temp.parent != null) {</span>
+<span class="nc" id="L258">			temp = temp.parent;</span>
+<span class="nc" id="L259">			result += &quot;| &quot;;</span>
+		}
+
+<span class="nc" id="L262">		result += &quot;{&quot;;</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (parent == null) {</span>
+<span class="nc" id="L264">			result += &quot;Root&quot;;</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		} else if (parent.childIndex &lt; 0) {</span>
+			// result += &quot;R&quot;;
+<span class="nc" id="L267">			result += &quot;[&quot; + childIndex + &quot;]&quot;;</span>
+<span class="nc" id="L268">		} else {</span>
+			// result += parent.childIndex;
+<span class="nc" id="L270">			result += &quot;[&quot; + childIndex + &quot;]&quot;;</span>
+			// result += parent.nodeKind;
+		}
+<span class="nc" id="L273">		result += &quot;: &quot;;</span>
+		//result += this.id;
+<span class="nc" id="L275">		result += &quot;[&quot;;</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		if(rule != Integer.MIN_VALUE) result += &quot; &quot; + rule + &quot; &quot;;</span>
+<span class="nc" id="L277">		result += nodeName + &quot;]&quot;;</span>
+<span class="nc bnc" id="L278" title="All 4 branches missed.">		if (cTokens != null &amp;&amp; cTokens.length &gt; 0) {</span>
+<span class="nc" id="L279">			result += &quot;&lt;&quot;;</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">			for (Token t : cTokens) {</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">				if (t != null) {</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">					if (TEXT_ONLY) {</span>
+<span class="nc" id="L283">						result += t.getText();</span>
+<span class="nc" id="L284">					} else {</span>
+<span class="nc" id="L285">						result += t.toString();</span>
+						// result += &quot;{&quot; + t.getInputStream().getSourceName() +
+						// &quot;}&quot;;
+					}
+<span class="nc" id="L289">				} else {</span>
+<span class="nc" id="L290">					result += &quot;null&quot;;</span>
+				}
+			}
+<span class="nc" id="L293">			result += &quot;&gt;&quot;;</span>
+		}
+<span class="nc" id="L295">		result += &quot;}\n&quot;;</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">		if (numChildren() &gt; 0) {</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">			for (FortranTree i : children) {</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">				if (i != null)</span>
+<span class="nc" id="L299">					result += i.toString();</span>
+			}
+		}
+<span class="nc" id="L302">		return result;</span>
+	}
+
+	public void printNode() {
+<span class="nc" id="L306">		System.out.print(this.toString());</span>
+<span class="nc" id="L307">	}</span>
+
+	@Override
+	public Language getLanguage() {
+<span class="nc" id="L311">		return language;</span>
+	}
+
+	@Override
+	public CommonTree getRoot() {
+		// TODO Auto-generated method stub
+<span class="nc" id="L317">		return null;</span>
+	}
+
+	@Override
+	public Source source(CommonTree tree) {
+		// TODO Auto-generated method stub
+<span class="nc" id="L323">		return null;</span>
+	}
+
+	@Override
+	public Collection&lt;SourceFile&gt; getSourceFiles() {
+		// TODO Auto-generated method stub
+<span class="nc" id="L329">		return null;</span>
+	}
+
+	@Override
+	public SyntaxException newSyntaxException(String message, CommonTree tree) {
+		// TODO Auto-generated method stub
+<span class="nc" id="L335">		return null;</span>
+	}
+
+	@Override
+	public CivlcTokenSequence getTokenSourceProducer(CommonTree tokenListNode) {
+		// TODO Auto-generated method stub
+<span class="nc" id="L341">		return null;</span>
+	}
+
+	@Override
+	public CivlcTokenSource getCivlcTokenSource() {
+		// TODO Auto-generated method stub
+<span class="nc" id="L347">		return null;</span>
+	}
+
+	@Override
+	public TokenFactory getTokenFactory() {
+		// TODO Auto-generated method stub
+<span class="nc" id="L353">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,27 @@
+/* Commandline execution:
+ *		civl verify struct.cvl
+ * */
+#include<civlc.cvh>
+
+typedef struct Interval {
+  int left;
+  int right;
+} Interval;
+
+typedef struct IntervalList {
+	Interval value;
+	Interval* next;
+} IntervalList;
+
+void main() {
+  Interval result={.left = 2, .right = 3};
+  IntervalList list1 = {.value ={.left=2, .right=3}, .next = &result};
+  IntervalList list2 = {.value = result, .next = NULL};
+  
+  $assert(list1.value.left==list1.next->left && list1.value.right == list1.next->right);
+  $assert(result.left == 2 && result.right == 3);
+  result.left = 0;
+  result.right = 1;
+  $assert(result.left == 0);
+  $assert(result.right == 1);
+}

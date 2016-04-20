@@ -1,0 +1,23 @@
+#include<civlc.h>
+#include<stdio.h>
+int x;
+int *p = &x;
+
+void f() {
+  int y=0;
+  {
+    int *q = p;
+    $proc id = $self;
+    
+    if(id != $proc_null);
+    *q = 15;
+  }
+}
+
+void main() {
+  $proc fp = $spawn f();
+  
+  *p = 5; 
+  $assert(*p==5);
+  $wait(fp);
+}

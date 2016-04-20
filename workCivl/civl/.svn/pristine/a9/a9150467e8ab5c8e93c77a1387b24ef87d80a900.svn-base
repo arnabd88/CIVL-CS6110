@@ -1,0 +1,1046 @@
+#include <civlc.cvh>
+#ifdef __PTHREAD_FUNCTIONS__
+#else
+#define __PTHREAD_FUNCTIONS__
+extern void *value_ptr_value = NULL;
+__pthread_pool_t _pool={.len = 0};
+
+//pthread_mutex_t PTHREAD_MUTEX_INITIALIZER;
+//pthread_mutexattr_t DEFAULT_MUTEX_ATTR = {.robust=0, .pshared=0, .protocol=0, .type=PTHREAD_MUTEX_NORMAL, .prioceiling=0};
+//pthread_mutex_t PTHREAD_MUTEX_INITIALIZER = {.count=0, .ownerid=-1, .lock=0, .attr=DEFAULT_MUTEX_ATTR};
+
+void _free_pool(__pthread_pool_t* pool){
+  $atomic{
+    int len = pool->len;
+    
+    if(pool->threads != NULL)
+        free(pool->threads);
+  }
+}
+
+void _add_thread(__pthread_pool_t* pool, pthread_t* thread){
+  $atomic{
+    int len = pool->len;
+    pthread_t** newThreads = (pthread_t**) malloc(sizeof(pthread_t*) * (len+1));
+  
+    if(pool->threads != NULL){
+      for(int i = 0; i < len; i++) {  
+         *(newThreads+i) = *(pool->threads+i);
+      }
+      free(pool->threads);
+    }
+    *(newThreads+len) = thread;
+    pool->threads = newThreads;
+    pool->len = len + 1;
+  }
+}
+
+/**
+  * Initializes a spinlock with the default values defined for it by an implementation
+  * Corresponding specification: p. 
+  *
+  * @param *slock
+  *            The spinlock to be initialized.
+  * @param pshared
+  *            The process shared attribute that the spinlock shall take as its field
+  *
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_spin_init(pthread_spinlock_t *slock, int pshared){
+  slock->owner = $proc_null;
+  slock->lock = true;
+  slock->pshared = 0;
+  return 0;
+}
+
+int pthread_spin_destroy(pthread_spinlock_t *slock){
+  pthread_spinlock_t blank;
+  *slock = blank;
+  return 0;
+}
+
+int pthread_spin_lock(pthread_spinlock_t *slock){
+  $atomic{
+    $when(!slock->lock && slock->owner == $proc_null){
+      slock->lock = true;
+      slock->owner == $self;
+    }
+  }
+  return 0;
+}
+
+int pthread_spin_unlock(pthread_spinlock_t *slock){
+  $atomic{
+    slock->owner = $proc_null;
+    slock->lock = false;
+  }
+  return 0;
+}
+
+int pthread_rwlock_init(pthread_rwlock_t *rwlock, const pthread_rwlockattr_t * attr){
+  if(attr==NULL){
+    rwlock->attr.pshared = PTHREAD_PROCESS_PRIVATE;
+  }
+  else{
+    rwlock->attr = *attr;
+  }
+  int zero = 0;
+  $proc nu = $proc_null;
+  rwlock->wrowner = $proc_null;
+  rwlock->wrlock = false;
+  rwlock->empty = true;
+  return 0;
+}
+
+int pthread_rwlock_destroy(pthread_rwlock_t *rwlock){
+  pthread_rwlock_t blank;
+
+  *rwlock = blank;
+  return 0;
+}
+
+int pthread_rwlock_rdlock(pthread_rwlock_t *rwlock){
+  $when(!rwlock->wrlock){
+    $atomic{
+      int len = $seq_length(&(rwlock->rdowners));
+      int one = 1;
+      _Bool found = false;
+
+      for(int x = 0; x < len; x++){
+        if(rwlock->rdowners[x] == $self){
+          found = true;
+          rwlock->rdlocks[x]++;
+          break;
+        }
+      }
+
+      if(!found){
+        $proc s = $self;
+        $seq_insert(&(rwlock->rdowners), len, &s, 1);
+        $seq_insert(&(rwlock->rdlocks), len, &one, 1);
+      }
+      rwlock->empty = false;
+    }
+  }
+  return 0;
+}
+
+int pthread_rwlock_unlock(pthread_rwlock_t *rwlock){
+  $atomic{
+    _Bool found = false;
+    int len = $seq_length(&(rwlock->rdowners));
+    for(int x = 0; x < len; x++){      
+      if(rwlock->rdowners[x] == $self){
+        found = true;
+        rwlock->rdlocks[x]--;
+        if(rwlock->rdlocks[x] == 0){
+          $seq_remove(&(rwlock->rdowners), x, NULL, 1);
+          $seq_remove(&(rwlock->rdlocks), x, NULL, 1);
+          len--;
+          x--;
+          break;
+        }
+      }
+    }
+    if(!found){
+      if(rwlock->wrowner == $self){
+        rwlock->wrowner = $proc_null;
+        rwlock->wrlock = false;
+      }
+    }
+    if($seq_length(&(rwlock->rdowners)) == 0){
+      rwlock->empty = true;
+    }
+    return 0;
+  }
+}
+
+int pthread_rwlock_wrlock(pthread_rwlock_t *rwlock){
+  $when(rwlock->empty && !(rwlock->wrlock)){
+    $atomic{
+      rwlock->wrlock = true;
+      rwlock->wrowner = $self;
+    }
+  }
+  return 0;
+}
+
+
+int pthread_barrierattr_init(pthread_barrierattr_t *attr){
+  attr->pshared = 0;
+  return 0;
+}
+
+int pthread_barrierattr_destroy(pthread_barrierattr_t *attr){
+  pthread_barrierattr_t blank;
+  *attr = blank;
+  return 0;
+}
+
+/**
+  * Initializes a barrier with the default values defined for it by an implementation
+  * or with the values defined by the barrier attribute parameter
+  * Corresponding specification: p. 
+  *
+  * @param *barrier
+  *            The barrier to be initialized.
+  * @param *attr
+  *            The mutex attribute which the mutex shall take as it's field. May also
+  *            be null for default values to be initialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_barrier_init(pthread_barrier_t *barrier, const pthread_barrierattr_t *attr, int count){
+  if(attr == NULL){
+    barrier->attr.pshared = 0;
+  }
+  else{
+    barrier->attr = *attr;
+  }
+  barrier->barr = $gbarrier_create($root, count);
+  barrier->size = count;
+  barrier->numThrds = 0;
+  return 0;
+}
+
+/**
+  * Uninitializes the specified barrier variable.
+  * Corresponding specification: p.
+  *
+  * @param *barrier
+  *            The barrier to be uninitialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_barrier_destroy(pthread_barrier_t *barrier){
+  $gbarrier_destroy(barrier->barr);
+  pthread_barrier_t blank;
+  *barrier = blank;
+  return 0;
+}
+
+/**
+  * Creates local barrier for a thead and places it in the global barrier. It then proceeds to call the
+  * $barrier_call, forcing the thread to wait until the release of the global barrier. The global barrier
+  * and local barrier are then destroyed.
+  *
+  * @param *barrier
+  *            The barrier containing the global barrier to be waited upon
+  *
+  * @return Returns PTHREAD_BARRIER_SERIAL_THREAD from one exiting thread, and 0 from each of the rest
+  */
+
+int pthread_barrier_wait(pthread_barrier_t *barrier){
+  $barrier locbarr;
+  $atomic{
+    locbarr = $barrier_create($here, barrier->barr, barrier->numThrds);
+    barrier->numThrds++;
+    $barrier_call(locbarr);
+    
+    $barrier_destroy(locbarr);
+    $gbarrier_destroy(barrier->barr);
+    if(barrier->numThrds == barrier->size){
+      barrier->numThrds--;
+      return PTHREAD_BARRIER_SERIAL_THREAD;
+    }
+    else{
+      return 0;
+    }
+  }
+}
+
+
+/**
+  * Initializes an attribute with the default values defined for it by an implementation.
+  * Corresponding specification: p. 1532-4
+  *
+  * @param *attr
+  *            The attribute to be initialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_attr_init(pthread_attr_t *attr){
+  attr->detachstate = PTHREAD_CREATE_JOINABLE;
+  //attr->inheritsched = PTHREAD_EXPLICIT_SCHED;
+  attr->contentionscope = PTHREAD_SCOPE_SYSTEM;
+  //attr->schedpolicy = SCHED_OTHER;
+  return 0;
+}
+
+/**
+  * Uninitializes the specified attr variable.
+  * Corresponding specification: p. 1532-4
+  *
+  * @param *attr
+  *            The attribute to be uninitialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_attr_destroy(pthread_attr_t *attr)
+{ 
+  pthread_attr_t blank;
+  
+  *attr = blank;
+  return 0; 
+}
+
+
+/**
+  * Sets the detachstate field of the attribute
+  * Corresponding specification: p. 1535-6
+  *
+  * @param *attr
+  *            The attribute to have it's detachstate set
+  * @param detachstate
+  *            The detachstate to which the attribute's detachstate is set  
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_attr_setdetachstate(pthread_attr_t *attr, int detachstate)
+{
+  attr->detachstate = detachstate;
+  return 0;
+}
+
+/**
+  * Stores the detachstate value of the attribute in an alternate location
+  * Corresponding specification: p. 1535-6
+  *
+  * @param *attr
+  *            The attribute whose detachstate is to be stored
+  * @param *detachstate
+  *            The location at which the detachstate is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+  
+int pthread_attr_getdetachstate(const pthread_attr_t *attr, int *detachstate)
+{
+  *detachstate = attr->detachstate;
+  return 0;
+}
+
+/**
+  * Set scheduling inheritance 
+  * Corresponding specification: p. 1540-1
+  *
+  * @param *attr
+  *            The attribute to have it's inheritsched set
+  * @param inheritsched
+  *            The inheritsched to which the attribute's inheritsched is set 
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_attr_setinheritsched(pthread_attr_t *attr, int inheritsched)
+{
+  attr->inheritsched = inheritsched;
+  return 0;
+}
+
+/**
+  * Stores the inheritsched value of the attribute in an alternate location
+  * Corresponding specification: p. 1540-1
+  *
+  * @param *attr
+  *            The attribute whose inheritsched is to be stored
+  * @param *intheritsched
+  *            The location at which the attribute's inheritsched is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_attr_getinheritsched(const pthread_attr_t *attr, int *inheritsched)
+{
+  *inheritsched = attr->inheritsched;
+  return 0;
+}
+/*
+int pthread_attr_setschedparam(pthread_attr_t *attr, int priority)
+{
+  attr->param.sched_priority = priority;
+  return 0;
+}
+
+int pthread_attr_getschedparam(const pthread_attr_t *attr, sched_param *param)
+{
+  *param = attr->param;
+  return 0;
+}
+
+*/
+/**
+  * Set contentionscope field of the attribute
+  * Corresponding specification: p. 1546-7
+  *
+  * @param *attr
+  *            The attribute to have it's contentionscope set
+  * @param contentionscope
+  *            The contentionscope to which the attribute's contentionscope is set  
+  * @return Returns 0 upon successful completion
+  */
+ 
+int pthread_attr_setscope(pthread_attr_t *attr, int contentionscope)
+{
+  attr->contentionscope = contentionscope;
+  return 0;
+}
+
+/**
+  * Stores the contentionscope value of the attribute in an alternate location
+  * Corresponding specification: p. 1546-7
+  *
+  * @param *attr
+  *            The attribute whose contentionscope is to be stored
+  * @param *contentionscope
+  *            The location at which the attribute's contentionscope is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_attr_getscope(const pthread_attr_t *attr, int *contentionscope)
+{
+  *contentionscope = attr->contentionscope;
+  return 0;
+}
+
+/**
+  * Sets the scheduling policy field of the attribute
+  * Corresponding specification: p. 1544-45
+  *
+  * @param *attr
+  *            The attribute to have it's scheduling policy set
+  * @param policy
+  *            The scheduling policy to which the attribute's scheduling policy is set  
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_attr_setschedpolicy(pthread_attr_t *attr, int policy)
+{
+  attr->schedpolicy = policy;
+  return 0;
+}
+
+/**
+  * Stores the scheduling policy value in an alternate location
+  * Corresponding specification: p. 1544-45
+  *
+  * @param *attr
+  *            The attribute whose scheduling policy is to be stored
+  * @param *policy
+  *            The location at which the attribute's scheduling policy is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_attr_getschedpolicy(const pthread_attr_t *attr, int *policy)
+{
+  *policy = attr->schedpolicy;
+  return 0;
+}
+
+/**
+  * Initializes an attribute with the default values defined for it by an implementation.
+  * Corresponding specification: p. 1647-51
+  *
+  * @param *attr
+  *            The attribute to be initialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_mutexattr_init(pthread_mutexattr_t *attr){
+  attr->robust = 0;
+  attr->pshared = 0;
+  attr->protocol = 0;
+  attr->type = 0;
+  attr->prioceiling = 0;
+  return 0;
+}
+
+/**
+  * Uninitializes the specified attr variable.
+  * Corresponding specification: p. 1647-51
+  *
+  * @param *attr
+  *            The attribute to be uninitialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_mutexattr_destroy(pthread_mutexattr_t *attr){
+  pthread_mutexattr_t blank;
+  
+  *attr = blank;
+  return 0;
+}
+
+/**
+  * Stores the robustness value in an alternate location
+  * Corresponding specification: p. 1659-1660
+  *
+  * @param *attr
+  *            The attribute whose robustness is to be stored
+  * @param *robust
+  *            The location at which the attribute's robustness is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_mutexattr_getrobust(const pthread_mutexattr_t *attr, int *robust){
+  *robust = attr->robust;
+  return 0;
+}
+
+/**
+  * Sets the robustness field of the attribute
+  * Corresponding specification: p. 1659-1660
+  *
+  * @param *attr
+  *            The attribute to have it's robustness set
+  * @param robust
+  *            The robustness to which the attribute's robustness is set  
+  * @return Returns 0 upon successful completion
+  */
+  
+int pthread_mutexattr_setrobust(pthread_mutexattr_t *attr, int robust){
+  attr->robust = robust;
+  return 0;
+}
+
+/**
+  * Stores the process shared variable in an alternate location
+  * Corresponding specification: p. 1657-8
+  *
+  * @param *attr
+  *            The attribute whose process shared variable is to be stored
+  * @param *detachstate
+  *            The location at which the attribute's process shared variable is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+  
+int pthread_mutexattr_getpshared(const pthread_mutexattr_t *attr, int *pshared){
+  *pshared = attr->pshared;
+  return 0;
+}
+
+/**
+  * Sets the process shared variable field of the attribute
+  * Corresponding specification: p. 1657-8
+  *
+  * @param *attr
+  *            The attribute to have it's process shared variable set
+  * @param detachstate
+  *            The process shared variable to which the attribute's process shared variable is set  
+  * @return Returns 0 upon successful completion
+  */
+  
+int pthread_mutexattr_setpshared(pthread_mutexattr_t *attr, int pshared){
+  attr->pshared = pshared;
+  return 0;
+}
+
+/**
+  * Stores the protocol value in an alternate location
+  * Corresponding specification: p. 1654-56
+  *
+  * @param *attr
+  *            The attribute whose protocol is to be stored
+  * @param *detachstate
+  *            The location at which the attribute's protocol is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+  
+int pthread_mutexattr_getprotocol(const pthread_mutexattr_t *attr, int *protocol){
+  *protocol = attr->protocol;
+  return 0;
+}
+
+/**
+  * Sets the protocol field of the attribute
+  * Corresponding specification: p. 1654-56
+  *
+  * @param *attr
+  *            The protocol to have it's protocol set
+  * @param detachstate
+  *            The protocol to which the attribute's protocol is set  
+  * @return Returns 0 upon successful completion
+  */
+int pthread_mutexattr_setprotocol(pthread_mutexattr_t *attr, int protocol){
+  attr->protocol = protocol;
+  return 0;
+}
+
+/**
+  * Stores the type value in an alternate location
+  * Corresponding specification: p. 1709-10
+  *
+  * @param *attr
+  *            The attribute whose type is to be stored
+  * @param *detachstate
+  *            The location at which the attribute's type is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+int pthread_mutexattr_gettype(const pthread_mutexattr_t *attr, int *type){
+  *type = attr->type;
+  return 0;
+}
+
+/**
+  * Sets the type field of the attribute
+  * Corresponding specification: p. 1709-10
+  *
+  * @param *attr
+  *            The attribute to have it's type set
+  * @param detachstate
+  *            The type to which the attribute's type is set  
+  * @return Returns 0 upon successful completion
+  */
+int pthread_mutexattr_settype(pthread_mutexattr_t *attr, int type){
+  attr->type = type;
+  return 0;
+}
+
+/**
+  * Stores the priority ceiling value in an alternate location
+  * Corresponding specification: p. 1700-1
+  *
+  * @param *attr
+  *            The attribute whose priority ceiling is to be stored
+  * @param *detachstate
+  *            The location at which the attribute's priority ceiling is to be stored  
+  * @return Returns 0 upon successful completion
+  */
+  
+int pthread_mutexattr_getprioceiling(const pthread_mutexattr_t *attr, int *prioceiling){
+  *prioceiling = attr->prioceiling;
+  return 0;
+}
+
+/**
+  * Sets the priority ceiling field of the attribute
+  * Corresponding specification: p. 1700-1
+  *
+  * @param *attr
+  *            The attribute to have it's priority ceiling set
+  * @param detachstate
+  *            The priority ceiling to which the attribute's priority ceiling is set  
+  * @return Returns 0 upon successful completion
+  */
+  
+int pthread_mutexattr_setprioceiling(pthread_mutexattr_t *attr, int prioceiling){
+  attr->prioceiling = prioceiling;
+  return 0;
+}
+
+
+/**
+  * Initializes a mutex with the default values defined for it by an implementation
+  * or with the values defined by the mutex attribute parameter
+  * Corresponding specification: p. 1676-81
+  *
+  * @param *mutex
+  *            The mutex to be initialized.
+  * @param *attr
+  *            The mutex attribute which the mutex shall take as it's field. May also
+  *            be null for default values to be initialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr){
+  if(attr == NULL){
+    mutex->attr.robust = 0;
+    mutex->attr.pshared = 0;
+    mutex->attr.protocol = 0;
+    mutex->attr.type = PTHREAD_MUTEX_NORMAL;
+    mutex->attr.prioceiling = 0;
+  }
+  else{
+    mutex->attr = *attr;
+  }
+  mutex->lock = 0;
+  mutex->count = 0;
+  mutex->ownerid = -1;
+  return 0;
+}
+
+/**
+  * Uninitializes the specified mutex variable.
+  * Corresponding specification: p. 1676-81
+  *
+  * @param *mutex
+  *            The mutex to be uninitialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_mutex_destroy(pthread_mutex_t *mutex){
+  pthread_mutex_t blank;
+  
+  *mutex = blank;
+  return 0;
+}
+
+/**
+  * Initializes an condition with the default values defined for it by an implementation.
+  * Corresponding specification: p. 1630-32
+  *
+  * @param *cond
+  *            The condition to be initialized.
+  * @param *arg
+  *            Should be changed to condition attribute
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_cond_init(pthread_cond_t *cond, void *arg){
+  cond->proccount = 0;
+  cond->signal = 0;
+  return 0;
+}
+
+
+/**
+  * Uninitializes the specified cond variable.
+  * Corresponding specification: p. 1630-2
+  *
+  * @param *cond
+  *            The condition to be uninitialized.
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_cond_destroy(pthread_cond_t *cond){
+  pthread_cond_t blank;
+  *cond = blank;
+  return 0;
+}
+
+int pthread_equal(pthread_t t1, pthread_t t2){
+  if(t1.thr == t2.thr){
+    return 1;
+  }
+  return 0;
+}
+
+/**
+  * Defines a pthread_t by assigning it an attribute value (by value so the original attribute's state is
+  * irrelevant), and spawning a process as the thr field with arguments void *arg
+  * Corresponding specification: p. 1649-51
+  *
+  * @param *thread
+  *            The thread to be created with fields set from the other parameters.
+  * @param *attr
+  *            The attribute to be assigned to the thread
+  * @param *startroutine
+  *            The process to be spawned as the thread's actual 'thread'
+  * @param *arg
+  *            The argument to be passed to the spawned function
+  *
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg){
+  $atomic{
+    thread->thr = $spawn start_routine(arg);
+    if(attr == NULL){
+      thread->attr.detachstate = PTHREAD_CREATE_JOINABLE;
+      thread->attr.inheritsched = 0;
+      thread->attr.contentionscope = 0;
+      thread->attr.schedpolicy = 0;
+    }
+    else{
+      thread->attr = *attr;
+    }
+    thread->pid = _pool.len;
+    thread->terminated = false;
+    _add_thread(&_pool, thread);
+  }
+  return 0;
+}
+
+/**
+  * Causes current thread to wait on thread specified as a parameter. If specified thread's detachstate field is set as PTHREAD_CREATE_DETACHED,
+  * error will be returned stating the the thread cannot be joined. The value_ptr of pthread_exit shall be passed to any joining thread to the 
+  * terminated thread using pthread_join's value_ptr
+  * Corresponding specification: p. 1617-9
+  *
+  * @param thread
+  *            The thread to be waited on by the current thread.
+  * @param **value_ptr
+  *            The location at which the pthread_exit output is accessible
+  *
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_join(pthread_t thread, void **value_ptr){
+  if(&thread.attr != NULL){
+    if(thread.attr.detachstate == PTHREAD_CREATE_DETACHED){
+      $assert($false, "Thread is designated as unjoinable");
+      return 1;
+    }
+  }
+  $wait(thread.thr);
+  if(value_ptr!=NULL)
+    value_ptr = &value_ptr_value;
+  return 0;
+}
+
+/**
+  * Causes current thread to immediately terminate; if currently in the main method as specified by the 
+  * isMain parameter, the main method will wait for each thread to terminate before it terminates. The value
+  * value_ptr will be made accessible in the location stated in pthread_join
+  * Corresponding specification: p. 1655-6
+  *
+  * @param *value_ptr
+  *            The value to be stored in the location stated by pthread_join
+  * @param isMain
+  *            Is this thread the main thread?
+  * @param *arr 
+  *            The array of threads which need to be waited upon by the main thread
+  * @param len
+  *            The length of the array of threads to be waited upon
+  * @return Returns 0 upon successful completion
+  */
+
+void _pthread_exit(void *value_ptr, _Bool isMain){
+  if(isMain){
+    for(int i = 0; i<_pool.len; i++){
+      if($proc_defined(_pool.threads[i]->thr)){
+        $wait(_pool.threads[i]->thr);
+      }
+    }
+    free(_pool.threads);
+    $exit();
+  }
+  else{
+    $atomic{
+      for(int i = 0; i<_pool.len; i++){
+        if(!(_pool.threads[i]->terminated)){
+          if(_pool.threads[i]->thr == $self){
+            _pool.threads[i]->terminated = true;
+            break;
+          }
+        }
+      }
+    }
+    value_ptr_value = value_ptr;
+    $exit();
+  }
+}
+
+/**
+  * Takes in a mutex variable and acts accordingly to its current state and type
+  * PTHREAD_MUTEX_NORMAL: Checks to see whether mutex is already locked and behaves accordingly
+  *  locked and owner: Relock error, returns 0
+  *  locked and not owner: Waits until mutex is unlocked and then locks and becomes owner
+  *  unlocked and not owner: Locks the mutex and becomes owner
+  * PTHREAD_MUTEX_RECURSIVE: A recursive mutex increments its count when it is locked and decremented when
+  *  it is unlocked and the lock is released when the count reaches 0.
+  * PTHREAD_MUTEX_ERRORCHECK: Implemented similarly to PTHREAD_MUTEX_NORMAL, but notifies the user of errors
+  * Corresponding specification: p. 1686-9
+  *
+  * @param *mutex
+  *            The mutex to be locked
+  * @return Returns 0 upon successful completion, EOWNERDEAD upon termination of owner, 
+  */
+
+
+int pthread_mutex_lock(pthread_mutex_t *mutex){
+  $choose{
+    $when(mutex->lock==0){
+      $atomic{
+        for(int i = 0; i < _pool.len; i++){
+          if(!(_pool.threads[i]->terminated)){
+            if(_pool.threads[i]->thr == $self){
+              mutex->ownerid = i;
+              break;
+            }
+          }
+        }
+        mutex->lock = 1;
+        mutex->count = 1;
+      } 
+      return 0;
+    }
+    $when((mutex->attr.type == PTHREAD_MUTEX_NORMAL || mutex->attr.type == PTHREAD_MUTEX_ERRORCHECK)  && mutex->lock == 1  && _pool.threads[mutex->ownerid]->thr == $self){
+      $assert($false, "Deadlock: attempted to relock lock");
+      return 0;
+    }
+    $when(mutex->lock == 1 && _pool.threads[mutex->ownerid]->thr != $self && _pool.threads[mutex->ownerid]->terminated == true && mutex->attr.robust != PTHREAD_MUTEX_ROBUST){
+      $assert($false, "Deadlock: owner terminated without robust mutex");
+      return 0;
+    }
+    $when(!(mutex->attr.type == PTHREAD_MUTEX_NORMAL || mutex->attr.type == PTHREAD_MUTEX_ERRORCHECK) && mutex->lock == 1 && _pool.threads[mutex->ownerid]->thr == $self){
+      mutex->count++;
+      return 0;
+    }
+  }
+  return 0;
+}
+
+/**
+  * Takes in a mutex variable and acts similarly to pthread_mutex_lock except that 
+  * if the mutex is locked, it will return immeditately. In the case of a recursive mutex, the count will
+  * be incremented and will return successfully.
+  * Corresponding specification: p. 1686-9
+  *
+  * @param *mutex
+  *            The mutex to be locked
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_mutex_trylock(pthread_mutex_t *mutex){
+  $atomic{
+    if (mutex->attr.type == PTHREAD_MUTEX_NORMAL){
+      if (mutex->lock != 0) {
+        return EBUSY;
+      }
+      _pool.threads[mutex->ownerid]->thr = $self;
+      mutex->lock = 1;
+    } 
+    else {
+      int tmp = mutex->lock;
+      
+      mutex->lock = 1;
+      if (tmp == 0) { // Attempts lock and checks for whether lock is already locked
+        mutex->count = 1; 
+        _pool.threads[mutex->ownerid]->thr = $self;
+      } 
+      else {
+        //Checks for ownership, otherwise returns error
+        if(_pool.threads[mutex->ownerid]->thr == $self){
+          // Checks for recursive mutex, otherwise returns an error 
+          if (mutex->attr.type == PTHREAD_MUTEX_RECURSIVE) {
+            mutex->count++;
+          }
+          else {
+            $assert(($false));
+            return 0;
+          }
+        }
+        else {
+          return EBUSY;
+        }
+      }
+    }
+    return 0;
+  }
+}
+
+/**
+  * Takes in a mutex variable and acts accordingly to its current state and type
+  * PTHREAD_MUTEX_NORMAL: Checks to see whether mutex is already unlocked and behaves accordingly
+  *  unlocked: returns error
+  *  locked: unlocks
+  * PTHREAD_MUTEX_RECURSIVE: A recursive mutex increments its count when it is locked and decremented when
+  *  it is unlocked and the lock is released when the count reaches 0.
+  * PTHREAD_MUTEX_ERRORCHECK: Currently implemented similarly to PTHREAD_MUTEX_NORMAL
+  * Corresponding specification: p. 1686-9 
+  *
+  * @param *mutex
+  *            The mutex to be unlocked
+  * @return Returns 0 upon successful completion
+  */
+
+int pthread_mutex_unlock(pthread_mutex_t *mutex){
+  $atomic{
+    if (mutex->attr.type == PTHREAD_MUTEX_NORMAL || mutex->attr.type == PTHREAD_MUTEX_ERRORCHECK) {
+      // Attempts unlock, if already unlocked, returns error
+      if (mutex->lock == 0) {
+        $assert($false, "Attempting to unlock unlocked lock\n");
+        return 0;
+      }
+      else {
+        mutex->lock = 0;
+        mutex->ownerid = -1;
+      }
+    } 
+    else {
+      //Checks for ownership of thread, if not, returns error
+      if(_pool.threads[mutex->ownerid]->thr == $self)
+      {
+        if (--mutex->count == 0){
+          mutex->lock = 0;
+          mutex->ownerid = -1;
+        }
+      }
+      else {
+        $assert(($false));
+        return 0;
+      }
+    }
+    return 0;
+  }
+}
+
+/**
+  * Checks for robustness of mutex: if robust, the mutex is unlocked, otherwise an error is caused
+  * and EINVAL is returned
+  * Corresponding specification: p. 1674-5
+  *
+  * @param *mutex
+  *            The mutex to be marked as consistent
+  * @return Returns 0 upon successful completion, EINVAL upon non-robust mutex input 
+  */
+
+int pthread_mutex_consistent(pthread_mutex_t *mutex){
+  if(mutex->attr.robust == PTHREAD_MUTEX_ROBUST){
+    mutex->lock = 0;
+    return 0;
+  }
+  $assert(($false));
+  return EINVAL;
+}
+
+/**
+  * Checks for calling thread as owner of the mutex, then increments proccount, unlocks the mutex 
+  * and sleeps. Awakens upon signal and decrements proccount and locks mutex.
+  * Corresponding specification: p. 1634-9
+  *
+  * @param *cond
+  *            The condition to be waited upon until a signal is given
+  * @param *mutex
+  *            The mutex used to lock other threads out
+  * @return Returns 0 upon successful completion, EINVAL upon non-robust mutex input 
+  */
+
+int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex){
+  if(_pool.threads[mutex->ownerid]->thr != $self){
+    printf("Mutex not owned by thread");
+    $assert(($false));
+    return 0;
+  }
+  
+  cond->proccount= cond->proccount+1;
+  cond->signal = false;
+  pthread_mutex_unlock(mutex);
+  
+  $when(cond->signal);
+  cond->signal = false;
+  --cond->proccount;
+  $when(mutex->lock == 0){pthread_mutex_lock(mutex);}
+  return 0;
+}
+
+/**
+  * Signals the condition by setting the signal to true
+  * Corresponding specification: p. 1627-30
+  *
+  * @param *cond
+  *            The condition to be signalled
+  * @return Returns 0 upon successful completion 
+  */
+
+int pthread_cond_signal(pthread_cond_t *cond){
+  cond->signal = true;
+  return 0;
+}
+
+/**
+  * Repeated signals the condition until all processes waiting have been signalled and awoken
+  * Corresponding specification: p. 1627-30
+  *
+  * @param *cond
+  *            The condition to be signalled repeatedly
+  * @return Returns 0 upon successful completion 
+  */
+
+int pthread_cond_broadcast(pthread_cond_t *cond){
+  while(cond->proccount > 0){
+    cond->signal = true;
+  }
+  return 0;
+}
+
+#endif

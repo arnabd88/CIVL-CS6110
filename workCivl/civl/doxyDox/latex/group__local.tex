@@ -1,0 +1,70 @@
+\hypertarget{group__local}{}\section{Local and partial evaluation of S\+H fields.}
+\label{group__local}\index{Local and partial evaluation of S\+H fields.@{Local and partial evaluation of S\+H fields.}}
+
+
+These do only require a call to \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create}, but not to \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid}.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__local_gabf09188eb9c6351807752e160b4c1723}{}double \hyperlink{group__local_gabf09188eb9c6351807752e160b4c1723}{S\+H\+\_\+to\+\_\+point} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, double cost, double phi)\label{group__local_gabf09188eb9c6351807752e160b4c1723}
+
+\begin{DoxyCompactList}\small\item\em Evaluate scalar S\+H representation {\bfseries Qlm} at physical point defined by {\bfseries cost} = cos(theta) and {\bfseries phi}. \end{DoxyCompactList}\item 
+\hypertarget{group__local_gae6c36bc728d73f6e7b8a212bed4d34c3}{}void {\bfseries S\+H\+\_\+to\+\_\+grad\+\_\+point} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Dr\+Slm, cplx $\ast$Slm, double cost, double phi, double $\ast$gr, double $\ast$gt, double $\ast$gp)\label{group__local_gae6c36bc728d73f6e7b8a212bed4d34c3}
+
+\item 
+\hypertarget{group__local_ga10e38e735afa642698c4c78fda56b045}{}void \hyperlink{group__local_ga10e38e735afa642698c4c78fda56b045}{S\+Hqst\+\_\+to\+\_\+point} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, double cost, double phi, double $\ast$vr, double $\ast$vt, double $\ast$vp)\label{group__local_ga10e38e735afa642698c4c78fda56b045}
+
+\begin{DoxyCompactList}\small\item\em Evaluate vector S\+H representation {\bfseries Qlm} at physical point defined by {\bfseries cost} = cos(theta) and {\bfseries phi}. \end{DoxyCompactList}\item 
+void \hyperlink{group__local_ga7a490f355da08822e437ff6093288e86}{S\+Hqst\+\_\+to\+\_\+lat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, double cost, double $\ast$vr, double $\ast$vt, double $\ast$vp, int nphi, int ltr, int mtr)
+\begin{DoxyCompactList}\small\item\em synthesis at a given latitude, on nphi equispaced longitude points. \end{DoxyCompactList}\item 
+void \hyperlink{group__local_ga19f8e3040d8f37c994ca73573e76b738}{S\+H\+\_\+to\+\_\+lat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, double cost, double $\ast$vr, int nphi, int ltr, int mtr)
+\begin{DoxyCompactList}\small\item\em synthesis at a given latitude, on nphi equispaced longitude points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+These do only require a call to \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create}, but not to \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid}. 
+
+These functions are not optimized and can be relatively slow, but they provide good reference implemenation for the transforms. 
+
+\subsection{Function Documentation}
+\hypertarget{group__local_ga19f8e3040d8f37c994ca73573e76b738}{}\index{Local and partial evaluation of S\+H fields.@{Local and partial evaluation of S\+H fields.}!S\+H\+\_\+to\+\_\+lat@{S\+H\+\_\+to\+\_\+lat}}
+\index{S\+H\+\_\+to\+\_\+lat@{S\+H\+\_\+to\+\_\+lat}!Local and partial evaluation of S\+H fields.@{Local and partial evaluation of S\+H fields.}}
+\subsubsection[{S\+H\+\_\+to\+\_\+lat}]{\setlength{\rightskip}{0pt plus 5cm}void S\+H\+\_\+to\+\_\+lat (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{double}]{cost, }
+\item[{double $\ast$}]{vr, }
+\item[{int}]{nphi, }
+\item[{int}]{ltr, }
+\item[{int}]{mtr}
+\end{DoxyParamCaption}
+)}\label{group__local_ga19f8e3040d8f37c994ca73573e76b738}
+
+
+synthesis at a given latitude, on nphi equispaced longitude points. 
+
+vr arrays must have nphi+2 doubles allocated (fftw requirement). It does not require a previous call to shtns\+\_\+set\+\_\+grid, but it is N\+O\+T thread-\/safe. \hypertarget{group__local_ga7a490f355da08822e437ff6093288e86}{}\index{Local and partial evaluation of S\+H fields.@{Local and partial evaluation of S\+H fields.}!S\+Hqst\+\_\+to\+\_\+lat@{S\+Hqst\+\_\+to\+\_\+lat}}
+\index{S\+Hqst\+\_\+to\+\_\+lat@{S\+Hqst\+\_\+to\+\_\+lat}!Local and partial evaluation of S\+H fields.@{Local and partial evaluation of S\+H fields.}}
+\subsubsection[{S\+Hqst\+\_\+to\+\_\+lat}]{\setlength{\rightskip}{0pt plus 5cm}void S\+Hqst\+\_\+to\+\_\+lat (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{cplx $\ast$}]{Slm, }
+\item[{cplx $\ast$}]{Tlm, }
+\item[{double}]{cost, }
+\item[{double $\ast$}]{vr, }
+\item[{double $\ast$}]{vt, }
+\item[{double $\ast$}]{vp, }
+\item[{int}]{nphi, }
+\item[{int}]{ltr, }
+\item[{int}]{mtr}
+\end{DoxyParamCaption}
+)}\label{group__local_ga7a490f355da08822e437ff6093288e86}
+
+
+synthesis at a given latitude, on nphi equispaced longitude points. 
+
+vr, vt, and vp arrays must have nphi+2 doubles allocated (fftw requirement). It does not require a previous call to shtns\+\_\+set\+\_\+grid, but it is N\+O\+T thread-\/safe. 

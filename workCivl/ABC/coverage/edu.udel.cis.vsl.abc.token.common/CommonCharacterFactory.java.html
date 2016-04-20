@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonCharacterFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.common</a> &gt; <span class="el_source">CommonCharacterFactory.java</span></div><h1>CommonCharacterFactory.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.token.common;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CharacterToken;
+import edu.udel.cis.vsl.abc.token.IF.ExecutionCharacter;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+import edu.udel.cis.vsl.abc.token.IF.ExecutionCharacter.CharacterKind;
+import edu.udel.cis.vsl.abc.token.IF.StringLiteral.StringKind;
+
+/**
+ * A class to help parsing of characters and string and creation of
+ * corresponding tokens.
+ * 
+ * @author siegel
+ * 
+ */
+public class CommonCharacterFactory {
+
+	// Types...
+
+	/**
+	 * A type which extracts the &quot;core&quot; part of the text of a string literal
+	 * token (the text minus the optional prefix and double quotes) and which
+	 * records the kind of string (which is determined by the prefix).
+	 * 
+	 * @author siegel
+	 */
+	private class StringAnalysis {
+		CivlcToken token;
+		StringKind kind;
+		String core;
+
+<span class="nc" id="L41">		StringAnalysis(CivlcToken token, StringKind kind, String core) {</span>
+<span class="nc" id="L42">			this.token = token;</span>
+<span class="nc" id="L43">			this.kind = kind;</span>
+<span class="nc" id="L44">			this.core = core;</span>
+<span class="nc" id="L45">		}</span>
+	}
+
+	/**
+	 * A type used to help parse the characters from a string, one at a time.
+	 * */
+	private class CharacterParseData {
+		String string;
+		int totalLength;
+		CharacterKind kind;
+		int index;
+
+<span class="nc" id="L57">		CharacterParseData(String string, CharacterKind kind) {</span>
+<span class="nc" id="L58">			this.string = string;</span>
+<span class="nc" id="L59">			this.kind = kind;</span>
+<span class="nc" id="L60">			this.index = 0;</span>
+<span class="nc" id="L61">			this.totalLength = string.length();</span>
+<span class="nc" id="L62">		}</span>
+	}
+
+	// Fields...
+
+	/**
+	 * The tokenFactory which this class is helping.
+	 */
+	private TokenFactory tokenFactory;
+
+	/**
+	 * A map used to implement the Flyweight Patten on ExecutionCharacters.
+	 */
+<span class="fc" id="L75">	private Map&lt;ExecutionCharacter, ExecutionCharacter&gt; characterMap = new HashMap&lt;ExecutionCharacter, ExecutionCharacter&gt;();</span>
+
+	// Constructors...
+
+	/**
+	 * Constructs new CommonCharacterFactory associated to given tokenFactory.
+	 * 
+	 * @param tokenFactory
+	 *            any TokenFactory
+	 */
+<span class="fc" id="L85">	public CommonCharacterFactory(TokenFactory tokenFactory) {</span>
+<span class="fc" id="L86">		this.tokenFactory = tokenFactory;</span>
+<span class="fc" id="L87">	}</span>
+
+	// Exported methods...
+
+	/**
+	 * Returns canonic instance of execution character with given parameters.
+	 * 
+	 * @param kind
+	 *            the character kind
+	 * @param codePoint
+	 *            the Unicode code point for this character
+	 * @param characters
+	 *            the (1 or 2) Java character(s) representing this code point
+	 * @return the execution character specified by the given 3 parameters
+	 */
+	public ExecutionCharacter executionCharacter(CharacterKind kind,
+			int codePoint, char[] characters) {
+<span class="nc" id="L104">		ExecutionCharacter result = new CommonExecutionCharacter(kind,</span>
+<span class="nc" id="L105">				codePoint, characters);</span>
+<span class="nc" id="L106">		ExecutionCharacter old = characterMap.get(result);</span>
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (old == null) {</span>
+<span class="nc" id="L109">			characterMap.put(result, result);</span>
+<span class="nc" id="L110">			return result;</span>
+		}
+<span class="nc" id="L112">		return old;</span>
+	}
+
+	public ExecutionCharacter nullChar(CharacterKind kind) {
+<span class="nc" id="L116">		return executionCharacter(kind, 0, new char[] { '\0' });</span>
+	}
+
+	/**
+	 * Given a CToken of type CHARACTER_CONSTANT, this returns an instance of
+	 * CommonCharacterToken formed by analyzing the given token. The text from
+	 * the given token is analyzed to extract its (optional) prefix, used to
+	 * determine the &quot;character kind&quot;, escape sequences are analyzed, and so on.
+	 * 
+	 * @param token
+	 *            a token of type PreprocessorParser.CHARACTER_CONSTANT;
+	 * @return a CharacterToken based on data in the given token
+	 * @throws SyntaxException
+	 *             if the text of the character constant is not well formed
+	 */
+	public CharacterToken characterToken(CivlcToken token) throws SyntaxException {
+<span class="nc" id="L132">		String text = token.getText();</span>
+<span class="nc" id="L133">		Character prefix = text.charAt(0);</span>
+		CharacterKind kind;
+		String stripped;
+		int length;
+		ExecutionCharacter executionCharacter;
+		CharacterParseData data;
+
+<span class="nc bnc" id="L140" title="All 6 branches missed.">		if (prefix == 'L' || prefix == 'u' || prefix == 'U') {</span>
+<span class="nc" id="L141">			stripped = text.substring(1);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (prefix == 'L')</span>
+<span class="nc" id="L143">				kind = CharacterKind.WCHAR;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			else if (prefix == 'u')</span>
+<span class="nc" id="L145">				kind = CharacterKind.CHAR16;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">			else if (prefix == 'U')</span>
+<span class="nc" id="L147">				kind = CharacterKind.CHAR32;</span>
+			else
+<span class="nc" id="L149">				throw new RuntimeException(&quot;unreachable&quot;);</span>
+		} else {
+<span class="nc" id="L151">			kind = CharacterKind.CHAR;</span>
+<span class="nc" id="L152">			stripped = text;</span>
+		}
+<span class="nc" id="L154">		length = stripped.length();</span>
+<span class="nc bnc" id="L155" title="All 4 branches missed.">		if (length &lt; 3 || stripped.charAt(0) != '\''</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				|| stripped.charAt(length - 1) != '\'')</span>
+<span class="nc" id="L157">			throw tokenFactory.newSyntaxException(</span>
+<span class="nc" id="L158">					&quot;Malformed character constant: &quot; + stripped, token);</span>
+<span class="nc" id="L159">		stripped = stripped.substring(1, length - 1);</span>
+<span class="nc" id="L160">		length -= 2;</span>
+<span class="nc" id="L161">		data = new CharacterParseData(stripped, kind);</span>
+		try {
+<span class="nc" id="L163">			executionCharacter = parseNextCharacter(data);</span>
+<span class="nc" id="L164">		} catch (UnsourcedException e) {</span>
+<span class="nc" id="L165">			throw tokenFactory.newSyntaxException(</span>
+<span class="nc" id="L166">					&quot;Malformed character constant&quot;, token);</span>
+		}
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (data.index != data.totalLength)</span>
+<span class="nc" id="L169">			throw tokenFactory.newSyntaxException(</span>
+<span class="nc" id="L170">					&quot;Malformed character constant&quot;, token);</span>
+<span class="nc" id="L171">		return new CommonCharacterToken(token, executionCharacter);</span>
+	}
+
+	/**
+	 * Given a CToken of type STRING_LITERAL, this method analyzes the text of
+	 * the string literal and uses the result to create a StringLiteral object.
+	 * The StringLiteral object stores the &quot;string kind&quot; of the string literal
+	 * (determined by the optional prefix in the text) and the sequence of
+	 * execution characters specified by the core part of the test.
+	 * 
+	 * The null character is appended to the execution character sequence.
+	 * 
+	 * @param token
+	 *            a token of type STRING_LITERAL
+	 * @return a StringLiteral object with kind and execution characters
+	 *         determined by the text of the given token
+	 * @throws SyntaxException
+	 *             if the text of given token does not have the proper syntax
+	 *             for a string literal
+	 */
+	public CommonStringLiteral stringLiteral(CivlcToken token)
+			throws SyntaxException {
+<span class="nc" id="L193">		StringAnalysis analysis = stringAnalyze(token);</span>
+<span class="nc" id="L194">		StringKind stringKind = analysis.kind;</span>
+<span class="nc" id="L195">		CharacterKind characterKind = characterKind(stringKind);</span>
+<span class="nc" id="L196">		ArrayList&lt;ExecutionCharacter&gt; characters = new ArrayList&lt;ExecutionCharacter&gt;();</span>
+
+		try {
+<span class="nc" id="L199">			extractCharacters(characterKind, analysis.core, characters);</span>
+<span class="nc" id="L200">		} catch (UnsourcedException e) {</span>
+<span class="nc" id="L201">			throw tokenFactory.newSyntaxException(e, token);</span>
+		}
+<span class="nc" id="L203">		characters.add(nullChar(characterKind));</span>
+<span class="nc" id="L204">		return new CommonStringLiteral(stringKind, characters);</span>
+	}
+
+	/**
+	 * Given a sequence of adjacent tokens, all of type STRING_LITERAL, this
+	 * forms the StringLiteral object obtained by (1) analyzing each token to
+	 * extract a sequence of execution characters, and (2) then concatenating
+	 * the sequences to form one big sequence of execution characters. The
+	 * string kind of the result is determined by the kinds of the constituents
+	 * as specified in the C11 Standard.
+	 * 
+	 * The null character is appended to the final execution character sequence.
+	 * 
+	 * @param tokens
+	 *            a list of tokens, each of type STRING_LITERAL
+	 * @return a StringLiteral object representing the concatenation of the
+	 *         StringLiteral objects resulting from each token
+	 * @throws SyntaxException
+	 *             if any of the token texts are not proper string literals, or
+	 *             the string kinds do not match up
+	 */
+	public CommonStringLiteral stringLiteral(List&lt;CivlcToken&gt; tokens)
+			throws SyntaxException {
+<span class="nc" id="L227">		List&lt;StringAnalysis&gt; analyses = new LinkedList&lt;StringAnalysis&gt;();</span>
+<span class="nc" id="L228">		ArrayList&lt;ExecutionCharacter&gt; characters = new ArrayList&lt;ExecutionCharacter&gt;();</span>
+		StringKind stringKind;
+		CharacterKind characterKind;
+
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		for (CivlcToken token : tokens)</span>
+<span class="nc" id="L233">			analyses.add(stringAnalyze(token));</span>
+<span class="nc" id="L234">		stringKind = concatKind(analyses);</span>
+<span class="nc" id="L235">		characterKind = characterKind(stringKind);</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">		for (StringAnalysis analysis : analyses) {</span>
+			try {
+<span class="nc" id="L238">				extractCharacters(characterKind, analysis.core, characters);</span>
+<span class="nc" id="L239">			} catch (UnsourcedException e) {</span>
+<span class="nc" id="L240">				throw tokenFactory.newSyntaxException(e, analysis.token);</span>
+			}
+		}
+<span class="nc" id="L243">		characters.add(nullChar(characterKind));</span>
+<span class="nc" id="L244">		return new CommonStringLiteral(stringKind, characters);</span>
+	}
+
+	// Private methods...
+
+	private void extractCharacters(CharacterKind kind, String text,
+			ArrayList&lt;ExecutionCharacter&gt; list) throws UnsourcedException {
+<span class="nc" id="L251">		CharacterParseData data = new CharacterParseData(text, kind);</span>
+
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		while (data.index &lt; data.totalLength)</span>
+<span class="nc" id="L254">			list.add(parseNextCharacter(data));</span>
+<span class="nc" id="L255">	}</span>
+
+	private StringAnalysis stringAnalyze(CivlcToken token) throws SyntaxException {
+<span class="nc" id="L258">		String text = token.getText();</span>
+<span class="nc" id="L259">		int length = text.length();</span>
+		char prefix0;
+		int quotePos;
+		StringKind kind;
+
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (length &lt; 2)</span>
+<span class="nc" id="L265">			throw tokenFactory.newSyntaxException(&quot;Malformed string literal&quot;,</span>
+<span class="nc" id="L266">					token);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (text.charAt(length - 1) != '&quot;')</span>
+<span class="nc" id="L268">			throw tokenFactory.newSyntaxException(&quot;Malformed string literal&quot;,</span>
+<span class="nc" id="L269">					token);</span>
+<span class="nc" id="L270">		prefix0 = text.charAt(0);</span>
+<span class="nc bnc" id="L271" title="All 5 branches missed.">		switch (prefix0) {</span>
+		case '&quot;':
+<span class="nc" id="L273">			kind = StringKind.CHAR;</span>
+<span class="nc" id="L274">			quotePos = 0;</span>
+<span class="nc" id="L275">			break;</span>
+		case 'L':
+<span class="nc" id="L277">			kind = StringKind.WCHAR;</span>
+<span class="nc" id="L278">			quotePos = 1;</span>
+<span class="nc" id="L279">			break;</span>
+		case 'U':
+<span class="nc" id="L281">			kind = StringKind.CHAR32;</span>
+<span class="nc" id="L282">			quotePos = 1;</span>
+<span class="nc" id="L283">			break;</span>
+		case 'u': {
+<span class="nc" id="L285">			char prefix1 = text.charAt(1);</span>
+
+<span class="nc bnc" id="L287" title="All 3 branches missed.">			switch (prefix1) {</span>
+			case '&quot;':
+<span class="nc" id="L289">				kind = StringKind.CHAR16;</span>
+<span class="nc" id="L290">				quotePos = 1;</span>
+<span class="nc" id="L291">				break;</span>
+			case '8':
+<span class="nc" id="L293">				kind = StringKind.UTF_8;</span>
+<span class="nc" id="L294">				quotePos = 2;</span>
+<span class="nc" id="L295">				break;</span>
+			default:
+<span class="nc" id="L297">				throw tokenFactory.newSyntaxException(&quot;Illegal string prefix&quot;,</span>
+<span class="nc" id="L298">						token);</span>
+			}
+			break;
+		}
+		default:
+<span class="nc" id="L303">			throw tokenFactory.newSyntaxException(&quot;Illegal string prefix&quot;,</span>
+<span class="nc" id="L304">					token);</span>
+		}
+<span class="nc bnc" id="L306" title="All 2 branches missed.">		if (length &lt; quotePos + 2)</span>
+<span class="nc" id="L307">			throw tokenFactory.newSyntaxException(&quot;Malformed string literal&quot;,</span>
+<span class="nc" id="L308">					token);</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">		if (text.charAt(quotePos) != '&quot;')</span>
+<span class="nc" id="L310">			throw tokenFactory.newSyntaxException(</span>
+<span class="nc" id="L311">					&quot;String literal missing open quote&quot;, token);</span>
+<span class="nc" id="L312">		return new StringAnalysis(token, kind, text.substring(quotePos + 1,</span>
+<span class="nc" id="L313">				length - 1));</span>
+	}
+
+	private StringKind concatKind(List&lt;StringAnalysis&gt; analyses)
+			throws SyntaxException {
+<span class="nc" id="L318">		StringKind kind = null;</span>
+
+<span class="nc bnc" id="L320" title="All 2 branches missed.">		for (StringAnalysis analysis : analyses) {</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">			if (kind == null) {</span>
+<span class="nc" id="L322">				kind = analysis.kind;</span>
+<span class="nc" id="L323">			} else {</span>
+<span class="nc" id="L324">				StringKind newKind = analysis.kind;</span>
+
+<span class="nc bnc" id="L326" title="All 2 branches missed.">				if (kind != newKind) {</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">					if (kind == StringKind.CHAR)</span>
+<span class="nc" id="L328">						kind = newKind;</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">					else if (newKind != StringKind.CHAR)</span>
+<span class="nc" id="L330">						throw tokenFactory</span>
+<span class="nc" id="L331">								.newSyntaxException(</span>
+<span class="nc" id="L332">										&quot;Adjacent string literals have incompatible types: &quot;</span>
+<span class="nc" id="L333">												+ kind + &quot;, &quot; + newKind,</span>
+<span class="nc" id="L334">										analysis.token);</span>
+				}
+			}
+		}
+<span class="nc" id="L338">		return kind;</span>
+	}
+
+	private CharacterKind characterKind(StringKind stringKind) {
+<span class="nc bnc" id="L342" title="All 5 branches missed.">		switch (stringKind) {</span>
+		case CHAR:
+		case UTF_8:
+<span class="nc" id="L345">			return CharacterKind.CHAR;</span>
+		case WCHAR:
+<span class="nc" id="L347">			return CharacterKind.WCHAR;</span>
+		case CHAR16:
+<span class="nc" id="L349">			return CharacterKind.CHAR16;</span>
+		case CHAR32:
+<span class="nc" id="L351">			return CharacterKind.CHAR32;</span>
+		default:
+<span class="nc" id="L353">			throw new RuntimeException(&quot;unreachable&quot;);</span>
+		}
+	}
+
+	private boolean isHex(char c) {
+<span class="nc bnc" id="L358" title="All 12 branches missed.">		return '0' &lt;= c &amp;&amp; c &lt;= '9' || 'a' &lt;= c &amp;&amp; c &lt;= 'f' || 'A' &lt;= c</span>
+<span class="nc" id="L359">				&amp;&amp; c &lt;= 'F';</span>
+	}
+
+	private boolean isOctal(char c) {
+<span class="nc bnc" id="L363" title="All 4 branches missed.">		return '0' &lt;= c &amp;&amp; c &lt;= '7';</span>
+	}
+
+	private ExecutionCharacter parseNextCharacter(CharacterParseData data)
+			throws UnsourcedException {
+<span class="nc" id="L368">		String text = data.string;</span>
+<span class="nc" id="L369">		int index = data.index;</span>
+<span class="nc" id="L370">		int totalLength = data.totalLength;</span>
+<span class="nc" id="L371">		char first = text.charAt(index);</span>
+		int codePoint;
+		char[] characters;
+
+		// cases: (1) single char (2) escape sequence (3) \ followed by
+		// 1, 2, or 3 octal digits, or (4) \x followed by sequence
+		// of hex digits. Read maximal substring that matches
+		// one of those patterns.
+
+<span class="nc" id="L380">		index++; // consumed first character</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">		if (first == '\\') {</span>
+			char second;
+
+<span class="nc bnc" id="L384" title="All 2 branches missed.">			if (index &gt;= totalLength)</span>
+<span class="nc" id="L385">				throw tokenFactory</span>
+<span class="nc" id="L386">						.newUnsourcedException(&quot;Malformed character constant: &quot;</span>
+<span class="nc" id="L387">								+ text);</span>
+<span class="nc" id="L388">			second = text.charAt(index);</span>
+<span class="nc" id="L389">			index++; // consume second</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">			if (second == 'x') { // hex: sequence of hex digits</span>
+<span class="nc" id="L391">				int start = index;</span>
+				String hexString;
+
+				// consume all hex digits...
+<span class="nc bnc" id="L395" title="All 4 branches missed.">				while (index &lt; totalLength &amp;&amp; isHex(text.charAt(index)))</span>
+<span class="nc" id="L396">					index++;</span>
+<span class="nc" id="L397">				hexString = text.substring(start, index);</span>
+				try {
+<span class="nc" id="L399">					codePoint = Integer.parseInt(hexString, 16);</span>
+<span class="nc" id="L400">				} catch (NumberFormatException e) {</span>
+<span class="nc" id="L401">					throw tokenFactory</span>
+<span class="nc" id="L402">							.newUnsourcedException(&quot;Malformed character constant: &quot;</span>
+<span class="nc" id="L403">									+ text);</span>
+				}
+<span class="nc" id="L405">				characters = Character.toChars(codePoint);</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">			} else if (isOctal(second)) { // octal: 1, 2, or 3 digits</span>
+<span class="nc" id="L407">				int start = index - 1;</span>
+				String octalString;
+
+<span class="nc bnc" id="L410" title="All 4 branches missed.">				if (index &lt; totalLength &amp;&amp; isOctal(text.charAt(index))) {</span>
+<span class="nc" id="L411">					index++; // consume second octal digit</span>
+<span class="nc bnc" id="L412" title="All 4 branches missed.">					if (index &lt; totalLength &amp;&amp; isOctal(text.charAt(index)))</span>
+<span class="nc" id="L413">						index++; // consume third octal digit</span>
+				}
+<span class="nc" id="L415">				octalString = text.substring(start, index);</span>
+				try {
+<span class="nc" id="L417">					codePoint = Integer.parseInt(octalString, 8);</span>
+<span class="nc" id="L418">				} catch (NumberFormatException e) {</span>
+<span class="nc" id="L419">					throw tokenFactory</span>
+<span class="nc" id="L420">							.newUnsourcedException(&quot;Malformed character constant: &quot;</span>
+<span class="nc" id="L421">									+ text);</span>
+				}
+<span class="nc" id="L423">				characters = Character.toChars(codePoint);</span>
+<span class="nc" id="L424">			} else { // escape sequence</span>
+<span class="nc" id="L425">				characters = new char[1];</span>
+<span class="nc bnc" id="L426" title="All 12 branches missed.">				switch (second) {</span>
+				case '\'':
+<span class="nc" id="L428">					characters[0] = '\'';</span>
+<span class="nc" id="L429">					break;</span>
+				case '&quot;':
+<span class="nc" id="L431">					characters[0] = '&quot;';</span>
+<span class="nc" id="L432">					break;</span>
+				case '?':
+<span class="nc" id="L434">					characters[0] = '?';</span>
+<span class="nc" id="L435">					break;</span>
+				case '\\':
+<span class="nc" id="L437">					characters[0] = '\\';</span>
+<span class="nc" id="L438">					break;</span>
+				case 'a':
+<span class="nc" id="L440">					characters[0] = '\007'; // alert</span>
+<span class="nc" id="L441">					break;</span>
+				case 'b':
+<span class="nc" id="L443">					characters[0] = '\b'; // backspace</span>
+<span class="nc" id="L444">					break;</span>
+				case 'f':
+<span class="nc" id="L446">					characters[0] = '\f'; // formfeed</span>
+<span class="nc" id="L447">					break;</span>
+				case 'n':
+<span class="nc" id="L449">					characters[0] = '\n'; // newline</span>
+<span class="nc" id="L450">					break;</span>
+				case 'r':
+<span class="nc" id="L452">					characters[0] = '\r'; // return</span>
+<span class="nc" id="L453">					break;</span>
+				case 't':
+<span class="nc" id="L455">					characters[0] = '\t'; // tab</span>
+<span class="nc" id="L456">					break;</span>
+				case 'v':
+<span class="nc" id="L458">					characters[0] = '\013'; // vertical tab</span>
+<span class="nc" id="L459">					break;</span>
+				default:
+<span class="nc" id="L461">					throw tokenFactory</span>
+<span class="nc" id="L462">							.newUnsourcedException(&quot;Unknown escape sequence in character&quot;);</span>
+				}
+<span class="nc" id="L464">				codePoint = (int) characters[0];</span>
+			}
+<span class="nc" id="L466">		} else {</span>
+<span class="nc" id="L467">			characters = new char[] { first };</span>
+<span class="nc" id="L468">			codePoint = (int) first;</span>
+		}
+<span class="nc" id="L470">		data.index = index;</span>
+<span class="nc" id="L471">		return executionCharacter(data.kind, codePoint, characters);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

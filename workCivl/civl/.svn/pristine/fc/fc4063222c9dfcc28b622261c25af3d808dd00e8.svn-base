@@ -1,0 +1,58 @@
+// attempt to make general barrier module
+#include <civlc.h>
+
+typedef struct _CIVL_Barrier {
+  int numProcs;
+  int *in_barrier;
+  int num_in_barrier;
+  int lock;
+} CIVL_Barrier;
+
+void CIVL_Barrier_init(int numProcs, CIVL_Barrier *barrier, int *array) {  
+  barrier->numProcs = numProcs;
+  barrier->num_in_barrier = 0;
+  barrier->lock = 0;
+  barrier->in_barrier = array;
+  for (int i=0; i<numProcs; i++)
+    barrier->in_barrier[i] = 0;
+  return barrier;
+}
+
+void CIVL_barrier(CIVL_Barrier *barrier, int tid) {
+  $when (barrier->lock==0) barrier->lock = 1;
+  barrier->in_barrier[tid] = 1;
+  barrier->num_in_barrier++;
+  if (barrier->num_in_barrier == barrier->numProcs) {
+    for (int i=0; i<barrier->numProcs; i++)
+      barrier->in_barrier[i] = 0;
+    barrier->num_in_barrier = 0;
+  }
+  barrier->lock = 0;
+  $when (barrier->in_barrier[tid] == 0);
+}
+
+
+void main() {
+  int N=4;
+  $proc threads[N];
+  int counter = 0;
+  CIVL_Barrier b;
+  int barrier_array[N];
+  
+  void run(int tid) {
+    while ($true) {
+      $assert counter == 0;
+      CIVL_barrier(&b, tid);
+      counter++;
+      CIVL_barrier(&b, tid);
+      $assert counter == N;
+      CIVL_barrier(&b, tid);
+      counter--;
+      CIVL_barrier(&b, tid);
+    }
+  }
+  
+  CIVL_Barrier_init(N, &b, barrier_array);
+  for (int i=0; i<N; i++) threads[i] = $spawn run(i);
+  for (int i=0; i<N; i++) $wait threads[i];
+}

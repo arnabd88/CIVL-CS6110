@@ -1,0 +1,22 @@
+/* A simple example for conversion specifier.
+ * Format: %[flags][width][.precision][length]specifier
+ * Created by Si Li
+ */
+#include <civlc.cvh>
+#include <stdio.h>
+
+void main() {
+  int a = 1;
+  double b = 2.18162;
+  char c = 's';
+  char *s = "how are you doing";
+  int *p = &a;
+  
+  printf("The value of a is %d\n",a);
+  printf("The value of b is %f\n",b);
+  printf("The value of a is %lf\n",b);
+  printf("The value of c is %c\n",c);
+  printf("The value of s is %s\n",s);
+  printf("The value of p is %p\n",*p);
+  printf("The value of b is %03.2Lf\n",b);//with all format parameter
+}

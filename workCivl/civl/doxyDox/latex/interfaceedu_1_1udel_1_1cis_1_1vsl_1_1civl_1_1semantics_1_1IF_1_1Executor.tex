@@ -1,0 +1,406 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a641d7b8c23c29c8c890124d3f36c25f7}{assign} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, Symbolic\+Expression pointer, Symbolic\+Expression value)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Assigns a value to the referenced cell in the state. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a05284edbb0f6af6f5203b4591095a1c4}{assign} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} lhs, Symbolic\+Expression value)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Assigns a value to the memory location specified by the given left-\/hand-\/side expression. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a13ec8800fe1e89fd4292331bd79da81d}{state\+Factory} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7abfbd56f78080512030ce12ce3cc539}{evaluator} ()
+\item 
+long \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7332dc921fd2735fff3a2d356dd8c23e}{get\+Num\+Steps} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of \char`\"{}steps\char`\"{} executed since this \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} was created. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_aa866838dc60d17311c93164033fd0900}{malloc} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} lhs, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} scope\+Expression, Symbolic\+Expression scope\+Value, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} object\+Type, Symbolic\+Expression object\+Value)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Adds a new object to the heap of a certain scope; sets the pointer of the object in the heap to the provided left-\/hand-\/side expression (or does nothing if no left-\/hand-\/side expression is specified). \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, Symbolic\+Expression $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a4775347def35617040b08fa1a47761d9}{malloc} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} scope\+Expression, Symbolic\+Expression scope\+Value, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} object\+Type, Symbolic\+Expression object\+Value)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Adds a new object to the heap of a certain scope; returns the pointer of the object in the heap. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_ac036070596258e5ccf9320a03a0ef77f}{execute} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} transition)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Returns the state that results from executing the statement, or null if path condition becomes unsatisfiable. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a4e6b5f093b821573e729d68f4f241f32}{error\+Logger} ()
+\begin{DoxyCompactList}\small\item\em Returns the error logger used by this executor. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a1936720866aede66359cd013355453a7}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} {\bfseries execute\+\_\+printf} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} lhs, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}\mbox{[}$\,$\mbox{]} arguments, Symbolic\+Expression\mbox{[}$\,$\mbox{]} argument\+Values)  throws Unsatisfiable\+Path\+Condition\+Exception\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a1936720866aede66359cd013355453a7}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a5bb0d04cdcf2f422e621bf756e90bfa6}{}List$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Format}{Format} $>$ {\bfseries split\+Format} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, String\+Buffer format\+Buffer)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a5bb0d04cdcf2f422e621bf756e90bfa6}
+
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7d1dfb9d41445da360b1fe56a0fea98a}{printf} (Print\+Stream print\+Stream, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, String process, List$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Format}{Format} $>$ formats, List$<$ String\+Buffer $>$ arguments)
+\begin{DoxyCompactList}\small\item\em If there are insufficient arguments for the format, the behavior is undefined. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a88152dc2df5a27b3576f4ba8141239b2}{report\+Contract\+Violation} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, int place, Result\+Type result\+Type, Boolean\+Expression assert\+Value, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} violated\+Condition, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLException_1_1ErrorKind}{Error\+Kind} error\+Kind, String group\+String)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} lowest level contract violation error reporting function\+: provides basic contract violation error reporting format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a641d7b8c23c29c8c890124d3f36c25f7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!assign@{assign}}
+\index{assign@{assign}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+assign (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{Symbolic\+Expression}]{value}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a641d7b8c23c29c8c890124d3f36c25f7}
+
+
+Assigns a value to the referenced cell in the state. 
+
+Returns a new state which is equivalent to the old state except that the memory specified by the given pointer value is assigned the given value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & the source code information for error report \\
+\hline
+{\em state} & a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model state \\
+\hline
+{\em process} & the process information (process name + P\+I\+D) for error report \\
+\hline
+{\em pointer} & a pointer value \\
+\hline
+{\em value} & a value to be assigned to the referenced memory location \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new state 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_addd64de526e18405fb9e89b790fa8cba}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a05284edbb0f6af6f5203b4591095a1c4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!assign@{assign}}
+\index{assign@{assign}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+assign (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf L\+H\+S\+Expression}}]{lhs, }
+\item[{Symbolic\+Expression}]{value}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a05284edbb0f6af6f5203b4591095a1c4}
+
+
+Assigns a value to the memory location specified by the given left-\/hand-\/side expression. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model state \\
+\hline
+{\em pid} & the P\+I\+D of the process executing the assignment \\
+\hline
+{\em process} & the process information (process name + P\+I\+D) for error report \\
+\hline
+{\em lhs} & a left-\/hand-\/side expression \\
+\hline
+{\em value} & the value being assigned to the left-\/hand-\/side \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new state 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a41f2d8f3b0476d3135960c19a47fa76c}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a4e6b5f093b821573e729d68f4f241f32}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!error\+Logger@{error\+Logger}}
+\index{error\+Logger@{error\+Logger}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{error\+Logger}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Error\+Logger} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+error\+Logger (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a4e6b5f093b821573e729d68f4f241f32}
+
+
+Returns the error logger used by this executor. 
+
+\begin{DoxyReturn}{Returns}
+The error logger used by this executor. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a9836733bc543d40a62a3f7516a52c602}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7abfbd56f78080512030ce12ce3cc539}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!evaluator@{evaluator}}
+\index{evaluator@{evaluator}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{evaluator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluator} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+evaluator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7abfbd56f78080512030ce12ce3cc539}
+\begin{DoxyReturn}{Returns}
+The evaluator used by this executor. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a106d49d5803a75559199c0cf4bed6598}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_ac036070596258e5ccf9320a03a0ef77f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!execute@{execute}}
+\index{execute@{execute}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+execute (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Transition}}]{transition}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_ac036070596258e5ccf9320a03a0ef77f}
+
+
+Returns the state that results from executing the statement, or null if path condition becomes unsatisfiable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the state that the transition emanates from \\
+\hline
+{\em pid} & the P\+I\+D of the process that the transition \\
+\hline
+{\em transition} & a deterministic transition to be executed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The state after the transition is executed. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a6a0a72525403eba73434a9ff50b9c323}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a751e0341eabb8965b544dd0f1cdfa26e}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7332dc921fd2735fff3a2d356dd8c23e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!get\+Num\+Steps@{get\+Num\+Steps}}
+\index{get\+Num\+Steps@{get\+Num\+Steps}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{get\+Num\+Steps}]{\setlength{\rightskip}{0pt plus 5cm}long edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+get\+Num\+Steps (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7332dc921fd2735fff3a2d356dd8c23e}
+
+
+Returns the number of \char`\"{}steps\char`\"{} executed since this \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} was created. 
+
+\begin{DoxyReturn}{Returns}
+the number of steps executed 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_aedfa05e23bff4a3933ac10af8a0a22e0}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_aa866838dc60d17311c93164033fd0900}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!malloc@{malloc}}
+\index{malloc@{malloc}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{malloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+malloc (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf L\+H\+S\+Expression}}]{lhs, }
+\item[{{\bf Expression}}]{scope\+Expression, }
+\item[{Symbolic\+Expression}]{scope\+Value, }
+\item[{{\bf C\+I\+V\+L\+Type}}]{object\+Type, }
+\item[{Symbolic\+Expression}]{object\+Value}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_aa866838dc60d17311c93164033fd0900}
+
+
+Adds a new object to the heap of a certain scope; sets the pointer of the object in the heap to the provided left-\/hand-\/side expression (or does nothing if no left-\/hand-\/side expression is specified). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code element to be used to report errors. \\
+\hline
+{\em state} & The current state. \\
+\hline
+{\em pid} & The I\+D of the process where this computation happens. \\
+\hline
+{\em lhs} & The left-\/hand-\/side expression to store the pointer to the added object. \\
+\hline
+{\em scope\+Expression} & The static expression of the scope value. \\
+\hline
+{\em scope\+Value} & The symbolic expression of the scope. \\
+\hline
+{\em object\+Type} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the object to be added, needed to decide the field index in the heap. \\
+\hline
+{\em object\+Value} & The object to be added to the heap. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new state after adding the given object to the heap in the given scope. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a148ac749fd4155c39c406904d4fa59fa}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a4775347def35617040b08fa1a47761d9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!malloc@{malloc}}
+\index{malloc@{malloc}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{malloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<${\bf State}, Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+malloc (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf Expression}}]{scope\+Expression, }
+\item[{Symbolic\+Expression}]{scope\+Value, }
+\item[{{\bf C\+I\+V\+L\+Type}}]{object\+Type, }
+\item[{Symbolic\+Expression}]{object\+Value}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a4775347def35617040b08fa1a47761d9}
+
+
+Adds a new object to the heap of a certain scope; returns the pointer of the object in the heap. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code element to be used to report errors. \\
+\hline
+{\em state} & The current state. \\
+\hline
+{\em pid} & The I\+D of the process where this computation happens. \\
+\hline
+{\em scope\+Expression} & The static expression of the scope value. \\
+\hline
+{\em scope\+Value} & The symbolic expression of the scope. \\
+\hline
+{\em object\+Type} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the object to be added, needed to decide the field index in the heap. \\
+\hline
+{\em object\+Value} & The object to be added to the heap. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new state after allocating the specified object in the heap and the pointer of the object in the heap. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a1e177bfd7e714119aa7b2780a351d03b}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7d1dfb9d41445da360b1fe56a0fea98a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!printf@{printf}}
+\index{printf@{printf}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{printf}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+printf (
+\begin{DoxyParamCaption}
+\item[{Print\+Stream}]{print\+Stream, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{String}]{process, }
+\item[{List$<$ {\bf Format} $>$}]{formats, }
+\item[{List$<$ String\+Buffer $>$}]{arguments}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a7d1dfb9d41445da360b1fe56a0fea98a}
+
+
+If there are insufficient arguments for the format, the behavior is undefined. 
+
+If the format is exhausted while arguments remain, the excess arguments are evaluated (as always) but are otherwise ignored.
+
+
+\begin{DoxyParams}{Parameters}
+{\em print\+Stream} & \\
+\hline
+{\em source} & \\
+\hline
+{\em formats} & \\
+\hline
+{\em arguments} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a07f7046a40790b3f4f82b870956cfcfa}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a88152dc2df5a27b3576f4ba8141239b2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!report\+Contract\+Violation@{report\+Contract\+Violation}}
+\index{report\+Contract\+Violation@{report\+Contract\+Violation}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{report\+Contract\+Violation}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+report\+Contract\+Violation (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{int}]{place, }
+\item[{Result\+Type}]{result\+Type, }
+\item[{Boolean\+Expression}]{assert\+Value, }
+\item[{{\bf Expression}}]{violated\+Condition, }
+\item[{{\bf Error\+Kind}}]{error\+Kind, }
+\item[{String}]{group\+String}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a88152dc2df5a27b3576f4ba8141239b2}
+
+
+\hyperlink{structA}{A} lowest level contract violation error reporting function\+: provides basic contract violation error reporting format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state where the evaluation is on \\
+\hline
+{\em source} & The C\+I\+V\+L\+Source of the contract \\
+\hline
+{\em place} & The place of the process in the group (Or P\+I\+D for regular non-\/collective contract) \\
+\hline
+{\em process} & The String identifier of the process \\
+\hline
+{\em result\+Type} & The result type of the reasoning result \\
+\hline
+{\em assert\+Value} & The value of the evaluated condition \\
+\hline
+{\em violated\+Condition} & The expression of the condition \\
+\hline
+{\em error\+Kind} & The corresponding error kind\+: C\+O\+N\+T\+R\+A\+C\+T for regular contract violation or M\+P\+I\+\_\+\+E\+R\+R\+O\+R for collective contract violation \\
+\hline
+{\em group\+String} & The String of the group of processes, only significant when error\+Kind == M\+P\+I\+\_\+\+E\+R\+R\+O\+R \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a0b2523d597d3638be5fdb3681eab54d5}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a13ec8800fe1e89fd4292331bd79da81d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}!state\+Factory@{state\+Factory}}
+\index{state\+Factory@{state\+Factory}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Executor}}
+\subsubsection[{state\+Factory}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State\+Factory} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor.\+state\+Factory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_a13ec8800fe1e89fd4292331bd79da81d}
+\begin{DoxyReturn}{Returns}
+The state factory associated with this executor. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonExecutor_a096411de2dfadb1c2ad06f58cd427e28}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Executor}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/\+I\+F/Executor.\+java\end{DoxyCompactItemize}

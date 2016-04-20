@@ -1,0 +1,74 @@
+Need to add (interfaces, classes, factory methods):
+  self
+  true
+  false
+  result
+  contracts: ensures requires: part of function decl
+
+Need to implement all new expressions, statements.
+
+--
+
+ABC: front end for C
+  ast: this will have library functions and state like
+    MPI_Send, blah blah blah
+
+SARL: symbolic algebra and reasoning library
+  provides representation, manipulation of symbolic expressions
+  interface to theorem provers, etc.
+
+GMC: generic model checker
+  provides depth first search, printing traces, ...
+
+CIVL: Concurrency Intermeidate Verification Language
+  ast: similar to ABC AST but simpler
+    uses: (nothing)
+    provides: AST
+    notes: no type qualifiers or other complicated C stuff.
+      functions can be defined in any scope
+      eventually add pointer scope qualifiers, etc.
+      provide a side-effect remover and ASTMerger (like a linker, for libraries)
+
+  front: common interface for all CIVL front-ends
+    uses: ast
+    provides: FrontEnd
+    notes: provides methods to parse a file and produce an AST
+
+  civlc: grammar and parser for CIVL-C language
+    uses: front, ast
+    provides: CivlCFrontEnd
+    notes: the grammar of the CIVL-C language should be very
+      closely aligned with the CIVL AST.
+      this module is like ABC, but results in a CIVL AST.
+      also uses library files in lib
+      could this use the AST preprocessor?
+    
+  lib: libraries written in CIVL-C:  mp.civl, etc.
+    how is state and definitions incorporated into the module?
+    notes: this is not java source, just CIVL-C source
+  
+  c: translator from C code to CIVL AST
+     uses: ABC, ast, front, civlc
+     uses ABC to create ABC-AST, then translated that to CIVL-AST
+       needs to translate library calls to CIVL libraries, e.g.,
+       MPI_Send -> CIVL_MP_send, etc.  Hence needs to civlc
+       to parse and construct library modules, then merge them
+       needs to introduce scopes for MPI processes etc
+
+  model: representation of a CIVL model, like in CVT
+    uses: ast
+    provides: Model, ModelBuilder
+    notes: ModelBuilder translates AST to Model
+      Model elements maintain back-pointers to AST nodes
+
+    translates AST to Model
+     
+  state: representation and manipulation of states of a Model
+    note: like CVT, but no buffers
+
+  transition:
+
+  predicate:
+
+  kripke: 
+

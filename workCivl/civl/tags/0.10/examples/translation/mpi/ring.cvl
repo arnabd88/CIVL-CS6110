@@ -1,0 +1,49 @@
+/* Create NPROCS processes.  Have them exchange data in a cycle.
+ * Command line verification example:
+ *     civl verify -inputNPROCS_BOUND=10 -inputN_BOUND=5 ring.cvl
+ */
+#include<civlc.h>
+#define TAG 0
+
+$input int NPROCS_BOUND; // upper bound of the number of MPI processes
+$input int NPROCS; // number of MPI processes
+$assume 0 < NPROCS && NPROCS <= NPROCS_BOUND;
+$input int N_BOUND; // upper bound on number times to loop
+$input int N; // number of times to loop
+$assume 0 < N && N <= N_BOUND;
+$gcomm GCOMM_WORLD  = $gcomm_create($here, NPROCS); // global comm object
+
+void MPI_Process (int rank) {
+  $comm comm = $comm_create($here, GCOMM_WORLD, rank);
+  int left = (rank+NPROCS-1)%NPROCS;
+  int right = (rank+NPROCS+1)%NPROCS;
+  int x=rank, y; // send a message from x, recv into y
+  $message in, out;
+  
+  for (int i=0; i<N; i++) {
+    if (rank%2==0) { // send first, then recv
+      out = $message_pack(rank, right, TAG, &x, sizeof(int));
+      $comm_enqueue(comm, out);
+      in = $comm_dequeue(comm, left, TAG);
+      $message_unpack(in, &y, sizeof(int));
+      $assert(y==left);
+    } else { // recv first, then send
+      in = $comm_dequeue(comm, left, TAG);
+      $message_unpack(in, &y, sizeof(int));
+      $assert(y==left);
+      out = $message_pack(rank, right, TAG, &x, sizeof(int));
+      $comm_enqueue(comm, out);
+    }
+  }
+  $comm_destroy(comm);
+}
+
+void main() {
+  $proc procs[NPROCS];
+  
+  for (int i=0; i<NPROCS; i++) 
+    procs[i] = $spawn MPI_Process(i);
+  for (int i=0; i<NPROCS; i++)
+    $wait(procs[i]);
+  $gcomm_destroy(GCOMM_WORLD);
+}

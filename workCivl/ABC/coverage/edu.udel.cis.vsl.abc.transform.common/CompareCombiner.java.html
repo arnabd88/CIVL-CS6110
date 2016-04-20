@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CompareCombiner.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.transform.common</a> &gt; <span class="el_source">CompareCombiner.java</span></div><h1>CompareCombiner.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.transform.common;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTException;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode.NodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.TypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StringLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.Formation;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.token.IF.StringToken;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+import edu.udel.cis.vsl.abc.transform.IF.Combiner;
+import edu.udel.cis.vsl.abc.transform.IF.Transformer;
+
+/**
+ * Combine two ASTs to form a new AST to be used for comparison. The
+ * CompareCombiner treats the first argument to combine() as the specification
+ * program, and the second argument as the implementation.
+ * 
+ * @author zirkel
+ * 
+ */
+<span class="nc bnc" id="L53" title="All 2 branches missed.">public class CompareCombiner implements Combiner {</span>
+
+	private final static String MY_NAME = &quot;CompareCombiner&quot;;
+
+	/**
+	 * The node factory that creates new AST nodes.
+	 */
+	private NodeFactory factory;
+
+	/**
+	 * The AST factory that creates new AST's.
+	 */
+	private ASTFactory astFactory;
+
+	/**
+	 * The source of the specification.
+	 */
+	private Source specSource;
+
+	/**
+	 * The source of the implementation.
+	 */
+	private Source implSource;
+
+<span class="nc" id="L77">	private final static String ASSERT_EQUALS = &quot;$assert_equals&quot;;</span>
+
+	@Override
+	public AST combine(AST spec, AST impl) throws SyntaxException {
+<span class="nc" id="L81">		SequenceNode&lt;BlockItemNode&gt; specRoot = spec.getRootNode();</span>
+<span class="nc" id="L82">		SequenceNode&lt;BlockItemNode&gt; implRoot = impl.getRootNode();</span>
+		SequenceNode&lt;BlockItemNode&gt; newRoot;
+		Map&lt;String, VariableDeclarationNode&gt; inputVariables;
+		Map&lt;String, VariableDeclarationNode&gt; specOutputs;
+		Map&lt;String, VariableDeclarationNode&gt; implOutputs;
+		FunctionDefinitionNode specSystem;
+		FunctionDefinitionNode implSystem;
+		FunctionDefinitionNode newMain;
+<span class="nc" id="L90">		List&lt;BlockItemNode&gt; newMainBodyNodes = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L91">		List&lt;BlockItemNode&gt; nodes = new ArrayList&lt;BlockItemNode&gt;();</span>
+		Transformer nameTransformer;
+<span class="nc" id="L93">		TypedefDeclarationNode specFileTypeDef = null, implFileTypeDef = null;</span>
+<span class="nc" id="L94">		FunctionDeclarationNode equalsFunc = null;</span>
+<span class="nc" id="L95">		Collection&lt;SourceFile&gt; sourceFiles0 = spec.getSourceFiles(), sourceFiles1 = impl</span>
+<span class="nc" id="L96">				.getSourceFiles(), allSourceFiles = new LinkedHashSet&lt;&gt;();</span>
+
+<span class="nc" id="L98">		allSourceFiles.addAll(sourceFiles0);</span>
+<span class="nc" id="L99">		allSourceFiles.addAll(sourceFiles1);</span>
+<span class="nc" id="L100">		astFactory = spec.getASTFactory();</span>
+<span class="nc" id="L101">		spec.release();</span>
+<span class="nc" id="L102">		impl.release();</span>
+<span class="nc" id="L103">		specFileTypeDef = this.getAndRemoveFileTypeNode(specRoot);</span>
+<span class="nc" id="L104">		implFileTypeDef = this.getAndRemoveFileTypeNode(implRoot);</span>
+<span class="nc" id="L105">		processExternVariables(specRoot);</span>
+<span class="nc" id="L106">		processExternVariables(implRoot);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (specFileTypeDef != null)</span>
+<span class="nc" id="L108">			nodes.add(specFileTypeDef);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		else if (implFileTypeDef != null)</span>
+<span class="nc" id="L110">			nodes.add(implFileTypeDef);</span>
+<span class="nc" id="L111">		equalsFunc = this.getAndRemoveEqualsFuncNode(specRoot);</span>
+<span class="nc" id="L112">		nodes.add(equalsFunc);</span>
+<span class="nc" id="L113">		spec = astFactory.newAST(specRoot, sourceFiles0, spec.isWholeProgram());</span>
+<span class="nc" id="L114">		impl = astFactory.newAST(implRoot, sourceFiles1, impl.isWholeProgram());</span>
+<span class="nc" id="L115">		specSource = this.getMainSource(specRoot);</span>
+<span class="nc" id="L116">		implSource = this.getMainSource(implRoot);</span>
+<span class="nc" id="L117">		factory = astFactory.getNodeFactory();</span>
+<span class="nc" id="L118">		inputVariables = combineInputs(specRoot, implRoot);</span>
+<span class="nc" id="L119">		nodes.add(this.assertFunctionNode(specSource));</span>
+<span class="nc" id="L120">		nodes.add(definedFunctionNode(specSource));</span>
+<span class="nc" id="L121">		nodes.add(assertEquals(specSource));</span>
+<span class="nc" id="L122">		nodes.addAll(inputVariables.values());</span>
+<span class="nc" id="L123">		specOutputs = getOutputs(specRoot);</span>
+<span class="nc" id="L124">		implOutputs = getOutputs(implRoot);</span>
+<span class="nc" id="L125">		checkOutputs(specOutputs, implOutputs);</span>
+		// systemFunctions = combineSystemFunctions(specRoot, implRoot);
+		// nodes.addAll(systemFunctions.values());
+<span class="nc" id="L128">		nameTransformer = new CommonNameTransformer(renameVariables(</span>
+<span class="nc" id="L129">				specOutputs.values(), &quot;_spec&quot;), astFactory);</span>
+<span class="nc" id="L130">		spec = nameTransformer.transform(spec);</span>
+		// TODO: Check consistency of assumptions
+<span class="nc" id="L132">		specSystem = wrapperFunction(specSource, specRoot, &quot;system_spec&quot;);</span>
+<span class="nc" id="L133">		implSystem = wrapperFunction(implSource, implRoot, &quot;system_impl&quot;);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (VariableDeclarationNode v : specOutputs.values()) {</span>
+<span class="nc" id="L135">			v.getTypeNode().setOutputQualified(false);</span>
+<span class="nc" id="L136">			nodes.add(v.copy());</span>
+		}
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (VariableDeclarationNode v : implOutputs.values()) {</span>
+<span class="nc" id="L139">			v.getTypeNode().setOutputQualified(false);</span>
+<span class="nc" id="L140">			nodes.add(v.copy());</span>
+		}
+<span class="nc" id="L142">		nodes.add(specSystem);</span>
+<span class="nc" id="L143">		nodes.add(implSystem);</span>
+
+<span class="nc" id="L145">		newMainBodyNodes.add(factory.newVariableDeclarationNode(specSource,</span>
+<span class="nc" id="L146">				factory.newIdentifierNode(specSource, &quot;_isEqual&quot;),</span>
+<span class="nc" id="L147">				factory.newBasicTypeNode(specSource, BasicTypeKind.BOOL)));</span>
+
+<span class="nc" id="L149">		newMainBodyNodes.add(factory.newExpressionStatementNode(factory</span>
+<span class="nc" id="L150">				.newFunctionCallNode(specSource, factory</span>
+<span class="nc" id="L151">						.newIdentifierExpressionNode(specSource, factory</span>
+<span class="nc" id="L152">								.newIdentifierNode(specSource, &quot;system_spec&quot;)),</span>
+<span class="nc" id="L153">						new ArrayList&lt;ExpressionNode&gt;(), null)));</span>
+<span class="nc" id="L154">		newMainBodyNodes.add(factory.newExpressionStatementNode(factory</span>
+<span class="nc" id="L155">				.newFunctionCallNode(implSource, factory</span>
+<span class="nc" id="L156">						.newIdentifierExpressionNode(implSource, factory</span>
+<span class="nc" id="L157">								.newIdentifierNode(implSource, &quot;system_impl&quot;)),</span>
+<span class="nc" id="L158">						new ArrayList&lt;ExpressionNode&gt;(), null)));</span>
+		// TODO: spawn and join (but calls ok until joint assertions
+		// implemented)
+<span class="nc" id="L161">		newMainBodyNodes.addAll(outputAssertions(specOutputs, implOutputs));</span>
+<span class="nc" id="L162">		newMain = factory</span>
+<span class="nc" id="L163">				.newFunctionDefinitionNode(</span>
+<span class="nc" id="L164">						specSource,</span>
+<span class="nc" id="L165">						factory.newIdentifierNode(specSource, &quot;main&quot;),</span>
+<span class="nc" id="L166">						factory.newFunctionTypeNode(</span>
+<span class="nc" id="L167">								specSource,</span>
+<span class="nc" id="L168">								factory.newVoidTypeNode(specSource),</span>
+<span class="nc" id="L169">								factory.newSequenceNode(</span>
+<span class="nc" id="L170">										specSource,</span>
+<span class="nc" id="L171">										&quot;Formals&quot;,</span>
+<span class="nc" id="L172">										new ArrayList&lt;VariableDeclarationNode&gt;()),</span>
+<span class="nc" id="L173">								false), factory.newSequenceNode(specSource,</span>
+<span class="nc" id="L174">								&quot;Contract&quot;, new ArrayList&lt;ContractNode&gt;()),</span>
+<span class="nc" id="L175">						factory.newCompoundStatementNode(specSource,</span>
+<span class="nc" id="L176">								newMainBodyNodes));</span>
+<span class="nc" id="L177">		nodes.add(newMain);</span>
+<span class="nc" id="L178">		newRoot = factory.newSequenceNode(</span>
+<span class="nc" id="L179">				astFactory.getTokenFactory().join(specSource, implSource),</span>
+<span class="nc" id="L180">				&quot;Composite System&quot;, nodes);</span>
+
+<span class="nc" id="L182">		AST result = astFactory.newAST(newRoot, allSourceFiles, true);</span>
+
+		// result.prettyPrint(System.out, false);
+<span class="nc" id="L185">		return result;</span>
+	}
+
+	private FunctionDeclarationNode assertFunctionNode(Source specSource) {
+<span class="nc" id="L189">		IdentifierNode name = factory.newIdentifierNode(specSource, &quot;$assert&quot;);</span>
+<span class="nc" id="L190">		FunctionTypeNode funcType = factory.newFunctionTypeNode(specSource,</span>
+<span class="nc" id="L191">				factory.newVoidTypeNode(specSource), factory.newSequenceNode(</span>
+<span class="nc" id="L192">						specSource, &quot;Formals&quot;, Arrays.asList(factory</span>
+<span class="nc" id="L193">								.newVariableDeclarationNode(specSource, factory</span>
+<span class="nc" id="L194">										.newIdentifierNode(specSource,</span>
+<span class="nc" id="L195">												&quot;expression&quot;), factory</span>
+<span class="nc" id="L196">										.newBasicTypeNode(specSource,</span>
+<span class="nc" id="L197">												BasicTypeKind.BOOL))))</span>
+
+<span class="nc" id="L199">				, false);</span>
+
+<span class="nc" id="L201">		FunctionDeclarationNode function = factory.newFunctionDeclarationNode(</span>
+<span class="nc" id="L202">				specSource, name, funcType, null);</span>
+
+<span class="nc" id="L204">		function.setSystemFunctionSpeciier(true);</span>
+<span class="nc" id="L205">		return function;</span>
+	}
+
+	/**
+	 * Construct the function declaration of the system function $equals.
+	 * 
+	 * @param specSource
+	 * @return
+	 */
+	private FunctionDeclarationNode assertEquals(Source specSource) {
+<span class="nc" id="L215">		IdentifierNode name = factory.newIdentifierNode(specSource,</span>
+<span class="nc" id="L216">				ASSERT_EQUALS);</span>
+<span class="nc" id="L217">		FunctionTypeNode funcType = factory</span>
+<span class="nc" id="L218">				.newFunctionTypeNode(</span>
+<span class="nc" id="L219">						specSource,</span>
+<span class="nc" id="L220">						factory.newBasicTypeNode(specSource, BasicTypeKind.BOOL),</span>
+<span class="nc" id="L221">						factory.newSequenceNode(</span>
+<span class="nc" id="L222">								specSource,</span>
+<span class="nc" id="L223">								&quot;Formals&quot;,</span>
+<span class="nc" id="L224">								Arrays.asList(</span>
+<span class="nc" id="L225">										factory.newVariableDeclarationNode(</span>
+<span class="nc" id="L226">												specSource,</span>
+<span class="nc" id="L227">												factory.newIdentifierNode(</span>
+<span class="nc" id="L228">														specSource, &quot;first&quot;),</span>
+<span class="nc" id="L229">												factory.newPointerTypeNode(</span>
+<span class="nc" id="L230">														specSource,</span>
+<span class="nc" id="L231">														factory.newVoidTypeNode(specSource))),</span>
+<span class="nc" id="L232">										factory.newVariableDeclarationNode(</span>
+<span class="nc" id="L233">												specSource,</span>
+<span class="nc" id="L234">												factory.newIdentifierNode(</span>
+<span class="nc" id="L235">														specSource, &quot;second&quot;),</span>
+<span class="nc" id="L236">												factory.newPointerTypeNode(</span>
+<span class="nc" id="L237">														specSource,</span>
+<span class="nc" id="L238">														factory.newVoidTypeNode(specSource)))))</span>
+
+<span class="nc" id="L240">						, false);</span>
+
+<span class="nc" id="L242">		funcType.setVariableArgs(true);</span>
+
+<span class="nc" id="L244">		FunctionDeclarationNode function = factory.newFunctionDeclarationNode(</span>
+<span class="nc" id="L245">				specSource, name, funcType, null);</span>
+
+<span class="nc" id="L247">		function.setSystemFunctionSpeciier(true);</span>
+<span class="nc" id="L248">		return function;</span>
+	}
+
+	/**
+	 * Construct the function declaration of the system function $defined.
+	 * 
+	 * @param specSource
+	 * @return
+	 */
+	private FunctionDeclarationNode definedFunctionNode(Source specSource) {
+<span class="nc" id="L258">		IdentifierNode name = factory.newIdentifierNode(specSource, &quot;$defined&quot;);</span>
+<span class="nc" id="L259">		FunctionTypeNode funcType = factory</span>
+<span class="nc" id="L260">				.newFunctionTypeNode(</span>
+<span class="nc" id="L261">						specSource,</span>
+<span class="nc" id="L262">						factory.newBasicTypeNode(specSource, BasicTypeKind.BOOL),</span>
+<span class="nc" id="L263">						factory.newSequenceNode(</span>
+<span class="nc" id="L264">								specSource,</span>
+<span class="nc" id="L265">								&quot;Formals&quot;,</span>
+<span class="nc" id="L266">								Arrays.asList(factory</span>
+<span class="nc" id="L267">										.newVariableDeclarationNode(</span>
+<span class="nc" id="L268">												specSource,</span>
+<span class="nc" id="L269">												factory.newIdentifierNode(</span>
+<span class="nc" id="L270">														specSource, &quot;obj&quot;),</span>
+<span class="nc" id="L271">												factory.newPointerTypeNode(</span>
+<span class="nc" id="L272">														specSource,</span>
+<span class="nc" id="L273">														factory.newVoidTypeNode(specSource))))),</span>
+<span class="nc" id="L274">						false);</span>
+<span class="nc" id="L275">		FunctionDeclarationNode function = factory.newFunctionDeclarationNode(</span>
+<span class="nc" id="L276">				specSource, name, funcType, null);</span>
+
+<span class="nc" id="L278">		function.setSystemFunctionSpeciier(true);</span>
+<span class="nc" id="L279">		return function;</span>
+	}
+
+	/**
+	 * Finds the $file type declaration node from an AST, returns it and remove
+	 * it from the AST if it is found. $file type declaration node is required
+	 * by the output variable CIVL_filesystem (array-of-$file type) (if IO
+	 * transformer has been applied). So we need to move it to the final file
+	 * scope.
+	 * 
+	 * @param root
+	 *            The root node of the AST
+	 * @return the $file type declaration node, or null if it absent from the
+	 *         AST.
+	 */
+	private TypedefDeclarationNode getAndRemoveFileTypeNode(
+			SequenceNode&lt;BlockItemNode&gt; root) {
+<span class="nc" id="L296">		int numChildren = root.numChildren();</span>
+
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L299">			BlockItemNode def = root.getSequenceChild(i);</span>
+
+<span class="nc bnc" id="L301" title="All 4 branches missed.">			if (def != null &amp;&amp; def instanceof TypedefDeclarationNode) {</span>
+<span class="nc" id="L302">				TypedefDeclarationNode typeDefNode = (TypedefDeclarationNode) def;</span>
+<span class="nc" id="L303">				String sourceFile = typeDefNode.getSource().getFirstToken()</span>
+<span class="nc" id="L304">						.getSourceFile().getName();</span>
+
+<span class="nc bnc" id="L306" title="All 2 branches missed.">				if (sourceFile.equals(&quot;stdio.cvl&quot;)</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">						&amp;&amp; typeDefNode.getName().equals(&quot;$file&quot;)) {</span>
+<span class="nc" id="L308">					typeDefNode.parent().removeChild(typeDefNode.childIndex());</span>
+<span class="nc" id="L309">					return typeDefNode;</span>
+				}
+			}
+		}
+<span class="nc" id="L313">		return null;</span>
+	}
+
+	/**
+	 * Finds the $equals function declaration node from an AST, returns it and
+	 * remove it from the AST if it is found.
+	 * 
+	 * @param root
+	 *            The root node of the AST
+	 * @return the $equals function declaration node, or null if it absent from
+	 *         the AST.
+	 */
+	private FunctionDeclarationNode getAndRemoveEqualsFuncNode(
+			SequenceNode&lt;BlockItemNode&gt; root) {
+<span class="nc" id="L327">		int numChildren = root.numChildren();</span>
+
+<span class="nc bnc" id="L329" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L330">			BlockItemNode def = root.getSequenceChild(i);</span>
+
+<span class="nc bnc" id="L332" title="All 4 branches missed.">			if (def != null &amp;&amp; def instanceof FunctionDeclarationNode) {</span>
+<span class="nc" id="L333">				FunctionDeclarationNode funcDec = (FunctionDeclarationNode) def;</span>
+<span class="nc" id="L334">				String sourceFile = funcDec.getSource().getFirstToken()</span>
+<span class="nc" id="L335">						.getSourceFile().getName();</span>
+
+<span class="nc bnc" id="L337" title="All 2 branches missed.">				if (sourceFile.equals(&quot;pointer.cvh&quot;)</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">						&amp;&amp; funcDec.getName().equals(&quot;$equals&quot;)) {</span>
+<span class="nc" id="L339">					funcDec.parent().removeChild(funcDec.childIndex());</span>
+<span class="nc" id="L340">					return funcDec;</span>
+				}
+			}
+		}
+<span class="nc" id="L344">		return null;</span>
+	}
+
+	// /**
+	// * Removes the $file type node from the AST. This is called after
+	// * {@link #getAndRemoveFileTypeNode(SequenceNode)}. When the compare
+	// * combiner moves the $file type node from one AST, it still needs to
+	// remove
+	// * it from
+	// *
+	// * @param root
+	// * the root node of the AST.
+	// */
+	// private void removeFileTypeNode(SequenceNode&lt;ExternalDefinitionNode&gt;
+	// root) {
+	// int numChildren = root.numChildren();
+	//
+	// for (int i = 0; i &lt; numChildren; i++) {
+	// ExternalDefinitionNode def = root.getSequenceChild(i);
+	//
+	// if (def != null &amp;&amp; def instanceof TypedefDeclarationNode) {
+	// TypedefDeclarationNode typeDefNode = (TypedefDeclarationNode) def;
+	// String sourceFile = typeDefNode.getSource().getFirstToken()
+	// .getSourceFile().getName();
+	//
+	// if (sourceFile.equals(&quot;stdio.cvl&quot;)
+	// &amp;&amp; typeDefNode.getName().equals(&quot;$file&quot;)) {
+	// typeDefNode.parent().removeChild(typeDefNode.childIndex());
+	// return;
+	// }
+	// }
+	// }
+	// }
+
+	/**
+	 * Take the input variable declaration nodes from the specification and the
+	 * implementation into a list. The input variables of the specification
+	 * should be a subset of those of the implementation.
+	 * 
+	 * @param specRoot
+	 *            The root node of the specification AST.
+	 * @param implRoot
+	 *            The root node of the implementation AST.
+	 * @return The combined list of input variable declaration nodes, key is
+	 *         name of variable.
+	 */
+	private Map&lt;String, VariableDeclarationNode&gt; combineInputs(
+			ASTNode specRoot, ASTNode implRoot) {
+<span class="nc" id="L392">		Map&lt;String, VariableDeclarationNode&gt; inputs = new LinkedHashMap&lt;String, VariableDeclarationNode&gt;();</span>
+
+		// Put all input variables from the implementation into the map.
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		for (int i = 0; i &lt; implRoot.numChildren(); i++) {</span>
+<span class="nc" id="L396">			ASTNode child = implRoot.child(i);</span>
+
+<span class="nc bnc" id="L398" title="All 2 branches missed.">			if (child != null</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">					&amp;&amp; child.nodeKind() == NodeKind.VARIABLE_DECLARATION) {</span>
+<span class="nc" id="L400">				VariableDeclarationNode var = (VariableDeclarationNode) child;</span>
+
+<span class="nc bnc" id="L402" title="All 2 branches missed.">				if (var.getTypeNode().isInputQualified()) {</span>
+<span class="nc" id="L403">					inputs.put(var.getName(), var.copy());</span>
+				}
+			}
+		}
+		// Check that all input variables from the spec were also in the impl.
+<span class="nc bnc" id="L408" title="All 2 branches missed.">		for (int i = 0; i &lt; specRoot.numChildren(); i++) {</span>
+<span class="nc" id="L409">			ASTNode child = specRoot.child(i);</span>
+
+<span class="nc bnc" id="L411" title="All 2 branches missed.">			if (child != null</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">					&amp;&amp; child.nodeKind() == NodeKind.VARIABLE_DECLARATION) {</span>
+<span class="nc" id="L413">				VariableDeclarationNode var = (VariableDeclarationNode) child;</span>
+
+<span class="nc bnc" id="L415" title="All 2 branches missed.">				if (var.getTypeNode().isInputQualified()) {</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">					if (!inputs.containsKey(var.getName())) {</span>
+						// throw new ASTException(
+						// &quot;Implementation program does not contain specification input variable &quot;
+						// + var.getName() + &quot;.&quot;);
+<span class="nc" id="L420">						inputs.put(var.getName(), var.copy());</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L425">		return inputs;</span>
+	}
+
+	/**
+	 * Returns the output variables of the AST.
+	 * 
+	 * @param root
+	 *            The root node of the AST.
+	 * @return the output variables of the AST, where key is name of variable.
+	 */
+	private Map&lt;String, VariableDeclarationNode&gt; getOutputs(ASTNode root) {
+<span class="nc" id="L436">		Map&lt;String, VariableDeclarationNode&gt; outputs = new LinkedHashMap&lt;String, VariableDeclarationNode&gt;();</span>
+
+		// Put all output variables into the map.
+<span class="nc bnc" id="L439" title="All 2 branches missed.">		for (int i = 0; i &lt; root.numChildren(); i++) {</span>
+<span class="nc" id="L440">			ASTNode child = root.child(i);</span>
+
+<span class="nc bnc" id="L442" title="All 2 branches missed.">			if (child != null</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">					&amp;&amp; child.nodeKind() == NodeKind.VARIABLE_DECLARATION) {</span>
+<span class="nc" id="L444">				VariableDeclarationNode var = (VariableDeclarationNode) child;</span>
+
+<span class="nc bnc" id="L446" title="All 2 branches missed.">				if (var.getTypeNode().isOutputQualified()) {</span>
+<span class="nc" id="L447">					outputs.put(var.getName(), var);</span>
+				}
+			}
+		}
+<span class="nc" id="L451">		return outputs;</span>
+	}
+
+	/**
+	 * Checks if the output variables of the specification and the
+	 * implementation satisfy the precondition that all the output variables of
+	 * the specification should also be the output variables of the
+	 * implementation. The output variable CIVL_filesystem which is introduced
+	 * by IO transformer is an exception, i.e., it is fine for the specification
+	 * to contain CIVL_filesystem while the implementation doesn't.
+	 * 
+	 * @param specOutputs
+	 *            The output variables of the
+	 * @param implOutputs
+	 */
+	private void checkOutputs(Map&lt;String, VariableDeclarationNode&gt; specOutputs,
+			Map&lt;String, VariableDeclarationNode&gt; implOutputs) {
+<span class="nc bnc" id="L468" title="All 2 branches missed.">		for (String name : specOutputs.keySet()) {</span>
+			// allow CIVL_output_filesystem to exist in only one program
+			// TODO better solution for IO transformer
+<span class="nc bnc" id="L471" title="All 2 branches missed.">			if (name.equals(&quot;CIVL_output_filesystem&quot;))</span>
+<span class="nc" id="L472">				continue;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">			if (!implOutputs.containsKey(name)) {</span>
+<span class="nc" id="L474">				throw new ASTException(</span>
+<span class="nc" id="L475">						&quot;No implementation output variable matching specification outputs variable &quot;</span>
+<span class="nc" id="L476">								+ name + &quot;.&quot;);</span>
+			}
+		}
+<span class="nc" id="L479">	}</span>
+
+	/**
+	 * Given an AST, remove input and output variables and create a new function
+	 * wrapping the remaining file scope items.
+	 * 
+	 * @param root
+	 *            The root node of the AST being wrapped in a new function.
+	 * @param name
+	 *            The name of the new function.
+	 * @return A function definition node with the appropriate name, void return
+	 *         type, and no parameters.
+	 */
+	private FunctionDefinitionNode wrapperFunction(Source source, ASTNode root,
+			String name) {
+<span class="nc" id="L494">		FunctionTypeNode functionType = factory.newFunctionTypeNode(source,</span>
+<span class="nc" id="L495">				factory.newBasicTypeNode(source, BasicTypeKind.INT), factory</span>
+<span class="nc" id="L496">						.newSequenceNode(source, &quot;Formals&quot;,</span>
+<span class="nc" id="L497">								new ArrayList&lt;VariableDeclarationNode&gt;()),</span>
+<span class="nc" id="L498">				false);</span>
+<span class="nc" id="L499">		List&lt;BlockItemNode&gt; items = new ArrayList&lt;BlockItemNode&gt;();</span>
+		CompoundStatementNode body;
+		FunctionDefinitionNode result;
+
+<span class="nc bnc" id="L503" title="All 2 branches missed.">		for (int i = 0; i &lt; root.numChildren(); i++) {</span>
+<span class="nc" id="L504">			ASTNode child = root.child(i);</span>
+
+<span class="nc bnc" id="L506" title="All 2 branches missed.">			if (child == null)</span>
+<span class="nc" id="L507">				continue;</span>
+<span class="nc bnc" id="L508" title="All 2 branches missed.">			if (child.nodeKind() == NodeKind.VARIABLE_DECLARATION) {</span>
+<span class="nc" id="L509">				VariableDeclarationNode var = (VariableDeclarationNode) child;</span>
+
+<span class="nc bnc" id="L511" title="All 2 branches missed.">				if (!var.getTypeNode().isInputQualified()</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">						&amp;&amp; !var.getTypeNode().isOutputQualified()) {</span>
+<span class="nc" id="L513">					items.add(var.copy());</span>
+				}
+<span class="nc bnc" id="L515" title="All 2 branches missed.">			} else if (child.nodeKind() == NodeKind.FUNCTION_DECLARATION) {</span>
+<span class="nc" id="L516">				FunctionDeclarationNode function = (FunctionDeclarationNode) child;</span>
+
+<span class="nc" id="L518">				items.add(function.copy());</span>
+<span class="nc bnc" id="L519" title="All 2 branches missed.">			} else if (child.nodeKind() == NodeKind.FUNCTION_DEFINITION) {</span>
+<span class="nc" id="L520">				FunctionDefinitionNode function = (FunctionDefinitionNode) child;</span>
+<span class="nc bnc" id="L521" title="All 2 branches missed.">				if (function.getName() != null</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">						&amp;&amp; function.getName().equals(&quot;main&quot;)) {</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">					for (int j = 0; j &lt; ((FunctionDefinitionNode) function)</span>
+<span class="nc" id="L524">							.getBody().numChildren(); j++) {</span>
+<span class="nc" id="L525">						items.add(((FunctionDefinitionNode) function).getBody()</span>
+<span class="nc" id="L526">								.getSequenceChild(j).copy());</span>
+					}
+<span class="nc" id="L528">				} else {</span>
+<span class="nc" id="L529">					items.add(function.copy());</span>
+				}
+<span class="nc" id="L531">			} else {</span>
+<span class="nc bnc" id="L532" title="All 4 branches missed.">				assert child instanceof BlockItemNode;</span>
+<span class="nc" id="L533">				items.add((BlockItemNode) child.copy());</span>
+			}
+		}
+<span class="nc" id="L536">		body = factory.newCompoundStatementNode(source, items);</span>
+<span class="nc" id="L537">		result = factory.newFunctionDefinitionNode(source, factory</span>
+<span class="nc" id="L538">				.newIdentifierNode(root.getSource(), name), functionType,</span>
+<span class="nc" id="L539">				factory.newSequenceNode(source, &quot;Contract&quot;,</span>
+<span class="nc" id="L540">						new ArrayList&lt;ContractNode&gt;()), body);</span>
+<span class="nc" id="L541">		return result;</span>
+	}
+
+	/**
+	 * Generate the set of assertions comparing output variables. We assume that
+	 * checkOutputs has been called, so the sets are of equal cardinality and
+	 * the names correspond. Furthermore, we assume that name substitutions have
+	 * happened, but that the String key values in the argument maps are the old
+	 * names.
+	 * 
+	 * @param specOutputs
+	 *            Mapping from original output variable name to the
+	 *            corresponding variable declaration from the spec program.
+	 * @param implOutputs
+	 *            Mapping from original output variable name to the
+	 *            corresponding variable declaration from the impl program.
+	 * @return A list of assertion statements checking equivalence of
+	 *         corresponding output variables.
+	 * @throws SyntaxException
+	 */
+	private List&lt;StatementNode&gt; outputAssertions(
+			Map&lt;String, VariableDeclarationNode&gt; specOutputs,
+			Map&lt;String, VariableDeclarationNode&gt; implOutputs)
+			throws SyntaxException {
+<span class="nc" id="L565">		List&lt;StatementNode&gt; result = new ArrayList&lt;StatementNode&gt;();</span>
+		// TODO: do something better for source
+		// ExpressionNode equalFunction = factory.newIdentifierExpressionNode(
+		// specSource, factory.newIdentifierNode(specSource, &quot;$equals&quot;));
+<span class="nc" id="L569">		ExpressionNode assertEqualFunction = factory</span>
+<span class="nc" id="L570">				.newIdentifierExpressionNode(specSource,</span>
+<span class="nc" id="L571">						factory.newIdentifierNode(specSource, ASSERT_EQUALS));</span>
+
+<span class="nc bnc" id="L573" title="All 2 branches missed.">		for (String outputName : specOutputs.keySet()) {</span>
+<span class="nc" id="L574">			Source source = specOutputs.get(outputName).getSource();</span>
+<span class="nc" id="L575">			List&lt;ExpressionNode&gt; args = new ArrayList&lt;ExpressionNode&gt;();</span>
+			FunctionCallNode assertEqualCall;
+<span class="nc" id="L577">			VariableDeclarationNode specOutput = specOutputs.get(outputName);</span>
+<span class="nc" id="L578">			VariableDeclarationNode implOutput = implOutputs.get(outputName);</span>
+			String message;
+
+			// don't compare outputs if only one program has output
+			// CIVL_output_system
+			// TODO better solution from IO transformer
+<span class="nc bnc" id="L584" title="All 2 branches missed.">			if (outputName.equals(&quot;CIVL_output_filesystem&quot;)</span>
+<span class="nc bnc" id="L585" title="All 4 branches missed.">					&amp;&amp; (specOutput == null || implOutput == null))</span>
+<span class="nc" id="L586">				continue;</span>
+<span class="nc" id="L587">			message = &quot;\&quot;Specification and implementation have&quot;</span>
+<span class="nc" id="L588">					+ &quot; different values for the output &quot; + outputName + &quot;!\&quot;&quot;;</span>
+<span class="nc" id="L589">			args.add(factory.newOperatorNode(specOutput.getSource(),</span>
+<span class="nc" id="L590">					Operator.ADDRESSOF, Arrays.asList((ExpressionNode) factory</span>
+<span class="nc" id="L591">							.newIdentifierExpressionNode(</span>
+<span class="nc" id="L592">									specOutput.getSource(), specOutput</span>
+<span class="nc" id="L593">											.getIdentifier().copy()))));</span>
+<span class="nc" id="L594">			args.add(factory.newOperatorNode(implOutput.getSource(),</span>
+<span class="nc" id="L595">					Operator.ADDRESSOF, Arrays.asList((ExpressionNode) factory</span>
+<span class="nc" id="L596">							.newIdentifierExpressionNode(</span>
+<span class="nc" id="L597">									implOutput.getSource(), implOutput</span>
+<span class="nc" id="L598">											.getIdentifier().copy()))));</span>
+<span class="nc" id="L599">			args.add(this.createStringLiteral(message));</span>
+<span class="nc" id="L600">			assertEqualCall = factory.newFunctionCallNode(source,</span>
+<span class="nc" id="L601">					assertEqualFunction.copy(), args, null);</span>
+<span class="nc" id="L602">			result.add(factory.newExpressionStatementNode(assertEqualCall));</span>
+		}
+<span class="nc" id="L604">		return result;</span>
+	}
+
+	/**
+	 * Create a mapping from Entity to String where the entities are variables
+	 * and the strings are those variable names with a suffix added.
+	 * 
+	 * @param variables
+	 *            A set of variable declarations.
+	 * @param suffix
+	 *            The suffix to be added to each variable name.
+	 * @return The mapping from entities to their new names.
+	 */
+	private Map&lt;Entity, String&gt; renameVariables(
+			Collection&lt;VariableDeclarationNode&gt; variables, String suffix) {
+<span class="nc" id="L619">		Map&lt;Entity, String&gt; result = new LinkedHashMap&lt;Entity, String&gt;();</span>
+
+<span class="nc bnc" id="L621" title="All 2 branches missed.">		for (VariableDeclarationNode var : variables) {</span>
+<span class="nc" id="L622">			result.put(var.getEntity(), var.getName() + suffix);</span>
+		}
+<span class="nc" id="L624">		return result;</span>
+	}
+
+	private Source getMainSource(ASTNode node) {
+<span class="nc bnc" id="L628" title="All 2 branches missed.">		if (node.nodeKind() == NodeKind.FUNCTION_DEFINITION) {</span>
+<span class="nc" id="L629">			FunctionDefinitionNode functionNode = (FunctionDefinitionNode) node;</span>
+<span class="nc" id="L630">			IdentifierNode functionName = (IdentifierNode) functionNode</span>
+<span class="nc" id="L631">					.child(0);</span>
+
+<span class="nc bnc" id="L633" title="All 2 branches missed.">			if (functionName.name().equals(&quot;main&quot;)) {</span>
+<span class="nc" id="L634">				return node.getSource();</span>
+			}
+		}
+<span class="nc bnc" id="L637" title="All 2 branches missed.">		for (ASTNode child : node.children()) {</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">			if (child == null)</span>
+<span class="nc" id="L639">				continue;</span>
+			else {
+<span class="nc" id="L641">				Source childResult = getMainSource(child);</span>
+
+<span class="nc bnc" id="L643" title="All 2 branches missed.">				if (childResult != null)</span>
+<span class="nc" id="L644">					return childResult;</span>
+			}
+		}
+<span class="nc" id="L647">		return null;</span>
+	}
+
+	private StringLiteralNode createStringLiteral(String text)
+			throws SyntaxException {
+<span class="nc" id="L652">		TokenFactory tokenFactory = astFactory.getTokenFactory();</span>
+<span class="nc" id="L653">		Formation formation = tokenFactory.newTransformFormation(MY_NAME,</span>
+<span class="nc" id="L654">				&quot;stringLiteral&quot;);</span>
+<span class="nc" id="L655">		CivlcToken ctoke = tokenFactory.newCivlcToken(</span>
+<span class="nc" id="L656">				CivlcTokenConstant.STRING_LITERAL, text, formation);</span>
+<span class="nc" id="L657">		StringToken stringToken = tokenFactory.newStringToken(ctoke);</span>
+
+<span class="nc" id="L659">		return factory.newStringLiteralNode(tokenFactory.newSource(ctoke),</span>
+<span class="nc" id="L660">				text, stringToken.getStringLiteral());</span>
+	}
+
+	/**
+	 * removed extra declaration nodes for extern variables; also make remove
+	 * the extern qualifier for the definition node
+	 * 
+	 * @param root
+	 */
+	private void processExternVariables(SequenceNode&lt;BlockItemNode&gt; root) {
+<span class="nc bnc" id="L670" title="All 2 branches missed.">		for (BlockItemNode item : root) {</span>
+<span class="nc bnc" id="L671" title="All 2 branches missed.">			if (item == null)</span>
+<span class="nc" id="L672">				continue;</span>
+<span class="nc bnc" id="L673" title="All 2 branches missed.">			if (item instanceof VariableDeclarationNode) {</span>
+<span class="nc" id="L674">				VariableDeclarationNode variable = (VariableDeclarationNode) item;</span>
+
+<span class="nc bnc" id="L676" title="All 2 branches missed.">				if (variable.hasExternStorage())</span>
+<span class="nc bnc" id="L677" title="All 2 branches missed.">					if (!variable.getEntity().getDefinition().equals(variable))</span>
+<span class="nc" id="L678">						variable.remove();</span>
+					else
+<span class="nc" id="L680">						variable.setExternStorage(false);</span>
+			}
+		}
+<span class="nc" id="L683">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

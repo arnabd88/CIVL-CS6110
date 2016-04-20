@@ -1,0 +1,57 @@
+/* CIVL model of stdlib.c */
+
+#ifndef __STDLIB_CIVL__
+#define __STDLIB_CIVL__
+
+#include<stdlib.h>
+#include<civlc.cvh>
+
+//#define DEFAULT_SEED  99
+
+//unsigned _rand_seed = DEFAULT_SEED;
+//unsigned _random_seed = DEFAULT_SEED;
+
+int rand(){
+  int tmp;
+
+  $havoc(&tmp);
+  return tmp;
+}
+
+void srand(unsigned int seed){
+}
+
+void srandom(unsigned int seed){
+}
+
+long int random(){
+  long int tmp;
+
+  $havoc(&tmp);
+  return tmp;
+}
+
+void exit(int status){
+  $assert(status == 0, "erroneous exit with code %d", status);
+  $exit();
+}
+
+_Noreturn void abort(void){
+  $exit();
+}
+
+int abs(int x){
+  if(x >= 0)
+    return x;
+  return (-x);
+}
+
+#ifdef _LINUX
+int rand_r(unsigned int *seedp){
+  int tmp;
+
+  $havoc(&tmp);
+  return tmp;
+}
+#endif
+#endif

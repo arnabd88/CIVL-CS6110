@@ -1,0 +1,32 @@
+#include<civlc.cvh>
+
+int x = 0, u = 0;
+
+void f(){
+  int v = 0;
+
+  $choose{
+    $when($true) v = 0;
+    $when(x) v = 1;
+  }
+  $assert(v == 0);
+}
+
+void g(){
+  $when(u) x = 1;
+}
+
+void h(){
+  u = 1;
+}
+
+void main(){
+  $proc procs[3];
+  
+  $atomic{
+    procs[0] = $spawn f();
+    procs[1] = $spawn g();
+    procs[2] = $spawn h();
+  }
+  $waitall(procs, 3);
+}

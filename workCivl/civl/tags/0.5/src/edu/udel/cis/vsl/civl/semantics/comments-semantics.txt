@@ -1,0 +1,200 @@
+Comments on semantics module
+
+use interfaces
+finish javadocs
+
+Evaluator
+
+don't use Vector
+
+processType, etc: for these and other fields,
+make them canonic using universe.canonic(...).
+This can improve efficiency
+
+evaluate: why return null if there is an unknown
+expression instead of throwing an exception?
+
+instead of big sequence of if...else if...
+use an enum like ExpressionKind and then
+use switch
+
+evaluate(...DotExpression): does this assume
+that the first operand of the dot expression
+is a variable?  What if it's another kind of
+expression, like "a[i].data" or "a.b.c" or
+"f(i).x"?  Also this does a linear-time search
+through the fields doing  string comparison
+at each step to find the index of the correct
+field. This happens every time you evaluate
+the dot expression.  Wouldn't it be better to
+do this once (statically) and replace the
+Identifier field with the field index in the
+DotExpression.
+
+evaluate(...ArrowExpression): I don't understand
+what this is doing with the getVariable etc.
+Since a->b is syntactic sugar for (*a).b, why
+isn't the code just that simple?
+
+evaluate(...ArrayIndexExpression): unclear about
+the loop to keep dereferencing the pointer.
+It would help to know what the fist argument
+to an array index expression can be.  For example:
+  double *p;
+  ...
+  p[5]; // is this an array index expression?
+if so then dereferencing is not going to give you
+an array.  For example what does this yield:
+  double a[10];
+  double *p=&a[3];
+  p[5];
+
+evalute(...BinaryExpression): for NOT_EQUAL,
+use universe.neq().  Does this handle pointer
+addition and subtraction?  Add default cast
+to throw an exception.    Don't return null.
+
+symbolicType(Type): throw exception instead of
+returning null.  What about other types: pointers,
+records, ...?
+
+evalute(...IntegerLiteralExpresion),
+evaluate(...SelfExpression),
+evaluate(...RealLiteralExpression),
+evaluate(...StringLiteralExpression):
+ is there some way these could be done once
+ statically, instead of re-evaluated every time?
+Also, for string literals use universe.stringExpression()
+(it returns an array of char).
+(And don't return null)
+
+evalute(...UnaryExpression): don't return null,
+throw exception.
+
+reference and pointerTarget:
+ don't understand what each method is supposed to do.
+ I guess reference() takes a LHS expression and
+ returns the corresponding reference value.
+ pointerTarget() takes a LHS expression and returns
+ the variable in which that LHS expression is ultimately
+ contained.  But then why does pointerTarget
+ accept an address-of expression?  This is not
+ an LHS expression. Also, what about dot expressions,
+ arrow expressions?
+
+dereference(): isn't pointerTuple.get(0) supposed to
+be a SymbolicConstant? In which case use a method
+to get its name rather than relying on the
+toString method which may or may not return the name:
+
+		scope = (SymbolicObject) pointerTuple.get(0);
+		scopeIDString = scope.toString();
+		scopeID = Integer.parseInt(scopeIDString.split("_")[1]);
+		variableNumber = symbolicUniverse
+				.extractNumber((NumericExpression) pointerTuple.get(1));
+		variableID = ((IntegerNumber) variableNumber).intValue();
+ 
+It would be nice if there were a way to do this that 
+did not involve parsing strings.  How about instead
+of using symbolic constants for scope IDs, use
+a tuple called "Scope" with one filed which is an int.
+
+navigateReference: instead of checking the kind of operator
+of result, why not check its type to see if it is an
+array type.  Still need to handle records.
+In addition, in TASS there are offset references
+for pointers resulting from an addition p+i
+which is not an array element reference.
+Another case you might need to handle is a heap
+reference which is a little special because
+it uses the union type.
+In TASS, instead of using a single integer for the
+navigator, each navigator is an ordered pair
+(code, index).  The code tells you what kind of
+navigator it is: array element, record member,
+offset.  In addition you probably need union member.
+If you encode this information in the navigator
+you don't have to examine the type or operator
+of the expression.
+
+
+evaluate(...VariableExpression): the error reporting
+code for incorporating the state into the
+log entry seems general enough that you could
+factor it out into a separate method somewhere
+to re-use every time there is an error to
+report (maybe in Log?)
+
+getVariable(): still don't get the point
+of the loop repeatedly de-referencing
+reference.  Also, why are VariableExpression,
+ArrayIndexExpression, and DEREFRENCE (*)
+the only cases?  Also dot and arrow expressions.
+
+
+Suggestions: get rid of arrow expressions, just
+translate them to dot of start in model builder.
+
+Re-do reference values like TASS with
+ordered pairs where code can be 
+arrayElement, recordMember, offset,
+unionMember
+
+array subscript expressions: first
+arg should have only array type.
+For pointers, use * and +.  Do
+this in model builder.
+
+Check that procedure parameters never
+have array type. (Modelbuilder).
+
+If an array a is ever used in a context
+where a pointer is called for
+be sure to translate it to &a[0].
+(Modelbuilder).  For example, an actual
+argument in a function call. The only
+context in which an array type should occur
+I think is as the first argument in 
+a subscript expression.
+Maybe also sizeof.
+
+
+where is heap type?
+
+--------------
+
+Executor:
+
+in the following, why does a parameter of pointer type require
+special handling?  If I have a function
+
+void f(int *p) {
+  *p = *p + 1;
+}
+
+and the function is called:
+
+int x = 1;
+f(&x);
+
+then p should be assigned &x, not 1.
+
+if (function.parameters().get(i).type() instanceof PointerType) {
+	expression = evaluator.reference(state, pid, statement
+			.arguments().get(i));
+} else {
+	expression = evaluator.evaluate(state, pid, statement
+			.arguments().get(i));
+}
+
+
+like in Evaluator, it looks like writeValue(...) assumes
+the first argument of a dot operator is a variable (for
+example).
+
+when a new dyscope is created, how are the scope's variables
+initialized?  (For example, arrays).
+
+
+
+

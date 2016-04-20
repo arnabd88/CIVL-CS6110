@@ -1,0 +1,15 @@
+/* divisionBad.cvl: denominator in division could be 0,
+ * so error should be reported.
+ * 
+ * Commandline execution:
+ * 		civl verify divisionBad.cvl
+ */
+#include<civlc.cvh>
+$input double x;
+$input double y; // could be 0
+
+void main() {
+  double z = x/y;
+
+  $assert(y*z==x);
+}

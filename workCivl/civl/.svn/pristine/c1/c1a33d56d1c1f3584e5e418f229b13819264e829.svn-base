@@ -1,0 +1,14 @@
+#include <civlc.cvh>
+#include <math.h>
+
+$input double a;
+$assume(a > 0);
+
+void main() {
+  double b = sqrt(a);
+  double c = sqrt(b);
+  double d = sqrt(c);
+
+  $assert(a == d*d*d*d*d*d*d*d);
+}
+

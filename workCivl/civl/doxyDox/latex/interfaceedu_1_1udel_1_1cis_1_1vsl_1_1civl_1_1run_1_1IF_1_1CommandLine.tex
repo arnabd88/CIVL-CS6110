@@ -1,0 +1,102 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Command\+Line Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Command\+Line@{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Command\+Line}}
+
+
+\hyperlink{structA}{A} command line represents the command line information for running \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Command\+Line\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_1_1CommandLineKind}{Command\+Line\+Kind}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} command line kinds\+: normal, or compare. \end{DoxyCompactList}\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_1_1CommandName}{Command\+Name}
+\begin{DoxyCompactList}\small\item\em This contains the names of all commands supported by \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}, either it is a normal command or a compare comamnd. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_1_1CommandLineKind}{Command\+Line\+Kind} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a80d11c5fe0374b1fa06c600eefc442a3}{command\+Line\+Kind} ()
+\begin{DoxyCompactList}\small\item\em The kind of this command line. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a71095fc17c907a9b4ddac9348f4a3364}{}void {\bfseries set\+Command\+String} (String string)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a71095fc17c907a9b4ddac9348f4a3364}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_ab82d8f4436e923444d60a5abf40dc1f6}{}String {\bfseries get\+Command\+String} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_ab82d8f4436e923444d60a5abf40dc1f6}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_aa0489eda86b19bd74cc3666697e6bd77}{}G\+M\+C\+Configuration {\bfseries gmc\+Config} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_aa0489eda86b19bd74cc3666697e6bd77}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a811deffdc0dd7ba1ed22a10ab94e4d0e}{}void {\bfseries set\+G\+M\+C\+Config} (G\+M\+C\+Configuration config)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a811deffdc0dd7ba1ed22a10ab94e4d0e}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a8007f2f4835e43e9b0dd3ea0fc16255c}{}static final String {\bfseries C\+O\+N\+F\+I\+G} = \char`\"{}config\char`\"{}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a8007f2f4835e43e9b0dd3ea0fc16255c}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_abdcaeedb8597fb0e66a6ca11386417fe}{}static final String {\bfseries C\+O\+M\+P\+A\+R\+E} = \char`\"{}compare\char`\"{}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_abdcaeedb8597fb0e66a6ca11386417fe}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a1769d27865175b3ea2808ad86ab581a7}{}static final String {\bfseries G\+U\+I} = \char`\"{}gui\char`\"{}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a1769d27865175b3ea2808ad86ab581a7}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_acafdddfac6a1a9e87074f5d44a614376}{}static final String {\bfseries H\+E\+L\+P} = \char`\"{}help\char`\"{}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_acafdddfac6a1a9e87074f5d44a614376}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_af627946842ddf87f2e4d7ce9ba7441c3}{}static final String {\bfseries R\+E\+P\+L\+A\+Y} = \char`\"{}replay\char`\"{}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_af627946842ddf87f2e4d7ce9ba7441c3}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a922951c026441ed304f558e8d47e1b35}{}static final String {\bfseries R\+U\+N} = \char`\"{}run\char`\"{}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a922951c026441ed304f558e8d47e1b35}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a6f3da5ffe59d1a8dc7255871739a3915}{}static final String {\bfseries S\+H\+O\+W} = \char`\"{}show\char`\"{}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a6f3da5ffe59d1a8dc7255871739a3915}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a9b8587585483be33d328557b5bd3b56c}{}static final String {\bfseries V\+E\+R\+I\+F\+Y} = \char`\"{}verify\char`\"{}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a9b8587585483be33d328557b5bd3b56c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} command line represents the command line information for running \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a80d11c5fe0374b1fa06c600eefc442a3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Command\+Line@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Command\+Line}!command\+Line\+Kind@{command\+Line\+Kind}}
+\index{command\+Line\+Kind@{command\+Line\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Command\+Line@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Command\+Line}}
+\subsubsection[{command\+Line\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Line\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Command\+Line.\+command\+Line\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_a80d11c5fe0374b1fa06c600eefc442a3}
+
+
+The kind of this command line. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1common_1_1NormalCommandLine_a425514422076dd5619251367538443f3}{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+common.\+Normal\+Command\+Line}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1common_1_1CompareCommandLine_a1ba1f2345a6aafd671c0ec12779c6df3}{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+common.\+Compare\+Command\+Line}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/run/\+I\+F/Command\+Line.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,9 @@
+/*example for length modifier*/
+#include <civlc.cvh>
+#include <stdio.h>
+
+void main() {
+  int a = 1;
+  
+  printf("The value of a is %l",a);
+}

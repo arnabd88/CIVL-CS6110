@@ -1,0 +1,70 @@
+Done:
+  make the args struct
+  implement clCreateKernel
+  Array with flags in, tells the program what variables are malloc'd or not so they don't try to free the same space
+  
+  
+ToDo:
+
+  
+ToDo: Long term:
+  Possible implementation of clGetKernelWorkGroupInfo, if an example that needs it is used
+  Possible implementation of clGetDeviceInfo
+  Re-arrange code so that the group designation is actually possible
+
+Problems:
+  This example does not neatly into work already done.
+  No memset(); 
+  No strcmp();
+  Program crash when using array index of kernel
+  Bug in memory leak detection
+  Forgot to notice that there need to be multiple args
+  
+
+  
+  -------
+  
+Done:
+Change square.cvl to reflect new changes
+Fixed problem with empty space being used
+Grappled with invalid pointer dereference.
+  
+  
+ToDo:
+Alter wiki again
+
+  
+ToDo: Long term:
+  Possible implementation of clGetKernelWorkGroupInfo, if an example that needs it is used
+  Possible implementation of clGetDeviceInfo
+  Re-arrange code so that the group designation is actually possible
+
+Problems:
+  Bug where there are many files that aren't there, and the printing of each file is not there
+  Error: This feature is not yet implemented: Pointer addition for anything other than array elements or variables
+at f31:24.4-30 "((  int*)(shared) ... ]".
+  This kernel really doesn't play nice with CIVL
+  heap object names are unique, but not in this program
+  
+  -------
+  
+Done:
+  Alter wiki for updating. Added pictures and code highlighting to page.
+  Made another example that demonstrates true multi cl_kernel instances and multiple __kernel methods.
+  
+  
+ToDo:
+  
+
+  
+ToDo Long term:
+  Possible implementation of clGetKernelWorkGroupInfo, if an example that needs it is used
+  Possible implementation of clGetDeviceInfo
+  Re-arrange code so that the group designation is actually possible
+
+Problems:
+  Found bug based off of strcmp and strcpy, various string operations
+  
+  
+  
+  

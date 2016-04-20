@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ConstantNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.expression</a> &gt; <span class="el_source">ConstantNode.java</span></div><h1>ConstantNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.expression;</span>
+
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+
+/**
+ * A &quot;constant&quot; in the sense of the C11 Standard. See C11 Sec. 6.4.4. Note that
+ * C uses the word &quot;constant&quot; in a limited way. Character, integer, and floating
+ * point literals and enumeration constants are all considered &quot;constants&quot;.
+ * String literals and compound literals (array, structure, and union literals)
+ * are not considered constants.
+ * 
+ */
+public interface ConstantNode extends ExpressionNode {
+
+<span class="nc" id="L15">	public enum ConstantKind{</span>
+<span class="nc" id="L16">		CHAR,</span>
+<span class="nc" id="L17">		ENUM,</span>
+<span class="nc" id="L18">		FLOAT,</span>
+<span class="nc" id="L19">		HERE_OR_ROOT,</span>
+<span class="nc" id="L20">		INT,</span>
+<span class="nc" id="L21">		PROCNULL,</span>
+<span class="nc" id="L22">		/**</span>
+		 * A use of the CIVL-C built-in variable &lt;code&gt;$self&lt;/code&gt; of type
+		 * &lt;code&gt;$proc&lt;/code&gt;. It represents the process which is evaluating the
+		 * expression containing &lt;code&gt;$self&lt;/code&gt;. A node of this kind may be
+		 * safely cast to {@link SelfNode}.
+		 */
+<span class="nc" id="L28">		SELF, </span>
+<span class="nc" id="L29">		STRING</span>
+	}
+	
+	ConstantKind constantKind();
+	
+	/**
+	 * Returns the representation of the constant exactly as it occurred in the
+	 * source code.
+	 * 
+	 * @return the original representation of this constant in the source code
+	 */
+	String getStringRepresentation();
+
+	/**
+	 * Sets the value returned by {@link #getStringRepresentation}.
+	 * 
+	 * @param representation
+	 *            the original representation of this constant in the source
+	 *            code
+	 */
+	void setStringRepresentation(String representation);
+
+	/**
+	 * Returns the actual constant value, obtained by evaluating this constant
+	 * expression.
+	 * 
+	 * @return the value of this constant expression
+	 */
+	Value getConstantValue();
+
+	@Override
+	ConstantNode copy();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

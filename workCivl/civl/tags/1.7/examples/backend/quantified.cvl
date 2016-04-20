@@ -1,0 +1,21 @@
+/** This example is to check the translation of quantified expression
+ *  into CVC theorem provers.
+ */
+#include <stdio.h>
+#include <civlc.cvh>
+
+$input int n;
+$assume (n>=0);
+$input int a[n];
+$input int b[n];
+
+void main(){
+  $assume($forall {int i | i >=0 && i<n} a[i]>0);
+  $assume($forall {int i | i >=0 && i<n} b[i]<0);
+  $assert(
+             ($forall {int i | i >= 0 && i < n} a[i])
+              && ($forall {int i | i >=0 && i < n} b[i])
+    );
+}
+
+

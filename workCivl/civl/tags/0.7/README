@@ -1,0 +1,197 @@
+      CIVL: The Concurrency Intermediate Verification Language
+                               v 0.7
+
+------------------------------ Overview -------------------------------
+
+CIVL is a framework encompassing...
+
+ * a programming language, CIVL-C, which adds to C a number of
+   concurrency primitives, as well as the ability to define
+   functions in any scope.  Together, these features make for
+   a very expressive concurrent language that can faithfully
+   represent programs using various APIs and parallel languages,
+   such as MPI, OpenMP, CUDA, and Chapel. CIVL-C also provides
+   a number of primitives supporting verification.
+ * a model checker which uses symbolic execution to verify a
+   number of safety properties of CIVL-C programs.   The model
+   checker can also be used to verify that two CIVL-C programs
+   are functionally equivalent.
+ * a number of translators from various commonly-used languages
+   and APIs to CIVL-C. (This part is still a work in progress.)
+
+CIVL is developed by the Verified Software Laboratory at the
+University of Delaware Department of Computer Science.
+For more information, visit http://vsl.cis.udel.edu/civl
+
+Developers:
+
+Stephen F. Siegel
+Timothy K. Zirkel
+Manchun Zheng
+Ziqing Luo
+
+------------------------------- License -------------------------------
+
+CIVL is open source software distributed under the GNU
+General Public License.  However, the libraries used by CIVL
+(and incorporated into the complete distribution) use various
+licenses.  See directory licenses for the license of each component.
+
+-------------------------- Updates from v 0.6 -------------------------
+
+1. A new system function is supported: $comm_add(*comm comm, $proc q, int rank),
+   allowing one process to add another process q into the communicator comm. 
+   Refer to examples/messagePassing/hybrid.cvl for more details.
+
+2. A new partial order reduction algorithm is implemented and performance gets
+   improved greatly.
+
+------------------------- Binary Installation -------------------------
+
+For most users, this will be the easiest way to install and use CIVL.
+
+1. Install a Java 7 SDK if you have not already.  Go to
+http://www.oracle.com/technetwork/java/javase/downloads/ for the
+latest from Oracle.  On linux, you can optionally sudo apt-get install
+openjdk-7-jdk.
+
+2. If you already have the VSL dependencies library, you may
+skip this step.  Otherwise, download the archive of VSL
+dependencies from http://vsl.cis.udel.edu/tools/vsl_depend,
+choosing the version for your OS type (32-bit linux,
+64-bit linux, or 64-bit OS X).  Unzip and untar the
+downloaded .tgz file and you will have a folder named "vsl".
+If you do not already have a directory /opt, create one with
+"mkdir /opt".  Move vsl into /opt.  Use sudo as needed.
+
+3. Download the appropriate CIVL distribution from
+http://vsl.cis.udel.edu/civl.
+
+4. Unzip and untar the downloaded file if this does not happen
+automatically.  This should result in a folder named
+CIVL-TAG, where TAG is some version id string.  This folder
+contains the following:
+
+ - README : this file
+ - bin : containing one executable sh script called "civl"
+ - lib : containing civl-TAG.jar
+ - doc : containing the manual and the tutorial of CIVL
+ - licenses : licenses for CIVL and included libraries
+ - examples : some example CIVL programs
+
+5. Move CIVL-TAG into /opt.
+
+6. Put the civl script in your path however you like to put things
+in your path.   Either move it to a directory in your path,
+or create a symlink to it, or edit your .profile or equivalent
+to put it in your path.
+
+------------------------- Source Installation -------------------------
+
+We recommend using the Eclipse IDE for Java/EE developers.
+
+1. Install prerequisite projects ABC, SARL and GMC. 
+   Make sure that the three projects are put in the workspace
+   directory where CIVL will be put. 
+
+	a. Install the C front-end ABC. In Eclipse, 
+	   select New Project...from SVN, use the archive 
+	   svn://vsl.cis.udel.edu/abc. After entering that, open it 
+	   up and select the "trunk". After checking out trunk, name 
+	   the project "ABC". Then follow the instructions in the INSTALL
+	   file for Eclipse installation. Build the abc.jar from within
+	   Eclipse by right-clicking (or ctrl-clicking on OS X) on the
+	   build.xml file and selecting Run As->Ant Build.
+	
+	b. Install the symbolic algebra and reasoning library SARL.
+	   In Eclipse, select New Project...from SVN, use the archive 
+	   svn://vsl.cis.udel.edu/sarl. After entering that, open it 
+	   up and select the "trunk". After checking out trunk, name 
+	   the project "SARL". Then follow the instructions in the INSTALL 
+	   file for Eclipse installation. Build the sarl.jar from within 
+	   Eclipse by right-clicking (or ctrl-clicking) on the build.xml 
+	   file and selecting Run As->Ant Build.
+
+	c. Install the generic model checking utilities package GMC.
+	   In Eclipse, select New Project...from SVN, use the archive 
+	   svn://vsl.cis.udel.edu/gmc. After entering that, open it 
+	   up and select the "trunk". After checking out trunk, name 
+	   the project "GMC". Build the gmc.jar from within Eclipse
+	   by right-clicking (or ctrl-clicking) on the build.xml file and
+	   selecting Run As->Ant Build.
+
+2. From within Eclipse, select New Project...from SVN. The archive is
+svn://vsl.cis.udel.edu/civl.  After entering that, open it up and
+select the "trunk". (It is simplest to just check out the trunk for
+the Eclipse project.)
+
+3. Check out the trunk, and create the project using the New Java
+Project Wizard as usual, naming it "CIVL". The .project, .classpath,
+and other Eclipse meta-data are already in the SVN archive, saving you
+a bunch of work.
+
+4. If you already have the VSL dependencies library, you may
+skip this step.
+
+Download the tgz archive of VSL dependencies from 
+   http://vsl.cis.udel.edu/tools/vsl_depend,
+   choosing the right .tgz according to your platform:
+	
+	vsl_linux32-1.0.tgz	- 32-bit linux
+	vsl_linux64-1.0.tgz	- 64-bit linux
+	vsl_osx64-1.0.tgz	- 64-bit osx
+	
+   Unzip the .tgz file and you will have the folder vsl.
+   Move vsl to /opt (you might need to use sudo for this.
+   Also, if you don't already have a directory called /opt, 
+   you will have to create it with mkdir /opt).
+
+   Suppose that you put the .tgz file (or .tar file if your browser
+   unzipped it automatically to a .tar file) in the directory $Download.
+   You can use the following commands:
+
+   		$ cd $Download
+   		$ tar xzf YourTgzOrTarFile vsl
+   		$ sudo mv vsl /opt
+
+   Now you can type "ls /opt/vsl", and the output should be
+
+   		README.txt    lib        licenses    src
+
+5. Create a file build.properties in the directory where build.xml is in.
+   Copy and paste the content from properties/build.properties.osx or 
+   properties/build.properties.linux depending on your platform.
+   If your workspace directory is the default setting of Eclipse, 
+   i.e., HOME/Documents/workspace for osx or HOME/workspace for linux, 
+   then you dont have to anything.
+   Otherwise, you need to edit the entry "workspace" to point to the
+   corresponding directory where you put the projects ABC, SARL and GMC.
+
+6. Navigate to Preferences -> Java -> Build Path -> ClassPath 
+   Variables, and then select New to create a classpath variable VSL, 
+   and specify its value to be /opt/vsl. Navigate to Preferences -> Run/Debug 
+   -> String Substitution -> New, and then define an entry vsl_lib and 
+   set its value to be /opt/vsl/lib.
+
+7. Do a clean build.  Everything should compile.  Generate the civl.jar
+   by right-clicking (or ctrl-click on OS X) the build.xml file and
+   Run As->Ant Build.  
+
+8. Go to Run->Run Configurations... Create a new JUnit configuration.
+   Name it CIVL Tests. Select "Run all tests in the selected project..."
+   and navigate to the folder "test" in the CIVL project.
+   The Test runner should be JUnit 4. Under the Arguments tab, type
+   "-ea" (without the quotes) in the VM arguments area (to enable assertion
+   checking). Under the Environment tab, create an entry 
+   DYLD_LIBRARY_PATH (OS X) or LD_LIBRARY_PATH (linux), 
+   specify its value by clicking Variables and choose vsl_lib from the list, 
+   or you may type ${vsl_lib} in the value entry.
+
+9. An example of how to set up a single test from within Eclipse:
+   create a new Run Configuration via the Run->Run
+   Configurations... menu.  Create a new "Java Application"
+   configuration.  Call it "CIVL barrier2".  The Project is CIVL.  The
+   main class is edu.udel.cis.vsl.civl.CIVL.  Under the Arguments tab,
+   set the Program arguments to "examples/barrier2.cvl" (without the
+   quotes).  Modify the VM arguments and the Environment as in the step
+   above.  You should now be able to run the test by clicking "Run".

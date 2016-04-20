@@ -1,0 +1,9 @@
+#include <civlc.cvh>
+
+void main() {
+  $domain dom = ($domain){0 .. 5};
+  int sum = 0;
+  
+  $parfor (int i: dom) // need to specify complete domain type
+    sum += i;
+}

@@ -1,0 +1,393 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State}}
+
+
+\hyperlink{structA}{A} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State} represents the state of a process (thread of execution) in a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_ac360e552f70fe4a6abbf3ed467692e1f}{has\+Empty\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Does this process state have an empty call stack? \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a9a7f310c24d43dcebfb0b0dd980bcebc}{get\+Location} ()
+\begin{DoxyCompactList}\small\item\em Returns the location at the top of the call stack of this process. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_af1d278c69916d774e259736b96fa165d}{get\+Pid} ()
+\begin{DoxyCompactList}\small\item\em Returns the process I\+D (pid) of this process state. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a2bd0a161aafb230460ffc430ce4b830d}{get\+Dyscope\+Id} ()
+\begin{DoxyCompactList}\small\item\em The I\+D of the dynamic scope of the top frame on the call stack. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry}{Stack\+Entry} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a2f92564072e4f205fb2eeeca62af4bad}{peek\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Returns the top frame on the call stack. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry}{Stack\+Entry} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_afa7894316d4343bb6b1a449f495db020}{peek\+Second\+Last\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Returns the second top frame on the call stack. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a822f60d4dace4a05854192d3968efc21}{stack\+Size} ()
+\begin{DoxyCompactList}\small\item\em Returns the length of the call stack. \end{DoxyCompactList}\item 
+Iterable$<$?extends \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry}{Stack\+Entry} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a069a17f0ca13e9675d44a5cd5fe9bc19}{get\+Stack\+Entries} ()
+\begin{DoxyCompactList}\small\item\em Returns an iterable object over the entries in this stack. \end{DoxyCompactList}\item 
+Iterator$<$?extends \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry}{Stack\+Entry} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_aa4cee20d99612ca501a63fe9f0142587}{bottom\+To\+Top\+Iterator} ()
+\begin{DoxyCompactList}\small\item\em Returns an iterator over the entries in the call stack from the bottom to the top. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a5eec7c6c472de4094774b7c786073749}{print} (Print\+Stream out, String prefix)
+\begin{DoxyCompactList}\small\item\em Prints a human-\/readable form of this process state. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a14f3ebfbb30651893390fb62b7f3e545}{increment\+Atomic\+Count} ()
+\begin{DoxyCompactList}\small\item\em Increase the atomic block counter. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a06269068708f12aabc1c65ef99333dd1}{decrement\+Atomic\+Count} ()
+\begin{DoxyCompactList}\small\item\em Decrease the atomic block counter. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a769482476680cd57a4cfbee3449c3b01}{in\+Atomic} ()
+\begin{DoxyCompactList}\small\item\em Check if the current process is in the execution of some atomic block. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a024696cc7cc27f3fbbe48d98e2969d8a}{atomic\+Count} ()
+\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a75eb2fe10d87bb0257930df52a4a9868}{identifier} ()
+\begin{DoxyCompactList}\small\item\em This identifier is not part of the state. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a6c10a95481c5c9b674b5e1cb966122f1}{}String\+Buffer {\bfseries to\+String\+Buffer} (String prefix)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a6c10a95481c5c9b674b5e1cb966122f1}
+
+\item 
+String \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a00f957b14faf3da1bd93941b096b5ab8}{name} ()
+\begin{DoxyCompactList}\small\item\em This name is not part of the state. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a8d926ecc5fce4dfb35837fa059a0504b}{}Map$<$ Symbolic\+Expression, Boolean $>$ {\bfseries get\+Reachable\+Mem\+Units\+Wo\+Pointer} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a8d926ecc5fce4dfb35837fa059a0504b}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_afb859e7260af5efd6e2d44a4060c0bc0}{}Map$<$ Symbolic\+Expression, Boolean $>$ {\bfseries get\+Reachable\+Mem\+Units\+Wt\+Pointer} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_afb859e7260af5efd6e2d44a4060c0bc0}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_ac728c81abbc121c59b9f1798978a421e}{}String\+Buffer {\bfseries to\+S\+Brieftring\+Buffer} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_ac728c81abbc121c59b9f1798978a421e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State} represents the state of a process (thread of execution) in a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. 
+
+The process has an integer I\+D number, the P\+I\+D, unique among the processes in the state.
+
+The state of the process is essentially a call stack. The entries on the stack are \char`\"{}activation frames\char`\"{}, instances of \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry}{Stack\+Entry}.
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a024696cc7cc27f3fbbe48d98e2969d8a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!atomic\+Count@{atomic\+Count}}
+\index{atomic\+Count@{atomic\+Count}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{atomic\+Count}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+atomic\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a024696cc7cc27f3fbbe48d98e2969d8a}
+\begin{DoxyReturn}{Returns}
+The number of \$atomic blocks that are currently being executed in this process 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_ab27251e76ea8448b55e9d6eccb97eb36}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_aa4cee20d99612ca501a63fe9f0142587}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!bottom\+To\+Top\+Iterator@{bottom\+To\+Top\+Iterator}}
+\index{bottom\+To\+Top\+Iterator@{bottom\+To\+Top\+Iterator}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{bottom\+To\+Top\+Iterator}]{\setlength{\rightskip}{0pt plus 5cm}Iterator$<$? extends {\bf Stack\+Entry}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+bottom\+To\+Top\+Iterator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_aa4cee20d99612ca501a63fe9f0142587}
+
+
+Returns an iterator over the entries in the call stack from the bottom to the top. 
+
+\begin{DoxyReturn}{Returns}
+iterator from bottom to top 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a8179f2d3d062aaf7e413c3053e321c1d}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a06269068708f12aabc1c65ef99333dd1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!decrement\+Atomic\+Count@{decrement\+Atomic\+Count}}
+\index{decrement\+Atomic\+Count@{decrement\+Atomic\+Count}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{decrement\+Atomic\+Count}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Process\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+decrement\+Atomic\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a06269068708f12aabc1c65ef99333dd1}
+
+
+Decrease the atomic block counter. 
+
+Invoked when reaching the end of a certain atomic block.
+
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new process state with the atomic block counter decreased by one and other fields remain unchanged. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a6d2dd160f75fccf28af49896cf9424eb}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a2bd0a161aafb230460ffc430ce4b830d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!get\+Dyscope\+Id@{get\+Dyscope\+Id}}
+\index{get\+Dyscope\+Id@{get\+Dyscope\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{get\+Dyscope\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+get\+Dyscope\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a2bd0a161aafb230460ffc430ce4b830d}
+
+
+The I\+D of the dynamic scope of the top frame on the call stack. 
+
+Undefined behavior if call stack is empty.
+
+\begin{DoxyReturn}{Returns}
+the dyscope id of the dyscope on the top frame of the call stack 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_acfd5b3aac9b5caf5c810cddf6eecabfe}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a9a7f310c24d43dcebfb0b0dd980bcebc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!get\+Location@{get\+Location}}
+\index{get\+Location@{get\+Location}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{get\+Location}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Location} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+get\+Location (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a9a7f310c24d43dcebfb0b0dd980bcebc}
+
+
+Returns the location at the top of the call stack of this process. 
+
+Undefined behavior if stack is empty.
+
+\begin{DoxyReturn}{Returns}
+location at top of call stack 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a952ce1461d69786f6e72bcfbed82cee2}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_af1d278c69916d774e259736b96fa165d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!get\+Pid@{get\+Pid}}
+\index{get\+Pid@{get\+Pid}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{get\+Pid}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+get\+Pid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_af1d278c69916d774e259736b96fa165d}
+
+
+Returns the process I\+D (pid) of this process state. 
+
+Within a fixed state, every process is assigned an integer I\+D which is unique. It does not necessarily stay the same from state to state though.
+
+\begin{DoxyReturn}{Returns}
+the P\+I\+D of the process 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a5b4cf2eb8a50e7a05302b8e69e746a9a}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a069a17f0ca13e9675d44a5cd5fe9bc19}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!get\+Stack\+Entries@{get\+Stack\+Entries}}
+\index{get\+Stack\+Entries@{get\+Stack\+Entries}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{get\+Stack\+Entries}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<$? extends {\bf Stack\+Entry}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+get\+Stack\+Entries (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a069a17f0ca13e9675d44a5cd5fe9bc19}
+
+
+Returns an iterable object over the entries in this stack. 
+
+Order is fixed (will be the same each time this method is called), but not specified.
+
+\begin{DoxyReturn}{Returns}
+the entries in the stack 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a99517eec25635ec99bd607b6ca4f5331}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_ac360e552f70fe4a6abbf3ed467692e1f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!has\+Empty\+Stack@{has\+Empty\+Stack}}
+\index{has\+Empty\+Stack@{has\+Empty\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{has\+Empty\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+has\+Empty\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_ac360e552f70fe4a6abbf3ed467692e1f}
+
+
+Does this process state have an empty call stack? 
+
+\begin{DoxyReturn}{Returns}
+true iff the call stack is empty 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_aed5729aefd94c5a468142aa0868899ec}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a75eb2fe10d87bb0257930df52a4a9868}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!identifier@{identifier}}
+\index{identifier@{identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{identifier}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a75eb2fe10d87bb0257930df52a4a9868}
+
+
+This identifier is not part of the state. 
+
+It is never renamed, helping to identify a specific process when processes get collected.
+
+\begin{DoxyReturn}{Returns}
+The identifier of this process. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_ab908fba02b613117ddabf0e32b675106}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a769482476680cd57a4cfbee3449c3b01}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!in\+Atomic@{in\+Atomic}}
+\index{in\+Atomic@{in\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{in\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+in\+Atomic (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a769482476680cd57a4cfbee3449c3b01}
+
+
+Check if the current process is in the execution of some atomic block. 
+
+\begin{DoxyReturn}{Returns}
+True if the current process is executing some atomic block. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a8717c0d252eca7a8f0c4ede87c3667c8}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a14f3ebfbb30651893390fb62b7f3e545}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!increment\+Atomic\+Count@{increment\+Atomic\+Count}}
+\index{increment\+Atomic\+Count@{increment\+Atomic\+Count}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{increment\+Atomic\+Count}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Process\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+increment\+Atomic\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a14f3ebfbb30651893390fb62b7f3e545}
+
+
+Increase the atomic block counter. 
+
+Invoked when encountering a new atomic block.
+
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new process state with the atomic block counter increased by one and other fields remain unchanged. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_af23028210a642b9dba74d8f3347e151c}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a00f957b14faf3da1bd93941b096b5ab8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!name@{name}}
+\index{name@{name}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a00f957b14faf3da1bd93941b096b5ab8}
+
+
+This name is not part of the state. 
+
+It is immutable and never renamed, helping to identify a specific process when processes get collected.
+
+\begin{DoxyReturn}{Returns}
+The name of this process, in the form of ,{\ttfamily p} +identifier, e.\+g. {\ttfamily p2}, {\ttfamily p3}. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a5b5acfbf5447a51b6be171fbfd370990}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_afa7894316d4343bb6b1a449f495db020}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!peek\+Second\+Last\+Stack@{peek\+Second\+Last\+Stack}}
+\index{peek\+Second\+Last\+Stack@{peek\+Second\+Last\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{peek\+Second\+Last\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Stack\+Entry} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+peek\+Second\+Last\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_afa7894316d4343bb6b1a449f495db020}
+
+
+Returns the second top frame on the call stack. 
+
+Return N\+U\+L\+L if the process has fewer than two stacks.
+
+\begin{DoxyReturn}{Returns}
+top frame on call stack. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a549b7ab395aabd5ae3172072adedb692}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a2f92564072e4f205fb2eeeca62af4bad}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!peek\+Stack@{peek\+Stack}}
+\index{peek\+Stack@{peek\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{peek\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Stack\+Entry} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+peek\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a2f92564072e4f205fb2eeeca62af4bad}
+
+
+Returns the top frame on the call stack. 
+
+Undefined behavior if call stack is empty.
+
+\begin{DoxyReturn}{Returns}
+top frame on call stack. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_abeedb8e756573f7e44183260b1fc4743}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a5eec7c6c472de4094774b7c786073749}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!print@{print}}
+\index{print@{print}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+print (
+\begin{DoxyParamCaption}
+\item[{Print\+Stream}]{out, }
+\item[{String}]{prefix}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a5eec7c6c472de4094774b7c786073749}
+
+
+Prints a human-\/readable form of this process state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & print stream to which the output is sent \\
+\hline
+{\em prefix} & a string to prepend to each line of output \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a355fe8e99c9078c48e95789a259ec95c}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a822f60d4dace4a05854192d3968efc21}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}!stack\+Size@{stack\+Size}}
+\index{stack\+Size@{stack\+Size}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Process\+State}}
+\subsubsection[{stack\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Process\+State.\+stack\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState_a822f60d4dace4a05854192d3968efc21}
+
+
+Returns the length of the call stack. 
+
+\begin{DoxyReturn}{Returns}
+the length of the call stack 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState_a802ad0474e539455212ddf903a8fc4e1}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Process\+State}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/state/\+I\+F/Process\+State.\+java\end{DoxyCompactItemize}

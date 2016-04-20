@@ -1,0 +1,14 @@
+#include <civlc.cvh>
+#include <math.h>
+#include <stdio.h>
+
+$input double x;
+
+void main() {
+  double y = exp(x);
+  double z = exp(1+x-1);
+
+  printf("y=%f\n", y);
+  printf("z=%f\n", z);
+  $assert(y==z);
+}

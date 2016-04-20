@@ -1,0 +1,55 @@
+#include<civlc.h>
+
+int L = 3;
+int M = 4;
+int N = 5;
+int TILE_SIZE = 3;
+$input double A[L][M];
+$input double B[M][N];
+double C[L][N];
+double D[L][N];
+
+void spec() {
+  for (int i = 0; i < L; i++) 
+    for (int j = 0; j < N; j++) {
+      C[i][j] = 0.0;
+      for (int k = 0; k < M; k++)
+        C[i][j] += A[i][k] * B[k][j]; 
+    }
+}
+
+void rowdist() {
+  int hi1, hi2, hi3;
+  
+  for (int i = 0; i < L; i++) {
+    for (int j = 0; j < N; j++) {
+      D[i][j] = 0.0;
+    }
+  }
+  
+  for (int ii = 0; ii < L; ii+=TILE_SIZE) {
+    for (int jj = 0; jj < N; jj+=TILE_SIZE) {
+      for (int kk = 0; kk < M; kk+=TILE_SIZE) {
+        hi1 = (ii + TILE_SIZE < L ? ii+TILE_SIZE : L);
+        for (int i = ii; i < hi1; i++) {
+          hi2 = (jj + TILE_SIZE < N ? jj + TILE_SIZE : N);
+          for (int j = jj; j < hi2; j++) {
+            hi3 = (kk + TILE_SIZE < M ? kk + TILE_SIZE : M);
+            for (int k = kk; k < hi3; k++)
+              D[i][j] = D[i][j] + A[i][k] * B[k][j]; 
+          }
+        }
+      }
+    }
+  }
+}
+
+void main() {
+  spec();
+  rowdist();
+  for (int i = 0; i < L; i++) {
+    for (int j = 0; j < N; j++) {
+      $assert C[i][j] == D[i][j];
+    }
+  }
+}

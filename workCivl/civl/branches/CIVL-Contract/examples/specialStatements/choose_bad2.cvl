@@ -1,0 +1,10 @@
+#include<civlc.cvh>
+
+int main(){
+  int x;
+  $scope scp;
+
+  $choose{
+    $when(scp<$here) x++;
+  }
+}

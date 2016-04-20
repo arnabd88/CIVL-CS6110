@@ -1,0 +1,191 @@
+/* simple exercise in multitasking verification using CIVL. 
+ * Commandline execution:
+ * 		civl verify -inputNUM_ACCOUNTS=5 bank.cvl
+ * */
+#include<civlc.h>
+
+$input int NUM_ACCOUNTS;
+
+/* ======================================================================== 
+   constants
+ */
+#define true 1
+#define false 0
+
+/* ======================================================================== 
+   prototypes
+ */
+
+void init();
+int withdraw( int account_num, int amount );
+int deposit( int account_num, int amount );
+int balance( int account_num );
+int transfer( int to_account_num, int from_account_num, int amount );
+void lock_account( int account_num );
+void unlock_account( int account_num );
+
+/* ======================================================================== 
+   global variables
+ */
+int account_balance[ NUM_ACCOUNTS ];
+int account_locked[ NUM_ACCOUNTS ];
+
+/* ======================================================================== */
+void init ()
+{
+   int acct_num;
+   
+   for ( acct_num= 0; acct_num < NUM_ACCOUNTS; acct_num++ )  {
+      account_balance[acct_num]= 0;
+      account_locked[acct_num]= false;
+   }
+}
+
+/* ======================================================================== */
+int withdraw( int account_num, int amount )
+/* Return value: false if success, true if an error occurred 
+ */
+{
+   int result;
+	
+   $assume 0 <= account_num;
+   $assume account_num <= NUM_ACCOUNTS;
+   $assume amount >= 0;
+   // begin transaction
+   lock_account( account_num );
+   if ( account_balance[account_num] >= amount )  {
+      account_balance[account_num]= account_balance[account_num]- amount;
+      result= false;
+   } else {
+      result= true;
+   }
+   // end transaction
+   unlock_account( account_num );
+   return result;
+}
+
+/* ======================================================================== */
+int deposit( int account_num, int amount )
+/* Return value: false if success, true if an error occurred 
+ */
+{
+   $assume 0 <= account_num;
+   $assume account_num <= NUM_ACCOUNTS;
+   $assume amount >= 0;
+   // begin transaction 
+   lock_account( account_num );
+   account_balance[account_num]= account_balance[account_num]+ amount;
+   // end transaction
+   unlock_account( account_num );
+   return false;
+}
+
+/* ======================================================================== */
+int balance( int account_num )
+/* Return value: the balance of the indicated account
+ */
+{
+   int balance= 0;
+   
+   $assume 0 <= account_num;
+   $assume account_num <= NUM_ACCOUNTS;
+   // begin transaction
+   lock_account( account_num );
+   balance= account_balance[account_num];
+   // end transaction
+   unlock_account( account_num );
+   return account_balance[account_num];
+}
+
+/* ======================================================================== */
+int transfer( int to_account_num, int from_account_num, int amount )
+/* Return value: false if success, true if an error occurred 
+ */
+{
+   int result= false;
+	
+   $assume 0 <= to_account_num;
+   $assume to_account_num <= NUM_ACCOUNTS;
+   $assume 0 <= from_account_num;
+   $assume from_account_num <= NUM_ACCOUNTS;
+   $assume from_account_num != to_account_num;
+   $assume amount >= 0;
+   // begin transaction
+   if ( from_account_num < to_account_num )  {
+      lock_account( from_account_num );
+      lock_account( to_account_num );
+   } else {
+      lock_account( to_account_num );
+      lock_account( from_account_num );
+   }
+   if ( account_balance[from_account_num] >= amount )  {
+      account_balance[from_account_num]-= amount;
+      account_balance[to_account_num]+= amount;
+      result= false;
+   } else {
+      result= true;
+   }
+   // end transaction
+   if ( from_account_num < to_account_num )  {
+      unlock_account( to_account_num );
+      unlock_account( from_account_num );
+   } else {
+      unlock_account( from_account_num );
+      unlock_account( to_account_num );
+   }
+   return result;
+}
+
+/* ======================================================================== */
+/* main() and its helper ftns
+ */
+void main_a()
+{
+   withdraw( 0, 50 );
+   transfer( 0, 1, 50 );
+   deposit( 2, 100 );
+}
+
+void main_b()
+{
+   deposit( 1, 10 );
+   withdraw( 2, 50 );
+   transfer( 2, 0, 20 );
+}
+
+void main() 
+{
+   int acct_num = 0;
+   $proc proc_a;
+   $proc proc_b;
+
+   init();
+   /* give all accounts some money */
+   for ( acct_num= 0; acct_num < NUM_ACCOUNTS; acct_num++ )  {
+      deposit( acct_num, 100 );
+   }
+   proc_a= $spawn main_a();
+   proc_b= $spawn main_b();
+   $wait proc_a;
+   $wait proc_b;
+}
+
+/* ======================================================================== */
+void lock_account( int account_num )
+{
+   $assume 0 <= account_num;
+   $assume account_num <= NUM_ACCOUNTS;
+   // this needs to happen atomically -- does it?
+   $when (account_locked[account_num] == false) account_locked[account_num]= true;
+}
+
+/* ======================================================================== */
+void unlock_account( int account_num )
+{
+   $assume 0 <= account_num;
+   $assume account_num <= NUM_ACCOUNTS;
+
+   account_locked[ account_num ]= false;
+}
+/* ======================================================================== */
+/* end of file */

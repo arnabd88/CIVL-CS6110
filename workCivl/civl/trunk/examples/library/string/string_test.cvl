@@ -1,0 +1,21 @@
+#include <civlc.cvh>
+#include<stdlib.h>
+#include<string.h>
+
+void main(){
+  char* s;
+  int len;
+  
+  s = (char*)malloc(sizeof(char) * 5);
+  
+  //s[0] = 'a';
+  //s[1] = 'b';
+  strcpy(s, "abcd");
+  int x = strcmp(s, "abcd");
+  $assert(x==0);
+  len = strlen(s);
+  $assert(len == 4);
+  len = strlen(s + 1);
+  $assert(len == 3);
+  free(s);
+}

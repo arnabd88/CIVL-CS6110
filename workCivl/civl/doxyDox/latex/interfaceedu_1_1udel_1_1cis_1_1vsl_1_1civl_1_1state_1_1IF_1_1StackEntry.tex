@@ -1,0 +1,92 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Stack\+Entry Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Stack\+Entry@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Stack\+Entry}}
+
+
+An entry on a call stack of a process; also known as an \char`\"{}activation frame\char`\"{}.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Stack\+Entry\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_a02cfe9422f4c36e31fe124277418d27c}{location} ()
+\begin{DoxyCompactList}\small\item\em Returns the static location component of this activation frame. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_a206f3a162926cf97ab36c6a582edce10}{scope} ()
+\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_af4da402336bd0c3164a9342f94996254}{dyscope\+Identifier} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An entry on a call stack of a process; also known as an \char`\"{}activation frame\char`\"{}. 
+
+An entry records the current location and dynamic scope of a process.
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_af4da402336bd0c3164a9342f94996254}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry}!dyscope\+Identifier@{dyscope\+Identifier}}
+\index{dyscope\+Identifier@{dyscope\+Identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry}}
+\subsubsection[{dyscope\+Identifier}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Stack\+Entry.\+dyscope\+Identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_af4da402336bd0c3164a9342f94996254}
+\begin{DoxyReturn}{Returns}
+The identifier of the dynamic scope of the process at the time of the function call. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStackEntry_aed6abcd2dc5e2a2f769d8c8993cb2b05}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Stack\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_a02cfe9422f4c36e31fe124277418d27c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry}!location@{location}}
+\index{location@{location}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry}}
+\subsubsection[{location}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Location} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Stack\+Entry.\+location (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_a02cfe9422f4c36e31fe124277418d27c}
+
+
+Returns the static location component of this activation frame. 
+
+This is the value of the \char`\"{}program counter\char`\"{}.
+
+\begin{DoxyReturn}{Returns}
+the static location 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStackEntry_a790e0d9b1e632451374dc092664dddb2}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Stack\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_a206f3a162926cf97ab36c6a582edce10}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry}!scope@{scope}}
+\index{scope@{scope}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Stack\+Entry}}
+\subsubsection[{scope}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Stack\+Entry.\+scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry_a206f3a162926cf97ab36c6a582edce10}
+\begin{DoxyReturn}{Returns}
+The I\+D of the dynamic scope of the process at the time of the function call. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStackEntry_a798f538364a9b130f64a994a557cf510}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Stack\+Entry}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/state/\+I\+F/Stack\+Entry.\+java\end{DoxyCompactItemize}

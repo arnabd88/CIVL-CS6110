@@ -1,0 +1,9 @@
+#include <civlc.h>
+
+void main(){
+  int * a = (int*) $malloc($here, sizeof(int));
+  
+  $free(NULL);
+  $free(a);
+  *a = 9; //a has already been deallocated and the dereference is error prone.
+}

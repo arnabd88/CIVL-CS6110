@@ -1,0 +1,9 @@
+#include <civlc.cvh>
+
+void main(){
+  int * a = (int*) $malloc($here, sizeof(int));
+ 
+  $free(NULL);
+  $free(a);
+  $free(a); //a has already been deallocated and the call is error prone.
+}

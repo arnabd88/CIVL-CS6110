@@ -1,0 +1,26 @@
+#include<civlc.cvh>
+
+void thr0(){
+  int x=0;
+  while(x<5){
+    x++;
+  }
+  while(1);
+}
+
+void thr2(){
+  int y=0;
+  while(y<5){
+    y++;
+  }
+  while(1);
+}
+
+int main(){
+  $proc p0,p2;
+
+  p0=$spawn thr0();
+  p2=$spawn thr2();
+  $wait(p0);
+  $wait(p2);
+}

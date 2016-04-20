@@ -1,0 +1,8 @@
+This folder contains a sequential and a concurrent implementation of an
+algorithm to find the maximum element in an array.
+
+max.cvl: the driver
+max_seq.cvl: the sequential implementation
+max_par.cvl: the concurrent implementation (with data races)
+
+CIVL finds that the two versions are not equivalent.

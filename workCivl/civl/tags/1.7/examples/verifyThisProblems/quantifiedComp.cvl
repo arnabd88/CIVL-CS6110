@@ -1,0 +1,50 @@
+/*
+Author: Yihao
+
+Download LCP.zip from: http://fm2012.verifythis.org/challenges
+
+-----------------
+Problem description:
+
+This is a verifyThis problem in 2012.
+This task asks you to get the longest common prefix of
+two subStrings.
+
+-----------------
+Verification task:
+
+Implement a the lcp function which takes an array, its length and two indices as input
+and verify that it behaves as described.
+
+command: civl verify quantifiedComp.cvl
+
+result: 
+For arrays with length less than 5, lcp function returns an integer n which is
+the length of the longest common prefix between its two suffixes: The two suffixes
+are the same with indexes from 0 to n-1 while they are different at index n.
+*/
+
+#include <civlc.cvh>
+#include <assert.h>
+
+$input int n=3;
+$input int x;
+$input int y;
+$input int X1[n];
+
+$assume (x < n && y < n && x >=0 && y>=0);
+
+int lcp (int *arr, int n, int x, int y) {
+  int l=0;
+
+  while (x+l<n && y+l<n && arr[x+l]==arr[y+l]) {
+      l++;
+  }
+  return l;
+}
+
+void main() {
+  int result = lcp(X1, n, x, y);
+  
+  assert($forall {int i | i>=0 && i<result} X1[x+i] == X1[y+i]);
+}

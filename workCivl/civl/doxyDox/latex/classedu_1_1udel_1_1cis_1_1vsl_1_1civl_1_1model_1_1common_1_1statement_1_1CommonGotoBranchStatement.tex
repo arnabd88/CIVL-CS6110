@@ -1,0 +1,73 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Goto\+Branch\+Statement Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Goto\+Branch\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Goto\+Branch\+Statement}}
+
+
+\hyperlink{structA}{A} goto statement (e.\+g., {\ttfamily goto l1;}) is usually translated to a noop statement because it has no side-\/effect.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Goto\+Branch\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Goto\+Branch\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement_a38d6e4e9f4c3350b4d71ee4e9792facd}{Common\+Goto\+Branch\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civl\+Source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} guard, String label)
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement_aa7fddf806c7211715fa73e06a6dcf2ec}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement_aa7fddf806c7211715fa73e06a6dcf2ec}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} goto statement (e.\+g., {\ttfamily goto l1;}) is usually translated to a noop statement because it has no side-\/effect. 
+
+In order to have more information about the transition, we create this class to extend \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement}{Common\+Noop\+Statement}. Currently, there is a field \hyperlink{}{label\+Name} to denote the label of the target location of this goto statement.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement_a38d6e4e9f4c3350b4d71ee4e9792facd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Goto\+Branch\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Goto\+Branch\+Statement}!Common\+Goto\+Branch\+Statement@{Common\+Goto\+Branch\+Statement}}
+\index{Common\+Goto\+Branch\+Statement@{Common\+Goto\+Branch\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Goto\+Branch\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Goto\+Branch\+Statement}}
+\subsubsection[{Common\+Goto\+Branch\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Goto\+Branch\+Statement.\+Common\+Goto\+Branch\+Statement (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{civl\+Source, }
+\item[{{\bf Location}}]{source, }
+\item[{{\bf Expression}}]{guard, }
+\item[{String}]{label}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonGotoBranchStatement_a38d6e4e9f4c3350b4d71ee4e9792facd}
+
+\begin{DoxyParams}{Parameters}
+{\em civl\+Source} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of this statement. More information in \hyperlink{}{C\+I\+V\+L\+Source}. \\
+\hline
+{\em source} & The source location of this goto statement \\
+\hline
+{\em label} & The label name of this goto statement \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/statement/Common\+Goto\+Branch\+Statement.\+java\end{DoxyCompactItemize}

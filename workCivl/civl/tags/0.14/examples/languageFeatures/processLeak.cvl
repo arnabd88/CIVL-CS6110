@@ -1,0 +1,20 @@
+/**
+ * This example demonstrates the checking of process leak, i.e., 
+ * when the main function returns, there should be no other processes
+ * running or being blocked.
+ *
+ * Command line execution: civl verify memoryLeak.cvl
+ */
+#include<civlc.cvh>
+
+$proc mainP=$proc_null;
+
+void process(){
+  $when(mainP != $proc_null);
+  $wait(mainP);
+}
+
+void main(){
+  $spawn process();
+  mainP = $self;
+}

@@ -1,0 +1,23 @@
+/* Commandline execution:
+ *		civl verify nonbooleanCondition.cvl
+ * */
+#include<civlc.h>
+
+void main() {
+  int i = 1;
+  float x = 1.0;
+  int* p = NULL;
+  int a = 9, b = 8;
+  
+  if(a && b){
+    a = 0;
+  }else{
+    a = 5;
+  }
+  $when(i) {i = 0;}
+  $when(x) {x = 0.0;}
+  $assert(i == 0);
+  $assert(x == 0.0);
+  $when(!p){p = &i;}
+  $assert(*p == i);
+}

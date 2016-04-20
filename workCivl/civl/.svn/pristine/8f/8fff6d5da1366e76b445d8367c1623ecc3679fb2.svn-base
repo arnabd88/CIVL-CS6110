@@ -1,0 +1,15 @@
+#include<civlc.cvh>
+
+int main(){
+  int a, *p, t;
+  void*q;
+
+  p=&a;
+  t=(int)p;
+  p=(int*)t;
+  $assert(p==&a);
+  a=9;
+  q=(void*)a;
+  t=(int)q;
+  $assert(t==a);
+}

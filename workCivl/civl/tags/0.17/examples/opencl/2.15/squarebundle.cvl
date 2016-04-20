@@ -1,0 +1,36 @@
+#include <civlc.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  int * input;
+  int * output;
+  
+  output = (int *)malloc(sizeof(int));
+  
+  int first = 1;
+  
+  input = &first;
+  
+  int sizex = sizeof(int);
+  
+  $bundle what = $bundle_pack(&first, sizex);
+  
+  first = first + 1;
+  //*input = *input + 1;
+  
+  /*
+  what = what + 1;
+  Don't do this
+  */
+  
+  
+  $bundle_unpack(what, output);
+  
+  printf("%d, %d", input[0], output[0]);
+  
+  free(output);
+  
+  return 0;
+}

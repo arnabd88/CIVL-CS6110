@@ -1,0 +1,1478 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FortranASTBuilderWorker.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.fortran.astgen</a> &gt; <span class="el_source">FortranASTBuilderWorker.java</span></div><h1>FortranASTBuilderWorker.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.fortran.astgen;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.antlr.runtime.CommonToken;
+import org.antlr.runtime.Token;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode.ExpressionKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FloatingConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.OrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.SwitchLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LabeledStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.SwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.ArrayTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode.TypeNodeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.front.IF.ParseException;
+import edu.udel.cis.vsl.abc.front.IF.PreprocessorException;
+import edu.udel.cis.vsl.abc.front.common.astgen.LibraryASTFactory;
+import edu.udel.cis.vsl.abc.front.common.astgen.SimpleScope;
+import edu.udel.cis.vsl.abc.front.fortran.ptree.FortranTree;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.Formation;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.token.IF.StringToken;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+<span class="nc bnc" id="L58" title="All 2 branches missed.">public class FortranASTBuilderWorker {</span>
+
+	/* Instance Field */
+	private Configuration configuration;
+
+	private String filePath;
+
+	private FortranTree parseTree;
+
+	private TokenFactory tokenFactory;
+
+	private LibraryASTFactory libFactory;
+
+	// private TypeFactory typeFactory = Types.newTypeFactory();
+	//
+	// private ValueFactory valueFactory = Values.newValueFactory(configuration,
+	// typeFactory);
+
+	private NodeFactory nodeFactory;
+
+	private ASTFactory astFactory;
+
+	private SequenceNode&lt;BlockItemNode&gt; rootNode;
+
+	private ArrayList&lt;BlockItemNode&gt; programUnits;
+
+<span class="nc" id="L84">	private boolean hasSTDIO = false;</span>
+
+<span class="nc" id="L86">	private Map&lt;String, TypeNode&gt; localMap = new HashMap&lt;String, TypeNode&gt;();</span>
+	//private Map&lt;String, VariableDeclarationNode&gt; localMap2 = new HashMap&lt;String, VariableDeclarationNode&gt;();
+
+<span class="nc" id="L89">	private List&lt;BlockItemNode&gt; tempItems = null;</span>
+
+	/* Constructor */
+
+<span class="nc" id="L93">	public FortranASTBuilderWorker(Configuration config, FortranTree parseTree,</span>
+			ASTFactory astFactory, String filePath) {
+<span class="nc" id="L95">		this.configuration = config;</span>
+<span class="nc" id="L96">		this.parseTree = parseTree;</span>
+<span class="nc" id="L97">		this.filePath = filePath;</span>
+<span class="nc" id="L98">		this.astFactory = astFactory;</span>
+<span class="nc" id="L99">		this.libFactory = new LibraryASTFactory();</span>
+<span class="nc" id="L100">		this.nodeFactory = astFactory.getNodeFactory();</span>
+<span class="nc" id="L101">		this.tokenFactory = astFactory.getTokenFactory();</span>
+<span class="nc" id="L102">		this.programUnits = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L103">	}</span>
+
+	/* Private Functions */
+	private CivlcToken findLToken(FortranTree node) {
+<span class="nc" id="L107">		CivlcToken result = null;</span>
+<span class="nc" id="L108">		Token[] tempTokens = node.cTokens();</span>
+<span class="nc" id="L109">		int numChildren = node.numChildren();</span>
+<span class="nc" id="L110">		int childIndex = 0;</span>
+
+<span class="nc bnc" id="L112" title="All 4 branches missed.">		if (tempTokens != null &amp;&amp; tempTokens.length &gt; 0) {</span>
+<span class="nc" id="L113">			return (CivlcToken) node.cTokens()[0];</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		} else if (numChildren &gt; 0) {</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			while (childIndex &lt; numChildren) {</span>
+<span class="nc" id="L116">				FortranTree tempNode = node.getChildByIndex(childIndex);</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">				if (tempNode != null) {</span>
+<span class="nc" id="L119">					result = findLToken(tempNode);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">					if (result != null)</span>
+<span class="nc" id="L121">						return result;</span>
+				}
+<span class="nc" id="L123">				childIndex++;</span>
+			}
+		}
+<span class="nc" id="L126">		return result;</span>
+	}
+
+	private CivlcToken findRToken(FortranTree node) {
+<span class="nc" id="L130">		CivlcToken result = null;</span>
+<span class="nc" id="L131">		Token[] tempTokens = node.cTokens();</span>
+<span class="nc" id="L132">		int childIndex = node.numChildren() - 1;</span>
+
+<span class="nc bnc" id="L134" title="All 4 branches missed.">		if (tempTokens != null &amp;&amp; tempTokens.length &gt; 0) {</span>
+<span class="nc" id="L135">			return (CivlcToken) node.cTokens()[tempTokens.length - 1];</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		} else if (childIndex &gt;= 0) {</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			while (childIndex &gt;= 0) {</span>
+<span class="nc" id="L138">				FortranTree tempNode = node.getChildByIndex(childIndex);</span>
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">				if (tempNode != null) {</span>
+<span class="nc" id="L141">					result = findRToken(tempNode);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">					if (result != null)</span>
+<span class="nc" id="L143">						return result;</span>
+				}
+<span class="nc" id="L145">				childIndex--;</span>
+			}
+		}
+<span class="nc" id="L148">		return result;</span>
+	}
+
+	private Source generateSource(FortranTree... sourceNodes) {
+<span class="nc" id="L152">		int numNodes = sourceNodes.length;</span>
+<span class="nc" id="L153">		int counter = 0;</span>
+<span class="nc" id="L154">		CivlcToken lToken = null, rToken = null;</span>
+<span class="nc" id="L155">		Formation dummyFormation = tokenFactory.newInclusion(new SourceFile(</span>
+<span class="nc" id="L156">				new File(this.filePath), 0));</span>
+<span class="nc" id="L157">		Source result = null;</span>
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (counter = 0; counter &lt; numNodes; counter++) {</span>
+<span class="nc" id="L160">			Token tempToken = null;</span>
+<span class="nc" id="L161">			FortranTree tempNode = sourceNodes[counter];</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (tempNode != null) {</span>
+<span class="nc" id="L164">				tempToken = findLToken(tempNode);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">				if (tempToken != null) {</span>
+<span class="nc" id="L166">					lToken = (CivlcToken) tempToken;</span>
+<span class="nc" id="L167">					break;</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		for (counter = numNodes - 1; counter &gt; -1; counter--) {</span>
+<span class="nc" id="L172">			Token tempToken = null;</span>
+<span class="nc" id="L173">			FortranTree tempNode = sourceNodes[counter];</span>
+
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (tempNode != null) {</span>
+<span class="nc" id="L176">				tempToken = findRToken(tempNode);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (tempToken != null) {</span>
+<span class="nc" id="L178">					rToken = (CivlcToken) tempToken;</span>
+<span class="nc" id="L179">					break;</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (lToken == null) {</span>
+<span class="nc" id="L184">			result = tokenFactory.newSource(tokenFactory.newCivlcToken(</span>
+<span class="nc" id="L185">					new CommonToken(0, &quot;&quot;), dummyFormation));</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		} else if (rToken == null) {</span>
+<span class="nc" id="L187">			rToken = lToken;</span>
+<span class="nc" id="L188">			result = tokenFactory.newSource(lToken);</span>
+<span class="nc" id="L189">		} else {</span>
+<span class="nc" id="L190">			result = tokenFactory.newSource(lToken, rToken);</span>
+		}
+<span class="nc" id="L192">		return result;</span>
+	}
+
+	private FunctionTypeNode translateFunctionType(
+			FortranTree programPrefixNode, FortranTree parameterNode,
+			boolean isMain, Map&lt;String, VariableDeclarationNode&gt; argsMap) {
+<span class="nc" id="L198">		FunctionTypeNode functionType = null;</span>
+<span class="nc" id="L199">		Source typeSource = generateSource(programPrefixNode);</span>
+		TypeNode returnType;
+<span class="nc" id="L201">		List&lt;VariableDeclarationNode&gt; formalList = new LinkedList&lt;VariableDeclarationNode&gt;();</span>
+<span class="nc" id="L202">		SequenceNode&lt;VariableDeclarationNode&gt; formals = null;</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		boolean hasIdentifierList = parameterNode != null;</span>
+
+<span class="nc" id="L205">		returnType = nodeFactory.newVoidTypeNode(typeSource);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (isMain) {</span>
+<span class="nc" id="L207">			returnType = nodeFactory.newBasicTypeNode(typeSource,</span>
+<span class="nc" id="L208">					BasicTypeKind.INT);</span>
+<span class="nc" id="L209">		} else {</span>
+<span class="nc" id="L210">			returnType = nodeFactory.newVoidTypeNode(typeSource);</span>
+		}
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (hasIdentifierList) {</span>
+<span class="nc" id="L213">			int numOfFormals = parameterNode.numChildren();</span>
+
+<span class="nc bnc" id="L215" title="All 2 branches missed.">			for (int i = 0; i &lt; numOfFormals; i++) {</span>
+				/*
+				 * A first letter of I, J, K, L, M, or N implies type integer
+				 * and any other letter type real, unless an IMPLICIT statement
+				 * is used to change the default implied type.
+				 */
+<span class="nc" id="L221">				IdentifierNode formalIdNode = translateIdentifier(parameterNode</span>
+<span class="nc" id="L222">						.getChildByIndex(i));</span>
+<span class="nc" id="L223">				String formalName = formalIdNode.name();</span>
+<span class="nc" id="L224">				String pattern = &quot;^(I|J|K|L|M|N|i|j|k|l|m|n).*$&quot;;</span>
+<span class="nc" id="L225">				TypeNode defaultType = null;</span>
+<span class="nc" id="L226">				VariableDeclarationNode formal = null;</span>
+
+<span class="nc bnc" id="L228" title="All 2 branches missed.">				if (formalName.matches(pattern)) {</span>
+<span class="nc" id="L229">					defaultType = nodeFactory.newBasicTypeNode(typeSource,</span>
+<span class="nc" id="L230">							BasicTypeKind.INT);</span>
+<span class="nc" id="L231">				} else {</span>
+<span class="nc" id="L232">					defaultType = nodeFactory.newBasicTypeNode(typeSource,</span>
+<span class="nc" id="L233">							BasicTypeKind.DOUBLE);</span>
+				}
+<span class="nc" id="L235">				formal = nodeFactory.newVariableDeclarationNode(typeSource,</span>
+<span class="nc" id="L236">						formalIdNode, defaultType);</span>
+<span class="nc" id="L237">				argsMap.put(formalName, formal);</span>
+<span class="nc" id="L238">				formalList.add(formal);</span>
+			}
+		}
+<span class="nc" id="L241">		formals = nodeFactory.newSequenceNode(typeSource,</span>
+<span class="nc" id="L242">				&quot;FormalParameterList&quot;, formalList);</span>
+<span class="nc" id="L243">		functionType = nodeFactory.newFunctionTypeNode(typeSource, returnType,</span>
+<span class="nc" id="L244">				formals, hasIdentifierList);</span>
+<span class="nc" id="L245">		return functionType;</span>
+	}
+
+	private FunctionTypeNode translateFunctionCallType(Source source,
+			List&lt;ExpressionNode&gt; argumentList) {
+<span class="nc" id="L250">		FunctionTypeNode functionType = null;</span>
+<span class="nc" id="L251">		TypeNode returnType = nodeFactory.newVoidTypeNode(source);</span>
+<span class="nc" id="L252">		List&lt;VariableDeclarationNode&gt; formalList = new LinkedList&lt;VariableDeclarationNode&gt;();</span>
+<span class="nc" id="L253">		SequenceNode&lt;VariableDeclarationNode&gt; formals = null;</span>
+<span class="nc" id="L254">		boolean hasIdentifierList = false;</span>
+
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		for (int i = 0; i &lt; argumentList.size(); i++) {</span>
+<span class="nc" id="L257">			ExpressionNode actual = argumentList.get(i);</span>
+<span class="nc" id="L258">			IdentifierNode formalIdNode = nodeFactory.newIdentifierNode(source,</span>
+<span class="nc" id="L259">					&quot;_dummy_arg_&quot; + i);</span>
+<span class="nc" id="L260">			TypeNode formalTypeNode = generateType(actual);</span>
+
+<span class="nc" id="L262">			if (actual.expressionKind() == ExpressionKind.IDENTIFIER_EXPRESSION) {</span>
+				// formalIdNode = ((IdentifierNode) actual.child(0)).copy();
+			}
+<span class="nc" id="L265">			formalList.add(nodeFactory.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L266">					formalIdNode, formalTypeNode));</span>
+		}
+<span class="nc" id="L268">		formals = nodeFactory.newSequenceNode(source, &quot;FormalParameterList&quot;,</span>
+<span class="nc" id="L269">				formalList);</span>
+<span class="nc" id="L270">		functionType = nodeFactory.newFunctionTypeNode(source, returnType,</span>
+<span class="nc" id="L271">				formals, hasIdentifierList);</span>
+<span class="nc" id="L272">		return functionType;</span>
+	}
+
+	private IdentifierNode translateIdentifier(FortranTree identifierNode) {
+		Source source;
+<span class="nc" id="L277">		String name = (identifierNode.cTokens())[0].getText();</span>
+
+<span class="nc" id="L279">		source = generateSource(identifierNode);</span>
+<span class="nc" id="L280">		return nodeFactory.newIdentifierNode(source, name);</span>
+	}
+
+	private TypeNode translateType(FortranTree typeSpecifierNode) {
+<span class="nc" id="L284">		TypeNode type = null;</span>
+<span class="nc" id="L285">		int rule = typeSpecifierNode.rule();</span>
+<span class="nc" id="L286">		Source source = generateSource(typeSpecifierNode);</span>
+
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		switch (rule) {</span>
+		case 403:
+<span class="nc" id="L290">			int specifierType = typeSpecifierNode.type();</span>
+
+<span class="nc bnc" id="L292" title="All 4 branches missed.">			switch (specifierType) {</span>
+			case 400: /* Integer */
+<span class="nc" id="L294">				type = nodeFactory.newBasicTypeNode(source, BasicTypeKind.INT);</span>
+<span class="nc" id="L295">				break;</span>
+			case 401: /* REAL */
+<span class="nc" id="L297">				type = nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L298">						BasicTypeKind.DOUBLE);</span>
+<span class="nc" id="L299">				break;</span>
+			case 402: /* DOUBLE PRECISION */
+<span class="nc" id="L301">				type = nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L302">						BasicTypeKind.DOUBLE);</span>
+<span class="nc" id="L303">				break;</span>
+			default:
+<span class="nc bnc" id="L305" title="All 2 branches missed.">				assert false;</span>
+			}
+			break;
+		default:
+<span class="nc bnc" id="L309" title="All 2 branches missed.">			assert false;</span>
+		}
+<span class="nc" id="L311">		return type;</span>
+	}
+
+	private InitializerNode translateInitializer(FortranTree initNode,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L316">		Source source = this.generateSource(initNode);</span>
+<span class="nc" id="L317">		return translateExpression(source, initNode, scope);</span>
+	}
+
+	private List&lt;BlockItemNode&gt; translateTypeDeclaration(
+			FortranTree declarationNode, SimpleScope scope,
+			Map&lt;String, VariableDeclarationNode&gt; argsMap)
+			throws SyntaxException {
+<span class="nc" id="L324">		ArrayList&lt;BlockItemNode&gt; definitionList = new ArrayList&lt;BlockItemNode&gt;();</span>
+		// FortranTree labelDefinition = declarationNode.getChildByIndex(0);
+<span class="nc" id="L326">		FortranTree declarationSpecifier = declarationNode.getChildByIndex(1);</span>
+<span class="nc" id="L327">		FortranTree declarationEntityList = declarationNode.getChildByIndex(2);</span>
+<span class="nc" id="L328">		int numOfDeclarator = declarationEntityList.numChildren();</span>
+<span class="nc" id="L329">		Source source = this.generateSource(declarationNode);</span>
+
+<span class="nc bnc" id="L331" title="All 4 branches missed.">		assert numOfDeclarator &gt; 0;</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">		for (int i = 0; i &lt; numOfDeclarator; i++) {</span>
+<span class="nc" id="L333">			FortranTree entityNode = declarationEntityList.getChildByIndex(i);</span>
+<span class="nc" id="L334">			FortranTree identifierNode = entityNode.getChildByIndex(0);</span>
+<span class="nc" id="L335">			IdentifierNode name = this.translateIdentifier(identifierNode);</span>
+<span class="nc" id="L336">			TypeNode type = this.translateType(declarationSpecifier</span>
+<span class="nc" id="L337">					.getChildByIndex(0));</span>
+<span class="nc" id="L338">			VariableDeclarationNode declaration = null;</span>
+<span class="nc" id="L339">			boolean isArray = false;</span>
+<span class="nc" id="L340">			boolean hasInit = false;</span>
+
+<span class="nc bnc" id="L342" title="All 2 branches missed.">			if (1 &lt; entityNode.numChildren()) {</span>
+<span class="nc" id="L343">				FortranTree temp = entityNode.getChildByIndex(1);</span>
+<span class="nc" id="L344">				int rule = temp.rule();</span>
+
+<span class="nc bnc" id="L346" title="All 3 branches missed.">				switch (rule) {</span>
+				case 510:
+<span class="nc" id="L348">					isArray = true;</span>
+<span class="nc" id="L349">					break;</span>
+				case 506:
+<span class="nc" id="L351">					hasInit = true;</span>
+<span class="nc" id="L352">					break;</span>
+				default:
+<span class="nc bnc" id="L354" title="All 2 branches missed.">					assert false;</span>
+				}
+			}
+<span class="nc bnc" id="L357" title="All 2 branches missed.">			if (isArray) {</span>
+<span class="nc" id="L358">				FortranTree arrayInfoNode = entityNode.getChildByIndex(1);</span>
+<span class="nc" id="L359">				int arity = arrayInfoNode.numChildren();</span>
+
+<span class="nc bnc" id="L361" title="All 2 branches missed.">				for (int j = arity - 1; j &gt;= 0; j--) {</span>
+<span class="nc" id="L362">					FortranTree arityInfo = arrayInfoNode.getChildByIndex(j);</span>
+<span class="nc" id="L363">					int numOfIndexes = arityInfo.numChildren();</span>
+<span class="nc" id="L364">					ExpressionNode startIndexExprNode = null; // 1 by default.</span>
+
+<span class="nc bnc" id="L366" title="All 2 branches missed.">					if (numOfIndexes == 0) {</span>
+						// For endIndex is '*'
+<span class="nc" id="L368">						startIndexExprNode = nodeFactory</span>
+<span class="nc" id="L369">								.newIntegerConstantNode(source, &quot;1&quot;);</span>
+<span class="nc" id="L370">						type = nodeFactory.newArrayTypeNode(source, type, null,</span>
+<span class="nc" id="L371">								startIndexExprNode);</span>
+<span class="nc" id="L372">						((ArrayTypeNode) type)</span>
+<span class="nc" id="L373">								.setUnspecifiedVariableLength(true);</span>
+<span class="nc" id="L374">						continue;</span>
+					}
+
+<span class="nc" id="L377">					ExpressionNode endIndexExprNode = null;</span>
+<span class="nc" id="L378">					Operator operator = Operator.MINUS;</span>
+<span class="nc" id="L379">					List&lt;ExpressionNode&gt; arguments = new ArrayList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L380">					ExpressionNode intOneConstNode = nodeFactory</span>
+<span class="nc" id="L381">							.newIntegerConstantNode(source, &quot;1&quot;);</span>
+
+<span class="nc bnc" id="L383" title="All 2 branches missed.">					if (numOfIndexes == 1) {</span>
+						// For only single endIndex
+<span class="nc" id="L385">						startIndexExprNode = nodeFactory</span>
+<span class="nc" id="L386">								.newIntegerConstantNode(source, &quot;1&quot;);</span>
+<span class="nc" id="L387">						endIndexExprNode = translateExpression(source,</span>
+<span class="nc" id="L388">								arityInfo.getChildByIndex(0), scope);</span>
+
+<span class="nc bnc" id="L390" title="All 2 branches missed.">					} else if (numOfIndexes == 2) {</span>
+						// For two indexes
+<span class="nc" id="L392">						startIndexExprNode = translateExpression(source,</span>
+<span class="nc" id="L393">								arityInfo.getChildByIndex(0), scope);</span>
+<span class="nc" id="L394">						endIndexExprNode = translateExpression(source,</span>
+<span class="nc" id="L395">								arityInfo.getChildByIndex(1), scope);</span>
+<span class="nc" id="L396">					} else {</span>
+<span class="nc" id="L397">						System.out.println(numOfIndexes);</span>
+					}
+<span class="nc" id="L399">					arguments.add(endIndexExprNode);</span>
+<span class="nc" id="L400">					arguments.add(startIndexExprNode);</span>
+
+<span class="nc" id="L402">					OperatorNode extentNode = nodeFactory.newOperatorNode(</span>
+<span class="nc" id="L403">							source, operator, arguments);</span>
+
+<span class="nc" id="L405">					operator = Operator.PLUS;</span>
+<span class="nc" id="L406">					arguments.clear();</span>
+<span class="nc" id="L407">					arguments.add(extentNode);</span>
+<span class="nc" id="L408">					arguments.add(intOneConstNode);</span>
+<span class="nc" id="L409">					extentNode = nodeFactory.newOperatorNode(source, operator,</span>
+<span class="nc" id="L410">							arguments);</span>
+<span class="nc" id="L411">					type = nodeFactory.newArrayTypeNode(source, type,</span>
+<span class="nc" id="L412">							extentNode, startIndexExprNode.copy());</span>
+				}
+<span class="nc" id="L414">				declaration = nodeFactory.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L415">						name, type);</span>
+<span class="nc" id="L416">				localMap.put(name.name(), type);</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">			} else if (hasInit) {</span>
+<span class="nc" id="L418">				FortranTree initNode = entityNode.getChildByIndex(1)</span>
+<span class="nc" id="L419">						.getChildByIndex(0);</span>
+<span class="nc" id="L420">				InitializerNode initializer = translateInitializer(initNode,</span>
+<span class="nc" id="L421">						scope);</span>
+
+<span class="nc" id="L423">				declaration = nodeFactory.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L424">						name, type);</span>
+<span class="nc" id="L425">				declaration.setInitializer(initializer);</span>
+<span class="nc" id="L426">				localMap.put(name.name(), type);</span>
+<span class="nc" id="L427">			} else {</span>
+<span class="nc" id="L428">				declaration = nodeFactory.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L429">						name, type);</span>
+<span class="nc" id="L430">				localMap.put(name.name(), type);</span>
+			}
+
+<span class="nc bnc" id="L433" title="All 2 branches missed.">			if (argsMap != null) {</span>
+<span class="nc" id="L434">				String formalName = name.name();</span>
+<span class="nc" id="L435">				VariableDeclarationNode argNode = argsMap.get(formalName);</span>
+
+<span class="nc bnc" id="L437" title="All 2 branches missed.">				if (argNode != null) {</span>
+<span class="nc" id="L438">					TypeNode argType = type.copy();</span>
+
+<span class="nc" id="L440">					argType.remove();</span>
+
+<span class="nc" id="L442">					TypeNode tempNode = argType;</span>
+
+					// Eliminate sub-scripts of the actual arg with array type
+<span class="nc bnc" id="L445" title="All 2 branches missed.">					while (tempNode.typeNodeKind() == TypeNodeKind.ARRAY) {</span>
+<span class="nc" id="L446">						tempNode.removeChild(1);</span>
+<span class="nc" id="L447">						tempNode = (TypeNode) tempNode.child(0);</span>
+					}
+<span class="nc" id="L449">					argNode.setTypeNode(argType);</span>
+<span class="nc" id="L450">				} else {</span>
+<span class="nc" id="L451">					definitionList.add(declaration);</span>
+				}
+<span class="nc" id="L453">			} else {</span>
+<span class="nc" id="L454">				definitionList.add(declaration);</span>
+			}
+		}
+<span class="nc" id="L457">		return definitionList;</span>
+	}
+
+	private OperatorNode translateOperatorExpression(Source source,
+			FortranTree exprNode, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L462">		int rule = exprNode.rule();</span>
+<span class="nc" id="L463">		OperatorNode result = null;</span>
+<span class="nc" id="L464">		Operator operator = null;</span>
+<span class="nc" id="L465">		List&lt;ExpressionNode&gt; arguments = null;</span>
+
+<span class="nc bnc" id="L467" title="All 6 branches missed.">		switch (rule) {</span>
+		case 613: /* PartRef(ArrayUnit) */
+<span class="nc" id="L469">			FortranTree id = exprNode.getChildByIndex(0);</span>
+<span class="nc" id="L470">			FortranTree indexUnitsNode = exprNode.getChildByIndex(1);</span>
+<span class="nc" id="L471">			int arity = indexUnitsNode.numChildren();</span>
+<span class="nc" id="L472">			IdentifierNode idNode = translateIdentifier(id);</span>
+<span class="nc" id="L473">			ExpressionNode idExprNode = nodeFactory</span>
+<span class="nc" id="L474">					.newIdentifierExpressionNode(source, idNode);</span>
+<span class="nc" id="L475">			ExpressionNode indexNode = null;</span>
+<span class="nc" id="L476">			ExpressionNode adjustedIndexNode = null;</span>
+
+<span class="nc bnc" id="L478" title="All 2 branches missed.">			for (int i = 0; i &lt; arity; i++) {</span>
+<span class="nc" id="L479">				FortranTree indexUnitNode = indexUnitsNode.getChildByIndex(i)</span>
+<span class="nc" id="L480">						.getChildByIndex(0);</span>
+<span class="nc" id="L481">				TypeNode arrayType = localMap.get(idNode.name());</span>
+<span class="nc" id="L482">				ExpressionNode startIndexNode = null;</span>
+
+<span class="nc bnc" id="L484" title="All 2 branches missed.">				for (int j = 1; j &lt;= i; j++) {</span>
+<span class="nc" id="L485">					arrayType = (TypeNode) arrayType.child(0);</span>
+				}
+<span class="nc" id="L487">				startIndexNode = (ExpressionNode) arrayType.child(2);</span>
+<span class="nc" id="L488">				operator = Operator.SUBSCRIPT;</span>
+<span class="nc" id="L489">				arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L490">				indexNode = translateExpression(source, indexUnitNode, scope);</span>
+<span class="nc" id="L491">				adjustedIndexNode = adjustIndex(source, indexNode,</span>
+<span class="nc" id="L492">						startIndexNode);</span>
+<span class="nc" id="L493">				arguments.add(idExprNode);</span>
+<span class="nc" id="L494">				arguments.add(adjustedIndexNode);</span>
+<span class="nc" id="L495">				idExprNode = nodeFactory.newOperatorNode(source, operator,</span>
+<span class="nc" id="L496">						arguments);</span>
+			}
+<span class="nc" id="L498">			return (OperatorNode) idExprNode;</span>
+		case 734: /* Assign */
+<span class="nc" id="L500">			ExpressionNode lhsArgExprNode = translateExpression(source,</span>
+<span class="nc" id="L501">					exprNode.getChildByIndex(1), scope);</span>
+<span class="nc" id="L502">			ExpressionNode rhsArgExprNode = translateExpression(source,</span>
+<span class="nc" id="L503">					exprNode.getChildByIndex(2), scope);</span>
+
+<span class="nc" id="L505">			operator = Operator.ASSIGN;</span>
+<span class="nc" id="L506">			arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc bnc" id="L507" title="All 2 branches missed.">			if (lhsArgExprNode.expressionKind() == ExpressionKind.IDENTIFIER_EXPRESSION) {</span>
+<span class="nc" id="L508">				IdentifierNode assignedIdNode = (IdentifierNode) lhsArgExprNode</span>
+<span class="nc" id="L509">						.child(0);</span>
+<span class="nc" id="L510">				String assignedIdName = assignedIdNode.name();</span>
+
+<span class="nc bnc" id="L512" title="All 2 branches missed.">				if (!localMap.containsKey(assignedIdName)) {</span>
+<span class="nc" id="L513">					String pattern = &quot;^(I|J|K|L|M|N|i|j|k|l|m|n).*$&quot;;</span>
+<span class="nc" id="L514">					TypeNode type = null;</span>
+<span class="nc" id="L515">					VariableDeclarationNode varDeclNode = null;</span>
+
+<span class="nc bnc" id="L517" title="All 2 branches missed.">					if (assignedIdName.matches(pattern)) {</span>
+<span class="nc" id="L518">						type = nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L519">								BasicTypeKind.INT);</span>
+<span class="nc" id="L520">					} else {</span>
+<span class="nc" id="L521">						type = nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L522">								BasicTypeKind.DOUBLE);</span>
+					}
+<span class="nc" id="L524">					varDeclNode = nodeFactory.newVariableDeclarationNode(</span>
+<span class="nc" id="L525">							source, assignedIdNode.copy(), type);</span>
+<span class="nc" id="L526">					localMap.put(assignedIdName, type);</span>
+<span class="nc" id="L527">					tempItems.add(0, varDeclNode);</span>
+				}
+			}
+<span class="nc" id="L530">			arguments.add(lhsArgExprNode);</span>
+<span class="nc" id="L531">			arguments.add(rhsArgExprNode);</span>
+<span class="nc" id="L532">			return nodeFactory.newOperatorNode(source, operator, arguments);</span>
+		case 710: /* Lv3 Expression */
+<span class="nc" id="L534">			String opStr = exprNode.getChildByIndex(0).cTokens()[0].getText();</span>
+
+<span class="nc bnc" id="L536" title="All 2 branches missed.">			if (opStr.contains(&quot;EQ&quot;)) {</span>
+<span class="nc" id="L537">				operator = Operator.EQUALS;</span>
+<span class="nc" id="L538">				arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">				for (int i = 1; i &lt; 3; i++) {</span>
+<span class="nc" id="L540">					ExpressionNode argument = translateExpression(source,</span>
+<span class="nc" id="L541">							exprNode.getChildByIndex(i), scope);</span>
+<span class="nc" id="L542">					arguments.add(argument);</span>
+				}
+<span class="nc" id="L544">				return nodeFactory.newOperatorNode(source, operator, arguments);</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">			} else if (opStr.contains(&quot;NE&quot;)) {</span>
+<span class="nc" id="L546">				operator = Operator.NEQ;</span>
+<span class="nc" id="L547">				arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc bnc" id="L548" title="All 2 branches missed.">				for (int i = 1; i &lt; 3; i++) {</span>
+<span class="nc" id="L549">					ExpressionNode argument = translateExpression(source,</span>
+<span class="nc" id="L550">							exprNode.getChildByIndex(i), scope);</span>
+
+<span class="nc" id="L552">					arguments.add(argument);</span>
+				}
+<span class="nc" id="L554">				return nodeFactory.newOperatorNode(source, operator, arguments);</span>
+			} else {
+<span class="nc" id="L556">				System.out.println(opStr);</span>
+<span class="nc bnc" id="L557" title="All 2 branches missed.">				assert false;</span>
+			}
+
+			break;
+		case 704: /* MultOperand(s) */
+<span class="nc bnc" id="L562" title="All 2 branches missed.">			for (int i = 0; i &lt; exprNode.numChildren(); i++) {</span>
+<span class="nc" id="L563">				String op_string = exprNode.getChildByIndex(0).cTokens()[0]</span>
+<span class="nc" id="L564">						.getText();</span>
+<span class="nc" id="L565">				ExpressionNode leftNode = null;</span>
+<span class="nc" id="L566">				ExpressionNode rightNode = null;</span>
+
+<span class="nc bnc" id="L568" title="All 2 branches missed.">				operator = op_string.startsWith(&quot;*&quot;) ? Operator.TIMES</span>
+<span class="nc" id="L569">						: Operator.DIV;</span>
+<span class="nc" id="L570">				arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L571">				leftNode = translateExpression(source,</span>
+<span class="nc" id="L572">						exprNode.getChildByIndex(1), scope);</span>
+<span class="nc" id="L573">				rightNode = translateExpression(source,</span>
+<span class="nc" id="L574">						exprNode.getChildByIndex(2), scope);</span>
+<span class="nc" id="L575">				arguments.add(leftNode);</span>
+<span class="nc" id="L576">				arguments.add(rightNode);</span>
+			}
+<span class="nc" id="L578">			return nodeFactory.newOperatorNode(source, operator, arguments);</span>
+		case 705: /* AddOperand(s) */
+<span class="nc bnc" id="L580" title="All 2 branches missed.">			for (int i = 0; i &lt; exprNode.numChildren(); i++) {</span>
+<span class="nc" id="L581">				String op_string = exprNode.getChildByIndex(0).cTokens()[0]</span>
+<span class="nc" id="L582">						.getText();</span>
+<span class="nc" id="L583">				ExpressionNode leftNode = null;</span>
+<span class="nc" id="L584">				ExpressionNode rightNode = null;</span>
+
+<span class="nc bnc" id="L586" title="All 2 branches missed.">				operator = op_string.startsWith(&quot;+&quot;) ? Operator.PLUS</span>
+<span class="nc" id="L587">						: Operator.MINUS;</span>
+<span class="nc" id="L588">				arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L589">				leftNode = translateExpression(source,</span>
+<span class="nc" id="L590">						exprNode.getChildByIndex(1), scope);</span>
+<span class="nc" id="L591">				rightNode = translateExpression(source,</span>
+<span class="nc" id="L592">						exprNode.getChildByIndex(2), scope);</span>
+<span class="nc" id="L593">				arguments.add(leftNode);</span>
+<span class="nc" id="L594">				arguments.add(rightNode);</span>
+			}
+<span class="nc" id="L596">			return nodeFactory.newOperatorNode(source, operator, arguments);</span>
+		default:
+<span class="nc" id="L598">			System.out.println(rule);</span>
+<span class="nc bnc" id="L599" title="All 2 branches missed.">			assert false;</span>
+		}
+<span class="nc" id="L601">		result = nodeFactory.newOperatorNode(source, operator, arguments);</span>
+<span class="nc" id="L602">		return result;</span>
+	}
+
+	private ExpressionNode adjustIndex(Source source, ExpressionNode indexNode,
+			ExpressionNode startIndexNode) throws SyntaxException {
+<span class="nc" id="L607">		Operator operator = Operator.MINUS;</span>
+<span class="nc" id="L608">		List&lt;ExpressionNode&gt; arguments = new ArrayList&lt;ExpressionNode&gt;();</span>
+
+<span class="nc" id="L610">		arguments.add(indexNode);</span>
+<span class="nc" id="L611">		arguments.add(startIndexNode.copy());</span>
+<span class="nc" id="L612">		return nodeFactory.newOperatorNode(source, operator, arguments);</span>
+	}
+
+	private IntegerConstantNode translateIntegerConstant(Source source,
+			FortranTree constNode) throws SyntaxException {
+<span class="nc" id="L617">		String representation = constNode.getChildByIndex(0).cTokens()[0]</span>
+<span class="nc" id="L618">				.getText();</span>
+
+<span class="nc" id="L620">		return nodeFactory.newIntegerConstantNode(source, representation);</span>
+	}
+
+	private ExpressionNode translateExpression(Source source,
+			FortranTree exprNode, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L625">		ExpressionNode result = null;</span>
+<span class="nc" id="L626">		int rule = exprNode.rule();</span>
+
+<span class="nc bnc" id="L628" title="All 7 branches missed.">		switch (rule) {</span>
+		case 734: /* Assign */
+<span class="nc" id="L630">			return translateOperatorExpression(source, exprNode, scope);</span>
+		case 601: /* Variable */
+<span class="nc" id="L632">			int var_type = exprNode.getChildByIndex(0).rule();</span>
+
+<span class="nc bnc" id="L634" title="All 2 branches missed.">			switch (var_type) {</span>
+			case 603: /* Designator */
+<span class="nc" id="L636">				FortranTree refNode = exprNode.getChildByIndex(0)</span>
+<span class="nc" id="L637">						.getChildByIndex(0).getChildByIndex(0);</span>
+
+<span class="nc bnc" id="L639" title="All 2 branches missed.">				if (refNode.numChildren() &lt; 2) {</span>
+<span class="nc" id="L640">					return nodeFactory.newIdentifierExpressionNode(source,</span>
+<span class="nc" id="L641">							translateIdentifier(refNode.getChildByIndex(0)));</span>
+				} else {
+<span class="nc" id="L643">					return translateOperatorExpression(source, refNode, scope);</span>
+				}
+			default:
+<span class="nc bnc" id="L646" title="All 2 branches missed.">				assert false;</span>
+			}
+		case 701: /* PrimaryExpr */
+<span class="nc" id="L649">			FortranTree primExprNode = exprNode.getChildByIndex(0);</span>
+<span class="nc" id="L650">			int expr_type = primExprNode.rule();</span>
+
+<span class="nc bnc" id="L652" title="All 5 branches missed.">			switch (expr_type) {</span>
+			case -3: /* DesignatorOrFunctionRef */
+<span class="nc" id="L654">				FortranTree refNode = primExprNode.getChildByIndex(0)</span>
+<span class="nc" id="L655">						.getChildByIndex(0);</span>
+
+<span class="nc bnc" id="L657" title="All 2 branches missed.">				if (refNode.numChildren() &lt; 2) {</span>
+<span class="nc" id="L658">					return nodeFactory.newIdentifierExpressionNode(source,</span>
+<span class="nc" id="L659">							translateIdentifier(refNode.getChildByIndex(0)));</span>
+				} else {
+<span class="nc" id="L661">					FortranTree refIdNode = refNode.getChildByIndex(0);</span>
+<span class="nc" id="L662">					String IdStr = refIdNode.cTokens()[0].getText();</span>
+
+<span class="nc bnc" id="L664" title="All 2 branches missed.">					if (IdStr.matches(&quot;^I?AND$&quot;)) {</span>
+<span class="nc" id="L665">						Operator operator = Operator.BITAND;</span>
+<span class="nc" id="L666">						List&lt;ExpressionNode&gt; arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+
+<span class="nc bnc" id="L668" title="All 2 branches missed.">						for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc" id="L669">							ExpressionNode argument = translateExpression(</span>
+<span class="nc" id="L670">									source, refNode.getChildByIndex(1)</span>
+<span class="nc" id="L671">											.getChildByIndex(i)</span>
+<span class="nc" id="L672">											.getChildByIndex(0), scope);</span>
+
+<span class="nc" id="L674">							arguments.add(argument);</span>
+						}
+<span class="nc" id="L676">						return nodeFactory.newOperatorNode(source, operator,</span>
+<span class="nc" id="L677">								arguments);</span>
+					}
+<span class="nc" id="L679">					return translateOperatorExpression(source, refNode, scope);</span>
+				}
+			case 306: /* LiteralConst */
+<span class="nc" id="L682">				FortranTree constNode = primExprNode.getChildByIndex(0);</span>
+<span class="nc" id="L683">				int const_type = constNode.rule();</span>
+
+<span class="nc bnc" id="L685" title="All 4 branches missed.">				switch (const_type) {</span>
+				case 406: /* IntLitConst */
+<span class="nc" id="L687">					return translateIntegerConstant(source, constNode);</span>
+				case 417: /* RealLitConst */
+<span class="nc" id="L689">					return translateFloatingConstant(source, constNode);</span>
+				case 427: /* CharLitConst */
+<span class="nc" id="L691">					return translateCharLitConstant(source, constNode);</span>
+				default:
+<span class="nc" id="L693">					System.out.println(const_type);</span>
+<span class="nc bnc" id="L694" title="All 2 branches missed.">					assert false;</span>
+				}
+			case 704: /* MultOperand(s) */
+<span class="nc" id="L697">				return translateOperatorExpression(source, primExprNode, scope);</span>
+			case 705: /* AddOperand(s) */
+<span class="nc" id="L699">				return translateOperatorExpression(source, primExprNode, scope);</span>
+			default:
+<span class="nc" id="L701">				System.out.print(expr_type);</span>
+<span class="nc bnc" id="L702" title="All 2 branches missed.">				assert false;</span>
+			}
+		case 704: /* MultOperand(s) */
+<span class="nc" id="L705">			return translateOperatorExpression(source, exprNode, scope);</span>
+		case 705: /* AddOperand(s) */
+<span class="nc" id="L707">			return translateOperatorExpression(source, exprNode, scope);</span>
+		case 710: /* Lv3 Expression */
+<span class="nc" id="L709">			return translateOperatorExpression(source, exprNode, scope);</span>
+		default:
+<span class="nc" id="L711">			System.out.println(rule);</span>
+<span class="nc bnc" id="L712" title="All 2 branches missed.">			assert false;</span>
+		}
+<span class="nc" id="L714">		return result;</span>
+	}
+
+	private ExpressionNode translateCharLitConstant(Source source,
+			FortranTree constNode) throws SyntaxException {
+<span class="nc" id="L719">		FortranTree contentTree = constNode.getChildByIndex(0);</span>
+<span class="nc" id="L720">		CivlcToken cToken = contentTree.cTokens()[0];</span>
+<span class="nc" id="L721">		String content = cToken.getText().replace('\'', '\&quot;');</span>
+
+<span class="nc" id="L723">		cToken.setText(content);</span>
+
+<span class="nc" id="L725">		StringToken strToken = tokenFactory.newStringToken(cToken);</span>
+
+<span class="nc" id="L727">		return nodeFactory.newStringLiteralNode(generateSource(contentTree),</span>
+<span class="nc" id="L728">				content, strToken.getStringLiteral());</span>
+	}
+
+	private FloatingConstantNode translateFloatingConstant(Source source,
+			FortranTree constNode) throws SyntaxException {
+<span class="nc" id="L733">		String representation = constNode.getChildByIndex(0).cTokens()[0]</span>
+<span class="nc" id="L734">				.getText();</span>
+<span class="nc bnc" id="L735" title="All 2 branches missed.">		if (representation.contains(&quot;d&quot;)) {</span>
+<span class="nc" id="L736">			int dIndex = representation.indexOf(&quot;d&quot;);</span>
+<span class="nc" id="L737">			String numberStr = representation.substring(0, dIndex);</span>
+<span class="nc" id="L738">			String powTenStr = representation.substring(dIndex + 1);</span>
+<span class="nc" id="L739">			double number = Double.valueOf(numberStr);</span>
+<span class="nc" id="L740">			double powTen = Double.valueOf(powTenStr);</span>
+<span class="nc" id="L741">			double result = number * Math.pow(10.0, powTen);</span>
+<span class="nc" id="L742">			representation = &quot;&quot; + result;</span>
+<span class="nc bnc" id="L743" title="All 2 branches missed.">		} else if (representation.contains(&quot;D&quot;)) {</span>
+<span class="nc" id="L744">			int dIndex = representation.indexOf(&quot;D&quot;);</span>
+<span class="nc" id="L745">			String numberStr = representation.substring(0, dIndex);</span>
+<span class="nc" id="L746">			String powTenStr = representation.substring(dIndex + 1);</span>
+<span class="nc" id="L747">			double number = Double.valueOf(numberStr);</span>
+<span class="nc" id="L748">			double powTen = Double.valueOf(powTenStr);</span>
+<span class="nc" id="L749">			double result = number * Math.pow(10.0, powTen);</span>
+<span class="nc" id="L750">			representation = &quot;&quot; + result;</span>
+		}
+
+<span class="nc" id="L753">		return nodeFactory.newFloatingConstantNode(source, representation);</span>
+	}
+
+	private StatementNode translateExpressionStatement(FortranTree exprNode,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L758">		Source statementSource = generateSource(exprNode);</span>
+<span class="nc" id="L759">		ExpressionNode expressionNode = translateExpression(statementSource,</span>
+<span class="nc" id="L760">				exprNode, scope);</span>
+
+<span class="nc bnc" id="L762" title="All 2 branches missed.">		if (expressionNode == null)</span>
+<span class="nc" id="L763">			return nodeFactory.newNullStatementNode(statementSource);</span>
+		else
+<span class="nc" id="L765">			return nodeFactory.newExpressionStatementNode(expressionNode);</span>
+	}
+
+	private StatementNode translateStatement(FortranTree blockItemNode,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L770">		int rule = blockItemNode.rule();</span>
+<span class="nc" id="L771">		StatementNode result = null;</span>
+
+<span class="nc bnc" id="L773" title="All 9 branches missed.">		switch (rule) {</span>
+		case 734: /* AssignmentStatement */
+<span class="nc" id="L775">			result = translateExpressionStatement(blockItemNode, scope);</span>
+<span class="nc" id="L776">			break;</span>
+		case 802: /* IfConstruct */
+<span class="nc" id="L778">			result = translateIfStatement(blockItemNode, scope);</span>
+<span class="nc" id="L779">			break;</span>
+		case 827: /* DoStatement */
+<span class="nc" id="L781">			result = translateDoStatement(blockItemNode.parent(), scope);</span>
+<span class="nc" id="L782">			break;</span>
+		case 845: /* GotoStatement */
+<span class="nc" id="L784">			result = translateGoto(blockItemNode);</span>
+<span class="nc" id="L785">			break;</span>
+		case 846: /* ComputedGotoStatement */
+<span class="nc" id="L787">			result = translateComputedGoto(blockItemNode, scope);</span>
+<span class="nc" id="L788">			break;</span>
+		case 1218: /* CallStatement */
+<span class="nc" id="L790">			result = translateCall(generateSource(blockItemNode),</span>
+<span class="nc" id="L791">					blockItemNode, scope);</span>
+<span class="nc" id="L792">			break;</span>
+		case 1236: /* ReaturnStatement */
+			// TODO: Return Statement for Fortran represents a exit for a
+			// subprogram such as subroutines or functions.
+<span class="nc" id="L796">			result = nodeFactory.newReturnNode(generateSource(blockItemNode),</span>
+<span class="nc" id="L797">					null);</span>
+<span class="nc" id="L798">			break;</span>
+		case 801: /* Block */
+<span class="nc bnc" id="L800" title="All 2 branches missed.">			assert false;</span>
+			break;
+		default:
+<span class="nc" id="L803">			System.out.println(rule);</span>
+<span class="nc bnc" id="L804" title="All 2 branches missed.">			assert false;</span>
+		}
+
+<span class="nc" id="L807">		return result;</span>
+
+	}
+
+	private StatementNode translateIfStatement(FortranTree blockItemNode,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L813">		int numOfChildren = blockItemNode.numChildren();</span>
+<span class="nc" id="L814">		int blockIndex = numOfChildren - 2;</span>
+<span class="nc" id="L815">		ExpressionNode condition = null;</span>
+<span class="nc" id="L816">		StatementNode trueBranch = null, falseBranch = null;</span>
+<span class="nc" id="L817">		StatementNode result = null;</span>
+<span class="nc" id="L818">		SimpleScope ifScope = new SimpleScope(scope);</span>
+
+<span class="nc bnc" id="L820" title="All 2 branches missed.">		while (blockIndex &gt; 0) {</span>
+<span class="nc bnc" id="L821" title="All 4 branches missed.">			assert blockIndex % 2 == 1;</span>
+
+<span class="nc" id="L823">			FortranTree blockNode = blockItemNode.getChildByIndex(blockIndex);</span>
+<span class="nc" id="L824">			FortranTree condNode = blockItemNode</span>
+<span class="nc" id="L825">					.getChildByIndex(blockIndex - 1);</span>
+<span class="nc" id="L826">			int rule = condNode.rule();</span>
+
+<span class="nc bnc" id="L828" title="All 2 branches missed.">			if (rule == 803) {</span>
+				// IF
+<span class="nc" id="L830">				Source blockSource = generateSource(blockNode);</span>
+<span class="nc" id="L831">				Source condSource = generateSource(condNode);</span>
+
+<span class="nc" id="L833">				condition = translateExpression(condSource,</span>
+<span class="nc" id="L834">						condNode.getChildByIndex(2), ifScope);</span>
+<span class="nc" id="L835">				trueBranch = translateBody(null, blockNode, new SimpleScope(</span>
+<span class="nc" id="L836">						ifScope), null);</span>
+
+<span class="nc bnc" id="L838" title="All 2 branches missed.">				result = falseBranch == null ? nodeFactory.newIfNode(</span>
+<span class="nc" id="L839">						blockSource, condition, trueBranch) : nodeFactory</span>
+<span class="nc" id="L840">						.newIfNode(blockSource, condition, trueBranch,</span>
+<span class="nc" id="L841">								falseBranch);</span>
+<span class="nc bnc" id="L842" title="All 2 branches missed.">			} else if (rule == 804) {</span>
+				// ELSE IF
+<span class="nc" id="L844">				Source blockSource = generateSource(blockNode);</span>
+<span class="nc" id="L845">				Source condSource = generateSource(condNode);</span>
+
+<span class="nc" id="L847">				condition = translateExpression(condSource,</span>
+<span class="nc" id="L848">						condNode.getChildByIndex(2), ifScope);</span>
+<span class="nc" id="L849">				trueBranch = translateBody(null, blockNode, new SimpleScope(</span>
+<span class="nc" id="L850">						ifScope), null);</span>
+<span class="nc bnc" id="L851" title="All 2 branches missed.">				falseBranch = falseBranch == null ? nodeFactory.newIfNode(</span>
+<span class="nc" id="L852">						blockSource, condition, trueBranch) : nodeFactory</span>
+<span class="nc" id="L853">						.newIfNode(blockSource, condition, trueBranch,</span>
+<span class="nc" id="L854">								falseBranch);</span>
+<span class="nc" id="L855">			} else { /* 805 */</span>
+				// ELSE
+<span class="nc" id="L857">				falseBranch = translateBody(null, blockNode, new SimpleScope(</span>
+<span class="nc" id="L858">						ifScope), null);</span>
+			}
+<span class="nc" id="L860">			blockIndex -= 2;</span>
+		}
+<span class="nc" id="L862">		return result;</span>
+	}
+
+	private StatementNode translateCall(Source source,
+			FortranTree blockItemNode, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L868">		FortranTree functionTree = blockItemNode.getChildByIndex(1);</span>
+<span class="nc" id="L869">		FortranTree functionIdNode = functionTree.getChildByIndex(0)</span>
+<span class="nc" id="L870">				.getChildByIndex(0);</span>
+<span class="nc" id="L871">		FortranTree argumentListTree = null;</span>
+<span class="nc" id="L872">		IdentifierNode idNode = translateIdentifier(functionIdNode</span>
+<span class="nc" id="L873">				.getChildByIndex(0));</span>
+<span class="nc" id="L874">		ExpressionNode functionNode = nodeFactory.newIdentifierExpressionNode(</span>
+<span class="nc" id="L875">				source, idNode);</span>
+<span class="nc bnc" id="L876" title="All 2 branches missed.">		boolean hasActualArgs = blockItemNode.numChildren() &gt; 2;</span>
+<span class="nc bnc" id="L877" title="All 2 branches missed.">		boolean hasSubScripts = functionIdNode.numChildren() &gt; 1;</span>
+<span class="nc" id="L878">		int numArgs = 0;</span>
+<span class="nc" id="L879">		List&lt;ExpressionNode&gt; argumentList = new LinkedList&lt;ExpressionNode&gt;();</span>
+
+<span class="nc bnc" id="L881" title="All 2 branches missed.">		if (hasActualArgs) {</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">			assert false;</span>
+		}
+<span class="nc bnc" id="L884" title="All 2 branches missed.">		if (hasSubScripts) {</span>
+<span class="nc" id="L885">			argumentListTree = functionIdNode.getChildByIndex(1);</span>
+<span class="nc" id="L886">			numArgs = argumentListTree.numChildren();</span>
+<span class="nc bnc" id="L887" title="All 2 branches missed.">			for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L888">				FortranTree argumentTree = argumentListTree.getChildByIndex(i)</span>
+<span class="nc" id="L889">						.getChildByIndex(0);</span>
+<span class="nc" id="L890">				ExpressionNode argumentNode = translateExpression(source,</span>
+<span class="nc" id="L891">						argumentTree, scope);</span>
+
+<span class="nc" id="L893">				argumentList.add(argumentNode);</span>
+			}
+		}
+
+<span class="nc" id="L897">		FunctionCallNode callNode = nodeFactory.newFunctionCallNode(source,</span>
+<span class="nc" id="L898">				functionNode, argumentList, null);</span>
+<span class="nc" id="L899">		FunctionTypeNode typeNode = translateFunctionCallType(source,</span>
+<span class="nc" id="L900">				argumentList);</span>
+<span class="nc" id="L901">		FunctionDeclarationNode declNode = nodeFactory</span>
+<span class="nc" id="L902">				.newFunctionDeclarationNode(source, idNode.copy(), typeNode,</span>
+<span class="nc" id="L903">						null);</span>
+
+<span class="nc" id="L905">		programUnits.add(0, declNode);</span>
+<span class="nc" id="L906">		return nodeFactory.newExpressionStatementNode(callNode);</span>
+	}
+
+	private TypeNode generateType(ExpressionNode argumentNode) {
+<span class="nc" id="L910">		TypeNode argType = null;</span>
+<span class="nc" id="L911">		ExpressionKind exprKind = argumentNode.expressionKind();</span>
+
+<span class="nc bnc" id="L913" title="All 2 branches missed.">		if (exprKind == ExpressionKind.IDENTIFIER_EXPRESSION) {</span>
+<span class="nc" id="L914">			String key = ((IdentifierNode) argumentNode.child(0)).name();</span>
+
+<span class="nc" id="L916">			argType = localMap.get(key);</span>
+<span class="nc bnc" id="L917" title="All 2 branches missed.">			if (argType == null) {</span>
+<span class="nc" id="L918">				String pattern = &quot;^(I|J|K|L|M|N|i|j|k|l|m|n).*$&quot;;</span>
+
+<span class="nc bnc" id="L920" title="All 2 branches missed.">				if (key.matches(pattern)) {</span>
+<span class="nc" id="L921">					argType = nodeFactory.newBasicTypeNode(</span>
+<span class="nc" id="L922">							argumentNode.getSource(), BasicTypeKind.INT);</span>
+<span class="nc" id="L923">				} else {</span>
+<span class="nc" id="L924">					argType = nodeFactory.newBasicTypeNode(</span>
+<span class="nc" id="L925">							argumentNode.getSource(), BasicTypeKind.DOUBLE);</span>
+				}
+<span class="nc" id="L927">			} else {</span>
+<span class="nc" id="L928">				argType = argType.copy();</span>
+<span class="nc" id="L929">				argType.remove();</span>
+			}
+
+<span class="nc" id="L932">			TypeNode tempNode = argType;</span>
+
+			// Eliminate sub-scripts of the actual arg with array type
+<span class="nc bnc" id="L935" title="All 2 branches missed.">			while (tempNode.typeNodeKind() == TypeNodeKind.ARRAY) {</span>
+<span class="nc" id="L936">				tempNode.removeChild(1);</span>
+<span class="nc" id="L937">				tempNode = (TypeNode) tempNode.child(0);</span>
+			}
+<span class="nc bnc" id="L939" title="All 2 branches missed.">		} else if (exprKind == ExpressionKind.CONSTANT) {</span>
+<span class="nc" id="L940">			TypeKind typeKind = argumentNode.getInitialType().kind();</span>
+
+<span class="nc bnc" id="L942" title="All 2 branches missed.">			if (typeKind == TypeKind.BASIC) {</span>
+<span class="nc bnc" id="L943" title="All 2 branches missed.">				assert false;</span>
+			}
+		} else {
+<span class="nc bnc" id="L946" title="All 2 branches missed.">			assert false;</span>
+		}
+<span class="nc" id="L948">		return argType;</span>
+	}
+
+	private StatementNode translateDoStatement(FortranTree blockItemNode,
+			SimpleScope scope) throws SyntaxException {
+		ForLoopInitializerNode initializerNode;
+		ExpressionNode conditionNode;
+<span class="nc" id="L955">		ExpressionNode incrementerNode = null;</span>
+		StatementNode bodyNode;
+		// ExpressionNode invariantNode;
+<span class="nc" id="L958">		Operator initOperator = Operator.ASSIGN;</span>
+<span class="nc" id="L959">		Operator condOperator = Operator.LTE;</span>
+<span class="nc" id="L960">		Operator stepOperator = Operator.PLUSEQ;</span>
+<span class="nc" id="L961">		FortranTree doControlNode = blockItemNode.getChildByIndex(0)</span>
+<span class="nc" id="L962">				.getChildByIndex(4);</span>
+<span class="nc" id="L963">		FortranTree doBodyNode = blockItemNode.getChildByIndex(1);</span>
+<span class="nc" id="L964">		FortranTree doVariableNode = doControlNode.getChildByIndex(1)</span>
+<span class="nc" id="L965">				.getChildByIndex(0);</span>
+<span class="nc" id="L966">		Source doVariableSource = generateSource(doVariableNode);</span>
+<span class="nc" id="L967">		FortranTree initExprNode = doControlNode.getChildByIndex(2);</span>
+<span class="nc" id="L968">		Source initSource = generateSource(initExprNode);</span>
+<span class="nc" id="L969">		List&lt;ExpressionNode&gt; initArgs = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L970">		FortranTree condExprNode = doControlNode.getChildByIndex(3);</span>
+<span class="nc" id="L971">		Source condSource = generateSource(condExprNode);</span>
+<span class="nc" id="L972">		List&lt;ExpressionNode&gt; condArgs = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L973">		Source stepSource = generateSource(doVariableNode);// TODO: Fix no step</span>
+															// defined
+<span class="nc" id="L975">		List&lt;ExpressionNode&gt; stepArgs = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L976">		IdentifierNode doVarIdNode = translateIdentifier(doVariableNode);</span>
+<span class="nc" id="L977">		String assignedIdName = doVarIdNode.name();</span>
+
+<span class="nc bnc" id="L979" title="All 2 branches missed.">		if (!localMap.containsKey(assignedIdName)) {</span>
+<span class="nc" id="L980">			String pattern = &quot;^(I|J|K|L|M|N|i|j|k|l|m|n).*$&quot;;</span>
+<span class="nc" id="L981">			TypeNode type = null;</span>
+<span class="nc" id="L982">			VariableDeclarationNode varDeclNode = null;</span>
+
+<span class="nc bnc" id="L984" title="All 2 branches missed.">			if (assignedIdName.matches(pattern)) {</span>
+<span class="nc" id="L985">				type = nodeFactory.newBasicTypeNode(initSource,</span>
+<span class="nc" id="L986">						BasicTypeKind.INT);</span>
+<span class="nc" id="L987">			} else {</span>
+<span class="nc" id="L988">				type = nodeFactory.newBasicTypeNode(initSource,</span>
+<span class="nc" id="L989">						BasicTypeKind.DOUBLE);</span>
+			}
+<span class="nc" id="L991">			varDeclNode = nodeFactory.newVariableDeclarationNode(initSource,</span>
+<span class="nc" id="L992">					doVarIdNode.copy(), type);</span>
+<span class="nc" id="L993">			localMap.put(assignedIdName, type);</span>
+<span class="nc" id="L994">			tempItems.add(0, varDeclNode);</span>
+		}
+<span class="nc" id="L996">		initArgs.add(nodeFactory.newIdentifierExpressionNode(doVariableSource,</span>
+<span class="nc" id="L997">				doVarIdNode));</span>
+<span class="nc" id="L998">		initArgs.add(translateExpression(initSource, initExprNode, scope));</span>
+<span class="nc" id="L999">		condArgs.add(nodeFactory.newIdentifierExpressionNode(doVariableSource,</span>
+<span class="nc" id="L1000">				translateIdentifier(doVariableNode)));</span>
+<span class="nc" id="L1001">		condArgs.add(translateExpression(condSource, condExprNode, scope));</span>
+<span class="nc" id="L1002">		stepArgs.add(nodeFactory.newIdentifierExpressionNode(doVariableSource,</span>
+<span class="nc" id="L1003">				translateIdentifier(doVariableNode)));</span>
+<span class="nc bnc" id="L1004" title="All 2 branches missed.">		if (doControlNode.numChildren() &gt; 4) {</span>
+<span class="nc" id="L1005">			FortranTree stepExprNode = doControlNode.getChildByIndex(4);</span>
+
+<span class="nc" id="L1007">			stepArgs.add(translateExpression(stepSource, stepExprNode, scope));</span>
+<span class="nc" id="L1008">		} else {</span>
+<span class="nc" id="L1009">			stepArgs.add(nodeFactory.newIntegerConstantNode(stepSource, &quot;1&quot;));</span>
+		}
+<span class="nc" id="L1011">		initializerNode = nodeFactory.newOperatorNode(initSource, initOperator,</span>
+<span class="nc" id="L1012">				initArgs);</span>
+<span class="nc" id="L1013">		conditionNode = nodeFactory.newOperatorNode(condSource, condOperator,</span>
+<span class="nc" id="L1014">				condArgs);</span>
+<span class="nc" id="L1015">		incrementerNode = nodeFactory.newOperatorNode(stepSource, stepOperator,</span>
+<span class="nc" id="L1016">				stepArgs);</span>
+<span class="nc" id="L1017">		bodyNode = translateBody(null, doBodyNode, scope, null);</span>
+
+<span class="nc" id="L1019">		return nodeFactory.newForLoopNode(</span>
+<span class="nc" id="L1020">				generateSource(blockItemNode.parent()), initializerNode,</span>
+<span class="nc" id="L1021">				conditionNode, incrementerNode, bodyNode, null);</span>
+	}
+
+	private StatementNode translateGoto(FortranTree blockItemNode) {
+<span class="nc" id="L1025">		Source statementSource = generateSource(blockItemNode);</span>
+<span class="nc" id="L1026">		int labelIndex = blockItemNode.numChildren() - 1;</span>
+<span class="nc" id="L1027">		FortranTree labelNode = blockItemNode.getChildByIndex(labelIndex);</span>
+
+<span class="nc" id="L1029">		return nodeFactory.newGotoNode(statementSource,</span>
+<span class="nc" id="L1030">				translateIdentifier(labelNode));</span>
+	}
+
+	private StatementNode translateComputedGoto(FortranTree blockItemNode,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1035">		Source source = generateSource(blockItemNode);</span>
+<span class="nc" id="L1036">		FortranTree exprNode = blockItemNode.getChildByIndex(2);</span>
+<span class="nc" id="L1037">		FortranTree labelListNode = blockItemNode.getChildByIndex(1);</span>
+
+<span class="nc" id="L1039">		ExpressionNode expressionNode = translateExpression(source, exprNode,</span>
+<span class="nc" id="L1040">				scope);</span>
+<span class="nc" id="L1041">		StatementNode statementNode = translateGotoLabelList(source,</span>
+<span class="nc" id="L1042">				labelListNode, scope);</span>
+<span class="nc" id="L1043">		SwitchNode switchNode = nodeFactory.newSwitchNode(source,</span>
+<span class="nc" id="L1044">				expressionNode, statementNode);</span>
+<span class="nc" id="L1045">		return switchNode;</span>
+	}
+
+	private CompoundStatementNode translateGotoLabelList(Source source,
+			FortranTree labelListNode, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L1051">		int numOfLabel = labelListNode.numChildren();</span>
+<span class="nc" id="L1052">		List&lt;BlockItemNode&gt; items = new LinkedList&lt;BlockItemNode&gt;();</span>
+
+<span class="nc bnc" id="L1054" title="All 2 branches missed.">		for (int i = 0; i &lt; numOfLabel; i++) {</span>
+<span class="nc" id="L1055">			FortranTree labelNode = labelListNode.getChildByIndex(i);</span>
+<span class="nc" id="L1056">			Source labelSource = generateSource(labelNode);</span>
+<span class="nc" id="L1057">			String labelStr = labelNode.cTokens()[0].getText();</span>
+<span class="nc" id="L1058">			IntegerConstantNode caseNum = nodeFactory.newIntegerConstantNode(</span>
+<span class="nc" id="L1059">					labelSource, &quot;&quot; + (i + 1));</span>
+<span class="nc" id="L1060">			StatementNode gotoStatement = nodeFactory.newGotoNode(source,</span>
+<span class="nc" id="L1061">					nodeFactory.newIdentifierNode(labelSource, labelStr));</span>
+<span class="nc" id="L1062">			SwitchLabelNode labelDecl = nodeFactory</span>
+<span class="nc" id="L1063">					.newCaseLabelDeclarationNode(labelSource, caseNum,</span>
+<span class="nc" id="L1064">							gotoStatement);</span>
+<span class="nc" id="L1065">			LabeledStatementNode tempItemNode = nodeFactory</span>
+<span class="nc" id="L1066">					.newLabeledStatementNode(source, labelDecl, gotoStatement);</span>
+<span class="nc" id="L1067">			items.add(tempItemNode);</span>
+		}
+<span class="nc" id="L1069">		return nodeFactory.newCompoundStatementNode(source, items);</span>
+	}
+
+	private List&lt;BlockItemNode&gt; translateBlockItem(FortranTree blockItemNode,
+			SimpleScope scope, Map&lt;String, VariableDeclarationNode&gt; argsMap)
+			throws SyntaxException {
+<span class="nc" id="L1075">		List&lt;BlockItemNode&gt; result = null;</span>
+<span class="nc" id="L1076">		int rule = blockItemNode.rule();</span>
+
+<span class="nc bnc" id="L1078" title="All 11 branches missed.">		switch (rule) {</span>
+		case 501: /* TypeDeclarationStatement */
+<span class="nc" id="L1080">			result = this.translateTypeDeclaration(blockItemNode, scope,</span>
+<span class="nc" id="L1081">					argsMap);</span>
+<span class="nc" id="L1082">			break;</span>
+		case 538: /* ParameterStatement */
+<span class="nc" id="L1084">			result = this.translateParameterStatement(blockItemNode, scope);</span>
+<span class="nc" id="L1085">			break;</span>
+		case 734: /* AssignmentStatement */
+<span class="nc" id="L1087">			result = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1088">			result.add((BlockItemNode) this.translateStatement(blockItemNode,</span>
+<span class="nc" id="L1089">					scope));</span>
+<span class="nc" id="L1090">			break;</span>
+		case 827: /* DoStatement */
+<span class="nc" id="L1092">			result = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1093">			result.add((BlockItemNode) this.translateStatement(blockItemNode,</span>
+<span class="nc" id="L1094">					scope));</span>
+<span class="nc" id="L1095">			break;</span>
+		case 845: /* GotoStatement */
+<span class="nc" id="L1097">			result = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1098">			result.add((BlockItemNode) this.translateStatement(blockItemNode,</span>
+<span class="nc" id="L1099">					scope));</span>
+<span class="nc" id="L1100">			break;</span>
+		case 846: /* ComputedGotoStatement */
+<span class="nc" id="L1102">			result = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1103">			result.add((BlockItemNode) this.translateStatement(blockItemNode,</span>
+<span class="nc" id="L1104">					scope));</span>
+<span class="nc" id="L1105">			break;</span>
+		case 848: /* ContinueStatement */
+<span class="nc" id="L1107">			result = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1108">			result.add((BlockItemNode) this</span>
+<span class="nc" id="L1109">					.translateIdentifierLabeledStatement(blockItemNode, scope));</span>
+<span class="nc" id="L1110">			break;</span>
+		case 912: /* PrintStatement */
+<span class="nc" id="L1112">			result = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1113">			result.add((BlockItemNode) this.translatePrintStatement(</span>
+<span class="nc" id="L1114">					blockItemNode, scope));</span>
+<span class="nc" id="L1115">			break;</span>
+		case 1218: /* CallStatement */
+<span class="nc" id="L1117">			result = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1118">			result.add((BlockItemNode) this.translateStatement(blockItemNode,</span>
+<span class="nc" id="L1119">					scope));</span>
+<span class="nc" id="L1120">			break;</span>
+		case 1236: /* ReturnStatement */
+<span class="nc" id="L1122">			result = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1123">			result.add((BlockItemNode) this.translateStatement(blockItemNode,</span>
+<span class="nc" id="L1124">					scope));</span>
+<span class="nc" id="L1125">			break;</span>
+		default:
+<span class="nc" id="L1127">			System.out.println(rule);</span>
+<span class="nc bnc" id="L1128" title="All 2 branches missed.">			assert false;</span>
+		}
+<span class="nc" id="L1130">		return result;</span>
+	}
+
+	private BlockItemNode translatePrintStatement(FortranTree blockItemNode,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1135">		Source source = generateSource(blockItemNode);</span>
+<span class="nc" id="L1136">		FortranTree printStatementTree = blockItemNode;</span>
+<span class="nc" id="L1137">		FortranTree outputListTree = printStatementTree.getChildByIndex(2);</span>
+<span class="nc" id="L1138">		IdentifierNode printfIdNode = nodeFactory.newIdentifierNode(source,</span>
+<span class="nc" id="L1139">				&quot;printf&quot;);</span>
+<span class="nc" id="L1140">		ExpressionNode functionNode = nodeFactory.newIdentifierExpressionNode(</span>
+<span class="nc" id="L1141">				source, printfIdNode);</span>
+<span class="nc" id="L1142">		ExpressionNode formatNode = null;</span>
+<span class="nc" id="L1143">		int numOfOutputItem = outputListTree.numChildren();</span>
+<span class="nc" id="L1144">		List&lt;ExpressionNode&gt; argumentList = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L1145">		FunctionCallNode callNode = null;</span>
+		// TODO: All variables use &quot;%s&quot; (CIVL doesn't analysis the format.)
+<span class="nc" id="L1147">		String formatStr = &quot;\&quot;&quot;;</span>
+<span class="nc" id="L1148">		CivlcToken cToken = null;</span>
+<span class="nc" id="L1149">		StringToken strToken = null;</span>
+
+<span class="nc" id="L1151">		hasSTDIO = true;</span>
+<span class="nc bnc" id="L1152" title="All 2 branches missed.">		for (int i = 0; i &lt; numOfOutputItem; i++) {</span>
+<span class="nc" id="L1153">			FortranTree outputItemTree = outputListTree.getChildByIndex(i)</span>
+<span class="nc" id="L1154">					.getChildByIndex(0);</span>
+<span class="nc" id="L1155">			ExpressionNode outputExprNode = translateExpression(source,</span>
+<span class="nc" id="L1156">					outputItemTree, scope);</span>
+
+<span class="nc" id="L1158">			argumentList.add(outputExprNode);</span>
+<span class="nc" id="L1159">			formatStr += &quot;%s&quot;;</span>
+		}
+<span class="nc" id="L1161">		formatStr += &quot;\n\&quot;&quot;;</span>
+<span class="nc" id="L1162">		cToken = tokenFactory.newCivlcToken(0, formatStr, blockItemNode</span>
+<span class="nc" id="L1163">				.getChildByIndex(1).cTokens()[0].getFormation());</span>
+<span class="nc" id="L1164">		strToken = tokenFactory.newStringToken(cToken);</span>
+<span class="nc" id="L1165">		formatNode = nodeFactory.newStringLiteralNode(source, formatStr,</span>
+<span class="nc" id="L1166">				strToken.getStringLiteral());</span>
+<span class="nc" id="L1167">		argumentList.add(0, formatNode);</span>
+<span class="nc" id="L1168">		callNode = nodeFactory.newFunctionCallNode(source, functionNode,</span>
+<span class="nc" id="L1169">				argumentList, null);</span>
+<span class="nc" id="L1170">		return nodeFactory.newExpressionStatementNode(callNode);</span>
+	}
+
+	private List&lt;BlockItemNode&gt; translateParameterStatement(
+			FortranTree parameterStmtNode, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L1176">		ArrayList&lt;BlockItemNode&gt; paramterItems = new ArrayList&lt;BlockItemNode&gt;();</span>
+		// FortranTree labelDefinition = parameterStmtNode.getChildByIndex(0);
+<span class="nc" id="L1178">		FortranTree constList = parameterStmtNode.getChildByIndex(2);</span>
+<span class="nc" id="L1179">		int numOfConst = constList.numChildren();</span>
+<span class="nc" id="L1180">		Source source = this.generateSource(parameterStmtNode);</span>
+
+<span class="nc bnc" id="L1182" title="All 4 branches missed.">		assert numOfConst &gt; 0;</span>
+<span class="nc bnc" id="L1183" title="All 2 branches missed.">		for (int i = 0; i &lt; numOfConst; i++) {</span>
+<span class="nc" id="L1184">			FortranTree namedConstDefNode = constList.getChildByIndex(i);</span>
+<span class="nc" id="L1185">			FortranTree identifierNode = namedConstDefNode.getChildByIndex(0);</span>
+<span class="nc" id="L1186">			FortranTree exprNode = namedConstDefNode.getChildByIndex(1);</span>
+<span class="nc" id="L1187">			ExpressionNode constValExpr = translateExpression(source, exprNode,</span>
+<span class="nc" id="L1188">					scope);</span>
+<span class="nc" id="L1189">			OperatorNode expressionNode = null;</span>
+<span class="nc" id="L1190">			Operator operator = Operator.ASSIGN;</span>
+<span class="nc" id="L1191">			List&lt;ExpressionNode&gt; arguments = new ArrayList&lt;ExpressionNode&gt;();</span>
+
+<span class="nc" id="L1193">			arguments.add(nodeFactory.newIdentifierExpressionNode(source,</span>
+<span class="nc" id="L1194">					translateIdentifier(identifierNode)));</span>
+<span class="nc" id="L1195">			arguments.add(constValExpr);</span>
+<span class="nc" id="L1196">			expressionNode = nodeFactory.newOperatorNode(source, operator,</span>
+<span class="nc" id="L1197">					arguments);</span>
+<span class="nc" id="L1198">			paramterItems.add(nodeFactory</span>
+<span class="nc" id="L1199">					.newExpressionStatementNode(expressionNode));</span>
+		}
+<span class="nc" id="L1201">		return paramterItems;</span>
+	}
+
+	private LabeledStatementNode translateIdentifierLabeledStatement(
+			FortranTree blockItemNode, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L1207">		Source source = generateSource(blockItemNode);</span>
+<span class="nc" id="L1208">		IdentifierNode labelName = null;</span>
+<span class="nc" id="L1209">		StatementNode statement = null;</span>
+<span class="nc" id="L1210">		FortranTree ancesterNode = blockItemNode.parent().parent();</span>
+<span class="nc" id="L1211">		int nextIndex = (ancesterNode.childIndex()) + 1;</span>
+<span class="nc" id="L1212">		FortranTree labeledAncesterNode = ancesterNode.parent()</span>
+<span class="nc" id="L1213">				.getChildByIndex(nextIndex);</span>
+<span class="nc" id="L1214">		FortranTree labeledStatementNode = labeledAncesterNode</span>
+<span class="nc" id="L1215">				.getChildByIndex(0);</span>
+<span class="nc" id="L1216">		FortranTree labelIdNode = blockItemNode.getChildByIndex(0);</span>
+<span class="nc" id="L1217">		int rule = labeledStatementNode.rule();</span>
+
+<span class="nc" id="L1219">		labelName = translateIdentifier(labelIdNode);</span>
+<span class="nc bnc" id="L1220" title="All 2 branches missed.">		if (rule == 214) {</span>
+<span class="nc" id="L1221">			statement = translateStatement(</span>
+<span class="nc" id="L1222">					labeledStatementNode.getChildByIndex(0), scope);</span>
+<span class="nc bnc" id="L1223" title="All 2 branches missed.">		} else if (rule == 825) {</span>
+<span class="nc" id="L1224">			statement = translateDoStatement(labeledStatementNode, scope);</span>
+<span class="nc" id="L1225">		} else {</span>
+<span class="nc" id="L1226">			System.out.print(rule);</span>
+<span class="nc bnc" id="L1227" title="All 2 branches missed.">			assert false;</span>
+		}
+
+<span class="nc" id="L1230">		OrdinaryLabelNode labelDecl = nodeFactory</span>
+<span class="nc" id="L1231">				.newStandardLabelDeclarationNode(labelName.getSource(),</span>
+<span class="nc" id="L1232">						labelName, statement);</span>
+
+<span class="nc" id="L1234">		return nodeFactory</span>
+<span class="nc" id="L1235">				.newLabeledStatementNode(source, labelDecl, statement);</span>
+	}
+
+	private CompoundStatementNode translateBody(
+			FortranTree specificationPartNode, FortranTree executionPartNode,
+			SimpleScope scope, Map&lt;String, VariableDeclarationNode&gt; argsMap)
+			throws SyntaxException {
+		CompoundStatementNode result;
+<span class="nc" id="L1243">		SimpleScope newScope = new SimpleScope(scope);</span>
+<span class="nc" id="L1244">		Source source = null;</span>
+<span class="nc" id="L1245">		List&lt;BlockItemNode&gt; items = new LinkedList&lt;BlockItemNode&gt;();</span>
+
+<span class="nc bnc" id="L1247" title="All 2 branches missed.">		if (specificationPartNode != null) {</span>
+<span class="nc" id="L1248">			int numOfSpecification = specificationPartNode.numChildren();</span>
+
+<span class="nc" id="L1250">			tempItems = items;</span>
+<span class="nc" id="L1251">			source = generateSource(specificationPartNode);</span>
+<span class="nc bnc" id="L1252" title="All 2 branches missed.">			for (int i = 0; i &lt; numOfSpecification; i++) {</span>
+<span class="nc" id="L1253">				FortranTree specificationNode = specificationPartNode</span>
+<span class="nc" id="L1254">						.getChildByIndex(i);</span>
+<span class="nc" id="L1255">				int rule = specificationNode.rule();</span>
+<span class="nc bnc" id="L1256" title="All 2 branches missed.">				switch (rule) {</span>
+				case 207: /* DeclarationConstruct */
+<span class="nc" id="L1258">					FortranTree declarationNode = specificationNode</span>
+<span class="nc" id="L1259">							.getChildByIndex(0);</span>
+<span class="nc" id="L1260">					List&lt;BlockItemNode&gt; blockItemNodes = this</span>
+<span class="nc" id="L1261">							.translateBlockItem(declarationNode, newScope,</span>
+<span class="nc" id="L1262">									argsMap);</span>
+
+<span class="nc" id="L1264">					items.addAll(blockItemNodes);</span>
+<span class="nc" id="L1265">					break;</span>
+				default:
+<span class="nc bnc" id="L1267" title="All 2 branches missed.">					assert false;</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L1271" title="All 2 branches missed.">		if (executionPartNode != null) {</span>
+<span class="nc" id="L1272">			int numOfExecution = executionPartNode.numChildren();</span>
+
+<span class="nc bnc" id="L1274" title="All 2 branches missed.">			if (specificationPartNode != null) {</span>
+<span class="nc" id="L1275">				source = generateSource(specificationPartNode,</span>
+<span class="nc" id="L1276">						executionPartNode);</span>
+<span class="nc" id="L1277">			} else {</span>
+<span class="nc" id="L1278">				source = generateSource(executionPartNode);</span>
+			}
+<span class="nc bnc" id="L1280" title="All 2 branches missed.">			for (int i = 0; i &lt; numOfExecution; i++) {</span>
+<span class="nc" id="L1281">				FortranTree execConstNode = executionPartNode</span>
+<span class="nc" id="L1282">						.getChildByIndex(i);</span>
+<span class="nc" id="L1283">				int rule = execConstNode.rule();</span>
+
+<span class="nc bnc" id="L1285" title="All 2 branches missed.">				switch (rule) {</span>
+				case 213: /* ExecutableConstruct */
+<span class="nc" id="L1287">					FortranTree stmtTypeNode = execConstNode.getChildByIndex(0);</span>
+
+<span class="nc" id="L1289">					rule = stmtTypeNode.rule();</span>
+<span class="nc bnc" id="L1290" title="All 4 branches missed.">					switch (rule) {</span>
+					case 214: /* Assignment */
+<span class="nc" id="L1292">						FortranTree stmtNode = stmtTypeNode.getChildByIndex(0);</span>
+<span class="nc" id="L1293">						List&lt;BlockItemNode&gt; blockItemNodes = this</span>
+<span class="nc" id="L1294">								.translateBlockItem(stmtNode, newScope, null);</span>
+<span class="nc" id="L1295">						items.addAll(blockItemNodes);</span>
+<span class="nc bnc" id="L1296" title="All 2 branches missed.">						if (execConstNode.getChildByIndex(0).getChildByIndex(0)</span>
+<span class="nc" id="L1297">								.rule() == 848) {</span>
+<span class="nc" id="L1298">							i++;</span>
+						}
+<span class="nc" id="L1300">						break;</span>
+					case 802: /* If Construct */
+<span class="nc" id="L1302">						items.add(translateStatement(stmtTypeNode, scope));</span>
+<span class="nc" id="L1303">						break;</span>
+					case 825: /* Do Construct */
+<span class="nc" id="L1305">						items.add(translateStatement(</span>
+<span class="nc" id="L1306">								stmtTypeNode.getChildByIndex(0), scope));</span>
+<span class="nc" id="L1307">						break;</span>
+					default:
+<span class="nc" id="L1309">						System.out.println(rule);</span>
+<span class="nc bnc" id="L1310" title="All 2 branches missed.">						assert false;</span>
+					}
+					break;
+				default:
+<span class="nc" id="L1314">					System.out.println(rule);</span>
+<span class="nc bnc" id="L1315" title="All 2 branches missed.">					assert false;</span>
+				}
+			}
+		}
+<span class="nc" id="L1319">		result = nodeFactory.newCompoundStatementNode(source, items);</span>
+<span class="nc" id="L1320">		return result;</span>
+	}
+
+	private BlockItemNode translateMainProgramUnit(FortranTree programUnitNode,
+			SimpleScope scope, int unitType) throws SyntaxException {
+<span class="nc" id="L1325">		int numChildren = programUnitNode.numChildren();</span>
+<span class="nc" id="L1326">		SimpleScope newScope = new SimpleScope(scope, true);</span>
+<span class="nc" id="L1327">		FortranTree programStatementNode = programUnitNode.getChildByIndex(0);</span>
+<span class="nc" id="L1328">		FortranTree identifierNode = programStatementNode.getChildByIndex(2);</span>
+<span class="nc" id="L1329">		FortranTree argsNode = null;</span>
+<span class="nc" id="L1330">		FortranTree specificationPartNode = programUnitNode.getChildByIndex(1);</span>
+<span class="nc bnc" id="L1331" title="All 2 branches missed.">		FortranTree executionPartNode = numChildren &gt; 3 ? programUnitNode</span>
+<span class="nc" id="L1332">				.getChildByIndex(2) : null;</span>
+		/*
+		 * FortranTree endProgramStatementNode = programUnitNode
+		 * .getChildByIndex(numChildren - 1);
+		 */
+<span class="nc" id="L1337">		Map&lt;String, VariableDeclarationNode&gt; argsMap = new HashMap&lt;String, VariableDeclarationNode&gt;();</span>
+		Source source;
+		IdentifierNode name;
+		FunctionTypeNode type;
+		CompoundStatementNode body;
+<span class="nc" id="L1342">		BlockItemNode result = null;</span>
+
+<span class="nc" id="L1344">		source = generateSource(programUnitNode);</span>
+<span class="nc" id="L1345">		name = this.translateIdentifier(identifierNode);</span>
+<span class="nc bnc" id="L1346" title="All 2 branches missed.">		if (unitType == 0)</span>
+<span class="nc" id="L1347">			name = nodeFactory.newIdentifierNode(source, &quot;main&quot;);</span>
+<span class="nc bnc" id="L1348" title="All 2 branches missed.">		if (programStatementNode.numChildren() &gt; 3) {</span>
+<span class="nc" id="L1349">			argsNode = programStatementNode.getChildByIndex(3);</span>
+		}
+<span class="nc" id="L1351">		type = this.translateFunctionType(null, argsNode, true, argsMap);</span>
+<span class="nc" id="L1352">		body = translateBody(specificationPartNode, executionPartNode,</span>
+<span class="nc" id="L1353">				newScope, argsMap);</span>
+<span class="nc" id="L1354">		result = nodeFactory.newFunctionDefinitionNode(source, name, type,</span>
+<span class="nc" id="L1355">				null, body);</span>
+<span class="nc" id="L1356">		localMap.clear();</span>
+<span class="nc" id="L1357">		return result;</span>
+	}
+
+	private BlockItemNode translateSubroutine(FortranTree subroutineTree,
+			SimpleScope scope, int unitType) throws SyntaxException {
+<span class="nc" id="L1362">		int numChildren = subroutineTree.numChildren();</span>
+<span class="nc" id="L1363">		SimpleScope newScope = new SimpleScope(scope, true);</span>
+<span class="nc" id="L1364">		FortranTree subroutineStatementTree = subroutineTree.getChildByIndex(0);</span>
+<span class="nc bnc" id="L1365" title="All 2 branches missed.">		boolean hasArgs = subroutineStatementTree.numChildren() &gt; 3;</span>
+<span class="nc" id="L1366">		FortranTree idTree = subroutineStatementTree.getChildByIndex(2);</span>
+<span class="nc bnc" id="L1367" title="All 2 branches missed.">		FortranTree argsNode = hasArgs ? subroutineStatementTree</span>
+<span class="nc" id="L1368">				.getChildByIndex(3) : null;</span>
+<span class="nc" id="L1369">		FortranTree specificationPartNode = subroutineTree.getChildByIndex(1);</span>
+<span class="nc bnc" id="L1370" title="All 2 branches missed.">		FortranTree executionPartNode = numChildren &gt; 3 ? subroutineTree</span>
+<span class="nc" id="L1371">				.getChildByIndex(2) : null;</span>
+		/*
+		 * FortranTree endSubroutineStatementNode = subroutineTree
+		 * .getChildByIndex(numChildren - 1);
+		 */
+<span class="nc" id="L1376">		Map&lt;String, VariableDeclarationNode&gt; argsMap = new HashMap&lt;String, VariableDeclarationNode&gt;();</span>
+		Source source;
+		IdentifierNode name;
+		FunctionTypeNode functionType;
+		CompoundStatementNode body;
+<span class="nc" id="L1381">		BlockItemNode result = null;</span>
+
+<span class="nc" id="L1383">		source = generateSource(subroutineTree);</span>
+<span class="nc" id="L1384">		name = this.translateIdentifier(idTree);</span>
+<span class="nc" id="L1385">		functionType = this.translateFunctionType(null, argsNode, false,</span>
+<span class="nc" id="L1386">				argsMap);</span>
+<span class="nc" id="L1387">		body = translateBody(specificationPartNode, executionPartNode,</span>
+<span class="nc" id="L1388">				newScope, argsMap);</span>
+<span class="nc" id="L1389">		result = nodeFactory.newFunctionDefinitionNode(source, name,</span>
+<span class="nc" id="L1390">				functionType, null, body);</span>
+<span class="nc" id="L1391">		localMap.clear();</span>
+<span class="nc" id="L1392">		return result;</span>
+	}
+
+	/**
+	 * [R202-F08] ProgramUnits
+	 * 
+	 * @param programUnitNode
+	 * @param scope
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private List&lt;BlockItemNode&gt; translateProgramUnit(
+			FortranTree programUnitNode, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L1406">		int rule = programUnitNode.rule();</span>
+<span class="nc" id="L1407">		List&lt;BlockItemNode&gt; items = new LinkedList&lt;BlockItemNode&gt;();</span>
+
+<span class="nc bnc" id="L1409" title="All 4 branches missed.">		switch (rule) {</span>
+		case 1101: /* MainProgramUnit */
+<span class="nc" id="L1411">			items.add((BlockItemNode) translateMainProgramUnit(programUnitNode,</span>
+<span class="nc" id="L1412">					scope, 0));</span>
+<span class="nc" id="L1413">			break;</span>
+		case 1231: /* Subroutine */
+<span class="nc" id="L1415">			items.add((BlockItemNode) translateSubroutine(programUnitNode,</span>
+<span class="nc" id="L1416">					scope, 1));</span>
+<span class="nc" id="L1417">			break;</span>
+		case 1223: /* Function */
+<span class="nc" id="L1419">			items.add((BlockItemNode) translateMainProgramUnit(programUnitNode,</span>
+<span class="nc" id="L1420">					scope, 2));</span>
+<span class="nc" id="L1421">			break;</span>
+		default:
+<span class="nc bnc" id="L1423" title="All 2 branches missed.">			assert false;</span>
+		}
+<span class="nc" id="L1425">		return items;</span>
+	}
+
+	/* Public Function */
+
+	public SequenceNode&lt;BlockItemNode&gt; generateRoot() throws SyntaxException {
+<span class="nc" id="L1431">		int numOfProgramUnit = parseTree.numChildren();</span>
+<span class="nc" id="L1432">		SimpleScope scope = new SimpleScope(null);</span>
+		Source source;
+
+<span class="nc bnc" id="L1435" title="All 4 branches missed.">		assert numOfProgramUnit &gt;= 0;</span>
+<span class="nc bnc" id="L1436" title="All 2 branches missed.">		for (int i = 0; i &lt; numOfProgramUnit; i++) {</span>
+<span class="nc" id="L1437">			programUnits.addAll(this.translateProgramUnit(</span>
+<span class="nc" id="L1438">					parseTree.getChildByIndex(i), scope));</span>
+		}
+<span class="nc" id="L1440">		source = generateSource(parseTree);</span>
+<span class="nc" id="L1441">		return nodeFactory.newTranslationUnitNode(source, programUnits);</span>
+	}
+
+	public AST generateAST() {
+<span class="nc" id="L1445">		AST ast = null;</span>
+<span class="nc" id="L1446">		Set&lt;SourceFile&gt; sourceFiles = new LinkedHashSet&lt;&gt;();</span>
+
+<span class="nc" id="L1448">		sourceFiles.add(new SourceFile(new File(filePath), 0));</span>
+		try {
+<span class="nc" id="L1450">			rootNode = this.generateRoot();</span>
+<span class="nc" id="L1451">			ast = addLib(rootNode, sourceFiles);</span>
+<span class="nc" id="L1452">		} catch (SyntaxException | PreprocessorException | ParseException e) {</span>
+<span class="nc" id="L1453">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L1455">		return ast;</span>
+	}
+
+	private AST addLib(SequenceNode&lt;BlockItemNode&gt; oldRootNode,
+			Set&lt;SourceFile&gt; sourceFiles) throws PreprocessorException,
+			ParseException, SyntaxException {
+<span class="nc bnc" id="L1461" title="All 2 branches missed.">		if (hasSTDIO) {</span>
+<span class="nc" id="L1462">			AST stdioAST = libFactory.getASTofLibrary(LibraryASTFactory.STDIO,</span>
+<span class="nc" id="L1463">					configuration, tokenFactory, astFactory);</span>
+<span class="nc" id="L1464">			SequenceNode&lt;BlockItemNode&gt; stdioNodes = stdioAST.getRootNode();</span>
+<span class="nc" id="L1465">			List&lt;BlockItemNode&gt; nodes = new ArrayList&lt;BlockItemNode&gt;();</span>
+
+<span class="nc" id="L1467">			stdioAST.release();</span>
+<span class="nc bnc" id="L1468" title="All 2 branches missed.">			for (BlockItemNode node : stdioNodes) {</span>
+<span class="nc" id="L1469">				node.remove();</span>
+<span class="nc" id="L1470">				nodes.add(node);</span>
+			}
+<span class="nc" id="L1472">			oldRootNode.insertChildren(0, nodes);</span>
+<span class="nc" id="L1473">			sourceFiles.addAll(stdioAST.getSourceFiles());</span>
+		}
+<span class="nc" id="L1475">		return astFactory.newAST(oldRootNode, sourceFiles, false);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

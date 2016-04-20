@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BaseTransformer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.transform.IF</a> &gt; <span class="el_source">BaseTransformer.java</span></div><h1>BaseTransformer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.transform.IF;
+
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StringLiteralNode;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.Formation;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.StringToken;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+/**
+ * A very basic partial implementation of {@link Transformer}. Implements the
+ * book-keeping methods {@link #getCode()}, {@link #getShortDescription()},
+ * {@link #toString()}, and provides similar fields. Most implementations of
+ * {@link Transformer} can extend this class.
+ * 
+ * @author siegel
+ * 
+ */
+public abstract class BaseTransformer implements Transformer {
+
+	protected String code;
+
+	protected String longName;
+
+	protected String shortDescription;
+
+	protected ASTFactory astFactory;
+
+	protected NodeFactory nodeFactory;
+
+<span class="nc" id="L36">	protected BaseTransformer(String code, String longName,</span>
+			String shortDescription, ASTFactory astFactory) {
+<span class="nc" id="L38">		this.code = code;</span>
+<span class="nc" id="L39">		this.longName = longName;</span>
+<span class="nc" id="L40">		this.shortDescription = shortDescription;</span>
+<span class="nc" id="L41">		this.astFactory = astFactory;</span>
+<span class="nc" id="L42">		this.nodeFactory = astFactory.getNodeFactory();</span>
+<span class="nc" id="L43">	}</span>
+
+	/**
+	 * gets the configuration associated with this translation task
+	 * 
+	 * @return the configuration associated with this translation task
+	 */
+	protected Configuration getConfiguration() {
+<span class="nc" id="L51">		return this.nodeFactory.configuration();</span>
+	}
+
+	@Override
+	public String getCode() {
+<span class="nc" id="L56">		return code;</span>
+	}
+
+	@Override
+	public String getShortDescription() {
+<span class="nc" id="L61">		return shortDescription;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L66">		return longName;</span>
+	}
+
+	@Override
+	public StringLiteralNode newStringLiteralNode(String method,
+			String representation) throws SyntaxException {
+<span class="nc" id="L72">		TokenFactory tokenFactory = astFactory.getTokenFactory();</span>
+<span class="nc" id="L73">		Formation formation = tokenFactory.newTransformFormation(longName,</span>
+<span class="nc" id="L74">				method);</span>
+<span class="nc" id="L75">		CivlcToken token = tokenFactory.newCivlcToken(</span>
+<span class="nc" id="L76">				CivlcTokenConstant.STRING_LITERAL, representation, formation);</span>
+<span class="nc" id="L77">		StringToken stringToken = tokenFactory.newStringToken(token);</span>
+<span class="nc" id="L78">		Source source = tokenFactory.newSource(stringToken);</span>
+<span class="nc" id="L79">		StringLiteralNode result = nodeFactory.newStringLiteralNode(source,</span>
+<span class="nc" id="L80">				representation, stringToken.getStringLiteral());</span>
+
+<span class="nc" id="L82">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

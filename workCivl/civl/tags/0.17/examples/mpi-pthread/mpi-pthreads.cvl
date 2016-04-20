@@ -1,0 +1,43 @@
+/* CIVL model of simple hybrid MPI+threads program.
+ * The program has a defect.
+ * Commnad line execution:
+ *     civl verify -min mpi-pthreads.cvl
+ */
+#include<civlc.h>
+#define TAG 0
+#define NPROCS 2
+#define NTHREADS 2
+
+$gcomm gcomm = $gcomm_create($here, NPROCS);
+
+void MPI_Process (int rank) {
+  $comm comm = $comm_create($here, gcomm, rank);
+  $proc threads[NTHREADS];
+  
+  void Thread(int tid) {
+    int x = rank;
+    $message in, out = $message_pack(rank, 1-rank, TAG, &x, sizeof(int));
+    
+    for (int j=0; j<2; j++) {
+      if (rank == 1) {
+        for (int i=0; i<2; i++) $comm_enqueue(comm, out);
+        for (int i=0; i<2; i++) in = $comm_dequeue(comm, 1-rank, TAG);
+      } else {
+        for (int i=0; i<2; i++) in = $comm_dequeue(comm, 1-rank, TAG);
+        for (int i=0; i<2; i++) $comm_enqueue(comm, out);
+      }
+    }
+  }
+  
+  for (int i=0; i<NTHREADS; i++) threads[i] = $spawn Thread(i);
+  for (int i=0; i<NTHREADS; i++) $wait(threads[i]);
+  $comm_destroy(comm);
+}
+
+void main() {
+  $proc procs[NPROCS];
+
+  for (int i=0; i<NPROCS; i++) procs[i] = $spawn MPI_Process(i);
+  for (int i=0; i<NPROCS; i++) $wait(procs[i]);
+  $gcomm_destroy(gcomm);
+}

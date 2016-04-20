@@ -1,0 +1,27 @@
+#include<civlc.cvh>
+
+$input int BLOCK_SIZE;
+$input int NPROCS;
+
+int getMax(int* array, int length){
+  int myMax = 0;
+  $proc procs[NPROCS];
+
+  void max_worker(int id){
+    for(int i = 0; i < BLOCK_SIZE; i++){
+      int currentIndex = BLOCK_SIZE * id + i;
+
+      if(currentIndex >= length)
+        break;
+      if(myMax < array[currentIndex])
+        myMax = array[currentIndex];
+    }
+  }
+  for(int i = 0; i < NPROCS; i++){
+    procs[i] = $spawn max_worker(i);
+  }
+  for(int i = 0; i < NPROCS; i++){
+    $wait(procs[i]);
+  }
+  return myMax;
+}

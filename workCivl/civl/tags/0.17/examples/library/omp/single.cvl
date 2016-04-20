@@ -1,0 +1,34 @@
+#include<civlc.cvh>
+#include<civl-omp.cvh>
+#include<stdio.h>
+
+void main(){
+  int data = 0;
+  $omp_gteam gteam = $omp_gteam_create($here, 3);
+  $omp_gshared gshared = $omp_gshared_create(gteam, &data);  
+
+  void thread(int tid) {
+    int data_local;
+    int data_status;
+    $omp_team team = $omp_team_create($here, gteam, tid);
+    $omp_shared shared = $omp_shared_create(team, gshared, &data_local, &data_status);
+    int owner = $omp_arrive_single(team, 0);
+
+    printf("Hello from thread %d\n", tid);
+    if (owner == tid) {
+      int tmp = 10 + tid;
+      
+      $omp_write(shared, &data_local, &tmp);
+    }
+    $omp_barrier_and_flush(team);
+    $omp_shared_destroy(shared);
+    $omp_team_destroy(team);
+  }
+  
+  $parfor (int i: ($domain){ 0 .. 2 }) {
+    thread(i);
+  }
+  $assert data == 10;
+  $omp_gshared_destroy(gshared);
+  $omp_gteam_destroy(gteam);
+}

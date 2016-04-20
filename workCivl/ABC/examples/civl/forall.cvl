@@ -1,0 +1,9 @@
+#include <civlc.cvh>
+
+int main(){
+  int a[5];
+
+  for(int i = 0; i < 5; i++)
+    a[i] = i;
+  $assert(($forall {k = 0 .. 4} a[k] == k));
+}

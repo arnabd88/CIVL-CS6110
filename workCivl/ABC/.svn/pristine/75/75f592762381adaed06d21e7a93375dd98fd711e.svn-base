@@ -1,0 +1,18 @@
+#ifdef __CIVL_CIVLPTHREAD__
+#else
+#define __CIVL_CIVLPTHREAD__
+
+#include <civlc.cvh>
+#include "civlpthread.cvh"
+#include <concurrency.cvh>
+
+/* __pthread_pool_t struct definition
+  Description: The pthread_pool_t is the pool where threads are stored in an array of pointers to threads
+  in order to access them after creation
+*/
+struct __pthread_pool_t{
+  pthread_t** threads;
+  int len;
+};
+
+#endif

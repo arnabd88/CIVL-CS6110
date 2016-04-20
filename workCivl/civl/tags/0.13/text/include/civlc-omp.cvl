@@ -1,0 +1,226 @@
+/* This header file defines standard types and provides
+ * function prototypes used in the OpenMP to CIVLC transformation.
+ */
+ 
+#ifdef __CIVLC_OMP__
+#else
+#define __CIVLC_OMP__
+
+#include<civlc.h>
+
+/* *********************** Types *********************** */
+
+/* global shared object, used to represent the state of
+ * a shared variable. A handle type.
+ */
+typedef struct OMP_gshared {
+  void * original; // pointer to original variable
+  int size; // size of original variable
+  void * state; // heap allocated state object
+  int state_size; // size of state object
+} * $omp_gshared;
+
+/* local view of the shared object, belonging to a single
+ * thread, with reference to the global object.
+ * A handle type.
+ */
+typedef struct OMP_shared {
+  $omp_gshared;
+  int tid;
+} * $omp_shared;
+
+/* a reference to a shared object or some part of
+ * a shared object.  This leaves the struct type
+ * incomplete.
+ */
+typedef struct OMP_ref * $omp_ref;
+
+/* The different kinds of references */
+typedef enum OMP_Ref_kind {
+  IDENTITY,
+  ARRAY_ELEMENT,
+  MEMBER
+} OMP_Ref_kind;
+
+/* A reference to part of a composite structure */
+typedef struct OMP_subref {
+  $omp_ref parent;
+  int index;
+} * $omp_subref;
+
+/* completes the definition of struct OMP_ref */
+struct OMP_ref {
+  enum OMP_Ref_kind kind;
+  union {
+    $omp_gshared var; // for IDENTITY
+    $omp_subref subref; // for ARRAY_ELEMENT and MEMBER
+  } data;
+};
+
+typedef struct OMP_loop_record {
+  $domain loop_domain; // full loop domain
+  $domain subdomain; // subdomain for this thread
+} OMP_loop_record;
+
+typedef struct OMP_work_record {
+  int kind; // loop, barrier, sections, single
+  int location; // location in model of construct
+  _Bool arrived; // has this thread arrived yet?
+  union {
+    OMP_loop_record loop;
+    $domain sections;
+    int singletid;
+  } data;
+} OMP_work_record;
+
+/* global team object, represents a team of threads executing
+ * in a parallel region. A handle type. This is where all the
+ * state needed to correctly execute a parallel region will
+ * be stored. This includes all the shared object data,
+ * and a worksharking queue for every thread.
+ */
+typedef struct OMP_gteam {
+  /* number of threads in team */
+  int nthreads;
+  /* work queues.  Length nthreads. For each thread,
+   * a FIFO queue of work records */
+  OMP_work_record work[][];
+  /* number of shared variables */
+  int nshared;
+  /* the shared object data.  Length nshared. */
+  $omp_gshared shared[];
+} * $omp_gteam;
+
+typedef struct OMP_team {
+  $omp_gteam gteam;
+  int tid;
+} * $omp_team;
+
+typedef enum OMP_Operator {
+  OMP_SUM,
+  OMP_PRODUCT,
+  OMP_MAX,
+  OMP_MIN
+} $omp_operator;
+
+
+/* *********************** Functions *********************** */
+
+/* creates new global team object, allocating object in heap
+ * in specified scope. Number of threads that will be in the
+ * team is nthreads.
+ */
+$omp_gteam $omp_gteam_create($scope scope, int nthreads);
+
+/* destroys the global team object. All shared objects
+ * associated to the team must have been destroyed before
+ * calling this function. 
+ */
+void $omp_gteam_destroy($omp_gteam gteam);
+
+/* creates new local team object for a specific thread. */
+$omp_team $omp_team_create($scope scope, $omp_gteam gteam, int tid);
+
+/* destroys the local team object */
+void $omp_team_destroy($omp_team team);
+
+/* creates new global shared object, associated to the given
+ * global team. A pointer to the shared variable that this
+ * object corresponds to is given. The new object is initialized
+ * by copying the values from the original variable.
+ */
+$omp_gshared $omp_gshared_create($omp_gteam, void *original);
+
+/* destroys the global shared object, copying the content
+ * to the original variable.
+ */
+void $omp_gshared_destroy($omp_gshared gshared);
+
+/* creates a local shared object, returning handle to it */
+$omp_shared $omp_shared_create($omp_team team, $omp_gshared gshared);
+
+/* destroys the local shared object */
+void $omp_shared_destroy($omp_shared shared);
+
+/* creates a reference to the specified shared object */
+$omp_ref $omp_identity_ref($omp_shared shared);
+
+/* creates a reference to an element of a shared array
+ * object. Argument ref is a reference to shared object
+ * of array type.
+ */
+$omp_ref $omp_array_element_ref($omp_ref ref, int index);
+
+/* creates a reference to a member of a structure or
+ * union shared object. Argument ref is a reference to
+ * the shared object of structure or union type.
+ */
+$omp_ref $omp_member_ref($omp_ref ref, int fieldIndex);
+
+/* called by a thread to read a shared object pointed
+ * to by ref. The result of the read is stored in the
+ * memory unit pointed to by result.
+ */
+void $omp_read(void *result, $omp_ref ref);
+
+/* called by a thread to write to the shared object
+ * pointed to by ref. The value to be written is taken
+ * from the memory unit pointed to by value.
+ */
+void $omp_write($omp_ref ref, void *value);
+
+/* Reads the reference, applies the associative operator
+ * specified by op to the read value and the value pointed
+ * to by value, and writes the result back to ref.
+ * This happens in one atomic step. Example: you can
+ * use this to add some value to a shared variable,
+ * using CIVL_SUM for op.
+ */
+void $omp_apply_assoc($omp_ref ref, $omp_operator op,
+   void *value);
+
+/* performs an OpenMP flush operation on the shared object
+ */
+void $omp_flush($omp_shared shared);
+
+/* performs an OpenMP flush operation on all shared 
+ * objects. This is the default in OpenMP if no argument
+ * is specified for a flush construct.
+ */
+void $omp_flush_all($omp_team team);
+
+/* performs a barrier only. Note however that usually
+ * (always?) a barrier is accompanied by a flush-all,
+ * so $omp_barrier_and_flush should be used instead.
+ */
+void $omp_barrier($omp_team team);
+
+/* combines a barrier and a flush on all shared objects
+ * owned by the team. Implicit in many OpenMP worksharing
+ * constructs. 
+ */
+void $omp_barrier_and_flush($omp_team team);
+
+/* called by a thread when it reaches an omp for loop,
+ * this function returns the subset of the loop domain
+ * specifying the iterations that this thread will execute.
+ * The dimension of the domain returned equals the
+ * dimension of the given domain loop_dom.
+ */
+$domain $omp_arrive_loop($omp_team, $domain loop_dom);
+
+/* called by a thread when it reaches an omp sections
+ * construct, this function returns the subset of the
+ * integers 0..numSections-1 specifying the indexes of
+ * the sections that this thread will execute. The sections
+ * are numbered from 0 in increasing order.
+ */
+$domain(1) $omp_arrive_sections($omp_team, int numSections);
+
+/* called by a thread when it reaches on omp single
+ * construct, returns the thread ID of the thread that
+ * will execute the single construct.
+ */
+int $omp_arrive_single($omp_team team);
+
+#endif

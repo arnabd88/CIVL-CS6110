@@ -1,0 +1,14 @@
+#include<assert.h>
+
+$input int N;
+$input int a[N];
+
+void main() {
+  double x = 0.0;
+  double s;
+
+  $assume N >= 2 && N <= 4;
+  x = x + a[0]+a[1];
+  s = x/N;
+  $assert N*s==a[0]+a[1];
+}

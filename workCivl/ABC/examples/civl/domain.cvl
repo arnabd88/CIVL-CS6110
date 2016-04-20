@@ -1,0 +1,11 @@
+#include <civlc.cvh>
+#include <stdio.h>
+
+void main(){
+  $range range1 = 0 .. 5;
+  $domain(1) dom1 = ($domain){range1};
+  $domain(2) dom2 = ($domain){range1, 3 .. 9 # 3};
+  
+  printf("%s\n", dom1);
+  printf("%s\n", dom2);
+}

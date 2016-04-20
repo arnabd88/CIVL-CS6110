@@ -1,0 +1,11 @@
+#include <civlc.cvh>
+
+$input double x,y,z,w;
+
+int main() {
+  $assume(0==x*y-z*w);
+  $assume(0==z);
+  $assume(0!=x);
+  $assume(0!=y);
+  $assert(0);
+}

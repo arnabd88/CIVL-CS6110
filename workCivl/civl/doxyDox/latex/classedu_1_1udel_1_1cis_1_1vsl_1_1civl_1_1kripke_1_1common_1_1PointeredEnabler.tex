@@ -1,0 +1,112 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Pointered\+Enabler Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Pointered\+Enabler@{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Pointered\+Enabler}}
+
+
+Enabler\+P\+O\+R implements \hyperlink{}{Enabler\+I\+F} for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} models.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Pointered\+Enabler\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Pointered\+Enabler\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler_acf3536d488e79c7e2763edec35c18bb0}{Pointered\+Enabler} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonEnabler_ab70b386e8532965202e8b619749b768d}{state\+Factory}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonEnabler_a9890967584ab748b05714c777aa77940}{evaluator}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonEnabler_a7fe830b682c6ef46defd766ebf14c66b}{symbolic\+Analyzer}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Unit\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnablerLoader}{Library\+Enabler\+Loader} lib\+Loader, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonEnabler_af13cf4d908776faff26025c88e9f7f6e}{error\+Logger}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config)
+\begin{DoxyCompactList}\small\item\em Create a new instance of enabler that implements the P\+O\+R based on impact memory units. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence}{Transition\+Sequence} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler_a42cacbd93c2a0be74dcfa6a562e6387f}{enabled\+Transitions\+P\+O\+R} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em The partial order reduction computes the set of processes that impact a set of memory units exclusively accessed by other processes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Enabler\+P\+O\+R implements \hyperlink{}{Enabler\+I\+F} for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} models. 
+
+Its basic functionality is to obtain the set of enabled transitions of a certain state, using the new P\+O\+R as discussed in Feb 2014.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler_acf3536d488e79c7e2763edec35c18bb0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Pointered\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Pointered\+Enabler}!Pointered\+Enabler@{Pointered\+Enabler}}
+\index{Pointered\+Enabler@{Pointered\+Enabler}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Pointered\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Pointered\+Enabler}}
+\subsubsection[{Pointered\+Enabler}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Pointered\+Enabler.\+Pointered\+Enabler (
+\begin{DoxyParamCaption}
+\item[{{\bf State\+Factory}}]{state\+Factory, }
+\item[{{\bf Evaluator}}]{evaluator, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf Memory\+Unit\+Factory}}]{mem\+Unit\+Factory, }
+\item[{{\bf Library\+Enabler\+Loader}}]{lib\+Loader, }
+\item[{{\bf C\+I\+V\+L\+Error\+Logger}}]{error\+Logger, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler_acf3536d488e79c7e2763edec35c18bb0}
+
+
+Create a new instance of enabler that implements the P\+O\+R based on impact memory units. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transition\+Factory} & The unique transition factory used in the system to create transitions. \\
+\hline
+{\em evaluator} & The unique evaluator used in the system to evaluate expressions at a given state. \\
+\hline
+{\em executor} & The unique executor used in the system to execute statements at a certain state. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer to be used. \\
+\hline
+{\em lib\+Loader} & The library enabler loader. \\
+\hline
+{\em error\+Logger} & The error logger \\
+\hline
+{\em civl\+Config} & The configuration of the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler_a42cacbd93c2a0be74dcfa6a562e6387f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Pointered\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Pointered\+Enabler}!enabled\+Transitions\+P\+O\+R@{enabled\+Transitions\+P\+O\+R}}
+\index{enabled\+Transitions\+P\+O\+R@{enabled\+Transitions\+P\+O\+R}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Pointered\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Pointered\+Enabler}}
+\subsubsection[{enabled\+Transitions\+P\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Transition\+Sequence} edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Pointered\+Enabler.\+enabled\+Transitions\+P\+O\+R (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1PointeredEnabler_a42cacbd93c2a0be74dcfa6a562e6387f}
+
+
+The partial order reduction computes the set of processes that impact a set of memory units exclusively accessed by other processes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state to work with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The enabled transitions as an instance of Transition\+Sequence. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/kripke/common/Pointered\+Enabler.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,103 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Switch\+Branch\+Statement Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Switch\+Branch\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Switch\+Branch\+Statement}}
+
+
+When translating a switch block, we need to create a noop statement for each label.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Switch\+Branch\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Switch\+Branch\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_ac734540a720b3da845c8ecef147a01f3}{Common\+Switch\+Branch\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civl\+Source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} guard, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} label)
+\begin{DoxyCompactList}\small\item\em Basic constructor. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_aadda91212ce449c7b58b1481aa2ecef1}{Common\+Switch\+Branch\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civl\+Source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} guard)
+\begin{DoxyCompactList}\small\item\em Create a noop statement for the default case of a switch block. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_a4b57277e44ede73f111f53a00ca35835}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_a4b57277e44ede73f111f53a00ca35835}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+When translating a switch block, we need to create a noop statement for each label. 
+
+In order to have more information about the transition, we create this class to extend \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement}{Common\+Noop\+Statement}. Currently, the label of the noop statement is included as a field. In the future, we may put more information, if necessary.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_ac734540a720b3da845c8ecef147a01f3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Switch\+Branch\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Switch\+Branch\+Statement}!Common\+Switch\+Branch\+Statement@{Common\+Switch\+Branch\+Statement}}
+\index{Common\+Switch\+Branch\+Statement@{Common\+Switch\+Branch\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Switch\+Branch\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Switch\+Branch\+Statement}}
+\subsubsection[{Common\+Switch\+Branch\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Switch\+Branch\+Statement.\+Common\+Switch\+Branch\+Statement (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{civl\+Source, }
+\item[{{\bf Location}}]{source, }
+\item[{{\bf Expression}}]{guard, }
+\item[{{\bf Expression}}]{label}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_ac734540a720b3da845c8ecef147a01f3}
+
+
+Basic constructor. 
+
+Every parameter should be non-\/null. If there is no label, use \hyperlink{}{Common\+Switch\+Branch\+Statement(\+C\+I\+V\+L\+Source, Location)}
+
+
+\begin{DoxyParams}{Parameters}
+{\em civl\+Source} & \\
+\hline
+{\em source} & \\
+\hline
+{\em label} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_aadda91212ce449c7b58b1481aa2ecef1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Switch\+Branch\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Switch\+Branch\+Statement}!Common\+Switch\+Branch\+Statement@{Common\+Switch\+Branch\+Statement}}
+\index{Common\+Switch\+Branch\+Statement@{Common\+Switch\+Branch\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Switch\+Branch\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Switch\+Branch\+Statement}}
+\subsubsection[{Common\+Switch\+Branch\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Switch\+Branch\+Statement.\+Common\+Switch\+Branch\+Statement (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{civl\+Source, }
+\item[{{\bf Location}}]{source, }
+\item[{{\bf Expression}}]{guard}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_aadda91212ce449c7b58b1481aa2ecef1}
+
+
+Create a noop statement for the default case of a switch block. 
+
+Each parameter should be non-\/null. For cases other than default, use \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonSwitchBranchStatement_ac734540a720b3da845c8ecef147a01f3}{Common\+Switch\+Branch\+Statement(\+C\+I\+V\+L\+Source, Location, Expression, Expression)}
+
+
+\begin{DoxyParams}{Parameters}
+{\em civl\+Source} & \\
+\hline
+{\em source} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/statement/Common\+Switch\+Branch\+Statement.\+java\end{DoxyCompactItemize}

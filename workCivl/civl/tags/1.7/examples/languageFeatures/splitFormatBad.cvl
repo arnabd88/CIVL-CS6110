@@ -1,0 +1,11 @@
+/* A syntax exception (Invalid precision) example.
+ */
+#include <civlc.cvh>
+#include <stdio.h>
+
+void main() {
+  char c = 's';
+
+  printf("The value of c is %.2c",c);//Invalid precision
+  printf("The value of c is %2c",c);
+}

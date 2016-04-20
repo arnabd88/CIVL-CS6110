@@ -1,0 +1,14 @@
+#include <pointer.cvh>
+
+int main() {
+  int val1 = 3;
+  int val2 = 4;
+  int * a = &val1;
+  int * b = &val2;
+
+  val1 = 4;
+  b = &val1;
+  $assert_equals(a, b, "%d and %d are not equal!\n", *a, *b);
+
+  return 0;
+}

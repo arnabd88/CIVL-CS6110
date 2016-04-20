@@ -1,0 +1,14 @@
+#include <civlc.cvh>
+#include <pointer.cvh>
+
+void test(void f(void*), void* x){
+  f(x);
+}
+
+int main(){
+  int x;
+
+  test($set_default, &x);
+  $assert(x==0);
+}
+

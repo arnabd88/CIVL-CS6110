@@ -1,0 +1,14 @@
+#include<civlc.h>
+
+$input int n;
+$output double d=0;
+
+void main() {
+  for (int i=0; i<n; i++) {
+    double h();
+    double g(int j) {
+      return (double)(10*i+j);
+    }
+    d += g(i);
+  }
+}

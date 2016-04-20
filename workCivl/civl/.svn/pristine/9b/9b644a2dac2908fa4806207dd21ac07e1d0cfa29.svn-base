@@ -1,0 +1,18 @@
+/* Commandline execution:
+ *		civl verify self.cvl
+ * */
+#include<civlc.h>
+
+$proc target = $proc_null;
+
+void waiter() {
+  target = $self;
+}
+
+void main() {
+  $proc wp = $spawn waiter();
+  
+  $when(target != $proc_null);
+  $assert(wp == target);
+  $wait(target);
+}

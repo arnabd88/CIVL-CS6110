@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonFunctionDefinitionNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.declaration</a> &gt; <span class="el_source">CommonFunctionDefinitionNode.java</span></div><h1>CommonFunctionDefinitionNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.declaration;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonFunctionDefinitionNode extends CommonFunctionDeclarationNode
+		implements FunctionDefinitionNode {
+
+	public CommonFunctionDefinitionNode(Source source,
+			IdentifierNode identifier, FunctionTypeNode type,
+			SequenceNode&lt;ContractNode&gt; contract, CompoundStatementNode statement) {
+<span class="nc" id="L19">		super(source, identifier, type, contract);</span>
+<span class="nc" id="L20">		addChild(statement);</span>
+<span class="nc" id="L21">	}</span>
+
+	@Override
+	public CompoundStatementNode getBody() {
+<span class="nc" id="L25">		return (CompoundStatementNode) child(3);</span>
+	}
+
+	@Override
+	public void setBody(CompoundStatementNode statement) {
+<span class="nc" id="L30">		setChild(3, statement);</span>
+<span class="nc" id="L31">	}</span>
+
+	@Override
+	protected void printKind(PrintStream out) {
+<span class="nc" id="L35">		out.print(&quot;FunctionDefinition&quot;);</span>
+<span class="nc" id="L36">	}</span>
+
+	@Override
+	public FunctionDefinitionNode copy() {
+<span class="nc" id="L40">		CommonFunctionDefinitionNode result = new CommonFunctionDefinitionNode(</span>
+<span class="nc" id="L41">				getSource(), duplicate(getIdentifier()),</span>
+<span class="nc" id="L42">				duplicate(getTypeNode()), duplicate(getContract()),</span>
+<span class="nc" id="L43">				duplicate(getBody()));</span>
+
+<span class="nc" id="L45">		result.setInlineFunctionSpecifier(hasInlineFunctionSpecifier());</span>
+<span class="nc" id="L46">		result.setNoreturnFunctionSpecifier(hasNoreturnFunctionSpecifier());</span>
+<span class="nc" id="L47">		result.setGlobalFunctionSpecifier(hasGlobalFunctionSpecifier());</span>
+<span class="nc" id="L48">		copyStorage(result);</span>
+<span class="nc" id="L49">		return result;</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L54">		return NodeKind.FUNCTION_DEFINITION;</span>
+	}
+
+	@Override
+	public OrdinaryDeclarationKind ordinaryDeclarationKind() {
+<span class="nc" id="L59">		return OrdinaryDeclarationKind.FUNCTION_DEFINITION;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

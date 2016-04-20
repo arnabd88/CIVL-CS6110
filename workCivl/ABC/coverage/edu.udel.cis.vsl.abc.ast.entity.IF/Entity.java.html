@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Entity.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.entity.IF</a> &gt; <span class="el_source">Entity.java</span></div><h1>Entity.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.entity.IF;</span>
+
+import java.util.Enumeration;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Enumerator;
+import edu.udel.cis.vsl.abc.ast.type.IF.Field;
+import edu.udel.cis.vsl.abc.front.common.astgen.PragmaHandler;
+
+/**
+ * &lt;p&gt;
+ * An entity is an underlying program &quot;conceptual thing&quot; that can be named by an
+ * identifier. The kinds of things include: variables, functions, typedefs,
+ * structures, unions, enumerations, enumerators, fields, and labels.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * An entity object has some list of declarations associated to it. It begins
+ * with no declarations; a declaration is added using method
+ * {@link #addDeclaration(DeclarationNode)}. There are also methods to get the
+ * number of declarations and to get the i-th declaration.
+ * &lt;/p&gt;
+ * 
+ * @author siegel
+ * 
+ */
+public interface Entity {
+
+	/**
+	 * The different kinds of Entity.
+	 * 
+	 */
+<span class="nc" id="L33">	public static enum EntityKind {</span>
+<span class="nc" id="L34">		/**</span>
+		 * A variable: this is the static notion of variable. A variable is
+		 * named thing that can store a value. Note that a single variable can
+		 * be declared multiple times in C.
+		 */
+<span class="nc" id="L39">		VARIABLE,</span>
+<span class="nc" id="L40">		/**</span>
+		 * A function. A function is a thing that takes inputs, executes a
+		 * statement and possibly returns a result. Note that a function can be
+		 * declared multiple times in C, but should be defined at most once.
+		 */
+<span class="nc" id="L45">		FUNCTION,</span>
+<span class="nc" id="L46">		/**</span>
+		 * A typedef, the entity corresponding to an occurrence of
+		 * &lt;code&gt;typedef&lt;/code&gt; in the program. The typedef binds an identifier
+		 * to a type.
+		 */
+<span class="nc" id="L51">		TYPEDEF,</span>
+<span class="nc" id="L52">		/**</span>
+		 * A structure or union, the entity corresponding to an occurrence of
+		 * &lt;code&gt;struct&lt;/code&gt; or &lt;code&gt;union&lt;/code&gt; in the program.
+		 */
+<span class="nc" id="L56">		STRUCTURE_OR_UNION,</span>
+<span class="nc" id="L57">		/**</span>
+		 * An enumeration, the entity corresponding to an occurrence of an
+		 * &lt;code&gt;enum&lt;/code&gt; definition in a program. Note that an enumeration
+		 * can be declared multiple times, but at most one instance can be
+		 * complete, i.e., contain the curly brackets with the enumerator list.
+		 */
+<span class="nc" id="L63">		ENUMERATION,</span>
+<span class="nc" id="L64">		/**</span>
+		 * An enumerator, the identifier that occurs in the list inside an
+		 * &lt;code&gt;enum&lt;/code&gt; definition. An enumerator is an enumeration
+		 * constant and in C has a constant integer value.
+		 */
+<span class="nc" id="L69">		ENUMERATOR,</span>
+<span class="nc" id="L70">		/**</span>
+		 * A field, the entity corresponding to a field declaration in the list
+		 * inside a complete &lt;code&gt;struct&lt;/code&gt; or &lt;code&gt;union&lt;/code&gt;
+		 * definition.
+		 */
+<span class="nc" id="L75">		FIELD,</span>
+<span class="nc" id="L76">		/**</span>
+		 * An ordinary label, which occurs in a labeled statement of the form
+		 * &lt;code&gt;labelName : stmt&lt;/code&gt;. (Note that neither the
+		 * &lt;code&gt;case&lt;/code&gt; nor &lt;code&gt;default&lt;/code&gt; constructs in a
+		 * &lt;code&gt;switch&lt;/code&gt; statement generate an entity.)
+		 */
+<span class="nc" id="L82">		LABEL,</span>
+<span class="nc" id="L83">		/**</span>
+		 * A pragma domain, named by the first token following the
+		 * &lt;code&gt;# pragma&lt;/code&gt; in a pragma. For example, all OpenMP pragmas
+		 * begin &lt;code&gt;# pragma omp&lt;/code&gt;; the &lt;code&gt;omp&lt;/code&gt; names an entity
+		 * which is the OpenMP pragma domain. Each pragma domain may have a
+		 * pragma handler which is used to process pragmas of its domain.
+		 */
+<span class="nc" id="L90">		PRAGMA_HANDLER,</span>
+<span class="nc" id="L91">		/**</span>
+		 * An ACSL behavior, named by the token between the keyword
+		 * &lt;code&gt;behavior &lt;/code&gt; and the symbol &lt;code&gt;:&lt;/code&gt;.
+		 */
+<span class="nc" id="L95">		BEHAVIOR</span>
+	};
+
+	/**
+	 * &lt;p&gt;
+	 * The kind of entity this is.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#VARIABLE}, this entity may be safely
+	 * cast to {@link Variable}
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#FUNCTION}, this entity may be safely
+	 * cast to {@link Function}.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#TYPEDEF}, this entity may be safely cast
+	 * to {@link Typedef}.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#STRUCTURE_OR_UNION}, this entity may be
+	 * safely cast to {@link StructureOrUnion}.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#ENUMERATION}, this entity may be safely
+	 * cast to {@link Enumeration}.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#ENUMERATOR}, this entity may be safely
+	 * cast to {@link Enumerator}. An enumerator is an element of an
+	 * enumeration.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#FIELD}, this entity may be safely cast
+	 * to {@link Field}. A &quot;field&quot; is a member of a structure or union.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#LABEL}, this entity may be safely cast
+	 * to {@link Label}.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the kind is {@link EntityKind#PRAGMA_HANDLER}, this entity may be
+	 * safely cast to {@link PragmaHandler}.
+	 * &lt;/p&gt;
+	 * 
+	 * @return the entity kind
+	 */
+	EntityKind getEntityKind();
+
+	/**
+	 * Gets the name of this entity. This is the identifier used in the
+	 * declaration of the entity. It can be null in certain situations (e.g., an
+	 * unnamed field).
+	 * 
+	 * @return the name of this entity
+	 */
+	String getName();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

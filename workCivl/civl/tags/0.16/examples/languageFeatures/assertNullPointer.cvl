@@ -1,0 +1,11 @@
+/* 
+ * Commandline example:
+ *     civl verify assertNullPointer.cvl
+ */
+#include<civlc.cvh>
+
+void main(){
+  double *p = NULL; 
+  
+  $assert(p);
+}

@@ -1,0 +1,165 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_1_1Quantifier}{Quantifier}
+\begin{DoxyCompactList}\small\item\em The different kinds of quantifiers which are possible. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_1_1Quantifier}{Quantifier} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a580454717246c185c1533529d8a17967}{quantifier} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a808fd75ac55190353b260efad62ccdbc}{bound\+Variable\+Name} ()
+\begin{DoxyCompactList}\small\item\em The name of the bound variable (e.\+g. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a4d8b43ec562c665f25fe19ad6bb9cb29}{bound\+Variable\+Type} ()
+\begin{DoxyCompactList}\small\item\em The type of the bound variable. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a43fc8d7e3acf3705cf52b45a88c8b80f}{}boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a43fc8d7e3acf3705cf52b45a88c8b80f}{is\+Range} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a43fc8d7e3acf3705cf52b45a88c8b80f}
+
+\begin{DoxyCompactList}\small\item\em Is the quantifier specified to be a range? \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a0160fd56ba93ba3db7db0d13e33c47b1}{lower} ()
+\begin{DoxyCompactList}\small\item\em Integer-\/valued expression for the lower end of the range. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_acf0d2706c091f8f431cde30949772022}{upper} ()
+\begin{DoxyCompactList}\small\item\em Integer-\/valued expression for the upper end of the range. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_ae736822ef6856aecf94e5b1d4c534641}{bound\+Restriction} ()
+\begin{DoxyCompactList}\small\item\em Boolean-\/valued expression assumed to hold when evaluating expression. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a6585cf434492893cc6cde9a64036dc22}{expression} ()
+\begin{DoxyCompactList}\small\item\em The expression e(x). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+zirkel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_ae736822ef6856aecf94e5b1d4c534641}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}!bound\+Restriction@{bound\+Restriction}}
+\index{bound\+Restriction@{bound\+Restriction}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}}
+\subsubsection[{bound\+Restriction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression.\+bound\+Restriction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_ae736822ef6856aecf94e5b1d4c534641}
+
+
+Boolean-\/valued expression assumed to hold when evaluating expression. 
+
+Null iff \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a43fc8d7e3acf3705cf52b45a88c8b80f}{is\+Range()} == true. 
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonQuantifiedExpression_a38334c015cfd850c69d3af1c9a84de81}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Quantified\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a808fd75ac55190353b260efad62ccdbc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}!bound\+Variable\+Name@{bound\+Variable\+Name}}
+\index{bound\+Variable\+Name@{bound\+Variable\+Name}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}}
+\subsubsection[{bound\+Variable\+Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Identifier} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression.\+bound\+Variable\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a808fd75ac55190353b260efad62ccdbc}
+
+
+The name of the bound variable (e.\+g. 
+
+x in forall x $\vert$ ...). 
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonQuantifiedExpression_a2075f3abc133be31320bfe711573fd03}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Quantified\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a4d8b43ec562c665f25fe19ad6bb9cb29}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}!bound\+Variable\+Type@{bound\+Variable\+Type}}
+\index{bound\+Variable\+Type@{bound\+Variable\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}}
+\subsubsection[{bound\+Variable\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression.\+bound\+Variable\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a4d8b43ec562c665f25fe19ad6bb9cb29}
+
+
+The type of the bound variable. 
+
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonQuantifiedExpression_a925e0b6ec37bb43fd7c79005c1e5964e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Quantified\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a6585cf434492893cc6cde9a64036dc22}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}!expression@{expression}}
+\index{expression@{expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}}
+\subsubsection[{expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression.\+expression (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a6585cf434492893cc6cde9a64036dc22}
+
+
+The expression e(x). 
+
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonQuantifiedExpression_a0d50da53d541203d956f7989a968c1af}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Quantified\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a0160fd56ba93ba3db7db0d13e33c47b1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}!lower@{lower}}
+\index{lower@{lower}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}}
+\subsubsection[{lower}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression.\+lower (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a0160fd56ba93ba3db7db0d13e33c47b1}
+
+
+Integer-\/valued expression for the lower end of the range. 
+
+Null iff \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a43fc8d7e3acf3705cf52b45a88c8b80f}{is\+Range()} == false. 
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonQuantifiedExpression_a9fce6515dc6222c776cc6357d0faf395}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Quantified\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a580454717246c185c1533529d8a17967}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}!quantifier@{quantifier}}
+\index{quantifier@{quantifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}}
+\subsubsection[{quantifier}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Quantifier} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression.\+quantifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a580454717246c185c1533529d8a17967}
+\begin{DoxyReturn}{Returns}
+The quantifier binding the variable. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonQuantifiedExpression_ad6fb2b93eaf17b7007314451fdb209d5}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Quantified\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_acf0d2706c091f8f431cde30949772022}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}!upper@{upper}}
+\index{upper@{upper}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Quantified\+Expression}}
+\subsubsection[{upper}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Quantified\+Expression.\+upper (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_acf0d2706c091f8f431cde30949772022}
+
+
+Integer-\/valued expression for the upper end of the range. 
+
+Null iff \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1QuantifiedExpression_a43fc8d7e3acf3705cf52b45a88c8b80f}{is\+Range()} == false. 
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonQuantifiedExpression_a0c8b7a84134e269c29f27638fbc3fa5e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Quantified\+Expression}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/expression/Quantified\+Expression.\+java\end{DoxyCompactItemize}

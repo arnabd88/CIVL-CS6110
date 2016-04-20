@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonOmpParallelNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.omp</a> &gt; <span class="el_source">CommonOmpParallelNode.java</span></div><h1>CommonOmpParallelNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.omp;
+
+import java.io.PrintStream;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpParallelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpExecutableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonOmpParallelNode extends CommonOmpStatementNode implements
+		OmpParallelNode {
+<span class="nc" id="L19">	private boolean isDefaultShared = true;</span>
+
+	/**
+	 * Children
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Children 0-7: same as {@link CommonOmpStatementNode};&lt;/li&gt;
+	 * &lt;li&gt;Child 8: ExpressionNode, the expression of &lt;code&gt;num_threads()&lt;/code&gt;
+	 * ;&lt;/li&gt;
+	 * &lt;li&gt;Child 9: ExpressionNode, the expression of &lt;code&gt;if()&lt;/code&gt;.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @param source
+	 */
+	public CommonOmpParallelNode(Source source, StatementNode statement) {
+<span class="nc" id="L33">		super(source, statement);</span>
+<span class="nc" id="L34">		this.ompStatementKind = OmpExecutableKind.PARALLEL;</span>
+<span class="nc" id="L35">		this.addChild(null);// child 8</span>
+<span class="nc" id="L36">		this.addChild(null);// child 9</span>
+<span class="nc" id="L37">	}</span>
+
+	public CommonOmpParallelNode(Source source, IdentifierNode identifier,
+			List&lt;CivlcToken&gt; body, CivlcToken eofToken, ExpressionNode numThreads,
+			ExpressionNode ifClause, StatementNode statementNode,
+			boolean isDefaultShared) {
+<span class="nc" id="L43">		super(source, statementNode);</span>
+<span class="nc" id="L44">		this.ompStatementKind = OmpExecutableKind.PARALLEL;</span>
+<span class="nc" id="L45">		this.setNumThreads(numThreads);</span>
+<span class="nc" id="L46">		this.setIfClause(ifClause);</span>
+<span class="nc" id="L47">		this.isDefaultShared = isDefaultShared;</span>
+<span class="nc" id="L48">	}</span>
+
+	@Override
+	public void setStatementNode(StatementNode statement) {
+<span class="nc" id="L52">		StatementNode statementNode = (StatementNode) this.child(7);</span>
+
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (statementNode != null) {</span>
+<span class="nc" id="L55">			((OmpExecutableNode) statementNode).setStatementNode(statement);</span>
+<span class="nc" id="L56">		} else {</span>
+<span class="nc" id="L57">			super.setStatementNode(statement);</span>
+		}
+
+<span class="nc" id="L60">	}</span>
+
+	@Override
+	public ExpressionNode numThreads() {
+<span class="nc" id="L64">		return (ExpressionNode) this.child(8);</span>
+	}
+
+	@Override
+	public ExpressionNode ifClause() {
+<span class="nc" id="L69">		return (ExpressionNode) this.child(9);</span>
+	}
+
+	@Override
+	public boolean isDefaultShared() {
+<span class="nc" id="L74">		return this.isDefaultShared;</span>
+	}
+
+	@Override
+	public void setDefault(boolean shared) {
+<span class="nc" id="L79">		this.isDefaultShared = shared;</span>
+<span class="nc" id="L80">	}</span>
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L84">		out.print(&quot;OmpParallel&quot;);</span>
+<span class="nc" id="L85">	}</span>
+
+	@Override
+	protected void printExtras(String prefix, PrintStream out) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (this.isDefaultShared) {</span>
+<span class="nc" id="L90">			out.println();</span>
+<span class="nc" id="L91">			out.print(prefix + &quot;default(shared)&quot;);</span>
+<span class="nc" id="L92">		} else {</span>
+<span class="nc" id="L93">			out.println();</span>
+<span class="nc" id="L94">			out.print(prefix + &quot;default(none)&quot;);</span>
+		}
+
+<span class="nc" id="L97">	}</span>
+
+	@Override
+	public void setNumThreads(ExpressionNode value) {
+<span class="nc" id="L101">		this.setChild(8, value);</span>
+<span class="nc" id="L102">	}</span>
+
+	@Override
+	public void setIfClause(ExpressionNode value) {
+<span class="nc" id="L106">		this.setChild(9, value);</span>
+<span class="nc" id="L107">	}</span>
+
+	@Override
+	public OmpParallelNode copy() {
+<span class="nc" id="L111">		OmpParallelNode newParallelNode = new CommonOmpParallelNode(</span>
+<span class="nc" id="L112">				this.getSource(), null);</span>
+<span class="nc" id="L113">		int numChildren = this.numChildren();</span>
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L116">			ASTNode child = this.child(i);</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc" id="L119">				newParallelNode.setChild(i, child.copy());</span>
+			}
+		}
+<span class="nc" id="L122">		return newParallelNode;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (that instanceof OmpParallelNode)</span>
+<span class="nc" id="L128">			if (this.isDefaultShared == ((OmpParallelNode) that)</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">					.isDefaultShared())</span>
+<span class="nc" id="L130">				return null;</span>
+			else
+<span class="nc" id="L132">				return new DifferenceObject(this, that, DiffKind.OTHER,</span>
+<span class="nc" id="L133">						&quot;different default(shared|none) clause&quot;);</span>
+<span class="nc" id="L134">		return new DifferenceObject(this, that);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

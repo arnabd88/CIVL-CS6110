@@ -1,0 +1,38 @@
+/**
+ * This example demonstrates the features of CIVL's system function for implementing barriers.
+ */
+ 
+#include<civlc.cvh>
+#include<concurrency.cvh>
+ 
+$input int N;
+$input int B = 5;
+$assume(N > 0 && N < B);
+$gbarrier gbarrier = $gbarrier_create($here, N);
+int counter = 0;
+ 
+void process(int id) {
+  $barrier barrier = $barrier_create($here, gbarrier, id);
+
+  while($true){
+    $assert(counter == 0);
+    $barrier_call(barrier);
+    counter++;
+    $barrier_call(barrier);
+    $assert(counter == N);
+    $barrier_call(barrier);
+    counter--;
+    $barrier_call(barrier);
+  }
+  $barrier_destroy(barrier);
+}
+ 
+void main(){
+  $proc procs[N];
+  
+  for(int i = 0; i < N; i++)
+    procs[i] = $spawn process(i);
+  for(int i = 0; i < N; i++)
+    $wait(procs[i]);
+  $gbarrier_destroy(gbarrier);
+}

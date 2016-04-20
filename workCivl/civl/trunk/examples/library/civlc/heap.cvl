@@ -1,0 +1,22 @@
+/** implementin $malloc using $havoc and $seq **/
+#include<civlc.cvh>
+#include<seq.cvh>
+#include<stdio.h>
+
+struct Heap{
+  int h1[][];
+  int h2[][];
+};
+
+int main(){
+  struct Heap h;
+
+  //$seq_init(&h.h1, 0, NULL);
+  //$seq_init(&h.h2, 0, NULL);
+
+  int tmp[5];
+  $havoc(&tmp);
+  $seq_append(&h.h1, &tmp, 1);
+  printf("heap: %s\n", h);
+}
+

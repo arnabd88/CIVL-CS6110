@@ -1,0 +1,10 @@
+root=/opt/vsl
+workspace=/home/${user.name}/workspace
+hamcrest.jar=${root}/lib/hamcrest-core.jar
+jacoco.jar=${root}/src/jacoco/lib/jacocoant.jar
+junit.jar=${root}/lib/junit.jar
+antlr.jar=${root}/lib/antlr-4.4-complete.jar
+antlr.runtime.jar=${root}/lib/antlr-runtime-4.4.jar
+abc.jar=${workspace}/ABC/abc.jar
+gmc.jar=${workspace}/GMC/gmc.jar
+sarl.jar=${workspace}/SARL/sarl.jar

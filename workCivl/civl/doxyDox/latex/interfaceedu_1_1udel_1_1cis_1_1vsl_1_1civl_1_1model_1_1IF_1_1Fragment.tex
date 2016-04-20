@@ -1,0 +1,348 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment}}
+
+
+\hyperlink{structA}{A} fragment is a sequence of statements.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a3464111d435dd0154db446e85638598e}{add\+Guard\+To\+Start\+Location} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} guard, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} factory)
+\begin{DoxyCompactList}\small\item\em Add a specified guard to the all statements of the start location. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_aa74a16c438c58c640751ea96744f98bd}{add\+Final\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)
+\begin{DoxyCompactList}\small\item\em Add a statement to the final statement set. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a4933d2d1a1e0bc0a00e360537cc5b997}{add\+Final\+Statement\+Set} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ stmt\+Set)
+\begin{DoxyCompactList}\small\item\em Add a set of statements to the final statement set. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a6b06d327a6ed3206196e30284d81f1ce}{add\+New\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)
+\begin{DoxyCompactList}\small\item\em Add a new statement to the fragment, which will be considered the subsequent statement of the current final statements.\+s. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{Fragment} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a50d1ee6ab7637aa0f110d6d367fa8d9c}{combine\+With} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{Fragment} next)
+\begin{DoxyCompactList}\small\item\em Combine two fragment in sequential order. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_ac381e6dd0a6ab7c038ffdc46f4a8eb6f}{is\+Empty} ()
+\begin{DoxyCompactList}\small\item\em Check if the fragment is empty. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_aa700b440666841cd053bb577d3709ea1}{final\+Statements} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a641ca0a39685ee55c97497b0803f084c}{unique\+Final\+Statement} ()
+\begin{DoxyCompactList}\small\item\em Precondition\+: \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_aa700b440666841cd053bb577d3709ea1}{final\+Statements()}.size() == 1. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{Fragment} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a34b0e7fef2fb116d9d36721802e2d16c}{parallel\+Combine\+With} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{Fragment} parallel)
+\begin{DoxyCompactList}\small\item\em Combine this fragment and another fragment in parallel, i.\+e., merge the start location, and add the last statement of both fragments as the last statement of the result fragment. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_af1fac34a0205651a00d2799c79f79349}{print} (Print\+Stream out)
+\begin{DoxyCompactList}\small\item\em Print the fragment. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a5299f8b352e04a6391f30fdf7f14fbd6}{set\+Start\+Location} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} location)
+\begin{DoxyCompactList}\small\item\em Update the start location of this fragment. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_ac80765bc3bdf0d0d80684e1ae10b1c6d}{set\+Final\+Statements} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ statements)
+\begin{DoxyCompactList}\small\item\em Update the last statement of this fragment. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a12a4d1d1497967e39b2aece98d1eb8c0}{start\+Location} ()
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a52ff0c0da400ffef60f84eb1dfd419a1}{update\+Start\+Location} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} new\+Location)
+\begin{DoxyCompactList}\small\item\em Update the start location with a new location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} fragment is a sequence of statements. 
+
+It has a \char`\"{}pointer\char`\"{} to the start location and a set of statements as its final statements which should all enamate from the same location.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_aa74a16c438c58c640751ea96744f98bd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!add\+Final\+Statement@{add\+Final\+Statement}}
+\index{add\+Final\+Statement@{add\+Final\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{add\+Final\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+add\+Final\+Statement (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_aa74a16c438c58c640751ea96744f98bd}
+
+
+Add a statement to the final statement set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & the new statement to be added to the final statement set \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a1bda7e80a21c4aa40a4227b1652ef401}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a4933d2d1a1e0bc0a00e360537cc5b997}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!add\+Final\+Statement\+Set@{add\+Final\+Statement\+Set}}
+\index{add\+Final\+Statement\+Set@{add\+Final\+Statement\+Set}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{add\+Final\+Statement\+Set}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+add\+Final\+Statement\+Set (
+\begin{DoxyParamCaption}
+\item[{Set$<$ {\bf Statement} $>$}]{stmt\+Set}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a4933d2d1a1e0bc0a00e360537cc5b997}
+
+
+Add a set of statements to the final statement set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stmt\+Set} & the set of new statements to be added to the final statement set \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a14cd7abf99bd1c9fe96668e2d517382e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a3464111d435dd0154db446e85638598e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!add\+Guard\+To\+Start\+Location@{add\+Guard\+To\+Start\+Location}}
+\index{add\+Guard\+To\+Start\+Location@{add\+Guard\+To\+Start\+Location}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{add\+Guard\+To\+Start\+Location}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+add\+Guard\+To\+Start\+Location (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression}}]{guard, }
+\item[{{\bf Model\+Factory}}]{factory}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a3464111d435dd0154db446e85638598e}
+
+
+Add a specified guard to the all statements of the start location. 
+
+If a statement has an existing guard, then it will have a new guard which is a conjunction of the both. This method is used for translating a when statement, where it adds the guard of the when statement to the start location of its body fragment.
+
+
+\begin{DoxyParams}{Parameters}
+{\em guard} & The guard that is to be combined with \\
+\hline
+{\em factory} & The model factory that provides some helper methods that are useful in checking if an expression is True. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_ae5fc3b65a444cf29ce316756970ac252}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a6b06d327a6ed3206196e30284d81f1ce}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!add\+New\+Statement@{add\+New\+Statement}}
+\index{add\+New\+Statement@{add\+New\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{add\+New\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+add\+New\+Statement (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a6b06d327a6ed3206196e30284d81f1ce}
+
+
+Add a new statement to the fragment, which will be considered the subsequent statement of the current final statements.\+s. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & the new statement to be added to the fragment \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_ade9599c5c2230b64ad44f902869d0ee9}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a50d1ee6ab7637aa0f110d6d367fa8d9c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!combine\+With@{combine\+With}}
+\index{combine\+With@{combine\+With}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{combine\+With}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Fragment} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+combine\+With (
+\begin{DoxyParamCaption}
+\item[{{\bf Fragment}}]{next}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a50d1ee6ab7637aa0f110d6d367fa8d9c}
+
+
+Combine two fragment in sequential order. 
+
+~\newline
+ Precondition\+: {\ttfamily this.\+last\+Statement == null}
+
+
+\begin{DoxyParams}{Parameters}
+{\em next} & the fragment that comes after the current fragment \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sequential combination of both fragments 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_ab34e2434e334825ba7ad51c20fefc234}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_aa700b440666841cd053bb577d3709ea1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!final\+Statements@{final\+Statements}}
+\index{final\+Statements@{final\+Statements}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{final\+Statements}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Statement}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+final\+Statements (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_aa700b440666841cd053bb577d3709ea1}
+\begin{DoxyReturn}{Returns}
+The set of final statementss of this fragment 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_ab4e81c16318800dbdc9586d686879d8d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_ac381e6dd0a6ab7c038ffdc46f4a8eb6f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!is\+Empty@{is\+Empty}}
+\index{is\+Empty@{is\+Empty}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+is\+Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_ac381e6dd0a6ab7c038ffdc46f4a8eb6f}
+
+
+Check if the fragment is empty. 
+
+\begin{DoxyReturn}{Returns}
+true iff both the start location and the last statement are null 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a0772702fd6c57a4d8aebf7bd8a9aa3cc}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a34b0e7fef2fb116d9d36721802e2d16c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!parallel\+Combine\+With@{parallel\+Combine\+With}}
+\index{parallel\+Combine\+With@{parallel\+Combine\+With}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{parallel\+Combine\+With}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Fragment} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+parallel\+Combine\+With (
+\begin{DoxyParamCaption}
+\item[{{\bf Fragment}}]{parallel}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a34b0e7fef2fb116d9d36721802e2d16c}
+
+
+Combine this fragment and another fragment in parallel, i.\+e., merge the start location, and add the last statement of both fragments as the last statement of the result fragment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parallel} & the second fragment to be combined with \\
+\hline
+\end{DoxyParams}
+
+
+{\bfseries Preconditions\+:}  this.\+start\+Location.\+id() === parallel.\+start\+Location.\+id()
+
+\begin{DoxyReturn}{Returns}
+the new fragment after the combination 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a1363d11a0463b79ee0e3f8f5b5f08205}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_af1fac34a0205651a00d2799c79f79349}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!print@{print}}
+\index{print@{print}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+print (
+\begin{DoxyParamCaption}
+\item[{Print\+Stream}]{out}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_af1fac34a0205651a00d2799c79f79349}
+
+
+Print the fragment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & the print stream \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a94d7066496470cc5d1a7b21b5b73fc9f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_ac80765bc3bdf0d0d80684e1ae10b1c6d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!set\+Final\+Statements@{set\+Final\+Statements}}
+\index{set\+Final\+Statements@{set\+Final\+Statements}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{set\+Final\+Statements}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+set\+Final\+Statements (
+\begin{DoxyParamCaption}
+\item[{Set$<$ {\bf Statement} $>$}]{statements}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_ac80765bc3bdf0d0d80684e1ae10b1c6d}
+
+
+Update the last statement of this fragment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statements} & The new last statements \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a952bc55d485c5bd29766d1e067d7994a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a5299f8b352e04a6391f30fdf7f14fbd6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!set\+Start\+Location@{set\+Start\+Location}}
+\index{set\+Start\+Location@{set\+Start\+Location}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{set\+Start\+Location}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+set\+Start\+Location (
+\begin{DoxyParamCaption}
+\item[{{\bf Location}}]{location}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a5299f8b352e04a6391f30fdf7f14fbd6}
+
+
+Update the start location of this fragment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em location} & The new start location \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_ab978a4e9d9ae890f31e9088a3c5912e1}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a12a4d1d1497967e39b2aece98d1eb8c0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!start\+Location@{start\+Location}}
+\index{start\+Location@{start\+Location}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{start\+Location}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Location} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+start\+Location (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a12a4d1d1497967e39b2aece98d1eb8c0}
+\begin{DoxyReturn}{Returns}
+The start location of this fragment 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a0fbcc137c61bca4873a973a1491d9ed5}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a641ca0a39685ee55c97497b0803f084c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!unique\+Final\+Statement@{unique\+Final\+Statement}}
+\index{unique\+Final\+Statement@{unique\+Final\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{unique\+Final\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+unique\+Final\+Statement (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a641ca0a39685ee55c97497b0803f084c}
+
+
+Precondition\+: \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_aa700b440666841cd053bb577d3709ea1}{final\+Statements()}.size() == 1. 
+
+\begin{DoxyReturn}{Returns}
+The unique final statement of this fragment 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a363309eaa01e5650caeb246a399a706c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a52ff0c0da400ffef60f84eb1dfd419a1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}!update\+Start\+Location@{update\+Start\+Location}}
+\index{update\+Start\+Location@{update\+Start\+Location}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Fragment}}
+\subsubsection[{update\+Start\+Location}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Fragment.\+update\+Start\+Location (
+\begin{DoxyParamCaption}
+\item[{{\bf Location}}]{new\+Location}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment_a52ff0c0da400ffef60f84eb1dfd419a1}
+
+
+Update the start location with a new location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Location} & the new start location \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonFragment_a030d5185dc9f8e58ce5219076b873a9b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Fragment}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/Fragment.\+java\end{DoxyCompactItemize}

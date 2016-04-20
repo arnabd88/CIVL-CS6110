@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ScopeAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.common</a> &gt; <span class="el_source">ScopeAnalyzer.java</span></div><h1>ScopeAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.common;
+
+import java.util.Iterator;
+
+import edu.udel.cis.vsl.abc.analysis.IF.Analyzer;
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.entity.IF.EntityFactory;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope.ScopeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.ScopeParameterizedDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.QuantifiedExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.OrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.IfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.SwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * Given an AST, determines and sets scope of every node.
+ * 
+ * Scope structure of a function definition:
+ * 
+ * &lt;pre&gt;
+ * { ...current parent scope...
+ *   declNode - formals (incl. return type, identifier)
+ *   { function scope:
+ *     labels
+ *     { block scope: formals
+ *       { block scope: contract if contract!=null }
+ *       body (will be block scope because is compound stmt)
+ *     }
+ *   }
+ *   ...current parent scope...
+ * }
+ * &lt;/pre&gt;
+ * 
+ * 
+ * Scope structure for function declaration:
+ * 
+ * &lt;pre&gt;
+ * { ...current parent scope...
+ *   decl - formals (including return type, identifier)
+ *   { function prototype scope: formals
+ *     { block scope: contract }
+ *   }
+<span class="nc" id="L57"> *   ...current parent scope...</span>
+ * }
+ * &lt;/pre&gt;
+ * 
+ * Scope structure of a parameterized scope decl node used any place other than
+ * the situations above (i.e., typedefs):
+ * 
+ * &lt;pre&gt;
+ * { ...current parent scope...
+ *   decl - scopeList - baseDecl
+ *   identifier
+ *   { block scope: 
+ *     scopeList
+ *     baseDecl - identifier
+ *   }
+ *   ...current parent scope...
+ * }
+ * &lt;/pre&gt;
+ * 
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc bnc" id="L80" title="All 2 branches missed.">public class ScopeAnalyzer implements Analyzer {</span>
+
+	public static void setScopes(AST ast, EntityFactory scopeFactory)
+			throws SyntaxException {
+<span class="nc" id="L84">		(new ScopeAnalyzer(scopeFactory)).analyze(ast);</span>
+<span class="nc" id="L85">	}</span>
+
+	private EntityFactory scopeFactory;
+
+<span class="nc" id="L89">	private int currentId = 0;</span>
+
+<span class="nc" id="L91">	public ScopeAnalyzer(EntityFactory scopeFactory) {</span>
+<span class="nc" id="L92">		this.scopeFactory = scopeFactory;</span>
+<span class="nc" id="L93">	}</span>
+
+	private void processFunctionDefinitionNode(FunctionDefinitionNode funcNode,
+			Scope parentScope) throws SyntaxException {
+		// children: identifier, type, contract (optional), body
+<span class="nc" id="L98">		FunctionTypeNode typeNode = funcNode.getTypeNode();</span>
+<span class="nc" id="L99">		SequenceNode&lt;ContractNode&gt; contract = funcNode.getContract();</span>
+<span class="nc" id="L100">		CompoundStatementNode body = funcNode.getBody();</span>
+<span class="nc" id="L101">		SequenceNode&lt;VariableDeclarationNode&gt; paramsNode = typeNode</span>
+<span class="nc" id="L102">				.getParameters();</span>
+<span class="nc" id="L103">		Scope newFunctionScope = scopeFactory.newScope(ScopeKind.FUNCTION,</span>
+<span class="nc" id="L104">				parentScope, funcNode);</span>
+<span class="nc" id="L105">		Scope parameterScope = scopeFactory.newScope(ScopeKind.BLOCK,</span>
+<span class="nc" id="L106">				newFunctionScope, paramsNode);</span>
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (paramsNode != null)</span>
+<span class="nc" id="L109">			processRecursive(paramsNode, parameterScope, null);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (contract != null) {</span>
+<span class="nc" id="L111">			Scope contractScope = scopeFactory.newScope(ScopeKind.CONTRACT,</span>
+<span class="nc" id="L112">					parameterScope, contract);</span>
+
+<span class="nc" id="L114">			processRecursive(contract, contractScope, null);</span>
+		}
+<span class="nc" id="L116">		processNode(body, parameterScope, newFunctionScope);</span>
+<span class="nc" id="L117">		processRecursive(funcNode, parentScope, null);</span>
+<span class="nc" id="L118">	}</span>
+
+	private void processFunctionDeclarationNode(
+			FunctionDeclarationNode funcNode, Scope parentScope)
+			throws SyntaxException {
+		// children: ident, type, contract.
+<span class="nc" id="L124">		FunctionTypeNode typeNode = funcNode.getTypeNode();</span>
+<span class="nc" id="L125">		SequenceNode&lt;ContractNode&gt; contract = funcNode.getContract();</span>
+<span class="nc" id="L126">		SequenceNode&lt;VariableDeclarationNode&gt; paramsNode = typeNode</span>
+<span class="nc" id="L127">				.getParameters();</span>
+<span class="nc" id="L128">		Scope parameterScope = scopeFactory.newScope(ScopeKind.BLOCK,</span>
+<span class="nc" id="L129">				parentScope, paramsNode);</span>
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (paramsNode != null)</span>
+<span class="nc" id="L132">			processRecursive(paramsNode, parameterScope, null);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (contract != null) {</span>
+<span class="nc" id="L134">			Scope contractScope = scopeFactory.newScope(ScopeKind.CONTRACT,</span>
+<span class="nc" id="L135">					parameterScope, contract);</span>
+
+<span class="nc" id="L137">			processRecursive(contract, contractScope, null);</span>
+		}
+<span class="nc" id="L139">		processRecursive(funcNode, parentScope, null);</span>
+<span class="nc" id="L140">	}</span>
+
+	/**
+	 * Performs scope analysis on a node and all its decendants, but back tracks
+	 * if it encounters a node that already has a non-null scope. I.e., if a
+	 * node has a non-null scope, it and all of its descendants are left alone.
+	 * 
+	 * @param node
+	 *            an AST node
+	 * @param parentScope
+	 *            the current scope we are in when the given node is reached;
+	 *            may be null if node is the root node, i.e., the first node in
+	 *            the AST
+	 * @param functionScope
+	 *            the function scope for the current function we are &quot;in&quot; when
+	 *            we reach this node; this is used only for LabelNodes as these
+	 *            must go into the first containing function scope; may be null
+	 *            if the node and all its descendants could not possibly have a
+	 *            label
+	 * @throws SyntaxException
+	 *             if AST is malformed in some way
+	 */
+	private void processNode(ASTNode node, Scope parentScope,
+			Scope functionScope) throws SyntaxException {
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (node.getScope() != null)</span>
+<span class="nc" id="L166">			return;</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (parentScope == null) {</span>
+<span class="nc" id="L168">			parentScope = scopeFactory.newScope(ScopeKind.FILE, null, node);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		} else if (node instanceof QuantifiedExpressionNode) {			</span>
+<span class="nc" id="L170">			parentScope = scopeFactory.newScope(ScopeKind.BLOCK,</span>
+<span class="nc" id="L171">					parentScope, node);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		} else if (node instanceof ScopeParameterizedDeclarationNode) {</span>
+<span class="nc" id="L173">			DeclarationNode base = ((ScopeParameterizedDeclarationNode) node)</span>
+<span class="nc" id="L174">					.baseDeclaration();</span>
+<span class="nc" id="L175">			SequenceNode&lt;VariableDeclarationNode&gt; scopeList = ((ScopeParameterizedDeclarationNode) node)</span>
+<span class="nc" id="L176">					.parameters();</span>
+<span class="nc" id="L177">			IdentifierNode identifier = base.getIdentifier();</span>
+<span class="nc" id="L178">			Scope blockScope = scopeFactory.newScope(ScopeKind.BLOCK,</span>
+<span class="nc" id="L179">					parentScope, node);</span>
+
+<span class="nc" id="L181">			processRecursive(identifier, parentScope, null);</span>
+<span class="nc" id="L182">			processRecursive(scopeList, blockScope, null);</span>
+<span class="nc" id="L183">			processNode(base, blockScope, functionScope);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		} else if (node instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L185">			processFunctionDefinitionNode((FunctionDefinitionNode) node,</span>
+<span class="nc" id="L186">					parentScope);</span>
+<span class="nc" id="L187">			return;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		} else if (node instanceof CompoundStatementNode) {</span>
+<span class="nc" id="L189">			parentScope = scopeFactory.newScope(ScopeKind.BLOCK, parentScope,</span>
+<span class="nc" id="L190">					node);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		} else if (node instanceof SwitchNode) {</span>
+<span class="nc" id="L192">			ASTNode body = ((SwitchNode) node).getBody();</span>
+			Scope bodyScope;
+
+<span class="nc" id="L195">			parentScope = scopeFactory.newScope(ScopeKind.BLOCK, parentScope,</span>
+<span class="nc" id="L196">					node);</span>
+<span class="nc" id="L197">			bodyScope = scopeFactory.newScope(ScopeKind.BLOCK, parentScope,</span>
+<span class="nc" id="L198">					body);</span>
+<span class="nc" id="L199">			processRecursive(body, bodyScope, functionScope);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		} else if (node instanceof IfNode) {</span>
+<span class="nc" id="L201">			ASTNode trueBranch = ((IfNode) node).getTrueBranch();</span>
+<span class="nc" id="L202">			ASTNode falseBranch = ((IfNode) node).getFalseBranch();</span>
+			Scope trueBranchScope;
+
+<span class="nc" id="L205">			parentScope = scopeFactory.newScope(ScopeKind.BLOCK, parentScope,</span>
+<span class="nc" id="L206">					node);</span>
+<span class="nc" id="L207">			trueBranchScope = scopeFactory.newScope(ScopeKind.BLOCK,</span>
+<span class="nc" id="L208">					parentScope, trueBranch);</span>
+<span class="nc" id="L209">			processRecursive(trueBranch, trueBranchScope, functionScope);</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (falseBranch != null) {</span>
+<span class="nc" id="L211">				Scope falseBranchScope = scopeFactory.newScope(ScopeKind.BLOCK,</span>
+<span class="nc" id="L212">						parentScope, falseBranch);</span>
+
+<span class="nc" id="L214">				processRecursive(falseBranch, falseBranchScope, functionScope);</span>
+			}
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		} else if (node instanceof LoopNode) {</span>
+<span class="nc" id="L217">			ASTNode body = ((LoopNode) node).getBody();</span>
+			Scope bodyScope;
+
+<span class="nc" id="L220">			parentScope = scopeFactory.newScope(ScopeKind.BLOCK, parentScope,</span>
+<span class="nc" id="L221">					node);</span>
+<span class="nc" id="L222">			bodyScope = scopeFactory.newScope(ScopeKind.BLOCK, parentScope,</span>
+<span class="nc" id="L223">					body);</span>
+<span class="nc" id="L224">			processRecursive(body, bodyScope, functionScope);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		} else if (node instanceof CivlForNode) {</span>
+<span class="nc" id="L226">			ASTNode body = ((CivlForNode) node).getBody();</span>
+			Scope bodyScope;
+
+<span class="nc" id="L229">			parentScope = scopeFactory.newScope(ScopeKind.BLOCK, parentScope,</span>
+<span class="nc" id="L230">					node);</span>
+<span class="nc" id="L231">			bodyScope = scopeFactory.newScope(ScopeKind.BLOCK, parentScope,</span>
+<span class="nc" id="L232">					body);</span>
+<span class="nc" id="L233">			processRecursive(body, bodyScope, functionScope);</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">		} else if (node instanceof FunctionDeclarationNode) {</span>
+<span class="nc" id="L235">			processFunctionDeclarationNode((FunctionDeclarationNode) node,</span>
+<span class="nc" id="L236">					parentScope);</span>
+<span class="nc" id="L237">			return;</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		} else if (node instanceof FunctionTypeNode) {</span>
+			// a function type node may occur outside of a function
+			// declaration/definition, e.g., as a type name...
+<span class="nc" id="L241">			ASTNode parameters = ((FunctionTypeNode) node).getParameters();</span>
+
+<span class="nc bnc" id="L243" title="All 4 branches missed.">			if (parameters != null &amp;&amp; parameters.getScope() == null) {</span>
+<span class="nc" id="L244">				Scope prototypeScope = scopeFactory.newScope(</span>
+<span class="nc" id="L245">						ScopeKind.FUNCTION_PROTOTYPE, parentScope, parameters);</span>
+
+<span class="nc" id="L247">				processRecursive(parameters, prototypeScope, functionScope);</span>
+			}
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		} else if (node instanceof OrdinaryLabelNode) {</span>
+<span class="nc" id="L250">			parentScope = functionScope;</span>
+		}
+<span class="nc" id="L252">		processRecursive(node, parentScope, functionScope);</span>
+<span class="nc" id="L253">	}</span>
+
+	private void setIds(Scope scope) {
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		if (scope.getId() &gt;= 0) {</span>
+<span class="nc" id="L257">			return;</span>
+		} else {
+<span class="nc" id="L259">			Iterator&lt;Scope&gt; children = scope.getChildrenScopes();</span>
+
+<span class="nc" id="L261">			scope.setId(currentId);</span>
+<span class="nc" id="L262">			currentId++;</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">			while (children.hasNext())</span>
+<span class="nc" id="L264">				setIds(children.next());</span>
+		}
+<span class="nc" id="L266">	}</span>
+
+	/**
+	 * Assigns the given scope to the given node and then invokes method
+	 * {@link #processNode} to all the children.
+	 * 
+	 * @param node
+	 *            an ASTNode which does not yet have a Scope
+	 * @param scope
+	 *            the scope that will be assigned to the given node
+	 * @param functionScope
+	 *            the function scope we are currently in
+	 * @throws SyntaxException
+	 *             if problem in AST
+	 */
+	private void processRecursive(ASTNode node, Scope scope, Scope functionScope)
+			throws SyntaxException {
+<span class="nc" id="L283">		Iterable&lt;ASTNode&gt; children = node.children();</span>
+
+<span class="nc bnc" id="L285" title="All 4 branches missed.">		assert scope != null;</span>
+<span class="nc" id="L286">		node.setScope(scope);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		for (ASTNode child : children) {</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">			if (child != null)</span>
+<span class="nc" id="L289">				processNode(child, scope, functionScope);</span>
+		}
+<span class="nc" id="L291">	}</span>
+
+	private void clearNode(ASTNode node) {
+<span class="nc bnc" id="L294" title="All 2 branches missed.">		if (node != null) {</span>
+<span class="nc" id="L295">			Iterable&lt;ASTNode&gt; children = node.children();</span>
+
+<span class="nc" id="L297">			node.setScope(null);</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">			for (ASTNode child : children)</span>
+<span class="nc" id="L299">				clearNode(child);</span>
+		}
+<span class="nc" id="L301">	}</span>
+
+	// Exported methods...
+
+	@Override
+	public void clear(AST unit) {
+<span class="nc" id="L307">		clearNode(unit.getRootNode());</span>
+<span class="nc" id="L308">	}</span>
+
+	@Override
+	public void analyze(AST unit) throws SyntaxException {
+<span class="nc" id="L312">		ASTNode root = unit.getRootNode();</span>
+
+<span class="nc" id="L314">		processNode(root, null, null);</span>
+<span class="nc" id="L315">		setIds(root.getScope());</span>
+<span class="nc" id="L316">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

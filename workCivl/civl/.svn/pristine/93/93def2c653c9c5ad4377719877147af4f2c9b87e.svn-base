@@ -1,0 +1,15 @@
+ModelFactory.java: reading by S.F. Siegel on 2/27/2013. 
+
+
+it would help if the general comment contained some guide
+as to how to use the methods to build a model.  In particular,
+in what order are things called?  (Scopes first, then 
+functions, then ,..., finally model).
+
+the argument to scope takes the Function to which the scope belongs.
+However, isn't the function determined by the parent scope?
+I forget exactly how this works.   I think there are certain
+scopes which are "function scopes" which belong to a particular
+function f.  It isn't clear me to how to use this---do I produce
+the function first, and then the scope to go with it...???
+Maybe there needs to be more than one method here?

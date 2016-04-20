@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ExpressionEvaluator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.util</a> &gt; <span class="el_source">ExpressionEvaluator.java</span></div><h1>ExpressionEvaluator.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.util;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.sarl.SARL;
+import edu.udel.cis.vsl.sarl.IF.Reasoner;
+import edu.udel.cis.vsl.sarl.IF.SymbolicUniverse;
+import edu.udel.cis.vsl.sarl.IF.expr.BooleanExpression;
+import edu.udel.cis.vsl.sarl.IF.expr.NumericExpression;
+import edu.udel.cis.vsl.sarl.IF.expr.NumericSymbolicConstant;
+
+/*
+ * This class provides support for evaluating certain classes of ABC
+ * expressions.   It does this by transforming  ABC expressions to SARL 
+ * expressions and evaluating those.
+ */
+<span class="nc bnc" id="L23" title="All 2 branches missed.">public class ExpressionEvaluator {</span>
+	// Record mapping from ABC IDs, defined by their Entity, and the translated SARL representation
+	private static Map&lt;String,NumericSymbolicConstant&gt; translateID;
+	
+<span class="nc" id="L27">	private static SymbolicUniverse universe = SARL.newStandardUniverse();</span>
+
+	public static boolean checkEqualityWithConditions(ExpressionNode o1, ExpressionNode o2, List&lt;ExpressionNode&gt; conditions) {
+		/*
+		 * Should check that operator nodes are of an integer type
+		 */
+		//System.out.println(&quot;ExpressionEvaluator: &quot;+o1+&quot;, &quot;+o2+&quot;, &quot;+conditions);
+		
+<span class="nc" id="L35">		BooleanExpression context = universe.trueExpression();</span>
+<span class="nc" id="L36">		Reasoner reasoner = universe.reasoner(context);</span>
+		
+<span class="nc" id="L38">		translateID = new HashMap&lt;String,NumericSymbolicConstant&gt;();</span>
+		
+<span class="nc" id="L40">		NumericExpression n1 = toSarlNumeric(o1);</span>
+<span class="nc" id="L41">		NumericExpression n2 = toSarlNumeric(o2);</span>
+<span class="nc" id="L42">		BooleanExpression equiv = universe.equals(n1, n2);</span>
+		
+<span class="nc" id="L44">		BooleanExpression current = equiv;</span>
+		//System.out.println(&quot;ExpressionEvaluator Check &quot;+equiv);
+
+		
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		for(ExpressionNode e : conditions) {</span>
+<span class="nc" id="L49">			current = universe.and(current, (BooleanExpression) toSarlBool(e));</span>
+		}
+		
+		//System.out.println(&quot;ExpressionEvaluator Check with Conditions &quot;+current);
+		
+<span class="nc" id="L54">		return reasoner.isValid(current);</span>
+	}
+	
+	/*
+	 * Visit the operator node and convert it to a SARL expression.
+	 * The following are not supported in operator nodes:
+	 *   - function calls
+	 *   - array references
+	 */
+		
+	private static BooleanExpression toSarlBool(ExpressionNode o) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (o instanceof OperatorNode) {</span>
+<span class="nc" id="L66">			OperatorNode op = (OperatorNode) o;</span>
+			/*
+			 * Works with basic logical and relational operators now.  Could be extended to handle
+			 * arrays, etc. (not sure how well that will work, but ...)
+			 */
+<span class="nc" id="L71">			OperatorNode.Operator oper = op.getOperator();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">			if (oper == OperatorNode.Operator.NEQ) {</span>
+<span class="nc" id="L73">				return universe.not(toSarlBool(op.getArgument(1)));</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">			} else if (oper == OperatorNode.Operator.LAND || oper == OperatorNode.Operator.LOR) {</span>
+<span class="nc" id="L75">				BooleanExpression op1 = toSarlBool(op.getArgument(0));</span>
+<span class="nc" id="L76">				BooleanExpression op2 = toSarlBool(op.getArgument(1));</span>
+<span class="nc bnc" id="L77" title="All 3 branches missed.">				switch (oper) {</span>
+				case LAND:
+<span class="nc" id="L79">					return universe.and(op1,op2);</span>
+				case LOR:
+<span class="nc" id="L81">					return universe.or(op1,op2);</span>
+				default: 
+<span class="nc bnc" id="L83" title="All 2 branches missed.">					assert false : &quot;ExpressionEvaluator : cannot translate &quot;+oper+&quot; to SARL&quot;;</span>
+				}
+			} else {
+<span class="nc" id="L86">				NumericExpression op1 = toSarlNumeric(op.getArgument(0));</span>
+<span class="nc" id="L87">				NumericExpression op2 = toSarlNumeric(op.getArgument(1));</span>
+
+<span class="nc bnc" id="L89" title="All 6 branches missed.">				switch (oper) {</span>
+				case LT:
+<span class="nc" id="L91">					return universe.lessThan(op1,op2);</span>
+				case LTE:
+<span class="nc" id="L93">					return universe.lessThanEquals(op1,op2);</span>
+				case GT:
+<span class="nc" id="L95">					return universe.not(universe.lessThanEquals(op1,op2));</span>
+				case GTE:
+<span class="nc" id="L97">					return universe.not(universe.lessThan(op1,op2));</span>
+				case EQUALS: 
+<span class="nc" id="L99">					return universe.equals(op1,op2);</span>
+				default: 
+<span class="nc bnc" id="L101" title="All 2 branches missed.">					assert false : &quot;ExpressionEvaluator : cannot translate &quot;+oper+&quot; to SARL&quot;;</span>
+				}
+			}
+
+		} else {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			assert false : &quot;ExpressionEvaluator : cannot translate &quot;+o+&quot; to SARL&quot;;</span>
+		}
+<span class="nc" id="L108">		return null;</span>
+	}
+
+	
+	private static NumericExpression toSarlNumeric(ExpressionNode o) {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (o instanceof OperatorNode) {</span>
+<span class="nc" id="L114">			OperatorNode op = (OperatorNode) o;</span>
+
+			/*
+			 * Works with basic integer operators now.  Could be extended to handle
+			 * arrays, etc. (not sure how well that will work, but ...)
+			 */
+<span class="nc" id="L120">			NumericExpression op1 = (NumericExpression) toSarlNumeric(op.getArgument(0));</span>
+<span class="nc" id="L121">			OperatorNode.Operator oper = op.getOperator();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (oper == OperatorNode.Operator.UNARYPLUS) {</span>
+<span class="nc" id="L123">				return op1;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			} else if (oper == OperatorNode.Operator.UNARYMINUS) {</span>
+<span class="nc" id="L125">				return universe.minus(op1);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			} else if (oper == OperatorNode.Operator.SUBSCRIPT) {</span>
+				/* 
+				 * Handle the case where this expression is an array reference expression.
+				 * We use uninterpreted functions for this where the name of the function
+				 * is &quot;subscript&quot; and we have parameters for both the base array and index
+				 * expressions.   This should work for multi-dimensional arrays.
+				 */
+<span class="nc" id="L133">				return universe.divide(op1,op1); // TBD change second operand and replace this with subscript</span>
+			} else {
+<span class="nc" id="L135">				NumericExpression op2 = (NumericExpression) toSarlNumeric(op.getArgument(1));</span>
+<span class="nc bnc" id="L136" title="All 6 branches missed.">				switch (oper) {</span>
+				case DIV:
+<span class="nc" id="L138">					return universe.divide(op1,op2);</span>
+				case MINUS:
+<span class="nc" id="L140">					return universe.subtract(op1,op2);</span>
+				case MOD:
+<span class="nc" id="L142">					return universe.modulo(op1,op2);</span>
+				case PLUS:
+<span class="nc" id="L144">					return universe.add(op1,op2);</span>
+				case TIMES: 
+<span class="nc" id="L146">					return universe.multiply(op1,op2);</span>
+				default: 
+<span class="nc bnc" id="L148" title="All 2 branches missed.">					assert false : &quot;ExpressionEvaluator : cannot translate &quot;+oper+&quot; to SARL&quot;;</span>
+				}
+			}
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		} else if (o instanceof IntegerConstantNode) {</span>
+<span class="nc" id="L153">			return universe.integer(((IntegerConstantNode)o).getConstantValue().getIntegerValue());</span>
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		} else if (o instanceof IdentifierExpressionNode) {</span>
+<span class="nc" id="L156">			String idName = ((IdentifierExpressionNode)o).getIdentifier().name();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (translateID.containsKey(idName)) {</span>
+<span class="nc" id="L158">				return translateID.get(idName);</span>
+			} else {
+<span class="nc" id="L160">				NumericSymbolicConstant idSarl = (NumericSymbolicConstant) universe</span>
+<span class="nc" id="L161">						.symbolicConstant(universe.stringObject(idName), universe.integerType());</span>
+<span class="nc" id="L162">				translateID.put(idName, idSarl);</span>
+<span class="nc" id="L163">				return idSarl;</span>
+			}	
+		} else {
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			assert false : &quot;ExpressionEvaluator : cannot translate &quot;+o+&quot; to SARL&quot;;</span>
+		}
+<span class="nc" id="L168">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

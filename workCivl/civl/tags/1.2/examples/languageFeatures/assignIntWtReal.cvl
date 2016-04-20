@@ -1,0 +1,12 @@
+/**
+ * This example demonstrates the implicit conversion of an assignment.
+ * Command line execution:
+ * civl verify assignIntWtReal.cvl
+ */
+#include<civlc.cvh>
+#include<assert.h>
+void main() {
+  int x = 1.0;
+  
+  assert (x==1);
+}

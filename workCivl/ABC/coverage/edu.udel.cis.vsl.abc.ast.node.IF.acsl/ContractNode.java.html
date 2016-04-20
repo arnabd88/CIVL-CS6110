@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ContractNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.acsl</a> &gt; <span class="el_source">ContractNode.java</span></div><h1>ContractNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.acsl;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+
+/**
+ * A contract node represents an element that may occur in a procedure contract.
+ * The procedure contract consists of a sequence of contract nodes.
+ * 
+ * @author siegel
+ * 
+ */
+public interface ContractNode extends ASTNode {
+
+	/**
+	 * The kinds of contract nodes
+	 * 
+	 * @author Manchun Zheng
+	 *
+	 */
+<span class="nc" id="L20">	public enum ContractKind {</span>
+<span class="nc" id="L21">		/**</span>
+		 * defines memory units assigned by the function
+		 */
+<span class="nc" id="L24">		ASSIGNS_READS,</span>
+<span class="nc" id="L25">		/**</span>
+		 * an &quot;assumes&quot; clause
+		 */
+<span class="nc" id="L28">		ASSUMES,</span>
+<span class="nc" id="L29">		/**</span>
+		 * An &quot;behavior&quot; node encodes a named behavior block
+		 */
+<span class="nc" id="L32">		BEHAVIOR,</span>
+<span class="nc" id="L33">		/**</span>
+		 * An &quot;completeness&quot; node encodes either a complete or disjoint clause
+		 */
+<span class="nc" id="L36">		COMPLETENESS,</span>
+<span class="nc" id="L37">		/**</span>
+		 * defines features of the dependent processes of the current one
+		 */
+<span class="nc" id="L40">		DEPENDS,</span>
+<span class="nc" id="L41">		/**</span>
+		 * An &quot;ensures&quot; node encodes a post-condition in a procedure contract. A
+		 * node of this kind can be safely cast to {@link EnsuresNode}.
+		 */
+<span class="nc" id="L45">		ENSURES,</span>
+<span class="nc" id="L46">		/**</span>
+		 * A &quot;guard&quot; node represents the guard of a CIVL-C function. A node of
+		 * this kind may be safely cast to {@link GuardNode}.
+		 */
+<span class="nc" id="L50">		GUARDS,</span>
+<span class="nc" id="L51">		/**</span>
+		 * A &quot;invariant&quot; node represents a loop invariant or a general
+		 * invariant.
+		 */
+<span class="nc" id="L55">		INVARIANT,</span>
+<span class="nc" id="L56">		/**</span>
+		 * A &quot;\mpi_collective&quot; node introduces a block of contracts which should
+		 * satisfy mpi collective behaviors.
+		 */
+<span class="nc" id="L60">		MPI_COLLECTIVE,</span>
+<span class="nc" id="L61">		/**</span>
+		 * A &quot;pure&quot; node represents the contract for specifying a pure function.
+		 * A node of this kind may be safely cast to {@link PureNode}.
+		 */
+<span class="nc" id="L65">		PURE,</span>
+<span class="nc" id="L66">		/**</span>
+		 * A &quot;requires&quot; node represents a pre-condition in a CIVL-C procedure
+		 * contract. May be safely cast to {@link RequiresNode}.
+		 */
+<span class="nc" id="L70">		REQUIRES</span>
+
+	}
+
+	/**
+	 * The kind of this contract node.
+	 * 
+	 * @return
+	 */
+	ContractKind contractKind();
+
+	@Override
+	ContractNode copy();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,21 @@
+#include <civlc.h>
+#include <stdio.h>
+int f(int x);
+int g(void);
+
+void main(){
+  int k = 1;
+  
+  k = f(4);
+  printf("Function prototype test: f(y) = 2 * y, then f(4) = %d.\n", k);
+  k = g();
+  printf("Function prototype test: g() = 10.\n");
+}
+
+int f(int y){
+  return 2 * y;
+}
+
+int g(){
+  return 10;
+}

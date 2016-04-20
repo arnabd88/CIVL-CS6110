@@ -1,0 +1,119 @@
+\hypertarget{structdev__pm__info}{}\section{dev\+\_\+pm\+\_\+info Struct Reference}
+\label{structdev__pm__info}\index{dev\+\_\+pm\+\_\+info@{dev\+\_\+pm\+\_\+info}}
+
+
+Collaboration diagram for dev\+\_\+pm\+\_\+info\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structdev__pm__info__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structdev__pm__info_a53919e734b1a18bd0ca8b7a368645573}{}\hyperlink{structpm__message}{pm\+\_\+message\+\_\+t} {\bfseries power\+\_\+state}\label{structdev__pm__info_a53919e734b1a18bd0ca8b7a368645573}
+
+\item 
+\hypertarget{structdev__pm__info_a4f31de1c436e998a29aca236ed6c3d1a}{}unsigned char {\bfseries can\+\_\+wakeup}\+: 1\label{structdev__pm__info_a4f31de1c436e998a29aca236ed6c3d1a}
+
+\item 
+\hypertarget{structdev__pm__info_acb58960e47344c4379c982b323d7bcff}{}unsigned char {\bfseries async\+\_\+suspend}\+: 1\label{structdev__pm__info_acb58960e47344c4379c982b323d7bcff}
+
+\item 
+\hypertarget{structdev__pm__info_a4357299a1a82fe551b3e0a856439089c}{}unsigned char {\bfseries in\+\_\+suspend}\+: 1\label{structdev__pm__info_a4357299a1a82fe551b3e0a856439089c}
+
+\item 
+\hypertarget{structdev__pm__info_a83aa5b3defff5ecd940887a6e3277e0c}{}\hyperlink{structspinlock}{spinlock\+\_\+t} {\bfseries lock}\label{structdev__pm__info_a83aa5b3defff5ecd940887a6e3277e0c}
+
+\item 
+\hypertarget{structdev__pm__info_a3bad220c23a6173203b918026789c4fd}{}struct \hyperlink{structlist__head}{list\+\_\+head} {\bfseries entry}\label{structdev__pm__info_a3bad220c23a6173203b918026789c4fd}
+
+\item 
+\hypertarget{structdev__pm__info_a980460b9597d0b243bc1406e8fb2568d}{}struct \hyperlink{structcompletion}{completion} {\bfseries completion}\label{structdev__pm__info_a980460b9597d0b243bc1406e8fb2568d}
+
+\item 
+\hypertarget{structdev__pm__info_a62b0d90715c6d144c45e24b805389ca1}{}struct \hyperlink{structwakeup__source}{wakeup\+\_\+source} $\ast$ {\bfseries wakeup}\label{structdev__pm__info_a62b0d90715c6d144c45e24b805389ca1}
+
+\item 
+\hypertarget{structdev__pm__info_a8561bb9e3b71394a5494b7b88c1e9343}{}struct \hyperlink{structtimer__list}{timer\+\_\+list} {\bfseries suspend\+\_\+timer}\label{structdev__pm__info_a8561bb9e3b71394a5494b7b88c1e9343}
+
+\item 
+\hypertarget{structdev__pm__info_a59b18a7640fca3e530edca3a34913ccc}{}unsigned long {\bfseries timer\+\_\+expires}\label{structdev__pm__info_a59b18a7640fca3e530edca3a34913ccc}
+
+\item 
+\hypertarget{structdev__pm__info_aa19708f9259221a0791b18196ac53821}{}struct \hyperlink{structwork__struct}{work\+\_\+struct} {\bfseries work}\label{structdev__pm__info_aa19708f9259221a0791b18196ac53821}
+
+\item 
+\hypertarget{structdev__pm__info_a33b9f35f50e4e12eae3f9ca802940d02}{}\hyperlink{struct____wait__queue__head}{wait\+\_\+queue\+\_\+head\+\_\+t} {\bfseries wait\+\_\+queue}\label{structdev__pm__info_a33b9f35f50e4e12eae3f9ca802940d02}
+
+\item 
+\hypertarget{structdev__pm__info_a360c8144a01783408adeed621254298b}{}atomic\+\_\+t {\bfseries usage\+\_\+count}\label{structdev__pm__info_a360c8144a01783408adeed621254298b}
+
+\item 
+\hypertarget{structdev__pm__info_a816057dfb3a13abf7c8225d99c7d3b0c}{}atomic\+\_\+t {\bfseries child\+\_\+count}\label{structdev__pm__info_a816057dfb3a13abf7c8225d99c7d3b0c}
+
+\item 
+\hypertarget{structdev__pm__info_a76f52d99c977f44939ef615867fbb86a}{}unsigned char {\bfseries disable\+\_\+depth}\+: 3\label{structdev__pm__info_a76f52d99c977f44939ef615867fbb86a}
+
+\item 
+\hypertarget{structdev__pm__info_a370d92d7ec236db85ea89988227d5b09}{}unsigned char {\bfseries ignore\+\_\+children}\+: 1\label{structdev__pm__info_a370d92d7ec236db85ea89988227d5b09}
+
+\item 
+\hypertarget{structdev__pm__info_a70f9db4330a11ee7fb775513b8ac2d59}{}unsigned char {\bfseries idle\+\_\+notification}\+: 1\label{structdev__pm__info_a70f9db4330a11ee7fb775513b8ac2d59}
+
+\item 
+\hypertarget{structdev__pm__info_a5c38327ef3888eb6ad0016b3ffad0a98}{}unsigned char {\bfseries request\+\_\+pending}\+: 1\label{structdev__pm__info_a5c38327ef3888eb6ad0016b3ffad0a98}
+
+\item 
+\hypertarget{structdev__pm__info_ad4487f13f910bac3a191eb20f83d386f}{}unsigned char {\bfseries deferred\+\_\+resume}\+: 1\label{structdev__pm__info_ad4487f13f910bac3a191eb20f83d386f}
+
+\item 
+\hypertarget{structdev__pm__info_a94e738c962f3a48441b9bc8c6a0cff8b}{}unsigned char {\bfseries run\+\_\+wake}\+: 1\label{structdev__pm__info_a94e738c962f3a48441b9bc8c6a0cff8b}
+
+\item 
+\hypertarget{structdev__pm__info_ab5580cf9adec625401e9336fcd1be00d}{}unsigned char {\bfseries runtime\+\_\+auto}\+: 1\label{structdev__pm__info_ab5580cf9adec625401e9336fcd1be00d}
+
+\item 
+\hypertarget{structdev__pm__info_a96a591f2a7b3d7e75332ab819847cf33}{}unsigned char {\bfseries no\+\_\+callbacks}\+: 1\label{structdev__pm__info_a96a591f2a7b3d7e75332ab819847cf33}
+
+\item 
+\hypertarget{structdev__pm__info_a8f4a768c57c7215d1443a6cf50584084}{}unsigned char {\bfseries irq\+\_\+safe}\+: 1\label{structdev__pm__info_a8f4a768c57c7215d1443a6cf50584084}
+
+\item 
+\hypertarget{structdev__pm__info_af0dde671cb7e9bee0a88af96571dfdb3}{}unsigned char {\bfseries use\+\_\+autosuspend}\+: 1\label{structdev__pm__info_af0dde671cb7e9bee0a88af96571dfdb3}
+
+\item 
+\hypertarget{structdev__pm__info_aad02a31f16f080d312c8585a8105cd3b}{}unsigned char {\bfseries timer\+\_\+autosuspends}\+: 1\label{structdev__pm__info_aad02a31f16f080d312c8585a8105cd3b}
+
+\item 
+\hypertarget{structdev__pm__info_a099bb2df0baf94875808655265a77ba3}{}enum rpm\+\_\+request {\bfseries request}\label{structdev__pm__info_a099bb2df0baf94875808655265a77ba3}
+
+\item 
+\hypertarget{structdev__pm__info_a113229ede26e623964c7cbfa4146e8f9}{}enum rpm\+\_\+status {\bfseries runtime\+\_\+status}\label{structdev__pm__info_a113229ede26e623964c7cbfa4146e8f9}
+
+\item 
+\hypertarget{structdev__pm__info_aba705529cc2ec13591d9839d3ba3f043}{}int {\bfseries runtime\+\_\+error}\label{structdev__pm__info_aba705529cc2ec13591d9839d3ba3f043}
+
+\item 
+\hypertarget{structdev__pm__info_a0b505717da20658f43f2dd66a3658208}{}int {\bfseries autosuspend\+\_\+delay}\label{structdev__pm__info_a0b505717da20658f43f2dd66a3658208}
+
+\item 
+\hypertarget{structdev__pm__info_a6b2b8107da1099e7288c0ec23ccd0f14}{}unsigned long {\bfseries last\+\_\+busy}\label{structdev__pm__info_a6b2b8107da1099e7288c0ec23ccd0f14}
+
+\item 
+\hypertarget{structdev__pm__info_a6c74d16bbcb664a081f1ed7c415bffea}{}unsigned long {\bfseries active\+\_\+jiffies}\label{structdev__pm__info_a6c74d16bbcb664a081f1ed7c415bffea}
+
+\item 
+\hypertarget{structdev__pm__info_aece3487eae4117bda0e4aadeb4ccf787}{}unsigned long {\bfseries suspended\+\_\+jiffies}\label{structdev__pm__info_aece3487eae4117bda0e4aadeb4ccf787}
+
+\item 
+\hypertarget{structdev__pm__info_afd8e7a638ef1a5e0e8e8a518e3da7e88}{}unsigned long {\bfseries accounting\+\_\+timestamp}\label{structdev__pm__info_afd8e7a638ef1a5e0e8e8a518e3da7e88}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/svcomp17/linux-\/stable-\/af3071a-\/1-\/130\+\_\+7a-\/drivers-\/-\/hwmon-\/-\/s3c-\/hwmon.\+ko-\/entry\+\_\+point\+\_\+false-\/unreach-\/call.\+cil.\+out.\+c\end{DoxyCompactItemize}

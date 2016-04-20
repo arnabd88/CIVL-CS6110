@@ -1,0 +1,12 @@
+#include <civlc.cvh>
+
+int *func(){
+  static int v = 9;
+  return &v;
+}
+
+void main(){
+  int* p = func();
+
+  $assert(*p == 9);
+}

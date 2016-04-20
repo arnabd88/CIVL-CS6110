@@ -1,0 +1,25 @@
+
+grammar/OmpLexer.g: defines OpenMP keywords
+grammar/OmpParser.g: defines OpenMP grammar rules, uses OmpLexer, 
+    imports CivlCParser to reuse the rule for expressions
+antlr2ast.common.OMPPragmaHandler: translating an OpenMP pragma 
+    into OpenMP AST nodes. Note: the source is first parsed by the
+    general parser (CivlCParser), and then at the AST builder phase,
+    the OMPPragmaHandler is triggered to translate the OpenMP pragma.
+    The input is a general pragma node produced by applying the general parser
+    (CivlCParser) to the pragma source. 
+    
+- add a new keyword, for example, "barrier"
+  (1) add a token for the keyword in OmpLexer.g: BARRIER: 'barrier';
+  (2) add a case for the keyword in OMPPragmaHandler.markTokens():
+          case "barrier":
+			token.setType(BARRIER);
+		  break;
+      Since the OpenMP parser uses extra tokens provided by OmpLexer, 
+      it needs to mark those tokens explicitly, which are all
+      considered as "IDENTIFIER" by CivlCParser. 
+      
+- add a new BNF rule
+  (1) add the rule in OmpParser.g
+  (2) add a method for translating the rule in OMPPragmaHandler
+

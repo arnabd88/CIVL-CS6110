@@ -1,0 +1,101 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Memory\+Unit Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Memory\+Unit@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Memory\+Unit}}
+
+
+\hyperlink{structA}{A} memory unit represents an object or a part of an object that can be accessed through an expression, e.\+g., a\mbox{[}9\mbox{]}.x, b\mbox{[}8\mbox{]}, c, etc.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Memory\+Unit\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a0b13f1febc63b7a1b93ea68c072457cd}{dyscope\+I\+D} ()
+\begin{DoxyCompactList}\small\item\em The I\+D of the dynamic scope of the memory unit. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a13a6246faf7dfcc1329992570e77bf1c}{var\+I\+D} ()
+\begin{DoxyCompactList}\small\item\em The I\+D of the variable of the memory unit. \end{DoxyCompactList}\item 
+Reference\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a8501f34fb25505e826f16c18a3255c88}{reference} ()
+\begin{DoxyCompactList}\small\item\em The reference of the memory unit. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_ac195b554a4a4dd1bd4ccb2ff49708e0b}{}void {\bfseries print} (Print\+Stream out)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_ac195b554a4a4dd1bd4ccb2ff49708e0b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} memory unit represents an object or a part of an object that can be accessed through an expression, e.\+g., a\mbox{[}9\mbox{]}.x, b\mbox{[}8\mbox{]}, c, etc. 
+
+\hyperlink{structA}{A} memory unit has three components\+: dyscope I\+D, variable I\+D and reference.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a0b13f1febc63b7a1b93ea68c072457cd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit}!dyscope\+I\+D@{dyscope\+I\+D}}
+\index{dyscope\+I\+D@{dyscope\+I\+D}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit}}
+\subsubsection[{dyscope\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Memory\+Unit.\+dyscope\+I\+D (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a0b13f1febc63b7a1b93ea68c072457cd}
+
+
+The I\+D of the dynamic scope of the memory unit. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMemoryUnit_a10e0b187c3cefc512aa35d6426e2debc}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Memory\+Unit}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a8501f34fb25505e826f16c18a3255c88}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit}!reference@{reference}}
+\index{reference@{reference}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit}}
+\subsubsection[{reference}]{\setlength{\rightskip}{0pt plus 5cm}Reference\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Memory\+Unit.\+reference (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a8501f34fb25505e826f16c18a3255c88}
+
+
+The reference of the memory unit. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMemoryUnit_ac550a6847f0b143c45fc145516ab6414}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Memory\+Unit}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a13a6246faf7dfcc1329992570e77bf1c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit}!var\+I\+D@{var\+I\+D}}
+\index{var\+I\+D@{var\+I\+D}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Memory\+Unit}}
+\subsubsection[{var\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Memory\+Unit.\+var\+I\+D (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit_a13a6246faf7dfcc1329992570e77bf1c}
+
+
+The I\+D of the variable of the memory unit. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMemoryUnit_a4fb65440d824faecf76cceb308abcf98}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Memory\+Unit}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/state/\+I\+F/Memory\+Unit.\+java\end{DoxyCompactItemize}

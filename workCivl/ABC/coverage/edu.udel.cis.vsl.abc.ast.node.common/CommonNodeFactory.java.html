@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonNodeFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common</a> &gt; <span class="el_source">CommonNodeFactory.java</span></div><h1>CommonNodeFactory.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common;
+
+import java.util.Arrays;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.AttributeKey;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.PairNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.PragmaNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.StaticAssertionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.AnyactNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.AssignsOrReadsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.AssumesNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.BehaviorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CallEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CompletenessNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CompositeEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CompositeEventNode.EventOperator;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.EnsuresNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.GuardsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.InvariantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPICollectiveBlockNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPICollectiveBlockNode.MPICollectiveKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPIContractConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPIContractConstantNode.MPIConstantKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPIContractExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPIContractExpressionNode.MPIContractExpressionKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MemoryEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MemoryEventNode.MemoryEventNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MemorySetNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.NoactNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.NothingNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.PureNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.RequiresNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.ArrayDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.FieldDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.AbstractFunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.EnumeratorDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FieldDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.TypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.AlignOfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ArrowNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CallsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CastNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CharacterConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CompoundLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ConstantNode.ConstantKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ContractVerifyNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DerivativeExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DotNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.EnumerationConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FloatingConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.QuantifiedExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.QuantifiedExpressionNode.Quantifier;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.RegularRangeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.RemoteExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ScopeOfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeofNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SpawnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StatementExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StringLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.WildcardNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.LabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.OrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.SwitchLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpDeclarativeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpFunctionReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpParallelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpSymbolReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpSyncNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpSyncNode.OmpSyncNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpWorksharingNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpWorksharingNode.OmpWorksharingNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.AtomicNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ChooseStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.DeclarationListNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ExpressionStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.GotoNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.IfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.JumpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.JumpNode.JumpKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LabeledStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode.LoopKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ReturnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.SwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.WhenNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.ArrayTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.AtomicTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.BasicTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.DomainTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.EnumerationTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.PointerTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.StructureOrUnionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypedefNameNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeofNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonAnyactNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonAssignsOrReadsNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonAssumesNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonBehaviorNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonCallEventNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonCompletenessNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonCompositeEventNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonDependsNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonEnsuresNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonGuardNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonInvariantNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonMPICollectiveBlockNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonMPIConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonMPIContractExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonMemoryEventNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonMemorySetNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonNoactNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonNothingNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonPureNode;
+import edu.udel.cis.vsl.abc.ast.node.common.acsl.CommonRequiresNode;
+import edu.udel.cis.vsl.abc.ast.node.common.compound.CommonArrayDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.common.compound.CommonCompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.common.compound.CommonDesignationNode;
+import edu.udel.cis.vsl.abc.ast.node.common.compound.CommonFieldDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.common.declaration.CommonAbstractFunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.declaration.CommonEnumeratorDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.common.declaration.CommonFieldDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.common.declaration.CommonFunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.common.declaration.CommonFunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.declaration.CommonTypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.common.declaration.CommonVariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonAlignOfNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonArrowNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonCallsNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonCastNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonCharacterConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonCompoundLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonContractVerifyNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonDerivativeExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonDotNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonEnumerationConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonFunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonHereOrRootNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonIdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonIntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonOperatorNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonProcnullNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonQuantifiedExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonRegularRangeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonRemoteExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonResultNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonScopeOfNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonSelfNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonSizeofNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonSpawnNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonStatementExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonStringLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonWildcardNode;
+import edu.udel.cis.vsl.abc.ast.node.common.label.CommonOrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.common.label.CommonSwitchLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.common.omp.CommonOmpDeclarativeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.omp.CommonOmpForNode;
+import edu.udel.cis.vsl.abc.ast.node.common.omp.CommonOmpFunctionReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.omp.CommonOmpParallelNode;
+import edu.udel.cis.vsl.abc.ast.node.common.omp.CommonOmpSymbolReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.omp.CommonOmpSyncNode;
+import edu.udel.cis.vsl.abc.ast.node.common.omp.CommonOmpWorkshareNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonAtomicNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonChooseStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonCivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonCompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonDeclarationListNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonExpressionStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonForLoopNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonGotoNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonIfNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonJumpNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonLabeledStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonLoopNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonNullStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonReturnNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonSwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.common.statement.CommonWhenNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonArrayTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonAtomicTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonBasicTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonDomainTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonEnumerationTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonFunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonPointerTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonRangeTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonScopeTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonStructureOrUnionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonTypedefNameNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonTypeofNode;
+import edu.udel.cis.vsl.abc.ast.node.common.type.CommonVoidTypeNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType.UnsignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.value.IF.CharacterValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.StringValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+import edu.udel.cis.vsl.abc.ast.value.IF.ValueFactory;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+<span class="fc" id="L235">import edu.udel.cis.vsl.abc.front.c.parse.CivlCParser;</span>
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSequence;
+import edu.udel.cis.vsl.abc.token.IF.ExecutionCharacter;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.StringLiteral;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+public class CommonNodeFactory implements NodeFactory {
+
+	private int attributeCount = 0;
+
+	private LiteralInterpreter literalInterpreter;
+
+	private ValueFactory valueFactory;
+
+	private TypeFactory typeFactory;
+
+	private StandardUnsignedIntegerType booleanType;
+
+	private ObjectType processType;
+
+	private ObjectType scopeType;
+
+	private Configuration configuration;
+
+	public CommonNodeFactory(Configuration configuration,
+			TypeFactory typeFactory, ValueFactory valueFactory) {
+		this.literalInterpreter = new LiteralInterpreter(typeFactory,
+				valueFactory);
+		this.typeFactory = typeFactory;
+		this.valueFactory = valueFactory;
+		this.booleanType = typeFactory
+				.unsignedIntegerType(UnsignedIntKind.BOOL);
+		this.processType = typeFactory.processType();
+		this.scopeType = typeFactory.scopeType();
+		this.configuration = configuration;
+	}
+
+	@Override
+<span class="nc" id="L275">	public ValueFactory getValueFactory() {</span>
+		return valueFactory;
+	}
+
+	@Override
+<span class="nc" id="L280">	public AttributeKey newAttribute(String attributeName,</span>
+			Class&lt;? extends Object&gt; attributeClass) {
+		AttributeKey key = new CommonAttributeKey(attributeCount,
+				attributeName, attributeClass);
+
+		attributeCount++;
+		return key;
+	}
+
+	@Override
+<span class="nc" id="L290">	public &lt;T extends ASTNode&gt; SequenceNode&lt;T&gt; newSequenceNode(Source source,</span>
+			String name, List&lt;T&gt; nodes) {
+		return new CommonSequenceNode&lt;T&gt;(source, name, nodes);
+	}
+
+	@Override
+<span class="nc" id="L296">	public &lt;S extends ASTNode, T extends ASTNode&gt; PairNode&lt;S, T&gt; newPairNode(</span>
+			Source source, S node1, T node2) {
+		return new CommonPairNode&lt;S, T&gt;(source, node1, node2);
+	}
+
+	@Override
+<span class="nc" id="L302">	public IdentifierNode newIdentifierNode(Source source, String name) {</span>
+		return new CommonIdentifierNode(source, name);
+	}
+
+	@Override
+<span class="nc" id="L307">	public BasicTypeNode newBasicTypeNode(Source source, BasicTypeKind kind) {</span>
+		return new CommonBasicTypeNode(source, kind);
+	}
+
+	@Override
+<span class="nc" id="L312">	public TypeNode newVoidTypeNode(Source source) {</span>
+		return new CommonVoidTypeNode(source);
+	}
+
+	@Override
+<span class="nc" id="L317">	public EnumerationTypeNode newEnumerationTypeNode(Source source,</span>
+			IdentifierNode tag,
+			SequenceNode&lt;EnumeratorDeclarationNode&gt; enumerators) {
+		return new CommonEnumerationTypeNode(source, tag, enumerators);
+	}
+
+	@Override
+<span class="nc" id="L324">	public ArrayTypeNode newArrayTypeNode(Source source, TypeNode elementType,</span>
+			ExpressionNode extent) {
+		return new CommonArrayTypeNode(source, elementType, extent);
+	}
+
+	@Override
+<span class="nc" id="L330">	public AtomicTypeNode newAtomicTypeNode(Source source, TypeNode baseType) {</span>
+		return new CommonAtomicTypeNode(source, baseType);
+	}
+
+	@Override
+<span class="nc" id="L335">	public PointerTypeNode newPointerTypeNode(Source source,</span>
+			TypeNode referencedType) {
+		return new CommonPointerTypeNode(source, referencedType);
+	}
+
+	@Override
+<span class="nc" id="L341">	public StructureOrUnionTypeNode newStructOrUnionTypeNode(Source source,</span>
+			boolean isStruct, IdentifierNode tag,
+			SequenceNode&lt;FieldDeclarationNode&gt; structDeclList) {
+		return new CommonStructureOrUnionTypeNode(source, isStruct, tag,
+				structDeclList);
+	}
+
+	@Override
+<span class="nc" id="L349">	public FunctionTypeNode newFunctionTypeNode(Source source,</span>
+			TypeNode returnType, SequenceNode&lt;VariableDeclarationNode&gt; formals,
+			boolean hasIdentifierList) {
+		return new CommonFunctionTypeNode(source, returnType, formals,
+				hasIdentifierList);
+	}
+
+	@Override
+<span class="nc" id="L357">	public TypeNode newScopeTypeNode(Source source) {</span>
+		return new CommonScopeTypeNode(source);
+	}
+
+	@Override
+<span class="nc" id="L362">	public TypeNode newRangeTypeNode(Source source) {</span>
+		return new CommonRangeTypeNode(source);
+	}
+
+	@Override
+<span class="nc" id="L367">	public DomainTypeNode newDomainTypeNode(Source source) {</span>
+		return new CommonDomainTypeNode(source, null);
+	}
+
+	@Override
+<span class="nc" id="L372">	public DomainTypeNode newDomainTypeNode(Source source,</span>
+			ExpressionNode dimension) {
+		return new CommonDomainTypeNode(source, dimension);
+	}
+
+	@Override
+<span class="nc" id="L378">	public TypedefNameNode newTypedefNameNode(IdentifierNode name,</span>
+			SequenceNode&lt;ExpressionNode&gt; scopeList) {
+		return new CommonTypedefNameNode(name.getSource(), name, scopeList);
+	}
+
+	@Override
+<span class="nc" id="L384">	public CharacterConstantNode newCharacterConstantNode(Source source,</span>
+			String representation, ExecutionCharacter character) {
+		CharacterValue constant = valueFactory.characterValue(character);
+
+		return new CommonCharacterConstantNode(source, representation, constant);
+	}
+
+	@Override
+<span class="nc" id="L392">	public StringLiteralNode newStringLiteralNode(Source source,</span>
+			String representation, StringLiteral literal) {
+		StringValue stringValue = valueFactory.stringValue(literal);
+
+		return new CommonStringLiteralNode(source, representation, stringValue);
+	}
+
+	@Override
+<span class="nc" id="L400">	public IntegerConstantNode newIntegerConstantNode(Source source,</span>
+			String representation) throws SyntaxException {
+		return literalInterpreter.integerConstant(source, representation);
+	}
+
+	@Override
+<span class="nc" id="L406">	public FloatingConstantNode newFloatingConstantNode(Source source,</span>
+			String representation) throws SyntaxException {
+		return literalInterpreter.floatingConstant(source, representation);
+	}
+
+	@Override
+<span class="nc" id="L412">	public EnumerationConstantNode newEnumerationConstantNode(</span>
+			IdentifierNode name) {
+		return new CommonEnumerationConstantNode(name.getSource(), name);
+	}
+
+	@Override
+<span class="nc" id="L418">	public CompoundLiteralNode newCompoundLiteralNode(Source source,</span>
+			TypeNode typeNode, CompoundInitializerNode initializerList) {
+		return new CommonCompoundLiteralNode(source, typeNode, initializerList);
+	}
+
+	@Override
+<span class="nc" id="L424">	public IdentifierExpressionNode newIdentifierExpressionNode(Source source,</span>
+			IdentifierNode identifier) {
+		return new CommonIdentifierExpressionNode(source, identifier);
+	}
+
+	@Override
+<span class="nc" id="L430">	public AlignOfNode newAlignOfNode(Source source, TypeNode type) {</span>
+		return new CommonAlignOfNode(source, type);
+	}
+
+	@Override
+<span class="nc" id="L435">	public CastNode newCastNode(Source source, TypeNode type,</span>
+			ExpressionNode argument) {
+		return new CommonCastNode(source, type, argument);
+	}
+
+	@Override
+<span class="nc" id="L441">	public FunctionCallNode newFunctionCallNode(Source source,</span>
+			ExpressionNode function, List&lt;ExpressionNode&gt; arguments,
+			SequenceNode&lt;ExpressionNode&gt; scopeList) {
+		SequenceNode&lt;ExpressionNode&gt; argumentSequenceNode = newSequenceNode(
+				source, &quot;ActualParameterList&quot;, arguments);
+
+		return new CommonFunctionCallNode(source, function, null,
+				argumentSequenceNode, scopeList);
+	}
+
+	@Override
+<span class="nc" id="L452">	public FunctionCallNode newFunctionCallNode(Source source,</span>
+			ExpressionNode function, List&lt;ExpressionNode&gt; contextArguments,
+			List&lt;ExpressionNode&gt; arguments,
+			SequenceNode&lt;ExpressionNode&gt; scopeList) {
+		SequenceNode&lt;ExpressionNode&gt; contextArgumentSequenceNode = newSequenceNode(
+				source, &quot;ActualContextParameterList&quot;, contextArguments);
+		SequenceNode&lt;ExpressionNode&gt; argumentSequenceNode = newSequenceNode(
+				source, &quot;ActualParameterList&quot;, arguments);
+
+		return new CommonFunctionCallNode(source, function,
+				contextArgumentSequenceNode, argumentSequenceNode, scopeList);
+	}
+
+	@Override
+<span class="nc" id="L466">	public DotNode newDotNode(Source source, ExpressionNode structure,</span>
+			IdentifierNode fieldName) {
+		return new CommonDotNode(source, structure, fieldName);
+	}
+
+	@Override
+<span class="nc" id="L472">	public ArrowNode newArrowNode(Source source,</span>
+			ExpressionNode structurePointer, IdentifierNode fieldName) {
+		return new CommonArrowNode(source, structurePointer, fieldName);
+	}
+
+	@Override
+<span class="nc" id="L478">	public OperatorNode newOperatorNode(Source source, Operator operator,</span>
+			List&lt;ExpressionNode&gt; arguments) {
+		return new CommonOperatorNode(source, operator, arguments);
+	}
+
+	@Override
+<span class="nc" id="L484">	public SizeofNode newSizeofNode(Source source, SizeableNode argument) {</span>
+		return new CommonSizeofNode(source, argument);
+	}
+
+	@Override
+<span class="nc" id="L489">	public ScopeOfNode newScopeOfNode(Source source, ExpressionNode argument) {</span>
+		return new CommonScopeOfNode(source, argument);
+	}
+
+	@Override
+<span class="nc" id="L494">	public VariableDeclarationNode newVariableDeclarationNode(Source source,</span>
+			IdentifierNode name, TypeNode type) {
+		return new CommonVariableDeclarationNode(source, name, type);
+	}
+
+	@Override
+<span class="nc" id="L500">	public VariableDeclarationNode newVariableDeclarationNode(Source source,</span>
+			IdentifierNode name, TypeNode type, InitializerNode initializer) {
+		return new CommonVariableDeclarationNode(source, name, type,
+				initializer);
+	}
+
+	@Override
+<span class="nc" id="L507">	public FunctionDeclarationNode newFunctionDeclarationNode(Source source,</span>
+			IdentifierNode name, FunctionTypeNode type,
+			SequenceNode&lt;ContractNode&gt; contract) {
+		return new CommonFunctionDeclarationNode(source, name, type, contract);
+	}
+
+	@Override
+<span class="nc" id="L514">	public EnumeratorDeclarationNode newEnumeratorDeclarationNode(</span>
+			Source source, IdentifierNode name, ExpressionNode value) {
+		return new CommonEnumeratorDeclarationNode(source, name, value);
+	}
+
+	@Override
+<span class="nc" id="L520">	public FieldDeclarationNode newFieldDeclarationNode(Source source,</span>
+			IdentifierNode name, TypeNode type) {
+		return new CommonFieldDeclarationNode(source, name, type);
+	}
+
+	@Override
+<span class="nc" id="L526">	public FieldDeclarationNode newFieldDeclarationNode(Source source,</span>
+			IdentifierNode name, TypeNode type, ExpressionNode bitFieldWidth) {
+		return new CommonFieldDeclarationNode(source, name, type, bitFieldWidth);
+	}
+
+	@Override
+<span class="nc" id="L532">	public OrdinaryLabelNode newStandardLabelDeclarationNode(Source source,</span>
+			IdentifierNode name, StatementNode statement) {
+		CommonOrdinaryLabelNode label = new CommonOrdinaryLabelNode(source,
+				name);
+
+		label.setStatement(statement);
+		return label;
+	}
+
+	@Override
+<span class="nc" id="L542">	public SwitchLabelNode newCaseLabelDeclarationNode(Source source,</span>
+			ExpressionNode constantExpression, StatementNode statement) {
+		CommonSwitchLabelNode label = new CommonSwitchLabelNode(source,
+				constantExpression);
+
+		label.setStatement(statement);
+		return label;
+	}
+
+	@Override
+<span class="nc" id="L552">	public SwitchLabelNode newDefaultLabelDeclarationNode(Source source,</span>
+			StatementNode statement) {
+		CommonSwitchLabelNode label = new CommonSwitchLabelNode(source);
+
+		label.setStatement(statement);
+		return label;
+	}
+
+	@Override
+<span class="nc" id="L561">	public TypedefDeclarationNode newTypedefDeclarationNode(Source source,</span>
+			IdentifierNode name, TypeNode type) {
+		return new CommonTypedefDeclarationNode(source, name, type);
+	}
+
+	@Override
+<span class="nc" id="L567">	public CompoundInitializerNode newCompoundInitializerNode(Source source,</span>
+			List&lt;PairNode&lt;DesignationNode, InitializerNode&gt;&gt; initList) {
+		return new CommonCompoundInitializerNode(source, initList);
+	}
+
+	@Override
+<span class="nc" id="L573">	public DesignationNode newDesignationNode(Source source,</span>
+			List&lt;DesignatorNode&gt; designators) {
+		return new CommonDesignationNode(source, designators);
+	}
+
+	@Override
+<span class="nc" id="L579">	public FieldDesignatorNode newFieldDesignatorNode(Source source,</span>
+			IdentifierNode name) {
+		return new CommonFieldDesignatorNode(source, name);
+	}
+
+	@Override
+<span class="nc" id="L585">	public ArrayDesignatorNode newArrayDesignatorNode(Source source,</span>
+			ExpressionNode index) {
+		return new CommonArrayDesignatorNode(source, index);
+	}
+
+	@Override
+<span class="nc" id="L591">	public CompoundStatementNode newCompoundStatementNode(Source source,</span>
+			List&lt;BlockItemNode&gt; items) {
+		return new CommonCompoundStatementNode(source, items);
+	}
+
+	@Override
+<span class="nc" id="L597">	public ExpressionStatementNode newExpressionStatementNode(</span>
+			ExpressionNode expression) {
+		return new CommonExpressionStatementNode(expression.getSource(),
+				expression);
+	}
+
+	@Override
+<span class="nc" id="L604">	public StatementNode newNullStatementNode(Source source) {</span>
+		return new CommonNullStatementNode(source);
+	}
+
+	@Override
+<span class="nc" id="L609">	public ForLoopNode newForLoopNode(Source source,</span>
+			ForLoopInitializerNode initializer, ExpressionNode condition,
+			ExpressionNode incrementer, StatementNode body,
+			SequenceNode&lt;ContractNode&gt; contracts) {
+		return new CommonForLoopNode(source, condition, body, initializer,
+				incrementer, contracts);
+	}
+
+	@Override
+<span class="nc" id="L618">	public DeclarationListNode newForLoopInitializerNode(Source source,</span>
+			List&lt;VariableDeclarationNode&gt; declarations) {
+		return new CommonDeclarationListNode(source, declarations);
+	}
+
+	@Override
+<span class="nc" id="L624">	public LoopNode newWhileLoopNode(Source source, ExpressionNode condition,</span>
+			StatementNode body, SequenceNode&lt;ContractNode&gt; contracts) {
+		return new CommonLoopNode(source, LoopKind.WHILE, condition, body,
+				contracts);
+	}
+
+	@Override
+<span class="nc" id="L631">	public LoopNode newDoLoopNode(Source source, ExpressionNode condition,</span>
+			StatementNode body, SequenceNode&lt;ContractNode&gt; contracts) {
+		return new CommonLoopNode(source, LoopKind.DO_WHILE, condition, body,
+				contracts);
+	}
+
+	@Override
+<span class="nc" id="L638">	public GotoNode newGotoNode(Source source, IdentifierNode label) {</span>
+		return new CommonGotoNode(source, label);
+	}
+
+	@Override
+<span class="nc" id="L643">	public IfNode newIfNode(Source source, ExpressionNode condition,</span>
+			StatementNode trueBranch) {
+		return new CommonIfNode(source, condition, trueBranch);
+	}
+
+	@Override
+<span class="nc" id="L649">	public IfNode newIfNode(Source source, ExpressionNode condition,</span>
+			StatementNode trueBranch, StatementNode falseBranch) {
+		return new CommonIfNode(source, condition, trueBranch, falseBranch);
+	}
+
+	@Override
+<span class="nc" id="L655">	public JumpNode newContinueNode(Source source) {</span>
+		return new CommonJumpNode(source, JumpKind.CONTINUE);
+	}
+
+	@Override
+<span class="nc" id="L660">	public JumpNode newBreakNode(Source source) {</span>
+		return new CommonJumpNode(source, JumpKind.BREAK);
+	}
+
+	@Override
+<span class="nc" id="L665">	public ReturnNode newReturnNode(Source source, ExpressionNode argument) {</span>
+		return new CommonReturnNode(source, argument);
+	}
+
+	@Override
+<span class="nc" id="L670">	public LabeledStatementNode newLabeledStatementNode(Source source,</span>
+			LabelNode label, StatementNode statement) {
+		return new CommonLabeledStatementNode(source, label, statement);
+	}
+
+	@Override
+<span class="nc" id="L676">	public SwitchNode newSwitchNode(Source source, ExpressionNode condition,</span>
+			StatementNode body) {
+		CommonSwitchNode switchNode = new CommonSwitchNode(source, condition,
+				body);
+
+		return switchNode;
+	}
+
+	@Override
+<span class="nc" id="L685">	public CivlForNode newCivlForNode(Source source, boolean isParallel,</span>
+			DeclarationListNode variables, ExpressionNode domain,
+			StatementNode body, ExpressionNode invariant) {
+		return new CommonCivlForNode(source, isParallel, variables, domain,
+				body, invariant);
+	}
+
+	@Override
+<span class="nc" id="L693">	public StaticAssertionNode newStaticAssertionNode(Source source,</span>
+			ExpressionNode expression, StringLiteralNode message) {
+		return new CommonStaticAssertionNode(source, expression, message);
+	}
+
+	@Override
+	public PragmaNode newPragmaNode(Source source, IdentifierNode identifier,
+			CivlcTokenSequence producer, CivlcToken newlineToken) {
+<span class="nc" id="L701">		newlineToken.setType(CivlCParser.EOF);</span>
+		return new CommonPragmaNode(source, identifier, producer, newlineToken);
+	}
+
+	@Override
+<span class="nc" id="L706">	public FunctionDefinitionNode newFunctionDefinitionNode(Source source,</span>
+			IdentifierNode name, FunctionTypeNode type,
+			SequenceNode&lt;ContractNode&gt; contract, CompoundStatementNode body) {
+		return new CommonFunctionDefinitionNode(source, name, type, contract,
+				body);
+	}
+
+	@Override
+<span class="nc" id="L714">	public AbstractFunctionDefinitionNode newAbstractFunctionDefinitionNode(</span>
+			Source source, IdentifierNode name, FunctionTypeNode type,
+			SequenceNode&lt;ContractNode&gt; contract, int continuity) {
+		return new CommonAbstractFunctionDefinitionNode(source, name, type,
+				contract, continuity);
+	}
+
+	@Override
+<span class="nc" id="L722">	public SequenceNode&lt;BlockItemNode&gt; newTranslationUnitNode(Source source,</span>
+			List&lt;BlockItemNode&gt; definitions) {
+		return newSequenceNode(source, &quot;TranslationUnit&quot;, definitions);
+	}
+
+	@Override
+<span class="nc" id="L728">	public SequenceNode&lt;BlockItemNode&gt; newProgramNode(Source source,</span>
+			List&lt;BlockItemNode&gt; definitions) {
+		return newSequenceNode(source, &quot;Program&quot;, definitions);
+	}
+
+	@Override
+<span class="nc" id="L734">	public Value getConstantValue(ExpressionNode expression)</span>
+			throws SyntaxException {
+		CommonExpressionNode commonNode = (CommonExpressionNode) expression;
+
+		if (commonNode.constantComputed()) {
+			return commonNode.getConstantValue();
+		} else {
+			Value value = valueFactory.evaluate(expression);
+
+			commonNode.setConstantValue(value);
+			return value;
+		}
+	}
+
+	@Override
+<span class="nc" id="L749">	public SpawnNode newSpawnNode(Source source, FunctionCallNode callNode) {</span>
+		return new CommonSpawnNode(source, callNode);
+	}
+
+	@Override
+<span class="nc" id="L754">	public CallsNode newCallsNode(Source source, FunctionCallNode callNode) {</span>
+		return new CommonCallsNode(source, callNode);
+	}
+
+	@Override
+<span class="nc" id="L759">	public RemoteExpressionNode newRemoteExpressionNode(Source source,</span>
+			ExpressionNode left, IdentifierExpressionNode right) {
+		return new CommonRemoteExpressionNode(source, left, right);
+	}
+
+	@Override
+<span class="nc" id="L765">	public ScopeOfNode newScopeOfNode(Source source,</span>
+			IdentifierExpressionNode variableExpression) {
+		return new CommonScopeOfNode(source, variableExpression);
+	}
+
+	// @Override
+	// public AssumeNode newAssumeNode(Source source, ExpressionNode expression)
+	// {
+	// return new CommonAssumeNode(source, expression);
+	// }
+	//
+	// @Override
+	// public AssertNode newAssertNode(Source source, ExpressionNode expression,
+	// SequenceNode&lt;ExpressionNode&gt; explanation) {
+	// return new CommonAssertNode(source, expression, explanation);
+	// }
+
+	@Override
+<span class="nc" id="L783">	public WhenNode newWhenNode(Source source, ExpressionNode guard,</span>
+			StatementNode body) {
+		return new CommonWhenNode(source, guard, body);
+	}
+
+	@Override
+<span class="nc" id="L789">	public ChooseStatementNode newChooseStatementNode(Source source,</span>
+			List&lt;StatementNode&gt; statements) {
+		return new CommonChooseStatementNode(source, statements);
+	}
+
+	@Override
+<span class="nc" id="L795">	public ConstantNode newBooleanConstantNode(Source source, boolean value) {</span>
+		IntegerValue theValue;
+		String representation;
+
+		if (value) {
+			representation = &quot;\\true&quot;;
+			theValue = valueFactory.integerValue(booleanType, 1);
+		} else {
+			representation = &quot;\\false&quot;;
+			theValue = valueFactory.integerValue(booleanType, 0);
+		}
+		return new CommonIntegerConstantNode(source, representation, theValue);
+	}
+
+	@Override
+<span class="nc" id="L810">	public ExpressionNode newSelfNode(Source source) {</span>
+		ExpressionNode result = new CommonSelfNode(source, processType);
+
+		result.setInitialType(processType);
+		return result;
+	}
+
+	@Override
+<span class="nc" id="L818">	public ExpressionNode newHereNode(Source source) {</span>
+		ExpressionNode result = new CommonHereOrRootNode(source, &quot;$here&quot;,
+				scopeType);
+
+		result.setInitialType(scopeType);
+		return result;
+	}
+
+	@Override
+<span class="nc" id="L827">	public ExpressionNode newRootNode(Source source) {</span>
+		ExpressionNode result = new CommonHereOrRootNode(source, &quot;$root&quot;,
+				scopeType);
+
+		result.setInitialType(scopeType);
+		return result;
+	}
+
+	@Override
+<span class="nc" id="L836">	public ExpressionNode newResultNode(Source source) {</span>
+		return new CommonResultNode(source);
+	}
+
+	@Override
+<span class="nc" id="L841">	public RequiresNode newRequiresNode(Source source, ExpressionNode expression) {</span>
+		return new CommonRequiresNode(source, expression);
+	}
+
+	@Override
+<span class="nc" id="L846">	public EnsuresNode newEnsuresNode(Source source, ExpressionNode expression) {</span>
+		return new CommonEnsuresNode(source, expression);
+	}
+
+	@Override
+<span class="nc" id="L851">	public QuantifiedExpressionNode newQuantifiedExpressionNode(Source source,</span>
+			Quantifier quantifier, VariableDeclarationNode variable,
+			ExpressionNode restriction, ExpressionNode expression) {
+		return new CommonQuantifiedExpressionNode(source, quantifier, variable,
+				restriction, expression);
+	}
+
+	@Override
+<span class="nc" id="L859">	public QuantifiedExpressionNode newQuantifiedExpressionNode(Source source,</span>
+			Quantifier quantifier, VariableDeclarationNode variable,
+			ExpressionNode lower, ExpressionNode upper,
+			ExpressionNode expression) {
+		return new CommonQuantifiedExpressionNode(source, quantifier, variable,
+				lower, upper, expression);
+	}
+
+	@Override
+<span class="nc" id="L868">	public DerivativeExpressionNode newDerivativeExpressionNode(</span>
+			Source source,
+			ExpressionNode function,
+			SequenceNode&lt;PairNode&lt;IdentifierExpressionNode, IntegerConstantNode&gt;&gt; partials,
+			SequenceNode&lt;ExpressionNode&gt; arguments) {
+		return new CommonDerivativeExpressionNode(source, function, partials,
+				arguments);
+	}
+
+	@Override
+<span class="nc" id="L878">	public void setConstantValue(ExpressionNode expression, Value value) {</span>
+		((CommonExpressionNode) expression).setConstantValue(value);
+	}
+
+	@Override
+<span class="nc" id="L883">	public AtomicNode newAtomicStatementNode(Source statementSource,</span>
+			boolean deterministic, StatementNode body) {
+		return new CommonAtomicNode(statementSource, deterministic, body);
+	}
+
+	@Override
+<span class="nc" id="L889">	public ExpressionNode newProcnullNode(Source source) {</span>
+		ExpressionNode result = new CommonProcnullNode(source, processType);
+
+		result.setInitialType(processType);
+		return result;
+	}
+
+	/* *************************** OpenMP Section ************************** */
+
+	@Override
+<span class="nc" id="L899">	public OmpParallelNode newOmpParallelNode(Source source,</span>
+			StatementNode statement) {
+		return new CommonOmpParallelNode(source, statement);
+	}
+
+	@Override
+<span class="nc" id="L905">	public OmpForNode newOmpForNode(Source source, StatementNode statement) {</span>
+		return new CommonOmpForNode(source, statement);
+	}
+
+	@Override
+<span class="nc" id="L910">	public OmpSyncNode newOmpMasterNode(Source source, StatementNode statement) {</span>
+		return new CommonOmpSyncNode(source, OmpSyncNodeKind.MASTER, statement);
+	}
+
+	@Override
+<span class="nc" id="L915">	public OmpSyncNode newOmpAtomicNode(Source source, StatementNode statement) {</span>
+		return new CommonOmpSyncNode(source, OmpSyncNodeKind.OMPATOMIC,
+				statement);
+	}
+
+	@Override
+<span class="nc" id="L921">	public OmpSyncNode newOmpBarrierNode(Source source) {</span>
+		return new CommonOmpSyncNode(source, OmpSyncNodeKind.BARRIER, null);
+	}
+
+	@Override
+<span class="nc" id="L926">	public OmpWorksharingNode newOmpSectionsNode(Source source,</span>
+			StatementNode statement) {
+		return new CommonOmpWorkshareNode(source,
+				OmpWorksharingNodeKind.SECTIONS, statement);
+	}
+
+	@Override
+<span class="nc" id="L933">	public OmpWorksharingNode newOmpSectionNode(Source source,</span>
+			StatementNode statement) {
+		return new CommonOmpWorkshareNode(source,
+				OmpWorksharingNodeKind.SECTION, statement);
+	}
+
+	@Override
+<span class="nc" id="L940">	public OmpDeclarativeNode newOmpThreadprivateNode(Source source,</span>
+			SequenceNode&lt;IdentifierExpressionNode&gt; variables) {
+		return new CommonOmpDeclarativeNode(source, variables);
+	}
+
+	@Override
+<span class="nc" id="L946">	public OmpSymbolReductionNode newOmpSymbolReductionNode(Source source,</span>
+			Operator operator, SequenceNode&lt;IdentifierExpressionNode&gt; variables) {
+		return new CommonOmpSymbolReductionNode(source, operator, variables);
+	}
+
+	@Override
+<span class="nc" id="L952">	public OmpSyncNode newOmpCriticalNode(Source source, IdentifierNode name,</span>
+			StatementNode statement) {
+		OmpSyncNode criticalNode = new CommonOmpSyncNode(source,
+				OmpSyncNodeKind.CRITICAL, statement);
+
+		criticalNode.setCriticalName(name);
+		return criticalNode;
+	}
+
+	@Override
+<span class="nc" id="L962">	public OmpSyncNode newOmpFlushNode(Source source,</span>
+			SequenceNode&lt;IdentifierExpressionNode&gt; variables) {
+		OmpSyncNode flushNode = new CommonOmpSyncNode(source,
+				OmpSyncNodeKind.FLUSH, null);
+
+		flushNode.setFlushedList(variables);
+		return flushNode;
+	}
+
+	@Override
+<span class="nc" id="L972">	public OmpSyncNode newOmpOrederedNode(Source source, StatementNode statement) {</span>
+		return new CommonOmpSyncNode(source, OmpSyncNodeKind.ORDERED, statement);
+	}
+
+	@Override
+<span class="nc" id="L977">	public OmpWorksharingNode newOmpSingleNode(Source source,</span>
+			StatementNode statement) {
+		return new CommonOmpWorkshareNode(source,
+				OmpWorksharingNodeKind.SINGLE, statement);
+	}
+
+	@Override
+<span class="nc" id="L984">	public OmpFunctionReductionNode newOmpFunctionReductionNode(Source source,</span>
+			IdentifierExpressionNode function,
+			SequenceNode&lt;IdentifierExpressionNode&gt; variables) {
+		return new CommonOmpFunctionReductionNode(source, function, variables);
+	}
+
+	@Override
+<span class="nc" id="L991">	public OmpWorksharingNode newWorksharingNode(Source source,</span>
+			OmpWorksharingNodeKind kind) {
+		return new CommonOmpWorkshareNode(source, kind, null);
+	}
+
+	@Override
+<span class="nc" id="L997">	public RegularRangeNode newRegularRangeNode(Source source,</span>
+			ExpressionNode low, ExpressionNode high) {
+		return new CommonRegularRangeNode(source, low, high);
+	}
+
+	@Override
+<span class="nc" id="L1003">	public RegularRangeNode newRegularRangeNode(Source source,</span>
+			ExpressionNode low, ExpressionNode high, ExpressionNode step) {
+		return new CommonRegularRangeNode(source, low, high, step);
+	}
+
+	@Override
+<span class="nc" id="L1009">	public OperatorNode newOperatorNode(Source source, Operator operator,</span>
+			ExpressionNode argument) {
+		return new CommonOperatorNode(source, operator, Arrays.asList(argument));
+	}
+
+	@Override
+<span class="nc" id="L1015">	public OperatorNode newOperatorNode(Source source, Operator operator,</span>
+			ExpressionNode arg0, ExpressionNode arg1) {
+		return new CommonOperatorNode(source, operator, Arrays.asList(arg0,
+				arg1));
+	}
+
+	@Override
+<span class="nc" id="L1022">	public OperatorNode newOperatorNode(Source source, Operator operator,</span>
+			ExpressionNode arg0, ExpressionNode arg1, ExpressionNode arg2) {
+		return new CommonOperatorNode(source, operator, Arrays.asList(arg0,
+				arg1, arg2));
+	}
+
+	@Override
+<span class="nc" id="L1029">	public DependsNode newDependsNode(Source source, ExpressionNode condition,</span>
+			SequenceNode&lt;DependsEventNode&gt; eventList) {
+		return new CommonDependsNode(source, eventList);
+	}
+
+	@Override
+<span class="nc" id="L1035">	public GuardsNode newGuardNode(Source source, ExpressionNode expression) {</span>
+		return new CommonGuardNode(source, expression);
+	}
+
+	@Override
+<span class="nc" id="L1040">	public AssignsOrReadsNode newAssignsNode(Source source,</span>
+			SequenceNode&lt;ExpressionNode&gt; expressionList) {
+		return new CommonAssignsOrReadsNode(source, true, expressionList);
+	}
+
+	@Override
+<span class="nc" id="L1046">	public AssignsOrReadsNode newReadsNode(Source source,</span>
+			SequenceNode&lt;ExpressionNode&gt; expressionList) {
+		return new CommonAssignsOrReadsNode(source, false, expressionList);
+	}
+
+	@Override
+<span class="nc" id="L1052">	public WildcardNode newWildcardNode(Source source) {</span>
+		return new CommonWildcardNode(source);
+	}
+
+	@Override
+<span class="nc" id="L1057">	public Configuration configuration() {</span>
+		return this.configuration;
+	}
+
+	@Override
+<span class="nc" id="L1062">	public StatementExpressionNode newStatementExpressionNode(Source source,</span>
+			CompoundStatementNode statement) {
+		return new CommonStatementExpressionNode(source, statement);
+	}
+
+	@Override
+<span class="nc" id="L1068">	public TypeofNode newTypeofNode(Source source, ExpressionNode expression) {</span>
+		return new CommonTypeofNode(source, expression);
+	}
+
+	@Override
+<span class="nc" id="L1073">	public MemoryEventNode newMemoryEventNode(Source source,</span>
+			MemoryEventNodeKind kind, SequenceNode&lt;ExpressionNode&gt; memoryList) {
+		return new CommonMemoryEventNode(source, kind, memoryList);
+	}
+
+	@Override
+<span class="nc" id="L1079">	public CompositeEventNode newOperatorEventNode(Source source,</span>
+			EventOperator op, DependsEventNode left, DependsEventNode right) {
+		return new CommonCompositeEventNode(source, op, left, right);
+	}
+
+	@Override
+<span class="nc" id="L1085">	public NothingNode newNothingNode(Source source) {</span>
+		return new CommonNothingNode(source);
+	}
+
+	@Override
+<span class="nc" id="L1090">	public BehaviorNode newBehaviorNode(Source source, IdentifierNode name,</span>
+			SequenceNode&lt;ContractNode&gt; body) {
+		return new CommonBehaviorNode(source, name, body);
+	}
+
+	@Override
+<span class="nc" id="L1096">	public CompletenessNode newCompletenessNode(Source source,</span>
+			boolean isComplete, SequenceNode&lt;IdentifierNode&gt; idList) {
+		return new CommonCompletenessNode(source, isComplete, idList);
+	}
+
+	@Override
+<span class="nc" id="L1102">	public AssumesNode newAssumesNode(Source source, ExpressionNode predicate) {</span>
+		return new CommonAssumesNode(source, predicate);
+	}
+
+	@Override
+<span class="nc" id="L1107">	public NoactNode newNoactNode(Source source) {</span>
+		return new CommonNoactNode(source);
+	}
+
+	@Override
+<span class="nc" id="L1112">	public AnyactNode newAnyactNode(Source source) {</span>
+		return new CommonAnyactNode(source);
+	}
+
+	@Override
+<span class="nc" id="L1117">	public CallEventNode newCallEventNode(Source source,</span>
+			IdentifierExpressionNode function, SequenceNode&lt;ExpressionNode&gt; args) {
+		return new CommonCallEventNode(source, function, args);
+	}
+
+	@Override
+<span class="nc" id="L1123">	public MPICollectiveBlockNode newMPICollectiveBlockNode(Source source,</span>
+			ExpressionNode mpiComm, MPICollectiveKind kind,
+			SequenceNode&lt;ContractNode&gt; body) {
+		return new CommonMPICollectiveBlockNode(source, mpiComm, kind, body);
+	}
+
+	@Override
+<span class="nc" id="L1130">	public MPIContractConstantNode newMPIConstantNode(Source source,</span>
+			String stringRepresentation, MPIConstantKind kind,
+			ConstantKind constKind) {
+		return new CommonMPIConstantNode(source, stringRepresentation, kind,
+				constKind);
+	}
+
+	@Override
+<span class="nc" id="L1138">	public MPIContractExpressionNode newMPIExpressionNode(Source source,</span>
+			List&lt;ExpressionNode&gt; arguments, MPIContractExpressionKind kind,
+			String exprName) {
+		return new CommonMPIContractExpressionNode(source, arguments, kind,
+				exprName);
+	}
+
+	@Override
+<span class="nc" id="L1146">	public TypeFactory typeFactory() {</span>
+		return typeFactory;
+	}
+
+	@Override
+<span class="nc" id="L1151">	public InvariantNode newInvariantNode(Source source,</span>
+			boolean isLoopInvariant, ExpressionNode expression) {
+		return new CommonInvariantNode(source, isLoopInvariant, expression);
+	}
+
+	@Override
+<span class="nc" id="L1157">	public PureNode newPureNode(Source source) {</span>
+		return new CommonPureNode(source);
+	}
+
+	@Override
+<span class="nc" id="L1162">	public MemorySetNode newMemorySetNode(Source source, ExpressionNode term,</span>
+			SequenceNode&lt;VariableDeclarationNode&gt; binders,
+			ExpressionNode predicate) {
+		return new CommonMemorySetNode(source, term, binders, predicate);
+	}
+
+	@Override
+<span class="nc" id="L1169">	public ArrayTypeNode newArrayTypeNode(Source source, TypeNode elementType,</span>
+			ExpressionNode extent, ExpressionNode startIndex) {
+		return new CommonArrayTypeNode(source, elementType, extent, startIndex);
+	}
+
+	@Override
+<span class="nc" id="L1175">	public ContractVerifyNode newContractVerifyNode(Source source,</span>
+			ExpressionNode function, List&lt;ExpressionNode&gt; arguments,
+			SequenceNode&lt;ExpressionNode&gt; scopeList) {
+		SequenceNode&lt;ExpressionNode&gt; argumentSequenceNode = newSequenceNode(
+				source, &quot;ActualParameterList&quot;, arguments);
+
+		return new CommonContractVerifyNode(source, function, null,
+				argumentSequenceNode, scopeList);
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

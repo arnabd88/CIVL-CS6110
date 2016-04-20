@@ -1,0 +1,161 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_ac21c89238b275031d46dc8376c306d22}{}{\bfseries Common\+Heap\+Type} (String name)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_ac21c89238b275031d46dc8376c306d22}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a71dda177dfaf67159a95716f079d85a7}{has\+State} ()
+\begin{DoxyCompactList}\small\item\em If this type contains any array with non-\/constant extent, it \char`\"{}has state\char`\"{} in the sense that the dynamic type may depend on the state. \end{DoxyCompactList}\item 
+Symbolic\+Type \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_adff4ee2b344ba30f1e8a2c9ffeb6e0fe}{get\+Dynamic\+Type} (Symbolic\+Universe universe)
+\begin{DoxyCompactList}\small\item\em This returns the dynamic type corresponding to this static type in which all array extent expressions are ignored, i.\+e., all of the dynamic array types are incomplete. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a8e38e0ad2c99544e7e309c57b8fe866c}{}int {\bfseries get\+Num\+Mallocs} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a8e38e0ad2c99544e7e309c57b8fe866c}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_aa9c60c19e7263ca5ac8d96d6e72347ed}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement}{Malloc\+Statement} {\bfseries get\+Malloc} (int index)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_aa9c60c19e7263ca5ac8d96d6e72347ed}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a76bb0c4d8f6c18c4fb532c88d247427a}{}boolean {\bfseries is\+Complete} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a76bb0c4d8f6c18c4fb532c88d247427a}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_acfb047611b947afc9b1679eab372187f}{}void {\bfseries complete} (Collection$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement}{Malloc\+Statement} $>$ mallocs, Symbolic\+Type dynamic\+Type, Symbolic\+Expression initial\+Value, Symbolic\+Expression undefined\+Value)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_acfb047611b947afc9b1679eab372187f}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0d6a001c5b9a9b110955c76f549591ea}{is\+Heap\+Type} ()
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a8dc03ad2018ed8a1d5aee1ffe5ddb096}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a8dc03ad2018ed8a1d5aee1ffe5ddb096}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0545c11aed3c92318ec02c65bfddab5d}{}Symbolic\+Expression {\bfseries get\+Initial\+Value} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0545c11aed3c92318ec02c65bfddab5d}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_ab1d405d2b2f5b0e7d0742ede357b6572}{}Symbolic\+Expression {\bfseries get\+Undefined\+Value} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_ab1d405d2b2f5b0e7d0742ede357b6572}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_ab4fe2316185430349018691971abaa29}{}String {\bfseries get\+Name} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_ab4fe2316185430349018691971abaa29}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0f9528e9f3644283b6c37c0faea45ccd}{is\+Handle\+Object\+Type} ()
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a4c7440901d2837f6a2e026d8ca6b4dcf}{}\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_1_1TypeKind}{Type\+Kind} {\bfseries type\+Kind} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a4c7440901d2837f6a2e026d8ca6b4dcf}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a1bb9252d63e8166a29d44efecd32c7f7}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} {\bfseries copy\+As} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} type, Symbolic\+Universe universe)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a1bb9252d63e8166a29d44efecd32c7f7}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_aac2bee5a34bbf35b9ad06b8ad74bde3d}{are\+Subtypes\+Scalar} ()
+\begin{DoxyCompactList}\small\item\em Are all the sub-\/types of this type scalar? \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_aac2bee5a34bbf35b9ad06b8ad74bde3d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}!are\+Subtypes\+Scalar@{are\+Subtypes\+Scalar}}
+\index{are\+Subtypes\+Scalar@{are\+Subtypes\+Scalar}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}}
+\subsubsection[{are\+Subtypes\+Scalar}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type.\+are\+Subtypes\+Scalar (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_aac2bee5a34bbf35b9ad06b8ad74bde3d}
+
+
+Are all the sub-\/types of this type scalar? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a9ab881722a06afb89f948e48a31961e3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_adff4ee2b344ba30f1e8a2c9ffeb6e0fe}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}!get\+Dynamic\+Type@{get\+Dynamic\+Type}}
+\index{get\+Dynamic\+Type@{get\+Dynamic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}}
+\subsubsection[{get\+Dynamic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type.\+get\+Dynamic\+Type (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Universe}]{universe}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_adff4ee2b344ba30f1e8a2c9ffeb6e0fe}
+
+
+This returns the dynamic type corresponding to this static type in which all array extent expressions are ignored, i.\+e., all of the dynamic array types are incomplete. 
+
+May be null (only in the case of the primitive type of kind \hyperlink{}{Primitive\+Type\+Kind.\+V\+O\+I\+D}).
+
+\begin{DoxyReturn}{Returns}
+the dynamic type corresponding to this static type with incomplete array type 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3f01f0f60e869508ee46927aa5012b22}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a71dda177dfaf67159a95716f079d85a7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}!has\+State@{has\+State}}
+\index{has\+State@{has\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}}
+\subsubsection[{has\+State}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type.\+has\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a71dda177dfaf67159a95716f079d85a7}
+
+
+If this type contains any array with non-\/constant extent, it \char`\"{}has state\char`\"{} in the sense that the dynamic type may depend on the state. 
+
+\begin{DoxyReturn}{Returns}
+true iff type contains array with non-\/constant extent 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ad06e630b2a547346d274f8b21b36eebb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0f9528e9f3644283b6c37c0faea45ccd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}!is\+Handle\+Object\+Type@{is\+Handle\+Object\+Type}}
+\index{is\+Handle\+Object\+Type@{is\+Handle\+Object\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}}
+\subsubsection[{is\+Handle\+Object\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type.\+is\+Handle\+Object\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0f9528e9f3644283b6c37c0faea45ccd}
+\begin{DoxyReturn}{Returns}
+true iff this type is the object type of some handle type. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ae32800c68307a47a856133fdca61bddc}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0d6a001c5b9a9b110955c76f549591ea}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}!is\+Heap\+Type@{is\+Heap\+Type}}
+\index{is\+Heap\+Type@{is\+Heap\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Heap\+Type}}
+\subsubsection[{is\+Heap\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type.\+is\+Heap\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0d6a001c5b9a9b110955c76f549591ea}
+\begin{DoxyReturn}{Returns}
+true iff this type is heap type 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_adfbc8da7beab0f682ed6d4e02b68b9d8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/type/Common\+Heap\+Type.\+java\end{DoxyCompactItemize}

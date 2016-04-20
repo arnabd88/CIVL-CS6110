@@ -1,0 +1,17 @@
+#include<civlc.cvh>
+
+int check(int a, int b, int c, int d){
+  $assert((a+b) == (c+d), "assertion failed!\n");
+}
+
+int thread($proc x){
+  $wait(x);
+}
+
+int main(){
+  int a = 1, b = 2, c = 3, d = 4;
+
+  $spawn thread($self);
+  check(a,b,c,d);
+}
+

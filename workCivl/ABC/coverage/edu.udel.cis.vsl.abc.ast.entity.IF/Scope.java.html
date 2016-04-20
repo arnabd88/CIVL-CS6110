@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Scope.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.entity.IF</a> &gt; <span class="el_source">Scope.java</span></div><h1>Scope.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.entity.IF;</span>
+
+import java.io.PrintStream;
+import java.util.Iterator;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+/**
+ * &lt;p&gt;
+ * A lexical (static) scope in a translation unit. The C11 Standard specifies 4
+ * kinds of scopes: FILE, BLOCK, FUNCTION, and FUNCTION_PROTOTYPE.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * A scope contains declarations of various kinds of entities. An &quot;entity&quot; is
+ * any conceptual thing which can be named using an identifier. An entity may be
+ * declared in more than one scope (though the process of &quot;linkage&quot;).
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Global declarations are in the FILE scope. A BLOCK scope corresponds to a
+ * block. The BLOCK scope corresponding to a function body includes the formal
+ * parameters as well as the outermost local parameters. The only entities with
+ * FUNCTION scope are (standard) labels---the labels that can be used as a
+ * target of a &quot;goto&quot; statement. A FUNCTION_PROTOTYPE scope occurs only in a
+ * function prototype, i.e., a function delcaration without body; such a scope
+ * extends to the end of the declarator for the function prototype.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * The set of all scopes in a translation unit forms a tree. The root of the
+ * tree is the FILE scope.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * There are four kinds of name spaces in a scope: (1) the label namespace,
+ * which consists of all the (standard) label names in the scope; (2) the tag
+ * namespace, which consists of all the tags used in struct, union, and
+ * enumeration definitions; (3) the &quot;member&quot; namespaces (one namespace for each
+ * struct or union containing the field names for that struct or union); and (4)
+ * the namespace for &quot;ordinary identifiers&quot;---those declared in an ordinary (not
+ * struct or union) declarator, or as an enumeration constant---, this includes
+ * typedef names, variables, and functions. For example, the same identifier &quot;X&quot;
+ * could be used to denote a label, the tag of a struct, a member of that
+ * struct, and a variable, all in the same scope. However, &quot;X&quot; could not denote
+ * both a variable and a function in the same scope; nor could it denote both a
+ * struct tag and an enumeration tag in the same scope; but two different
+ * structs in the same scope can both have a field named &quot;X&quot;.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Ordinary entities include: functions, variables (that are not fields),
+ * enumeration constants, and typedefs.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Note that &quot;label&quot; means standard label: the kind that is specified by an
+ * identifier followed by a colon. Not a &quot;case label&quot; (CASE followed by a
+ * constant expression then colon, used in switch statements), and not the
+ * &quot;default&quot; label (also used in switch statements).
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Note: Entities can have no name. It is OK if two distinct entities have no
+ * name; they are not the same entity. It is as if each is given a new name
+ * distinct from all other names.
+ * &lt;/p&gt;
+ */
+public interface Scope {
+
+	/**
+	 * These are the four different kinds of scopes.
+	 */
+<span class="nc" id="L76">	public enum ScopeKind {</span>
+<span class="nc" id="L77">		/**</span>
+		 * File scope. This is the root scope.
+		 */
+<span class="nc" id="L80">		FILE,</span>
+<span class="nc" id="L81">		/**</span>
+		 * A block scope.
+		 */
+<span class="nc" id="L84">		BLOCK,</span>
+<span class="nc" id="L85">		/**</span>
+		 * A function scope.
+		 */
+<span class="nc" id="L88">		FUNCTION,</span>
+<span class="nc" id="L89">		/**</span>
+		 * A function prototype scope.
+		 */
+<span class="nc" id="L92">		FUNCTION_PROTOTYPE,</span>
+<span class="nc" id="L93">		/**</span>
+		 * The scope for a CIVL-C contract. The contract scope contains the
+		 * scope of the function signature and body.
+		 */
+<span class="nc" id="L97">		CONTRACT</span>
+	};
+
+	// information about this scope in the scope tree...
+
+	/**
+	 * Returns the kind of scope this is.
+	 * 
+	 * @return the scope kind
+	 * */
+	ScopeKind getScopeKind();
+
+	/**
+	 * Returns the ID number of this scope, unique among the scope of its
+	 * translation unit.
+	 * 
+	 * @return the scope ID
+	 */
+	int getId();
+
+	/**
+	 * Sets the ID number of this scope, which should be unique among the ID
+	 * numbers of the scopes of its translation unit.
+	 * 
+	 * @param id
+	 *            value to which ID number will be set
+	 */
+	void setId(int id);
+
+	/**
+	 * Returns the AST to which this scope belongs.
+	 * 
+	 * @return the AST to which this scope belongs
+	 * */
+	AST getAST();
+
+	/**
+	 * The parent scope, i.e., the scope directly containing this one. Null if
+	 * this is the root scope.
+	 * 
+	 * @return the parent scope
+	 */
+	Scope getParentScope();
+
+	/**
+	 * The number of children of this scope in the scope tree.
+	 * 
+	 * @return the number of children scopes of this scope
+	 */
+	int getNumChildrenScopes();
+
+	/**
+	 * Returns the child scope of this scope, indexed from 0.
+	 * 
+	 * @param index
+	 *            integer between 0 and numChildrenScope-1, inclusive
+	 * @return child scope number index
+	 * @exception IllegalArgumentException
+	 *                if index is out of bounds
+	 */
+	Scope getChildScope(int index);
+
+	/**
+	 * Returns an iterator over the children scope of this scope.
+	 * 
+	 * @return an iterator over all children scopes
+	 */
+	Iterator&lt;Scope&gt; getChildrenScopes();
+
+	/**
+	 * Returns the depth of this scope as a node in the scope tree. The FILE
+	 * scope has depth 0. Its immediate children have depth 1. Etc.
+	 * 
+	 * @return depth of this scope as node in scope tree
+	 */
+	int getScopeDepth();
+
+	// Ordinary entities...
+
+	/**
+	 * Gets the set of all ordinary entities declared in this scope, represented
+	 * as an iterable object.
+	 * 
+	 * @return iterable over all ordinary entities declared in this scope
+	 */
+	Iterable&lt;OrdinaryEntity&gt; getOrdinaryEntities();
+
+	/**
+	 * Adds an ordinary entity to this scope's collection of entities.
+	 * 
+	 * @param entity
+	 *            an ordinary entity to be added to this scope
+	 * @return the number of ordinary entities beloning to this scope before the
+	 *         new one was added; this number becomes the index of the ordinary
+	 *         entity
+	 * @throws UnsourcedException
+	 *             if the entity cannot be added to this scope for some reason,
+	 *             for example, because there is already an ordinary entity with
+	 *             that name in this scope
+	 */
+	int add(OrdinaryEntity entity) throws UnsourcedException;
+
+	/**
+	 * Gets the ordinary entity (variable/function/enumeration constant/typedef)
+	 * in this scope with the given name, or &lt;code&gt;null&lt;/code&gt; if there is not
+	 * one. This does not look in ancestor or descendant scopes.
+	 * 
+	 * @param isType
+	 *            true iff this is to get an entity of typedef; if false then
+	 *            the first entity from the bottom of the scope is returned,
+	 *            regardless of whether it is typedef or not
+	 * @param name
+	 *            the name of the ordinary entity
+	 * @return the ordinary entity in this scope with that name or
+	 *         &lt;code&gt;null&lt;/code&gt; if none exists
+	 */
+	OrdinaryEntity getOrdinaryEntity(boolean isType, String name);
+
+	/**
+	 * Performs search for ordinary entity with given name using lexical
+	 * scoping: if entity is not found in this scope, search the parent scope,
+	 * etc. Returns first occurrence of ordinary entity with this name,
+	 * searching in that order. If not found all the way up the scopes, returns
+	 * &lt;code&gt;null&lt;/code&gt;.
+	 * 
+	 * @param isType
+	 *            true iff this is to get an entity of typedef; if false then
+	 *            the first entity from the bottom of the scope is returned,
+	 *            regardless of whether it is typedef or not
+	 * @param name
+	 *            name of the entity
+	 * @return the first ordinary entity encountered with given name looking up
+	 *         the scope tree, or &lt;code&gt;null&lt;/code&gt;
+	 */
+	OrdinaryEntity getLexicalOrdinaryEntity(boolean isType, String name);
+
+	/**
+	 * Returns the number of variables declared in this scope. The set of
+	 * variables is a subset of the set of entities. Variables include global
+	 * variables, local variables declared in any block scope, including formal
+	 * parameters to a function. They do not include members of structures or
+	 * unions (aka &quot;fields&quot;). They do not include enumeration constants.
+	 * 
+	 * Note this does not include variables in ancestors or descendants of this
+	 * scope.
+	 * 
+	 * @return the number of variables declared in this scope
+	 */
+	int getNumVariables();
+
+	/**
+	 * 
+	 * The variables in this scope are assigned variable ID numbers 0, 1, 2,
+	 * ..., at completion time. This method returns the variable with the given
+	 * ID. Note that the variable ID is not necessarily the same as the entity
+	 * ID.
+	 * 
+	 * @return the index-th variable in this scope, indexed from 0
+	 */
+	Variable getVariable(int index);
+
+	/**
+	 * Returns an iterator over the variables in this scope, in order of
+	 * increasing variable ID.
+	 * 
+	 * @return an iterable over the variables in this scope.
+	 */
+	Iterable&lt;Variable&gt; getVariables();
+
+	/**
+	 * Returns the number of functions in this scope. Note this does not include
+	 * functions in ancestors of this scope. The functions are of course a
+	 * subset of the set of Entities.
+	 * 
+	 * @return the number of functions in this scope
+	 */
+	int getNumFunctions();
+
+	/**
+	 * The functions in this scope are assigned ID numbers 0, 1, 2, ..., at
+	 * completion time. This method returns the function with the given index.
+	 * 
+	 * @return the index-th function in this scope, counting from 0
+	 */
+	Function getFunction(int index);
+
+	/**
+	 * Returns an iterator over the functions defined in this scope, in order of
+	 * increasing function index.
+	 * 
+	 * @return iterator over functions in this scope
+	 */
+	Iterable&lt;Function&gt; getFunctions();
+
+	// Tagged entities (enumerations, structures, and unions)...
+
+	/**
+	 * Gets the set of all tagged entities declared in this scope, represented
+	 * as an iterable object.
+	 * 
+	 * @return iterable over all tagged entities declared in this scope
+	 */
+	Iterable&lt;TaggedEntity&gt; getTaggedEntities();
+
+	/**
+	 * Adds a tagged entity (an enumeration, structure, or union) to this scope.
+	 * Tagged entities occupy a separate name space from ordinary entities.
+	 * 
+	 * @param entity
+	 *            a tagged entity
+	 * @return the number of tagged entities belonging to this scope before the
+	 *         new one was added; this number is the index of the newly added
+	 *         tagged entity in the tagged entity list
+	 * @throws SyntaxException
+	 *             if the entity cannot be added to this scope for some reason,
+	 *             for example, because there is already a tagged entity with
+	 *             the same name in this scope
+	 */
+	int add(TaggedEntity entity) throws SyntaxException;
+
+	/**
+	 * &lt;p&gt;
+	 * Gets the tagged entity (struct/union/enumeration) in this scope with the
+	 * given tag, or null if there is not one. This does not look in parent or
+	 * descendant scopes.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Once you get the tagged entity, you can get its member entities
+	 * (enumeration constants or fields). Those member entities are also part of
+	 * this scope. The enumeration constants share the same name space as
+	 * ordinary identifiers in this scope, but the fields are in their own
+	 * entity-specific namespace.
+	 * &lt;/p&gt;
+	 * 
+	 * @param tag
+	 *            the tag
+	 * @return the tagged entity in this scope with that name or null if none
+	 *         exists
+	 */
+	TaggedEntity getTaggedEntity(String tag);
+
+	/**
+	 * Performs search for struct/union/enumeration entity with given tag using
+	 * lexical scoping: if entity is not found in this scope, search the parent
+	 * scope, etc. Returns first occurrence of entity with this tag, searching
+	 * in that order. If not found in any ancestor, returns &lt;code&gt;null&lt;/code&gt;.
+	 * 
+	 * @return the first tagged entity encountered with the given tag, lookin up
+	 *         the scope tree
+	 */
+	TaggedEntity getLexicalTaggedEntity(String tag);
+
+	// Labels...
+
+	/**
+	 * Adds the given label to the list of labels occurring in this scope.
+	 * 
+	 * @param label
+	 *            a label
+	 * @return the number of labels belonging to this scope before the new one
+	 *         was added; this is the index of the new label in the list of
+	 *         labels
+	 * @throws UnsourcedException
+	 *             if the label cannot be added for some reasons, for example,
+	 *             because there is already a label with the same name
+	 */
+	int add(Label label) throws UnsourcedException;
+
+	/**
+	 * Does the given label already belong to this scope?
+	 * 
+	 * @param label
+	 *            a label
+	 * @return &lt;code&gt;true&lt;/code&gt; iff the list of labels belonging to this scope
+	 *         contains the given label
+	 */
+	boolean contains(Label label);
+
+	/**
+	 * Gets the label declared in this scope with the given name. Labels only
+	 * exist in a FUNCTION scope. A Label is an entity.
+	 * 
+	 * @param name
+	 *            the label name
+	 * @return the label in this scope with that name or &lt;code&gt;null&lt;/code&gt; if
+	 *         none exists
+	 */
+	Label getLabel(String name);
+
+	/**
+	 * Finds the label with the given name in this or any ancestor scope.
+	 * 
+	 * @param name
+	 *            label name
+	 * @return label with name or null
+	 */
+	Label getLexicalLabel(String name);
+
+	/**
+	 * Returns iterator over all (standard) labels declared in this scope.
+	 * 
+	 * @return iterator over all standard labels declared in this scope
+	 */
+	Iterator&lt;Label&gt; getLabels();
+
+	/**
+	 * Returns the number of (standard) labels declared in this scope.
+	 * 
+	 * @return number of labels in this scope
+	 */
+	int getNumLabels();
+
+	/**
+	 * Gets the label with the given label ID.
+	 * 
+	 * @param labelId
+	 *            the label's id
+	 * @return the label with the given id
+	 * @exception IllegalArgumentException
+	 *                if the labelId is less than 0 or greater than or equal to
+	 *                the number of labels in this scope
+	 */
+	Label getLabel(int labelId);
+
+	/**
+	 * Prints complete description of this scope, with each line preceded by the
+	 * string prefix.
+	 * 
+	 * @param prefix
+	 *            any string
+	 * @param out
+	 *            PrintStream to which output is directed
+	 */
+	void print(String prefix, PrintStream out);
+
+	/**
+	 * Prints complete description of this scope.
+	 * 
+	 * @param out
+	 *            PrintStream to which output is directed
+	 */
+	void print(PrintStream out);
+
+	/**
+	 * Determines whether this scope is equal to or a descendant of the given
+	 * scope. This mean either this == that or the parent of this is a
+	 * descendant of that.
+	 * 
+	 * @param that
+	 *            another scope, not null
+	 * @return true iff this scope is a descendant (or equal to) that scope
+	 */
+	boolean isDescendantOf(Scope that);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

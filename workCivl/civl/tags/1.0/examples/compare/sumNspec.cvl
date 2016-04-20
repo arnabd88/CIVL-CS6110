@@ -1,0 +1,11 @@
+#include<civlc.cvh>
+$input int N;
+$output int sum;
+
+void main() {
+  int localsum = 0;
+  for (int i = 1; i <= N; i++) {
+	  localsum+=i;
+  } 
+  sum = localsum;
+}

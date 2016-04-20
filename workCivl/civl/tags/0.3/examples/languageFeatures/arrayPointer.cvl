@@ -1,0 +1,12 @@
+#include<civlc.h>
+
+void foo(int* array) {
+  array[0] = 2;
+}
+
+void main() {
+  int a[1];
+  
+  foo(a);
+  $assert a[0] == 2;
+}

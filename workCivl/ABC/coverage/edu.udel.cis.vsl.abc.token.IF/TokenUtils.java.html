@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TokenUtils.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.IF</a> &gt; <span class="el_source">TokenUtils.java</span></div><h1>TokenUtils.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.token.IF;
+
+import java.io.File;
+
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonToken;
+import org.antlr.runtime.Token;
+import org.antlr.runtime.TokenSource;
+
+/**
+ * Utility class providing static methods dealing with Token objects.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc" id="L16">public class TokenUtils {</span>
+
+<span class="nc" id="L18">	public final static Token eofToken = new CommonToken(Token.EOF);</span>
+
+	/**
+	 * The maximum number of tokens that will be printed when summarizing a
+	 * range of tokens. If the number of tokens exceeds this bound, the ellipsis
+	 * will be used in the summary.
+	 */
+<span class="nc" id="L25">	public final static int summaryBound = 10;</span>
+
+	/**
+	 * A utility function to extract the filename, line number, and character
+	 * index of a token of any type, and return a string representation of this
+	 * in a consistent way.
+	 * 
+	 * @param token
+	 *            any instance of Token
+	 * @param abbreviated
+	 *            true iff the resulting file name a the shorter one (f1, f2,
+	 *            ...) instead of the original one.
+	 * @return string explaining where the token came from
+	 */
+	public static String location(Token token, boolean abbreviated) {
+<span class="nc" id="L40">		String filename = getShortFilename(token, abbreviated);</span>
+<span class="nc" id="L41">		int line = token.getLine();</span>
+<span class="nc" id="L42">		int pos = token.getCharPositionInLine();</span>
+
+<span class="nc" id="L44">		return filename + &quot; &quot; + line + &quot;.&quot; + pos;</span>
+	}
+
+	/**
+	 * Computes a short version of the file name from a token's source file.
+	 * 
+	 * @param token
+	 *            a token
+	 * @param abbreviated
+	 *            true iff the result is an abbreviated file name, i.e., shorter
+	 *            file name, which is calculated by the static hash map.
+	 * @return the short file name
+	 */
+	public static String getShortFilename(Token token, boolean abbreviated) {
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (token instanceof CivlcToken) {</span>
+<span class="nc" id="L59">			CivlcToken ppToken = (CivlcToken) token;</span>
+<span class="nc" id="L60">			SourceFile file = ppToken.getSourceFile();</span>
+
+<span class="nc bnc" id="L62" title="All 2 branches missed.">			if (abbreviated)</span>
+<span class="nc" id="L63">				return file.getIndexName();</span>
+			else
+<span class="nc" id="L65">				return file.getName();</span>
+		} else {
+<span class="nc" id="L67">			CharStream stream = token.getInputStream();</span>
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">			if (stream == null)</span>
+<span class="nc" id="L70">				return &quot;&lt;unknown file&gt;&quot;;</span>
+			else {
+<span class="nc" id="L72">				String filename = stream.getSourceName();</span>
+<span class="nc" id="L73">				int separatorIndex = filename</span>
+<span class="nc" id="L74">						.lastIndexOf(File.pathSeparatorChar);</span>
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">				if (separatorIndex &gt;= 0</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">						&amp;&amp; separatorIndex &lt; filename.length() - 1)</span>
+<span class="nc" id="L78">					filename = filename.substring(separatorIndex + 1);</span>
+<span class="nc" id="L79">				return filename;</span>
+			}
+		}
+	}
+
+	public static String summarizeRangeLocation(CivlcToken first, CivlcToken last,
+			boolean abbreviated) {
+		String result;
+<span class="nc" id="L87">		String filename1 = getShortFilename(first, abbreviated);</span>
+<span class="nc" id="L88">		String filename2 = getShortFilename(last, abbreviated);</span>
+<span class="nc" id="L89">		int line1 = first.getLine();</span>
+<span class="nc" id="L90">		int pos1 = first.getCharPositionInLine();</span>
+		String endPosition;
+		int line2, pos2;
+<span class="nc" id="L93">		CivlcToken next = last.getNext();</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (next != null) {</span>
+<span class="nc" id="L96">			int line3 = next.getLine();</span>
+<span class="nc" id="L97">			int pos3 = next.getCharPositionInLine();</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (pos3 == 0) {</span>
+<span class="nc" id="L100">				line2 = line3 - 1;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">				if (line2 == last.getLine()) {</span>
+<span class="nc" id="L102">					pos2 = last.getCharPositionInLine()</span>
+<span class="nc" id="L103">							+ last.getText().length();</span>
+<span class="nc" id="L104">				} else {</span>
+<span class="nc" id="L105">					pos2 = -1;</span>
+				}
+<span class="nc" id="L107">			} else {</span>
+<span class="nc" id="L108">				line2 = line3;</span>
+<span class="nc" id="L109">				pos2 = pos3;</span>
+			}
+<span class="nc" id="L111">		} else {</span>
+<span class="nc" id="L112">			line2 = last.getLine();</span>
+<span class="nc" id="L113">			pos2 = last.getCharPositionInLine() + last.getText().length();</span>
+		}
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (pos2 &gt;= 0) {</span>
+<span class="nc" id="L116">			endPosition = line2 + &quot;.&quot; + pos2;</span>
+<span class="nc" id="L117">		} else {</span>
+<span class="nc" id="L118">			endPosition = line2 + &quot;.EOL&quot;;</span>
+		}
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (filename1.equals(filename2)) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (line1 == line2) {</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">				if (pos1 == pos2)</span>
+<span class="nc" id="L123">					result = filename1 + &quot;:&quot; + line1 + &quot;.&quot; + pos1;</span>
+				else
+<span class="nc" id="L125">					result = filename1 + &quot;:&quot; + line1 + &quot;.&quot; + pos1 + &quot;-&quot; + pos2;</span>
+<span class="nc" id="L126">			} else {</span>
+<span class="nc" id="L127">				result = filename1 + &quot;:&quot; + line1 + &quot;.&quot; + pos1 + &quot;-&quot;</span>
+<span class="nc" id="L128">						+ endPosition;</span>
+			}
+<span class="nc" id="L130">		} else {</span>
+<span class="nc" id="L131">			result = filename1 + &quot;:&quot; + line1 + &quot;.&quot; + pos1 + &quot;-&quot; + filename2</span>
+<span class="nc" id="L132">					+ &quot;:&quot; + endPosition;</span>
+		}
+<span class="nc" id="L134">		return result;</span>
+	}
+
+	public static String summarizeRange(CivlcToken first, CivlcToken last,
+			boolean abbreviated) {
+<span class="nc" id="L139">		String result = summarizeRangeLocation(first, last, abbreviated);</span>
+<span class="nc" id="L140">		String excerpt = &quot;&quot;;</span>
+<span class="nc" id="L141">		int tokenCount = 0;</span>
+<span class="nc" id="L142">		CivlcToken token = first;</span>
+
+<span class="nc bnc" id="L144" title="All 6 branches missed.">		while (token != null &amp;&amp; token != last &amp;&amp; tokenCount &lt; summaryBound - 1) {</span>
+<span class="nc" id="L145">			excerpt += token.getText();</span>
+<span class="nc" id="L146">			token = token.getNext();</span>
+<span class="nc" id="L147">			tokenCount++;</span>
+		}
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (token != null) {</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (token != last)</span>
+<span class="nc" id="L151">				excerpt += &quot; ... &quot;;</span>
+<span class="nc" id="L152">			excerpt += last.getText();</span>
+		}
+<span class="nc" id="L154">		excerpt = quoteText(excerpt);</span>
+<span class="nc" id="L155">		result = result + &quot; &quot; + excerpt;</span>
+		{ // experimental
+<span class="nc" id="L157">			Formation formation = first.getFormation();</span>
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (formation != null)</span>
+<span class="nc" id="L160">				result += formation.suffix();</span>
+		}
+<span class="nc" id="L162">		return result;</span>
+	}
+	
+	public static String contentOfRange(CivlcToken first, CivlcToken last,
+			boolean abbreviated) {
+<span class="nc" id="L167">		String result = summarizeRangeLocation(first, last, abbreviated);</span>
+<span class="nc" id="L168">		String excerpt = &quot;&quot;;</span>
+//		int tokenCount = 0;
+<span class="nc" id="L170">		CivlcToken token = first;</span>
+
+<span class="nc bnc" id="L172" title="All 4 branches missed.">		while (token != null &amp;&amp; token != last) {</span>
+<span class="nc" id="L173">			excerpt += token.getText();</span>
+<span class="nc" id="L174">			token = token.getNext();</span>
+//			tokenCount++;
+		}
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (token != null) {</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (token != last)</span>
+<span class="nc" id="L179">				excerpt += &quot; ... &quot;;</span>
+<span class="nc" id="L180">			excerpt += last.getText();</span>
+		}
+<span class="nc" id="L182">		excerpt = quoteText(excerpt);</span>
+<span class="nc" id="L183">		result = result + &quot; &quot; + excerpt;</span>
+		{ // experimental
+<span class="nc" id="L185">			Formation formation = first.getFormation();</span>
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			if (formation != null)</span>
+<span class="nc" id="L188">				result += formation.suffix();</span>
+		}
+<span class="nc" id="L190">		return result;</span>
+	}
+
+	/**
+	 * A utility function to return the text of a token surrounded by double
+	 * quotes, with newlines, returns and tabs replaced by escape sequences.
+	 * 
+	 * @param token
+	 *            any instance of Token
+	 * @return the text of the token, nicely formatted, in quotes
+	 */
+	public static String quotedText(Token token) {
+<span class="nc" id="L202">		String txt = token.getText();</span>
+
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (txt != null)</span>
+<span class="nc" id="L205">			return quoteText(txt);</span>
+<span class="nc" id="L206">		return &quot;&lt;no text&gt;&quot;;</span>
+	}
+
+	private static String quoteText(String text) {
+<span class="nc" id="L210">		String txt = text.replaceAll(&quot;\n&quot;, &quot;\\\\n&quot;);</span>
+
+<span class="nc" id="L212">		txt = txt.replaceAll(&quot;\r&quot;, &quot;\\\\r&quot;);</span>
+<span class="nc" id="L213">		txt = txt.replaceAll(&quot;\t&quot;, &quot;\\\\t&quot;);</span>
+<span class="nc" id="L214">		return &quot;\&quot;&quot; + txt + &quot;\&quot;&quot;;</span>
+	}
+
+	public static TokenSource makeTokenSourceFromList(CivlcToken first) {
+<span class="nc" id="L218">		return new ListTokenSource(first);</span>
+	}
+
+}
+
+/**
+ * A simple TokenSource formed from a linked list of PreprocessorTokens, given
+ * the first element in the list. The token source appends an infinite number of
+ * invalid tokens???? after the last token in the list.
+ * 
+ * @author siegel
+ * 
+ */
+class ListTokenSource implements TokenSource {
+
+	private CivlcToken current;
+
+<span class="nc" id="L235">	ListTokenSource(CivlcToken first) {</span>
+<span class="nc" id="L236">		this.current = first;</span>
+<span class="nc" id="L237">	}</span>
+
+	@Override
+	public Token nextToken() {
+<span class="nc" id="L241">		Token result = current;</span>
+
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L244">			result = TokenUtils.eofToken;</span>
+
+		else
+<span class="nc" id="L247">			current = current.getNext();</span>
+<span class="nc" id="L248">		return result;</span>
+	}
+
+	@Override
+	public String getSourceName() {
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		if (current == null)</span>
+<span class="nc" id="L254">			return &quot;unknown&quot;;</span>
+
+<span class="nc" id="L256">		CharStream stream = current.getInputStream();</span>
+
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (stream == null)</span>
+<span class="nc" id="L259">			return &quot;unknown&quot;;</span>
+
+<span class="nc" id="L261">		String name = stream.getSourceName();</span>
+
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (name == null)</span>
+<span class="nc" id="L264">			return &quot;unknown&quot;;</span>
+
+<span class="nc" id="L266">		return name;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

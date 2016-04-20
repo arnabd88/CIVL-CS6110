@@ -1,0 +1,34 @@
+#include <civlc.h>
+#include <stdio.h>
+
+void main(){
+  double * p1d;
+  double ** p2d;
+  double a1d[10];
+  double a2d[10][10];
+
+  p1d = (double *)$malloc($root, sizeof(double) * 10);
+  p2d = (double **)$malloc($root, sizeof(double *) * 10);
+  for(int i=0; i<10; i++){
+    a1d[i] = i;
+    p2d[i] = (double *)$malloc($root, sizeof(double) * 10);
+    for(int j=0; j<10; j++){
+      a2d[i][j] = i * 10 + j;
+      p2d[i][j] = i * 10 + j;
+    }
+  }
+
+  /* access array */
+  printf("*(a1d + 5) = %.4f\n", *(a1d + 5));
+  printf("*(a1d + 9) = %.4f\n", *(a1d + 9));
+  printf("*(*(a2d + 5) + 5) = %.4f\n", *(*(a2d + 5) + 5));
+  printf("*(&a2d[0][0] + 10) = %.4f\n", *(&a2d[0][0] + 10));
+  printf("*(&a2d[0][0] + 99) = %.4f\n", *(&a2d[0][0] + 99));
+
+  /* access malloced pointer */
+  printf("*(p1d + 5) = %.4f\n", *(p1d + 5));
+  printf("*(p1d + 9) = %.4f\n", *(p1d + 9));
+  printf("*(*(p2d + 5) + 5) = %.4f\n", *(*(p2d + 5) + 5));
+  printf("*(&p2d[0][0] + 10) = %.4f\n", *(&p2d[0][0] + 10));
+  printf("*(*p2d + 9) = %.4f\n", *(*p2d + 9));
+}

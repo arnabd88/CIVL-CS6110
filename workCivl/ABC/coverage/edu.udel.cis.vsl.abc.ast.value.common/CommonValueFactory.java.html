@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonValueFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.value.common</a> &gt; <span class="el_source">CommonValueFactory.java</span></div><h1>CommonValueFactory.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.value.common;
+
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity.EntityKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Variable;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.AlignOfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ArrowNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CastNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CharacterConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CompoundLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DotNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.EnumerationConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeofNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StringLiteralNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Enumerator;
+import edu.udel.cis.vsl.abc.ast.type.IF.Field;
+import edu.udel.cis.vsl.abc.ast.type.IF.FloatingType;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.PointerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType.SignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType.UnsignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.value.IF.AddressValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.ArrayElementReference;
+import edu.udel.cis.vsl.abc.ast.value.IF.ArrayValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.CastValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.CharacterValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.ComplexValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.FunctionReference;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.MemberReference;
+import edu.udel.cis.vsl.abc.ast.value.IF.OperatorValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.RealFloatingValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.StringValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.StructureValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.TypeValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.TypeValue.TypeValueKind;
+import edu.udel.cis.vsl.abc.ast.value.IF.UnionValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+import edu.udel.cis.vsl.abc.ast.value.IF.ValueFactory;
+import edu.udel.cis.vsl.abc.ast.value.IF.VariableReference;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.config.IF.Configuration.Architecture;
+import edu.udel.cis.vsl.abc.token.IF.ExecutionCharacter;
+import edu.udel.cis.vsl.abc.token.IF.StringLiteral;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+/**
+ * Flyweight pattern is used for those values which are immutable. Compound
+ * values are mutable.
+ * 
+ * @author siegel
+ * 
+ */
+public class CommonValueFactory implements ValueFactory {
+
+	// Fields...
+
+	private TypeFactory typeFactory;
+
+<span class="fc" id="L83">	private Map&lt;Value, Value&gt; valueMap = new HashMap&lt;Value, Value&gt;();</span>
+
+	private StandardSignedIntegerType SINT;
+
+	private IntegerType CHAR;
+
+<span class="fc" id="L89">	private BigInteger MAX_JINT = new BigInteger(</span>
+<span class="fc" id="L90">			Integer.toString(Integer.MAX_VALUE));</span>
+
+	private Value SINT_ONE, SINT_ZERO;
+
+	private Configuration configuration;
+
+	// Constructors...
+
+<span class="fc" id="L98">	public CommonValueFactory(Configuration configuration,</span>
+			TypeFactory typeFactory) {
+<span class="fc" id="L100">		this.typeFactory = typeFactory;</span>
+<span class="fc" id="L101">		SINT = typeFactory.signedIntegerType(SignedIntKind.INT);</span>
+<span class="fc" id="L102">		CHAR = (IntegerType) typeFactory.basicType(BasicTypeKind.CHAR);</span>
+<span class="fc" id="L103">		SINT_ONE = integerValue(SINT, 1);</span>
+<span class="fc" id="L104">		SINT_ZERO = integerValue(SINT, 0);</span>
+<span class="fc" id="L105">		this.configuration = configuration;</span>
+<span class="fc" id="L106">	}</span>
+
+	// Exported methods...
+
+	@Override
+	public Value evaluate(ExpressionNode expr) throws SyntaxException {
+		try {
+<span class="nc" id="L113">			return evaluateHelper(expr);</span>
+<span class="nc" id="L114">		} catch (UnsourcedException err) {</span>
+<span class="nc" id="L115">			throw error(err, expr);</span>
+		}
+	}
+
+	/**
+	 * Evaluates a constant expression.
+	 * 
+	 * Should apply conversions to result.
+	 * 
+	 * @param expr
+	 * @return
+	 * @throws SyntaxException
+	 * @throws UnsourcedException
+	 *             if expr is not a constant expression
+	 */
+	private Value evaluateHelper(ExpressionNode expr) throws SyntaxException,
+			UnsourcedException {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (expr instanceof AlignOfNode) {</span>
+<span class="nc" id="L133">			return alignofValue(((AlignOfNode) expr).getArgument().getType());</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		} else if (expr instanceof ArrowNode) {</span>
+<span class="nc" id="L135">			ArrowNode arrowNode = (ArrowNode) expr;</span>
+<span class="nc" id="L136">			ExpressionNode structOrUnionPointer = arrowNode</span>
+<span class="nc" id="L137">					.getStructurePointer();</span>
+<span class="nc" id="L138">			IdentifierNode fieldIdentifier = arrowNode.getFieldName();</span>
+<span class="nc" id="L139">			Field field = (Field) fieldIdentifier.getEntity();</span>
+<span class="nc" id="L140">			Value structOrUnionValue = evaluateDereference(structOrUnionPointer);</span>
+
+<span class="nc" id="L142">			return evaluateMemberAccess(structOrUnionValue, field);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		} else if (expr instanceof CastNode) {</span>
+<span class="nc" id="L144">			CastNode castNode = (CastNode) expr;</span>
+
+<span class="nc" id="L146">			return evaluateCast(castNode.getCastType().getType(),</span>
+<span class="nc" id="L147">					evaluate(castNode.getArgument()));</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		} else if (expr instanceof CharacterConstantNode) {</span>
+<span class="nc" id="L149">			return ((CharacterConstantNode) expr).getConstantValue();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		} else if (expr instanceof CompoundLiteralNode) {</span>
+<span class="nc" id="L151">			return evaluateCompoundLiteral((CompoundLiteralNode) expr);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		} else if (expr instanceof ConstantNode) {</span>
+<span class="nc" id="L153">			return ((ConstantNode) expr).getConstantValue();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		} else if (expr instanceof DotNode) {</span>
+<span class="nc" id="L155">			DotNode dotNode = (DotNode) expr;</span>
+<span class="nc" id="L156">			ExpressionNode structOrUnion = dotNode.getStructure();</span>
+<span class="nc" id="L157">			IdentifierNode fieldIdentifier = dotNode.getFieldName();</span>
+<span class="nc" id="L158">			Field field = (Field) fieldIdentifier.getEntity();</span>
+<span class="nc" id="L159">			Value structOrUnionValue = evaluate(structOrUnion);</span>
+
+<span class="nc" id="L161">			return evaluateMemberAccess(structOrUnionValue, field);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		} else if (expr instanceof OperatorNode) {</span>
+<span class="nc" id="L163">			OperatorNode opNode = (OperatorNode) expr;</span>
+<span class="nc" id="L164">			Operator operator = opNode.getOperator();</span>
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			if (operator == Operator.ADDRESSOF)</span>
+<span class="nc" id="L167">				return addressValue(opNode.getArgument(0));</span>
+			else { // evaluate arguments and call apply
+<span class="nc" id="L169">				int numArgs = opNode.getNumberOfArguments();</span>
+<span class="nc" id="L170">				Value[] argValues = new Value[numArgs];</span>
+<span class="nc" id="L171">				Type type = expr.getInitialType();</span>
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">				for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L174">					ExpressionNode arg = opNode.getArgument(i);</span>
+<span class="nc" id="L175">					Value argValue = evaluate(arg);</span>
+
+<span class="nc" id="L177">					argValues[i] = applyConversions(arg, argValue);</span>
+				}
+<span class="nc" id="L179">				return apply(type, operator, argValues);</span>
+			}
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		} else if (expr instanceof SizeofNode) {</span>
+<span class="nc" id="L182">			return sizeofValue((((SizeofNode) expr).getArgument()).getType());</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		} else if (expr instanceof StringLiteralNode) {</span>
+<span class="nc" id="L184">			return ((StringLiteralNode) expr).getConstantValue();</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		} else if (expr instanceof EnumerationConstantNode) {</span>
+<span class="nc" id="L186">			IdentifierNode identNode = ((EnumerationConstantNode) expr)</span>
+<span class="nc" id="L187">					.getName();</span>
+<span class="nc" id="L188">			Entity entity = identNode.getEntity();</span>
+
+<span class="nc bnc" id="L190" title="All 2 branches missed.">			if (entity.getEntityKind() == EntityKind.ENUMERATOR) {</span>
+<span class="nc" id="L191">				return ((Enumerator) entity).getValue();</span>
+			}
+<span class="nc" id="L193">			return null;</span>
+		}
+<span class="nc" id="L195">		return null;</span>
+	}
+
+	@Override
+	public IntegerValue plusOne(IntegerValue value) {
+<span class="nc" id="L200">		return integerValue(value.getType(),</span>
+<span class="nc" id="L201">				value.getIntegerValue().add(BigInteger.ONE));</span>
+	}
+
+	@Override
+	public AddressValue addressValue(ExpressionNode lhs) throws SyntaxException {
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (lhs instanceof IdentifierExpressionNode) {</span>
+<span class="nc" id="L207">			Entity entity = ((IdentifierExpressionNode) lhs).getIdentifier()</span>
+<span class="nc" id="L208">					.getEntity();</span>
+<span class="nc" id="L209">			EntityKind kind = entity.getEntityKind();</span>
+
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (kind == EntityKind.VARIABLE) {</span>
+<span class="nc" id="L212">				return variableReference((Variable) entity);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">			} else if (kind == EntityKind.FUNCTION) {</span>
+<span class="nc" id="L214">				return functionReference((Function) entity);</span>
+			} else {
+<span class="nc" id="L216">				throw error(&quot;Operand of &amp; not variable or function identifier&quot;,</span>
+<span class="nc" id="L217">						lhs);</span>
+			}
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		} else if (lhs instanceof DotNode) {</span>
+<span class="nc" id="L220">			AddressValue structureOrUnionReference = addressValue(((DotNode) lhs)</span>
+<span class="nc" id="L221">					.getStructure());</span>
+<span class="nc" id="L222">			Field field = (Field) ((DotNode) lhs).getFieldName().getEntity();</span>
+
+<span class="nc" id="L224">			return memberReference(structureOrUnionReference, field);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		} else if (lhs instanceof OperatorNode) {</span>
+<span class="nc" id="L226">			OperatorNode opNode = (OperatorNode) lhs;</span>
+<span class="nc" id="L227">			Operator operator = ((OperatorNode) lhs).getOperator();</span>
+
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			if (operator == Operator.SUBSCRIPT) {</span>
+<span class="nc" id="L230">				AddressValue arrayReference = addressValue(opNode</span>
+<span class="nc" id="L231">						.getArgument(0));</span>
+<span class="nc" id="L232">				Value index = evaluate(opNode.getArgument(1));</span>
+
+<span class="nc" id="L234">				return arrayElementReference(arrayReference, index);</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">			} else if (operator == Operator.DEREFERENCE) {</span>
+<span class="nc" id="L236">				return (AddressValue) evaluate(opNode.getArgument(0));</span>
+			}
+		}
+<span class="nc" id="L239">		throw error(&quot;Cannot take address of expression&quot;, lhs);</span>
+	}
+
+	@Override
+	public IntegerValue integerValue(IntegerType type, BigInteger integerValue) {
+<span class="fc" id="L244">		return (IntegerValue) canonic(new CommonIntegerValue(type, integerValue));</span>
+	}
+
+	@Override
+	public IntegerValue integerValue(IntegerType type, int intValue) {
+<span class="fc" id="L249">		return integerValue(type, BigInteger.valueOf(intValue));</span>
+	}
+
+	@Override
+	public RealFloatingValue realFloatingValue(FloatingType type, int radix,
+			BigInteger wholePartValue, BigInteger fractionPartValue,
+			int fractionLength, BigInteger exponentValue) {
+<span class="nc" id="L256">		return (RealFloatingValue) canonic(new CommonRealFloatingValue(type,</span>
+<span class="nc" id="L257">				radix, wholePartValue, fractionPartValue, fractionLength,</span>
+<span class="nc" id="L258">				exponentValue));</span>
+	}
+
+	@Override
+	public ComplexValue complexValue(FloatingType type,
+			RealFloatingValue realPart, RealFloatingValue imaginaryPart) {
+<span class="nc" id="L264">		return (ComplexValue) canonic(new CommonComplexValue(type, realPart,</span>
+<span class="nc" id="L265">				imaginaryPart));</span>
+	}
+
+	@Override
+	public Value sizeofValue(Type type) {
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (this.configuration.svcomp()) {</span>
+<span class="nc" id="L271">			int sizeofType = this.sizeofType(type);</span>
+
+<span class="nc bnc" id="L273" title="All 2 branches missed.">			if (sizeofType &gt; 0)</span>
+<span class="nc" id="L274">				return integerValue(</span>
+<span class="nc" id="L275">						(IntegerType) typeFactory.basicType(BasicTypeKind.INT),</span>
+<span class="nc" id="L276">						BigInteger.valueOf(sizeofType));</span>
+
+		}
+<span class="nc" id="L279">		return (TypeValue) canonic(new CommonTypeValue(typeFactory.size_t(),</span>
+<span class="nc" id="L280">				TypeValueKind.SIZEOF, type));</span>
+	}
+
+	/**
+	 * For svcomp, there are two architectures: 32-bit and 64-bit.
+	 * 
+	 * https://wiki.debian.org/ArchitectureSpecificsMemo For 32-bit, uses i386
+	 * in the above link; for 64-bit, amd64.
+	 * 
+	 * short int long long long float double long double void*
+	 * 
+	 * The size of types is factoring out here:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;sizeof(short)=2&lt;/li&gt;
+	 * &lt;li&gt;sizeof(int)=4&lt;/li&gt;
+	 * &lt;li&gt;sizeof(long)=sizeof(void*)&lt;/li&gt;
+	 * &lt;li&gt;sizeof(long long)=8&lt;/li&gt;
+	 * &lt;li&gt;sizeof(float)=4&lt;/li&gt;
+	 * &lt;li&gt;sizeof(double)=8&lt;/li&gt;
+	 * &lt;li&gt;sizeof(void*)=4 if 32-bit; 8 if 64-bit.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @return returns the size (a positive integer) of the given type; or -1 if
+	 *         the size of that type is not specified or can't be decided
+	 *         statically.
+	 */
+	private int sizeofType(Type type) {
+<span class="nc bnc" id="L307" title="All 2 branches missed.">		if (this.configuration.architecture() == Architecture.UNKNOWN)</span>
+<span class="nc" id="L308">			return -1;</span>
+
+<span class="nc" id="L310">		TypeKind typeKind = type.kind();</span>
+
+<span class="nc bnc" id="L312" title="All 5 branches missed.">		switch (typeKind) {</span>
+		case BASIC: {
+<span class="nc" id="L314">			StandardBasicType basicType = (StandardBasicType) type;</span>
+<span class="nc" id="L315">			BasicTypeKind basicKind = basicType.getBasicTypeKind();</span>
+
+<span class="nc bnc" id="L317" title="All 8 branches missed.">			switch (basicKind) {</span>
+			case SIGNED_CHAR:
+			case UNSIGNED_CHAR:
+			case CHAR:
+<span class="nc" id="L321">				return 1;</span>
+			case DOUBLE:
+<span class="nc" id="L323">				return 8;</span>
+			case FLOAT:
+<span class="nc" id="L325">				return 4;</span>
+			case UNSIGNED:
+			case INT:
+<span class="nc" id="L328">				return 4;</span>
+			case UNSIGNED_LONG:
+			case LONG:
+<span class="nc bnc" id="L331" title="All 2 branches missed.">				if (this.configuration.architecture() == Architecture._32_BIT)</span>
+<span class="nc" id="L332">					return 4;</span>
+				else
+<span class="nc" id="L334">					return 8;</span>
+			case UNSIGNED_LONG_LONG:
+			case LONG_LONG:
+<span class="nc" id="L337">				return 8;</span>
+			case UNSIGNED_SHORT:
+			case SHORT:
+<span class="nc" id="L340">				return 2;</span>
+			default:
+<span class="nc" id="L342">				return -1;</span>
+			}
+		}
+		case ARRAY: {
+<span class="nc" id="L346">			ArrayType arrayType = (ArrayType) type;</span>
+<span class="nc" id="L347">			int sizeOfEleType = this.sizeofType(arrayType.getElementType());</span>
+<span class="nc" id="L348">			IntegerValue size = arrayType.getConstantSize();</span>
+
+<span class="nc bnc" id="L350" title="All 4 branches missed.">			if (size == null || sizeOfEleType &lt; 0)</span>
+<span class="nc" id="L351">				return -1;</span>
+<span class="nc" id="L352">			return size.getIntegerValue().intValue() * sizeOfEleType;</span>
+		}
+		case OTHER_INTEGER:
+<span class="nc" id="L355">			return 4;</span>
+		case POINTER: {
+<span class="nc bnc" id="L357" title="All 2 branches missed.">			if (this.configuration.architecture() == Architecture._32_BIT)</span>
+<span class="nc" id="L358">				return 4;</span>
+			else
+<span class="nc" id="L360">				return 8;</span>
+		}
+		default: {
+<span class="nc" id="L363">			return -1;</span>
+		}
+		}
+	}
+
+	@Override
+	public TypeValue alignofValue(Type type) {
+<span class="nc" id="L370">		return (TypeValue) canonic(new CommonTypeValue(typeFactory.size_t(),</span>
+<span class="nc" id="L371">				TypeValueKind.ALIGNOF, type));</span>
+	}
+
+	@Override
+	public CastValue castValue(Type castType, Value argument) {
+<span class="nc" id="L376">		return (CastValue) canonic(new CommonCastValue(castType, argument));</span>
+	}
+
+	@Override
+	public OperatorValue operatorValue(Type type, Operator operator,
+			Value[] arguments) {
+<span class="nc" id="L382">		return (OperatorValue) canonic(new CommonOperatorValue(type, operator,</span>
+<span class="nc" id="L383">				arguments));</span>
+	}
+
+	@Override
+	public StructureValue newStructureValue(StructureOrUnionType type) {
+<span class="nc" id="L388">		return new CommonStructureValue(type);</span>
+	}
+
+	@Override
+	public UnionValue newUnionValue(StructureOrUnionType unionType,
+			Field field, Value memberValue) {
+<span class="nc" id="L394">		return (UnionValue) canonic(new CommonUnionValue(unionType, field,</span>
+<span class="nc" id="L395">				memberValue));</span>
+	}
+
+	@Override
+	public ArrayValue newArrayValue(ArrayType type) {
+<span class="nc" id="L400">		return new CommonArrayValue(type);</span>
+	}
+
+	@Override
+	public Answer isZero(Value value) {
+<span class="nc" id="L405">		return value.isZero();</span>
+	}
+
+	@Override
+	public CharacterValue characterValue(ExecutionCharacter character) {
+		IntegerType type;
+
+<span class="nc bnc" id="L412" title="All 5 branches missed.">		switch (character.getCharacterKind()) {</span>
+		case CHAR:
+<span class="nc" id="L414">			type = CHAR;</span>
+<span class="nc" id="L415">			break;</span>
+		case WCHAR:
+<span class="nc" id="L417">			type = typeFactory.wchar_t();</span>
+<span class="nc" id="L418">			break;</span>
+		case CHAR16:
+<span class="nc" id="L420">			type = typeFactory.char16_t();</span>
+<span class="nc" id="L421">			break;</span>
+		case CHAR32:
+<span class="nc" id="L423">			type = typeFactory.char32_t();</span>
+<span class="nc" id="L424">			break;</span>
+		default:
+<span class="nc" id="L426">			throw new RuntimeException(&quot;unreachable&quot;);</span>
+		}
+<span class="nc" id="L428">		return (CharacterValue) canonic(new CommonCharacterValue(type,</span>
+<span class="nc" id="L429">				character));</span>
+	}
+
+	@Override
+	/**
+	 * Precondition: string literal should already have the \0 appended.
+	 * In particular, it has at least one character.
+	 * 
+	 */
+	public StringValue stringValue(StringLiteral literal) {
+<span class="nc" id="L439">		int length = literal.getNumCharacters();</span>
+<span class="nc" id="L440">		IntegerValue size = integerValue(SINT, length);</span>
+		IntegerType characterType;
+		ArrayType type;
+
+<span class="nc bnc" id="L444" title="All 5 branches missed.">		switch (literal.getStringKind()) {</span>
+		case CHAR:
+		case UTF_8:
+<span class="nc" id="L447">			characterType = CHAR;</span>
+<span class="nc" id="L448">			break;</span>
+		case WCHAR:
+<span class="nc" id="L450">			characterType = typeFactory.wchar_t();</span>
+<span class="nc" id="L451">			break;</span>
+		case CHAR16:
+<span class="nc" id="L453">			characterType = typeFactory.char16_t();</span>
+<span class="nc" id="L454">			break;</span>
+		case CHAR32:
+<span class="nc" id="L456">			characterType = typeFactory.char32_t();</span>
+<span class="nc" id="L457">			break;</span>
+		default:
+<span class="nc" id="L459">			throw new RuntimeException(&quot;unreachable&quot;);</span>
+		}
+<span class="nc" id="L461">		type = typeFactory.arrayType(characterType, size);</span>
+<span class="nc" id="L462">		return (StringValue) canonic(new CommonStringValue(type, literal));</span>
+	}
+
+	public VariableReference variableReference(Variable variable) {
+<span class="nc" id="L466">		PointerType pointerType = typeFactory.pointerType(variable.getType());</span>
+
+<span class="nc" id="L468">		return (VariableReference) canonic(new CommonVariableReference(</span>
+<span class="nc" id="L469">				pointerType, variable));</span>
+	}
+
+	public FunctionReference functionReference(Function function) {
+<span class="nc" id="L473">		PointerType pointerType = typeFactory.pointerType(function.getType());</span>
+
+<span class="nc" id="L475">		return (FunctionReference) canonic(new CommonFunctionReference(</span>
+<span class="nc" id="L476">				pointerType, function));</span>
+	}
+
+	public ArrayElementReference arrayElementReference(
+			AddressValue arrayReference, Value index) {
+<span class="nc" id="L481">		PointerType arrayReferenceType = arrayReference.getType();</span>
+<span class="nc" id="L482">		ArrayType arrayType = (ArrayType) arrayReferenceType.referencedType();</span>
+		// might need to strip qualifiers?
+<span class="nc" id="L484">		ObjectType elementType = arrayType.getElementType();</span>
+<span class="nc" id="L485">		PointerType elementReferenceType = typeFactory.pointerType(elementType);</span>
+
+<span class="nc" id="L487">		return (ArrayElementReference) canonic(new CommonArrayElementReference(</span>
+<span class="nc" id="L488">				elementReferenceType, arrayReference, index));</span>
+	}
+
+	public MemberReference memberReference(
+			AddressValue structureOrUnionReference, Field field) {
+<span class="nc" id="L493">		ObjectType memberType = field.getType();</span>
+<span class="nc" id="L494">		PointerType memberReferenceType = typeFactory.pointerType(memberType);</span>
+
+<span class="nc" id="L496">		return (MemberReference) canonic(new CommonMemberReference(</span>
+<span class="nc" id="L497">				memberReferenceType, structureOrUnionReference, field));</span>
+	}
+
+	// Helper methods.......................................................
+
+	private Value canonic(Value value) {
+<span class="fc" id="L503">		Value result = valueMap.get(value);</span>
+
+<span class="pc bpc" id="L505" title="1 of 2 branches missed.">		if (result == null) {</span>
+<span class="fc" id="L506">			valueMap.put(value, value);</span>
+<span class="fc" id="L507">			return value;</span>
+		}
+<span class="nc" id="L509">		return result;</span>
+	}
+
+	/**
+	 * Given expression e of pointer type, evaluate *e. If e had type
+	 * [qualified] pointer to t, resulting value has type t.
+	 * 
+	 * @param pointerExpression
+	 * @return
+	 */
+	private Value evaluateDereference(ExpressionNode pointerExpression)
+			throws SyntaxException {
+<span class="nc" id="L521">		return null; // how can this happen in a constant expression?</span>
+	}
+
+	private Value evaluateCast(Type castType, Value value)
+			throws UnsourcedException {
+		// TODO: cast concrete numeric types if you can, pointer types, ...
+<span class="nc bnc" id="L527" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L528">			return null;</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">		if (castType.compatibleWith(value.getType()))</span>
+<span class="nc" id="L530">			return value;</span>
+<span class="nc" id="L531">		return canonic(new CommonCastValue(castType, value));</span>
+	}
+
+	private Value evaluateCompoundLiteral(CompoundLiteralNode node) {
+		// TODO
+<span class="nc" id="L536">		return null;</span>
+	}
+
+	private Value evalMinus(Type type, Value arg0) throws UnsourcedException {
+<span class="nc bnc" id="L540" title="All 2 branches missed.">		if (arg0 instanceof IntegerValue) {</span>
+<span class="nc" id="L541">			BigInteger big = ((IntegerValue) arg0).getIntegerValue();</span>
+<span class="nc" id="L542">			BigInteger neg = big.negate();</span>
+<span class="nc" id="L543">			Value result = integerValue((IntegerType) type, neg);</span>
+
+<span class="nc" id="L545">			return result;</span>
+		}
+<span class="nc" id="L547">		throw new UnsourcedException(</span>
+<span class="nc" id="L548">				&quot;Unsupported feature: non-integer negative&quot;);</span>
+	}
+
+	private Value evalBinaryNumericOp(Type type, Operator operator, Value arg0,
+			Value arg1) throws UnsourcedException {
+		Object val0, val1;
+
+<span class="nc bnc" id="L555" title="All 2 branches missed.">		if (arg0 instanceof IntegerValue) {</span>
+<span class="nc" id="L556">			val0 = ((IntegerValue) arg0).getIntegerValue();</span>
+<span class="nc bnc" id="L557" title="All 2 branches missed.">		} else if (arg0 instanceof RealFloatingValue) {</span>
+<span class="nc" id="L558">			val0 = ((RealFloatingValue) arg0).getDoubleValue();</span>
+<span class="nc" id="L559">		} else</span>
+<span class="nc" id="L560">			throw new UnsourcedException(</span>
+<span class="nc" id="L561">					&quot;Expected integer or real constant, not &quot; + arg0);</span>
+<span class="nc bnc" id="L562" title="All 2 branches missed.">		if (arg1 instanceof IntegerValue) {</span>
+<span class="nc" id="L563">			val1 = ((IntegerValue) arg1).getIntegerValue();</span>
+<span class="nc bnc" id="L564" title="All 2 branches missed.">		} else if (arg1 instanceof RealFloatingValue) {</span>
+<span class="nc" id="L565">			val1 = ((RealFloatingValue) arg1).getDoubleValue();</span>
+<span class="nc" id="L566">		} else</span>
+<span class="nc" id="L567">			throw new UnsourcedException(</span>
+<span class="nc" id="L568">					&quot;Expected integer or real constant, not &quot; + arg1);</span>
+<span class="nc bnc" id="L569" title="All 4 branches missed.">		if (val0 instanceof BigInteger &amp;&amp; val1 instanceof BigInteger) {</span>
+<span class="nc" id="L570">			BigInteger big0 = ((BigInteger) val0);</span>
+<span class="nc" id="L571">			BigInteger big1 = ((BigInteger) val1);</span>
+			BigInteger bigVal;
+
+<span class="nc bnc" id="L574" title="All 6 branches missed.">			switch (operator) {</span>
+			case TIMES:
+<span class="nc" id="L576">				bigVal = big0.multiply(big1);</span>
+<span class="nc" id="L577">				break;</span>
+			case PLUS:
+<span class="nc" id="L579">				bigVal = big0.add(big1);</span>
+<span class="nc" id="L580">				break;</span>
+			case MINUS:
+<span class="nc" id="L582">				bigVal = big0.subtract(big1);</span>
+<span class="nc" id="L583">				break;</span>
+			case DIV:
+<span class="nc" id="L585">				bigVal = big0.divide(big1);</span>
+<span class="nc" id="L586">				break;</span>
+			case MOD:
+<span class="nc" id="L588">				bigVal = big0.mod(big1);</span>
+			default:
+<span class="nc" id="L590">				throw new UnsourcedException(&quot;Unexpected operator: &quot; + operator);</span>
+			}
+<span class="nc" id="L592">			return integerValue((IntegerType) type, bigVal);</span>
+		} else {
+<span class="nc" id="L594">			throw new UnsourcedException(&quot;multiplication of floating constants&quot;);</span>
+		}
+
+	}
+
+	/**
+	 * Applies an operator to some arguments to yield a constant expression.
+	 * 
+	 * @param type
+	 * @param operator
+	 * @param args
+	 * @return
+	 * @throws UnsourcedException
+	 *             if result is not a constant expression
+	 */
+	private Value apply(Type type, Operator operator, Value[] args)
+			throws UnsourcedException {
+<span class="nc" id="L611">		int numArgs = args.length;</span>
+
+<span class="nc bnc" id="L613" title="All 5 branches missed.">		switch (operator) {</span>
+		case BITAND: // &amp; bit-wise and
+		case BITCOMPLEMENT: // ~ bit-wise complement
+		case BITOR: // | bit-wise inclusive or
+		case BITXOR: // ^ bit-wise exclusive or
+		case CONDITIONAL: // ?: the conditional operator
+		case DEREFERENCE: // * pointer dereference
+		case EQUALS: // == equality
+		case GT: // &gt; greater than
+		case GTE: // &gt;= greater than or equals
+		case LAND: // &amp;&amp; logical and
+		case LOR: // || logical or
+		case LT: // &lt; less than
+		case LTE: // &lt;= less than or equals
+		case NEQ: // != not equals
+		case NOT: // ! logical not
+		case SHIFTLEFT: // &lt;&lt; shift left
+		case SHIFTRIGHT: // &gt;&gt; shift right
+		case SUBSCRIPT: // [] array subscript
+<span class="nc" id="L632">			break;</span>
+
+		case PLUS: // + binary addition, numeric or pointer
+		case DIV: // / numerical division
+		case TIMES: // numeric multiplication
+		case MOD: // % integer modulus
+		case MINUS: // - binary subtraction (numbers and pointers)
+<span class="nc bnc" id="L639" title="All 2 branches missed.">			if (numArgs == 2)</span>
+<span class="nc" id="L640">				return evalBinaryNumericOp(type, operator, args[0], args[1]);</span>
+			else
+<span class="nc" id="L642">				throw new UnsourcedException(</span>
+<span class="nc" id="L643">						&quot;Expected two arguments for operator &quot; + operator);</span>
+		case UNARYMINUS: // - numeric negative
+<span class="nc" id="L645">			return evalMinus(type, args[0]);</span>
+		case UNARYPLUS: // + numeric no-op&lt;/li&gt;
+<span class="nc" id="L647">			return args[0];</span>
+		default:
+<span class="nc" id="L649">			throw new UnsourcedException(</span>
+<span class="nc" id="L650">					&quot;Illegal operator in constant expression: &quot; + operator);</span>
+		}
+		// TODO: handle specials cases for all of above
+<span class="nc" id="L653">		return canonic(new CommonOperatorValue(type, operator, args));</span>
+	}
+
+	private Value applyConversions(ExpressionNode expr, Value value) {
+		// TODO
+<span class="nc" id="L658">		return value;</span>
+	}
+
+	/**
+	 * 
+	 * C11 Sec. 6.3.1.2: &quot;When any scalar value is converted to _Bool, the
+	 * result is 0 if the value compares equal to 0; otherwise, the result is
+	 * 1.&quot;
+	 * 
+	 * C11 Sec. 6.3.1.3:
+	 * 
+	 * &lt;blockquote&gt; When a value with integer type is converted to another
+	 * integer type other than _Bool, if the value can be represented by the new
+	 * type, it is unchanged.
+	 * 
+	 * Otherwise, if the new type is unsigned, the value is converted by
+	 * repeatedly adding or subtracting one more than the maximum value that can
+	 * be represented in the new type until the value is in the range of the new
+	 * type.
+	 * 
+	 * Otherwise, the new type is signed and the value cannot be represented in
+	 * it; either the result is implementation-defined or an
+	 * implementation-defined signal is raised. &lt;/blockquote&gt;
+	 * 
+	 * 
+	 * @param value
+	 * @param newType
+	 * @return
+	 */
+	@SuppressWarnings(&quot;unused&quot;)
+	private Value evaluateIntegerConversion(Value value, IntegerType newType) {
+<span class="nc" id="L689">		IntegerType oldType = (IntegerType) value.getType();</span>
+
+<span class="nc bnc" id="L691" title="All 2 branches missed.">		if (oldType.equals(newType))</span>
+<span class="nc" id="L692">			return value;</span>
+<span class="nc bnc" id="L693" title="All 2 branches missed.">		if (value instanceof IntegerValue) {</span>
+<span class="nc" id="L694">			BigInteger intVal = ((IntegerValue) value).getIntegerValue();</span>
+
+			// first: if intVal representable in new type, that's it:
+<span class="nc bnc" id="L697" title="All 2 branches missed.">			if (newType instanceof StandardSignedIntegerType) {</span>
+<span class="nc" id="L698">				StandardSignedIntegerType newSigned = (StandardSignedIntegerType) newType;</span>
+
+<span class="nc bnc" id="L700" title="All 2 branches missed.">				if (newSigned.inMinimumRange(intVal)) {</span>
+<span class="nc" id="L701">					return integerValue(newType, intVal);</span>
+<span class="nc bnc" id="L702" title="All 2 branches missed.">				} else if (oldType instanceof StandardSignedIntegerType) {</span>
+<span class="nc" id="L703">					SignedIntKind newKind = newSigned.getIntKind();</span>
+<span class="nc" id="L704">					SignedIntKind oldKind = ((StandardSignedIntegerType) oldType)</span>
+<span class="nc" id="L705">							.getIntKind();</span>
+
+<span class="nc bnc" id="L707" title="All 2 branches missed.">					if (newKind.compareTo(oldKind) &gt; 0)</span>
+<span class="nc" id="L708">						return integerValue(newType, intVal);</span>
+				}
+<span class="nc bnc" id="L710" title="All 2 branches missed.">			} else if (newType instanceof StandardUnsignedIntegerType) {</span>
+<span class="nc" id="L711">				StandardUnsignedIntegerType newSigned = (StandardUnsignedIntegerType) newType;</span>
+
+<span class="nc bnc" id="L713" title="All 2 branches missed.">				if (newSigned.inMinimumRange(intVal)) {</span>
+<span class="nc" id="L714">					return integerValue(newType, intVal);</span>
+<span class="nc bnc" id="L715" title="All 2 branches missed.">				} else if (oldType instanceof StandardUnsignedIntegerType) {</span>
+<span class="nc" id="L716">					UnsignedIntKind newKind = newSigned.getIntKind();</span>
+<span class="nc" id="L717">					UnsignedIntKind oldKind = ((StandardUnsignedIntegerType) oldType)</span>
+<span class="nc" id="L718">							.getIntKind();</span>
+
+<span class="nc bnc" id="L720" title="All 2 branches missed.">					if (newKind.compareTo(oldKind) &gt; 0)</span>
+<span class="nc" id="L721">						return integerValue(newType, intVal);</span>
+				}
+			}
+		}
+<span class="nc" id="L725">		return castValue(newType, value);</span>
+	}
+
+	// private Value evaluateAndorOr(Operator operator, ExpressionNode expr1,
+	// ExpressionNode expr2) throws SyntaxException {
+	// boolean isAnd = operator == Operator.LAND;
+	// Value v1 = evaluate(expr1);
+	//
+	// return null;
+	// }
+
+	/**
+	 * Evaluates plus in case where both types are integers. NOTE types of these
+	 * values must be converted types from expression.
+	 * 
+	 * @param a1
+	 * @param a2
+	 * @return
+	 */
+	@SuppressWarnings(&quot;unused&quot;)
+	private Value evaluateBinaryIntegerOperator(Operator operator, Value a1,
+			Value a2) {
+<span class="nc" id="L747">		IntegerType type1 = (IntegerType) a1.getType();</span>
+		IntegerType type;
+
+<span class="nc bnc" id="L750" title="All 3 branches missed.">		switch (operator) {</span>
+		case PLUS:
+		case TIMES:
+		case MINUS:
+		case DIV:
+		case SHIFTLEFT:
+		case SHIFTRIGHT:
+<span class="nc" id="L757">			type = type1;</span>
+<span class="nc" id="L758">			break;</span>
+		case EQUALS:
+		case LTE:
+		case GTE:
+		case NEQ:
+		case LT:
+		case GT:
+<span class="nc" id="L765">			type = SINT;</span>
+<span class="nc" id="L766">			break;</span>
+		default:
+<span class="nc" id="L768">			throw new RuntimeException(</span>
+<span class="nc" id="L769">					&quot;This method should not be called with operator &quot;</span>
+<span class="nc" id="L770">							+ operator);</span>
+		}
+<span class="nc bnc" id="L772" title="All 2 branches missed.">		if (a1.equals(a2)) {</span>
+<span class="nc bnc" id="L773" title="All 3 branches missed.">			switch (operator) {</span>
+			case EQUALS:
+			case LTE:
+			case GTE:
+<span class="nc" id="L777">				return SINT_ONE;</span>
+			case NEQ:
+			case LT:
+			case GT:
+<span class="nc" id="L781">				return SINT_ZERO;</span>
+			default:
+			}
+		}
+<span class="nc bnc" id="L785" title="All 4 branches missed.">		if (a1 instanceof IntegerValue &amp;&amp; a2 instanceof IntegerValue) {</span>
+<span class="nc" id="L786">			BigInteger v1 = ((IntegerValue) a1).getIntegerValue();</span>
+<span class="nc" id="L787">			BigInteger v2 = ((IntegerValue) a2).getIntegerValue();</span>
+<span class="nc" id="L788">			BigInteger v3 = null;</span>
+
+<span class="nc bnc" id="L790" title="All 12 branches missed.">			switch (operator) {</span>
+			case PLUS:
+<span class="nc" id="L792">				v3 = v1.add(v2);</span>
+<span class="nc" id="L793">				break;</span>
+			case TIMES:
+<span class="nc" id="L795">				v3 = v1.multiply(v2);</span>
+<span class="nc" id="L796">				break;</span>
+			case MINUS:
+<span class="nc" id="L798">				v3 = v1.subtract(v2);</span>
+<span class="nc" id="L799">				break;</span>
+			case DIV:
+<span class="nc" id="L801">				v3 = v1.divide(v2);</span>
+<span class="nc" id="L802">				break;</span>
+			case EQUALS:
+<span class="nc" id="L804">				v3 = BigInteger.ZERO;</span>
+<span class="nc" id="L805">				break;</span>
+			case NEQ:
+<span class="nc" id="L807">				v3 = BigInteger.ONE;</span>
+<span class="nc" id="L808">				break;</span>
+			case LT:
+<span class="nc bnc" id="L810" title="All 2 branches missed.">				v3 = v1.compareTo(v2) &lt; 0 ? BigInteger.ONE : BigInteger.ZERO;</span>
+<span class="nc" id="L811">				break;</span>
+			case GT:
+<span class="nc bnc" id="L813" title="All 2 branches missed.">				v3 = v1.compareTo(v2) &gt; 0 ? BigInteger.ONE : BigInteger.ZERO;</span>
+<span class="nc" id="L814">				break;</span>
+			case LTE:
+<span class="nc bnc" id="L816" title="All 2 branches missed.">				v3 = v1.compareTo(v2) &lt;= 0 ? BigInteger.ONE : BigInteger.ZERO;</span>
+<span class="nc" id="L817">				break;</span>
+			case GTE:
+<span class="nc bnc" id="L819" title="All 2 branches missed.">				v3 = v1.compareTo(v2) &gt;= 0 ? BigInteger.ONE : BigInteger.ZERO;</span>
+<span class="nc" id="L820">				break;</span>
+			case SHIFTLEFT:
+			case SHIFTRIGHT:
+<span class="nc bnc" id="L823" title="All 4 branches missed.">				if (v1.signum() &gt;= 0 &amp;&amp; v2.signum() &gt;= 0</span>
+<span class="nc bnc" id="L824" title="All 2 branches missed.">						&amp;&amp; MAX_JINT.compareTo(v2) &gt;= 0) {</span>
+<span class="nc" id="L825">					int v2small = v2.intValue();</span>
+
+<span class="nc bnc" id="L827" title="All 2 branches missed.">					if (operator == Operator.SHIFTLEFT)</span>
+<span class="nc" id="L828">						v3 = v1.shiftLeft(v2small);</span>
+					else
+<span class="nc" id="L830">						v3 = v1.shiftRight(v2small);</span>
+				}
+				break;
+			default:
+			}
+<span class="nc bnc" id="L835" title="All 4 branches missed.">			if (v3 != null &amp;&amp; type instanceof StandardSignedIntegerType</span>
+<span class="nc bnc" id="L836" title="All 2 branches missed.">					&amp;&amp; ((StandardSignedIntegerType) type).inMinimumRange(v3)</span>
+<span class="nc bnc" id="L837" title="All 2 branches missed.">					|| type instanceof StandardUnsignedIntegerType</span>
+<span class="nc bnc" id="L838" title="All 2 branches missed.">					&amp;&amp; ((StandardUnsignedIntegerType) type).inMinimumRange(v3)) {</span>
+<span class="nc" id="L839">				return integerValue(type, v3);</span>
+			}
+		}
+<span class="nc" id="L842">		return operatorValue(type, operator, new Value[] { a1, a2 });</span>
+	}
+
+	private Value evaluateMemberAccess(Value structureOrUnionValue, Field field)
+			throws UnsourcedException {
+<span class="nc bnc" id="L847" title="All 2 branches missed.">		if (structureOrUnionValue instanceof StructureValue) {</span>
+<span class="nc" id="L848">			return ((StructureValue) structureOrUnionValue).getMember(field);</span>
+		}
+<span class="nc bnc" id="L850" title="All 2 branches missed.">		if (structureOrUnionValue instanceof UnionValue) {</span>
+<span class="nc" id="L851">			UnionValue unionValue = (UnionValue) structureOrUnionValue;</span>
+<span class="nc" id="L852">			Field unionField = unionValue.getField();</span>
+
+<span class="nc bnc" id="L854" title="All 2 branches missed.">			if (!unionField.equals(field))</span>
+<span class="nc" id="L855">				throw new UnsourcedException(</span>
+<span class="nc" id="L856">						&quot;Union value field differs from requested field:\n&quot;</span>
+<span class="nc" id="L857">								+ unionField + &quot;\n&quot; + field);</span>
+<span class="nc" id="L858">			return unionValue.getMemberValue();</span>
+		}
+		// TODO: need to create a new dot value.
+<span class="nc" id="L861">		throw new UnsourcedException(</span>
+<span class="nc" id="L862">				&quot;Cannot evaluate structure or union value: &quot;</span>
+<span class="nc" id="L863">						+ structureOrUnionValue);</span>
+	}
+
+	private SyntaxException error(String message, ASTNode node) {
+<span class="nc" id="L867">		return new SyntaxException(message, node.getSource());</span>
+	}
+
+	private SyntaxException error(UnsourcedException e, ASTNode node) {
+<span class="nc" id="L871">		return new SyntaxException(e, node.getSource());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

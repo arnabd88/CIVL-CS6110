@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FilteredANTLRInputStream.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.preproc</a> &gt; <span class="el_source">FilteredANTLRInputStream.java</span></div><h1>FilteredANTLRInputStream.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.c.preproc;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+import org.antlr.runtime.ANTLRStringStream;
+
+/**
+ * An ANTLR stream which reads from an arbitrary {@link InputStream} and removes
+ * any two consecutive characters that are backslash followed by newline. This
+ * is part of the C translation process.
+ * 
+ * If your input stream is a file input stream, you should use
+ * {@link FilteredANTLRFileStream} instead of this. It is more efficient,
+ * because you know the size of the file from the beginning.
+ * 
+ * @author siegel
+ *
+ */
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">public class FilteredANTLRInputStream extends ANTLRStringStream {</span>
+
+	// Static constants...
+
+	/**
+	 * The default number of characters to read at one time.
+	 */
+<span class="fc" id="L30">	public final static int DEFAULT_CHUNK_SIZE = 8192;</span>
+
+	// Types...
+
+	/**
+	 * Helper class for recording chunk of data read from stream.
+	 * 
+	 * @author siegel
+	 *
+	 */
+	private class Chunk {
+		/**
+		 * Buffer to store the characters read in from file. Length is specified
+		 * in constructor but is always {@link #chunkSize} for now.
+		 */
+		char buf[];
+
+		/**
+		 * The raw number of characters read in, before removing
+		 * backslash-newlines.
+		 */
+<span class="fc" id="L51">		int unfilteredLength = 0;</span>
+
+		/**
+		 * The number of characters in this chunk after removing the
+		 * backslash-newlines.
+		 */
+<span class="fc" id="L57">		int filteredLength = 0;</span>
+
+		/**
+		 * Creates a new chunk with buffer the given size.
+		 * 
+		 * @param bufferSize
+		 *            the number of characters to allocate for {@link #buf}
+		 *            array.
+		 */
+<span class="fc" id="L66">		Chunk(int bufferSize) {</span>
+<span class="fc" id="L67">			buf = new char[bufferSize];</span>
+<span class="fc" id="L68">		}</span>
+	}
+
+	/**
+	 * Name of this stream, like file name, for example.
+	 */
+	private String name;
+
+	/**
+	 * The number of characters to read at one time.
+	 */
+<span class="pc" id="L79">	private int chunkSize = DEFAULT_CHUNK_SIZE;</span>
+
+	// Constructors...
+
+	/**
+	 * Creates new filtered ANTLR input stream from given stream.
+	 * 
+	 * @param name
+	 *            the name to use for this stream; used mostly for reporting
+	 *            errors
+	 * @param stream
+	 *            the underlying stream to read from
+	 * @param encoding
+	 *            the character encoding or null if default encoding is to be
+	 *            used
+	 * @param chunkSize
+	 *            the number of characters to read at one time from the stream
+	 * @throws IOException
+	 *             if something goes wrong reading from the underlying stream
+	 */
+<span class="fc" id="L99">	public FilteredANTLRInputStream(String name, InputStream stream,</span>
+			String encoding, int chunkSize) throws IOException {
+<span class="fc" id="L101">		this.name = name;</span>
+<span class="fc" id="L102">		this.chunkSize = chunkSize;</span>
+<span class="fc" id="L103">		load(stream, encoding);</span>
+<span class="fc" id="L104">	}</span>
+
+	/**
+	 * Creates new filtered ANTLR input stream from given stream using default
+	 * chunk size.
+	 * 
+	 * @param name
+	 *            the name to use for this stream; used mostly for reporting
+	 *            errors
+	 * @param stream
+	 *            the underlying stream to read from
+	 * @param encoding
+	 *            the character encoding or null if default encoding is to be
+	 *            used
+	 * @throws IOException
+	 *             if something goes wrong reading from the underlying stream
+	 */
+<span class="nc" id="L121">	public FilteredANTLRInputStream(String name, InputStream stream,</span>
+			String encoding) throws IOException {
+<span class="nc" id="L123">		this.name = name;</span>
+<span class="nc" id="L124">		load(stream, encoding);</span>
+<span class="nc" id="L125">	}</span>
+
+	/**
+	 * Creates new filtered ANTLR input stream from given stream using default
+	 * chunk size and default character encoding.
+	 * 
+	 * @param name
+	 *            the name to use for this stream; used mostly for reporting
+	 *            errors
+	 * @param stream
+	 *            the underlying stream to read from
+	 * @throws IOException
+	 *             if something goes wrong reading from the underlying stream
+	 */
+	public FilteredANTLRInputStream(String name, InputStream stream)
+			throws IOException {
+<span class="nc" id="L141">		this(name, stream, null);</span>
+<span class="nc" id="L142">	}</span>
+
+	/**
+	 * Creates new filtered ANTLR input stream from a string.
+	 * 
+	 * @param name
+	 *            the name to use for this stream; used mostly for reporting
+	 *            errors
+	 * @param string
+	 *            a string while will form the source for the stream
+	 * @param chunkSize
+	 *            the number of characters to read from the string at one time
+	 * @throws IOException
+	 *             should not happen
+	 */
+	public FilteredANTLRInputStream(String name, String string, int chunkSize)
+			throws IOException {
+<span class="fc" id="L159">		this(name, new ByteArrayInputStream(string.getBytes()), null, chunkSize);</span>
+<span class="fc" id="L160">	}</span>
+
+	/**
+	 * Reads data from an input stream reader into chunks of memory. Goes
+	 * through each chunk and removes backslash-newlines. Special handling if
+	 * one chunk ends in backslash and the next begins with newline. Then
+	 * allocates data array any copies the filtered data into it.
+	 * 
+	 * @param isr
+	 *            the input stream reader
+	 * @throws IOException
+	 *             if something goes wrong reading the stream
+	 */
+	private void load(InputStreamReader isr) throws IOException {
+<span class="fc" id="L174">		ArrayList&lt;Chunk&gt; chunks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L175">		int numFilteredChars = 0;</span>
+<span class="fc" id="L176">		boolean previousBackslash = false; // does previous chunk end in \ ?</span>
+<span class="fc" id="L177">		Chunk previousChunk = null; // the previous chunk</span>
+<span class="fc" id="L178">		int pos = 0;</span>
+
+		// first read in the whole file in chunks...
+		while (true) {
+<span class="fc" id="L182">			Chunk chunk = new Chunk(chunkSize);</span>
+<span class="fc" id="L183">			chunk.unfilteredLength = isr.read(chunk.buf);</span>
+
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (chunk.unfilteredLength &lt;= 0)</span>
+<span class="fc" id="L186">				break;</span>
+<span class="fc" id="L187">			chunks.add(chunk);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">			if (chunk.unfilteredLength &lt; chunkSize)</span>
+				break;
+		}
+		// remove the backslash-newlines in-place...
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		for (Chunk chunk : chunks) {</span>
+<span class="fc" id="L193">			char[] buf = chunk.buf;</span>
+<span class="fc" id="L194">			int size = chunk.unfilteredLength;</span>
+<span class="fc" id="L195">			int i = 0; // higher index</span>
+<span class="fc" id="L196">			int j = 0; // lower index</span>
+<span class="fc" id="L197">			char c = 0;</span>
+
+<span class="pc bpc" id="L199" title="2 of 4 branches missed.">			assert size &gt;= 1;</span>
+<span class="fc bfc" id="L200" title="All 4 branches covered.">			if (previousBackslash &amp;&amp; buf[0] == '\n') {</span>
+				// remove last char from previous chunk and skip the \n...
+<span class="fc" id="L202">				previousChunk.filteredLength--;</span>
+<span class="fc" id="L203">				i = 1;</span>
+			}
+<span class="fc bfc" id="L205" title="All 2 branches covered.">			while (i &lt; size) {</span>
+<span class="fc" id="L206">				c = buf[i];</span>
+<span class="fc bfc" id="L207" title="All 6 branches covered.">				if (c == '\\' &amp;&amp; i &lt; size - 1 &amp;&amp; buf[i + 1] == '\n') {</span>
+<span class="fc" id="L208">					i += 2;</span>
+<span class="fc" id="L209">				} else {</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">					if (i != j)</span>
+<span class="fc" id="L211">						buf[j] = c;</span>
+<span class="fc" id="L212">					j++;</span>
+<span class="fc" id="L213">					i++;</span>
+				}
+			}
+<span class="fc" id="L216">			chunk.filteredLength = j;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">			previousBackslash = (c == '\\');</span>
+<span class="fc" id="L218">			previousChunk = chunk;</span>
+		}
+		// count the filtered characters and allocate data...
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		for (Chunk chunk : chunks)</span>
+<span class="fc" id="L222">			numFilteredChars += chunk.filteredLength;</span>
+<span class="fc" id="L223">		super.data = new char[numFilteredChars];</span>
+<span class="fc" id="L224">		super.n = numFilteredChars;</span>
+		// copy chunk bufs into data...
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		for (Chunk chunk : chunks) {</span>
+<span class="fc" id="L227">			System.arraycopy(chunk.buf, 0, super.data, pos,</span>
+<span class="fc" id="L228">					chunk.filteredLength);</span>
+<span class="fc" id="L229">			pos += chunk.filteredLength;</span>
+		}
+<span class="fc" id="L231">	}</span>
+
+	/**
+	 * &lt;p&gt;
+	 * Reads data from an input stream into chunks of memory. The character
+	 * encoding is specified, which determines how to translate the bytes from
+	 * the stream into characters. If null is given for encoding, the default
+	 * encoding is used.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Goes through each chunk and removes backslash-newlines. Special handling
+	 * if one chunk ends in backslash and the next begins with newline. Then
+	 * allocates data array any copies the filtered data into it.
+	 * &lt;/p&gt;
+	 * 
+	 * @param stream
+	 *            the input stream
+	 * @param encoding
+	 *            the character encoding
+	 * @throws IOException
+	 *             if something goes wrong reading the stream
+	 */
+	private void load(InputStream stream, String encoding) throws IOException {
+		InputStreamReader isr;
+
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">		if (encoding != null) {</span>
+<span class="nc" id="L258">			isr = new InputStreamReader(stream, encoding);</span>
+<span class="nc" id="L259">		} else {</span>
+<span class="fc" id="L260">			isr = new InputStreamReader(stream);</span>
+		}
+		try {
+<span class="fc" id="L263">			load(isr);</span>
+<span class="pc" id="L264">		} finally {</span>
+<span class="pc" id="L265">			isr.close();</span>
+<span class="nc" id="L266">		}</span>
+<span class="fc" id="L267">	}</span>
+
+	@Override
+	public String getSourceName() {
+<span class="nc" id="L271">		return name;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

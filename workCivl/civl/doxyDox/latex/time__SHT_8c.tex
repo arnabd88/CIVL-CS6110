@@ -1,0 +1,150 @@
+\hypertarget{time__SHT_8c}{}\section{/home/arnabd/workspace/civl/trunk/examples/omp/shtns/time\+\_\+\+S\+H\+T.c File Reference}
+\label{time__SHT_8c}\index{/home/arnabd/workspace/civl/trunk/examples/omp/shtns/time\+\_\+\+S\+H\+T.\+c@{/home/arnabd/workspace/civl/trunk/examples/omp/shtns/time\+\_\+\+S\+H\+T.\+c}}
+
+
+This program performs some spherical harmonic transforms, and displays timings and accuracy.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$complex.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}fftw3/fftw3.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fftw3/cycle.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$shtns.\+h$>$}\\*
+Include dependency graph for time\+\_\+\+S\+H\+T.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{time__SHT_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{time__SHT_8c_a9981e120251e6e33a59113f0cac0baaf}{}void {\bfseries runerr} (const char $\ast$error\+\_\+text)\label{time__SHT_8c_a9981e120251e6e33a59113f0cac0baaf}
+
+\item 
+\hypertarget{time__SHT_8c_ac39e9333bf00b07ce02f2bac8201b99d}{}void {\bfseries write\+\_\+vect} (char $\ast$fn, double $\ast$vec, int N)\label{time__SHT_8c_ac39e9333bf00b07ce02f2bac8201b99d}
+
+\item 
+\hypertarget{time__SHT_8c_a65750215325f6e4550105fdf37ac8f58}{}void {\bfseries write\+\_\+mx} (char $\ast$fn, double $\ast$mx, int N1, int N2)\label{time__SHT_8c_a65750215325f6e4550105fdf37ac8f58}
+
+\item 
+\hypertarget{time__SHT_8c_a1aa7a07420159a014376daaee6bb9cba}{}double {\bfseries tdiff} (struct \hyperlink{structtimespec}{timespec} $\ast$start, struct \hyperlink{structtimespec}{timespec} $\ast$end)\label{time__SHT_8c_a1aa7a07420159a014376daaee6bb9cba}
+
+\item 
+\hypertarget{time__SHT_8c_a644ab53e0c41f3975ac2ce07e791d7f0}{}int {\bfseries is\+Na\+N} (double x)\label{time__SHT_8c_a644ab53e0c41f3975ac2ce07e791d7f0}
+
+\item 
+\hypertarget{time__SHT_8c_ac115c48087751b8fcb56bb6b3261e84f}{}double {\bfseries scal\+\_\+error} (\hyperlink{structcomplex}{complex} double $\ast$Slm, \hyperlink{structcomplex}{complex} double $\ast$Slm0, int ltr)\label{time__SHT_8c_ac115c48087751b8fcb56bb6b3261e84f}
+
+\item 
+\hypertarget{time__SHT_8c_af6f3c21dd9feb9067e4881f43e77f72e}{}double {\bfseries vect\+\_\+error} (\hyperlink{structcomplex}{complex} double $\ast$Slm, \hyperlink{structcomplex}{complex} double $\ast$Tlm, \hyperlink{structcomplex}{complex} double $\ast$Slm0, \hyperlink{structcomplex}{complex} double $\ast$Tlm0, int ltr)\label{time__SHT_8c_af6f3c21dd9feb9067e4881f43e77f72e}
+
+\item 
+\hypertarget{time__SHT_8c_ae0cc2056a21f0cab83b26f29bcea0037}{}void {\bfseries test\+\_\+\+S\+H\+\_\+point} ()\label{time__SHT_8c_ae0cc2056a21f0cab83b26f29bcea0037}
+
+\item 
+\hypertarget{time__SHT_8c_ace27e3885f71f47da7f7bc70be3e85e6}{}void {\bfseries test\+\_\+\+S\+H\+T} ()\label{time__SHT_8c_ace27e3885f71f47da7f7bc70be3e85e6}
+
+\item 
+\hypertarget{time__SHT_8c_a39ea2c38d45e2ff68dfdb3fb22b97ec8}{}void {\bfseries test\+\_\+\+S\+H\+T\+\_\+m0} ()\label{time__SHT_8c_a39ea2c38d45e2ff68dfdb3fb22b97ec8}
+
+\item 
+\hypertarget{time__SHT_8c_ae933989ad6a491e519179801611a052c}{}void {\bfseries test\+\_\+\+S\+H\+T\+\_\+l} (int ltr)\label{time__SHT_8c_ae933989ad6a491e519179801611a052c}
+
+\item 
+\hypertarget{time__SHT_8c_a1366fe5d55812def6f43c9f44b3661aa}{}void {\bfseries test\+\_\+\+S\+H\+T\+\_\+vect\+\_\+l} (int ltr)\label{time__SHT_8c_a1366fe5d55812def6f43c9f44b3661aa}
+
+\item 
+\hypertarget{time__SHT_8c_a2743ebd3321f7846d3f7ebc44cca4150}{}void {\bfseries test\+\_\+\+S\+H\+T\+\_\+vect} ()\label{time__SHT_8c_a2743ebd3321f7846d3f7ebc44cca4150}
+
+\item 
+\hypertarget{time__SHT_8c_af57245e51d045db74e322ff29bf5c299}{}void {\bfseries test\+\_\+\+S\+H\+T\+\_\+vect3d\+\_\+l} (int ltr)\label{time__SHT_8c_af57245e51d045db74e322ff29bf5c299}
+
+\item 
+\hypertarget{time__SHT_8c_ad32a554d7615ea1c2b0cc2e8b467ab3a}{}void {\bfseries test\+\_\+\+S\+H\+T\+\_\+vect3d} ()\label{time__SHT_8c_ad32a554d7615ea1c2b0cc2e8b467ab3a}
+
+\item 
+\hypertarget{time__SHT_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{}void {\bfseries usage} ()\label{time__SHT_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}
+
+\item 
+\hypertarget{time__SHT_8c_a0ddf1224851353fc92bfbff6f499fa97}{}int {\bfseries main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})\label{time__SHT_8c_a0ddf1224851353fc92bfbff6f499fa97}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{time__SHT_8c_a96c8e3d25400dae1413e1f7886a8a4c1}{}\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} {\bfseries shtns}\label{time__SHT_8c_a96c8e3d25400dae1413e1f7886a8a4c1}
+
+\item 
+\hypertarget{time__SHT_8c_a1e1e8291328ca8ee9a17ba36362df95a}{}\hyperlink{structcomplex}{complex} double $\ast$ {\bfseries Slm}\label{time__SHT_8c_a1e1e8291328ca8ee9a17ba36362df95a}
+
+\item 
+\hypertarget{time__SHT_8c_adebf64fecaa9e005bf56f395b7ba3adb}{}\hyperlink{structcomplex}{complex} double $\ast$ {\bfseries Slm0}\label{time__SHT_8c_adebf64fecaa9e005bf56f395b7ba3adb}
+
+\item 
+\hypertarget{time__SHT_8c_a3bd8123d34c24e65d16e0975992c366c}{}\hyperlink{structcomplex}{complex} double $\ast$ {\bfseries Tlm}\label{time__SHT_8c_a3bd8123d34c24e65d16e0975992c366c}
+
+\item 
+\hypertarget{time__SHT_8c_a55d0810dc443be04409503b588cfeb41}{}\hyperlink{structcomplex}{complex} double $\ast$ {\bfseries Tlm0}\label{time__SHT_8c_a55d0810dc443be04409503b588cfeb41}
+
+\item 
+\hypertarget{time__SHT_8c_a243f029cec3034cd57bad4153ca1d8e4}{}\hyperlink{structcomplex}{complex} double $\ast$ {\bfseries Qlm}\label{time__SHT_8c_a243f029cec3034cd57bad4153ca1d8e4}
+
+\item 
+\hypertarget{time__SHT_8c_abf0a31952ce93440c20dd1dbb6f64208}{}\hyperlink{structcomplex}{complex} double $\ast$ {\bfseries Sh\+F}\label{time__SHT_8c_abf0a31952ce93440c20dd1dbb6f64208}
+
+\item 
+\hypertarget{time__SHT_8c_a440c5d47082f32f2536e6ae2e301be4e}{}\hyperlink{structcomplex}{complex} double $\ast$ {\bfseries Th\+F}\label{time__SHT_8c_a440c5d47082f32f2536e6ae2e301be4e}
+
+\item 
+\hypertarget{time__SHT_8c_a8596bece0a8bd2aef4729d50a4e57d79}{}\hyperlink{structcomplex}{complex} double $\ast$ {\bfseries N\+L\+F}\label{time__SHT_8c_a8596bece0a8bd2aef4729d50a4e57d79}
+
+\item 
+\hypertarget{time__SHT_8c_a312c6c513a58ca3c59ab77c48deb822f}{}double $\ast$ {\bfseries Sh}\label{time__SHT_8c_a312c6c513a58ca3c59ab77c48deb822f}
+
+\item 
+\hypertarget{time__SHT_8c_acb91452dcf7d18853eace53c0b7267b3}{}double $\ast$ {\bfseries Th}\label{time__SHT_8c_acb91452dcf7d18853eace53c0b7267b3}
+
+\item 
+\hypertarget{time__SHT_8c_addfd2a35ff284939b030c314f3b19434}{}double $\ast$ {\bfseries N\+L}\label{time__SHT_8c_addfd2a35ff284939b030c314f3b19434}
+
+\item 
+\hypertarget{time__SHT_8c_a80359683fc1a48b49e83c7afbc1e9f31}{}int {\bfseries L\+M\+A\+X}\label{time__SHT_8c_a80359683fc1a48b49e83c7afbc1e9f31}
+
+\item 
+\hypertarget{time__SHT_8c_ac7151522a531a9027cc48923fb4dfb02}{}int {\bfseries M\+M\+A\+X}\label{time__SHT_8c_ac7151522a531a9027cc48923fb4dfb02}
+
+\item 
+\hypertarget{time__SHT_8c_a052958f462830126fe7c55b65a2f7060}{}int {\bfseries M\+R\+E\+S}\label{time__SHT_8c_a052958f462830126fe7c55b65a2f7060}
+
+\item 
+\hypertarget{time__SHT_8c_a1850424fdf014b10d78e55f7ef2ee2c0}{}int {\bfseries N\+L\+M}\label{time__SHT_8c_a1850424fdf014b10d78e55f7ef2ee2c0}
+
+\item 
+\hypertarget{time__SHT_8c_a17e1c8b920fb19401515b5eb4cfaadfd}{}int {\bfseries N\+L\+A\+T} = 0\label{time__SHT_8c_a17e1c8b920fb19401515b5eb4cfaadfd}
+
+\item 
+\hypertarget{time__SHT_8c_ad784481c3b7ea3bbf77ccab07df83b48}{}int {\bfseries N\+P\+H\+I} = 0\label{time__SHT_8c_ad784481c3b7ea3bbf77ccab07df83b48}
+
+\item 
+\hypertarget{time__SHT_8c_ae897fe42cb9017e72f71068d827a8f7c}{}int {\bfseries S\+H\+T\+\_\+\+I\+T\+E\+R} = 50\label{time__SHT_8c_ae897fe42cb9017e72f71068d827a8f7c}
+
+\item 
+\hypertarget{time__SHT_8c_a1d291f26225bdd66c1b39d1f1be7f2a1}{}double {\bfseries is\+Na\+N\+\_\+0} =0\label{time__SHT_8c_a1d291f26225bdd66c1b39d1f1be7f2a1}
+
+\item 
+\hypertarget{time__SHT_8c_a6df43bf653116188567e22c5d510becf}{}double {\bfseries is\+Na\+N\+\_\+1} =1\label{time__SHT_8c_a6df43bf653116188567e22c5d510becf}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This program performs some spherical harmonic transforms, and displays timings and accuracy. 
+
+{\ttfamily make} {\ttfamily time\+\_\+\+S\+H\+T} to compile, and then run. 

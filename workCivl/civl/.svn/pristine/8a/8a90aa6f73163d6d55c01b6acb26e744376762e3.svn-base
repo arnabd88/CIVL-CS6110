@@ -1,0 +1,24 @@
+
+Why is a ProcessType not a primitive type?
+
+A CIVL Pointer type is supposed to also have an (optional?) additional
+scope parameter, which limits the scope into which it can point.
+
+{
+  \scope s; /* gives name s to this scope */
+  int x;
+  ...
+  {
+    int *\region(s) p = &x;
+    ...
+  }
+}
+
+(If not specified, the default scope used in the root dynamic scope.)
+
+Add to PointerType:
+  Scope getRegion();
+  void setRegion(Scope scope);
+
+
+Remove setters from types (except for struct)

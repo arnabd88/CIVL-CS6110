@@ -1,0 +1,348 @@
+%\usepackage{amsmath,amssymb,stmaryrd}
+\usepackage{graphicx}
+\usepackage{url}
+\usefonttheme[onlymath]{serif}
+
+\setbeamersize{text margin left=2mm, text margin right=1mm, %
+  sidebar width left=0mm, sidebar width right=3mm}
+\graphicspath{{../images/}}
+\author{Stephen F.\ Siegel}
+\institute{Department of Computer and Information Sciences\\University
+  of Delaware}
+%\newenvironment{pic}[4]{\begin{pgfpictureboxed}{#1}{#2}{#3}{#4}}{\end{pgfpictureboxed}}
+\newenvironment{pic}[4]{\begin{pgfpicture}{#1}{#2}{#3}{#4}}{\end{pgfpicture}}
+
+\newcommand{\myurl}[1]{\textcolor{blue}{\url{#1}}}
+
+\newcommand{\foot}[1]{%
+  \usefoottemplate{\hspace{0mm}\raisebox{1mm}[0mm][0mm]{%
+      \makebox[0pt][l]{\tiny
+        \color{blue!50}
+        S.F.\ Siegel $\diamond$
+        University of Delaware $\diamond$
+        #1 \hspace{1mm}
+        {\color{black!100}\insertframenumber}}}}}
+
+\newcommand{\code}[1]{\textcolor{blue}{\texttt{#1}}}
+
+% \newcommand{\U}{{\ttfamily\symbol{'137}}}
+% \newcommand{\lb}{\texttt{\char`\{}}
+% \newcommand{\rb}{\texttt{\char`\}}}
+% \newcommand{\bs}{\texttt{\char`\\}}
+% \newcommand{\ra}{\rightarrow}
+% \renewcommand{\implies}{\Rightarrow}
+% \renewcommand{\iff}{\Leftrightarrow}
+% %\renewcommand{\emptyset}{\varphi}
+\newcommand{\Z}{\mathbb{Z}}
+%\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+% \newcommand{\spin}{\textsc{Spin}}
+% \newcommand{\mpispin}{\textsc{Mpi-Spin}}
+% \newcommand{\x}{\mathbf{x}}
+% \newcommand{\y}{\mathbf{y}}
+% \newcommand{\mat}[4]{\bigl(\begin{smallmatrix}#1&#2\\#3&#4\end{smallmatrix}\bigr)}
+
+% \newcommand{\model}{\mathcal{M}}
+% \newcommand{\vocab}{\mathcal{V}}
+% \newcommand{\vars}{\mathcal{X}}
+% \newcommand{\valof}[1]{\llbracket #1 \rrbracket}
+% \newcommand{\valofma}[1]{\valof{#1}_{\model}(\alpha)}
+% \newcommand{\true}{\textbf{T}}
+% \newcommand{\false}{\textbf{F}}
+% \newcommand{\satisfies}{\models}
+% \newcommand{\infers}{\vdash}
+% \newcommand{\sep}{\hspace{3mm}}
+% \newcommand{\Vars}{\textsf{Vars}}
+% \newcommand{\FV}{\textsf{FV}}
+% \newcommand{\fmap}[1]{\lceil#1\rceil}
+% \newcommand{\myForm}{\textbf{Form}}
+% \newcommand{\Prop}{\textbf{Prop}}
+% \newcommand{\PL}{\textsf{PL}}
+% \newcommand{\FOL}{\textsf{FOL}}
+% \newcommand{\BV}{\textsf{BV}}
+% \newtheorem{proposition}{Proposition}
+% \newcommand{\attribute}[1]{\par\begin{flushright}\tiny\textcolor{gray}{---\
+%       #1}\end{flushright}\par}
+% \newcommand{\pSymbs}{\textsf{pSymbs}}
+% \newcommand{\NPL}{\mathcal{N}_{\textsf{PL}}}
+% \newcommand{\Herb}{\mathcal{H}}
+% \newcommand{\DHerb}{D_\Herb}
+% \newcommand{\IH}{I_\Herb}
+% \newcommand{\sorts}{\mathcal{S}}
+% \newcommand{\bool}{\textsf{bool}}
+
+% \newcommand{\theory}{\mathcal{T}}
+% \newcommand{\aread}{\textit{read}}
+% \newcommand{\awrite}{\textit{write}}
+% \newcommand{\sarrow}{\leadsto}
+
+% \newenvironment{hoare}{%
+%   \begin{displaymath}%
+%     \renewcommand{\arraystretch}{4}%
+%     \begin{array}[t]{r@{.\hspace{4mm}}l@{\hspace{5mm}}l}%
+%     }{%
+%     \end{array}%
+%   \end{displaymath}%
+% }
+
+% \newcommand{\bigtrip}[3]{%
+%   {%
+%     \renewcommand{\arraystretch}{1}%
+%     \begin{array}[c]{l}%
+%       {\color{blue}\{#1\}}\\\hspace{5mm}#2\\{\color{blue}\{#3\}}%
+%     \end{array}%
+%   }%
+% }
+% \newcommand{\ttrip}[3]{%
+%   {%
+%     \renewcommand{\arraystretch}{1}%
+%     \begin{array}[c]{l}%
+%       {\color{blue}[#1]}\\\hspace{5mm}#2\\{\color{blue}[#3]}%
+%     \end{array}%
+%   }%
+% }
+% \newcommand{\trip}[3]{%
+%   {\color{blue}\{#1\}}\: #2\: {\color{blue}\{#3\}}%
+% }
+% \newcommand{\assign}{\textit{assign}}
+% \newcommand{\seq}{\textit{seq}}
+% \newcommand{\conseq}{\textit{conseq}}
+% \newcommand{\pwhile}{\textbf{while}}
+% \newcommand{\pdo}{\textbf{do}}
+% \newcommand{\rwhile}{\textit{while}}
+% \newcommand{\pskip}{\textbf{skip}}
+% \newcommand{\pif}{\textbf{if}}
+% \newcommand{\pelse}{\textbf{else}}
+% \newcommand{\pthen}{\textbf{then}}
+
+% \newcommand{\Ax}{\text{Ax}}
+% \newcommand{\I}{\text{I}}
+% \newcommand{\E}{\text{E}}
+% \newcommand{\W}{\text{W}}
+% \newcommand{\RAA}{\text{RAA}}
+
+% \newcommand{\B}{\mathbb{B}}
+
+% \newcommand{\opstyle}[1]{\textsf{\textcolor{blue}{#1}}}
+% \newcommand{\TS}{\opstyle{TS}}
+% \newcommand{\TT}{\opstyle{TT}}
+% \newcommand{\LT}{\opstyle{LT}}
+% \newcommand{\LL}{\opstyle{LL}}
+% \newcommand{\TL}{\opstyle{TL}}
+% \newcommand{\TE}{\opstyle{TE}}
+% \newcommand{\ET}{\opstyle{ET}}
+
+% \newcommand{\Act}{\opstyle{Act}}
+% \newcommand{\AP}{\opstyle{AP}}
+% \newcommand{\ul}{\opstyle{ul}}
+% \newcommand{\ur}{\opstyle{ur}}
+% \newcommand{\dl}{\opstyle{dl}}
+% \newcommand{\dr}{\opstyle{dr}}
+% \newcommand{\defeq}{\stackrel{\text{def}}{=}}
+% \newcommand{\Post}{\opstyle{Post}}
+% \newcommand{\Pre}{\opstyle{Pre}}
+% \newcommand{\Reach}{\opstyle{Reach}}
+% \newcommand{\dom}{\opstyle{dom}}
+% %\newcommand{\true}{\textit{true}}
+% %\newcommand{\false}{\textit{false}}
+% \newcommand{\Eval}{\opstyle{Eval}}
+% \newcommand{\Cond}{\opstyle{Cond}}
+% \newcommand{\Loc}{\opstyle{Loc}}
+% \newcommand{\Effect}{\opstyle{Effect}}
+% \newcommand*{\hra}{\ensuremath{\lhook\joinrel\relbar\joinrel\rightarrow}}
+% % use \xhookrightarrow{g:\alpha} instead
+% \newcommand{\xra}[1]{\xrightarrow{#1}}
+% \newcommand{\xhra}[1]{\xhookrightarrow{#1}}
+
+% \newcommand{\PG}{\opstyle{PG}}
+% \newcommand{\Var}{\opstyle{Var}}
+% \newcommand{\tpc}{\;|||\;}
+% \newcommand{\dpc}{\;||\;}
+% \newcommand{\hand}[1]{\;||_{#1}\;}
+
+% \newcommand{\Val}{\opstyle{Val}}
+
+% \newcommand{\Chan}{\opstyle{Chan}}
+% \newcommand{\capacity}{\opstyle{cap}}
+% \newcommand{\Comm}{\opstyle{Comm}}
+% \newcommand{\CS}{\opstyle{CS}}
+
+% \newcommand{\len}{\opstyle{len}}
+
+% \newcommand{\trace}{\opstyle{trace}}
+% \newcommand{\Traces}{\opstyle{Traces}}
+% \newcommand{\exinf}{\stackrel{\scriptstyle\infty}{\exists}}
+% \newcommand{\Set}{\opstyle{Set}}
+% \newcommand{\Stack}{\opstyle{Stack}}
+% %\newcommand{\bool}{\opstyle{boolean}}
+% \newcommand{\State}{\opstyle{State}}
+
+% \newcommand{\BadPref}{\opstyle{BadPref}}
+% \newcommand{\MinBadPref}{\opstyle{MinBadPref}}
+
+\newenvironment{mybox}[1]{%
+  \begin{footnotesize}%
+    \color{red}%
+    \begin{tabular}{@{}|c|@{}}%
+      \hline\\[-2.5mm]%
+      \begin{minipage}{#1}%
+        \color{black}%
+      }{%
+      \end{minipage}%
+      \\[-2.5mm] \\ \hline%
+    \end{tabular}%
+  \end{footnotesize}%
+}
+
+\newenvironment{mycbox}[1]{%
+  \begin{center}%
+    \begin{mybox}{#1}%
+    }{%
+    \end{mybox}%
+  \end{center}%
+}
+
+% % CIVL-C keywords
+
+% \newcommand{\cckey}{\$}
+% \newcommand{\cc}[1]{\mbox{\textcolor{blue}{\texttt{\cckey{}#1}}}}
+% \newcommand{\cproc}{\cc{proc}}
+% \newcommand{\cself}{\cc{self}}
+% \newcommand{\cinput}{\cc{input}}
+% \newcommand{\coutput}{\cc{output}}
+% \newcommand{\cspawn}{\cc{spawn}}
+% \newcommand{\cwait}{\cc{wait}}
+% \newcommand{\cassert}{\cc{assert}}
+% \newcommand{\ctrue}{\cc{true}}
+% \newcommand{\cfalse}{\cc{false}}
+% \newcommand{\cassume}{\cc{assume}}
+% \newcommand{\cwhen}{\cc{when}}
+% \newcommand{\cchoose}{\cc{choose}}
+% \newcommand{\cchooseint}{\cc{choose{\U}int}}
+% \newcommand{\cinvariant}{\cc{invariant}}
+% \newcommand{\crequires}{\cc{requires}}
+% \newcommand{\censures}{\cc{ensures}}
+% \newcommand{\cresult}{\cc{result}}
+% \newcommand{\cat}{\texttt{@}}
+% \newcommand{\ccollective}{\cc{collective}}
+
+% \newcommand{\cheap}{\cc{heap}}
+% \newcommand{\cscope}{\cc{scope}}
+% \newcommand{\cregion}{\cc{region}}
+% \newcommand{\cmalloc}{\cc{malloc}}
+
+
+
+
+%%% new
+
+
+% Type/font styles...
+\newcommand{\upsty}[1]{\textup{\textsf{#1}}}
+\newcommand{\setsty}[1]{\textup{\textsf{\textcolor{blue}{#1}}}}
+%\newcommand{\code}[1]{\texttt{\textcolor{blue}{#1}}}
+\newcommand{\ct}[1]{\texttt{#1}}
+
+% Theorem environments...
+%\newtheorem{theorem}{Theorem}
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}[subsection]
+
+% Symbols...
+\renewcommand{\implies}{\Rightarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\lb}{\texttt{\char`\{}}
+\newcommand{\rb}{\texttt{\char`\}}}
+\newcommand{\U}{\texttt{\char`\_}}
+%\newcommand{\U}{{\ttfamily\symbol{'137}}}
+\newcommand{\UU}{\U\U}
+
+% Static notions...
+\newcommand{\rootscope}{\setsty{root}} % root static scope
+\newcommand{\start}{\setsty{start}} % start location $l_0$
+\newcommand{\Var}{\setsty{Var}} % set of all variables
+\newcommand{\bool}{\setsty{bool}} % boolean type
+\newcommand{\proc}{\setsty{proc}} % process reference type
+\newcommand{\Val}{\setsty{Val}} % set of all values
+\newcommand{\vtype}{\setsty{vtype}} % type of variable
+\newcommand{\etype}{\setsty{etype}} % type of expression
+\newcommand{\Type}{\setsty{Type}} % set of all types
+\newcommand{\Expr}{\setsty{Expr}} % set of all expressions
+\newcommand{\Eval}{\setsty{Eval}} % set of all valuations on variables
+\newcommand{\eval}{\setsty{eval}} % evaluation of an expression
+\newcommand{\sparent}{\setsty{sparent}} % parent of a static scope
+\newcommand{\dparent}{\setsty{dparent}} % parent of a dynamic scope
+\newcommand{\fscope}{\setsty{fscope}} % scope of a function
+\newcommand{\lscope}{\setsty{lscope}} % scope of a location
+\newcommand{\static}{\setsty{static}} % static scope associated to a dynamic one
+\newcommand{\stack}{\setsty{stack}} % call stack
+\newcommand{\vars}{\setsty{vars}} % variables declared in a scope
+\newcommand{\ancestors}{\setsty{ancestors}} % as in tree
+\newcommand{\descendants}{\setsty{descendants}} % as in tree
+\newcommand{\returntype}{\setsty{returnType}} % function's return type
+\newcommand{\numparams}{\setsty{numParams}} % number of params for a func.
+\newcommand{\params}{\setsty{params}} % sequence of formal parameters
+\newcommand{\void}{\setsty{void}} % type for func. returning nothing
+\newcommand{\Loc}{\setsty{Loc}} % locations in function's trans. sys.
+\newcommand{\Func}{\mathcal{F}} % set of function symbols
+\newcommand{\true}{\textit{true}} % boolean value true
+\newcommand{\false}{\textit{false}} % boolean value false
+\newcommand{\default}{\setsty{default}} % default value of type
+\newcommand{\len}{\setsty{length}} % length of sequence
+\newcommand{\func}{\setsty{func}} % function a static scope belongs to
+
+% Dynamic notions...
+\newcommand{\fnode}{\setsty{fnode}} % function node of dyscope
+\newcommand{\State}{\setsty{State}} % set of all states of model
+\newcommand{\deval}{\setsty{deval}} % valuation on dyscope
+\newcommand{\droot}{\setsty{droot}} % root dyscope
+\newcommand{\Frame}{\setsty{Frame}} % set of activation frames
+
+
+% CIVL-C keywords
+
+\newcommand{\cckey}{\$}
+\newcommand{\cc}[1]{\mbox{\textcolor{blue}{\texttt{\cckey{}#1}}}}
+\newcommand{\cproc}{\cc{proc}}
+\newcommand{\cself}{\cc{self}}
+\newcommand{\cinput}{\cc{input}}
+\newcommand{\coutput}{\cc{output}}
+\newcommand{\cspawn}{\cc{spawn}}
+\newcommand{\cwait}{\cc{wait}}
+\newcommand{\cassert}{\cc{assert}}
+\newcommand{\ctrue}{\cc{true}}
+\newcommand{\cfalse}{\cc{false}}
+\newcommand{\cassume}{\cc{assume}}
+\newcommand{\catom}{\cc{atom}}
+\newcommand{\catomic}{\cc{atomic}}
+\newcommand{\cwhen}{\cc{when}}
+\newcommand{\cchoose}{\cc{choose}}
+\newcommand{\cchooseint}{\cc{choose{\U}int}}
+\newcommand{\cinvariant}{\cc{invariant}}
+\newcommand{\crequires}{\cc{requires}}
+\newcommand{\censures}{\cc{ensures}}
+\newcommand{\cexit}{\cc{exit}}
+\newcommand{\cresult}{\cc{result}}
+\newcommand{\cat}{\texttt{@}}
+\newcommand{\ccollective}{\cc{collective}}
+
+%\newcommand{\cheap}{\cc{heap}}
+\newcommand{\cscope}{\cc{scope}}
+\newcommand{\cscopeof}{\cc{scopeof}}
+\newcommand{\cscopeparent}{\cc{scope{\U}parent}}
+\newcommand{\cscoperoot}{\cc{root}}
+\newcommand{\chere}{\cc{here}}
+\newcommand{\cregion}{\cc{region}}
+\newcommand{\cmalloc}{\cc{malloc}}
+\newcommand{\cfree}{\cc{free}}
+
+\newcommand{\cbundle}{\cc{bundle}}
+\newcommand{\cmessage}{\cc{message}}
+\newcommand{\ccomm}{\cc{comm}}
+\newcommand{\cgcomm}{\cc{gcomm}}
+
+\newcommand{\cforall}{\cc{forall}}
+\newcommand{\cexists}{\cc{exists}}
+\newcommand{\cimplies}{\ct{=>}}

@@ -1,0 +1,126 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1AmpleSetWorker}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Ample\+Set\+Worker Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1AmpleSetWorker}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Ample\+Set\+Worker@{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Ample\+Set\+Worker}}
+
+
+This class is responsible for computing the ample processes set at a given state.  
+
+
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Ample\+Set\+Worker\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1AmpleSetWorker__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1AmpleSetWorker_a3314d8eb02d8124fe1b91a49558923a0}{}void {\bfseries difference} (Bit\+Set lhs, Bit\+Set rhs)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1AmpleSetWorker_a3314d8eb02d8124fe1b91a49558923a0}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is responsible for computing the ample processes set at a given state. 
+
+It is a helper of Enabler.
+
+Basic ingredients. Need to know, in a state s\+:
+
+For each process p, what is the set of memory units that p can reach from its call stack?
+
+For each process p, given an enabled statement in p, what are the memory units that could read/written to by that statement.
+
+Questions\+:
+
+Representation of set of memory units\+:
+
+How much of this can be computed statically?
+
+Can this information be stored in state and updated incrementally with each transition?
+
+
+\begin{DoxyPre}
+Fix a process {\ttfamily p}, computes the set of processes that have to be
+in the ample set by examining the relation of the impact/reachable memory
+units of the processes.\end{DoxyPre}
+
+
+
+\begin{DoxyPre}Impact memory unit set: all memory units to be accessed (read or written) by a
+process {\ttfamily p} at a certain state {\ttfamily s}. Usually this
+includes the memory units through the variables appearing in the statements 
+(including its guard) that originates from {\ttfamily p}'s location at 
+{\ttfamily s}.\end{DoxyPre}
+
+
+
+\begin{DoxyPre}Reachable memory unit set: all memory units reachable by a process
+{\ttfamily p} at a certain state {\ttfamily s}. This includes all memory units 
+reachable through all the variables in the dyscopes visible to {\ttfamily p}.\end{DoxyPre}
+
+
+
+\begin{DoxyPre}Reachable memory unit access annotation: for each element in the reachable memory
+unit set, annotates the information if the process is possible to write it now or
+in the future. Immediately, any variable appearing as the left-hand-side of
+Note, all variables that ever appear as the operand of the address-of (\&)
+operator are to be considered as possibly written by any process. Given a memory 
+unit {\ttfamily m} and a process {\ttfamily p}, {\ttfamily w(m, p, s)} is true 
+iff {\ttfamily p} is possible to write to {\ttfamily m} from {\ttfamily s}.\end{DoxyPre}
+
+
+
+\begin{DoxyPre}Note: the heap is excluded when computing the impact/reachable memory units; 
+memory of handle types (such as gcomm/comm, gbarrier/barrier) are ignored.\end{DoxyPre}
+
+
+
+\begin{DoxyPre}Ample set algorithm: 
+0. Let {\ttfamily amp(p)} be the ample set of {\ttfamily p}. Initially, 
+   {\ttfamily amp(p) = \{ p \}}. Let {\ttfamily work = \{ p \}} be the 
+   set of working processes.
+1. Let {\ttfamily sys(p, s)} be the set of system function calls of {\ttfamily p}
+      origins at {\ttfamily s}. Let {\ttfamily imp(p, s)} be the impact memory set 
+   of {\ttfamily p} at state {\ttfamily s}; remove {\ttfamily p} from work.
+2. For every system call {\ttfamily c} of {\ttfamily sys(p, s)}, obtain the ample
+   set {\ttfamily amp(c, p, s)} from the corresponding library. Then, for every 
+   {\ttfamily q} in {\ttfamily amp(c, p, s)}, perform 2.1:
+   2.1. add {\ttfamily q} to {\ttfamily amp(p)}, and add {\ttfamily q} to {\ttfamily work} 
+        if {\ttfamily q} hasn't been added to {\ttfamily work} before.
+3. For every process {\ttfamily q} active at state {\ttfamily s}, 
+   let {\ttfamily rea(q, s)} be the map of reachable memory units and 
+   the access annotation (read only or possible write) of process {\ttfamily q} 
+   at state {\ttfamily s}, then do the following:
+\begin{DoxyItemize}
+\item for every memory unit {\ttfamily m} in {\ttfamily imp(p, s)}, 
+     find out all memory units {\ttfamily m'} belonging to {\ttfamily rea(q, s)} 
+     that intersects with {\ttfamily m};
+\item if there exists {\ttfamily m'}, such that {\ttfamily w(m, p, s)} or
+     {\ttfamily w(m', q, s)}, then perform step 2.1 for {\ttfamily q}.
+4. Repeat steps 1-3 until {\ttfamily work} is empty.
+
+\end{DoxyItemize}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}The ample set worker always return the minimal ample set, i.e., the set with
+the smallest number of processes. To achieve this, it greedily computes the
+ample set of all active processes. Sometimes, it doesn't have to iterates
+over all processes if it finds an ample set of size one.\end{DoxyPre}
+
+
+
+\begin{DoxyPre}\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun)
+
+\end{DoxyAuthor}
+\end{DoxyPre}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/kripke/common/Ample\+Set\+Worker.\+java\end{DoxyCompactItemize}

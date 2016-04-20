@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonExpressionStatementNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.statement</a> &gt; <span class="el_source">CommonExpressionStatementNode.java</span></div><h1>CommonExpressionStatementNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.statement;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ExpressionStatementNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonExpressionStatementNode extends CommonStatementNode
+		implements ExpressionStatementNode {
+
+	public CommonExpressionStatementNode(Source source,
+			ExpressionNode expression) {
+<span class="nc" id="L14">		super(source, expression);</span>
+//		assert expression != null;
+<span class="nc" id="L16">	}</span>
+
+	@Override
+	public ExpressionNode getExpression() {
+<span class="nc" id="L20">		return (ExpressionNode) child(0);</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L25">		out.print(&quot;ExpressionStatement&quot;);</span>
+<span class="nc" id="L26">	}</span>
+
+	@Override
+	public ExpressionStatementNode copy() {
+<span class="nc" id="L30">		return new CommonExpressionStatementNode(getSource(),</span>
+<span class="nc" id="L31">				duplicate(getExpression()));</span>
+	}
+
+	@Override
+	public StatementKind statementKind() {
+<span class="nc" id="L36">		return StatementKind.EXPRESSION;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

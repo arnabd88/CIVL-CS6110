@@ -1,0 +1,1556 @@
+#include <civlc.cvh>
+/* CIVL model of math.h.  Part of functions have optional assumption
+ * models which are controlled by two macros:
+ * 1. MATH_ELABORATE_ASSUMPTIONS: replacing a complicated assumption
+ * expression which includes implications with a "if..else" statement.
+ * This option reduces the complicity of the assumption expression but
+ * increase the number of branches. 
+ * 2. MATH_NO_ASSUMPTIONS: for some cases that the return value is not 
+ * important, it's no need to add any assumption.
+ */
+
+#ifdef __CIVL_MATH__
+#else
+#define __CIVL_MATH__
+#include <math.h>
+
+double acos(double x) {
+  $abstract double ACOS(double X);
+  double result;
+
+  $assert(-1 <= x && x <=1, "Argument x should be in interval[-1, 1]"); 
+  result = ACOS(x);
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result > 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x == 1 => result == 0) && (x != 1 => result > 0)));
+  return result;
+#endif
+}
+
+float acosf(float x) {
+  $abstract float ACOSF(float X);
+  double result;
+
+  $assert(-1 <= x && x <=1, "Argument x should be in interval[-1, 1]"); 
+  result = ACOSF(x);
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result > 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x == 1 => result == 0) && (x != 1 => result > 0)));
+  return result;
+#endif
+}
+
+long double acosl(long double x) {
+  $abstract long double ACOSL(long double X);
+  double result;
+
+  $assert(-1 <= x && x <=1, "Argument x should be in interval[-1, 1]"); 
+  result = ACOSL(x);
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result > 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x == 1 => result == 0) && (x != 1 => result > 0)));
+  return result;
+#endif
+}
+
+double asin(double x) {
+  $abstract double ASIN(double X);
+
+  $assert(-1 <= x && x <= 1);
+  "Argument x should be in interval[-1, 1]"; 
+  return ASIN(x);
+}
+
+float asinf(float x) {
+  $abstract float ASINF(float X);
+
+  $assert(-1 <= x && x <= 1);
+  "Argument x should be in interval[-1, 1]"; 
+  return ASINF(x);
+}
+
+long double asinl(long double x) {
+  $abstract long double ASINL(long double X);
+
+  $assert(-1 <= x && x <= 1);
+  "Argument x should be in interval[-1, 1]"; 
+  return ASINL(x);
+}
+
+double atan(double x) {
+  $abstract double ATAN(double X);
+  return ATAN(x);
+}
+
+float atanf(float x) {
+  $abstract float ATANF(float X);
+  return ATANF(x);
+}
+
+long double atanl(long double x) {
+  $abstract long double ATANL(long double X);
+  return ATANL(x);
+}
+
+double atan2(double x, double y) {
+  $abstract double ATAN2(double X, double Y);
+
+  $assert(x!=0 || y !=0, "Arguments x and y"
+    "should not be both 0");
+  return ATAN2(x, y);
+}
+
+float atan2f(float x, float y) {
+  $abstract float ATAN2F(float X, float Y);
+
+  $assert(x!=0.0 || y !=0.0, "Arguments x and y should not be both 0");
+  return ATAN2F(x, y);
+}
+
+long double atan2l(long double x, long double y) {
+  $abstract long double ATAN2L(long double X, 
+			       long double Y);
+
+  $assert(x!=0.0 || y !=0.0, "Arguments x and y should not be both 0");
+  return ATAN2L(x, y);
+}
+
+double cos(double x) {
+  $abstract double COS(double X);
+
+  return COS(x);
+}
+
+float cosf(float x) {
+  $abstract float COSF(float X);
+
+  return COSF(x);
+}
+
+long double cosl(long double x) {
+  $abstract long double COSL(long double X);
+
+  return COSL(x);
+}
+
+double sin(double x) {
+  $abstract double SIN(double X);
+
+  return SIN(x);
+}
+
+float sinf(float x) {
+  $abstract float SINF(float X);
+
+  return SINF(x);
+}
+
+long double sinl(long double x) {
+  $abstract long double SINL(long double X);
+
+  return SINL(x);
+}
+
+double tan(double x) {
+  $abstract double TAN(double X);
+
+  return TAN(x);
+}
+
+float tanf(float x) {
+  $abstract float TANF(float X);
+
+  return TANF(x);
+}
+
+long double tanl(long double x) {
+  $abstract long double TANL(long double X);
+
+  return TANL(x);
+}
+
+double acosh(double x) {
+  $abstract double ACOSH(double X);
+
+  $assert(x >= 1, "Argument x should not less than 1.");
+  return ACOSH(x);
+}
+
+float acoshf(float x) {
+  $abstract float ACOSHF(float X);
+
+  $assert(x >= 1, "Argument x should not less than 1.");
+  return ACOSHF(x);
+}
+
+long double acoshl(long double x) {
+  $abstract long double ACOSHL(long double X);
+
+  $assert(x >= 1, "Argument x should not less than 1.");
+  return ACOSHL(x);
+}
+
+double asinh(double x) {
+  $abstract double ASINH(double X);
+
+  return ASINH(x);
+}
+
+float asinhf(float x) {
+  $abstract float ASINHF(float X);
+
+  return ASINHF(x);
+}
+
+long double asinhl(long double x) {
+  $abstract long double ASINHL(long double X);
+
+  return ASINHL(x);
+}
+
+double atanh(double x) {
+  $abstract double ATANH(double X);
+
+  $assert(-1 < x && x < 1, "Argument x should be in the interval (-1, 1)");
+  return ATANH(x);
+}
+
+float atanhf(float x) {
+  $abstract float ATANHF(float X);
+
+  $assert(-1 < x && x < 1, "Argument x should be in the interval (-1, 1)");
+  return ATANHF(x);
+}
+
+long double atanhl(long double x) {
+  $abstract long double ATANHL(long double X);
+
+  $assert(-1 < x && x < 1, "Argument x should be in the interval (-1, 1)");
+  return ATANHL(x);
+}
+
+double cosh(double x) {
+  $abstract double COSH(double X);
+
+  return COSH(x);
+}
+
+float coshf(float x) {
+  $abstract float COSHF(float X);
+
+  return COSHF(x);
+}
+
+long double coshl(long double x) {
+  $abstract long double COSHL(long double X);
+
+  return COSHL(x);
+}
+
+double sinh(double x) {
+  $abstract double SINH(double X);
+
+  return SINH(x);
+}
+
+float sinhf(float x) {
+  $abstract float SINHF(float X);
+
+  return SINHF(x);
+}
+
+long double sinhl(long double x) {
+  $abstract long double SINHL(long double X);
+
+  return SINHL(x);
+}
+
+double tanh(double x) {
+  $abstract double TANH(double X);
+
+  return TANH(x);
+}
+
+float tanhf(float x) {
+  $abstract float TANHF(float X);
+
+  return TANHF(x);
+}
+
+long double tanhl(long double x) {
+  $abstract long double TANHL(long double X);
+
+  return TANHL(x);
+}
+
+double exp(double x) {
+  $abstract double EXP(double X);
+  double result = EXP(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 1;
+  else {
+    $assume(result > 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 1) && (x!=0 => result > 0)));
+  return result;
+#endif
+}
+
+float expf(float x) {
+  $abstract float EXPF(float X);
+  double result = EXPF(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 1;
+  else {
+    $assume(result > 0 );
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 1) && (x!=0 => result > 0)));
+  return result;
+#endif
+}
+
+long double expl(long double x) {
+  $abstract long double EXPL(long double X);
+  double result = EXPL(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 1;
+  else {
+    $assume(result > 0 );
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 1) && (x!=0 => result > 0)));
+  return result;
+#endif
+}
+
+double exp2(double x) {
+  $abstract double EXP2(double X);
+  double result = EXP2(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 1;
+  else {
+    $assume(result > 0 );
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 1) && (x!=0 => result > 0)));
+  return result;
+#endif
+}
+
+float exp2f(float x) {
+  $abstract float EXP2F(float X);
+  double result = EXP2F(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 1;
+  else {
+    $assume(result > 0 );
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 1) && (x!=0 => result > 0)));
+  return result;
+#endif
+}
+
+long double exp2l(long double x) {
+  $abstract long double EXP2L(long double X);
+  double result = EXP2L(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 1;
+  else {
+    $assume(result > 0 );
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 1) && (x!=0 => result > 0)));
+  return result;
+#endif
+}
+
+double expm1(double x) {
+  $abstract double EXPM1(double X);
+  double result = EXPM1(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else {
+    $assume(result > -1);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 0) && (x!=0 => result > -1)));
+  return result;
+#endif
+}
+
+float expm1f(float x) {
+  $abstract float EXPM1F(float X);
+  double result = EXPM1F(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else {
+    $assume(result > -1);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 0) && (x!=0 => result > -1)));
+  return result;
+#endif
+}
+
+long double expm1l(long double x) {
+  $abstract long double EXPM1L(long double X);
+  double result = EXPM1L(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else {
+    $assume(result > -1);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==0 => result == 0) && (x!=0 => result > -1)));
+  return result;
+#endif
+}
+
+double frexp(double x, int * exp) {
+  $abstract double FREXP_X(double X);
+  $abstract int FREXP_EXP(double X);
+
+  (*exp) = FREXP_EXP(x);
+  $assume((FREXP_X(x) >= 1/2 && FREXP_X(x) < 1) ||
+    FREXP_X(x) == 0);
+  return FREXP_X(x);
+}
+
+float frexpf(float x, int *exp) {
+  $abstract float FREXPF_X(float X);
+  $abstract int FREXPF_EXP(float X);
+
+  (*exp) = FREXPF_EXP(x);
+  $assume((FREXPF_X(x) >= 1/2 && FREXPF_X(x) < 1) ||
+    FREXPF_X(x) == 0);
+  return FREXPF_X(x);
+}
+
+long double frexpl(long double x, int *exp) {
+  $abstract long double FREXPL_X(long double X);
+  $abstract int FREXPL_EXP(long double X);
+
+  (*exp) = FREXPL_EXP(x);
+  $assume((FREXPL_X(x) >= 1/2 && FREXPL_X(x) < 1) ||
+    FREXPL_X(x) == 0);
+  return FREXPL_X(x);
+}
+
+int ilogb(double x) {
+  $abstract int ILOGB(double X);
+
+  //TODO: x can not be infinite or NaN neither.
+  $assert(x != 0, "Argument x cannot be zero.");
+  return ILOGB(x);
+}
+
+int ilogbf(float x) {
+  $abstract int ILOGBF(float X);
+
+  //TODO: x can not be infinite or NaN neither.
+  $assert(x != 0, "Argument x cannot be zero.");
+  return ILOGBF(x);
+}
+
+int ilogbl(long double x) {
+  $abstract int ILOGBL(long double X);
+
+  //TODO: x can not be infinite or NaN neither.
+  $assert(x != 0, "Argument x cannot be zero.");
+  return ILOGBL(x);
+}
+
+double ldexp(double x, int exp) {
+  $abstract double LDEXP(double X, int EXP);
+
+  return LDEXP(x, exp);
+}
+
+float ldexpf(float x, int exp) {
+  $abstract float LDEXPF(float X, int EXP);
+
+  return LDEXPF(x, exp);
+}
+
+long double ldexpl(long double x, int exp) {
+  $abstract long double LDEXPL(long double X, int EXP);
+
+  return LDEXPL(x, exp);
+}
+
+double log(double x) {
+  $abstract double LOG(double X);
+  double result = LOG(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+float logf(float x) {
+  $abstract float LOGF(float X);
+  float result = LOGF(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+long double logl(long double x) {
+  $abstract long double LOGL(long double X);
+  long double result = LOGL(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+double log10(double x) {
+  $abstract double LOG10(double X);
+  double result = LOG10(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+float log10f(float x) {
+  $abstract float LOG10F(float X);
+  float result = LOG10F(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+long double log10l(long double x) {
+  $abstract long double LOG10L(long double X);
+  long double result = LOG10L(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+double log1p(double x) {
+  $abstract double LOG1P(double X);
+
+  $assert(x > -1, "Argument x should be greater than -1");
+  return LOG1P(x);
+}
+
+float log1pf(float x) {
+  $abstract float LOG1PF(float X);
+
+  $assert(x > -1, "Argument x should be greater than -1");
+  return LOG1PF(x);
+}
+
+long double log1pl(long double x) {
+  $abstract long double LOG1PL(long double X);
+
+  $assert(x > -1, "Argument x should be greater than -1");
+  return LOG1PL(x);
+}
+
+double log2(double x) {
+  $abstract double LOG2(double X);
+  double result = LOG2(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+float log2f(float x) {
+  $abstract float LOG2F(float X);
+  float result = LOG2F(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+ #ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+long double log2l(long double x) {
+  $abstract long double LOG2L(long double X);
+  long double result = LOG2L(x);
+
+  $assert(x > 0, "Argument x should be greater than 0");
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 1)
+    return 0;
+  else {
+    $assume(result != 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume(((x==1) => (result==0)) && ((x!=1) => (result!=0)));
+  return result;
+#endif
+}
+
+double logb(double x) {
+  $abstract double LOGB(double X);
+
+  $assert(x != 0, "Argument x should not equal to 0");
+  return LOGB(x);
+}
+
+float logbf(float x) {
+  $abstract float LOGBF(float X);
+
+  $assert(x != 0, "Argument x should not equal to 0");
+  return LOGBF(x);
+}
+
+long double logbl(long double x) {
+  $abstract long double LOGBL(long double X);
+
+  $assert(x != 0, "Argument x should not equal to 0");
+  return LOGBL(x);
+}
+
+double modf(double value, double *iptr) {
+  $abstract double MODF_VALUE(double v);
+  $abstract double MODF_EXP(double v);
+
+  (*iptr) = MODF_EXP(value);
+  return MODF_VALUE(value);
+}
+
+float modff(float value, float *iptr) {
+  $abstract float MODFF_VALUE(float v);
+  $abstract float MODFF_EXP(float v);
+
+  (*iptr) = MODFF_EXP(value);
+  return MODFF_VALUE(value);
+}
+
+long double modfl(long double value, long double *iptr) {
+  $abstract long double MODFL_VALUE(long double v);
+  $abstract long double MODFL_EXP(long double v);
+
+  (*iptr) = MODFL_EXP(value);
+  return MODFL_VALUE(value);
+}
+
+double scalbn(double x, int n) {
+  $abstract double SCALBN(double x, int n);
+
+  return SCALBN(x, n);
+}
+
+float scalbnf(float x, int n) {
+  $abstract float SCALBNF(float x, int n);
+
+  return SCALBNF(x, n);
+}
+
+long double scalbnl(long double x, int n) {
+  $abstract long double SCALBNL(long double x, int n);
+
+  return SCALBNL(x, n);
+}
+
+double scalbln(double x, int n) {
+  $abstract double SCALBLN(double x, int n);
+
+  return SCALBLN(x, n);
+}
+
+float scalblnf(float x, int n) {
+  $abstract float SCALBLNF(float x, int n);
+
+  return SCALBLNF(x, n);
+}
+
+long double scalblnl(long double x, int n) {
+  $abstract long double SCALBLNL(long double x, int n);
+
+  return SCALBLNL(x, n);
+}
+
+double cbrt(double x) {
+  $abstract double CBRT(double x);
+
+  return CBRT(x);
+}
+
+float cbrtf(float x) {
+  $abstract float CBRTF(float x);
+
+  return CBRTF(x);
+}
+
+long double cbrtl(long double x) {
+  $abstract long double CBRTL(long double x);
+
+  return CBRTL(x);
+}
+
+double fabs(double x) {
+  $abstract double FABS(double x);
+  double result = FABS(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x >= 0)
+    return x;
+  else
+    return -x;
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x >= 0 => result == x) && (x < 0 => result == -x));
+  return result;
+#endif
+}
+
+float fabsf(float x) {
+  $abstract float FABSF(float x);
+  float result = FABSF(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x >= 0)
+    return x;
+  else
+    return -x;
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x >= 0 => result == x) && (x < 0 => result == -x));
+  return result;
+#endif
+}
+
+long double fabsl(long double x) {
+  $abstract long double FABSL(long double x);
+  long double result = FABSL(x);
+
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x >= 0)
+    return x;
+  else
+    return -x;
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x >= 0 => result == x) && (x < 0 => result == -x));
+  return result;
+#endif
+}
+
+double sqrt(double x) {
+  $abstract double SQRT(double x);
+  double result;
+
+  $assert(x >= 0, "Argument x should be greater than 0.");
+  result = SQRT(x);
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else {
+    $assume(result > 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x == 0 => result == 0) && (x > 0 => result > 0));
+  return result;
+#endif
+}
+
+float sqrtf(float x) {
+  $abstract float SQRTF(float x);
+  double result;
+
+  $assert(x >= 0, "Argument x should be greater than 0.");
+  result = SQRTF(x);
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else {
+    $assume(result > 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x == 0 => result == 0) && (x > 0 => result > 0));
+  return result;
+#endif
+}
+
+long double sqrtl(long double x) {
+  $abstract long double SQRTL(long double x);
+  double result;
+
+  $assert(x >= 0, "Argument x should be greater than 0.");
+  result = SQRTL(x);
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else {
+    $assume(result > 0);
+    return result;
+  }
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x == 0 => result == 0) && (x > 0 => result > 0));
+  return result;
+#endif
+}
+
+double hypot(double x, double y) {
+  double xsqrPLUSysqr = x*x + y*y;
+
+  return sqrt(xsqrPLUSysqr);
+}
+
+float hypotf(float x, float y) {
+  double xsqrPLUSysqr = x*x + y*y;
+
+  return sqrtf(xsqrPLUSysqr);
+}
+
+long double hypotl(long double x, long double y) {
+  double xsqrPLUSysqr = x*x + y*y;
+
+  return sqrtl(xsqrPLUSysqr);
+}
+
+double pow(double x, double y) {
+  $abstract double POW(double x, double y);
+  double result = POW(x,y);
+
+  $assert(x != 0 || y > 0, "It's invalid that argument x "
+    "is 0 and y is no greater than 0."); 
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else if(x == 1)
+    return 1;
+  else if(y == 1)
+    return x;
+  else if(y == 0 && x != 0)
+    return 1;
+  else return result;
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x==0 => result == 0) && (x==1 => result == 1) 
+    && (y==1 => result == x) && ((y==0 && x!=0) => result == 1));
+  return result;
+#endif
+}
+
+float powf(float x, float y) {
+  $abstract float POWF(float x, float y);
+  float result = POWF(x, y);
+
+  $assert(x != 0 || y > 0, "It's invalid that argument x "
+    "is 0 and y is no greater than 0."); 
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else if(x == 1)
+    return 1;
+  else if(y == 1)
+    return x;
+  else if(y == 0 && x != 0)
+    return 1;
+  else return result;
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x==0 => result == 0) && (x==1 => result == 1) 
+    && (y==1 => result == x) && ((y==0 && x!=0) => result == 1));
+  return result;
+#endif
+}
+
+long double powl(long double x, long double y) {
+  $abstract long double POWL(long double x, 
+			       long double y);
+  long double result = POWL(x, y);
+  $assert(x != 0 || y > 0, "It's invalid that argument x "
+    "is 0 and y is no greater than 0."); 
+#ifdef MATH_ELABORATE_ASSUMPTIONS
+  if(x == 0)
+    return 0;
+  else if(x == 1)
+    return 1;
+  else if(y == 1)
+    return x;
+  else if(y == 0 && x != 0)
+    return 1;
+  else return result;
+#elif defined(MATH_NO_ASSUMPTIONS)
+  return result;
+#else
+  $assume((x==0 => result == 0) && (x==1 => result == 1) 
+    && (y==1 => result == x) && ((y==0 && x!=0) => result == 1));
+  return result;
+#endif
+}
+
+double erf(double x) {
+  $abstract double ERF(double x);
+
+  return ERF(x);
+}
+
+float erff(float x) {
+  $abstract float ERFF(float x);
+
+  return ERFF(x);
+}
+
+long double erfl(long double x) {
+  $abstract long double ERFL(long double x);
+
+  return ERFL(x);
+}
+
+double erfc(double x) {
+  $abstract double ERFC(double x);
+
+  return ERFC(x);
+}
+
+float erfcf(float x) {
+  $abstract float ERFCF(float x);
+
+  return ERFCF(x);
+}
+
+long double erfcl(long double x) {
+  $abstract long double ERFCL(long double x);
+
+  return ERFCL(x);
+}
+
+double lgamma(double x) {
+  $abstract double LGAMMA(double x);
+
+  $assert((x > 0), "Argument x should be greater than 0");
+  return LGAMMA(x);
+}
+
+float lgammaf(float x) {
+  $abstract float LGAMMAF(float x);
+
+  $assert((x > 0), "Argument x should be greater than 0");
+  return LGAMMAF(x);
+}
+
+long double lgammal(long double x) {
+  $abstract long double LGAMMAL(long double x);
+
+  $assert((x > 0), "Argument x should be greater than 0");
+  return LGAMMAL(x);
+}
+
+double tgamma(double x) {
+  $abstract double TGAMMA(double x);
+
+  $assert((x > 0), "Argument x should be greater than 0");
+  return TGAMMA(x);
+}
+
+float tgammaf(float x) {
+  $abstract float TGAMMAF(float x);
+
+  $assert((x > 0), "Argument x should be greater than 0");
+  return TGAMMAF(x);
+}
+
+long double tgammal(long double x) {
+  $abstract long double TGAMMAL(long double x);
+
+  $assert((x > 0), "Argument x should be greater than 0");
+  return TGAMMAL(x);
+}
+
+double ceil(double x) {
+  $abstract double CEIL(double x);
+
+  $assume(CEIL(x) >= x && CEIL(x) < (x + 1));
+  return CEIL(x);
+}
+
+float ceilf(float x) {
+  $abstract float CEILF(float x);
+
+  $assume(CEILF(x) >= x && CEILF(x) < (x + 1));
+  return CEILF(x);
+}
+
+long double ceill(long double x) {
+  $abstract long double CEILL(long double x);
+
+  $assume(CEILL(x) >= x && CEILL(x) < (x + 1));
+  return CEILL(x);
+}
+
+double floor(double x) {
+  $abstract double FLOOR(double x);
+
+  $assume(FLOOR(x) <= x && FLOOR(x) > (x - 1));
+  return FLOOR(x);
+}
+
+float floorf(float x) {
+  $abstract float FLOORF(float x);
+
+  $assume(FLOORF(x) <= x && FLOORF(x) > (x - 1));
+  return FLOORF(x);
+}
+
+long double floorl(long double x) {
+  $abstract long double FLOORL(long double x);
+
+  $assume(FLOORL(x) <= x && FLOORL(x) > (x - 1));
+  return FLOORL(x);
+}
+
+double nearbyint(double x) {
+  $abstract double NEARBYINT(double x);
+
+  $assume(NEARBYINT(x) < (x+1) && NEARBYINT(x) > (x-1));
+  return NEARBYINT(x);
+}
+
+float nearbyintf(float x) {
+  $abstract float NEARBYINTF(float x);
+
+  $assume(NEARBYINTF(x) < (x+1) && NEARBYINTF(x) > (x-1));
+  return NEARBYINTF(x);
+}
+
+long double nearbyintl(long double x) {
+  $abstract long double NEARBYINTL(long double x);
+
+  $assume(NEARBYINTL(x) < (x+1) && NEARBYINTL(x) > (x-1));
+  return NEARBYINTL(x);
+}
+
+double rint(double x) {
+  $abstract double RINT(double x);
+
+  $assume(RINT(x) < (x+1) && RINT(x) > (x-1));
+  return RINT(x);
+}
+
+float rintf(float x) {
+  $abstract float RINTF(float x);
+
+  $assume(RINTF(x) < (x+1) && RINTF(x) > (x-1));
+  return RINTF(x);
+}
+
+long double rintl(long double x) {
+  $abstract long double RINTL(long double x);
+
+  $assume(RINTL(x) < (x+1) && RINTL(x) > (x-1));
+  return RINTL(x);
+}
+
+long int lrint(double x) {
+  $abstract long int LRINT(double x);
+
+  $assume(LRINT(x) < (x+1) && LRINT(x) > (x-1));
+  return LRINT(x);
+}
+
+long int lrintf(float x) {
+  $abstract long int LRINTF(float x);
+
+  $assume(LRINTF(x) < (x+1) && LRINTF(x) > (x-1));
+  return LRINTF(x);
+}
+
+long int lrintl(long double x) {
+  $abstract long int  LRINTL(long double x);
+
+  $assume(LRINTL(x) < (x+1) && LRINTL(x) > (x-1));
+  return LRINTL(x);
+}
+
+long long int llrint(double x) {
+  $abstract long long int LLRINT(double x);
+
+  $assume(LLRINT(x) < (x+1) && LLRINT(x) > (x-1));
+  return LLRINT(x);
+}
+
+long long int llrintf(float x) {
+  $abstract long long int LLRINTF(float x);
+
+  $assume(LLRINTF(x) < (x+1) && LLRINTF(x) > (x-1));
+  return LLRINTF(x);
+}
+
+long long int llrintl(long double x) {
+  $abstract long long int  LLRINTL(long double x);
+
+  $assume(LLRINTL(x) < (x+1) && LLRINTL(x) > (x-1));
+  return LLRINTL(x);
+}
+
+double round(double x) {
+  $abstract double ROUND(double x);
+
+  $assume(ROUND(x) < (x+1) && ROUND(x) > (x-1));
+  return ROUND(x);
+}
+
+float roundf(float x) {
+  $abstract float ROUNDF(float x);
+
+  $assume(ROUNDF(x) < (x+1) && ROUNDF(x) > (x-1));
+  return ROUNDF(x);
+}
+
+long double roundl(long double x) {
+  $abstract long double  ROUNDL(long double x);
+
+  $assume(ROUNDL(x) < (x+1) && ROUNDL(x) > (x-1));
+  return ROUNDL(x);
+}
+
+long int lround(double x) {
+  $abstract long int LROUND(double x);
+
+  $assume(LROUND(x) < (x+1) && LROUND(x) > (x-1));
+  return LROUND(x);
+}
+
+long int lroundf(float x) {
+  $abstract long int LROUNDF(float x);
+
+  $assume(LROUNDF(x) < (x+1) && LROUNDF(x) > (x-1));
+  return LROUNDF(x);
+}
+
+long int lroundl(long double x) {
+  $abstract long int LROUNDL(long double x);
+
+  $assume(LROUNDL(x) < (x+1) && LROUNDL(x) > (x-1));
+  return LROUNDL(x);
+}
+
+long long int llround(double x) {
+  $abstract long long int LLROUND(double x);
+
+  $assume(LLROUND(x) < (x+1) && LLROUND(x) > (x-1));
+  return LLROUND(x);
+}
+
+long long int llroundf(float x) {
+  $abstract long long int LLROUNDF(float x);
+
+  $assume(LLROUNDF(x) < (x+1) && LLROUNDF(x) > (x-1));
+  return LLROUNDF(x);
+}
+
+long long int llroundl(long double x) {
+  $abstract long long int LLROUNDL(long double x);
+
+  $assume(LLROUNDL(x) < (x+1) && LLROUNDL(x) > (x-1));
+  return LLROUNDL(x);
+}
+
+double trunc(double x) {
+  $abstract double TRUNC(double x);
+
+  $assume(TRUNC(x) < (x) && TRUNC(x) > (x-1));
+  return TRUNC(x);
+}
+
+float truncf(float x) {
+  $abstract float TRUNCF(float x);
+
+  $assume(TRUNCF(x) < (x) && TRUNCF(x) > (x-1));
+  return TRUNCF(x);
+}
+
+long double truncl(long double x) {
+  $abstract long double  TRUNCL(long double x);
+
+  $assume(TRUNCL(x) < (x) && TRUNCL(x) > (x-1));
+  return TRUNCL(x);
+}
+
+double fmod(double x, double y) {
+  $abstract double FMOD(double x, double y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  return FMOD(x,y);
+}
+
+float fmodf(float x, float y) {
+  $abstract float FMODF(float x, float y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  return FMODF(x,y);
+}
+
+long double fmodl(long double x, long double y) {
+  $abstract long double FMODL(long double x, long double y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  return FMODL(x,y);
+}
+
+double remainder(double x, double y) {
+  $abstract double REMAINDER(double x, double y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  return REMAINDER(x,y);
+}
+
+float remainderf(float x, float y) {
+  $abstract float REMAINDERF(float x, float y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  return REMAINDERF(x,y);
+}
+
+long double remainderl(long double x, long double y) {
+  $abstract long double REMAINDERL(long double x, long double y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  return REMAINDERL(x,y);
+}
+
+
+double remquo(double x, double y, int *quo) {
+  $abstract double REMQUO(double x, double y);
+  $abstract int REMQUO_QUO(double x, double y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  (*quo) = REMQUO_QUO(x, y);
+  return REMQUO(x,y);
+}
+
+float remquof(float x, float y, int *quo) {
+  $abstract float REMQUOF(float x, float y);
+  $abstract int REMQUOF_QUO(float x, float y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  (*quo) = REMQUOF_QUO(x, y);
+  return REMQUOF(x,y);
+}
+
+long double remquol(long double x, long double y, int *quo) {
+  $abstract long double REMQUOL(long double x, long double y);
+  $abstract int REMQUOL_QUO(long double x, long double y);
+
+  $assert(y != 0, "Argument y should not be 0");
+  (*quo) = REMQUOL_QUO(x, y);
+  return REMQUOL(x,y);
+}
+
+double copysign(double x, double y) {
+  $abstract double COPYSIGN(double x, double y);
+
+  return COPYSIGN(x,y);
+}
+
+float copysignf(float x, float y) {
+  $abstract float COPYSIGNF(float x, float y);
+
+  return COPYSIGNF(x,y);
+}
+
+long double copysignl(long double x, long double y) {
+  $abstract long double COPYSIGNL(long double x, long double y);
+
+  return COPYSIGNL(x,y);
+}
+
+double nan(const char *tagp) {
+  // changed by sfsiegel from NAN to CNAN
+  // since NAN is already used
+  $abstract double CNAN(const char *tagp);
+
+  return CNAN(tagp);
+}
+
+float nanf(const char *tagp) {
+  $abstract float NANF(const char *tagp);
+
+  return NANF(tagp);
+}
+
+long double nanl(const char *tagp) {
+  $abstract long double NANL(const char *tagp);
+
+  return NANL(tagp);
+}
+
+double nextafter(double x, double y) {
+  $abstract double NEXTAFTER(double x, double y);
+
+  return NEXTAFTER(x,y);
+}
+
+float nextafterf(float x, float y) {
+  $abstract float NEXTAFTERF(float x, float y);
+
+  return NEXTAFTERF(x,y);
+}
+
+long double nextafterl(long double x, long double y) {
+  $abstract long double NEXTAFTERL(long double x, long double y);
+
+  return NEXTAFTERL(x,y);
+}
+
+double nexttoward(double x, long double y) {
+  $abstract double NEXTTOWARD(double x, long double y);
+
+  return NEXTTOWARD(x,y);
+}
+
+float nexttowardf(float x, long double y) {
+  $abstract float NEXTTOWARDF(float x, long double y);
+
+  return NEXTTOWARDF(x,y);
+}
+
+long double nexttowardl(long double x, long double y) {
+  $abstract long double NEXTTOWARDL(long double x, long double y);
+
+  return NEXTTOWARDL(x,y);
+}
+
+double fdim(double x, double y) {
+  return (x>y)?(x-y):0;
+}
+
+float fdimf(float x, float y) {
+  return (x>y)?(x-y):0;
+}
+
+long double fdiml(long double x, long double y) {
+  return (x>y)?(x-y):0;
+}
+
+double fmax(double x, double y) {
+  return (x>y)?(x):(y);
+}
+
+float fmaxf(float x, float y) {
+  return (x>y)?(x):(y);
+}
+
+long double fmaxl(long double x, long double y) {
+  return (x>y)?(x):(y);
+}
+
+double fmin(double x, double y) {
+  return (x<y)?(x):(y);
+}
+
+float fminf(float x, float y) {
+  return (x<y)?(x):(y);
+}
+
+long double fminl(long double x, long double y) {
+  return (x<y)?(x):(y);
+}
+
+double fma(double x, double y, double z) {
+  $abstract double FMA(double x, double y, double z);
+
+  return FMA(x,y,z);
+}
+
+float fmaf(float x, float y, float z) {
+  $abstract float FMAF(float x, float y, float z);
+
+  return FMAF(x,y,z);
+}
+
+long double fmal(long double x, long double y, long double z) {
+  $abstract long double FMAL(long double x, 
+			     long double y, long double z);
+
+  return FMAL(x,y,z);
+}
+
+#define isgreater(X,Y) ((X)>(Y))
+#define isgreaterequal(X,Y) ((X)>=(Y))
+#define isless(X,Y) ((X)<(Y))
+#define islessequal(X,Y) ((X)<=(Y))
+#define islessgreater(X,Y) ((X)<(Y))||((X)>(Y))
+#define isunordered(X,Y) (X>Y)?1:0
+
+#endif
+
+

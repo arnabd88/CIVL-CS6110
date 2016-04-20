@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Configuration.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.config.IF</a> &gt; <span class="el_source">Configuration.java</span></div><h1>Configuration.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.config.IF;</span>
+
+import java.math.BigInteger;
+
+/**
+ * Configuration constants.
+ * 
+ * numbers of bits in types, etc.
+ * 
+ * unsigned char unsigned short int unsigned int unsigned long int unsigned long
+ * long int
+ * 
+ * signed versions of above, low and high
+ * 
+ * @author siegel
+ * 
+ */
+public interface Configuration {
+
+<span class="fc" id="L20">	public enum Architecture {</span>
+<span class="fc" id="L21">		_32_BIT, _64_BIT, UNKNOWN</span>
+	}
+
+	BigInteger unsignedCharMax();
+
+	BigInteger unsignedShortIntMax();
+
+	BigInteger unsignedIntMax();
+
+	BigInteger unsignedLongIntMax();
+
+	BigInteger unsignedLongLongIntMax();
+
+	BigInteger signedCharMin();
+
+	BigInteger signedCharMax();
+
+	BigInteger signedShortIntMin();
+
+	BigInteger signedShortIntMax();
+
+	BigInteger signedIntMin();
+
+	BigInteger signedIntMax();
+
+	BigInteger signedLongIntMin();
+
+	BigInteger signedLongIntMax();
+
+	BigInteger signedLongLongIntMin();
+
+	BigInteger signedLongLongIntMax();
+
+	BigInteger charMin();
+
+	BigInteger charMax();
+
+	boolean inRangeUnsignedChar(BigInteger value);
+
+	boolean inRangeUnsignedShort(BigInteger value);
+
+	boolean inRangeUnsignedInt(BigInteger value);
+
+	boolean inRangeUnsignedLongInt(BigInteger value);
+
+	boolean inRangeUnsignedLongLongInt(BigInteger value);
+
+	boolean inRangeSignedChar(BigInteger value);
+
+	boolean inRangeSignedShort(BigInteger value);
+
+	boolean inRangeSignedInt(BigInteger value);
+
+	boolean inRangeSignedLongInt(BigInteger value);
+
+	boolean inRangeSignedLongLongInt(BigInteger value);
+
+	/**
+	 * is svcomp feature enabled?
+	 * 
+	 * @return
+	 */
+	boolean svcomp();
+
+	void setSvcomp(boolean value);
+
+	/**
+	 * the architecture of this translation task, which could be 32-bit, 64-bit,
+	 * or unknown.
+	 * 
+	 * @return
+	 */
+	Architecture architecture();
+
+	void setArchitecture(Architecture arch);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

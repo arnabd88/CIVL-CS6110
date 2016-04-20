@@ -1,0 +1,51 @@
+#include <civlc.h>
+#include <stdio.h>
+
+void main(){
+  $scope s = $here, t = $here;
+  $scope p = $scope_parent(s);
+  $gcomm g = $gcomm_create(p, 5);
+  $gcomm f;
+  
+  void foo(){
+    $scope fs = $here;
+    $scope sum = fs + s;// compute the lowest common ancestors of fs and s.
+    
+    $assert(s > fs);
+    $assert(sum == s);
+    printf("foo done.\n");
+  }
+  
+  void goo(){
+    $scope s1 = $here;
+    int x;
+    double a[10];
+    
+    {
+      $scope s2 = $here;
+      int *p = &x;
+      double *q = &a[4];
+      
+      $assert($scopeof(x)==s1);
+      $assert($scopeof(p)==s2);
+      $assert($scopeof(*p)==s1);
+      $assert($scopeof(a)==s1);
+      $assert($scopeof(a[5])==s1);
+      $assert($scopeof(q)==s2);
+      $assert($scopeof(*q)==s1);
+      printf("goo done.\n");
+    }
+  }
+  
+  f = g;
+  g = f;
+  foo();
+  goo();
+  $assert($scopeof(g) == $scopeof(f));
+  $assert(s == t);
+  $assert(s != p);
+  $assert(s <= p);// s is equal to p or s is strictly a descendant of p.
+  $assert(s < p);// s is strictly a descendant of p 
+  $assert(p >= s);// p is equal to s or p is strictly an ancestor of s.
+  $assert(p > s);// p is strictly a ancestor of s.
+}

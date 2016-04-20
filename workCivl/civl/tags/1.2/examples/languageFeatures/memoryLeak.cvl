@@ -1,0 +1,30 @@
+/**
+ * This example demonstrates the checking of memory leak, i.e., 
+ * when a dynamic scope becomes unreachable, its heap should
+ * be cleaned up.
+ *
+ * Command line execution: civl verify memoryLeak.cvl
+ */
+#include<civlc.cvh>
+
+void process(){
+  int * p = (int *) $malloc($here, sizeof(int));
+  double * q;
+  
+  *p = 10;
+  for(int i = 0; i < 5; i++){
+    q = (double *) $malloc($here, sizeof(double));
+    *q = i + i*0.1;
+    $free(q);
+  }
+  //$free(p); // not freeing p, memory leak detected here.
+}
+
+void main(){
+  $proc p = $spawn process();
+  double * q = (double *) $malloc($here, sizeof(double));
+  
+  *q = 1.1;
+  $wait(p);
+  $free(q);
+}

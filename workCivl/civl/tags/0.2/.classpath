@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="var" path="ANTLR" sourcepath="/ANTLR_SOURCE"/>
+	<classpathentry kind="var" path="SARL" sourcepath="/SARL_src"/>
+	<classpathentry kind="var" path="GMC"/>
+	<classpathentry kind="var" path="CVC3"/>
+	<classpathentry kind="var" path="PCOLLECTIONS" sourcepath="/PCOLLECTIONS_SOURCE"/>
+	<classpathentry kind="var" path="CLJ-DS"/>
+	<classpathentry kind="var" path="ABC"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

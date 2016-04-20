@@ -1,0 +1,10 @@
+
+void f(int x) {
+  void g(int y) {
+    int z = x;
+  }
+}
+
+void main() {
+  f(3);
+}

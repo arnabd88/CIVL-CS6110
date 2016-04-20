@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>StandardUnsignedIntegerType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.IF</a> &gt; <span class="el_source">StandardUnsignedIntegerType.java</span></div><h1>StandardUnsignedIntegerType.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.type.IF;</span>
+
+import java.math.BigInteger;
+
+public interface StandardUnsignedIntegerType extends UnsignedIntegerType {
+
+<span class="nc" id="L7">	public static enum UnsignedIntKind {</span>
+<span class="nc" id="L8">		BOOL,</span>
+<span class="nc" id="L9">		UNSIGNED_CHAR,</span>
+<span class="nc" id="L10">		UNSIGNED_SHORT,</span>
+<span class="nc" id="L11">		UNSIGNED,</span>
+<span class="nc" id="L12">		UNSIGNED_LONG,</span>
+<span class="nc" id="L13">		UNSIGNED_LONG_LONG</span>
+	};
+
+	UnsignedIntKind getIntKind();
+
+	/**
+	 * The minimum greatest value of this type. Any conforming C implementation
+	 * must have a greatest value of at least this number for the given kind of
+	 * type.
+	 * 
+	 * @return intVal minimum greatest value of this type
+	 */
+	BigInteger getMinimumMaxValue();
+
+	/**
+	 * Is 0 &lt;= intVal &lt;= getMinimumMaxValue() ?
+	 * 
+	 * @param intVal
+	 * @return true iff intVal is in the range [0,getMinimumMaxValue()]
+	 */
+	boolean inMinimumRange(BigInteger intVal);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

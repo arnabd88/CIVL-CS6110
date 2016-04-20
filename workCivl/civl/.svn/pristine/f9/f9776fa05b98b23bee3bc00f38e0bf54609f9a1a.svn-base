@@ -1,0 +1,11 @@
+#include <civlc.h>
+
+void * func(){
+  return NULL;
+}
+
+int main()
+{
+  $proc p = $spawn func(NULL);
+  return 0;
+}

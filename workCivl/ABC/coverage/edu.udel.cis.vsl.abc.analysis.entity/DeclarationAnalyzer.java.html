@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DeclarationAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">DeclarationAnalyzer.java</span></div><h1>DeclarationAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import java.util.Collection;
+import java.util.Iterator;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Label;
+import edu.udel.cis.vsl.abc.ast.entity.IF.OrdinaryEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity.LinkageKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope.ScopeKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Typedef;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Variable;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.OrdinaryDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.ScopeParameterizedDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.TypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.GotoNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.node.common.compound.CommonCompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.DomainType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+/**
+ * A tool to analyze declarations in an AST.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc bnc" id="L48" title="All 2 branches missed.">public class DeclarationAnalyzer {</span>
+
+	// ***************************** Fields *******************************
+
+	/**
+	 * The entity analyzer controlling this declaration analyzer.
+	 */
+	private EntityAnalyzer entityAnalyzer;
+
+	private AcslContractAnalyzer acslAnalyzer;
+
+	/**
+	 * Is the compilation mode CIVL-C?
+	 */
+	// private boolean civl;
+
+	/**
+	 * Typedefs which name types in this set will be ignored in file scope.
+	 */
+<span class="nc" id="L67">	private Collection&lt;String&gt; ignoredTypes = null;</span>
+
+	private Language language;
+
+	// ************************** Constructors ****************************
+
+	/**
+	 * Creates new declaration analyzer with the given controlling entity
+	 * analyzer.
+	 * 
+	 * @param entityAnalyzer
+	 *            the entity analyzer in charge
+	 */
+<span class="nc" id="L80">	DeclarationAnalyzer(EntityAnalyzer entityAnalyzer) {</span>
+<span class="nc" id="L81">		this.entityAnalyzer = entityAnalyzer;</span>
+<span class="nc" id="L82">		this.language = entityAnalyzer.language;</span>
+<span class="nc" id="L83">		this.acslAnalyzer = new AcslContractAnalyzer(entityAnalyzer,</span>
+<span class="nc" id="L84">				entityAnalyzer.conversionFactory);</span>
+<span class="nc" id="L85">	}</span>
+
+	// ************************* Exported Methods *************************
+
+	/**
+	 * Sets the ignoredTypes to the given collection. Elements are not copied.
+	 * 
+	 * @param ignoredTypes
+	 *            names of types for which typedefs will be ignored
+	 */
+	void setIgnoredTypes(Collection&lt;String&gt; ignoredTypes) {
+<span class="nc" id="L96">		this.ignoredTypes = ignoredTypes;</span>
+<span class="nc" id="L97">	}</span>
+
+	/**
+	 * Processes a typedef declaration.
+	 * 
+	 * @param node
+	 *            a typedef declaration node that has not yet been processes
+	 * @throws SyntaxException
+	 */
+	void processTypedefDeclaration(TypedefDeclarationNode node)
+			throws SyntaxException {
+<span class="nc" id="L108">		IdentifierNode identifier = node.getIdentifier();</span>
+<span class="nc" id="L109">		String name = identifier.name();</span>
+<span class="nc" id="L110">		Scope scope = node.getScope();</span>
+<span class="nc" id="L111">		TypeNode typeNode = node.getTypeNode();</span>
+
+		if (// scope.getScopeKind() == ScopeKind.FILE &amp;&amp;
+<span class="nc bnc" id="L114" title="All 4 branches missed.">		ignoredTypes != null &amp;&amp; ignoredTypes.contains(name)) {</span>
+<span class="nc" id="L115">			OrdinaryEntity entity = scope.getLexicalOrdinaryEntity(false, name); // scope.getOrdinaryEntity(name);</span>
+
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			if (entity == null)</span>
+<span class="nc" id="L118">				throw error(&quot;Cannot find definition of system typedef&quot;, node);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (entity instanceof Typedef) {</span>
+<span class="nc" id="L120">				entityAnalyzer.typeAnalyzer.processTypeNode(typeNode);</span>
+<span class="nc" id="L121">				identifier.setEntity(entity);</span>
+<span class="nc" id="L122">				node.setEntity(entity);</span>
+<span class="nc" id="L123">				entity.addDeclaration(node);</span>
+<span class="nc" id="L124">			} else</span>
+<span class="nc" id="L125">				throw error(&quot;Expected system typedef, got &quot; + entity, node);</span>
+		} else {
+<span class="nc" id="L127">			Type type = entityAnalyzer.typeAnalyzer.processTypeNode(typeNode);</span>
+<span class="nc" id="L128">			OrdinaryEntity entity = scope.getOrdinaryEntity(false, name);</span>
+			Typedef typedef;
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			if (entity != null) {</span>
+				Type oldType;
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">				if (!(entity instanceof Typedef))</span>
+<span class="nc" id="L135">					throw entityAnalyzer.error(&quot;Typedef name already used at &quot;</span>
+<span class="nc" id="L136">							+ entity.getDefinition().getSource(), node);</span>
+<span class="nc" id="L137">				typedef = (Typedef) entity;</span>
+<span class="nc" id="L138">				oldType = typedef.getType();</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				if (!type.equals(oldType))</span>
+<span class="nc" id="L140">					throw entityAnalyzer</span>
+<span class="nc" id="L141">							.error(&quot;Redefiniton of typedef name with different type.  &quot;</span>
+									+ &quot;Original definition was at &quot;
+<span class="nc" id="L143">									+ typedef.getDefinition().getSource(), node);</span>
+			} else {
+<span class="nc" id="L145">				typedef = entityAnalyzer.entityFactory.newTypedef(name, type);</span>
+				try {
+<span class="nc" id="L147">					scope.add(typedef);</span>
+<span class="nc" id="L148">				} catch (UnsourcedException e) {</span>
+<span class="nc" id="L149">					throw entityAnalyzer.error(e, node);</span>
+				}
+<span class="nc" id="L151">				typedef.setDefinition((TypedefDeclarationNode) node);</span>
+			}
+<span class="nc" id="L153">			typedef.addDeclaration(node);</span>
+<span class="nc" id="L154">			node.setEntity(typedef);</span>
+<span class="nc" id="L155">			identifier.setEntity(typedef);</span>
+		}
+<span class="nc" id="L157">	}</span>
+
+	Variable processVariableDeclaration(VariableDeclarationNode node)
+			throws SyntaxException {
+<span class="nc" id="L161">		return processVariableDeclaration(node, false);</span>
+	}
+
+	// TODO: problem is contract uses variables x declared
+	// as formal parameters but scope is outside of that scope.
+	// function scope: contract, type
+
+	Function processFunctionDeclaration(FunctionDeclarationNode node)
+			throws SyntaxException {
+<span class="nc" id="L170">		Function result = (Function) processOrdinaryDeclaration(node);</span>
+<span class="nc" id="L171">		SequenceNode&lt;ContractNode&gt; contract = node.getContract();</span>
+
+<span class="nc" id="L173">		addDeclarationToFunction(result, node);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (node instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L175">			CompoundStatementNode body = ((FunctionDefinitionNode) node)</span>
+<span class="nc" id="L176">					.getBody();</span>
+
+<span class="nc" id="L178">			node.setIsDefinition(true);</span>
+<span class="nc" id="L179">			entityAnalyzer.statementAnalyzer.processCompoundStatement(body);</span>
+<span class="nc" id="L180">			processGotos(body);</span>
+		}
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (contract != null) {</span>
+<span class="nc" id="L183">			this.acslAnalyzer.processContractNodes(contract, result);</span>
+		}
+<span class="nc" id="L185">		return result;</span>
+	}
+
+	/**
+	 * Processes a variable declaration node, creating the Variable entity if
+	 * this is the definition, adding it to the appropriate scope, processing
+	 * the type node, etc.
+	 * 
+	 * @param node
+	 *            a variable declaration node
+	 * @param isParameter
+	 *            is this variable a formal parameter in a function declaration
+	 *            or definition
+	 * @return the Variable the Variable represented by this declaration (either
+	 *         the existing one or a new one)
+	 * @throws SyntaxException
+	 */
+	Variable processVariableDeclaration(VariableDeclarationNode node,
+			boolean isParameter) throws SyntaxException {
+<span class="nc" id="L204">		Variable result = (Variable) processOrdinaryDeclaration(node,</span>
+<span class="nc" id="L205">				isParameter);</span>
+<span class="nc" id="L206">		InitializerNode initializer = node.getInitializer();</span>
+
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (result != null) {</span>
+			ObjectType type;
+
+<span class="nc" id="L211">			addDeclarationToVariable(result, node);</span>
+<span class="nc" id="L212">			type = result.getType();</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">			if (initializer != null) {</span>
+<span class="nc" id="L214">				processInitializer(initializer, type);</span>
+				// if this is a compound initializer, the type
+				// of the initializer refines the type of the variable
+<span class="nc bnc" id="L217" title="All 2 branches missed.">				if (initializer instanceof CompoundInitializerNode)</span>
+<span class="nc" id="L218">					result.setType(entityAnalyzer.typeFactory.compositeType(</span>
+<span class="nc" id="L219">							type,</span>
+<span class="nc" id="L220">							((CompoundInitializerNode) initializer).getType()));</span>
+			}
+		}
+<span class="nc" id="L223">		return result;</span>
+	}
+
+	public void processInitializer(InitializerNode initializer,
+			ObjectType currentType) throws SyntaxException {
+<span class="nc bnc" id="L228" title="All 4 branches missed.">		assert currentType != null;</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">		if (initializer instanceof ExpressionNode) {</span>
+<span class="nc" id="L230">			ExpressionNode rhs = (ExpressionNode) initializer;</span>
+
+<span class="nc" id="L232">			entityAnalyzer.expressionAnalyzer</span>
+<span class="nc" id="L233">					.processExpression((ExpressionNode) initializer);</span>
+			try {
+<span class="nc" id="L235">				entityAnalyzer.expressionAnalyzer.processAssignment(</span>
+<span class="nc" id="L236">						currentType, rhs);</span>
+<span class="nc" id="L237">			} catch (UnsourcedException e) {</span>
+<span class="nc" id="L238">				throw error(e, initializer);</span>
+			}
+<span class="nc bnc" id="L240" title="All 2 branches missed.">		} else if (initializer instanceof CompoundInitializerNode) {</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (currentType.kind() == TypeKind.DOMAIN)</span>
+<span class="nc" id="L242">				entityAnalyzer.expressionAnalyzer</span>
+<span class="nc" id="L243">						.processCartesianDomainInitializer(</span>
+<span class="nc" id="L244">								(CompoundInitializerNode) initializer,</span>
+<span class="nc" id="L245">								(DomainType) currentType);</span>
+			else
+<span class="nc" id="L247">				entityAnalyzer.compoundLiteralAnalyzer</span>
+<span class="nc" id="L248">						.processCompoundInitializer(</span>
+<span class="nc" id="L249">								(CommonCompoundInitializerNode) initializer,</span>
+<span class="nc" id="L250">								currentType);</span>
+		}
+<span class="nc" id="L252">	}</span>
+
+	public void processScopeParameterizedDeclaration(
+			ScopeParameterizedDeclarationNode decl) throws SyntaxException {
+<span class="nc" id="L256">		DeclarationNode baseDecl = decl.baseDeclaration();</span>
+<span class="nc" id="L257">		SequenceNode&lt;VariableDeclarationNode&gt; scopeList = decl.parameters();</span>
+<span class="nc" id="L258">		int numVars = scopeList.numChildren();</span>
+
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		for (int i = 0; i &lt; numVars; i++) {</span>
+<span class="nc" id="L261">			VariableDeclarationNode varDecl = scopeList.getSequenceChild(i);</span>
+
+<span class="nc" id="L263">			processVariableDeclaration(varDecl, true);</span>
+		}
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (baseDecl instanceof TypedefDeclarationNode)</span>
+<span class="nc" id="L266">			processTypedefDeclaration((TypedefDeclarationNode) baseDecl);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		else if (baseDecl instanceof FunctionDeclarationNode)</span>
+<span class="nc" id="L268">			processFunctionDeclaration((FunctionDeclarationNode) baseDecl);</span>
+		else
+<span class="nc" id="L270">			throw error(&quot;Unexpected scoped declaration&quot;, decl);</span>
+		// Note: the declaration node for f will be the function declaration
+		// node, not the scope parameterized declaration node.
+<span class="nc" id="L273">	}</span>
+
+	// ************************* Private Methods **************************
+
+	private SyntaxException error(String message, ASTNode node) {
+<span class="nc" id="L278">		return entityAnalyzer.error(message, node);</span>
+	}
+
+	private SyntaxException error(UnsourcedException e, ASTNode node) {
+<span class="nc" id="L282">		return entityAnalyzer.error(e, node);</span>
+	}
+
+	/**
+	 * See C11 6.2.2 for the rules on determining linkage.
+	 * 
+	 * Note: &quot;The declaration of an identifier for a function that has block
+	 * scope shall have no explicit storage-class specifier other than extern.&quot;
+	 * (C11 6.7.1(7))
+	 * 
+	 * @param node
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private LinkageKind computeLinkage(OrdinaryDeclarationNode node)
+			throws SyntaxException {
+<span class="nc" id="L298">		boolean isFunction = node instanceof FunctionDeclarationNode;</span>
+<span class="nc" id="L299">		IdentifierNode identifier = node.getIdentifier();</span>
+<span class="nc" id="L300">		Scope scope = node.getScope();</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		boolean isFileScope = scope.getScopeKind() == ScopeKind.FILE;</span>
+		String name;
+		boolean hasNoStorageClass;
+
+<span class="nc bnc" id="L305" title="All 2 branches missed.">		if (identifier == null)</span>
+<span class="nc" id="L306">			return LinkageKind.NONE;</span>
+<span class="nc" id="L307">		name = identifier.name();</span>
+<span class="nc bnc" id="L308" title="All 4 branches missed.">		if (isFileScope &amp;&amp; node.hasStaticStorage()) {</span>
+<span class="nc" id="L309">			return LinkageKind.INTERNAL;</span>
+		}
+<span class="nc" id="L311">		hasNoStorageClass = hasNoStorageClass(node);</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">		if (node.hasExternStorage()</span>
+<span class="nc bnc" id="L313" title="All 8 branches missed.">				|| (isFunction &amp;&amp; hasNoStorageClass &amp;&amp; (isFileScope || !civl()))) {</span>
+<span class="nc" id="L314">			OrdinaryEntity previous = scope.getLexicalOrdinaryEntity(false,</span>
+<span class="nc" id="L315">					name);</span>
+
+<span class="nc bnc" id="L317" title="All 2 branches missed.">			if (previous == null) {</span>
+<span class="nc" id="L318">				return LinkageKind.EXTERNAL;</span>
+			} else {
+<span class="nc" id="L320">				LinkageKind previousLinkage = previous.getLinkage();</span>
+
+<span class="nc bnc" id="L322" title="All 2 branches missed.">				if (previousLinkage == LinkageKind.INTERNAL</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">						|| previousLinkage == LinkageKind.EXTERNAL)</span>
+<span class="nc" id="L324">					return previousLinkage;</span>
+				else
+<span class="nc" id="L326">					return LinkageKind.EXTERNAL;</span>
+			}
+		}
+		// if you are in C mode and this is a function, throw an
+		// exception.
+<span class="nc bnc" id="L331" title="All 4 branches missed.">		if (isFunction &amp;&amp; !civl())</span>
+<span class="nc" id="L332">			throw error(</span>
+<span class="nc" id="L333">					&quot;C11 6.7.1(7) states: \&quot;The declaration of an &quot;</span>
+							+ &quot; identifier for a function that has block scope shall &quot;
+							+ &quot;have no explicit storage-class specifier other than extern.\&quot;&quot;,
+<span class="nc" id="L336">					node);</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (isFileScope) {</span>
+<span class="nc bnc" id="L338" title="All 4 branches missed.">			if (!isFunction &amp;&amp; hasNoStorageClass)</span>
+<span class="nc" id="L339">				return LinkageKind.EXTERNAL;</span>
+		}
+<span class="nc" id="L341">		return LinkageKind.NONE;</span>
+	}
+
+	private OrdinaryEntity processOrdinaryDeclaration(
+			OrdinaryDeclarationNode node) throws SyntaxException {
+<span class="nc" id="L346">		return processOrdinaryDeclaration(node, false);</span>
+	}
+
+	/**
+	 * Processes an ordinary declaration, i.e., one which declares a variable or
+	 * function. (And not a structure/union member, enumerator, or typedef.) If
+	 * the declared entity has not yet been encountered, and Entity object is
+	 * created and added to the appropriate scope.
+	 * 
+	 * This method does not do everything needed to process an ordinary
+	 * declaration. It just does the stuff that is common to both an object and
+	 * function declaration.
+	 * 
+	 * Note that an entity can belong to multiple scopes! It is added to every
+	 * scope in which it is declared. An entity with no linkage can belong to
+	 * only one scope. An Entity with internal or external linkage can belong to
+	 * multiple scopes.
+	 * 
+	 * 
+	 * @param node
+	 *            the declaration node
+	 * @param isParameter
+	 *            is the declaration the declaration of a function parameter or
+	 *            scope parameter?
+	 * @throws SyntaxException
+	 */
+	private OrdinaryEntity processOrdinaryDeclaration(
+			OrdinaryDeclarationNode node, boolean isParameter)
+			throws SyntaxException {
+<span class="nc" id="L375">		AST ast = node.getOwner();</span>
+<span class="nc" id="L376">		IdentifierNode identifier = node.getIdentifier();</span>
+<span class="nc" id="L377">		TypeNode typeNode = node.getTypeNode();</span>
+<span class="nc" id="L378">		Type type = entityAnalyzer.typeAnalyzer.processTypeNode(typeNode,</span>
+<span class="nc" id="L379">				isParameter);</span>
+		Scope scope;
+		boolean isFunction;
+		LinkageKind linkage;
+		String name;
+		OrdinaryEntity entity;
+
+<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (identifier == null)</span>
+<span class="nc" id="L387">			return null;</span>
+		// the scope to which this entity belongs is the scope in which
+		// the Identifier in the declaration occurs:
+<span class="nc" id="L390">		scope = identifier.getScope();</span>
+<span class="nc" id="L391">		isFunction = node instanceof FunctionDeclarationNode;</span>
+<span class="nc" id="L392">		linkage = computeLinkage(node);</span>
+<span class="nc" id="L393">		name = identifier.name();</span>
+<span class="nc" id="L394">		entity = scope.getOrdinaryEntity(false, name);</span>
+		// CIVL allows multiple function declarations in block
+		// scope with no linkage and same identifier, all signifying
+		// the same function
+<span class="nc bnc" id="L398" title="All 2 branches missed.">		if (linkage == LinkageKind.NONE) {</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">			if (entity != null) {</span>
+<span class="nc bnc" id="L400" title="All 6 branches missed.">				if (!(civl() &amp;&amp; isFunction &amp;&amp; scope.getScopeKind() == ScopeKind.BLOCK))</span>
+<span class="nc" id="L401">					throw error(&quot;Redeclaration of identifier with no linkage. &quot;</span>
+							+ &quot;Original declaration was at &quot;
+<span class="nc" id="L403">							+ entity.getDeclaration(0).getSource(), identifier);</span>
+			} else {
+<span class="nc bnc" id="L405" title="All 2 branches missed.">				entity = isFunction ? entityAnalyzer.entityFactory.newFunction(</span>
+<span class="nc" id="L406">						name, linkage, type) : entityAnalyzer.entityFactory</span>
+<span class="nc" id="L407">						.newVariable(name, linkage, type);</span>
+				try {
+<span class="nc" id="L409">					scope.add(entity);</span>
+<span class="nc" id="L410">				} catch (UnsourcedException e) {</span>
+<span class="nc" id="L411">					throw error(e, identifier);</span>
+				}
+			}
+		} else {
+<span class="nc bnc" id="L415" title="All 2 branches missed.">			if (entity != null) {</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">				if (entity.getLinkage() != linkage)</span>
+<span class="nc" id="L417">					throw error(</span>
+<span class="nc" id="L418">							&quot;Disagreement on internal/external linkage between two declarations&quot;,</span>
+<span class="nc" id="L419">							node);</span>
+			} else {
+<span class="nc" id="L421">				entity = ast.getInternalOrExternalEntity(name);</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">				if (entity != null) {</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">					if (entity.getLinkage() != linkage)</span>
+<span class="nc" id="L424">						throw error(</span>
+<span class="nc" id="L425">								&quot;Disagreement on internal/external linkage between two declarations&quot;,</span>
+<span class="nc" id="L426">								node);</span>
+				} else {
+<span class="nc bnc" id="L428" title="All 2 branches missed.">					entity = isFunction ? entityAnalyzer.entityFactory</span>
+<span class="nc" id="L429">							.newFunction(name, linkage, type)</span>
+<span class="nc" id="L430">							: entityAnalyzer.entityFactory.newVariable(name,</span>
+<span class="nc" id="L431">									linkage, type);</span>
+<span class="nc" id="L432">					ast.add(entity);</span>
+				}
+				try {
+<span class="nc" id="L435">					scope.add(entity);</span>
+<span class="nc" id="L436">				} catch (UnsourcedException e) {</span>
+<span class="nc" id="L437">					throw error(e, identifier);</span>
+				}
+			}
+		}
+<span class="nc" id="L441">		node.setEntity(entity);</span>
+<span class="nc" id="L442">		identifier.setEntity(entity);</span>
+<span class="nc bnc" id="L443" title="All 4 branches missed.">		if (isFunction &amp;&amp; name.equals(&quot;main&quot;)) {</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">			if (scope.getParentScope() == null) {</span>
+<span class="nc" id="L445">				ast.setMain((Function) entity);</span>
+			}
+		}
+<span class="nc" id="L448">		return entity;</span>
+	}
+
+	private void addTypeToVariableOrFunction(TypeNode typeNode,
+			OrdinaryEntity entity) throws SyntaxException {
+<span class="nc bnc" id="L453" title="All 2 branches missed.">		if (typeNode != null) {</span>
+<span class="nc" id="L454">			Type type = typeNode.getType();</span>
+<span class="nc" id="L455">			Type oldType = entity.getType();</span>
+
+<span class="nc bnc" id="L457" title="All 2 branches missed.">			if (type == null)</span>
+<span class="nc" id="L458">				throw error(&quot;Internal error: type not processed&quot;, typeNode);</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">			if (oldType == null)</span>
+<span class="nc" id="L460">				entity.setType(type);</span>
+			else
+<span class="nc" id="L462">				entity.setType(entityAnalyzer.typeFactory.compositeType(</span>
+<span class="nc" id="L463">						oldType, type));</span>
+		}
+<span class="nc" id="L465">	}</span>
+
+	// precondition: type has already been set in decl and
+	// linkage has been computed.
+	private void addDeclarationToVariable(Variable variable,
+			VariableDeclarationNode declaration) throws SyntaxException {
+<span class="nc" id="L471">		TypeNode typeNode = declaration.getTypeNode();</span>
+<span class="nc" id="L472">		InitializerNode initializer = declaration.getInitializer();</span>
+<span class="nc" id="L473">		SequenceNode&lt;TypeNode&gt; typeAlignmentSpecifiers = declaration</span>
+<span class="nc" id="L474">				.typeAlignmentSpecifiers();</span>
+<span class="nc" id="L475">		SequenceNode&lt;ExpressionNode&gt; constantAlignmentSpecifiers = declaration</span>
+<span class="nc" id="L476">				.constantAlignmentSpecifiers();</span>
+
+<span class="nc" id="L478">		addTypeToVariableOrFunction(typeNode, variable);</span>
+<span class="nc bnc" id="L479" title="All 2 branches missed.">		if (initializer != null) {</span>
+<span class="nc" id="L480">			InitializerNode oldInitializer = variable.getInitializer();</span>
+
+<span class="nc bnc" id="L482" title="All 2 branches missed.">			if (oldInitializer != null)</span>
+<span class="nc" id="L483">				throw error(</span>
+<span class="nc" id="L484">						&quot;Re-initialization of variable &quot; + variable.getName()</span>
+<span class="nc" id="L485">								+ &quot;. First was at &quot;</span>
+<span class="nc" id="L486">								+ oldInitializer.getSource() + &quot;.&quot;, initializer);</span>
+<span class="nc" id="L487">			variable.setInitializer(initializer);</span>
+<span class="nc" id="L488">			variable.setDefinition(declaration);</span>
+<span class="nc" id="L489">			declaration.setIsDefinition(true);</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">		} else if (variable.getLinkage() == LinkageKind.NONE) {</span>
+<span class="nc" id="L491">			variable.setDefinition(declaration);</span>
+<span class="nc" id="L492">			declaration.setIsDefinition(true);</span>
+		}
+<span class="nc bnc" id="L494" title="All 2 branches missed.">		if (typeAlignmentSpecifiers != null) {</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">			for (TypeNode child : typeAlignmentSpecifiers)</span>
+<span class="nc" id="L496">				variable.addTypeAlignment(entityAnalyzer.typeAnalyzer</span>
+<span class="nc" id="L497">						.processTypeNode(child));</span>
+		}
+<span class="nc bnc" id="L499" title="All 2 branches missed.">		if (constantAlignmentSpecifiers != null) {</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">			for (ExpressionNode expression : constantAlignmentSpecifiers) {</span>
+<span class="nc" id="L501">				Value constant = entityAnalyzer.valueOf(expression);</span>
+
+<span class="nc bnc" id="L503" title="All 2 branches missed.">				if (constant == null)</span>
+<span class="nc" id="L504">					throw error(&quot;Value for enumerator must be constant&quot;,</span>
+<span class="nc" id="L505">							expression);</span>
+<span class="nc" id="L506">				variable.addConstantAlignment(constant);</span>
+			}
+		}
+		// TODO: set storage duration. See C11 Sec. 6.2.4.
+<span class="nc" id="L510">		variable.addDeclaration(declaration);</span>
+<span class="nc" id="L511">	}</span>
+
+	private void addDeclarationToFunction(Function function,
+			FunctionDeclarationNode declaration) throws SyntaxException {
+<span class="nc" id="L515">		TypeNode typeNode = declaration.getTypeNode();</span>
+		OrdinaryDeclarationNode previousDeclaration;
+<span class="nc" id="L517">		Iterator&lt;DeclarationNode&gt; declarationIter = function.getDeclarations()</span>
+<span class="nc" id="L518">				.iterator();</span>
+
+<span class="nc bnc" id="L520" title="All 2 branches missed.">		if (declarationIter.hasNext())</span>
+<span class="nc" id="L521">			previousDeclaration = (OrdinaryDeclarationNode) declarationIter</span>
+<span class="nc" id="L522">					.next();</span>
+		else
+<span class="nc" id="L524">			previousDeclaration = null;</span>
+<span class="nc" id="L525">		addTypeToVariableOrFunction(typeNode, function);</span>
+<span class="nc bnc" id="L526" title="All 2 branches missed.">		if (previousDeclaration == null) {</span>
+<span class="nc bnc" id="L527" title="All 2 branches missed.">			if (declaration.hasInlineFunctionSpecifier())</span>
+<span class="nc" id="L528">				function.setIsInlined(true);</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">			if (declaration.hasNoreturnFunctionSpecifier())</span>
+<span class="nc" id="L530">				function.setDoesNotReturn(true);</span>
+<span class="nc bnc" id="L531" title="All 2 branches missed.">			if (declaration.hasAtomicFunctionSpeciier())</span>
+<span class="nc" id="L532">				function.setAtomic(true);</span>
+<span class="nc bnc" id="L533" title="All 2 branches missed.">			if (declaration.hasSystemFunctionSpeciier())</span>
+<span class="nc" id="L534">				function.setSystemFunction(true);</span>
+<span class="nc" id="L535">		} else {</span>
+			// the standards never says that this is a problem, so commented it
+			// out
+			// if (declaration.hasInlineFunctionSpecifier() != function
+			// .isInlined())
+			// throw error(
+			// &quot;Disagreement on inline function specifier at function declaration.&quot;
+			// + &quot;  Previous declaration was at &quot;
+			// + previousDeclaration.getSource(), declaration);
+<span class="nc" id="L544">			if (declaration.hasNoreturnFunctionSpecifier() != function</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">					.doesNotReturn())</span>
+<span class="nc" id="L546">				throw error(</span>
+<span class="nc" id="L547">						&quot;Disagreement on Noreturn function specifier at function declaration.&quot;</span>
+								+ &quot;  Previous declaration was at &quot;
+<span class="nc" id="L549">								+ previousDeclaration.getSource(), declaration);</span>
+		}
+<span class="nc bnc" id="L551" title="All 2 branches missed.">		if (declaration instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L552">			FunctionDefinitionNode previousDefinition = function</span>
+<span class="nc" id="L553">					.getDefinition();</span>
+
+<span class="nc bnc" id="L555" title="All 2 branches missed.">			if (previousDefinition != null)</span>
+<span class="nc" id="L556">				throw error(</span>
+<span class="nc" id="L557">						&quot;Redefinition of function.  Previous definition was at &quot;</span>
+<span class="nc" id="L558">								+ previousDefinition.getSource(), declaration);</span>
+<span class="nc" id="L559">			function.setDefinition(declaration);</span>
+		}
+<span class="nc" id="L561">		function.addDeclaration(declaration);</span>
+<span class="nc" id="L562">	}</span>
+
+	private boolean hasNoStorageClass(OrdinaryDeclarationNode node) {
+<span class="nc bnc" id="L565" title="All 4 branches missed.">		if (node.hasExternStorage() || node.hasStaticStorage())</span>
+<span class="nc" id="L566">			return false;</span>
+<span class="nc bnc" id="L567" title="All 2 branches missed.">		if (node instanceof VariableDeclarationNode)</span>
+<span class="nc bnc" id="L568" title="All 2 branches missed.">			return !(((VariableDeclarationNode) node).hasRegisterStorage() || ((VariableDeclarationNode) node)</span>
+<span class="nc bnc" id="L569" title="All 2 branches missed.">					.hasAutoStorage());</span>
+<span class="nc" id="L570">		return true;</span>
+	}
+
+	private void processGotos(ASTNode node) throws SyntaxException {
+<span class="nc" id="L574">		Iterable&lt;ASTNode&gt; childIter = node.children();</span>
+
+<span class="nc bnc" id="L576" title="All 2 branches missed.">		if (node instanceof GotoNode) {</span>
+<span class="nc" id="L577">			IdentifierNode identifier = ((GotoNode) node).getLabel();</span>
+<span class="nc" id="L578">			String name = identifier.name();</span>
+<span class="nc" id="L579">			Scope scope = node.getScope();</span>
+<span class="nc" id="L580">			Label label = scope.getLexicalLabel(name);</span>
+
+<span class="nc bnc" id="L582" title="All 2 branches missed.">			if (label == null)</span>
+<span class="nc" id="L583">				throw error(&quot;Goto statement refers to non-existent label&quot;,</span>
+<span class="nc" id="L584">						identifier);</span>
+<span class="nc" id="L585">			identifier.setEntity(label);</span>
+		}
+<span class="nc bnc" id="L587" title="All 2 branches missed.">		for (ASTNode child : childIter) {</span>
+<span class="nc bnc" id="L588" title="All 2 branches missed.">			if (child != null)</span>
+<span class="nc" id="L589">				processGotos(child);</span>
+		}
+<span class="nc" id="L591">	}</span>
+
+	private boolean civl() {
+<span class="nc bnc" id="L594" title="All 2 branches missed.">		return language == Language.CIVL_C;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,46 @@
+/* Commandline execution:
+ * 		civl verify diffusion.cvl
+ */
+#include<civlc.h>
+
+int nx;
+$input double u0[2];
+int nsteps;
+double kappa;
+double data[3][2];
+double u[2];
+
+void init() {  
+  nx = 2;
+  nsteps = 2;
+  kappa = 0.1;
+  for (int i = 0; i < nx; i++) {
+    u[i] = u0[i];
+  }
+}
+
+void write(int time) {
+  for (int i = 0; i < nx; i++) {
+    data[time][i] = u[i];
+  }
+}
+
+void update() {
+	double u_new[nx];
+	
+	for (int i=1; i<nx-1; i++) {
+	  u_new[i] =  u[i] + kappa*(u[i+1] + u[i-1] - 2*u[i]);
+    }
+	for (int i=1; i<nx-1; i++) {
+	  u[i] = u_new[i];
+	}
+}
+
+void main() {
+	init();
+	write(0);
+	for (int iter = 1; iter <= nsteps; iter++) {
+		update();
+		write(iter);
+	}
+}

@@ -1,0 +1,10 @@
+#include <civlc.cvh>
+#include<pointer.cvh>
+
+void main(){
+  int a[5] = {[4]=4};
+  int b[5];
+  
+  $copy(&b, &a);
+  $assert((b[4] == 4));
+}

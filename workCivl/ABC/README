@@ -1,0 +1,63 @@
+                             ABC: A C Front-end
+                         http://vsl.cis.udel.edu/abc
+
+ABC is a Java-based C front-end.  It provides a pre-processor and
+parser for C programs.  These produce an Abstract Syntax Tree
+representation of the program.  The AST includes information such as
+the type of every expression, the "symbol table" (i.e., the mapping
+which yields the entity corresponding to each identifier in the
+program), and a precise description of the origin of each AST element
+in the original source files.  There is also support for transforming
+ASTs.  
+
+The ABC interface is intended to be thoroughly documented and easy to
+use.  The code is 100% Java.
+
+No one is sure what ABC stands for.  It may stand for "ANTLR-Based C
+front-end" because it uses the ANTLR parser generator at several
+steps.  However, ABC goes significantly beyond the services provided
+by these ANTLR parsers.  ABC may stand for "A Better C front-end" or
+using it may be as easy as the "ABCs".
+
+ABC is developed by Stephen F. Siegel and Timothy K. Zirkel at the
+Verified Software Laboratory, University of Delaware.  It is
+distributed under the terms of the GNU Lessor General Public
+License (LGPL).
+
+------------------------- Binary Installation -------------------------
+
+For most users, this will be the easiest way to install and use CIVL.
+
+1. Install a Java 7 SDK if you have not already.  Go to
+http://www.oracle.com/technetwork/java/javase/downloads/ for the
+latest from Oracle.  On linux, you can optionally sudo apt-get install
+openjdk-7-jdk.
+
+2. If you already have the VSL dependencies library, you may
+skip this step.  Otherwise, download the archive of VSL
+dependencies from http://vsl.cis.udel.edu/lib/tools/vsl_depend,
+choosing the version for your OS type (32-bit linux,
+64-bit linux, or 64-bit OS X).  Unzip and untar the
+downloaded .tgz file and you will have a folder named "vsl".
+If you do not already have a directory /opt, create one with
+"mkdir /opt".  Move vsl into /opt.  Use sudo as needed.
+
+3. Download the ABC distribution from http://vsl.cis.udel.edu/abc.
+
+4. Unzip and untar the downloaded file if this does not happen
+automatically.  This should result in a folder named
+ABC-TAG, where TAG is some version id string.  This folder
+contains the following:
+
+ - README   : this file
+ - bin      : containing one executable sh script called "civl"
+ - lib      : containing civl-TAG.jar
+ - licenses : licenses for CIVL and included libraries
+ - examples : some example CIVL programs
+
+5. Move ABC-TAG into /opt.
+
+6. Put the abc script in your path however you like to put things
+in your path.   Either move it to a directory in your path,
+or create a symlink to it, or edit your .profile or equivalent
+to put it in your path.

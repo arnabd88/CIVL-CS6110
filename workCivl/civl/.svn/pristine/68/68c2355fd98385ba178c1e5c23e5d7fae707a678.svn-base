@@ -1,0 +1,39 @@
+#include<civlc.cvh>
+
+int g=0;
+
+void proc0(){
+  int x,y,z;
+
+  $atomic{
+    while(1){
+      x=0;
+      y=0;
+      z=0;
+    }
+  }
+}
+
+void proc1(){
+  g=1;
+  $assert(g==1);
+}
+
+void proc2(){
+  g=2;
+  $assert(g==2);
+}
+
+int main(){
+  $proc p0, p1, p2;
+  
+  $atomic{
+    p0=$spawn proc0();
+    p1=$spawn proc1();
+    p2=$spawn proc2();
+  }
+  $wait(p1);
+  $wait(p2);
+  $assert(g==0);
+  $wait(p0);
+}

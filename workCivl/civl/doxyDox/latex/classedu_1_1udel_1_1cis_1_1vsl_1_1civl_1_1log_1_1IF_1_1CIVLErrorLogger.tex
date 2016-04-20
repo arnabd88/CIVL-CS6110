@@ -1,0 +1,181 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Error\+Logger Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Error\+Logger@{edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Error\+Logger}}
+
+
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} logs all errors of the system.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Error\+Logger\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Error\+Logger\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_a5ae3f46feb78d37487a50b2f89f2cf0d}{C\+I\+V\+L\+Error\+Logger} (File directory, String session\+Name, Print\+Stream out, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config, G\+M\+C\+Configuration gmc\+Config, Symbolic\+Universe universe, boolean solve)
+\begin{DoxyCompactList}\small\item\em creates a new instance of error logger. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_aa473ed1e1d4106f585a9699d2d3d7139}{log\+Error} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, String\+Buffer state\+String, Boolean\+Expression claim, Result\+Type result\+Type, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLException_1_1ErrorKind}{Error\+Kind} error\+Kind, String message)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_af952f1931adda68299fcf692d5fb9288}{log\+Simple\+Error} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, String\+Buffer state\+String, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLException_1_1ErrorKind}{Error\+Kind} error\+Kind, String message)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Checks whether the path condition is satisfiable and logs an error if it is (or might be). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} logs all errors of the system. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_a5ae3f46feb78d37487a50b2f89f2cf0d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger@{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger}!C\+I\+V\+L\+Error\+Logger@{C\+I\+V\+L\+Error\+Logger}}
+\index{C\+I\+V\+L\+Error\+Logger@{C\+I\+V\+L\+Error\+Logger}!edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger@{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger}}
+\subsubsection[{C\+I\+V\+L\+Error\+Logger}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Error\+Logger.\+C\+I\+V\+L\+Error\+Logger (
+\begin{DoxyParamCaption}
+\item[{File}]{directory, }
+\item[{String}]{session\+Name, }
+\item[{Print\+Stream}]{out, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config, }
+\item[{G\+M\+C\+Configuration}]{gmc\+Config, }
+\item[{Symbolic\+Universe}]{universe, }
+\item[{boolean}]{solve}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_a5ae3f46feb78d37487a50b2f89f2cf0d}
+
+
+creates a new instance of error logger. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em directory} & \\
+\hline
+{\em session\+Name} & \\
+\hline
+{\em out} & \\
+\hline
+{\em config} & \\
+\hline
+{\em universe} & \\
+\hline
+{\em solve} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_aa473ed1e1d4106f585a9699d2d3d7139}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger@{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger}!log\+Error@{log\+Error}}
+\index{log\+Error@{log\+Error}!edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger@{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger}}
+\subsubsection[{log\+Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Error\+Logger.\+log\+Error (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{String\+Buffer}]{state\+String, }
+\item[{Boolean\+Expression}]{claim, }
+\item[{Result\+Type}]{result\+Type, }
+\item[{{\bf Error\+Kind}}]{error\+Kind, }
+\item[{String}]{message}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_aa473ed1e1d4106f585a9699d2d3d7139}
+Report a (possible) error detected in the course of evaluating an expression. This is the method that should normally be used for logging, reporting, and recovering from errors. 
+
+This is the general protocol for checking conditions and reporting and recovering from errors\+: first, check some condition holds and call the result of that check \char`\"{}condsat\char`\"{}, which may be Y\+E\+S, N\+O, or M\+A\+Y\+B\+E. If condsat is Y\+E\+S, proceed. Otherwise, there is a problem and you should call this method. 
+
+This method first checks the satisfiability of the path condition, call the result \char`\"{}pcsat\char`\"{}. Logs a violation with certainty determined as follows\+: 
+\begin{DoxyItemize}
+\item pcsat=Y\+E\+S \&\& condsat=N\+O \+: certainty=P\+R\+O\+V\+E\+A\+B\+L\+E 
+\item pcsat=Y\+E\+S \&\& condsat=M\+A\+Y\+B\+E \+: certainty=M\+A\+Y\+B\+E 
+\item pcsat=M\+A\+Y\+B\+E \&\& condsat=N\+O \+: certainty=M\+A\+Y\+B\+E 
+\item pcsat=M\+A\+Y\+B\+E \&\& condsat=M\+A\+Y\+B\+E \+: certainty=M\+A\+Y\+B\+E 
+\item pcsat=N\+O\+: no error to report 
+\end{DoxyItemize}
+
+Returns the state obtained by adding the claim to the pc of the given state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & the source of the expression being evaluated \\
+\hline
+{\em state} & the state in which the evaluation is taking place \\
+\hline
+{\em process} & a string representation of the process that is evaluating the expression; used for reporting errors \\
+\hline
+{\em state\+String} & a string representation of the state which is used in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLExecutionException}{C\+I\+V\+L\+Execution\+Exception} that is recorded in the log \\
+\hline
+{\em claim} & the boolean expression which was expected to hold. This should already have been checked for validity before invoking this method. The result of that check should not have been \char`\"{}\+Y\+E\+S\char`\"{} (i.\+e., definitely valid); that is why you are calling this method \\
+\hline
+{\em result\+Type} & the result of evaluating the validity of the claim (which you did before you called this method). \\
+\hline
+{\em error\+Kind} & the kind of error you want to report if it turns out there is an error \\
+\hline
+{\em message} & the message you want to include in the error report if it turns out there is an error \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & if it turns out the path condition is unsatisfiable; in this case no error will be reported since the current path is infeasible \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+the state obtained by adding the claim to the pc of the given state. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_af952f1931adda68299fcf692d5fb9288}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger@{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger}!log\+Simple\+Error@{log\+Simple\+Error}}
+\index{log\+Simple\+Error@{log\+Simple\+Error}!edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger@{edu\+::udel\+::cis\+::vsl\+::civl\+::log\+::\+I\+F\+::\+C\+I\+V\+L\+Error\+Logger}}
+\subsubsection[{log\+Simple\+Error}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+log.\+I\+F.\+C\+I\+V\+L\+Error\+Logger.\+log\+Simple\+Error (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{String\+Buffer}]{state\+String, }
+\item[{{\bf Error\+Kind}}]{error\+Kind, }
+\item[{String}]{message}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger_af952f1931adda68299fcf692d5fb9288}
+
+
+Checks whether the path condition is satisfiable and logs an error if it is (or might be). 
+
+If the path condition is definitely unsatisfiable, there is no error to log, and an Unsatisfiable\+Path\+Condition\+Exception is thrown.
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & source code element used to report the error \\
+\hline
+{\em state} & the current state in which the possible error is detected \\
+\hline
+{\em process} & the process name, i.\+e, \char`\"{}p\char`\"{}+process identifier \\
+\hline
+{\em state\+String} & the string representation of state where the error occurs \\
+\hline
+{\em error\+Kind} & the kind of error (e.\+g., D\+E\+R\+E\+F\+E\+R\+E\+N\+C\+E) \\
+\hline
+{\em message} & the message to include in the error report \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & if the path condition is definitely unsatisfiable \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/log/\+I\+F/C\+I\+V\+L\+Error\+Logger.\+java\end{DoxyCompactItemize}

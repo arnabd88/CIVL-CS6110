@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OmpExecutableNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.omp</a> &gt; <span class="el_source">OmpExecutableNode.java</span></div><h1>OmpExecutableNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.omp;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+
+/**
+ * Represents an OpenMP executable Construct.&lt;br&gt;
+ * The children of an OmpStatementNode are:
+ * &lt;ul&gt;
+ * &lt;li&gt;SequenceNode&amp;lt;IdentifierExpressionNode&amp;gt; &quot;sharedList&quot;, the list of
+ * identifiers declared by &lt;code&gt;shared&lt;/code&gt;&lt;/li&gt;
+ * &lt;li&gt;SequenceNode&amp;lt;IdentifierExpressionNode&amp;gt; &quot;privateList&quot;, the list of
+ * identifiers declared by &lt;code&gt;private&lt;/code&gt;&lt;/li&gt;
+ * &lt;li&gt;SequenceNode&amp;lt;IdentifierExpressionNode&amp;gt; &quot;firstprivateList&quot;, the list
+ * of identifiers declared by &lt;code&gt;firstprivate&lt;/code&gt;&lt;/li&gt;
+ * &lt;li&gt;SequenceNode&amp;lt;IdentifierExpressionNode&amp;gt; &quot;lastprivateList&quot;, the list
+ * of identifiers declared by &lt;code&gt;lastprivate&lt;/code&gt;&lt;/li&gt;
+ * &lt;li&gt;SequenceNode&amp;lt;IdentifierExpressionNode&amp;gt; &quot;copyinList&quot;, the list of
+ * identifiers declared by &lt;code&gt;copyin&lt;/code&gt;&lt;/li&gt;
+ * &lt;li&gt;SequenceNode&amp;lt;IdentifierExpressionNode&amp;gt; &quot;copyprivateList&quot;, the list
+ * of identifiers declared by &lt;code&gt;copyprivate&lt;/code&gt;&lt;/li&gt;
+ * &lt;li&gt;SequenceNode&amp;lt;OmpReductionNode&amp;gt; &quot;reductionList&quot;, the list of
+ * operators and identifiers declared by &lt;code&gt;reduction&lt;/code&gt;&lt;/li&gt;
+ * &lt;li&gt;StatementNode, the statement node affected by this pragma&lt;/li&gt;.
+ * &lt;/ul&gt;
+ * In the constructor, these children are all set to null.
+ * 
+ */
+public interface OmpExecutableNode extends OmpNode, StatementNode {
+
+	/**
+	 * The kind of this OpenMP statement:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;PARALLEL: the parallel constuct&lt;/li&gt;
+	 * &lt;li&gt;SYNCHRONIZATION: synchronization constructs such as master, critical,
+	 * barrier, taskwait, taskgroup, atomic, flush, ordered, etc.&lt;/li&gt;
+	 * &lt;li&gt;WORKSHARING: worksharing constructs such as sections (section) and
+	 * single.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @author Manchun Zheng
+	 * 
+	 */
+<span class="nc" id="L45">	public enum OmpExecutableKind {</span>
+<span class="nc" id="L46">		PARALLEL, SYNCHRONIZATION, WORKSHARING</span>
+	}
+
+	/**
+	 * Checks if this node already has its statement sub-node.
+	 * 
+	 * @return true iff the statement sub-node is not null.
+	 */
+	boolean isComplete();
+
+	/**
+	 * Returns the OpenMP statement kind of this node, i.e., either it is a
+	 * parallel, worksharing or synchronization node.
+	 * 
+	 * @return the OpenMP statement kind of this node.
+	 */
+	OmpExecutableKind ompExecutableKind();
+
+	/**
+	 * Returns true iff nowait is applied.
+	 * 
+	 * @return true iff nowait is applied.
+	 */
+	boolean nowait();
+
+	/**
+	 * Updates the nowait flag.
+	 * 
+	 * @param value
+	 *            The value to be used to update the nowait flag.
+	 */
+	void setNowait(boolean value);
+
+	/**
+	 * Returns the statement node affected by this OpenMP pragma. e.g., the
+	 * following code is represented as an OpenMP parallel node with the
+	 * following compound statements as its statement node.&lt;br&gt;
+	 * &lt;code&gt;
+	 * #prama omp parallel
+	 * {
+	 *   ...//statements
+	 * }
+	 * &lt;/code&gt;
+	 * 
+	 * @return  the statement node affected by this OpenMP pragma.
+	 */
+	StatementNode statementNode();
+
+	/**
+	 * Updates the statement sub-node.
+	 * 
+	 * @param statementNode
+	 *            The node to be used as the statement sub-node.
+	 */
+	void setStatementNode(StatementNode statementNode);
+
+	/**
+	 * Returns the list of identifier nodes declared by &lt;code&gt;shared&lt;/code&gt;
+	 * clause. There are several possibilities:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;&lt;code&gt;shared(x, y, z, ...)&lt;/code&gt;: a non-empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;&lt;code&gt;shared()&lt;/code&gt;: an empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;no &lt;code&gt;shared&lt;/code&gt; clause: null.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @return the list of identifier nodes declared by &lt;code&gt;shared&lt;/code&gt;
+	 * clause.
+	 */
+	SequenceNode&lt;IdentifierExpressionNode&gt; sharedList();
+
+	/**
+	 * Updates the shared list of this node.
+	 * 
+	 * @param list
+	 *            The list to be used as the shared list.
+	 */
+	void setSharedList(SequenceNode&lt;IdentifierExpressionNode&gt; list);
+
+	/**
+	 * Returns the list of identifier nodes declared by &lt;code&gt;private&lt;/code&gt;
+	 * clause. There are several possibilities:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;&lt;code&gt;private(x, y, z, ...)&lt;/code&gt;: a non-empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;&lt;code&gt;private()&lt;/code&gt;: an empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;no &lt;code&gt;private&lt;/code&gt; clause: null.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @return the list of identifier nodes declared by &lt;code&gt;private&lt;/code&gt;
+	 * clause.
+	 */
+	SequenceNode&lt;IdentifierExpressionNode&gt; privateList();
+
+	/**
+	 * Updates the private list of this node.
+	 * 
+	 * @param list
+	 *            The list to be used as the private list.
+	 */
+	void setPrivateList(SequenceNode&lt;IdentifierExpressionNode&gt; list);
+
+	/**
+	 * Returns the list of identifier nodes declared by
+	 * &lt;code&gt;firstprivate&lt;/code&gt; clause. There are several possibilities:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;&lt;code&gt;firstprivate(x, y, z, ...)&lt;/code&gt;: a non-empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;&lt;code&gt;firstprivate()&lt;/code&gt;: an empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;no &lt;code&gt;firstprivate&lt;/code&gt; clause: null.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @return the list of identifier nodes declared by
+	 * &lt;code&gt;firstprivate&lt;/code&gt; clause.
+	 */
+	SequenceNode&lt;IdentifierExpressionNode&gt; firstprivateList();
+
+	/**
+	 * Updates the firstprivate list of this node.
+	 * 
+	 * @param list
+	 *            The list to be used as the firstprivate list.
+	 */
+	void setFirstprivateList(SequenceNode&lt;IdentifierExpressionNode&gt; list);
+
+	/**
+	 * Returns the list of identifier nodes declared by &lt;code&gt;lastprivate&lt;/code&gt;
+	 * clause. There are several possibilities:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;&lt;code&gt;lastprivate(x, y, z, ...)&lt;/code&gt;: a non-empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;&lt;code&gt;lastprivate()&lt;/code&gt;: an empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;no &lt;code&gt;lastprivate&lt;/code&gt; clause: null.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @return the list of identifier nodes declared by &lt;code&gt;lastprivate&lt;/code&gt;
+	 * clause.
+	 */
+	SequenceNode&lt;IdentifierExpressionNode&gt; lastprivateList();
+
+	/**
+	 * Updates the lastprivate list of this node.
+	 * 
+	 * @param list
+	 *            The list to be used as the lastprivate list.
+	 */
+	void setLastprivateList(SequenceNode&lt;IdentifierExpressionNode&gt; list);
+
+	/**
+	 * Returns the list of identifier nodes declared by &lt;code&gt;copyin&lt;/code&gt;
+	 * clause. There are several possibilities:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;&lt;code&gt;copyin(x, y, z, ...)&lt;/code&gt;: a non-empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;&lt;code&gt;copyin()&lt;/code&gt;: an empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;no &lt;code&gt;copyin&lt;/code&gt; clause: null.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @return
+	 */
+	SequenceNode&lt;IdentifierExpressionNode&gt; copyinList();
+
+	/**
+	 * Updates the copyin list of this node.
+	 * 
+	 * @param list
+	 *            The list to be used as the copyin list.
+	 */
+	void setCopyinList(SequenceNode&lt;IdentifierExpressionNode&gt; list);
+
+	/**
+	 * Returns the list of identifier nodes declared by &lt;code&gt;copyprivate&lt;/code&gt;
+	 * clause. There are several possibilities:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;&lt;code&gt;copyprivate(x, y, z, ...)&lt;/code&gt;: a non-empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;&lt;code&gt;copyprivate()&lt;/code&gt;: an empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;no &lt;code&gt;copyprivate&lt;/code&gt; clause: null.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @return the list of identifier nodes declared by &lt;code&gt;copyprivate&lt;/code&gt;
+	 * clause.
+	 */
+	SequenceNode&lt;IdentifierExpressionNode&gt; copyprivateList();
+
+	/**
+	 * Updates the copyprivate list of this node.
+	 * 
+	 * @param list
+	 *            The list to be used as the copyprivate list.
+	 */
+	void setCopyprivateList(SequenceNode&lt;IdentifierExpressionNode&gt; list);
+
+	/**
+	 * Returns the list of identifier nodes declared by &lt;code&gt;reduction&lt;/code&gt;
+	 * clause.
+	 * 
+	 * There are several possibilities:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;&lt;code&gt;reduction(operator: x, y, z, ...)&lt;/code&gt;: the operator and a
+	 * non-empty sequence node;&lt;/li&gt;
+	 * &lt;li&gt;no &lt;code&gt;reduction&lt;/code&gt; clause: null.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @return the list of identifier nodes declared by &lt;code&gt;reduction&lt;/code&gt;
+	 * clause.
+	 */
+	SequenceNode&lt;OmpReductionNode&gt; reductionList();
+
+	/**
+	 * Updates the reduction list of this node.
+	 * 
+	 * @param list
+	 *            The list to be used as the reduction list.
+	 */
+	void setReductionList(SequenceNode&lt;OmpReductionNode&gt; list);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

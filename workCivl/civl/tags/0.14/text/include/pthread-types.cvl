@@ -1,0 +1,203 @@
+#ifdef __PTHREAD_TYPES__
+#else
+#define __PTHREAD_TYPES__
+#include <sched.cvl>
+
+//Mutex types
+enum{
+PTHREAD_MUTEX_NORMAL,
+PTHREAD_MUTEX_RECURSIVE,
+PTHREAD_MUTEX_ERRORCHECK
+};
+
+enum{
+PTHREAD_MUTEX_STALLED, 
+PTHREAD_MUTEX_ROBUST
+};
+
+enum{
+PTHREAD_CREATE_JOINABLE,
+PTHREAD_CREATE_DETACHED
+};
+
+enum{
+PTHREAD_SCOPE_SYSTEM, 
+PTHREAD_SCOPE_PROCESS
+};
+
+enum{
+PTHREAD_INHERIT_SCHED,
+PTHREAD_EXPLICIT_SCHED
+};
+
+enum{
+PTHREAD_PROCESS_SHARED,
+PTHREAD_PROCESS_PRIVATE,
+};
+
+enum{
+PTHREAD_BARRIER_SERIAL_THREAD
+};
+
+//Error definitions
+enum{
+EINVAL,      //Designates an invalid value
+ENOTSUP,
+EOWNERDEAD,  //Designates the termination of the owning thread
+EBUSY,        //Mutex is already locked
+EDEADLK,      //If mutex type is errorcheck and already owns the mutex
+EPERM,        //If mutex is robust or errorcheck and does not own the mutex
+ERSCH        
+};
+
+// In process of implementing
+
+typedef struct {
+  $proc queue[];
+  $proc head;
+  $proc tail;
+} proc_fifo_queue;
+
+/* pthread_barrierattr_t
+*/
+typedef struct { 
+  int pshared;
+} pthread_barrierattr_t;
+
+/* pthread_barrier_t
+  A structure which contains a global barrier which each of the threads must key into.
+*/
+typedef struct {
+  pthread_barrierattr_t attr;
+  int numThrds;
+  int size;
+  $gbarrier barr;
+} pthread_barrier_t;
+  
+/* pthread_spinlock_t
+  Very simple locking mechanism, spins until the lock is free.
+*/
+typedef struct {
+  $proc owner;
+  _Bool lock;
+  int pshared;
+}pthread_spinlock_t;
+
+/* Implemented struct definitions */
+
+/* pthread_attr_t struct definition
+  Description: This struct corresponds to the pthread_attr_t which is the attribute of a pthread_t. It's fields
+  define the way the pthread_t is able to interact (join/detach), (memory capacity), (scope) etc.
+  
+  Fields:
+  int detachstate: Defines a threads ability to join with two values: PTHREAD_CREATE_DETACHED and PTHREAD_CREATE_JOINABLE
+  int inheritsched: The inheritance scheduling policy of the thread
+  int contentionscope: Defines the contention scope of the thread
+  int schedpolicy: Determines the scheduling policy of the thread
+  
+*/
+
+typedef struct {
+  int detachstate;
+  int inheritsched;
+  int contentionscope;
+  int schedpolicy;
+  //sched_param param;
+} pthread_attr_t;
+
+/* pthread_mutexattr_t struct definition
+  Description: The pthread_mutexattr_t defines multiple attributes of a mutex and controls its interactions with threads 
+  Fields: robust: defines the robustness of the mutex; if robust and the owning thread terminates, it will notify the 
+          next thread of this to prevent deadlocks and other errors
+          pshared: defines the process shared element of the thread and which processes can interact with the mutex
+          protocol: defines the priority protocol of the mutex and which threads may interact first
+          type: defines the type of the mutex as either PTHREAD_MUTEX_DEFAULT/NORMAL, PTHREAD_MUTEX_ERRORCHECK, or 
+          PTHREAD_MUTEX_RECURSIVE, each explained in pthread_mutex_lock below
+          prioceiling: defines the lowest priority the mutex's critical section can be at
+*/
+
+typedef struct {
+  int robust;
+  int pshared;
+  int protocol;
+  int type;
+  int prioceiling;
+}pthread_mutexattr_t;
+
+/* pthread_mutex_t struct definition
+  Description: The pthread_mutex_t is a locking mechanism for threads to interact with in order to control the scheduling
+  of the threads. It can be locked, which allows for blocking of other threads waiting on the mutex and unlocked, allowing
+  access. It has a pthread_mutexattr_t which defines its behavior.
+  Fields: count - used for recursive mutex, incremented when locked, decremented when unlocked, mutex released when count is 0
+  owner - current process owner of the mutex
+  lock - int of 0 or 1, respectively 0 if unlocked, 1 if locked
+  prioceiling - allows locking without adherence to the priority ceiling
+  attr - see above
+*/
+
+typedef struct {
+  int count;
+  int ownerid;
+  int lock;
+  int prioceiling;
+  proc_fifo_queue contenders;
+  pthread_mutexattr_t attr;
+} pthread_mutex_t;
+
+/* pthread_rwlockattr_t
+*/
+typedef struct {
+  int pshared;
+} pthread_rwlockattr_t;
+
+/* pthread_rwlock_t struct definition
+  Description: Reader-writer lock. When a reader has the lock other readers may operate, but not the writer.
+  Only a single writer can operate at one time and locks out readers
+*/
+typedef struct {
+  $proc rdowners[];
+  int rdlocks[];
+  _Bool empty;
+  $proc wrowner;
+  _Bool wrlock;
+  pthread_rwlockattr_t attr;
+} pthread_rwlock_t;
+
+
+/* pthread_cond_t struct definition
+  Description: The pthread_cond_t is another locking mechanism which interacts with the mutex variable. When
+  the mutex is locked, the condition can be accessed, leading the accessing thread to unlock it, and sleep
+  until the signal is given
+  Fields: proccount - specifies the number of processes/threads still waiting on this condition variable
+  signal - Boolean value stating whether the condition is satisfied (indicated by 1) or not (0)
+*/
+
+typedef struct {
+  int proccount;
+  _Bool signal;
+} pthread_cond_t;
+
+/* pthread_t struct definition
+  Description: The pthread_t is a struct containing a $proc variable as well as a thread attribute which defines
+  its interactions with other threads. It encapsulates the $proc and allows attributes to apply to it.
+  Fields: thr: the $proc variable that is the heart of the thread
+  attr: see above
+*/
+
+typedef struct {
+  $proc thr;
+  const pthread_attr_t attr;
+  int pid;
+  _Bool terminated;
+} pthread_t;
+
+/* __pthread_pool_t struct definition
+  Description: The pthread_pool_t is the pool where threads are stored in an array of pointers to threads
+  in order to access them after creation
+*/
+typedef struct {
+  pthread_t** threads;
+  int len;
+} __pthread_pool_t;
+
+#endif

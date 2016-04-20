@@ -1,0 +1,5 @@
+
+- library patters
+The general pattern is, each concurrency dialect has a “support library” called civl-X, 
+where X is one of mpi, cuds, pthread, omp, etc.
+Every type, constant, and function defined in civl-X has a name that starts with $X_.

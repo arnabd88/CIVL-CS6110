@@ -1,0 +1,241 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression}}
+
+
+\hyperlink{structA}{A} system guard expression stores the necessary information (library, function name and arguments of the function call) for calculating the guard of a system function call.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a4513fd6125801e577cbc9380c3c28305}{Common\+System\+Guard\+Expression} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope, String library, String function, List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} $>$ args, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type)
+\begin{DoxyCompactList}\small\item\em Create a new instance of system guard expression. \end{DoxyCompactList}\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_1_1ExpressionKind}{Expression\+Kind} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a28f73a477b739c9a6d373f9054df0069}{expression\+Kind} ()
+\begin{DoxyCompactList}\small\item\em Returns the kind of this expression. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a675f9f4b7a709abffb16fec82b4c7627}{variable\+Addressed\+Of} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Compute the set of variables visible from a certain scope that appear in an address-\/of expression. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_af2d50de98136d6cff1e9a65226288316}{variable\+Addressed\+Of} ()
+\begin{DoxyCompactList}\small\item\em Compute the set of variables that appear in an address-\/of expression. \end{DoxyCompactList}\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a6cf4df088f3f1aec840e5cd470249659}{library} ()
+\begin{DoxyCompactList}\small\item\em The name of the library that the invoked function belongs to. \end{DoxyCompactList}\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a94f12be0f7c9dd233f55af3c96f06c3f}{function\+Name} ()
+\begin{DoxyCompactList}\small\item\em The name of the invoked function. \end{DoxyCompactList}\item 
+List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_ab77e03b8c3c57ecd8da9982f001e78cf}{arguments} ()
+\begin{DoxyCompactList}\small\item\em The list of arguments that this function call uses. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a7e06918f015eaabbff37eb3141ff1869}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a7e06918f015eaabbff37eb3141ff1869}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a503acdcbe893067268690a6d6ffb46bc}{contains\+Here} ()
+\begin{DoxyCompactList}\small\item\em checks if this expression contains the constant \$here. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_abfd147430d22e2a0f658aa5942b4f42a}{}boolean {\bfseries expression\+Equals} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} expression)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_abfd147430d22e2a0f658aa5942b4f42a}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} system guard expression stores the necessary information (library, function name and arguments of the function call) for calculating the guard of a system function call. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a4513fd6125801e577cbc9380c3c28305}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}!Common\+System\+Guard\+Expression@{Common\+System\+Guard\+Expression}}
+\index{Common\+System\+Guard\+Expression@{Common\+System\+Guard\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}}
+\subsubsection[{Common\+System\+Guard\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression.\+Common\+System\+Guard\+Expression (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf Scope}}]{scope, }
+\item[{String}]{library, }
+\item[{String}]{function, }
+\item[{List$<$ {\bf Expression} $>$}]{args, }
+\item[{{\bf C\+I\+V\+L\+Type}}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a4513fd6125801e577cbc9380c3c28305}
+
+
+Create a new instance of system guard expression. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code element to be used for error report. \\
+\hline
+{\em library} & The name of the library that the invoked function belongs to. \\
+\hline
+{\em function} & The name of the invoked function. \\
+\hline
+{\em args} & The list of arguments used in the function call. \\
+\hline
+{\em type} & The type of this expression (should be always boolean type). \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_ab77e03b8c3c57ecd8da9982f001e78cf}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}!arguments@{arguments}}
+\index{arguments@{arguments}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}}
+\subsubsection[{arguments}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Expression}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression.\+arguments (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_ab77e03b8c3c57ecd8da9982f001e78cf}
+
+
+The list of arguments that this function call uses. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SystemGuardExpression_ade890e79bc66e63c8332cb1d1f9829a5}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+System\+Guard\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a503acdcbe893067268690a6d6ffb46bc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}!contains\+Here@{contains\+Here}}
+\index{contains\+Here@{contains\+Here}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}}
+\subsubsection[{contains\+Here}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression.\+contains\+Here (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a503acdcbe893067268690a6d6ffb46bc}
+
+
+checks if this expression contains the constant \$here. 
+
+e.\+g.\+: s$<$\$here would return true.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_aec9a7fe7f8d44b4aa62a7fedf98e3096}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a28f73a477b739c9a6d373f9054df0069}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}!expression\+Kind@{expression\+Kind}}
+\index{expression\+Kind@{expression\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}}
+\subsubsection[{expression\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression.\+expression\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a28f73a477b739c9a6d373f9054df0069}
+
+
+Returns the kind of this expression. 
+
+\begin{DoxyReturn}{Returns}
+The expression kind 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_a8a49b68d6741423848735c8a354f29cd}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a94f12be0f7c9dd233f55af3c96f06c3f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}!function\+Name@{function\+Name}}
+\index{function\+Name@{function\+Name}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}}
+\subsubsection[{function\+Name}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression.\+function\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a94f12be0f7c9dd233f55af3c96f06c3f}
+
+
+The name of the invoked function. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SystemGuardExpression_a373ecd0aa4479fb1ec2490eaf4f1d183}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+System\+Guard\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a6cf4df088f3f1aec840e5cd470249659}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}!library@{library}}
+\index{library@{library}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}}
+\subsubsection[{library}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression.\+library (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a6cf4df088f3f1aec840e5cd470249659}
+
+
+The name of the library that the invoked function belongs to. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1SystemGuardExpression_aa6e5902944a26f682b2cae7ab9ed7952}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+System\+Guard\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a675f9f4b7a709abffb16fec82b4c7627}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_a675f9f4b7a709abffb16fec82b4c7627}
+
+
+Compute the set of variables visible from a certain scope that appear in an address-\/of expression. 
+
+e.\+g., {\ttfamily (\&a + \&b)} returns {\ttfamily \{a\}} if {\ttfamily a} is in visible from the given scope while {\ttfamily b} invisible from the given scope.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scope} & The scope to focus on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_aecf8770df1ee96920b110079be622157}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_af2d50de98136d6cff1e9a65226288316}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+System\+Guard\+Expression}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+System\+Guard\+Expression.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonSystemGuardExpression_af2d50de98136d6cff1e9a65226288316}
+
+
+Compute the set of variables that appear in an address-\/of expression. 
+
+e.\+g., {\ttfamily (\&a + \&b)} returns {\ttfamily \{a, b\}}.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_ac2ad0236534bec54b91ee78ff658cbe0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Expression}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/expression/Common\+System\+Guard\+Expression.\+java\end{DoxyCompactItemize}

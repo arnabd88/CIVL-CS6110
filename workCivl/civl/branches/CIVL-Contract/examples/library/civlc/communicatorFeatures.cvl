@@ -1,0 +1,81 @@
+/* Create nprocs processes.  Have them exchange data in a cycle.
+ * Command line execution:
+ *     civl verify -inputNPROCS_BOUND=10 -inputN_BOUND=5 ring.cvl
+ */
+#include<civlc.cvh>
+#include<comm.cvh>
+#include<stdio.h>
+#define TAG 0
+
+$input int NPROCS_BOUND = 2; // upper bound of the number of mpi processes
+$input int NPROCS; // number of mpi processes
+$assume(0 < NPROCS && NPROCS <= NPROCS_BOUND);
+$input int N_BOUND = 2; // upper bound on number times to loop
+$input int N; // number of times to loop
+$assume(0 < N && N <= N_BOUND);
+_Bool initialized = $false;
+$gcomm MPI_COMM_WORLD; // the default MPI communicator
+
+void MPI_Process (int rank) {
+  int left = (rank+NPROCS-1)%NPROCS;
+  int right = (rank+NPROCS+1)%NPROCS;
+  int i=0;
+  int x=rank, y; // send a message from x, recv into y, for checking
+  $message in, out;
+  $comm myComm;
+  //test variables
+  int comm_size;
+  int comm_place;
+  _Bool hasMessage;
+  $message matchedMessage;
+  
+  $when (initialized);
+  myComm = $comm_create($here, MPI_COMM_WORLD, rank);
+  while (i<N) {
+    if (rank%2==0) { // send first, then recv
+      out = $message_pack(rank, right, TAG, &x, sizeof(int));
+      $comm_enqueue(myComm, out);
+      hasMessage = $comm_probe(myComm, left, TAG);
+      comm_size = $comm_size(myComm);
+      comm_place = $comm_place(myComm);
+      printf("hasMessage is %s\n", hasMessage);
+      printf("comm_size is %d\n", comm_size);
+      printf("comm_place is %d\n", comm_place);
+      matchedMessage = $comm_seek(myComm, left, TAG);
+      printf("matchedMessage is %s\n", matchedMessage);
+      in = $comm_dequeue(myComm, left, TAG);
+      $message_unpack(in, &y, sizeof(int));
+      $assert(y==left);
+    } else { // recv first, then send
+      hasMessage = $comm_probe(myComm, left, TAG);
+      comm_size = $comm_size(myComm);
+      comm_place = $comm_place(myComm);
+      printf("hasMessage is %s\n", hasMessage);
+      printf("comm_size is %d\n", comm_size);
+      printf("comm_place is %d\n", comm_place);
+      matchedMessage = $comm_seek(myComm, left, TAG);
+      printf("matchedMessage is %s\n", matchedMessage);
+      in = $comm_dequeue(myComm, left, TAG);
+      $message_unpack(in, &y, sizeof(int));
+      $assert(y==left);
+      out = $message_pack(rank, right, TAG, &x, sizeof(int));
+      $comm_enqueue(myComm, out);
+    }
+    i++;
+  }
+  // destroy the local communicator.
+  $comm_destroy(myComm);
+}
+
+void main() {
+  $proc procs[NPROCS];
+  
+  for (int i=0; i<NPROCS; i++)
+    procs[i] = $spawn MPI_Process(i);
+  MPI_COMM_WORLD = $gcomm_create($here, NPROCS);
+  initialized = $true;
+  for (int i=0; i<NPROCS; i++)
+    $wait(procs[i]);
+  // destroy the global communicator.
+  $gcomm_destroy(MPI_COMM_WORLD, NULL);
+}

@@ -1,0 +1,10 @@
+$input double a[10][10][10];
+
+int main(){
+  double * p = &a[0][0][0] + 1000;
+  double test;
+
+  test = *p;
+  return 0;
+}
+

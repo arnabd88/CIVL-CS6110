@@ -1,0 +1,56 @@
+#ifndef __CIVL_SVCOMP__
+#define __CIVL_SVCOMP__
+#include <civlc.cvh>
+
+#ifndef SVCOM_INT_UPPER
+#define SVCOM_INT_UPPER 5
+#endif
+
+#ifndef SVCOM_UINT_UPPER
+#define SVCOM_UINT_UPPER 4
+#endif
+
+int _bool_count=0;
+int _pointer_count=0;
+
+void* __VERIFIER_nondet_pointer(){
+  $abstract void* __VERIFIER_nondet_pointer_worker(int x);
+  return __VERIFIER_nondet_pointer_worker(_pointer_count++);
+}
+
+int __VERIFIER_nondet_int(){
+  int temp;
+
+  $havoc(&temp);
+  $assume(temp<=SVCOM_INT_UPPER);
+  return temp;
+}
+
+unsigned int __VERIFIER_nondet_uint(){
+  int temp;
+
+  $havoc(&temp);
+  $assume(temp>=0 && temp<=SVCOM_UINT_UPPER);
+  return temp;
+}
+
+int __VERIFIER_nondet_bool(){
+  $abstract int __VERIFIER_nondet_bool_worker(int x);
+
+  return __VERIFIER_nondet_bool_worker(_bool_count++)!=0;
+}
+
+void __VERIFIER_error(){
+  $assert($false, "__VERIFIER_error() is called.\n");
+}
+
+void __VERIFIER_assume(int expression) { 
+  if (!expression) 
+  { 
+    LOOP: 
+      goto LOOP; 
+      }
+}
+
+#endif
+

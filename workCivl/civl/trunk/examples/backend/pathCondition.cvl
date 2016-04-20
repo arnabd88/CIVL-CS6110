@@ -1,0 +1,17 @@
+#include<civlc.cvh>
+
+$input int a,b,c,d,e;
+
+int main(){
+  int x,y,z;
+
+  z=a-b;
+  x=a*b>b*c || a*d < c*e;
+  $assume(a*b>b*c || a*d < c*e);
+  $assume(a+b<0);
+  $assume(a*d-e!=0);
+  y=(c*b*b+a*d*e)/(a*d-e);
+  $assume((c*b*b+a*d*e)/(a*d-e)>10);
+  z=a*b>0 || c*d<11 || a*e==10 || (c*d>0 && a>0 && d>0);
+  $assume(z);
+}

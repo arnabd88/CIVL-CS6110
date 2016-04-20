@@ -1,0 +1,2 @@
+#! /bin/sh
+java -agentlib:hprof=cpu=samples,depth=200,interval=10 -classpath bin-bench:bin edu.udel.cis.vsl.sarl.ideal.BigPowerBenchmark

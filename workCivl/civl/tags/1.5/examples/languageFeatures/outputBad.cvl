@@ -1,0 +1,21 @@
+#include <civlc.cvh>
+
+typedef struct A{
+  int a;
+  int b;
+} A;
+
+int f(int x) {return x + 1;}
+
+$output A k;
+$output int x;
+void main(){
+  int *p = &k.a;
+  int ka;
+  
+  $choose {
+    {ka = *p;}
+    {f(x);}
+    {f(ka);}
+  }
+}

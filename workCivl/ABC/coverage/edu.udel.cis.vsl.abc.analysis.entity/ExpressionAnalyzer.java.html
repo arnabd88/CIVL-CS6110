@@ -1,0 +1,2533 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ExpressionAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">ExpressionAnalyzer.java</span></div><h1>ExpressionAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import edu.udel.cis.vsl.abc.ast.IF.ASTException;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.Conversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ConversionFactory;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity.EntityKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.entity.IF.OrdinaryEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity.LinkageKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Variable;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.AttributeKey;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.PairNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CallEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPIContractExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPIContractExpressionNode.MPIContractExpressionKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MemorySetNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.AlignOfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ArrowNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CallsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CastNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CharacterConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CompoundLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ContractVerifyNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DerivativeExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DotNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.EnumerationConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode.ExpressionKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FloatingConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.GenericSelectionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.HereOrRootNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ProcnullNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.QuantifiedExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.RegularRangeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.RemoteExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ResultNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ScopeOfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SelfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeofNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SpawnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StatementExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StringLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.WildcardNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArithmeticType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.AtomicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.DomainType;
+import edu.udel.cis.vsl.abc.ast.type.IF.EnumerationType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Enumerator;
+import edu.udel.cis.vsl.abc.ast.type.IF.Field;
+import edu.udel.cis.vsl.abc.ast.type.IF.FunctionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.PointerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.QualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType.SignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.type.IF.UnqualifiedObjectType;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+/**
+ * Analyzes expressions in an AST.
+ * 
+ * Scopes: can occur in the following situations:
+ * 
+ * &lt;pre&gt;
+ * $scope s;       // declaration of concrete scope variable s
+ * &lt;s&gt; f(...)      // introduction of scope variable s in function decl
+ * &lt;s&gt; typedef ... // introduction of scope variable s in typedef decl
+ * &lt;s&gt; struct ...  // introduction of scope variables s in struct decl
+ * double *&lt;s&gt; p;  // use of scope expr s in pointer restriction
+ * f&lt;s&gt;(...)       // use of scope expr s in function call instance
+ * t&lt;s&gt; x;         // use of scope expr s in typedef instance
+ * struct t&lt;s&gt; x;  // use of scope expr s in struct instance
+ * 
+ * &lt;/pre&gt;
+ * 
+ * The scope expressions (i.e., expressions of scope type) are: ScopeVariables
+ * and expressions of the form ScopeOf(lhs). Later expression may be added (like
+ * join).
+ * 
+ * A ScopeValue can be either a (concrete) scope (an instance of Scope), or a
+ * ScopeVariable (a parameter scope variable, not a concrete one). Later values
+ * may be added (like join).
+ * 
+ * A scope expression can always be evaluated statically to a ScopeValue.
+ * 
+ * Need to process a scope expression and to evaluate a scope expression to get
+ * the ScopeValue.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc bnc" id="L124" title="All 2 branches missed.">public class ExpressionAnalyzer {</span>
+
+	// ***************************** Fields *******************************
+
+	private EntityAnalyzer entityAnalyzer;
+
+	private ConversionFactory conversionFactory;
+
+	private TypeFactory typeFactory;
+
+	private ASTFactory astFactory;
+
+	private NodeFactory nodeFactory;
+
+	/**
+	 * needs the statement analyzer for analyzing statement expression (GNU C
+	 * extension)
+	 */
+	private StatementAnalyzer statementAnalyzer;
+
+	private IntegerType intType;
+
+	private StandardBasicType boolType;
+
+	private SpecialFunctionCallAnalyzer specialCallAnalyzer;
+
+	private Configuration config;
+
+	private Language language;
+
+	private AttributeKey unknownIdentifier;
+
+	// private List&lt;IdentifierExpressionNode&gt; unknownIdentifiers = new
+	// LinkedList&lt;&gt;();
+
+	// ************************** Constructors ****************************
+
+<span class="nc" id="L161">	ExpressionAnalyzer(EntityAnalyzer entityAnalyzer,</span>
+			ConversionFactory conversionFactory, TypeFactory typeFactory) {
+<span class="nc" id="L163">		this.entityAnalyzer = entityAnalyzer;</span>
+<span class="nc" id="L164">		this.conversionFactory = conversionFactory;</span>
+<span class="nc" id="L165">		this.typeFactory = typeFactory;</span>
+<span class="nc" id="L166">		this.intType = typeFactory.signedIntegerType(SignedIntKind.INT);</span>
+<span class="nc" id="L167">		this.boolType = typeFactory.basicType(BasicTypeKind.BOOL);</span>
+<span class="nc" id="L168">		this.astFactory = entityAnalyzer.astFactory;</span>
+<span class="nc" id="L169">		this.nodeFactory = astFactory.getNodeFactory();</span>
+		// this.language = entityAnalyzer.configuration.getLanguage();
+<span class="nc" id="L171">		this.specialCallAnalyzer = new SpecialFunctionCallAnalyzer(</span>
+<span class="nc" id="L172">				this.entityAnalyzer, typeFactory, this.conversionFactory);</span>
+<span class="nc" id="L173">		this.config = entityAnalyzer.configuration;</span>
+<span class="nc" id="L174">		this.language = entityAnalyzer.language;</span>
+<span class="nc" id="L175">		unknownIdentifier = this.nodeFactory.newAttribute(&quot;unknown_identifier&quot;,</span>
+<span class="nc" id="L176">				Boolean.class);</span>
+<span class="nc" id="L177">	}</span>
+
+	void setStatementAnalyzer(StatementAnalyzer statementAnalyzer) {
+<span class="nc" id="L180">		this.statementAnalyzer = statementAnalyzer;</span>
+<span class="nc" id="L181">	}</span>
+
+	// ************************* Exported Methods **************************
+
+	/**
+	 * Processes an expression node. This method will set the type of node and
+	 * the converted type of all of node's children nodes.
+	 * 
+	 * @param node
+	 *            an expression node
+	 * @throws SyntaxException
+	 */
+	void processExpression(ExpressionNode node) throws SyntaxException {
+		try {
+<span class="nc bnc" id="L195" title="All 26 branches missed.">			switch (node.expressionKind()) {</span>
+			case ALIGNOF:
+<span class="nc" id="L197">				processAlignOf((AlignOfNode) node);</span>
+<span class="nc" id="L198">				break;</span>
+			case ARROW:
+<span class="nc" id="L200">				processArrow((ArrowNode) node);</span>
+<span class="nc" id="L201">				break;</span>
+			case CAST:
+<span class="nc" id="L203">				processCast((CastNode) node);</span>
+<span class="nc" id="L204">				break;</span>
+			case COMPOUND_LITERAL:
+<span class="nc" id="L206">				processCompoundLiteral((CompoundLiteralNode) node);</span>
+<span class="nc" id="L207">				break;</span>
+			case CONSTANT:
+<span class="nc" id="L209">				processConstant((ConstantNode) node);</span>
+<span class="nc" id="L210">				break;</span>
+			case CONTRACT_VERIFY:
+<span class="nc" id="L212">				processContractVerify((ContractVerifyNode) node);</span>
+<span class="nc" id="L213">				break;</span>
+			case DERIVATIVE_EXPRESSION:
+<span class="nc" id="L215">				processDerivativeExpression((DerivativeExpressionNode) node);</span>
+<span class="nc" id="L216">				break;</span>
+			case DOT:
+<span class="nc" id="L218">				processDot((DotNode) node);</span>
+<span class="nc" id="L219">				break;</span>
+			case FUNCTION_CALL:
+<span class="nc" id="L221">				processFunctionCall((FunctionCallNode) node);</span>
+<span class="nc" id="L222">				break;</span>
+			case GENERIC_SELECTION:
+<span class="nc" id="L224">				processGenericSelection((GenericSelectionNode) node);</span>
+<span class="nc" id="L225">				break;</span>
+			case IDENTIFIER_EXPRESSION:
+<span class="nc" id="L227">				processIdentifierExpression((IdentifierExpressionNode) node,</span>
+<span class="nc" id="L228">						true, false);</span>
+<span class="nc" id="L229">				break;</span>
+			case OPERATOR:
+<span class="nc" id="L231">				processOperator((OperatorNode) node);</span>
+<span class="nc" id="L232">				break;</span>
+			case QUANTIFIED_EXPRESSION:
+<span class="nc" id="L234">				processQuantifiedExpression((QuantifiedExpressionNode) node);</span>
+<span class="nc" id="L235">				break;</span>
+			case REGULAR_RANGE:
+<span class="nc" id="L237">				processRegularRange((RegularRangeNode) node);</span>
+<span class="nc" id="L238">				break;</span>
+			case REMOTE_REFERENCE:
+<span class="nc" id="L240">				processRemoteExpression((RemoteExpressionNode) node);</span>
+<span class="nc" id="L241">				break;</span>
+			case RESULT:
+<span class="nc" id="L243">				processResult((ResultNode) node);</span>
+<span class="nc" id="L244">				break;</span>
+			case SCOPEOF:
+<span class="nc" id="L246">				processScopeOf((ScopeOfNode) node);</span>
+<span class="nc" id="L247">				break;</span>
+			case SIZEOF:
+<span class="nc" id="L249">				processSizeof((SizeofNode) node);</span>
+<span class="nc" id="L250">				break;</span>
+			case SPAWN:
+<span class="nc" id="L252">				processSpawn((SpawnNode) node);</span>
+<span class="nc" id="L253">				break;</span>
+			case CALLS:
+<span class="nc" id="L255">				processCalls((CallsNode) node);</span>
+<span class="nc" id="L256">				break;</span>
+			case STATEMENT_EXPRESSION:
+<span class="nc" id="L258">				processStatementExpression((StatementExpressionNode) node);</span>
+<span class="nc" id="L259">				break;</span>
+			case MPI_CONTRACT_EXPRESSION:
+<span class="nc" id="L261">				processMPIContractExpression((MPIContractExpressionNode) node);</span>
+<span class="nc" id="L262">				break;</span>
+			case MEMORY_SET:
+<span class="nc" id="L264">				processMemorySet((MemorySetNode) node);</span>
+<span class="nc" id="L265">				break;</span>
+			case WILDCARD:
+<span class="nc" id="L267">				node.setInitialType(typeFactory.voidType());</span>
+<span class="nc" id="L268">				break;</span>
+			case NOTHING:
+<span class="nc" id="L270">				node.setInitialType(this.typeFactory.memoryType());</span>
+<span class="nc" id="L271">				break;</span>
+			default:
+<span class="nc" id="L273">				throw new ABCRuntimeException(&quot;Unreachable&quot;);</span>
+
+			}
+<span class="nc" id="L276">		} catch (ASTException e) {</span>
+<span class="nc" id="L277">			throw new SyntaxException(e.getMessage(), node.getSource());</span>
+		}
+<span class="nc" id="L279">	}</span>
+
+	private void processMemorySet(MemorySetNode node) throws SyntaxException {
+<span class="nc" id="L282">		ExpressionNode element = node.getElements();</span>
+<span class="nc" id="L283">		SequenceNode&lt;VariableDeclarationNode&gt; binders = node.getBinders();</span>
+<span class="nc" id="L284">		ExpressionNode predicate = node.getPredicate();</span>
+		Type elementType;
+
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (binders != null)</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">			for (VariableDeclarationNode variable : binders)</span>
+<span class="nc" id="L289">				entityAnalyzer.declarationAnalyzer</span>
+<span class="nc" id="L290">						.processVariableDeclaration(variable);</span>
+<span class="nc" id="L291">		this.processExpression(element);</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">		if (predicate != null)</span>
+<span class="nc" id="L293">			this.processExpression(predicate);</span>
+<span class="nc" id="L294">		elementType = element.getConvertedType();</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">		if (elementType instanceof ArithmeticType) {</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">			if (((ArithmeticType) elementType).isInteger())</span>
+<span class="nc" id="L297">				node.setInitialType(this.typeFactory.rangeType());</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		} else if (elementType instanceof PointerType) {</span>
+<span class="nc" id="L299">			node.setInitialType(this.typeFactory.memoryType());</span>
+		}
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		if (node.getConvertedType() == null)</span>
+<span class="nc" id="L302">			throw this.error(&quot;set of &quot; + elementType</span>
+<span class="nc" id="L303">					+ &quot; type is not supported yet&quot;, node);</span>
+<span class="nc" id="L304">	}</span>
+
+	/**
+	 * processes a statement expression
+	 * 
+	 * @param statementExpression
+	 * @throws SyntaxException
+	 */
+	private void processStatementExpression(
+			StatementExpressionNode statementExpression) throws SyntaxException {
+<span class="nc" id="L314">		this.statementAnalyzer.processCompoundStatement(statementExpression</span>
+<span class="nc" id="L315">				.getCompoundStatement());</span>
+<span class="nc" id="L316">		statementExpression.setInitialType(statementExpression.getExpression()</span>
+<span class="nc" id="L317">				.getType());</span>
+<span class="nc" id="L318">	}</span>
+
+	/**
+	 * Given the type of the left hand side of an assignment, and the expression
+	 * which is the right hand side, this method will add any conversions needed
+	 * to the right hand side and return the type of the assignment, i.e., the
+	 * result of applying lvalue conversion to the left hand side type. This
+	 * method may be used for initializations in variable declarations, as well
+	 * as simple assignments.
+	 * 
+	 * @param lhsType
+	 *            type of left hand side
+	 * @param rhs
+	 *            expression
+	 * @return type of assignment
+	 * @throws UnsourcedException
+	 *             if the types are not compatible
+	 * @throws SyntaxException
+	 */
+	UnqualifiedObjectType processAssignment(ObjectType lhsType,
+			ExpressionNode rhs) throws UnsourcedException, SyntaxException {
+<span class="nc" id="L339">		UnqualifiedObjectType type = conversionFactory</span>
+<span class="nc" id="L340">				.lvalueConversionType(lhsType);</span>
+
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (!typeFactory.isArrayOfCharType(lhsType))</span>
+<span class="nc" id="L343">			addStandardConversions(rhs);</span>
+<span class="nc" id="L344">		convertRHS(rhs, type);</span>
+<span class="nc" id="L345">		return type;</span>
+	}
+
+	/**
+	 * For any IdentifierExpressionNode representing a function that has the
+	 * attribute unknownIdentifier set as true, this method tries to analyze it
+	 * and get its entity.
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	void processUnknownIdentifiers(ASTNode node) throws SyntaxException {
+<span class="nc bnc" id="L357" title="All 2 branches missed.">		if (node instanceof IdentifierExpressionNode) {</span>
+<span class="nc" id="L358">			Object unknownIdentiferAttribute = node</span>
+<span class="nc" id="L359">					.getAttribute(unknownIdentifier);</span>
+
+<span class="nc bnc" id="L361" title="All 2 branches missed.">			if (unknownIdentiferAttribute != null</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">					&amp;&amp; (boolean) unknownIdentiferAttribute)</span>
+<span class="nc" id="L363">				this.processIdentifierExpression(</span>
+<span class="nc" id="L364">						(IdentifierExpressionNode) node, false, false);</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">		} else if (node instanceof WildcardNode) {</span>
+<span class="nc" id="L366">			WildcardNode wildcard = (WildcardNode) node;</span>
+
+<span class="nc bnc" id="L368" title="All 2 branches missed.">			if (typeFactory.isVoidType(wildcard.getConvertedType())) {</span>
+<span class="nc" id="L369">				ASTNode callEventNode0 = wildcard.parent().parent();</span>
+
+<span class="nc bnc" id="L371" title="All 2 branches missed.">				if (callEventNode0 instanceof CallEventNode) {</span>
+<span class="nc" id="L372">					CallEventNode callEventNode = (CallEventNode) callEventNode0;</span>
+<span class="nc" id="L373">					Function function = (Function) callEventNode.getFunction()</span>
+<span class="nc" id="L374">							.getIdentifier().getEntity();</span>
+<span class="nc" id="L375">					FunctionType functionType = function.getType();</span>
+
+<span class="nc" id="L377">					wildcard.setInitialType(functionType</span>
+<span class="nc" id="L378">							.getParameterType(wildcard.childIndex()));</span>
+				}
+			}
+<span class="nc" id="L381">		} else {</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">				if (child != null)</span>
+<span class="nc" id="L384">					processUnknownIdentifiers(child);</span>
+			}
+		}
+<span class="nc" id="L387">	}</span>
+
+	/**
+	 * &lt;p&gt;
+	 * Processes a compound initializer node for which the type is a domain
+	 * type.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The following are checked: (1) if the domain type is domain(n), then the
+	 * length of the initializer list is n; (2) each of the pairs in the
+	 * initializer list will have a null designation; (3) each of the pairs in
+	 * the initializer list will have a non-null initializer which is an
+	 * expression of range type. If any of the checks fail, a syntax exception
+	 * is thrown.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Assuming all the checks pass, the following will be completed: each of
+	 * the range expressions will be processed; the type of this compound
+	 * initializer node will be set to the specific domain type, domain(n) (even
+	 * if the given type was just the universal domain type &lt;code&gt;$domain&lt;/code&gt;
+	 * , without specifying n).
+	 * &lt;/p&gt;
+	 * 
+	 * @param type
+	 *            the expected type of this compound initializer; must be a
+	 *            domain type
+	 * @param node
+	 *            a compound literal node with domain type
+	 * 
+	 * @throws SyntaxException
+	 *             if any of the above properties is violated, or there is a
+	 *             syntax exception generated when checking the range
+	 *             expressions
+	 */
+	void processCartesianDomainInitializer(CompoundInitializerNode initNode,
+			DomainType type) throws SyntaxException {
+<span class="nc" id="L425">		int numRanges = initNode.numChildren();</span>
+
+<span class="nc bnc" id="L427" title="All 2 branches missed.">		if (type.hasDimension()) {</span>
+<span class="nc" id="L428">			int dimension = type.getDimension();</span>
+
+<span class="nc bnc" id="L430" title="All 2 branches missed.">			if (dimension != numRanges)</span>
+<span class="nc" id="L431">				throw error(&quot;Expected &quot; + dimension</span>
+<span class="nc" id="L432">						+ &quot; ranges in Cartesian domain initializer, but saw &quot;</span>
+<span class="nc" id="L433">						+ numRanges, initNode);</span>
+		}
+<span class="nc bnc" id="L435" title="All 2 branches missed.">		for (int i = 0; i &lt; numRanges; i++) {</span>
+<span class="nc" id="L436">			PairNode&lt;DesignationNode, InitializerNode&gt; pair = initNode</span>
+<span class="nc" id="L437">					.getSequenceChild(i);</span>
+<span class="nc" id="L438">			InitializerNode rangeNode = pair.getRight();</span>
+			ExpressionNode rangeExpression;
+			Type rangeNodeType;
+
+<span class="nc bnc" id="L442" title="All 2 branches missed.">			if (pair.getLeft() != null)</span>
+<span class="nc" id="L443">				throw error(</span>
+<span class="nc" id="L444">						&quot;A designation may not be used in a Cartesian domain literal&quot;,</span>
+<span class="nc" id="L445">						pair.getLeft());</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">			if (rangeNode == null)</span>
+<span class="nc" id="L447">				throw error(&quot;Missing range expression at position &quot; + i</span>
+<span class="nc" id="L448">						+ &quot; in Cartesian domain literal&quot;, initNode);</span>
+<span class="nc bnc" id="L449" title="All 2 branches missed.">			if (!(rangeNode instanceof ExpressionNode))</span>
+<span class="nc" id="L450">				throw error(&quot;Expected an expression&quot;, rangeNode);</span>
+<span class="nc" id="L451">			rangeExpression = (ExpressionNode) rangeNode;</span>
+<span class="nc" id="L452">			processExpression(rangeExpression);</span>
+<span class="nc" id="L453">			rangeNodeType = rangeExpression.getConvertedType();</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed.">			if (rangeNodeType.kind() != TypeKind.RANGE)</span>
+<span class="nc" id="L455">				throw error(</span>
+<span class="nc" id="L456">						&quot;Expected expression of range type in Cartesian domain literal&quot;,</span>
+<span class="nc" id="L457">						rangeExpression);</span>
+		}
+<span class="nc bnc" id="L459" title="All 2 branches missed.">		if (!type.hasDimension())</span>
+<span class="nc" id="L460">			type = typeFactory.domainType(numRanges);</span>
+<span class="nc" id="L461">		initNode.setType(type);</span>
+<span class="nc" id="L462">	}</span>
+
+	// ************************ Private Methods ***************************
+
+	private void processAlignOf(AlignOfNode node) throws SyntaxException {
+<span class="nc" id="L467">		entityAnalyzer.typeAnalyzer.processTypeNode(node.getArgument());</span>
+<span class="nc" id="L468">		node.setInitialType(typeFactory.size_t());</span>
+<span class="nc" id="L469">	}</span>
+
+	/**
+	 * C11 Sec. 6.5.2.3:
+	 * 
+	 * &quot;The first operand of the -&gt; operator shall have type &quot;pointer to atomic,
+	 * qualified, or unqualified structure&quot; or &quot;pointer to atomic, qualified, or
+	 * unqualified union&quot;, and the second operand shall name a member of the
+	 * type pointed to.&quot;
+	 * 
+	 * &quot;A postfix expression followed by the -&gt; operator and an identifier
+	 * designates a member of a structure or union object. The value is that of
+	 * the named member of the object to which the first expression points, and
+	 * is an lvalue. If the first expression is a pointer to a qualified type,
+	 * the result has the so-qualified version of the type of the designated
+	 * member.&quot;
+	 * 
+	 * &quot;Accessing a member of an atomic structure or union object results in
+	 * undefined behavior.&quot;
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processArrow(ArrowNode node) throws SyntaxException {
+<span class="nc" id="L493">		IdentifierNode identifier = node.getFieldName();</span>
+<span class="nc" id="L494">		ExpressionNode pointerNode = node.getStructurePointer();</span>
+<span class="nc" id="L495">		String fieldName = identifier.name();</span>
+		StructureOrUnionType structureOrUnionType;
+<span class="nc" id="L497">		boolean atomicQ = false, restrictQ = false, constQ = false, volatileQ = false;</span>
+		Field field;
+		Type tempType, type;
+		ObjectType fieldType;
+
+<span class="nc" id="L502">		processExpression(pointerNode);</span>
+<span class="nc" id="L503">		addLvalueConversion(pointerNode);</span>
+<span class="nc" id="L504">		tempType = pointerNode.getConvertedType();</span>
+<span class="nc bnc" id="L505" title="All 2 branches missed.">		if (tempType.kind() != TypeKind.POINTER)</span>
+<span class="nc" id="L506">			throw error(&quot;Left operand of arrow operator not pointer&quot;,</span>
+<span class="nc" id="L507">					pointerNode);</span>
+<span class="nc" id="L508">		tempType = ((PointerType) tempType).referencedType();</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">		if (tempType.kind() == TypeKind.QUALIFIED) {</span>
+<span class="nc" id="L510">			QualifiedObjectType qType = (QualifiedObjectType) tempType;</span>
+
+<span class="nc" id="L512">			constQ = qType.isConstQualified();</span>
+<span class="nc" id="L513">			restrictQ = qType.isRestrictQualified();</span>
+<span class="nc" id="L514">			volatileQ = qType.isVolatileQualified();</span>
+<span class="nc" id="L515">			tempType = qType.getBaseType();</span>
+		}
+<span class="nc bnc" id="L517" title="All 2 branches missed.">		if (tempType.kind() == TypeKind.ATOMIC) {</span>
+<span class="nc" id="L518">			atomicQ = true;</span>
+<span class="nc" id="L519">			tempType = ((AtomicType) tempType).getBaseType();</span>
+		}
+<span class="nc bnc" id="L521" title="All 2 branches missed.">		if (tempType.kind() != TypeKind.STRUCTURE_OR_UNION)</span>
+<span class="nc" id="L522">			throw error(</span>
+<span class="nc" id="L523">					&quot;Left operand of arrow operator not pointer to structure or union&quot;,</span>
+<span class="nc" id="L524">					pointerNode);</span>
+<span class="nc" id="L525">		structureOrUnionType = (StructureOrUnionType) tempType;</span>
+<span class="nc bnc" id="L526" title="All 2 branches missed.">		if (!structureOrUnionType.isComplete())</span>
+<span class="nc" id="L527">			throw error(</span>
+<span class="nc" id="L528">					&quot;Structure or union type &quot; + structureOrUnionType.getTag()</span>
+<span class="nc" id="L529">							+ &quot; is incomplete&quot;, node);</span>
+<span class="nc" id="L530">		field = structureOrUnionType.getField(fieldName);</span>
+<span class="nc bnc" id="L531" title="All 2 branches missed.">		if (field == null)</span>
+<span class="nc" id="L532">			throw error(</span>
+<span class="nc" id="L533">					&quot;Structure or union type &quot; + structureOrUnionType.getTag()</span>
+<span class="nc" id="L534">							+ &quot; contains no field named &quot; + fieldName,</span>
+<span class="nc" id="L535">					identifier);</span>
+<span class="nc" id="L536">		identifier.setEntity(field);</span>
+<span class="nc" id="L537">		fieldType = field.getType();</span>
+<span class="nc" id="L538">		type = typeFactory.qualify(fieldType, atomicQ, constQ, volatileQ,</span>
+<span class="nc" id="L539">				restrictQ, false, false);</span>
+<span class="nc" id="L540">		node.setInitialType(type);</span>
+<span class="nc" id="L541">	}</span>
+
+	private void processCast(CastNode node) throws SyntaxException {
+<span class="nc" id="L544">		TypeNode typeNode = node.getCastType();</span>
+<span class="nc" id="L545">		ExpressionNode expression = node.getArgument();</span>
+
+<span class="nc" id="L547">		entityAnalyzer.typeAnalyzer.processTypeNode(typeNode);</span>
+<span class="nc" id="L548">		processExpression(expression);</span>
+<span class="nc" id="L549">		addStandardConversions(expression);</span>
+<span class="nc" id="L550">		node.setInitialType(typeNode.getType());</span>
+<span class="nc" id="L551">	}</span>
+
+	private void processCompoundLiteral(CompoundLiteralNode node)
+			throws SyntaxException {
+<span class="nc" id="L555">		Type type = entityAnalyzer.typeAnalyzer.processTypeNode(node</span>
+<span class="nc" id="L556">				.getTypeNode());</span>
+<span class="nc" id="L557">		CompoundInitializerNode initNode = node.getInitializerList();</span>
+
+<span class="nc bnc" id="L559" title="All 2 branches missed.">		if (!(type instanceof ObjectType))</span>
+<span class="nc" id="L560">			throw error(&quot;Compound literal has non-object type: &quot; + type, node);</span>
+<span class="nc bnc" id="L561" title="All 2 branches missed.">		if (type.kind() == TypeKind.DOMAIN)</span>
+<span class="nc" id="L562">			processCartesianDomainInitializer(initNode, (DomainType) type);</span>
+		else
+<span class="nc" id="L564">			entityAnalyzer.compoundLiteralAnalyzer.processCompoundInitializer(</span>
+<span class="nc" id="L565">					initNode, (ObjectType) type);</span>
+<span class="nc" id="L566">		node.setInitialType(initNode.getType());</span>
+<span class="nc" id="L567">	}</span>
+
+	private void processConstant(ConstantNode node) throws SyntaxException {
+<span class="nc bnc" id="L570" title="All 2 branches missed.">		if (node instanceof CharacterConstantNode) {</span>
+			// type should already be set
+<span class="nc bnc" id="L572" title="All 2 branches missed.">		} else if (node instanceof IntegerConstantNode) {</span>
+			// type should already be set.
+<span class="nc bnc" id="L574" title="All 2 branches missed.">		} else if (node instanceof EnumerationConstantNode) {</span>
+<span class="nc" id="L575">			String name = node.getStringRepresentation();</span>
+<span class="nc" id="L576">			OrdinaryEntity entity = node.getScope().getLexicalOrdinaryEntity(</span>
+<span class="nc" id="L577">					false, name);</span>
+			EntityKind kind;
+			EnumerationType type;
+
+<span class="nc bnc" id="L581" title="All 2 branches missed.">			if (entity == null)</span>
+<span class="nc" id="L582">				throw error(&quot;Undeclared enumeration constant?&quot;, node);</span>
+<span class="nc" id="L583">			kind = entity.getEntityKind();</span>
+<span class="nc bnc" id="L584" title="All 2 branches missed.">			if (kind != EntityKind.ENUMERATOR)</span>
+<span class="nc" id="L585">				throw error(&quot;Use of &quot; + kind + &quot; &quot; + name</span>
+<span class="nc" id="L586">						+ &quot; as enumeration constant?&quot;, node);</span>
+<span class="nc" id="L587">			type = ((Enumerator) entity).getType();</span>
+<span class="nc" id="L588">			node.setInitialType(type);</span>
+<span class="nc" id="L589">			((EnumerationConstantNode) node).getName().setEntity(entity);</span>
+<span class="nc" id="L590">			nodeFactory</span>
+<span class="nc" id="L591">					.setConstantValue(node, ((Enumerator) entity).getValue());</span>
+<span class="nc bnc" id="L592" title="All 2 branches missed.">		} else if (node instanceof FloatingConstantNode) {</span>
+			// type should already be set
+<span class="nc bnc" id="L594" title="All 2 branches missed.">		} else if (node instanceof StringLiteralNode) {</span>
+			// type should already be set
+<span class="nc bnc" id="L596" title="All 2 branches missed.">		} else if (node instanceof SelfNode) {</span>
+			// type is process type, already set
+<span class="nc bnc" id="L598" title="All 2 branches missed.">		} else if (node instanceof ProcnullNode) {</span>
+			// type is process type, already set
+<span class="nc" id="L600">		} else if (node instanceof HereOrRootNode) {</span>
+			// type is scope type, already set
+		}
+		// else
+		// throw new RuntimeException(&quot;Unknown kind of constant node: &quot; + node);
+<span class="nc bnc" id="L605" title="All 2 branches missed.">		if (node.getInitialType() == null)</span>
+<span class="nc" id="L606">			throw error(&quot;Internal error: did not set type&quot;, node);</span>
+<span class="nc" id="L607">	}</span>
+
+	/**
+	 * C11 Sec. 6.5.2.3:
+	 * 
+	 * &quot;The first operand of the . operator shall have an atomic, qualified, or
+	 * unqualified structure or union type, and the second operand shall name a
+	 * member of that type.&quot;
+	 * 
+	 * &quot;A postfix expression followed by the . operator and an identifier
+	 * designates a member of a structure or union object. The value is that of
+	 * the named member, and is an lvalue if the first expression is an lvalue.
+	 * If the first expression has qualified type, the result has the
+	 * so-qualified version of the type of the designated member.&quot;
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processDot(DotNode node) throws SyntaxException {
+<span class="nc" id="L626">		ExpressionNode expression = node.getStructure();</span>
+<span class="nc" id="L627">		IdentifierNode identifier = node.getFieldName();</span>
+<span class="nc" id="L628">		String fieldName = identifier.name();</span>
+<span class="nc" id="L629">		boolean atomicQ = false, restrictQ = false, constQ = false, volatileQ = false;</span>
+		StructureOrUnionType structureOrUnionType;
+		ObjectType fieldType;
+		Type tempType, type;
+		Field field;
+
+<span class="nc" id="L635">		processExpression(expression);</span>
+<span class="nc" id="L636">		tempType = expression.getType();</span>
+		// no lvalue conversion for left operand of . operator:
+<span class="nc bnc" id="L638" title="All 2 branches missed.">		if (tempType.kind() == TypeKind.QUALIFIED) {</span>
+<span class="nc" id="L639">			QualifiedObjectType qType = (QualifiedObjectType) tempType;</span>
+
+<span class="nc" id="L641">			constQ = qType.isConstQualified();</span>
+<span class="nc" id="L642">			restrictQ = qType.isRestrictQualified();</span>
+<span class="nc" id="L643">			volatileQ = qType.isVolatileQualified();</span>
+<span class="nc" id="L644">			tempType = qType.getBaseType();</span>
+		}
+<span class="nc bnc" id="L646" title="All 2 branches missed.">		if (tempType.kind() == TypeKind.ATOMIC) {</span>
+<span class="nc" id="L647">			atomicQ = true;</span>
+<span class="nc" id="L648">			tempType = ((AtomicType) tempType).getBaseType();</span>
+		}
+<span class="nc bnc" id="L650" title="All 2 branches missed.">		if (tempType.kind() != TypeKind.STRUCTURE_OR_UNION)</span>
+<span class="nc" id="L651">			throw error(&quot;Left operand of dot operator not structure or union&quot;,</span>
+<span class="nc" id="L652">					expression);</span>
+<span class="nc" id="L653">		structureOrUnionType = (StructureOrUnionType) tempType;</span>
+<span class="nc bnc" id="L654" title="All 2 branches missed.">		if (!structureOrUnionType.isComplete())</span>
+<span class="nc" id="L655">			throw error(</span>
+<span class="nc" id="L656">					&quot;Structure or union type &quot; + structureOrUnionType.getTag()</span>
+<span class="nc" id="L657">							+ &quot; is incomplete&quot;, expression);</span>
+<span class="nc" id="L658">		field = structureOrUnionType.getField(fieldName);</span>
+<span class="nc bnc" id="L659" title="All 2 branches missed.">		if (field == null)</span>
+<span class="nc" id="L660">			throw error(</span>
+<span class="nc" id="L661">					&quot;Structure or union type &quot; + structureOrUnionType.getTag()</span>
+<span class="nc" id="L662">							+ &quot; contains no field named &quot; + fieldName,</span>
+<span class="nc" id="L663">					identifier);</span>
+<span class="nc" id="L664">		identifier.setEntity(field);</span>
+<span class="nc" id="L665">		fieldType = field.getType();</span>
+<span class="nc" id="L666">		type = typeFactory.qualify(fieldType, atomicQ, constQ, volatileQ,</span>
+<span class="nc" id="L667">				restrictQ, false, false);</span>
+<span class="nc" id="L668">		node.setInitialType(type);</span>
+<span class="nc" id="L669">	}</span>
+
+	private void processScopeOf(ScopeOfNode node) throws SyntaxException {
+<span class="nc" id="L672">		ExpressionNode expressionNode = node.expression();</span>
+
+<span class="nc" id="L674">		processExpression(expressionNode);</span>
+<span class="nc" id="L675">		node.setInitialType(typeFactory.scopeType());</span>
+<span class="nc" id="L676">	}</span>
+
+	private void processFunctionCall(FunctionCallNode node)
+			throws SyntaxException {
+<span class="nc" id="L680">		ExpressionNode functionNode = node.getFunction();</span>
+<span class="nc" id="L681">		int numArgs = node.getNumberOfArguments();</span>
+<span class="nc" id="L682">		int numContextArgs = node.getNumberOfContextArguments();</span>
+		FunctionType functionType;
+<span class="nc" id="L684">		int expectedNumArgs = -1;</span>
+<span class="nc" id="L685">		boolean hasVariableNumArgs = false;</span>
+<span class="nc" id="L686">		boolean isSpecialFunction = false;</span>
+<span class="nc" id="L687">		String functionName = null;</span>
+
+<span class="nc" id="L689">		processExpression(functionNode);</span>
+		{
+<span class="nc" id="L691">			Type tmpType = functionNode.getType();</span>
+<span class="nc bnc" id="L692" title="All 2 branches missed.">			TypeKind tmpKind = tmpType == null ? TypeKind.FUNCTION : tmpType</span>
+<span class="nc" id="L693">					.kind();</span>
+
+<span class="nc bnc" id="L695" title="All 2 branches missed.">			if (tmpKind == TypeKind.POINTER) {</span>
+<span class="nc" id="L696">				tmpType = ((PointerType) tmpType).referencedType();</span>
+<span class="nc" id="L697">				tmpKind = tmpType.kind();</span>
+			}
+<span class="nc bnc" id="L699" title="All 2 branches missed.">			if (tmpKind == TypeKind.FUNCTION)</span>
+<span class="nc" id="L700">				functionType = (FunctionType) tmpType;</span>
+			else
+<span class="nc" id="L702">				throw error(</span>
+<span class="nc" id="L703">						&quot;Function expression in function call does not have function &quot;</span>
+								+ &quot;type or pointer to function type&quot;,
+<span class="nc" id="L705">						functionNode);</span>
+		}
+
+		// TODO: Sanity checks on kernel functions
+		// Check that context arg 0 is an int or dim3
+		// Check that context arg 1 is an int or dim3
+		// Check that context arg 2, if present, is a pointer to a stream
+		// It might be appropriate to factor out these Cuda-specific checks into
+		// a separate function
+
+<span class="nc bnc" id="L715" title="All 2 branches missed.">		if (functionNode instanceof IdentifierExpressionNode) {</span>
+<span class="nc" id="L716">			functionName = ((IdentifierExpressionNode) functionNode)</span>
+<span class="nc" id="L717">					.getIdentifier().name();</span>
+		}
+<span class="nc bnc" id="L719" title="All 2 branches missed.">		if (functionName != null)</span>
+<span class="nc" id="L720">			specialCallAnalyzer.hasSufficientArgumentsForPrintf(node,</span>
+<span class="nc" id="L721">					functionName, node.getArguments());</span>
+<span class="nc bnc" id="L722" title="All 2 branches missed.">		if (functionType != null) {</span>
+<span class="nc" id="L723">			expectedNumArgs = functionType.getNumParameters();</span>
+<span class="nc" id="L724">			hasVariableNumArgs = functionType.hasVariableArgs();</span>
+<span class="nc bnc" id="L725" title="All 2 branches missed.">			if (hasVariableNumArgs) {</span>
+				// if function has variable number of args then the number of
+				// actual parameters must be at least the number expected
+<span class="nc bnc" id="L728" title="All 2 branches missed.">				if (numArgs &lt; expectedNumArgs)</span>
+<span class="nc" id="L729">					throw error(&quot;Expected at least &quot; + expectedNumArgs</span>
+<span class="nc" id="L730">							+ &quot; arguments, saw &quot; + numArgs, node);</span>
+<span class="nc" id="L731">				isSpecialFunction = this.specialCallAnalyzer</span>
+<span class="nc" id="L732">						.isSpecialFunction(functionName);</span>
+<span class="nc" id="L733">			} else {</span>
+<span class="nc bnc" id="L734" title="All 2 branches missed.">				if (numArgs != expectedNumArgs)</span>
+<span class="nc" id="L735">					throw error(&quot;Expected &quot; + expectedNumArgs</span>
+<span class="nc" id="L736">							+ &quot; arguments but saw &quot; + numArgs, node);</span>
+			}
+		}
+<span class="nc bnc" id="L739" title="All 2 branches missed.">		for (int i = 0; i &lt; numContextArgs; i++) {</span>
+<span class="nc" id="L740">			ExpressionNode argument = node.getContextArgument(i);</span>
+
+<span class="nc" id="L742">			processExpression(argument);</span>
+		}
+<span class="nc bnc" id="L744" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L745">			ExpressionNode argument = node.getArgument(i);</span>
+
+<span class="nc" id="L747">			processExpression(argument);</span>
+<span class="nc" id="L748">			addStandardConversions(argument);</span>
+<span class="nc" id="L749">			specialCallAnalyzer.addConversionsForSpecialFunctions(functionName,</span>
+<span class="nc" id="L750">					argument);</span>
+<span class="nc bnc" id="L751" title="All 6 branches missed.">			if ((functionType != null &amp;&amp; (!hasVariableNumArgs || i &lt; expectedNumArgs))</span>
+<span class="nc bnc" id="L752" title="All 2 branches missed.">					|| isSpecialFunction) {</span>
+				ObjectType lhsType;
+				UnqualifiedObjectType type;
+
+<span class="nc bnc" id="L756" title="All 2 branches missed.">				if (i &lt; expectedNumArgs)</span>
+<span class="nc" id="L757">					lhsType = functionType.getParameterType(i);</span>
+				else
+<span class="nc" id="L759">					lhsType = this.specialCallAnalyzer.variableParameterType(</span>
+<span class="nc" id="L760">							functionName, i);</span>
+<span class="nc" id="L761">				type = conversionFactory.lvalueConversionType(lhsType);</span>
+				try {
+<span class="nc" id="L763">					convertRHS(argument, type);</span>
+<span class="nc" id="L764">				} catch (UnsourcedException e) {</span>
+<span class="nc" id="L765">					throw error(e, argument);</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L769" title="All 2 branches missed.">		node.setInitialType(functionType == null ? this.typeFactory</span>
+<span class="nc" id="L770">				.basicType(BasicTypeKind.INT) : functionType.getReturnType());</span>
+<span class="nc" id="L771">	}</span>
+
+	private void processContractVerify(ContractVerifyNode node)
+			throws SyntaxException {
+<span class="nc" id="L775">		ExpressionNode functionNode = node.getFunction();</span>
+<span class="nc" id="L776">		int numArgs = node.getNumberOfArguments();</span>
+<span class="nc" id="L777">		int numContextArgs = node.getNumberOfContextArguments();</span>
+		FunctionType functionType;
+<span class="nc" id="L779">		int expectedNumArgs = -1;</span>
+<span class="nc" id="L780">		boolean hasVariableNumArgs = false;</span>
+<span class="nc" id="L781">		boolean isSpecialFunction = false;</span>
+<span class="nc" id="L782">		String functionName = null;</span>
+
+<span class="nc" id="L784">		processExpression(functionNode);</span>
+		{
+<span class="nc" id="L786">			Type tmpType = functionNode.getType();</span>
+<span class="nc bnc" id="L787" title="All 2 branches missed.">			TypeKind tmpKind = tmpType == null ? TypeKind.FUNCTION : tmpType</span>
+<span class="nc" id="L788">					.kind();</span>
+
+<span class="nc bnc" id="L790" title="All 2 branches missed.">			if (tmpKind == TypeKind.POINTER) {</span>
+<span class="nc" id="L791">				tmpType = ((PointerType) tmpType).referencedType();</span>
+<span class="nc" id="L792">				tmpKind = tmpType.kind();</span>
+			}
+<span class="nc bnc" id="L794" title="All 2 branches missed.">			if (tmpKind == TypeKind.FUNCTION)</span>
+<span class="nc" id="L795">				functionType = (FunctionType) tmpType;</span>
+			else
+<span class="nc" id="L797">				throw error(</span>
+<span class="nc" id="L798">						&quot;Function expression in contract verify call does not have function &quot;</span>
+								+ &quot;type or pointer to function type&quot;,
+<span class="nc" id="L800">						functionNode);</span>
+		}
+
+		// TODO: Sanity checks on kernel functions
+		// Check that context arg 0 is an int or dim3
+		// Check that context arg 1 is an int or dim3
+		// Check that context arg 2, if present, is a pointer to a stream
+		// It might be appropriate to factor out these Cuda-specific checks into
+		// a separate function
+
+<span class="nc bnc" id="L810" title="All 2 branches missed.">		if (functionNode instanceof IdentifierExpressionNode) {</span>
+<span class="nc" id="L811">			functionName = ((IdentifierExpressionNode) functionNode)</span>
+<span class="nc" id="L812">					.getIdentifier().name();</span>
+		}
+<span class="nc bnc" id="L814" title="All 2 branches missed.">		if (functionName != null)</span>
+<span class="nc" id="L815">			specialCallAnalyzer.hasSufficientArgumentsForPrintf(node,</span>
+<span class="nc" id="L816">					functionName, node.getArguments());</span>
+<span class="nc bnc" id="L817" title="All 2 branches missed.">		if (functionType != null) {</span>
+<span class="nc" id="L818">			expectedNumArgs = functionType.getNumParameters();</span>
+<span class="nc" id="L819">			hasVariableNumArgs = functionType.hasVariableArgs();</span>
+<span class="nc bnc" id="L820" title="All 2 branches missed.">			if (hasVariableNumArgs) {</span>
+				// if function has variable number of args then the number of
+				// actual parameters must be at least the number expected
+<span class="nc bnc" id="L823" title="All 2 branches missed.">				if (numArgs &lt; expectedNumArgs)</span>
+<span class="nc" id="L824">					throw error(&quot;Expected at least &quot; + expectedNumArgs</span>
+<span class="nc" id="L825">							+ &quot; arguments, saw &quot; + numArgs, node);</span>
+<span class="nc" id="L826">				isSpecialFunction = this.specialCallAnalyzer</span>
+<span class="nc" id="L827">						.isSpecialFunction(functionName);</span>
+<span class="nc" id="L828">			} else {</span>
+<span class="nc bnc" id="L829" title="All 2 branches missed.">				if (numArgs != expectedNumArgs)</span>
+<span class="nc" id="L830">					throw error(&quot;Expected &quot; + expectedNumArgs</span>
+<span class="nc" id="L831">							+ &quot; arguments but saw &quot; + numArgs, node);</span>
+			}
+		}
+<span class="nc bnc" id="L834" title="All 2 branches missed.">		for (int i = 0; i &lt; numContextArgs; i++) {</span>
+<span class="nc" id="L835">			ExpressionNode argument = node.getContextArgument(i);</span>
+
+<span class="nc" id="L837">			processExpression(argument);</span>
+		}
+<span class="nc bnc" id="L839" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L840">			ExpressionNode argument = node.getArgument(i);</span>
+
+<span class="nc" id="L842">			processExpression(argument);</span>
+<span class="nc" id="L843">			addStandardConversions(argument);</span>
+<span class="nc" id="L844">			specialCallAnalyzer.addConversionsForSpecialFunctions(functionName,</span>
+<span class="nc" id="L845">					argument);</span>
+<span class="nc bnc" id="L846" title="All 6 branches missed.">			if ((functionType != null &amp;&amp; (!hasVariableNumArgs || i &lt; expectedNumArgs))</span>
+<span class="nc bnc" id="L847" title="All 2 branches missed.">					|| isSpecialFunction) {</span>
+				ObjectType lhsType;
+				UnqualifiedObjectType type;
+
+<span class="nc bnc" id="L851" title="All 2 branches missed.">				if (i &lt; expectedNumArgs)</span>
+<span class="nc" id="L852">					lhsType = functionType.getParameterType(i);</span>
+				else
+<span class="nc" id="L854">					lhsType = this.specialCallAnalyzer.variableParameterType(</span>
+<span class="nc" id="L855">							functionName, i);</span>
+<span class="nc" id="L856">				type = conversionFactory.lvalueConversionType(lhsType);</span>
+				try {
+<span class="nc" id="L858">					convertRHS(argument, type);</span>
+<span class="nc" id="L859">				} catch (UnsourcedException e) {</span>
+<span class="nc" id="L860">					throw error(e, argument);</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L864" title="All 2 branches missed.">		node.setInitialType(functionType == null ? this.typeFactory</span>
+<span class="nc" id="L865">				.basicType(BasicTypeKind.INT) : functionType.getReturnType());</span>
+<span class="nc" id="L866">	}</span>
+
+	private void processSpawn(SpawnNode node) throws SyntaxException {
+<span class="nc" id="L869">		processFunctionCall(node.getCall());</span>
+<span class="nc" id="L870">		node.setInitialType(typeFactory.processType());</span>
+<span class="nc" id="L871">	}</span>
+
+	private void processCalls(CallsNode node) throws SyntaxException {
+<span class="nc" id="L874">		processFunctionCall(node.getCall());</span>
+<span class="nc" id="L875">		node.setInitialType(typeFactory.basicType(BasicTypeKind.BOOL));</span>
+<span class="nc" id="L876">	}</span>
+
+	private void processGenericSelection(GenericSelectionNode node)
+			throws SyntaxException {
+		// TODO
+<span class="nc" id="L881">	}</span>
+
+	/**
+	 * Apparently, special handling is required for functions which were
+	 * declared only with identifier lists. in this case, the type of the
+	 * identifier expression does not get the full type of the function, only
+	 * the return type. See &lt;a href=
+	 * &quot;http://stackoverflow.com/questions/24743887/are-these-compatible-function-types-in-c&quot;
+	 * &gt;here&lt;/a&gt;.
+	 */
+	private FunctionType getFunctionExpressionType(
+			IdentifierExpressionNode node, Function function) {
+<span class="nc" id="L893">		FunctionType functionType = function.getType();</span>
+<span class="nc" id="L894">		FunctionType result = null;</span>
+
+<span class="nc bnc" id="L896" title="All 2 branches missed.">		if (node.parent() instanceof FunctionCallNode) {</span>
+<span class="nc" id="L897">			result = functionType;</span>
+<span class="nc" id="L898">		} else {</span>
+<span class="nc bnc" id="L899" title="All 2 branches missed.">			for (DeclarationNode dn : function.getDeclarations()) {</span>
+<span class="nc" id="L900">				FunctionDeclarationNode decl = (FunctionDeclarationNode) dn;</span>
+<span class="nc" id="L901">				FunctionTypeNode typeNode = decl.getTypeNode();</span>
+
+<span class="nc bnc" id="L903" title="All 2 branches missed.">				if (!typeNode.hasIdentifierList()) {</span>
+<span class="nc" id="L904">					result = functionType;</span>
+<span class="nc" id="L905">					break;</span>
+				}
+			}
+<span class="nc bnc" id="L908" title="All 2 branches missed.">			if (result == null)</span>
+				// if you've made it to this point, all declarations of the
+				// function
+				// have identifier lists; none has a parameter-type list
+<span class="nc" id="L912">				result = typeFactory.functionType(functionType.getReturnType());</span>
+		}
+<span class="nc" id="L914">		return result;</span>
+	}
+
+	void processIdentifierExpression(IdentifierExpressionNode node,
+			boolean isFirstRound, boolean isContract) throws SyntaxException {
+<span class="nc" id="L919">		IdentifierNode identifierNode = node.getIdentifier();</span>
+<span class="nc" id="L920">		String name = identifierNode.name();</span>
+<span class="nc" id="L921">		OrdinaryEntity entity = node.getScope().getLexicalOrdinaryEntity(false,</span>
+<span class="nc" id="L922">				name);</span>
+		EntityKind kind;
+
+<span class="nc bnc" id="L925" title="All 2 branches missed.">		if (entity == null) {</span>
+<span class="nc bnc" id="L926" title="All 6 branches missed.">			if (isFirstRound &amp;&amp; (config.svcomp() || isContract)) {</span>
+<span class="nc" id="L927">				node.setAttribute(unknownIdentifier, true);</span>
+<span class="nc" id="L928">				return;</span>
+			} else {
+<span class="nc" id="L930">				throw error(&quot;Undeclared identifier &quot; + name, node);</span>
+			}
+		}
+<span class="nc" id="L933">		kind = entity.getEntityKind();</span>
+<span class="nc bnc" id="L934" title="All 3 branches missed.">		switch (kind) {</span>
+		case VARIABLE:
+<span class="nc bnc" id="L936" title="All 2 branches missed.">			if (isFirstRound)</span>
+<span class="nc" id="L937">				node.setInitialType(entity.getType());</span>
+			else
+<span class="nc" id="L939">				throw error(&quot;Undeclared identifier &quot; + name, node);</span>
+			break;
+		case FUNCTION:
+<span class="nc" id="L942">			node.setInitialType(getFunctionExpressionType(node,</span>
+<span class="nc" id="L943">					(Function) entity));</span>
+<span class="nc" id="L944">			break;</span>
+		default:
+<span class="nc" id="L946">			throw error(&quot;Use of &quot; + kind + &quot; &quot; + name + &quot; as expression&quot;, node);</span>
+		}
+<span class="nc" id="L948">		identifierNode.setEntity(entity);</span>
+		// only checks external definition for whole-program AST
+<span class="nc bnc" id="L950" title="All 2 branches missed.">		if (node.getOwner().isWholeProgram()) {</span>
+<span class="nc" id="L951">			this.checkExternalDefinitionOfIdentifier(node);</span>
+		}
+<span class="nc" id="L953">	}</span>
+
+	/**
+	 * When an identifier is used in an expression except for
+	 * &lt;code&gt;sizeof&lt;/code&gt; or &lt;code&gt;_Alignof&lt;/code&gt;, if its declaration is a
+	 * variable with external linkage, then report an error if the external
+	 * definition is missing.
+	 * 
+	 * @param identifierExpression
+	 *            the identifier expression node being checked
+	 * @throws SyntaxException
+	 */
+	private void checkExternalDefinitionOfIdentifier(
+			IdentifierExpressionNode identifierExpression)
+			throws SyntaxException {
+<span class="nc" id="L968">		ASTNode parent = identifierExpression.parent();</span>
+
+<span class="nc bnc" id="L970" title="All 2 branches missed.">		if (parent instanceof ExpressionNode) {</span>
+<span class="nc" id="L971">			ExpressionNode expression = (ExpressionNode) parent;</span>
+<span class="nc" id="L972">			ExpressionKind kind = expression.expressionKind();</span>
+
+<span class="nc bnc" id="L974" title="All 4 branches missed.">			if (kind != ExpressionKind.ALIGNOF &amp;&amp; kind != ExpressionKind.SIZEOF) {</span>
+<span class="nc" id="L975">				Entity entity = identifierExpression.getIdentifier()</span>
+<span class="nc" id="L976">						.getEntity();</span>
+
+<span class="nc bnc" id="L978" title="All 2 branches missed.">				if (entity.getEntityKind() == EntityKind.VARIABLE) {</span>
+<span class="nc" id="L979">					Variable variable = (Variable) entity;</span>
+<span class="nc" id="L980">					VariableDeclarationNode definition = variable</span>
+<span class="nc" id="L981">							.getDefinition();</span>
+
+					// don't check $input variables
+<span class="nc" id="L984">					if (variable.getDeclaration(0).getTypeNode()</span>
+<span class="nc bnc" id="L985" title="All 2 branches missed.">							.isInputQualified())</span>
+<span class="nc" id="L986">						return;</span>
+
+					// tentative definitions are OK
+<span class="nc" id="L989">					boolean noStorage = true;</span>
+
+<span class="nc bnc" id="L991" title="All 2 branches missed.">					for (DeclarationNode declaration : variable</span>
+<span class="nc" id="L992">							.getDeclarations()) {</span>
+<span class="nc" id="L993">						VariableDeclarationNode varDeclaration = (VariableDeclarationNode) declaration;</span>
+
+<span class="nc bnc" id="L995" title="All 2 branches missed.">						if (varDeclaration.hasAutoStorage()</span>
+<span class="nc bnc" id="L996" title="All 2 branches missed.">								|| varDeclaration.hasRegisterStorage()</span>
+<span class="nc bnc" id="L997" title="All 2 branches missed.">								|| varDeclaration.hasThreadLocalStorage()</span>
+<span class="nc bnc" id="L998" title="All 2 branches missed.">								|| varDeclaration.hasExternStorage()) {</span>
+<span class="nc" id="L999">							noStorage = false;</span>
+<span class="nc" id="L1000">							break;</span>
+						}
+					}
+<span class="nc bnc" id="L1003" title="All 2 branches missed.">					if (noStorage)</span>
+<span class="nc" id="L1004">						return;</span>
+
+<span class="nc bnc" id="L1006" title="All 2 branches missed.">					if (variable.getLinkage() == LinkageKind.EXTERNAL) {</span>
+<span class="nc bnc" id="L1007" title="All 2 branches missed.">						if (definition == null)</span>
+<span class="nc" id="L1008">							throw this.error(&quot;the definition for the variable &quot;</span>
+<span class="nc" id="L1009">									+ variable.getName() + &quot; which is declared&quot;</span>
+<span class="nc" id="L1010">									+ &quot; with external linkage is missing&quot;,</span>
+<span class="nc" id="L1011">									identifierExpression);</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L1016">	}</span>
+
+	private void processOperator(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1019">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1020">		int numArgs = node.getNumberOfArguments();</span>
+
+		// the following sets the initial type of each argument:
+<span class="nc bnc" id="L1023" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L1024">			ExpressionNode child = node.getArgument(i);</span>
+
+<span class="nc bnc" id="L1026" title="All 2 branches missed.">			if (child == null)</span>
+<span class="nc" id="L1027">				throw new ASTException(&quot;Child &quot; + i</span>
+<span class="nc" id="L1028">						+ &quot; of operator node is null:\n&quot; + node);</span>
+<span class="nc" id="L1029">			processExpression(child);</span>
+		}
+<span class="nc bnc" id="L1031" title="All 26 branches missed.">		switch (operator) {</span>
+		case ADDRESSOF: // &amp; pointer to object
+<span class="nc" id="L1033">			processADDRESSOF(node);</span>
+<span class="nc" id="L1034">			break;</span>
+		case ASSIGN: // = standard assignment operator
+<span class="nc" id="L1036">			processASSIGN(node);</span>
+<span class="nc" id="L1037">			break;</span>
+		case HASH:
+<span class="nc" id="L1039">			processHash(node);</span>
+<span class="nc" id="L1040">			break;</span>
+		case BIG_O: // big-O expresion
+<span class="nc" id="L1042">			processBIG_O(node);</span>
+<span class="nc" id="L1043">			break;</span>
+		case BITAND: // &amp; bit-wise and
+		case BITOR: // | bit-wise inclusive or
+		case BITXOR: // ^ bit-wise exclusive or
+<span class="nc" id="L1047">			processBitwise(node);</span>
+<span class="nc" id="L1048">			break;</span>
+		case BITANDEQ: // &amp;= bit-wise and assignment
+		case BITOREQ: // |= bit-wise inclusive or assignment
+		case BITXOREQ: // ^= bit-wise exclusive or assignment
+<span class="nc" id="L1052">			processBitwiseAssign(node);</span>
+<span class="nc" id="L1053">			break;</span>
+		case BITCOMPLEMENT: // ~ bit-wise complement
+<span class="nc" id="L1055">			processBITCOMPLEMENT(node);</span>
+<span class="nc" id="L1056">			break;</span>
+		case COMMA: // : the comma operator
+<span class="nc" id="L1058">			processCOMMA(node);</span>
+<span class="nc" id="L1059">			break;</span>
+		case CONDITIONAL: // ?: the conditional operator
+<span class="nc" id="L1061">			processCONDITIONAL(node);</span>
+<span class="nc" id="L1062">			break;</span>
+		case DEREFERENCE: // * pointer dereference
+<span class="nc" id="L1064">			processDEREFERENCE(node);</span>
+<span class="nc" id="L1065">			break;</span>
+		case DIVEQ: // /= division assignment
+		case MODEQ: // %= integer modulus assignment
+		case TIMESEQ: // *= multiplication assignment
+<span class="nc" id="L1069">			processTIMESEQorDIVEQorMODEQ(node);</span>
+<span class="nc" id="L1070">			break;</span>
+		case EQUALS: // == equality
+		case NEQ: // != not equals
+<span class="nc" id="L1073">			processEqualityOperator(node);</span>
+<span class="nc" id="L1074">			break;</span>
+		case LAND: // &amp;&amp; logical and
+		case LOR: // || logical or
+		case NOT: // ! logical not
+		case IMPLIES: // =&gt; logical implication
+<span class="nc" id="L1079">			processLANDorLORorNOT(node);</span>
+<span class="nc" id="L1080">			break;</span>
+		case GT: // &gt; greater than
+		case GTE: // &gt;= greater than or equals
+		case LT: // &lt; less than
+		case LTE: // &lt;= less than or equals
+<span class="nc" id="L1085">			processRelational(node);</span>
+<span class="nc" id="L1086">			break;</span>
+		case MINUS: // - binary subtraction (numbers and pointers)
+<span class="nc" id="L1088">			processMINUS(node);</span>
+<span class="nc" id="L1089">			break;</span>
+		case PLUS: // + binary addition: numeric or pointer
+<span class="nc" id="L1091">			processPLUS(node);</span>
+<span class="nc" id="L1092">			break;</span>
+		case MINUSEQ: // -= subtraction assignment
+		case PLUSEQ: // += addition assignment
+<span class="nc" id="L1095">			processPLUSEQorMINUSEQ(node);</span>
+<span class="nc" id="L1096">			break;</span>
+		case POSTDECREMENT: // -- decrement after expression
+		case POSTINCREMENT: // ++ increment after expression
+<span class="nc" id="L1099">			processPostfixOperators(node);</span>
+<span class="nc" id="L1100">			break;</span>
+		case PREDECREMENT: // -- decrement before expression
+		case PREINCREMENT: // ++ increment before expression
+<span class="nc" id="L1103">			processPrefixOperators(node);</span>
+<span class="nc" id="L1104">			break;</span>
+		case SHIFTLEFT: // &lt;&lt; shift left
+		case SHIFTRIGHT: // &gt;&gt; shift right
+<span class="nc" id="L1107">			processSHIFTLEFTorSHIFTRIGHT(node);</span>
+<span class="nc" id="L1108">			break;</span>
+		case SHIFTLEFTEQ: // &lt;&lt;= shift left assignment
+		case SHIFTRIGHTEQ: // &gt;&gt;= shift right assignment
+<span class="nc" id="L1111">			processSHIFTLEFTEQorSHIFTRIGHTEQ(node);</span>
+<span class="nc" id="L1112">			break;</span>
+		case SUBSCRIPT: // [] array subscript
+<span class="nc" id="L1114">			processSUBSCRIPT(node);</span>
+<span class="nc" id="L1115">			break;</span>
+		case DIV: // / numerical division
+		case MOD: // % integer modulus
+		case TIMES: // * numeric multiplication
+<span class="nc" id="L1119">			processTIMESorDIVorMOD(node);</span>
+<span class="nc" id="L1120">			break;</span>
+		case UNARYMINUS: // - numeric negative
+		case UNARYPLUS: // + numeric no-op
+<span class="nc" id="L1123">			processUNARAYPLUSorUNARYMINUS(node);</span>
+<span class="nc" id="L1124">			break;</span>
+		case VALID:
+<span class="nc" id="L1126">			processValidExpression(node);</span>
+<span class="nc" id="L1127">			break;</span>
+		default:
+<span class="nc" id="L1129">			throw new RuntimeException(&quot;Unknown operator: &quot; + operator);</span>
+		}
+<span class="nc" id="L1131">	}</span>
+
+	private void processHash(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1134">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1135">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1136">		Type type0 = addStandardConversions(arg0), type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1138" title="All 2 branches missed.">		if (!(type1 instanceof IntegerType))</span>
+<span class="nc" id="L1139">			throw error(</span>
+<span class="nc" id="L1140">					&quot;The right-hand-side operand of @ must have integer type&quot;,</span>
+<span class="nc" id="L1141">					arg1);</span>
+<span class="nc" id="L1142">		node.setInitialType(type0);</span>
+<span class="nc" id="L1143">	}</span>
+
+	private void processQuantifiedExpression(QuantifiedExpressionNode node)
+			throws SyntaxException {
+<span class="nc" id="L1147">		entityAnalyzer.declarationAnalyzer.processVariableDeclaration(node</span>
+<span class="nc" id="L1148">				.variable());</span>
+<span class="nc bnc" id="L1149" title="All 2 branches missed.">		if (node.isRange()) {</span>
+<span class="nc" id="L1150">			processExpression(node.lower());</span>
+<span class="nc" id="L1151">			processExpression(node.upper());</span>
+<span class="nc" id="L1152">		} else {</span>
+<span class="nc" id="L1153">			processExpression(node.restriction());</span>
+		}
+<span class="nc" id="L1155">		processExpression(node.expression());</span>
+<span class="nc" id="L1156">		node.setInitialType(typeFactory.basicType(BasicTypeKind.BOOL));</span>
+<span class="nc bnc" id="L1157" title="All 2 branches missed.">		if (!node.isSideEffectFree(false))</span>
+<span class="nc" id="L1158">			throw this</span>
+<span class="nc" id="L1159">					.error(&quot;quantified expressions are not allowed to have side effects.&quot;,</span>
+<span class="nc" id="L1160">							node);</span>
+<span class="nc" id="L1161">	}</span>
+
+	private void processDerivativeExpression(DerivativeExpressionNode node)
+			throws SyntaxException {
+<span class="nc" id="L1165">		ExpressionNode functionNode = node.getFunction();</span>
+		Type tmpType;
+		TypeKind tmpKind;
+		FunctionType functionType;
+
+<span class="nc" id="L1170">		processExpression(functionNode);</span>
+<span class="nc" id="L1171">		tmpType = functionNode.getType();</span>
+<span class="nc" id="L1172">		tmpKind = tmpType.kind();</span>
+<span class="nc bnc" id="L1173" title="All 2 branches missed.">		for (int i = 0; i &lt; node.getNumberOfPartials(); i++) {</span>
+<span class="nc" id="L1174">			processExpression(node.getPartial(i).getRight());</span>
+		}
+<span class="nc bnc" id="L1176" title="All 2 branches missed.">		for (int i = 0; i &lt; node.getNumberOfArguments(); i++) {</span>
+<span class="nc" id="L1177">			processExpression(node.getArgument(i));</span>
+		}
+<span class="nc bnc" id="L1179" title="All 2 branches missed.">		if (tmpKind == TypeKind.POINTER) {</span>
+<span class="nc" id="L1180">			tmpType = ((PointerType) tmpType).referencedType();</span>
+<span class="nc" id="L1181">			tmpKind = tmpType.kind();</span>
+		}
+<span class="nc bnc" id="L1183" title="All 2 branches missed.">		if (tmpKind == TypeKind.FUNCTION)</span>
+<span class="nc" id="L1184">			functionType = (FunctionType) tmpType;</span>
+		else
+<span class="nc" id="L1186">			throw error(</span>
+<span class="nc" id="L1187">					&quot;Function expression in derivative expression does not have function &quot;</span>
+<span class="nc" id="L1188">							+ &quot;type or pointer to function type&quot;, functionNode);</span>
+<span class="nc" id="L1189">		node.setInitialType(functionType.getReturnType());</span>
+<span class="nc" id="L1190">	}</span>
+
+	private void processSizeof(SizeofNode node) throws SyntaxException {
+<span class="nc" id="L1193">		SizeableNode argument = node.getArgument();</span>
+
+<span class="nc bnc" id="L1195" title="All 2 branches missed.">		if (argument instanceof TypeNode) {</span>
+<span class="nc" id="L1196">			entityAnalyzer.typeAnalyzer.processTypeNode((TypeNode) argument);</span>
+<span class="nc bnc" id="L1197" title="All 2 branches missed.">		} else if (argument instanceof ExpressionNode) {</span>
+<span class="nc" id="L1198">			processExpression((ExpressionNode) argument);</span>
+<span class="nc" id="L1199">		} else {</span>
+<span class="nc bnc" id="L1200" title="All 2 branches missed.">			assert false;</span>
+		}
+<span class="nc" id="L1202">		node.setInitialType(typeFactory.size_t());</span>
+<span class="nc" id="L1203">	}</span>
+
+	private void processRemoteExpression(RemoteExpressionNode node)
+			throws SyntaxException {
+<span class="nc" id="L1207">		ExpressionNode left = node.getProcessExpression();</span>
+<span class="nc" id="L1208">		IdentifierExpressionNode identifierExpression = node</span>
+<span class="nc" id="L1209">				.getIdentifierNode();</span>
+
+<span class="nc" id="L1211">		processExpression(left);</span>
+<span class="nc" id="L1212">		processIdentifierExpression(identifierExpression, true, false);</span>
+<span class="nc" id="L1213">		node.setInitialType(identifierExpression.getInitialType());</span>
+<span class="nc" id="L1214">	}</span>
+
+	private void processResult(ResultNode node) {
+<span class="nc" id="L1217">		Function function = entityAnalyzer.enclosingFunction(node);</span>
+
+<span class="nc" id="L1219">		node.setInitialType(function.getType().getReturnType());</span>
+<span class="nc" id="L1220">	}</span>
+
+	// Operators...
+
+	// /**
+	// * Given a left hand side expression, try to find the scope in which the
+	// * memory object referred to by that expression is stored.
+	// *
+	// * @param node
+	// * a LHS expression node
+	// * @return a non-null Scope, in the worst case, the root scope
+	// * @throws SyntaxException
+	// * if node is not a LHS expression
+	// */
+	// private Scope scopeOf(ExpressionNode node) throws SyntaxException {
+	// Scope result;
+	//
+	// if (node instanceof IdentifierExpressionNode) {
+	// Variable variable = (Variable) ((IdentifierExpressionNode) node)
+	// .getIdentifier().getEntity();
+	//
+	// result = variable.getFirstDeclaration().getScope();
+	// } else if (node instanceof OperatorNode) {
+	// OperatorNode opNode = (OperatorNode) node;
+	// Operator operator = opNode.getOperator();
+	//
+	// switch (operator) {
+	// case DEREFERENCE: {
+	// PointerType pointerType = (PointerType) opNode.getArgument(0)
+	// .getType();
+	//
+	// result = entityAnalyzer.rootScope;
+	// break;
+	// }
+	// case SUBSCRIPT:
+	// result = scopeOf(((OperatorNode) node).getArgument(0));
+	// break;
+	// default:
+	// throw error(&quot;Illegal left-hand side expression&quot;, node);
+	// }
+	// } else if (node instanceof ArrowNode) {
+	// // &amp;(e-&gt;f) = &amp;((*e).f)
+	// ArrowNode arrowNode = (ArrowNode) node;
+	// PointerType pointerType = (PointerType) arrowNode
+	// .getStructurePointer().getType();
+	// ScopeValue scopeValue = pointerType.scopeRestriction();
+	//
+	// if (scopeValue instanceof Scope)
+	// result = (Scope) scopeValue;
+	// else
+	// result = entityAnalyzer.rootScope;
+	// } else if (node instanceof DotNode) { // &amp;(e.f)
+	// DotNode dotNode = (DotNode) node;
+	// ExpressionNode expr = dotNode.getStructure();
+	//
+	// result = scopeOf(expr);
+	// } else if (node instanceof CompoundLiteralNode) {
+	// result = node.getScope();
+	// } else if (node instanceof StringLiteralNode) {
+	// result = node.getScope();
+	// } else
+	// throw error(&quot;Illegal left-hand side expression&quot;, node);
+	// return result;
+	// }
+
+	private void processADDRESSOF(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1286">		ExpressionNode arg0 = node.getArgument(0);</span>
+
+<span class="nc" id="L1288">		node.setInitialType(typeFactory.pointerType(arg0.getType()));</span>
+<span class="nc" id="L1289">	}</span>
+
+	/**
+	 * Processes a simple assignment of the form lhs = rhs. Pre-req: the two
+	 * operands have already been processed via method
+	 * {@link #processExpression}.
+	 * 
+	 * @param node
+	 *            an OperatorNode with operator ASSIGN
+	 * @throws SyntaxException
+	 *             if there is a type incompatibility between the two sides
+	 */
+	private void processASSIGN(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1302">		ExpressionNode lhs = node.getArgument(0);</span>
+
+<span class="nc bnc" id="L1304" title="All 2 branches missed.">		if (!this.isLvalue(lhs)) {</span>
+<span class="nc" id="L1305">			throw error(&quot;The expression &quot; + lhs.prettyRepresentation()</span>
+<span class="nc" id="L1306">					+ &quot; doesn't designate an object and thus &quot;</span>
+<span class="nc" id="L1307">					+ &quot;can't be used as the left argument of assignment&quot;, node);</span>
+		}
+
+<span class="nc" id="L1310">		ExpressionNode rhs = node.getArgument(1);</span>
+<span class="nc" id="L1311">		Type type = assignmentType(node);</span>
+
+<span class="nc" id="L1313">		addStandardConversions(rhs);</span>
+		try {
+<span class="nc" id="L1315">			convertRHS(rhs, type);</span>
+<span class="nc" id="L1316">		} catch (UnsourcedException e) {</span>
+<span class="nc" id="L1317">			throw error(e, node);</span>
+		}
+<span class="nc" id="L1319">		node.setInitialType(type);</span>
+<span class="nc" id="L1320">	}</span>
+
+	/**
+	 * checks if the given expression is an lvalue.
+	 * 
+	 * @param node
+	 *            the expression to be check
+	 */
+	private boolean isLvalue(ExpressionNode node) {
+<span class="nc" id="L1329">		ExpressionKind kind = node.expressionKind();</span>
+
+<span class="nc bnc" id="L1331" title="All 3 branches missed.">		switch (kind) {</span>
+		case ARROW:
+		case DOT:
+		case IDENTIFIER_EXPRESSION:
+<span class="nc" id="L1335">			return true;</span>
+		case OPERATOR: {
+<span class="nc" id="L1337">			OperatorNode operatorNode = (OperatorNode) node;</span>
+
+<span class="nc bnc" id="L1339" title="All 2 branches missed.">			switch (operatorNode.getOperator()) {</span>
+			case DEREFERENCE:
+			case SUBSCRIPT:
+<span class="nc" id="L1342">				return true;</span>
+			default:
+			}
+		}
+		default:
+<span class="nc" id="L1347">			return false;</span>
+		}
+	}
+
+	/**
+	 * Complete processing of BIG_O node. The operand must be arithmetic, and
+	 * the integer promotions are performed. The type is the promoted type.
+	 * 
+	 */
+	private void processBIG_O(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1357">		ExpressionNode arg = node.getArgument(0);</span>
+<span class="nc" id="L1358">		Type type = addStandardConversions(arg);</span>
+
+<span class="nc bnc" id="L1360" title="All 2 branches missed.">		if (!(type instanceof ArithmeticType))</span>
+<span class="nc" id="L1361">			throw error(&quot;Argument to unary operator &quot; + node.getOperator()</span>
+<span class="nc" id="L1362">					+ &quot; has non-arithmetic type: &quot; + type, node);</span>
+<span class="nc bnc" id="L1363" title="All 2 branches missed.">		if (type instanceof IntegerType)</span>
+<span class="nc" id="L1364">			type = doIntegerPromotion(arg);</span>
+<span class="nc" id="L1365">		node.setInitialType(type);</span>
+<span class="nc" id="L1366">	}</span>
+
+	/**
+	 * C11 Sec. 6.5.3.3 says the argument must have integer type, and
+	 * 
+	 * &lt;blockquote&gt; The result of the ~ operator is the bitwise complement of
+	 * its (promoted) operand (that is, each bit in the result is set if and
+	 * only if the corresponding bit in the converted operand is not set). The
+	 * integer promotions are performed on the operand, and the result has the
+	 * promoted type. If the promoted type is an unsigned type, the expression
+	 * ~E is equivalent to the maximum value representable in that type minus E.
+	 * &lt;/blockquote&gt;
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processBITCOMPLEMENT(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1383">		node.setInitialType(doIntegerPromotion(node.getArgument(0)));</span>
+<span class="nc" id="L1384">	}</span>
+
+	/**
+	 * See Sec. 6.5.17.
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processCOMMA(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1393">		node.setInitialType(addStandardConversions(node.getArgument(1)));</span>
+<span class="nc" id="L1394">	}</span>
+
+	/**
+	 * From C11 Sec. 6.5.15:
+	 * 
+	 * &lt;blockquote&gt; The first operand shall have scalar type.
+	 * 
+	 * One of the following shall hold for the second and third operands:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;both operands have arithmetic type;&lt;/li&gt;
+	 * &lt;li&gt;both operands have the same structure or union type;&lt;/li&gt;
+	 * &lt;li&gt;both operands have void type;&lt;/li&gt;
+	 * &lt;li&gt;both operands are pointers to qualified or unqualified versions of
+	 * compatible types;&lt;/li&gt;
+	 * &lt;li&gt;one operand is a pointer and the other is a null pointer constant; or
+	 * &lt;/li&gt;
+	 * &lt;li&gt;one operand is a pointer to an object type and the other is a pointer
+	 * to a qualified or unqualified version of void.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If both the second and third operands have arithmetic type, the result
+	 * type that would be determined by the usual arithmetic conversions, were
+	 * they applied to those two operands, is the type of the result. If both
+	 * the operands have structure or union type, the result has that type. If
+	 * both operands have void type, the result has void type.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If both the second and third operands are pointers or one is a null
+	 * pointer constant and the other is a pointer, the result type is a pointer
+	 * to a type qualified with all the type qualifiers of the types referenced
+	 * by both operands. Furthermore, if both operands are pointers to
+	 * compatible types or to differently qualified versions of compatible
+	 * types, the result type is a pointer to an appropriately qualified version
+	 * of the composite type; if one operand is a null pointer constant, the
+	 * result has the type of the other operand; otherwise, one operand is a
+	 * pointer to void or a qualified version of void, in which case the result
+	 * type is a pointer to an appropriately qualified version of void.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;/blockquote&gt;
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processCONDITIONAL(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1441">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1442">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1443">		ExpressionNode arg2 = node.getArgument(2);</span>
+<span class="nc" id="L1444">		Type type0 = addStandardConversions(arg0);</span>
+<span class="nc" id="L1445">		Type type1 = addStandardConversions(arg1);</span>
+<span class="nc" id="L1446">		Type type2 = addStandardConversions(arg2);</span>
+		Type type;
+
+<span class="nc bnc" id="L1449" title="All 2 branches missed.">		if (!isScalar(type0))</span>
+<span class="nc" id="L1450">			throw error(</span>
+<span class="nc" id="L1451">					&quot;First argument of conditional operator has non-scalar type: &quot;</span>
+<span class="nc" id="L1452">							+ type0, arg0);</span>
+<span class="nc bnc" id="L1453" title="All 4 branches missed.">		if (type1 instanceof ArithmeticType &amp;&amp; type2 instanceof ArithmeticType) {</span>
+<span class="nc" id="L1454">			type = typeFactory.usualArithmeticConversion(</span>
+<span class="nc" id="L1455">					(ArithmeticType) type1, (ArithmeticType) type2);</span>
+<span class="nc bnc" id="L1456" title="All 2 branches missed.">		} else if (type1 instanceof StructureOrUnionType) {</span>
+<span class="nc bnc" id="L1457" title="All 2 branches missed.">			if (!type1.equals(type2))</span>
+<span class="nc" id="L1458">				throw error(</span>
+<span class="nc" id="L1459">						&quot;Operands of conditional operator have incompatible types&quot;,</span>
+<span class="nc" id="L1460">						node);</span>
+<span class="nc" id="L1461">			type = type1;</span>
+<span class="nc bnc" id="L1462" title="All 2 branches missed.">		} else if (type1.kind() == TypeKind.VOID</span>
+<span class="nc bnc" id="L1463" title="All 2 branches missed.">				&amp;&amp; type2.kind() == TypeKind.VOID) {</span>
+<span class="nc" id="L1464">			type = type1;</span>
+<span class="nc bnc" id="L1465" title="All 2 branches missed.">		} else if (conversionFactory.isNullPointerConstant(arg1)</span>
+<span class="nc bnc" id="L1466" title="All 2 branches missed.">				&amp;&amp; type2 instanceof PointerType) {</span>
+<span class="nc" id="L1467">			type = type2;</span>
+<span class="nc bnc" id="L1468" title="All 2 branches missed.">		} else if (conversionFactory.isNullPointerConstant(arg2)</span>
+<span class="nc bnc" id="L1469" title="All 2 branches missed.">				&amp;&amp; type1 instanceof PointerType) {</span>
+<span class="nc" id="L1470">			type = type1;</span>
+<span class="nc bnc" id="L1471" title="All 4 branches missed.">		} else if (type1 instanceof PointerType &amp;&amp; type2 instanceof PointerType) {</span>
+<span class="nc" id="L1472">			PointerType p0 = (PointerType) type1;</span>
+<span class="nc" id="L1473">			PointerType p1 = (PointerType) type2;</span>
+<span class="nc" id="L1474">			boolean atomicQ = false, constQ = false, volatileQ = false, restrictQ = false;</span>
+<span class="nc" id="L1475">			Type base0 = p0.referencedType();</span>
+<span class="nc" id="L1476">			Type base1 = p1.referencedType();</span>
+
+<span class="nc bnc" id="L1478" title="All 2 branches missed.">			if (base0 instanceof QualifiedObjectType) {</span>
+<span class="nc" id="L1479">				QualifiedObjectType q0 = (QualifiedObjectType) base0;</span>
+
+<span class="nc" id="L1481">				constQ = q0.isConstQualified();</span>
+<span class="nc" id="L1482">				volatileQ = q0.isVolatileQualified();</span>
+<span class="nc" id="L1483">				restrictQ = q0.isRestrictQualified();</span>
+<span class="nc" id="L1484">				base0 = q0.getBaseType();</span>
+			}
+<span class="nc bnc" id="L1486" title="All 2 branches missed.">			if (base0 instanceof AtomicType) {</span>
+<span class="nc" id="L1487">				atomicQ = true;</span>
+<span class="nc" id="L1488">				base0 = ((AtomicType) base0).getBaseType();</span>
+			}
+<span class="nc bnc" id="L1490" title="All 2 branches missed.">			if (base1 instanceof QualifiedObjectType) {</span>
+<span class="nc" id="L1491">				QualifiedObjectType q1 = (QualifiedObjectType) base1;</span>
+
+<span class="nc bnc" id="L1493" title="All 4 branches missed.">				constQ = constQ || q1.isConstQualified();</span>
+<span class="nc bnc" id="L1494" title="All 4 branches missed.">				volatileQ = volatileQ || q1.isVolatileQualified();</span>
+<span class="nc bnc" id="L1495" title="All 4 branches missed.">				restrictQ = restrictQ || q1.isRestrictQualified();</span>
+<span class="nc" id="L1496">				base1 = q1.getBaseType();</span>
+			}
+<span class="nc bnc" id="L1498" title="All 2 branches missed.">			if (base1 instanceof AtomicType) {</span>
+<span class="nc" id="L1499">				atomicQ = true;</span>
+<span class="nc" id="L1500">				base1 = ((AtomicType) base1).getBaseType();</span>
+			}
+<span class="nc bnc" id="L1502" title="All 4 branches missed.">			if (base0.kind() == TypeKind.VOID || base1.kind() == TypeKind.VOID)</span>
+<span class="nc" id="L1503">				type = base0;</span>
+<span class="nc bnc" id="L1504" title="All 2 branches missed.">			else if (base0.compatibleWith(base1))</span>
+<span class="nc" id="L1505">				type = typeFactory.compositeType(base0, base1);</span>
+			else
+<span class="nc" id="L1507">				throw error(&quot;Incompatible pointer types in conditional:\n&quot;</span>
+<span class="nc" id="L1508">						+ type1 + &quot;\n&quot; + type2, node);</span>
+
+<span class="nc" id="L1510">			type = typeFactory.pointerType(type);</span>
+<span class="nc bnc" id="L1511" title="All 2 branches missed.">			if (atomicQ)</span>
+<span class="nc" id="L1512">				type = typeFactory.atomicType((PointerType) type);</span>
+<span class="nc" id="L1513">			type = typeFactory.qualify((ObjectType) type, constQ, volatileQ,</span>
+<span class="nc" id="L1514">					restrictQ, false, false);</span>
+<span class="nc" id="L1515">		} else {</span>
+<span class="nc bnc" id="L1516" title="All 2 branches missed.">			if (this.config == null</span>
+<span class="nc bnc" id="L1517" title="All 2 branches missed.">					|| !config.svcomp()</span>
+<span class="nc bnc" id="L1518" title="All 4 branches missed.">					|| (type1.kind() != TypeKind.VOID &amp;&amp; type2.kind() != TypeKind.VOID))</span>
+<span class="nc" id="L1519">				throw error(</span>
+<span class="nc" id="L1520">						&quot;Incompatible types for second and third arguments of conditional operator:\n&quot;</span>
+<span class="nc" id="L1521">								+ type1 + &quot;\n&quot; + type2, node);</span>
+<span class="nc bnc" id="L1522" title="All 2 branches missed.">			if (type1.kind() == TypeKind.VOID)</span>
+<span class="nc" id="L1523">				type = type2;</span>
+			else
+<span class="nc" id="L1525">				type = type1;</span>
+		}
+<span class="nc" id="L1527">		node.setInitialType(type);</span>
+<span class="nc" id="L1528">	}</span>
+
+	/**
+	 * Complete processing of PLUS node.
+	 * 
+	 * Cases: pointer + integer, integer + pointer, arithmetic + arithmetic,
+	 * 
+	 * TODO: consider actually adding information to the node to say what kind
+	 * of addition it is (arithmetic, pointer)
+	 * 
+	 * @param node
+	 */
+	private void processPLUS(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1541">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1542">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1543">		Type type0 = addStandardConversions(arg0);</span>
+<span class="nc" id="L1544">		Type type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1546" title="All 4 branches missed.">		if (type0.kind() == TypeKind.SCOPE &amp;&amp; type1.kind() == TypeKind.SCOPE) {</span>
+			// no conversions necessary
+<span class="nc" id="L1548">			node.setInitialType(type0);</span>
+<span class="nc bnc" id="L1549" title="All 2 branches missed.">		} else if (type0 instanceof ArithmeticType</span>
+<span class="nc bnc" id="L1550" title="All 2 branches missed.">				&amp;&amp; type1 instanceof ArithmeticType)</span>
+<span class="nc" id="L1551">			node.setInitialType(doUsualArithmetic(arg0, arg1));</span>
+<span class="nc bnc" id="L1552" title="All 2 branches missed.">		else if (isPointerToCompleteObjectType(type0)</span>
+<span class="nc bnc" id="L1553" title="All 2 branches missed.">				&amp;&amp; type1 instanceof IntegerType)</span>
+<span class="nc" id="L1554">			node.setInitialType(type0);</span>
+<span class="nc bnc" id="L1555" title="All 2 branches missed.">		else if (type0 instanceof IntegerType</span>
+<span class="nc bnc" id="L1556" title="All 2 branches missed.">				&amp;&amp; isPointerToCompleteObjectType(type1))</span>
+<span class="nc" id="L1557">			node.setInitialType(type1);</span>
+		// TODO:experimental:
+<span class="nc bnc" id="L1559" title="All 2 branches missed.">		else if (isPointerToCompleteObjectType(type0)</span>
+<span class="nc bnc" id="L1560" title="All 2 branches missed.">				&amp;&amp; type1.kind().equals(TypeKind.RANGE)) {</span>
+<span class="nc" id="L1561">			node.setInitialType(typeFactory</span>
+<span class="nc" id="L1562">					.incompleteArrayType((ObjectType) type0));</span>
+<span class="nc" id="L1563">		} else</span>
+<span class="nc" id="L1564">			throw error(</span>
+<span class="nc" id="L1565">					&quot;Invalid arguments for +.  C requires either (1) both arguments\n&quot;</span>
+							+ &quot;are numeric, or (2) one argument is numeric and the other is a pointer\n&quot;
+							+ &quot;to a complete object type.  The argument types are:\n&quot;
+<span class="nc" id="L1568">							+ type0 + &quot;\n&quot; + type1, node);</span>
+<span class="nc" id="L1569">	}</span>
+
+	/**
+	 * Processes a binary minus operator expression. From C11 Sec. 6.5.6:
+	 * 
+	 * &lt;blockquote&gt;
+	 * 
+	 * For subtraction, one of the following shall hold:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;both operands have arithmetic type;&lt;/li&gt;
+	 * &lt;li&gt;both operands are pointers to qualified or unqualified versions of
+	 * compatible complete object types; or&lt;/li&gt;
+	 * &lt;li&gt;the left operand is a pointer to a complete object type and the right
+	 * operand has integer type.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * &lt;/blockquote&gt;
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processMINUS(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1591">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1592">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1593">		Type type0 = addStandardConversions(arg0);</span>
+<span class="nc" id="L1594">		Type type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1596" title="All 4 branches missed.">		if (type0 instanceof ArithmeticType &amp;&amp; type1 instanceof ArithmeticType)</span>
+<span class="nc" id="L1597">			node.setInitialType(doUsualArithmetic(arg0, arg1));</span>
+<span class="nc bnc" id="L1598" title="All 2 branches missed.">		else if (isPointerToCompleteObjectType(type0)</span>
+<span class="nc bnc" id="L1599" title="All 2 branches missed.">				&amp;&amp; type1 instanceof IntegerType)</span>
+<span class="nc" id="L1600">			node.setInitialType(type0);</span>
+<span class="nc bnc" id="L1601" title="All 2 branches missed.">		else if (pointerToCompatibleComplete(type0, type1))</span>
+<span class="nc" id="L1602">			node.setInitialType(typeFactory.ptrdiff_t());</span>
+		else
+<span class="nc" id="L1604">			throw error(&quot;Arguments cannot be subtracted&quot;, node);</span>
+<span class="nc" id="L1605">	}</span>
+
+	/**
+	 * Processes a += or -= expression. From C11 Sec. 6.5.16.2:
+	 * 
+	 * &lt;blockquote&gt; For the operators += and -= only, either the left operand
+	 * shall be an atomic, qualified, or unqualified pointer to a complete
+	 * object type, and the right shall have integer type; or the left operand
+	 * shall have atomic, qualified, or unqualified arithmetic type, and the
+	 * right shall have arithmetic type. &lt;/blockquote&gt;
+	 * 
+	 * Note: this is almost equivalent to &quot;lhs = lhs + rhs&quot; which results in the
+	 * following conversions:
+	 * 
+	 * &lt;pre&gt;
+	 * lhs = (C-&gt;L)((L-&gt;C)lhs + (R-&gt;C)rhs)
+	 * &lt;/pre&gt;
+	 * 
+	 * where L is the type of the left hand side (after lvalue conversion), R is
+	 * the type of the right hand side (after lvalue conversion) and C is the
+	 * type resulting from the &quot;usual arithmetic conversions&quot; applied to L and
+	 * R. Hence in the worst case there are 3 conversions, but we don't have a
+	 * place to put them all in the unexpanded form (i.e., there's no place for
+	 * the L-&gt;C conversion since that term is not in the AST).
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processPLUSEQorMINUSEQ(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L1635">		Type type = assignmentType(node);</span>
+<span class="nc" id="L1636">		ExpressionNode rhs = node.getArgument(1);</span>
+<span class="nc" id="L1637">		Type rightType = addStandardConversions(rhs);</span>
+
+<span class="nc bnc" id="L1639" title="All 2 branches missed.">		if (isPointerToCompleteObjectType(type)</span>
+<span class="nc bnc" id="L1640" title="All 2 branches missed.">				&amp;&amp; rightType instanceof IntegerType)</span>
+<span class="nc" id="L1641">			; // pointer addition: nothing to do</span>
+<span class="nc bnc" id="L1642" title="All 2 branches missed.">		else if (type instanceof ArithmeticType</span>
+<span class="nc bnc" id="L1643" title="All 2 branches missed.">				&amp;&amp; rightType instanceof ArithmeticType)</span>
+<span class="nc" id="L1644">			doArithmeticCompoundAssign((ArithmeticType) type, rhs);</span>
+		else
+<span class="nc" id="L1646">			throw error(&quot;Inappropriate arguments to += operator.  &quot;</span>
+<span class="nc" id="L1647">					+ &quot;Argument types:\n&quot; + type + &quot;\n&quot; + rightType, node);</span>
+<span class="nc" id="L1648">		node.setInitialType(type);</span>
+<span class="nc" id="L1649">	}</span>
+
+	private void processTIMESorDIVorMOD(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L1653">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1654">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1655">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1656">		Type type0 = addStandardConversions(arg0), type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1658" title="All 2 branches missed.">		if (operator == Operator.MOD) {</span>
+<span class="nc bnc" id="L1659" title="All 2 branches missed.">			if (!(type0 instanceof IntegerType))</span>
+<span class="nc" id="L1660">				throw error(&quot;Arguments to % must have integer type&quot;, arg0);</span>
+<span class="nc bnc" id="L1661" title="All 2 branches missed.">			if (!(type1 instanceof IntegerType))</span>
+<span class="nc" id="L1662">				throw error(&quot;Arguments to % must have integer type&quot;, arg1);</span>
+		} else {
+<span class="nc bnc" id="L1664" title="All 2 branches missed.">			if (!(type0 instanceof ArithmeticType))</span>
+<span class="nc" id="L1665">				throw error(&quot;Arguments to &quot; + operator</span>
+<span class="nc" id="L1666">						+ &quot; must have arithmetic type&quot;, arg0);</span>
+<span class="nc bnc" id="L1667" title="All 2 branches missed.">			if (!(type1 instanceof ArithmeticType))</span>
+<span class="nc" id="L1668">				throw error(&quot;Arguments to &quot; + operator</span>
+<span class="nc" id="L1669">						+ &quot; must have arithmetic type&quot;, arg1);</span>
+		}
+<span class="nc" id="L1671">		node.setInitialType(doUsualArithmetic(arg0, arg1));</span>
+<span class="nc" id="L1672">	}</span>
+
+	private void processTIMESEQorDIVEQorMODEQ(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L1676">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1677">		Type type = assignmentType(node);</span>
+<span class="nc" id="L1678">		ExpressionNode lhs = node.getArgument(0);</span>
+<span class="nc" id="L1679">		ExpressionNode rhs = node.getArgument(1);</span>
+<span class="nc" id="L1680">		Type rightType = addStandardConversions(rhs);</span>
+
+<span class="nc bnc" id="L1682" title="All 2 branches missed.">		if (operator == Operator.MOD) {</span>
+<span class="nc bnc" id="L1683" title="All 2 branches missed.">			if (!(type instanceof IntegerType))</span>
+<span class="nc" id="L1684">				throw error(&quot;Arguments to % must have integer type&quot;, lhs);</span>
+<span class="nc bnc" id="L1685" title="All 2 branches missed.">			if (!(rightType instanceof IntegerType))</span>
+<span class="nc" id="L1686">				throw error(&quot;Arguments to % must have integer type&quot;, rhs);</span>
+		} else {
+<span class="nc bnc" id="L1688" title="All 2 branches missed.">			if (!(type instanceof ArithmeticType))</span>
+<span class="nc" id="L1689">				throw error(&quot;Arguments to &quot; + operator</span>
+<span class="nc" id="L1690">						+ &quot; must have arithmetic type&quot;, lhs);</span>
+<span class="nc bnc" id="L1691" title="All 2 branches missed.">			if (!(rightType instanceof ArithmeticType))</span>
+<span class="nc" id="L1692">				throw error(&quot;Arguments to &quot; + operator</span>
+<span class="nc" id="L1693">						+ &quot; must have arithmetic type&quot;, rhs);</span>
+		}
+<span class="nc" id="L1695">		doArithmeticCompoundAssign((ArithmeticType) type, rhs);</span>
+<span class="nc" id="L1696">		node.setInitialType(type);</span>
+<span class="nc" id="L1697">	}</span>
+
+	/**
+	 * From C11 Sec. 6.5.7:
+	 * 
+	 * &lt;blockquote&gt; Each of the operands shall have integer type.
+	 * 
+	 * The integer promotions are performed on each of the operands. The type of
+	 * the result is that of the promoted left operand. If the value of the
+	 * right operand is negative or is greater than or equal to the width of the
+	 * promoted left operand, the behavior is undefined. &lt;/blockquote&gt;
+	 * 
+	 * @param node
+	 */
+	private void processSHIFTLEFTorSHIFTRIGHT(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L1713">		node.setInitialType(doIntegerPromotion(node.getArgument(0)));</span>
+<span class="nc" id="L1714">		doIntegerPromotion(node.getArgument(1));</span>
+<span class="nc" id="L1715">	}</span>
+
+	/**
+	 * Recall from C11 Sec. 6.5.16:
+	 * 
+	 * &lt;blockquote&gt; An assignment operator stores a value in the object
+	 * designated by the left operand. An assignment expression has the value of
+	 * the left operand after the assignment, but is not an lvalue. The type of
+	 * an assignment expression is the type the left operand would have after
+	 * lvalue conversion. The side effect of updating the stored value of the
+	 * left operand is sequenced after the value computations of the left and
+	 * right operands. The evaluations of the operands are unsequenced.
+	 * &lt;/blockquote&gt;
+	 * 
+	 * and
+	 * 
+	 * &lt;blockquote&gt; For the other operators, the left operand shall have atomic,
+	 * qualified, or unqualified arithmetic type, and (considering the type the
+	 * left operand would have after lvalue conversion) each operand shall have
+	 * arithmetic type consistent with those allowed by the corresponding binary
+	 * operator. &lt;/blockquote&gt;
+	 * 
+	 * @param node
+	 *            expression node with operator SHIFTLEFTEQ or SHIFTRIGHTEQ
+	 * @throws SyntaxException
+	 */
+	private void processSHIFTLEFTEQorSHIFTRIGHTEQ(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L1743">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1744">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1745">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1746">		Type type0 = arg0.getConvertedType();</span>
+		Conversion conversion;
+		Type type;
+
+<span class="nc bnc" id="L1750" title="All 2 branches missed.">		if (!(type0 instanceof ObjectType))</span>
+<span class="nc" id="L1751">			throw error(&quot;First argument to &quot; + operator</span>
+<span class="nc" id="L1752">					+ &quot; has non-object type: &quot; + type0, arg0);</span>
+<span class="nc" id="L1753">		conversion = conversionFactory.lvalueConversion((ObjectType) type0);</span>
+<span class="nc bnc" id="L1754" title="All 2 branches missed.">		if (conversion == null)</span>
+<span class="nc" id="L1755">			type = type0;</span>
+		else
+<span class="nc" id="L1757">			type = conversion.getNewType();</span>
+<span class="nc bnc" id="L1758" title="All 2 branches missed.">		if (!(type instanceof IntegerType))</span>
+<span class="nc" id="L1759">			throw error(&quot;First argument to &quot; + operator</span>
+<span class="nc" id="L1760">					+ &quot; has non-integer type: &quot; + type0, arg0);</span>
+<span class="nc" id="L1761">		addStandardConversions(arg1);</span>
+<span class="nc" id="L1762">		doIntegerPromotion(arg1);</span>
+<span class="nc" id="L1763">		node.setInitialType(type);</span>
+<span class="nc" id="L1764">	}</span>
+
+	/**
+	 * C11 Sec. 6.5.8: &lt;blockquote&gt; One of the following shall hold:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;both operands have real type; or&lt;/li&gt;
+	 * &lt;li&gt;both operands are pointers to qualified or unqualified versions of
+	 * compatible object types.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * If both of the operands have arithmetic type, the usual arithmetic
+	 * conversions are performed.
+	 * 
+	 * Each of the operators &lt; (less than), &gt; (greater than), &lt;= (less than or
+	 * equal to), and &gt;= (greater than or equal to) shall yield 1 if the
+	 * specified relation is true and 0 if it is false.) The result has type
+	 * int. &lt;/blockquote&gt;
+	 * 
+	 * @param node
+	 *            an expression node for one of the operators LT, GT, LTE, or
+	 *            GTE.
+	 */
+	private void processRelational(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1787">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1788">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1789">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1790">		Type type0 = addStandardConversions(arg0);</span>
+<span class="nc" id="L1791">		Type type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1793" title="All 4 branches missed.">		if (type0.kind() == TypeKind.SCOPE &amp;&amp; type1.kind() == TypeKind.SCOPE) {</span>
+			// no conversions necessary
+<span class="nc bnc" id="L1795" title="All 2 branches missed.">		} else if (type0 instanceof ArithmeticType</span>
+<span class="nc bnc" id="L1796" title="All 2 branches missed.">				&amp;&amp; type1 instanceof ArithmeticType) {</span>
+<span class="nc bnc" id="L1797" title="All 2 branches missed.">			if (!((ArithmeticType) type0).inRealDomain())</span>
+<span class="nc" id="L1798">				throw error(&quot;Argument to relational operator &quot; + operator</span>
+<span class="nc" id="L1799">						+ &quot; must have real type&quot;, arg0);</span>
+<span class="nc bnc" id="L1800" title="All 2 branches missed.">			if (!((ArithmeticType) type1).inRealDomain())</span>
+<span class="nc" id="L1801">				throw error(&quot;Argument to relational operator &quot; + operator</span>
+<span class="nc" id="L1802">						+ &quot; must have real type&quot;, arg1);</span>
+<span class="nc" id="L1803">			doUsualArithmetic(arg0, arg1);</span>
+<span class="nc bnc" id="L1804" title="All 2 branches missed.">		} else if (pointerToCompatibleObject(type0, type1)) {</span>
+			// nothing to do
+		} else
+<span class="nc" id="L1807">			throw error(&quot;Illegal arguments to operator &quot; + operator, node);</span>
+<span class="nc" id="L1808">		node.setInitialType(intType);</span>
+<span class="nc" id="L1809">	}</span>
+
+	/**
+	 * 6.5.2.1: &quot;One of the expressions shall have type &quot;pointer to complete
+	 * object type&quot;, the other expression shall have integer type, and the
+	 * result has type &quot;type&quot;.&quot;
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processSUBSCRIPT(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1820">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1821">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1822">		Type type0 = addStandardConversions(arg0);</span>
+<span class="nc" id="L1823">		Type type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1825" title="All 2 branches missed.">		if (!(type1 instanceof IntegerType)</span>
+<span class="nc bnc" id="L1826" title="All 2 branches missed.">				&amp;&amp; !(type1.equals(typeFactory.rangeType()))</span>
+<span class="nc bnc" id="L1827" title="All 2 branches missed.">				&amp;&amp; !(arg1 instanceof WildcardNode))</span>
+<span class="nc" id="L1828">			throw error(&quot;Subscript does not have integer or range type:\n&quot;</span>
+<span class="nc" id="L1829">					+ type1, arg1);</span>
+		// the following will check pointer in any case
+		// if strict C, must also be pointer to complete object type:
+<span class="nc bnc" id="L1832" title="All 2 branches missed.">		if (isPointerToCompleteObjectType(type0))</span>
+<span class="nc" id="L1833">			node.setInitialType(((PointerType) type0).referencedType());</span>
+		else
+<span class="nc" id="L1835">			throw error(</span>
+<span class="nc" id="L1836">					&quot;First argument to subscript operator not pointer to complete object type:\n&quot;</span>
+<span class="nc" id="L1837">							+ type0, arg0);</span>
+<span class="nc" id="L1838">	}</span>
+
+	private void processBitwise(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1841">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1842">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1843">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1844">		Type type0 = addStandardConversions(arg0);</span>
+<span class="nc" id="L1845">		Type type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1847" title="All 2 branches missed.">		if (!(type0 instanceof IntegerType))</span>
+<span class="nc" id="L1848">			throw error(&quot;Argument to bitwise operator &quot; + operator</span>
+<span class="nc" id="L1849">					+ &quot; must have integer type&quot;, arg0);</span>
+<span class="nc bnc" id="L1850" title="All 2 branches missed.">		if (!(type1 instanceof IntegerType))</span>
+<span class="nc" id="L1851">			throw error(&quot;Argument to bitwise operator &quot; + operator</span>
+<span class="nc" id="L1852">					+ &quot; must have integer type&quot;, arg1);</span>
+<span class="nc" id="L1853">		node.setInitialType(doUsualArithmetic(arg0, arg1));</span>
+<span class="nc" id="L1854">	}</span>
+
+	private void processBitwiseAssign(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L1857">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1858">		Type type = assignmentType(node);</span>
+<span class="nc" id="L1859">		ExpressionNode lhs = node.getArgument(0);</span>
+<span class="nc" id="L1860">		ExpressionNode rhs = node.getArgument(1);</span>
+<span class="nc" id="L1861">		Type rightType = addStandardConversions(rhs);</span>
+
+<span class="nc bnc" id="L1863" title="All 2 branches missed.">		if (!(type instanceof IntegerType))</span>
+<span class="nc" id="L1864">			throw error(&quot;Argument to bitwise operator &quot; + operator</span>
+<span class="nc" id="L1865">					+ &quot; must have integer type&quot;, lhs);</span>
+<span class="nc bnc" id="L1866" title="All 2 branches missed.">		if (!(rightType instanceof IntegerType))</span>
+<span class="nc" id="L1867">			throw error(&quot;Argument to bitwise operator &quot; + operator</span>
+<span class="nc" id="L1868">					+ &quot; must have integer type&quot;, rhs);</span>
+<span class="nc" id="L1869">		doArithmeticCompoundAssign((ArithmeticType) type, rhs);</span>
+<span class="nc" id="L1870">		node.setInitialType(type);</span>
+<span class="nc" id="L1871">	}</span>
+
+	/**
+	 * Each operand must have &quot;scalar&quot; type, i.e., arithmetic or pointer. Result
+	 * has type int (0 or 1).
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processLANDorLORorNOT(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L1882">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1883">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1884">		Type type0 = addStandardConversions(arg0);</span>
+
+<span class="nc bnc" id="L1886" title="All 2 branches missed.">		if (!isScalar(type0))</span>
+<span class="nc" id="L1887">			throw error(&quot;Argument to logical operator &quot; + operator</span>
+<span class="nc" id="L1888">					+ &quot; does not have scalar type; type is &quot; + type0, arg0);</span>
+<span class="nc bnc" id="L1889" title="All 2 branches missed.">		if (node.getNumberOfArguments() &gt; 1) {</span>
+<span class="nc" id="L1890">			ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1891">			Type type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1893" title="All 2 branches missed.">			if (!isScalar(type1))</span>
+<span class="nc" id="L1894">				throw error(&quot;Argument to logical operator &quot; + operator</span>
+<span class="nc" id="L1895">						+ &quot; does not have scalar type; type is &quot; + type1, arg1);</span>
+		}
+<span class="nc" id="L1897">		node.setInitialType(intType);</span>
+<span class="nc" id="L1898">	}</span>
+
+	/**
+	 * 
+	 * From C11 Sec. 6.5.9:
+	 * 
+	 * &lt;blockquote&gt; One of the following shall hold:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;both operands have arithmetic type;&lt;/li&gt;
+	 * &lt;li&gt;both operands are pointers to qualified or unqualified versions of
+	 * compatible types;&lt;/li&gt;
+	 * &lt;li&gt;one operand is a pointer to an object type and the other is a pointer
+	 * to a qualified or unqualified version of void; or&lt;/li&gt;
+	 * &lt;li&gt;one operand is a pointer and the other is a null pointer constant.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The == (equal to) and != (not equal to) operators are analogous to the
+	 * relational operators except for their lower precedence.108) Each of the
+	 * operators yields 1 if the specified relation is true and 0 if it is
+	 * false. The result has type int. For any pair of operands, exactly one of
+	 * the relations is true.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If both of the operands have arithmetic type, the usual arithmetic
+	 * conversions are performed. Values of complex types are equal if and only
+	 * if both their real parts are equal and also their imaginary parts are
+	 * equal. Any two values of arithmetic types from different type domains are
+	 * equal if and only if the results of their conversions to the (complex)
+	 * result type determined by the usual arithmetic conversions are equal.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Otherwise, at least one operand is a pointer. If one operand is a pointer
+	 * and the other is a null pointer constant, the null pointer constant is
+	 * converted to the type of the pointer. If one operand is a pointer to an
+	 * object type and the other is a pointer to a qualified or unqualified
+	 * version of void, the former is converted to the type of the latter.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Two pointers compare equal if and only if both are null pointers, both
+	 * are pointers to the same object (including a pointer to an object and a
+	 * subobject at its beginning) or function, both are pointers to one past
+	 * the last element of the same array object, or one is a pointer to one
+	 * past the end of one array object and the other is a pointer to the start
+	 * of a different array object that happens to immediately follow the first
+	 * array object in the address space.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * For the purposes of these operators, a pointer to an object that is not
+	 * an element of an array behaves the same as a pointer to the first element
+	 * of an array of length one with the type of the object as its element
+	 * type.
+	 * &lt;/p&gt;
+	 * &lt;/blockquote&gt;
+	 * 
+	 * 
+	 * @param node
+	 */
+	private void processEqualityOperator(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L1962">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L1963">		ExpressionNode arg0 = node.getArgument(0);</span>
+<span class="nc" id="L1964">		ExpressionNode arg1 = node.getArgument(1);</span>
+<span class="nc" id="L1965">		Type type0 = addStandardConversions(arg0);</span>
+<span class="nc" id="L1966">		Type type1 = addStandardConversions(arg1);</span>
+
+<span class="nc bnc" id="L1968" title="All 2 branches missed.">		if (type0.kind() == TypeKind.PROCESS</span>
+<span class="nc bnc" id="L1969" title="All 2 branches missed.">				&amp;&amp; type1.kind() == TypeKind.PROCESS) {</span>
+			// no conversions necessary
+<span class="nc bnc" id="L1971" title="All 2 branches missed.">		} else if (type0.kind() == TypeKind.SCOPE</span>
+<span class="nc bnc" id="L1972" title="All 2 branches missed.">				&amp;&amp; type1.kind() == TypeKind.SCOPE) {</span>
+			// no conversions necessary
+<span class="nc bnc" id="L1974" title="All 2 branches missed.">		} else if (type0 instanceof ArithmeticType</span>
+<span class="nc bnc" id="L1975" title="All 2 branches missed.">				&amp;&amp; type1 instanceof ArithmeticType) {</span>
+<span class="nc" id="L1976">			doUsualArithmetic(arg0, arg1);</span>
+<span class="nc bnc" id="L1977" title="All 2 branches missed.">		} else if (pointerToCompatibleTypes(type0, type1)) {</span>
+			// no conversions necessary
+<span class="nc bnc" id="L1979" title="All 2 branches missed.">		} else if (type0 instanceof PointerType</span>
+<span class="nc bnc" id="L1980" title="All 2 branches missed.">				&amp;&amp; conversionFactory.isNullPointerConstant(arg1)) {</span>
+<span class="nc" id="L1981">			arg1.addConversion(conversionFactory.nullPointerConversion(</span>
+<span class="nc" id="L1982">					(ObjectType) type1, (PointerType) type0));</span>
+<span class="nc bnc" id="L1983" title="All 2 branches missed.">		} else if (type1 instanceof PointerType</span>
+<span class="nc bnc" id="L1984" title="All 2 branches missed.">				&amp;&amp; conversionFactory.isNullPointerConstant(arg0)) {</span>
+<span class="nc" id="L1985">			arg0.addConversion(conversionFactory.nullPointerConversion(</span>
+<span class="nc" id="L1986">					(ObjectType) type0, (PointerType) type1));</span>
+<span class="nc bnc" id="L1987" title="All 4 branches missed.">		} else if (type0 instanceof PointerType &amp;&amp; type1 instanceof PointerType) {</span>
+<span class="nc" id="L1988">			PointerType p0 = (PointerType) type0;</span>
+<span class="nc" id="L1989">			PointerType p1 = (PointerType) type1;</span>
+
+<span class="nc bnc" id="L1991" title="All 2 branches missed.">			if (conversionFactory.isPointerToObject(p0)</span>
+<span class="nc bnc" id="L1992" title="All 2 branches missed.">					&amp;&amp; conversionFactory.isPointerToVoid(p1)) {</span>
+<span class="nc" id="L1993">				arg0.addConversion(conversionFactory.voidPointerConversion(p0,</span>
+<span class="nc" id="L1994">						p1));</span>
+<span class="nc bnc" id="L1995" title="All 2 branches missed.">			} else if (conversionFactory.isPointerToObject(p1)</span>
+<span class="nc bnc" id="L1996" title="All 2 branches missed.">					&amp;&amp; conversionFactory.isPointerToVoid(p0)) {</span>
+<span class="nc" id="L1997">				arg0.addConversion(conversionFactory.voidPointerConversion(p0,</span>
+<span class="nc" id="L1998">						p1));</span>
+<span class="nc" id="L1999">			} else</span>
+<span class="nc" id="L2000">				throw error(&quot;Incompatible pointer types for operator &quot;</span>
+<span class="nc" id="L2001">						+ operator + &quot;:\n&quot; + type0 + &quot;\n&quot; + type1, node);</span>
+		} else
+<span class="nc" id="L2003">			throw error(&quot;Incompatible types for operator &quot; + operator + &quot;:\n&quot;</span>
+<span class="nc" id="L2004">					+ type0 + &quot;\n&quot; + type1, node);</span>
+<span class="nc" id="L2005">		node.setInitialType(intType);</span>
+<span class="nc" id="L2006">	}</span>
+
+	/**
+	 * In both cases: the operand must be arithmetic, and the integer promotions
+	 * are performed. The type is the promoted type.
+	 * 
+	 * @param node
+	 *            expression node for unary + or - operator
+	 */
+	private void processUNARAYPLUSorUNARYMINUS(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L2017">		Operator operator = node.getOperator();</span>
+<span class="nc" id="L2018">		ExpressionNode arg = node.getArgument(0);</span>
+<span class="nc" id="L2019">		Type type = addStandardConversions(arg);</span>
+
+<span class="nc bnc" id="L2021" title="All 2 branches missed.">		if (!(type instanceof ArithmeticType))</span>
+<span class="nc" id="L2022">			throw error(&quot;Argument to unary operator &quot; + operator</span>
+<span class="nc" id="L2023">					+ &quot; has non-arithmetic type: &quot; + type, node);</span>
+<span class="nc bnc" id="L2024" title="All 2 branches missed.">		if (type instanceof IntegerType)</span>
+<span class="nc" id="L2025">			type = doIntegerPromotion(arg);</span>
+<span class="nc" id="L2026">		node.setInitialType(type);</span>
+<span class="nc" id="L2027">	}</span>
+
+	/**
+	 * 
+	 * 6.5.2.4.
+	 * 
+	 * The operand of the postfix increment or decrement operator shall have
+	 * atomic, qualified, or unqualified real or pointer type, and shall be a
+	 * modifiable lvalue.
+	 * 
+	 * No lvalue conversion is performed. However, array and function
+	 * conversions are performed.
+	 * 
+	 * @param node
+	 */
+	private void processPostfixOperators(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L2044">		ExpressionNode arg = node.getArgument(0);</span>
+		Type type, baseType;
+
+<span class="nc" id="L2047">		addArrayConversion(arg);</span>
+<span class="nc" id="L2048">		addFunctionConversion(arg);</span>
+<span class="nc" id="L2049">		type = arg.getConvertedType();</span>
+<span class="nc" id="L2050">		baseType = stripQualifiers(type);</span>
+<span class="nc bnc" id="L2051" title="All 2 branches missed.">		if (baseType instanceof ArithmeticType) {</span>
+<span class="nc bnc" id="L2052" title="All 2 branches missed.">			if (!((ArithmeticType) baseType).inRealDomain())</span>
+<span class="nc" id="L2053">				throw error(&quot;Cannot apply ++ or -- to complex type&quot;, node);</span>
+<span class="nc bnc" id="L2054" title="All 2 branches missed.">		} else if (baseType instanceof PointerType) {</span>
+			// nothing to check
+		} else
+<span class="nc" id="L2057">			throw error(&quot;Cannot apply ++ or -- to type: &quot; + baseType, node);</span>
+<span class="nc" id="L2058">		node.setInitialType(type);</span>
+<span class="nc" id="L2059">	}</span>
+
+	/**
+	 * No difference from postfix operators for purposes of type analysis.
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processPrefixOperators(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L2069">		processPostfixOperators(node);</span>
+<span class="nc" id="L2070">	}</span>
+
+	private void processDEREFERENCE(OperatorNode node) throws SyntaxException {
+<span class="nc" id="L2073">		ExpressionNode arg = node.getArgument(0);</span>
+<span class="nc" id="L2074">		Type type = addStandardConversions(arg);</span>
+
+<span class="nc bnc" id="L2076" title="All 2 branches missed.">		if (type instanceof PointerType)</span>
+<span class="nc" id="L2077">			node.setInitialType(((PointerType) type).referencedType());</span>
+<span class="nc bnc" id="L2078" title="All 2 branches missed.">		else if (type instanceof ArrayType) {</span>
+<span class="nc" id="L2079">			ArrayType arrayType = (ArrayType) type;</span>
+
+<span class="nc bnc" id="L2081" title="All 2 branches missed.">			if (!(arrayType.getElementType() instanceof PointerType))</span>
+<span class="nc" id="L2082">				throw error(&quot;Argument to * has non-pointer set type: &quot; + type,</span>
+<span class="nc" id="L2083">						node);</span>
+			else
+<span class="nc" id="L2085">				node.setInitialType(this.typeFactory</span>
+<span class="nc" id="L2086">						.incompleteArrayType((ObjectType) ((PointerType) arrayType</span>
+<span class="nc" id="L2087">								.getElementType()).referencedType()));</span>
+<span class="nc" id="L2088">		} else {</span>
+<span class="nc" id="L2089">			throw error(&quot;Argument to * has non-pointer type: &quot; + type, node);</span>
+		}
+<span class="nc" id="L2091">	}</span>
+
+	private void processRegularRange(RegularRangeNode node)
+			throws SyntaxException {
+<span class="nc" id="L2095">		ExpressionNode low = node.getLow();</span>
+<span class="nc" id="L2096">		ExpressionNode high = node.getHigh();</span>
+<span class="nc" id="L2097">		ExpressionNode step = node.getStep();</span>
+
+<span class="nc" id="L2099">		processExpression(low);</span>
+<span class="nc" id="L2100">		doIntegerPromotion(low);</span>
+<span class="nc" id="L2101">		processExpression(high);</span>
+<span class="nc" id="L2102">		doIntegerPromotion(high);</span>
+<span class="nc bnc" id="L2103" title="All 2 branches missed.">		if (step != null) {</span>
+<span class="nc" id="L2104">			processExpression(step);</span>
+<span class="nc" id="L2105">			doIntegerPromotion(step);</span>
+		}
+<span class="nc" id="L2107">		node.setInitialType(typeFactory.rangeType());</span>
+<span class="nc" id="L2108">	}</span>
+
+	/**
+	 * Process MPI contract expressions
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processMPIContractExpression(MPIContractExpressionNode node)
+			throws SyntaxException {
+<span class="nc" id="L2118">		MPIContractExpressionKind kind = node.MPIContractExpressionKind();</span>
+<span class="nc" id="L2119">		int numArgs = node.numArguments();</span>
+		Type[] formalTypes;
+		Type exprType;
+
+<span class="nc bnc" id="L2123" title="All 2 branches missed.">		if (kind.equals(MPIContractExpressionKind.MPI_INTEGER_CONSTANT)) {</span>
+<span class="nc bnc" id="L2124" title="All 4 branches missed.">			assert node.getType().equals(intType);</span>
+<span class="nc" id="L2125">			return;</span>
+		}
+<span class="nc" id="L2127">		formalTypes = new Type[numArgs];</span>
+<span class="nc bnc" id="L2128" title="All 5 branches missed.">		switch (kind) {</span>
+		case MPI_EMPTY_IN:
+		case MPI_EMPTY_OUT:
+<span class="nc" id="L2131">			formalTypes[0] = intType;</span>
+<span class="nc" id="L2132">			exprType = boolType;</span>
+<span class="nc" id="L2133">			break;</span>
+		case MPI_AGREE:
+<span class="nc" id="L2135">			formalTypes[0] = null;</span>
+<span class="nc" id="L2136">			exprType = boolType;</span>
+<span class="nc" id="L2137">			break;</span>
+		case MPI_REGION:
+<span class="nc" id="L2139">			formalTypes[0] = typeFactory.pointerType(typeFactory.voidType());</span>
+<span class="nc" id="L2140">			formalTypes[1] = intType;</span>
+<span class="nc" id="L2141">			formalTypes[2] = intType;</span>
+<span class="nc" id="L2142">			exprType = typeFactory.voidType();</span>
+<span class="nc" id="L2143">			break;</span>
+		case MPI_EQUALS:
+<span class="nc" id="L2145">			formalTypes[0] = null;</span>
+<span class="nc" id="L2146">			formalTypes[1] = intType;</span>
+<span class="nc" id="L2147">			formalTypes[2] = null;</span>
+<span class="nc" id="L2148">			formalTypes[3] = null;</span>
+<span class="nc" id="L2149">			exprType = boolType;</span>
+<span class="nc" id="L2150">			break;</span>
+		default:
+<span class="nc" id="L2152">			throw error(&quot;Unknown MPI contract expression kind: &quot; + kind, node);</span>
+		}
+<span class="nc bnc" id="L2154" title="All 2 branches missed.">		if (numArgs &lt; 1)</span>
+<span class="nc" id="L2155">			throw error(&quot;MPI contract expression &quot; + kind</span>
+<span class="nc" id="L2156">					+ &quot; takes at least one argument.&quot;, node);</span>
+<span class="nc bnc" id="L2157" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L2158">			ExpressionNode argument = node.getArgument(i);</span>
+<span class="nc" id="L2159">			processExpression(argument);</span>
+<span class="nc bnc" id="L2160" title="All 2 branches missed.">			if (formalTypes[i] != null) {</span>
+<span class="nc bnc" id="L2161" title="All 2 branches missed.">				if (!argument.getType().equals(formalTypes[i]))</span>
+<span class="nc" id="L2162">					throw error(&quot;The argument in &quot; + i</span>
+<span class="nc" id="L2163">							+ &quot; position of MPI contract expression &quot; + kind</span>
+<span class="nc" id="L2164">							+ &quot; must has an &quot; + formalTypes[i], node);</span>
+<span class="nc bnc" id="L2165" title="All 4 branches missed.">			} else if (i == 0 &amp;&amp; kind == MPIContractExpressionKind.MPI_EQUALS) {</span>
+<span class="nc" id="L2166">				if (argument.getType().compatibleWith(</span>
+<span class="nc bnc" id="L2167" title="All 2 branches missed.">						typeFactory.pointerType(typeFactory.voidType())))</span>
+<span class="nc" id="L2168">					throw error(&quot;The argument in &quot; + 0</span>
+<span class="nc" id="L2169">							+ &quot; position of MPI contract expression &quot; + kind</span>
+<span class="nc" id="L2170">							+ &quot; must has a pointer type&quot;, node);</span>
+			}
+
+		}
+<span class="nc" id="L2174">		node.setInitialType(exprType);</span>
+<span class="nc" id="L2175">	}</span>
+
+	/**
+	 * Process &lt;code&gt;\valid( pointer-set )&lt;/code&gt; expression. The argument must
+	 * has one of the following types:&lt;br&gt;
+	 * A pointer type or An array of pointer type.
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void processValidExpression(OperatorNode node)
+			throws SyntaxException {
+<span class="nc" id="L2187">		int numArgs = node.getNumberOfArguments();</span>
+<span class="nc" id="L2188">		ExpressionNode expr = node.getArgument(0);</span>
+
+<span class="nc bnc" id="L2190" title="All 2 branches missed.">		if (numArgs != 1)</span>
+<span class="nc" id="L2191">			throw error(&quot;\\valid(tset) expression only takes one argument&quot;,</span>
+<span class="nc" id="L2192">					node);</span>
+<span class="nc bnc" id="L2193" title="All 2 branches missed.">		if (expr.getType().kind().equals(TypeKind.ARRAY)) {</span>
+<span class="nc" id="L2194">			ArrayType arrayType = (ArrayType) expr.getType();</span>
+
+<span class="nc bnc" id="L2196" title="All 2 branches missed.">			if (arrayType.getElementType().kind().equals(TypeKind.POINTER)) {</span>
+<span class="nc" id="L2197">				node.setInitialType(typeFactory.basicType(BasicTypeKind.BOOL));</span>
+<span class="nc" id="L2198">				return;</span>
+			}
+<span class="nc bnc" id="L2200" title="All 2 branches missed.">		} else if (expr.getType().kind().equals(TypeKind.POINTER)) {</span>
+<span class="nc" id="L2201">			node.setInitialType(typeFactory.basicType(BasicTypeKind.BOOL));</span>
+<span class="nc" id="L2202">			return;</span>
+		}
+<span class="nc" id="L2204">		throw error(</span>
+<span class="nc" id="L2205">				&quot;The argument of a \\valid expression must has an array of pointer type&quot;,</span>
+<span class="nc" id="L2206">				expr);</span>
+	}
+
+	// Helper functions...
+
+	private SyntaxException error(String message, ASTNode node) {
+<span class="nc" id="L2212">		return entityAnalyzer.error(message, node);</span>
+	}
+
+	private SyntaxException error(UnsourcedException e, ASTNode node) {
+<span class="nc" id="L2216">		return entityAnalyzer.error(e, node);</span>
+	}
+
+	/**
+	 * Given unqualified type, determines whether it is &quot;scalar&quot; (arithmetic or
+	 * pointer type).
+	 * 
+	 * @param type
+	 *            unqualified, non-atomic type
+	 * @return true if scalar, false otherwise
+	 */
+	private boolean isScalar(Type type) {
+<span class="nc bnc" id="L2228" title="All 4 branches missed.">		return type instanceof ArithmeticType || type instanceof PointerType;</span>
+	}
+
+	private void addArrayConversion(ExpressionNode node) throws SyntaxException {
+<span class="nc" id="L2232">		Type oldType = node.getConvertedType();</span>
+
+<span class="nc bnc" id="L2234" title="All 2 branches missed.">		if (oldType instanceof ArrayType) {</span>
+<span class="nc" id="L2235">			Conversion conversion = conversionFactory</span>
+<span class="nc" id="L2236">					.arrayConversion((ArrayType) oldType);</span>
+
+<span class="nc" id="L2238">			node.addConversion(conversion);</span>
+		}
+<span class="nc" id="L2240">	}</span>
+
+	private void addFunctionConversion(ExpressionNode node) {
+<span class="nc" id="L2243">		Type oldType = node.getConvertedType();</span>
+
+<span class="nc bnc" id="L2245" title="All 2 branches missed.">		if (oldType instanceof FunctionType) {</span>
+<span class="nc" id="L2246">			Conversion conversion = conversionFactory</span>
+<span class="nc" id="L2247">					.functionConversion((FunctionType) oldType);</span>
+
+<span class="nc" id="L2249">			node.addConversion(conversion);</span>
+		}
+<span class="nc" id="L2251">	}</span>
+
+	private void addLvalueConversion(ExpressionNode node) {
+<span class="nc" id="L2254">		Type oldType = node.getConvertedType();</span>
+
+<span class="nc bnc" id="L2256" title="All 2 branches missed.">		if (oldType instanceof ObjectType) {</span>
+<span class="nc" id="L2257">			Conversion conversion = conversionFactory</span>
+<span class="nc" id="L2258">					.lvalueConversion((ObjectType) oldType);</span>
+
+<span class="nc bnc" id="L2260" title="All 2 branches missed.">			if (conversion != null)</span>
+<span class="nc" id="L2261">				node.addConversion(conversion);</span>
+		}
+<span class="nc" id="L2263">	}</span>
+
+	/**
+	 * Applies array conversion, function conversion, and lvalue conversion to
+	 * the given expression. The node is updated as necessary by adding any
+	 * nontrivial conversions to the node's conversion list.
+	 * 
+	 * @param node
+	 *            an expression node
+	 * @return the post-coversion type of the expression
+	 * @throws SyntaxException
+	 */
+	Type addStandardConversions(ExpressionNode node) throws SyntaxException {
+<span class="nc" id="L2276">		addArrayConversion(node);</span>
+<span class="nc" id="L2277">		addFunctionConversion(node);</span>
+<span class="nc" id="L2278">		addLvalueConversion(node);</span>
+<span class="nc" id="L2279">		return node.getConvertedType();</span>
+	}
+
+	private Type stripQualifiers(Type type) {
+<span class="nc bnc" id="L2283" title="All 2 branches missed.">		if (type instanceof QualifiedObjectType)</span>
+<span class="nc" id="L2284">			type = ((QualifiedObjectType) type).getBaseType();</span>
+<span class="nc bnc" id="L2285" title="All 2 branches missed.">		if (type instanceof AtomicType)</span>
+<span class="nc" id="L2286">			type = ((AtomicType) type).getBaseType();</span>
+<span class="nc" id="L2287">		return type;</span>
+	}
+
+	/**
+	 * Given an unqualified, non-atomic type, tells whether the type is a
+	 * pointer to a complete object type.
+	 * 
+	 * @param type
+	 * @return
+	 */
+	private boolean isPointerToCompleteObjectType(Type type) {
+<span class="nc bnc" id="L2298" title="All 2 branches missed.">		if (type instanceof PointerType) {</span>
+<span class="nc bnc" id="L2299" title="All 2 branches missed.">			if (this.language == Language.CIVL_C)</span>
+<span class="nc" id="L2300">				return true;</span>
+			else {
+<span class="nc" id="L2302">				Type baseType = ((PointerType) type).referencedType();</span>
+
+<span class="nc bnc" id="L2304" title="All 2 branches missed.">				if (baseType instanceof ObjectType</span>
+<span class="nc bnc" id="L2305" title="All 2 branches missed.">						&amp;&amp; ((ObjectType) baseType).isComplete())</span>
+<span class="nc" id="L2306">					return true;</span>
+				else
+<span class="nc" id="L2308">					return false;</span>
+			}
+		}
+<span class="nc" id="L2311">		return false;</span>
+	}
+
+	/**
+	 * Returns true iff both types are pointer types, and the types pointed to
+	 * are qualified or unqualified versions of compatible types.
+	 * 
+	 * @param type0
+	 *            any type
+	 * @param type1
+	 *            any type
+	 * @return true iff condition above holds
+	 */
+	private boolean pointerToCompatibleTypes(Type type0, Type type1) {
+<span class="nc bnc" id="L2325" title="All 4 branches missed.">		if (type0 instanceof PointerType &amp;&amp; type1 instanceof PointerType) {</span>
+<span class="nc" id="L2326">			Type base0 = stripQualifiers(((PointerType) type0).referencedType());</span>
+<span class="nc" id="L2327">			Type base1 = stripQualifiers(((PointerType) type1).referencedType());</span>
+
+<span class="nc" id="L2329">			return base0.compatibleWith(base1);</span>
+		}
+<span class="nc" id="L2331">		return false;</span>
+	}
+
+	/**
+	 * Returns true iff both types are pointer types, and the types pointed to
+	 * are qualified or unqualified versions of compatible object types.
+	 * 
+	 * @param type0
+	 *            any type
+	 * @param type1
+	 *            any type
+	 * @return true iff condition above holds
+	 */
+	private boolean pointerToCompatibleObject(Type type0, Type type1) {
+<span class="nc bnc" id="L2345" title="All 4 branches missed.">		if (type0 instanceof PointerType &amp;&amp; type1 instanceof PointerType) {</span>
+<span class="nc" id="L2346">			Type base0 = stripQualifiers(((PointerType) type0).referencedType());</span>
+<span class="nc" id="L2347">			Type base1 = stripQualifiers(((PointerType) type1).referencedType());</span>
+
+<span class="nc bnc" id="L2349" title="All 4 branches missed.">			return base0 instanceof ObjectType &amp;&amp; base1 instanceof ObjectType</span>
+<span class="nc bnc" id="L2350" title="All 2 branches missed.">					&amp;&amp; base0.compatibleWith(base1);</span>
+		}
+<span class="nc" id="L2352">		return false;</span>
+	}
+
+	/**
+	 * Returns true iff both types are pointer types, and the types pointed to
+	 * are qualified or unqualified versions of compatible complete object
+	 * types.
+	 * 
+	 * @param type0
+	 *            any type
+	 * @param type1
+	 *            any type
+	 * @return true iff condition above holds
+	 */
+	private boolean pointerToCompatibleComplete(Type type0, Type type1) {
+<span class="nc bnc" id="L2367" title="All 4 branches missed.">		if (type0 instanceof PointerType &amp;&amp; type1 instanceof PointerType) {</span>
+<span class="nc" id="L2368">			Type base0 = stripQualifiers(((PointerType) type0).referencedType());</span>
+<span class="nc" id="L2369">			Type base1 = stripQualifiers(((PointerType) type1).referencedType());</span>
+
+<span class="nc bnc" id="L2371" title="All 4 branches missed.">			return base0 instanceof ObjectType &amp;&amp; base1 instanceof ObjectType</span>
+<span class="nc bnc" id="L2372" title="All 2 branches missed.">					&amp;&amp; ((ObjectType) base0).isComplete()</span>
+<span class="nc bnc" id="L2373" title="All 2 branches missed.">					&amp;&amp; ((ObjectType) base1).isComplete()</span>
+<span class="nc bnc" id="L2374" title="All 2 branches missed.">					&amp;&amp; base0.compatibleWith(base1);</span>
+		}
+<span class="nc" id="L2376">		return false;</span>
+	}
+
+	/**
+	 * Given two expression with arithmetic type, computes the common type
+	 * resulting from the &quot;usual arithmetic conversions&quot;, adds conversions as
+	 * needed to the two expressions, and returns the common type.
+	 * 
+	 * This method does not perform the standard conversions (lvalue, array,
+	 * function). If you want those, do them first, then invoke this method.
+	 * 
+	 * @param arg0
+	 *            expression of arithmetic type
+	 * @param arg1
+	 *            expression of arithmetic type
+	 * @return the common type resulting from the usual arithmetic conversions
+	 */
+	private ArithmeticType doUsualArithmetic(ExpressionNode arg0,
+			ExpressionNode arg1) {
+<span class="nc" id="L2395">		ArithmeticType a0 = (ArithmeticType) arg0.getConvertedType();</span>
+<span class="nc" id="L2396">		ArithmeticType a1 = (ArithmeticType) arg1.getConvertedType();</span>
+<span class="nc" id="L2397">		ArithmeticType type = typeFactory.usualArithmeticConversion(a0, a1);</span>
+
+<span class="nc bnc" id="L2399" title="All 2 branches missed.">		if (!type.equals(a0))</span>
+<span class="nc" id="L2400">			arg0.addConversion(conversionFactory.arithmeticConversion(a0, type));</span>
+<span class="nc bnc" id="L2401" title="All 2 branches missed.">		if (!type.equals(a1))</span>
+<span class="nc" id="L2402">			arg1.addConversion(conversionFactory.arithmeticConversion(a1, type));</span>
+<span class="nc" id="L2403">		return type;</span>
+	}
+
+	/**
+	 * Given an assignment expression (for a simple or compound assignment),
+	 * this method computes the type of the expression. The type of the
+	 * expression is the result of applying lvalue conversion to the left hand
+	 * side. The expression is not modified.
+	 * 
+	 * &lt;blockquote&gt; 6.3.2.1 Lvalues, arrays, and function designators &lt;br&gt;
+	 * 1. An lvalue is an expression (with an object type other than void) that
+	 * potentially designates an object;64) if an lvalue does not designate an
+	 * object when it is evaluated, the behavior is undefined. When an object is
+	 * said to have a particular type, the type is specified by the lvalue used
+	 * to designate the object. A modifiable lvalue is an lvalue that does not
+	 * have array type, does not have an incomplete type, does not have a const-
+	 * qualified type, and if it is a structure or union, does not have any
+	 * member (including, recursively, any member or element of all contained
+	 * aggregates or unions) with a const-qualified type. &lt;/blockquote&gt;
+	 * 
+	 * @param assignExpression
+	 * @return the type of the assignment expression
+	 * @throws SyntaxException
+	 *             if the type of the left hand side is not an object type
+	 */
+	private Type assignmentType(OperatorNode assignExpression)
+			throws SyntaxException {
+<span class="nc" id="L2430">		ExpressionNode leftNode = assignExpression.getArgument(0);</span>
+<span class="nc" id="L2431">		Type leftType = leftNode.getType();</span>
+		Conversion leftConversion;
+
+<span class="nc bnc" id="L2434" title="All 2 branches missed.">		if (typeFactory.isVoidType(leftType))</span>
+<span class="nc" id="L2435">			throw error(&quot;Left argument of assignment can't have void type&quot;,</span>
+<span class="nc" id="L2436">					leftNode);</span>
+<span class="nc bnc" id="L2437" title="All 2 branches missed.">		if (!(leftType instanceof ObjectType))</span>
+<span class="nc" id="L2438">			throw error(</span>
+<span class="nc" id="L2439">					&quot;Left argument of assignment does not have object type&quot;,</span>
+<span class="nc" id="L2440">					leftNode);</span>
+<span class="nc bnc" id="L2441" title="All 2 branches missed.">		if (leftType instanceof ArrayType)</span>
+<span class="nc" id="L2442">			throw error(&quot;Left argument of assignment can't have array type&quot;,</span>
+<span class="nc" id="L2443">					leftNode);</span>
+
+<span class="nc" id="L2445">		ObjectType objectType = (ObjectType) leftType;</span>
+
+		// if (!this.typeFactory.isBundleType(objectType)
+		// &amp;&amp; !objectType.isComplete())
+		// throw error(
+		// &quot;Type of the left argument of assignment can't be incomplete&quot;,
+		// leftNode);
+<span class="nc bnc" id="L2452" title="All 2 branches missed.">		if (objectType instanceof QualifiedObjectType) {</span>
+<span class="nc bnc" id="L2453" title="All 2 branches missed.">			if (((QualifiedObjectType) objectType).isInputQualified())</span>
+<span class="nc" id="L2454">				throw error(</span>
+<span class="nc" id="L2455">						&quot;Type of the left argument of assignment has input-qualifier&quot;,</span>
+<span class="nc" id="L2456">						leftNode);</span>
+		}
+<span class="nc bnc" id="L2458" title="All 2 branches missed.">		if (objectType.isConstantQualified())</span>
+<span class="nc" id="L2459">			throw error(</span>
+<span class="nc" id="L2460">					&quot;Type of the left argument of assignment has const-qualifier&quot;,</span>
+<span class="nc" id="L2461">					leftNode);</span>
+<span class="nc" id="L2462">		leftConversion = conversionFactory</span>
+<span class="nc" id="L2463">				.lvalueConversion((ObjectType) leftType);</span>
+<span class="nc bnc" id="L2464" title="All 2 branches missed.">		return leftConversion == null ? leftType : leftConversion.getNewType();</span>
+	}
+
+	/**
+	 * Given (1) the type of a (simple or compound) assignment expression, and
+	 * (2) the right hand side argument of that assignment expression, this
+	 * method adds an implicit arithmetic conversion to the rhs argument if one
+	 * is needed. The conversion is to the type resulting from applying the
+	 * &quot;usual arithmetic conversions&quot; to the two types.
+	 * 
+	 * Recall that the type of an assignment expression if the type that results
+	 * from applying lvalue conversion to the left hand side.
+	 * 
+	 * @param assignmentType
+	 *            the type of the assignment expression
+	 * @param rightNode
+	 *            the right hand side argument of the assignment expression
+	 */
+	private void doArithmeticCompoundAssign(ArithmeticType assignmentType,
+			ExpressionNode rightNode) {
+<span class="nc" id="L2484">		ArithmeticType a1 = (ArithmeticType) rightNode.getConvertedType();</span>
+<span class="nc" id="L2485">		ArithmeticType commonType = typeFactory.usualArithmeticConversion(</span>
+<span class="nc" id="L2486">				assignmentType, a1);</span>
+
+<span class="nc bnc" id="L2488" title="All 2 branches missed.">		if (!commonType.equals(a1))</span>
+<span class="nc" id="L2489">			rightNode.addConversion(conversionFactory.arithmeticConversion(a1,</span>
+<span class="nc" id="L2490">					commonType));</span>
+<span class="nc" id="L2491">	}</span>
+
+	private void convertRHS(ExpressionNode rightNode, Type type)
+			throws UnsourcedException {
+<span class="nc" id="L2495">		Conversion rightConversion = conversionFactory.assignmentConversion(</span>
+<span class="nc" id="L2496">				config, rightNode, type);</span>
+
+<span class="nc bnc" id="L2498" title="All 2 branches missed.">		if (rightConversion != null)</span>
+<span class="nc" id="L2499">			rightNode.addConversion(rightConversion);</span>
+<span class="nc" id="L2500">	}</span>
+
+	/**
+	 * Given an expression node of integer type, performs the standard
+	 * conversions and then the integer promotion, adding conversions as
+	 * necessary to the node.
+	 * 
+	 * @param node
+	 *            an expression node
+	 * @return the post-conversion type of the expression
+	 * @throws SyntaxException
+	 *             if the node does not have integer type
+	 */
+	private IntegerType doIntegerPromotion(ExpressionNode node)
+			throws SyntaxException {
+<span class="nc" id="L2515">		Type type = addStandardConversions(node);</span>
+
+<span class="nc bnc" id="L2517" title="All 2 branches missed.">		if (type instanceof IntegerType) {</span>
+<span class="nc" id="L2518">			IntegerType promotedType = typeFactory</span>
+<span class="nc" id="L2519">					.integerPromotion((IntegerType) type);</span>
+
+<span class="nc bnc" id="L2521" title="All 2 branches missed.">			if (promotedType.equals(type))</span>
+<span class="nc" id="L2522">				return (IntegerType) type;</span>
+			else {
+<span class="nc" id="L2524">				node.addConversion(conversionFactory.arithmeticConversion(</span>
+<span class="nc" id="L2525">						(IntegerType) type, promotedType));</span>
+<span class="nc" id="L2526">				return promotedType;</span>
+			}
+		} else {
+<span class="nc" id="L2529">			throw error(&quot;Expected expression of integer type&quot;, node);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

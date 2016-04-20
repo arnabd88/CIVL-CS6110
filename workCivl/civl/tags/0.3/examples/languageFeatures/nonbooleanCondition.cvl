@@ -1,0 +1,11 @@
+#include<civlc.h>
+
+void main() {
+  int i = 1;
+  float x = 1.0;
+  
+  $when(i) {i = 0;}
+  $when(x) {x = 0.0;}
+  $assert i == 0;
+  $assert x == 0.0;
+}

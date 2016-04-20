@@ -1,0 +1,32 @@
+#include<civlc.cvh>
+#include<stdio.h>
+
+int result[2];
+
+$atomic_f int oneOrTwo(){
+  int res;
+
+  $choose{
+    res=1;
+    res=2;
+  }
+  return res;
+}
+
+$atomic_f void increase(int i, int* p){
+  int old=*p;
+  int step=oneOrTwo();
+  
+  *p=(*p)+step;
+  $assert(old+step==*p);
+  result[i]=*p;
+}
+
+int data=0;
+
+void main(){
+  $parfor(int i: 0 .. 1)
+    increase(i, &data);
+  $for(int i: 0 .. 1)
+    printf("process %d: result=%d\n", i, result[i]);
+}

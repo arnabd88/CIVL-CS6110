@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonFunction.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.entity.common</a> &gt; <span class="el_source">CommonFunction.java</span></div><h1>CommonFunction.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.entity.common;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope.ScopeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.FunctionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+
+public class CommonFunction extends CommonOrdinaryEntity implements Function {
+
+	private boolean isInlined, doesNotReturn, isAtomic,
+<span class="nc" id="L22">			isSystemFunction = false;</span>
+
+<span class="nc" id="L24">	private Set&lt;Function&gt; callers = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L25">	private Set&lt;Function&gt; callees = new HashSet&lt;&gt;();</span>
+	static Function mainFunction;
+
+<span class="nc" id="L28">	private List&lt;ContractNode&gt; contracts = new LinkedList&lt;&gt;();</span>
+
+	public CommonFunction(String name, ProgramEntity.LinkageKind linkage,
+			Type type) {
+<span class="nc" id="L32">		super(EntityKind.FUNCTION, name, linkage, type);</span>
+<span class="nc" id="L33">	}</span>
+
+	@Override
+	public boolean isInlined() {
+<span class="nc" id="L37">		return isInlined;</span>
+	}
+
+	@Override
+	public void setIsInlined(boolean value) {
+<span class="nc" id="L42">		this.isInlined = value;</span>
+<span class="nc" id="L43">	}</span>
+
+	@Override
+	public boolean doesNotReturn() {
+<span class="nc" id="L47">		return doesNotReturn;</span>
+	}
+
+	@Override
+	public void setDoesNotReturn(boolean value) {
+<span class="nc" id="L52">		this.doesNotReturn = value;</span>
+<span class="nc" id="L53">	}</span>
+
+	@Override
+	public FunctionDefinitionNode getDefinition() {
+<span class="nc" id="L57">		return (FunctionDefinitionNode) super.getDefinition();</span>
+	}
+
+	@Override
+	public Scope getScope() {
+<span class="nc" id="L62">		Scope result = getDefinition().getBody().getScope();</span>
+
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		while (result != null) {</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (result.getScopeKind() == ScopeKind.FUNCTION)</span>
+<span class="nc" id="L66">				break;</span>
+<span class="nc" id="L67">			result = result.getParentScope();</span>
+		}
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L70">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L71">					&quot;Could not find function scope of function &quot; + this);</span>
+<span class="nc" id="L72">		return result;</span>
+	}
+
+	@Override
+	public FunctionType getType() {
+<span class="nc" id="L77">		return (FunctionType) super.getType();</span>
+	}
+
+	@Override
+	public Set&lt;Function&gt; getCallers() {
+<span class="nc" id="L82">		return callees;</span>
+	}
+
+	@Override
+	public Set&lt;Function&gt; getCallees() {
+<span class="nc" id="L87">		return callers;</span>
+	}
+
+	@Override
+	public void addContract(ContractNode contract) {
+<span class="nc" id="L92">		contracts.add(contract);</span>
+<span class="nc" id="L93">	}</span>
+
+	@Override
+	public Iterator&lt;ContractNode&gt; getContracts() {
+<span class="nc" id="L97">		return contracts.iterator();</span>
+	}
+
+	@Override
+	public boolean isAtomic() {
+<span class="nc" id="L102">		return this.isAtomic;</span>
+	}
+
+	@Override
+	public void setAtomic(boolean value) {
+<span class="nc" id="L107">		this.isAtomic = value;</span>
+<span class="nc" id="L108">	}</span>
+
+	@Override
+	public void setSystemFunction(boolean value) {
+<span class="nc" id="L112">		this.isSystemFunction = value;</span>
+<span class="nc" id="L113">	}</span>
+
+	@Override
+	public boolean isSystemFunction() {
+<span class="nc" id="L117">		return this.isSystemFunction;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

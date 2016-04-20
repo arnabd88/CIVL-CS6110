@@ -1,0 +1,68 @@
+#ifndef __SCHED__
+#define __SCHED__
+
+#include <pthread.h>
+enum{
+  SCHED_FIFO,
+  SCHED_RR,
+  SCHED_SPORADIC,
+  SCHED_OTHER
+};
+
+typedef $proc pid_t;
+
+typedef struct{
+  int sched_priority;
+} sched_param;
+/*
+int sched_get_priority_max(int policy)
+{
+  if(policy == SCHED_FIFO || policy == SCHED_RR)
+  {
+    return 31;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+int sched_get_priority_min(int policy){
+  return 0;
+}
+
+int sched_getparam(pid_t pid, struct sched_param *param)
+{
+  for(int i = 0; i < _pool.len-1; i++){
+    if(pid == _pool.threads[i]->thr){
+      *param = *(_pool.threads[i}->attr->param);
+  }
+  return 0;
+}
+
+int sched_setscheduler(pid_t pid, int policy, const sched_param *param)
+{
+  for(int i = 0; i < _pool.len-1; i++){
+    if(pid == _pool.threads[i]->thr){
+      *(_pool.threads[i}->attr.param) = *param;
+      *(_pool.threads[i}->attr.schedpolicy) = policy;
+      return 0;
+    }
+  }
+  return ERSCH;
+}
+
+int sched_getscheduler(pid_t pid)
+{
+  if(pid == $proc_null){
+  }
+  for(int i = 0; i < _pool.len-1; i++){
+    if(pid == _pool.threads[i]->thr){
+      return _pool.threads[i]->attr.schedpolicy;
+    }
+  }
+}
+
+*/
+
+#endif

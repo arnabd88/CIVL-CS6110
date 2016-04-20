@@ -1,0 +1,67 @@
+            SARL: Symbolic Algebra and Reasoning Library
+                     http://vsl.cis.udel.edu/sarl
+            
+=============================== ABOUT =================================
+
+SARL is a Java library for symbolic algebra and reasoning.
+It is intended primarily to support symbolic execution.
+
+The SARL API provides for the creation and manipulation of typed
+symbolic expressions, and the ability to verify the validity of first
+order formulas.
+
+SARL uses ("under the hood") automated theorem provers (currently
+CVC3 and CVC4) to assist in the verification tasks.  It also is
+very effective at placing symbolic expressions in a canonical form,
+in order to easily tell if two expressions are equivalent.  It
+supports real (mathematical) integers and reals, as well as
+Herbrand integers and reals (where the numeric operations are
+treated as uninterpreted functions). 
+
+SARL is written by Stephen Siegel, University of Delaware.
+Please send comments, bug reports, feature requests, etc., to
+siegel@udel.edu.
+            
+============================ INSTALLATION =============================
+
+If you only want to use SARL (and not contribute to its development)
+you only need to download/install the automated theorem provers
+CVC3 and CVC4 and then download sarl.jar and place it in the CLASSPATH
+for your application.  See file INSTALL in this directory.
+
+In order for SARL to find CVC3 and CVC4, the executables (cvc3 and
+cvc4) must be in your PATH the first time you use SARL.
+
+You will also need a Java 7 SDK.
+
+If you want to install from source (e.g., because you want to develop
+SARL), it is a bit more complicated, because SARL requires
+all of the following:
+
+ - Java SE 7 SDK
+   http://www.oracle.com/technetwork/java/javase/downloads/index.html
+ - Apache Ant (build tool):
+   http://ant.apache.org 
+ - CVC3 (automated theorem prover):
+   http://www.cs.nyu.edu/acsys/cvc3/download.html
+ - CVC4 (automated theorem prover):
+   http://cvc4.cs.nyu.edu/downloads/
+ - Z3 (automated theorem prover)
+   http://z3.codeplex.com/SourceControl/latest
+ - JUnit (automated testing framework):
+   https://github.com/KentBeck/junit/downloads
+ - Hamcrest (a library of "matchers", required by JUnit):
+   https://github.com/hamcrest/JavaHamcrest
+ - JaCoCo (Java code coverage analysis tool):
+   http://www.jacoco.org
+
+See file INSTALL in this directory for detailed instructions on
+installing SARL from source.
+
+============================== LICENSES ===============================
+
+SARL is copyright 2013,2014, Stephen F. Siegel,
+Verified Software Laboratory, University of Delaware.
+It is distributed under the terms of the GNU
+Lesser General Public License (LGPL).
+See the file COPYING.LESSER.

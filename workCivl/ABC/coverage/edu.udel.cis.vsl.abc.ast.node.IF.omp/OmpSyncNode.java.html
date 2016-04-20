@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OmpSyncNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.omp</a> &gt; <span class="el_source">OmpSyncNode.java</span></div><h1>OmpSyncNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.omp;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+
+/**
+ * This interface stands for synchronization constructs of OpenMP, including:
+ * &lt;ol&gt;
+ * &lt;li&gt;master&lt;/li&gt;
+ * &lt;li&gt;critical&lt;/li&gt;
+ * &lt;li&gt;barrier&lt;/li&gt;
+ * &lt;li&gt;flush&lt;/li&gt;
+ * &lt;li&gt;atomic&lt;/li&gt;
+ * &lt;/ol&gt;
+ * 
+ * Currently, taskwait and atomic constructs are not supported.
+ * 
+ * @author Manchun Zheng
+ * 
+ */
+public interface OmpSyncNode extends OmpExecutableNode {
+	/**
+	 * The kind of this OmpSyncNode:
+	 * 
+	 * &lt;ul&gt;
+	 * &lt;li&gt;MASTER: the master construct&lt;/li&gt;
+	 * &lt;li&gt;CRITICAL: the critical construct&lt;/li&gt;
+	 * &lt;li&gt;BARRIER: the barrier construct&lt;/li&gt;
+	 * &lt;li&gt;FLUSH: the flush construct&lt;/li&gt;
+	 * &lt;li&gt;ORDERED: the ordered construct&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @author Manchun Zheng
+	 * 
+	 */
+<span class="nc" id="L37">	public enum OmpSyncNodeKind {</span>
+<span class="nc" id="L38">		MASTER, CRITICAL, BARRIER, FLUSH, ORDERED, OMPATOMIC</span>
+	}
+
+	/**
+	 * Returns the kind of this OpenMP synchronization construct.
+	 * 
+	 * @return the synchronization kind of this node.
+	 */
+	OmpSyncNodeKind ompSyncNodeKind();
+
+	/**
+	 * Updates the name declared by the critical construct. Only valid when the
+	 * synchronization kind of this node is OmpSyncNodeKind.CRITICAL.
+	 * 
+	 * @param name
+	 *            The name declared by the critical construct.
+	 */
+	void setCriticalName(IdentifierNode name);
+
+	/**
+	 * The identifier node representing the name of the critical section, only
+	 * valid for CRITICAL kind.
+	 * 
+	 * @return the identifier node representing the name of the critical
+	 *         section, only valid for CRITICAL kind.
+	 */
+	IdentifierNode criticalName();
+
+	/**
+	 * The list of variables in the flush construct. NULL for other kinds.
+	 * 
+	 * @return the list of variables in the flush construct, NULL for other
+	 *         kinds.
+	 */
+	SequenceNode&lt;IdentifierExpressionNode&gt; flushedList();
+
+	/**
+	 * Updates the flush list of this construct. Only valid when the
+	 * synchronization kind of this node is OmpSyncNodeKind.FLUSH.
+	 * 
+	 * @param list
+	 *            The new flush list.
+	 */
+	void setFlushedList(SequenceNode&lt;IdentifierExpressionNode&gt; list);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

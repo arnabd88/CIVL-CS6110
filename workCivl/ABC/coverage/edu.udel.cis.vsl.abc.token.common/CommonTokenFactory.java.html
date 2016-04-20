@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonTokenFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.common</a> &gt; <span class="el_source">CommonTokenFactory.java</span></div><h1>CommonTokenFactory.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.token.common;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.Tree;
+
+import edu.udel.cis.vsl.abc.token.IF.CharacterToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSequence;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+import edu.udel.cis.vsl.abc.token.IF.Concatenation;
+import edu.udel.cis.vsl.abc.token.IF.ExecutionCharacter;
+import edu.udel.cis.vsl.abc.token.IF.ExecutionCharacter.CharacterKind;
+import edu.udel.cis.vsl.abc.token.IF.Formation;
+import edu.udel.cis.vsl.abc.token.IF.FunctionMacro;
+import edu.udel.cis.vsl.abc.token.IF.Inclusion;
+import edu.udel.cis.vsl.abc.token.IF.Macro;
+import edu.udel.cis.vsl.abc.token.IF.MacroExpansion;
+import edu.udel.cis.vsl.abc.token.IF.ObjectMacro;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.token.IF.StringLiteral;
+import edu.udel.cis.vsl.abc.token.IF.StringToken;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+public class CommonTokenFactory implements TokenFactory {
+
+	private CommonCharacterFactory characterFactory;
+
+	private CommonSourceFactory sourceFactory;
+
+<span class="fc" id="L40">	private Map&lt;String, SourceFile&gt; transformerMap = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L42">	public CommonTokenFactory() {</span>
+<span class="fc" id="L43">		characterFactory = new CommonCharacterFactory(this);</span>
+<span class="fc" id="L44">		sourceFactory = new CommonSourceFactory();</span>
+<span class="fc" id="L45">	}</span>
+
+	@Override
+	public CivlcToken newCivlcToken(Token token, Formation formation) {
+<span class="nc" id="L49">		return new CommonCivlcToken(token, formation);</span>
+	}
+
+	@Override
+	public CivlcToken newCivlcToken(int type, String text, Formation formation) {
+<span class="nc" id="L54">		return new CommonCivlcToken(type, text, formation);</span>
+	}
+
+	@Override
+	public CivlcToken newCivlcToken(CharStream input, int type, int channel,
+			int start, int stop, Formation formation) {
+<span class="nc" id="L60">		return new CommonCivlcToken(input, type, channel, start, stop,</span>
+<span class="nc" id="L61">				formation);</span>
+	}
+
+	@Override
+	public Concatenation newConcatenation(List&lt;CivlcToken&gt; tokens) {
+<span class="nc" id="L66">		return new CommonConcatenation(new ArrayList&lt;CivlcToken&gt;(tokens));</span>
+	}
+
+	@Override
+	public Inclusion newInclusion(SourceFile file, CivlcToken includeToken) {
+<span class="nc" id="L71">		return new CommonInclusion(file, includeToken);</span>
+	}
+
+	@Override
+	public Inclusion newInclusion(SourceFile file) {
+<span class="nc" id="L76">		return new CommonInclusion(file);</span>
+	}
+
+	@Override
+	public Formation newSystemFormation(String identifier) {
+<span class="nc" id="L81">		return new SystemFormation(identifier, -1);</span>
+	}
+
+	@Override
+	public Formation newTransformFormation(String transformerName, String method) {
+<span class="nc" id="L86">		SourceFile transformer = transformerMap.get(transformerName);</span>
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (transformer == null) {</span>
+<span class="nc" id="L89">			transformer = new SourceFile(new File(transformerName), -1);</span>
+<span class="nc" id="L90">			transformerMap.put(transformerName, transformer);</span>
+		}
+<span class="nc" id="L92">		return new CommonTransformFormation(transformer, method);</span>
+	}
+
+	@Override
+	public ExecutionCharacter executionCharacter(CharacterKind kind,
+			int codePoint, char[] characters) {
+<span class="nc" id="L98">		return characterFactory.executionCharacter(kind, codePoint, characters);</span>
+	}
+
+	@Override
+	public CharacterToken characterToken(CivlcToken token)
+			throws SyntaxException {
+<span class="nc" id="L104">		return characterFactory.characterToken(token);</span>
+	}
+
+	/**
+	 * 
+	 * @param type
+	 *            usually PreprocessorParser.STRING_LITERAL
+	 * @return
+	 * @throws SyntaxException
+	 */
+	@Override
+	public StringToken newStringToken(CivlcToken token) throws SyntaxException {
+<span class="nc" id="L116">		StringLiteral data = characterFactory.stringLiteral(token);</span>
+
+<span class="nc" id="L118">		return new CommonStringToken(token, token.getFormation(), data);</span>
+	}
+
+	/**
+	 * Precondition: tokens has length at least 2.
+	 */
+	@Override
+	public StringToken newStringToken(List&lt;CivlcToken&gt; tokens)
+			throws SyntaxException {
+<span class="nc" id="L127">		int type = tokens.get(0).getType();</span>
+<span class="nc" id="L128">		CommonStringLiteral data = characterFactory.stringLiteral(tokens);</span>
+<span class="nc" id="L129">		Concatenation concatenation = newConcatenation(tokens);</span>
+<span class="nc" id="L130">		CommonStringToken result = new CommonStringToken(type, concatenation,</span>
+<span class="nc" id="L131">				data);</span>
+
+<span class="nc" id="L133">		return result;</span>
+	}
+
+	@Override
+	public Source newSource(CivlcToken token) {
+<span class="nc" id="L138">		return sourceFactory.newSource(token);</span>
+	}
+
+	@Override
+	public Source newSource(CivlcToken first, CivlcToken last) {
+<span class="nc" id="L143">		return sourceFactory.newSource(first, last);</span>
+	}
+
+	@Override
+	public Source join(Source source, CivlcToken token) {
+<span class="nc" id="L148">		return sourceFactory.join(source, token);</span>
+	}
+
+	@Override
+	public Source join(Source source1, Source source2) {
+<span class="nc" id="L153">		return sourceFactory.join(source1, source2);</span>
+	}
+
+	@Override
+	public SyntaxException newSyntaxException(String message, Source source) {
+<span class="nc" id="L158">		return new SyntaxException(message, source);</span>
+	}
+
+	@Override
+	public SyntaxException newSyntaxException(UnsourcedException e,
+			Source source) {
+<span class="nc" id="L164">		return new SyntaxException(e, source);</span>
+	}
+
+	@Override
+	public UnsourcedException newUnsourcedException(String message) {
+<span class="nc" id="L169">		return new UnsourcedException(message);</span>
+	}
+
+	@Override
+	public SyntaxException newSyntaxException(String message, CivlcToken token) {
+<span class="nc" id="L174">		return newSyntaxException(message, newSource(token));</span>
+	}
+
+	@Override
+	public SyntaxException newSyntaxException(UnsourcedException e,
+			CivlcToken token) {
+<span class="nc" id="L180">		return newSyntaxException(e, newSource(token));</span>
+	}
+
+	@Override
+	public ObjectMacro newObjectMacro(Tree definitionNode, SourceFile file) {
+<span class="nc" id="L185">		return new CommonObjectMacro(definitionNode, file);</span>
+	}
+
+	@Override
+	public FunctionMacro newFunctionMacro(Tree definitionNode, SourceFile file) {
+<span class="nc" id="L190">		return new CommonFunctionMacro(definitionNode, file);</span>
+	}
+
+	@Override
+	public MacroExpansion newMacroExpansion(CivlcToken startToken, Macro macro,
+			int index) {
+<span class="nc" id="L196">		return new CommonMacroExpansion(startToken, macro, index);</span>
+	}
+
+	@Override
+	public CivlcTokenSequence getTokenSubsequence(CivlcTokenSource fullSource,
+			CivlcToken startToken, CivlcToken stopToken) {
+<span class="nc" id="L202">		return new CivlcTokenSubSequence(fullSource, startToken.getIndex(),</span>
+<span class="nc" id="L203">				stopToken.getIndex());</span>
+	}
+
+	@Override
+	public CivlcTokenSequence getEmptyTokenSubsequence(
+			CivlcTokenSource originalSource) {
+<span class="nc" id="L209">		return new CivlcTokenSubSequence(originalSource, 0, -1);</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public CivlcTokenSource getCivlcTokenSourceByTokens(
+			List&lt;? extends Token&gt; tokens, Formation formation) {
+<span class="nc" id="L216">		int num = tokens.size();</span>
+<span class="nc" id="L217">		List&lt;CivlcToken&gt; ctokens = new ArrayList&lt;&gt;(num);</span>
+<span class="nc" id="L218">		boolean needsTransformed = false;</span>
+
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		for (Token token : tokens) {</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">			if (token instanceof CivlcToken)</span>
+<span class="nc" id="L222">				ctokens.add((CivlcToken) token);</span>
+			else {
+<span class="nc" id="L224">				needsTransformed = true;</span>
+<span class="nc" id="L225">				ctokens.add(this.newCivlcToken(token, formation));</span>
+			}
+		}
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (needsTransformed) {</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			for (int i = 0; i &lt; num - 1; i++) {</span>
+<span class="nc" id="L230">				CivlcToken current = ctokens.get(i), next = ctokens.get(i + 1);</span>
+
+<span class="nc" id="L232">				current.setNext(next);</span>
+			}
+<span class="nc" id="L234">			return new CommonCivlcTokenSource(ctokens, this);</span>
+		} else
+<span class="nc" id="L236">			return new CommonCivlcTokenSource((List&lt;CivlcToken&gt;) tokens, this);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

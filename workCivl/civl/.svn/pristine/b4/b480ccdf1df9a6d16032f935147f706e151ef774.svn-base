@@ -1,0 +1,28 @@
+/* spawn.cvl: simple example of spawning two processes.
+ * A good test for reduction: verification should avoid
+ * exploring all interleavings.  It should in fact 
+ * reduce to a single interleaving.
+ *      civl verify -inputN=10 spawn.cvl
+ */
+#include<civlc.cvh>
+
+$input int N = 10;
+
+void f(int n) {
+  int i = 0;
+  
+  $atomic {
+    for (i=0; i<n; i++) ;
+    $assert((i==n));
+  }
+}
+
+void main() {
+  $proc p = $spawn f(N);
+  $proc q = $spawn f(N);
+
+  $atomic {
+    $wait(p);
+    $wait(q);
+  }
+}

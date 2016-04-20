@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonParseTree.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.common.ptree</a> &gt; <span class="el_source">CommonParseTree.java</span></div><h1>CommonParseTree.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.common.ptree;
+
+import java.util.Collection;
+
+import org.antlr.runtime.tree.CommonTree;
+
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.front.IF.ParseTree;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSequence;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+public abstract class CommonParseTree implements ParseTree {
+
+	protected Language language;
+
+	protected CivlcTokenSource tokenSource;
+
+	protected TokenFactory tokenFactory;
+
+	protected CommonTree root;
+
+<span class="nc" id="L27">	public CommonParseTree(Language language, CivlcTokenSource tokenSource,</span>
+			CommonTree root) {
+<span class="nc" id="L29">		this.language = language;</span>
+<span class="nc" id="L30">		this.tokenSource = tokenSource;</span>
+<span class="nc" id="L31">		this.tokenFactory = tokenSource.getTokenFactory();</span>
+<span class="nc" id="L32">		this.root = root;</span>
+<span class="nc" id="L33">	}</span>
+
+	@Override
+	public Language getLanguage() {
+<span class="nc" id="L37">		return this.language;</span>
+	}
+
+	@Override
+	public CommonTree getRoot() {
+<span class="nc" id="L42">		return root;</span>
+	}
+
+	@Override
+	public Source source(CommonTree tree) {
+<span class="nc" id="L47">		CivlcToken firstToken = null, lastToken = null;</span>
+<span class="nc" id="L48">		int start = tree.getTokenStartIndex();</span>
+<span class="nc" id="L49">		int stop = tree.getTokenStopIndex();</span>
+
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (start &gt;= 0)</span>
+<span class="nc" id="L52">			firstToken = tokenSource.getToken(start);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (stop &gt;= 0)</span>
+<span class="nc" id="L54">			lastToken = tokenSource.getToken(stop);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (firstToken == null)</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">			if (lastToken == null)</span>
+<span class="nc" id="L57">				throw new IllegalArgumentException(</span>
+<span class="nc" id="L58">						&quot;No tokens associated to tree node &quot; + tree);</span>
+			else
+<span class="nc" id="L60">				firstToken = lastToken;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		else if (lastToken == null)</span>
+<span class="nc" id="L62">			lastToken = firstToken;</span>
+<span class="nc" id="L63">		return tokenFactory.newSource(firstToken, lastToken);</span>
+	}
+
+	@Override
+	public SyntaxException newSyntaxException(String message, CommonTree tree) {
+<span class="nc" id="L68">		return tokenFactory.newSyntaxException(message, source(tree));</span>
+	}
+
+	@Override
+	public CivlcTokenSequence getTokenSourceProducer(CommonTree tokenListNode) {
+<span class="nc" id="L73">		int numChildren = tokenListNode.getChildCount();</span>
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (numChildren == 0) {</span>
+<span class="nc" id="L76">			return tokenFactory.getEmptyTokenSubsequence(tokenSource);</span>
+		} else {
+<span class="nc" id="L78">			CivlcToken startToken = (CivlcToken) ((CommonTree) tokenListNode</span>
+<span class="nc" id="L79">					.getChild(0)).getToken();</span>
+<span class="nc" id="L80">			CivlcToken stopToken = (CivlcToken) ((CommonTree) tokenListNode</span>
+<span class="nc" id="L81">					.getChild(numChildren - 1)).getToken();</span>
+
+<span class="nc" id="L83">			return tokenFactory.getTokenSubsequence(tokenSource, startToken,</span>
+<span class="nc" id="L84">					stopToken);</span>
+		}
+	}
+
+	@Override
+	public Collection&lt;SourceFile&gt; getSourceFiles() {
+<span class="nc" id="L90">		return tokenSource.getSourceFiles();</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L95">		return tokenSource.toString();</span>
+	}
+
+	@Override
+	public CivlcTokenSource getCivlcTokenSource() {
+<span class="nc" id="L100">		return this.tokenSource;</span>
+	}
+
+	@Override
+	public TokenFactory getTokenFactory() {
+<span class="nc" id="L105">		return this.tokenFactory;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

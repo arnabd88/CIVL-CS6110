@@ -1,0 +1,49 @@
+/* Commandline execution:
+ *		civl verify -inputn=4 upwindFirstOrder.cvl
+ * */
+#include<civlc.cvh>
+
+$input int n = 4; /* Number of points */
+$input double h;  /* Distance between points */
+$input double dt; /* Size of a time step */
+$input double a;  /* Constant for wave velocity */
+$input double u1[n];
+$abstract $contin(2) $real u($real x, $real t);
+$assume(h > 0);
+$assume(dt > 0);
+$assume(a != 0);
+double v[n];
+double v_new[n];
+int iter;
+
+void upwindForward() {
+  for (int i = 1; i < n-1; i++) {
+	  v_new[i] = v[i]-dt*a*(v[i+1]-v[i])/h;
+  }
+}
+
+void upwindBackward() {
+  for (int i = 1; i < n-1; i++) {
+	  v_new[i] = v[i]-dt*a*(v[i]-v[i-1])/h;
+  }
+}
+
+void upwind() {
+  $assume($forall {j=0 .. n-1} v[j] == u(j*h, iter*dt));
+  if (a > 0)
+    upwindBackward();
+  else 
+    upwindForward();
+  for (int i = 1; i < n-1; i++) {
+	  v[i] = v_new[i];
+  }	
+  $assert($uniform{m=1 .. n-2} (u(m*h, (iter+1)*dt)-v[m])/dt-($D[u, {t, 1}](m*h, iter*dt)+a*$D[u,{x,1}](m*h, iter*dt)) ==$O(dt)+$O(h));
+}
+
+void main() {
+  for (int i = 0; i < n; i++) {
+    v[i] = u1[i];
+  }
+  iter = 0;
+  upwind();
+}

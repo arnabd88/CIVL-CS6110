@@ -1,0 +1,47 @@
+/* Dining philosophers with fork switching. Even philosophers pick
+ * up left fork first, odd pick up right first.  This breaks deadlock.
+ *
+ *       civl verify -inputBOUND=4 dining.cvl
+ */
+#include <civlc.cvh>
+
+$input int BOUND = 4; // upper bound on number of philosophers
+$input int n;         // number of philosophers
+$assume(2<=n && n<=BOUND);
+
+// Each fork will be on the table (-1) or in a hand (0-(n-1)).
+int forks[n];
+
+void dine(int id) {
+  int left = id;
+  int right = (id + 1) % n;
+
+  while (1) {
+    if (id % 2 == 0) {
+      $when (forks[left] < 0) {forks[left] = id;}
+      $when (forks[right] < 0) {forks[right] = id;}
+      forks[right] = -1;
+      forks[left] = -1;
+    } else {
+      $when (forks[right] < 0) {forks[right] = id;}
+      $when (forks[left] < 0) {forks[left] = id;}
+      forks[right] = -1;
+      forks[left] = -1;
+    }
+  }
+}
+
+/* Put all forks on the table. */
+void init() {
+  for (int i = 0; i < n; i++) forks[i] = -1;
+}
+
+void main() {
+  $proc philosophers[n];
+  
+  init();
+  for (int i = 0; i < n; i++)
+    philosophers[i] = $spawn dine(i);
+  for (int i = 0; i < n; i++)
+    $wait(philosophers[i]);
+}

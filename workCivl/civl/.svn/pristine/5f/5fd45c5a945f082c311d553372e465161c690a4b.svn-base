@@ -1,0 +1,5 @@
+This folder contains scripts for runing scale benchmarks and generating the scale figure.
+
+runBenchScale.pl: runs scale benchmarks (civl/bench/scale) and prints the output to stdout. 
+parseScale.pl: parses the output of the scale benchmarks and generates a data file scale.dat.
+plotScale: gnuplog scripts that draws the scaling figure based on the data in scale.dat.

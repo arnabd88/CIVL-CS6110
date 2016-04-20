@@ -1,0 +1,88 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Memory\+Unit\+Evaluator Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Memory\+Unit\+Evaluator@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Memory\+Unit\+Evaluator}}
+
+
+This is responsible for evaluating memory unit expressions.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Memory\+Unit\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Memory\+Unit\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator_a6fac20ed01572e519a1b0ea36b32d0a6}{}{\bfseries Common\+Memory\+Unit\+Evaluator} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} evaluator, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mu\+Factory, Symbolic\+Universe universe)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator_a6fac20ed01572e519a1b0ea36b32d0a6}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitSet}{Memory\+Unit\+Set} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator_a764ae459841e8b649da174ee32f906f7}{evaluates} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{Memory\+Unit\+Expression} mem\+Unit, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitSet}{Memory\+Unit\+Set} mu\+Set)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Evaluates a memory unit expression. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is responsible for evaluating memory unit expressions. 
+
+(I\+N P\+R\+O\+G\+R\+E\+S\+S)
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator_a764ae459841e8b649da174ee32f906f7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Memory\+Unit\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Memory\+Unit\+Evaluator}!evaluates@{evaluates}}
+\index{evaluates@{evaluates}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Memory\+Unit\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Memory\+Unit\+Evaluator}}
+\subsubsection[{evaluates}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Memory\+Unit\+Set} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Memory\+Unit\+Evaluator.\+evaluates (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Memory\+Unit\+Expression}}]{mem\+Unit, }
+\item[{{\bf Memory\+Unit\+Set}}]{mu\+Set}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonMemoryUnitEvaluator_a764ae459841e8b649da174ee32f906f7}
+
+
+Evaluates a memory unit expression. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+{\em mem\+Unit} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1MemoryUnitExpressionEvaluator}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Memory\+Unit\+Expression\+Evaluator}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/common/Common\+Memory\+Unit\+Evaluator.\+java\end{DoxyCompactItemize}

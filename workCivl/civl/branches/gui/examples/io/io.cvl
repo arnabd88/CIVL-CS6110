@@ -1,0 +1,11 @@
+#include<stdio.h>
+
+void main(){
+    int a = 9;
+    int b = a + 10;
+    
+    printf("%% a is %d, b is %d\n", a, b);
+    a = a + 1;
+    //fscanf(stdin, "%d", &a);
+    printf("a is %d.\n", a);
+}

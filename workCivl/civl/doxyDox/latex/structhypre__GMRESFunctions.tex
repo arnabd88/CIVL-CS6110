@@ -1,0 +1,72 @@
+\hypertarget{structhypre__GMRESFunctions}{}\section{hypre\+\_\+\+G\+M\+R\+E\+S\+Functions Struct Reference}
+\label{structhypre__GMRESFunctions}\index{hypre\+\_\+\+G\+M\+R\+E\+S\+Functions@{hypre\+\_\+\+G\+M\+R\+E\+S\+Functions}}
+
+
+The \{ \hyperlink{structhypre__GMRESFunctions}{hypre\+\_\+\+G\+M\+R\+E\+S\+Functions}\} object ...  
+
+
+
+
+{\ttfamily \#include $<$gmres.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structhypre__GMRESFunctions_a2e3bec7e3fea7756e51c0e8f468f3a22}{}char $\ast$($\ast$ {\bfseries C\+Alloc} )(int count, int elt\+\_\+size)\label{structhypre__GMRESFunctions_a2e3bec7e3fea7756e51c0e8f468f3a22}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_aac14e602b7dc705d478bda566a36f20e}{}int($\ast$ {\bfseries Free} )(char $\ast$ptr)\label{structhypre__GMRESFunctions_aac14e602b7dc705d478bda566a36f20e}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_aa224ae03c721e044c6bd4d95c9fc98ac}{}int($\ast$ {\bfseries Comm\+Info} )(void $\ast$\hyperlink{structA}{A}, int $\ast$my\+\_\+id, int $\ast$num\+\_\+procs)\label{structhypre__GMRESFunctions_aa224ae03c721e044c6bd4d95c9fc98ac}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_a86eaa9c3563f4db0c3f8573ba08d016d}{}void $\ast$($\ast$ {\bfseries Create\+Vector} )(void $\ast$\hyperlink{structvector}{vector})\label{structhypre__GMRESFunctions_a86eaa9c3563f4db0c3f8573ba08d016d}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_ad467279fb685b8b0404f1c41adfb59fd}{}void $\ast$($\ast$ {\bfseries Create\+Vector\+Array} )(int size, void $\ast$vectors)\label{structhypre__GMRESFunctions_ad467279fb685b8b0404f1c41adfb59fd}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_a8b0536e9b64af764d6a20e035b0bfbc4}{}int($\ast$ {\bfseries Destroy\+Vector} )(void $\ast$\hyperlink{structvector}{vector})\label{structhypre__GMRESFunctions_a8b0536e9b64af764d6a20e035b0bfbc4}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_afa8292d45d83ed3186dd4b874501930f}{}void $\ast$($\ast$ {\bfseries Matvec\+Create} )(void $\ast$\hyperlink{structA}{A}, void $\ast$x)\label{structhypre__GMRESFunctions_afa8292d45d83ed3186dd4b874501930f}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_a77837dd3108dd415e456175304001bbd}{}int($\ast$ {\bfseries Matvec} )(void $\ast$matvec\+\_\+data, double alpha, void $\ast$\hyperlink{structA}{A}, void $\ast$x, double beta, void $\ast$y)\label{structhypre__GMRESFunctions_a77837dd3108dd415e456175304001bbd}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_a88944720dcc96049ec5a34a56835fa7e}{}int($\ast$ {\bfseries Matvec\+Destroy} )(void $\ast$matvec\+\_\+data)\label{structhypre__GMRESFunctions_a88944720dcc96049ec5a34a56835fa7e}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_af5d2f0ca9db259d1df8cf374e918b14f}{}double($\ast$ {\bfseries Inner\+Prod} )(void $\ast$x, void $\ast$y)\label{structhypre__GMRESFunctions_af5d2f0ca9db259d1df8cf374e918b14f}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_a125ba36799e7b4fd4763f03d9d7848b8}{}int($\ast$ {\bfseries Copy\+Vector} )(void $\ast$x, void $\ast$y)\label{structhypre__GMRESFunctions_a125ba36799e7b4fd4763f03d9d7848b8}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_a389c2d1794fc943e853facb8bd7d4859}{}int($\ast$ {\bfseries Clear\+Vector} )(void $\ast$x)\label{structhypre__GMRESFunctions_a389c2d1794fc943e853facb8bd7d4859}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_ab02342df6e1a7a1bbb4a81d291e19b6c}{}int($\ast$ {\bfseries Scale\+Vector} )(double alpha, void $\ast$x)\label{structhypre__GMRESFunctions_ab02342df6e1a7a1bbb4a81d291e19b6c}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_a8c2d3e8fc7469044aa31fc0209eea79c}{}int($\ast$ {\bfseries Axpy} )(double alpha, void $\ast$x, void $\ast$y)\label{structhypre__GMRESFunctions_a8c2d3e8fc7469044aa31fc0209eea79c}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_abdff91e1fa97e0271b0bdb4ae0bbe5ec}{}int($\ast$ {\bfseries precond} )(void $\ast$vdata, void $\ast$\hyperlink{structA}{A}, void $\ast$b, void $\ast$x)\label{structhypre__GMRESFunctions_abdff91e1fa97e0271b0bdb4ae0bbe5ec}
+
+\item 
+\hypertarget{structhypre__GMRESFunctions_a7981377f981fe8e5372788b9fde9077a}{}int($\ast$ {\bfseries precond\+\_\+setup} )(void $\ast$vdata, void $\ast$\hyperlink{structA}{A}, void $\ast$b, void $\ast$x)\label{structhypre__GMRESFunctions_a7981377f981fe8e5372788b9fde9077a}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \{ \hyperlink{structhypre__GMRESFunctions}{hypre\+\_\+\+G\+M\+R\+E\+S\+Functions}\} object ... 
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/mpi-\/omp/\+A\+M\+G2013/krylov/gmres.\+h\item 
+/home/arnabd/workspace/civl/trunk/examples/mpi-\/omp/\+A\+M\+G2013/krylov/krylov.\+h\item 
+/home/arnabd/workspace/civl/trunk/examples/mpi-\/omp/\+A\+M\+G2013/krylov\+\_\+bug/krylov\+\_\+bug.\+h\end{DoxyCompactItemize}

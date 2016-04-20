@@ -1,0 +1,18 @@
+//command: civl parse potentialBug.cvl
+
+#include<civlc.cvh>
+//$input int L;
+//$assume(0<L && L<=3);
+int L =3;
+int foo(int a[L]){
+  return L;
+}
+void main(){
+  int a[L];
+  int i;
+
+  for(i=0; i<L; i++){
+    a[i] = 0;
+  }
+  foo(a);
+}

@@ -1,0 +1,32 @@
+/* This example shows that CIVL reports an error when 
+ * the program tries to dereference a pointer referring 
+ * to a unit of a heap that is already removed.
+ * Command line execution: 
+ * civl verify removedHeapPointer.cvl
+ */
+#include <civlc.h>
+
+int *gp;
+_Bool gStart = $false;
+
+void foo(){
+  $scope sf = $here;
+  
+  gp = (int *) $malloc(sf, sizeof(int));
+  gStart = $true;
+  *gp = 1;
+  $free(gp);
+}
+
+void goo(){
+  $when(gStart);
+  *gp = 2;// an error is possible when the process f has already returned.
+}
+
+void main(){
+  $proc f = $spawn foo();
+  $proc g = $spawn goo();
+  
+  $wait(f);
+  $wait(g);
+}

@@ -1,0 +1,734 @@
+\part{Semantics}
+\label{part:semantics}
+
+\chapter{CIVL Model Syntax}
+
+\section{Notation and terminology}
+\label{sec:notation}
+
+Let $\B=\{\true,\false\}$ (the set of boolean values).  Let
+$\N=\{0,1,2,\ldots\}$ (the set of natural numbers).
+
+Given a node $u$ in a tree, we let $\ancestors(u)$ denote the set of
+all ancestors of $u$, including $u$.  We let $\descendants(u)$ denote
+the set of all descendants of $u$, including $u$.
+
+For any set $S$, let $S^*$ denote the set of all finite sequences of
+elements of $S$.  The length of a sequence $\xi\in S^*$ is denoted
+$\len(\xi)$.  
+
+% This is a lie:
+% The elements of the sequence are indexed from $0$ to
+% $\len(\xi)-1$.
+
+\section{Definition of Context}
+\label{sec:context}
+
+\begin{definition}
+  A \emph{CIVL type system} is a tuple comprising the following
+  components:
+  \begin{enumerate}
+  \item a set $\Type$ (the set of \emph{types}),
+  \item a type $\bool\in\Type$ (the \emph{boolean type}),
+  \item a type $\proc\in\Type$ (the \emph{process-reference type}),
+  \item a set $\Var$ (the set of all \emph{typed variables}),
+  \item a function $\vtype\colon \Var\ra\Type$ (which gives the
+    type of each variable),
+  \item a set $\Val$ (the set of all \emph{values}),
+  \item a function which assigns to each $t\in\Type$ a subset
+    $\Val_t\subseteq\Val$ (the set of values of type $t$)
+    and which satisfies $\Val_{\bool}=\B$ and $\Val_{\proc}=\N$,
+  \item a function which assigns to each $t\in\Type$ a value
+    $\default_t\in\Val_t$.
+  \end{enumerate}
+\end{definition}
+
+The default value will be used to give an initial value to any
+variable.  It could represent something like ``an undefined value of
+type $t$'' or a reasonable initial value ($0$ for integers, etc.),
+depending on the language one is modeling.
+
+\begin{definition}
+  Given a CIVL type system, a \emph{valuation} in that system is a
+  function $\eta\colon\Var\ra\Val$ with the property that for any
+  $v\in\Var$, $\eta(v)\in\Val_{\vtype(v)}$.
+\end{definition}
+
+Given a CIVL type system, we let $\Eval$ denote the set of all
+valuations in that system.
+
+\begin{definition}
+  Given a CIVL type system, A \emph{CIVL expression system} for that
+  type system is a tuple comprising the following components:
+  \begin{enumerate}
+  \item a set $\Expr$ (the set of all \emph{typed expressions} over
+    $\Var$),
+  \item a function $\etype\colon\Expr\ra\Type$ (giving the type
+    of each expression),
+  \item a function
+    $\eval\colon\Expr\times\Eval\ra\Val$ (the \emph{evaluation
+      function}), satisyfing
+    \begin{itemize}
+    \item for any $e\in\Expr$ and $\eta\in\Eval$,
+      $\eval(e,\eta)\in\Val_{\etype(e)}$,
+    \end{itemize}
+  \item a function which associates to any $V\subseteq\Var$, a
+    subset $\Expr(V)\subseteq\Expr$ (the set of
+    \emph{expressions which involve only variables in $V$}) satisfying
+    the following:
+    \begin{itemize}
+    \item for any $V\subseteq\Var$ and $\eta,\eta'\in\Eval$, if
+      $\eta(v)=\eta'(v)$ for all $v\in V$, then for any $e\in\Expr(V)$,
+      $\eval(e,\eta)=\eval(e,\eta')$
+    \end{itemize}
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  A \emph{CIVL context} is a CIVL type system together with
+  a CIVL expression system for that type system.
+\end{definition}
+
+\begin{figure}
+  \notationtable
+  \caption{Table of Notation Used to Define CIVL Model Syntax}
+  \label{fig:notation}
+\end{figure}
+
+\section{Lexical scopes}
+\label{sec:scopes}
+
+\begin{definition}
+  Given a CIVL context $\mathcal{C}$, a \emph{lexical scope system}
+  over $\mathcal{C}$ is a tuple 
+  \[
+  (\Sigma,\rootscope,\sparent,\vars)
+  \]
+  consisting of
+  \begin{enumerate}
+  \item a set $\Sigma$ (the set of \emph{static scopes}),
+  \item a scope $\rootscope\in\Sigma$ (the  \emph{root scope}),
+  \item a function
+    $\sparent\colon\Sigma\setminus\{\rootscope\}\rightarrow
+    \Sigma$ such that 
+    \[\{(\sparent(\sigma),\sigma)\mid \sigma\in\Sigma\setminus\{\rootscope\}\}\]
+    gives $\Sigma$ the structure of a rooted tree with root $\rootscope$,
+  \item a function $\vars\colon\Sigma\rightarrow 2^{\Var}$ 
+    (specifying the variables \emph{declared} in each scope) satisfying
+    \begin{itemize}
+    \item $\sigma\neq\tau\implies \vars(\sigma)\cap \vars(\tau)=\emptyset$.
+    \end{itemize}
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  Given a CIVL context and scope $\sigma\in\Sigma$,
+  the set of \emph{visible variables} in $\sigma$
+  is $\bigcup_{\sigma'\in\ancestors(\sigma)}\vars(\sigma')$.
+\end{definition}
+
+One way this notion will be used: expressions used in a scope $\sigma$
+can only involve variables visible in $\sigma$.
+
+\section{Functions}
+\label{sec:functions}
+
+Fix a CIVL context $\mathcal{C}$ and lexical scope system
+\[\Lambda=(\Sigma,\rootscope,\sparent,\vars)\] over $\mathcal{C}$.
+
+We introduce a new type symbol $\void$, as in C, to use as the return
+type for a function that does not return a value.  Let
+$\Type'=\Type\cup\{\void\}$.
+
+\begin{definition}
+  A \emph{function prototype} for $\Lambda$ is a tuple
+  $(\sigma, t, \xi)$  consisting of
+  \begin{enumerate}
+  \item a scope $\sigma\in\Sigma\setminus\{\rootscope\}$
+    (the \emph{function scope}),
+  \item a type $t\in\Type'$ (the \emph{return type}),
+  \item a finite sequence $\xi=v_1v_2\cdots v_n\in\vars(\sigma)^*$
+    consisting of variables declared in the function scope
+    (the \emph{formal parameters}).
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  A \emph{CIVL function prototype system} consists of
+  \begin{enumerate}
+  \item a set $\Func$ (the \emph{function symbols}),
+  \item a function which assigns to each $f\in\Func$ a 
+    function prototype, denoted
+    \[
+    (\fscope(f), \returntype(f), \params(f)),
+    \]
+    and satisfying
+    \begin{itemize}
+    \item for any $\sigma\in\Sigma$, there is at most
+      one $f\in\Func$ such that $\sigma=\fscope(f)$, and
+    \end{itemize}
+  \item a \emph{root function} $f_0$ with $\fscope(f_0)=\rootscope$
+    and which is the only function with root scope.
+  \end{enumerate}
+\end{definition}
+
+
+\begin{definition}
+  Given a CIVL function prototype system, and function symbol
+  $f\in\Func\setminus\{f_0\}$, the \emph{declaration scope} of $f$ is
+  the scope $\sigma=\sparent(\fscope(f))$.  We also write \emph{$f$ is
+    declared in $\sigma$.}
+\end{definition}
+
+Note the root function $f_0$ has no declaration scope.
+
+Just as every scope has a set of visible variables, there is also
+a set of visible functions:
+\begin{definition} 
+  The functions \emph{visible at scope $\sigma$} are
+  those declared in $\sigma$ or an ancestor of $\sigma$.
+\end{definition}
+We will see that the variables and functions visible at $\sigma$ are
+the only variables and functions that can be referred to by statements
+and expressions used within $\sigma$.
+
+Note that only certain scopes are function scopes.  There can be
+additional scopes (intuitively corresponding to block scopes in a
+source program).  Every scope, however, must ``belong to'' exactly one
+function.  The precise definition is as follows:
+\begin{definition}
+  \label{def:func}
+  Given a CIVL function prototype system, define
+  \[
+  \func \colon \Sigma \ra \Func 
+  \]
+  by
+  \[
+  \func(\sigma)=
+  \begin{cases}
+    f & \text{if $\sigma=\fscope(f)$ for some $f\in\Func$}\\
+    \func(\sparent(\sigma)) & \text{otherwise.}
+  \end{cases}
+  \]
+  We say \emph{$\sigma$ belongs to $f$}  when $\func(\sigma)=f$.
+\end{definition}
+Note that the recursion in Definition \ref{def:func} must stop as the
+root scope belongs to the root function and the scopes form a tree.
+
+
+\section{Statements}
+
+Fix a CIVL function prototype system.  A \emph{CIVL statement} is
+defined to be a tuple of one of the forms described below.
+In each case, we give any restritions on the components of the tuple
+and a brief intuition on the statement's semantics.  The precise
+semantics will be described in \S\ref{sec:semantics}.
+
+\begin{enumerate}
+\item $\langle\code{parassign},V_1,V_2,\psi\rangle$
+  \begin{itemize}
+  \item $V_1,V_2\subseteq\Var$
+  \item $\psi\colon V_2\ra\Expr(V_1)$ satisfying
+    $\etype(\psi(v))=\vtype(v)$ for all $v\in V_2$
+  \item \emph{meaning}: parallel assignment, i.e., the assignment of new
+    values to any or all of the variables in $V_2$. For each variable
+    in $V_2$ an expression is given which will be evaluated in the old
+    state to compute the new value for that variable.  $V_1$ contains
+    all the variables that may be used in those expressions.  Hence
+    $V_1$ is the ``read set'' and $V_2$ is the ``write set'' for the
+    parallel assignment.
+  \end{itemize}
+\item $\langle\code{assign},v,e\rangle$
+  \begin{itemize}
+  \item $v\in\Var$, $e\in\Expr$, $\etype(e)=\vtype(v)$
+  \item \emph{meaning}: simple assignment: evaluate an expression $e$ and
+    assign result to variable $v$.  It is a special case of
+    \code{parassign} but is provided for convenience.
+  \end{itemize}
+\item $\langle\code{call},y,f,e_1,\ldots,e_n\rangle$
+  \begin{itemize}
+  \item $y\in\Var$, $f\in\Func$, $e_1,\ldots,e_n\in\Expr$
+  \item $n=\numparams(f)$
+  \item $\etype(e_i)=\vtype(v_i)$, where $\params(f)=v_1\cdots v_n$
+  \item $\returntype(f)=\vtype(y)$
+  \item \emph{meaning}: evaluate expressions $e_1,\ldots,e_n$; push
+    frame on call stack and move control to guarded transition system
+    (see \S\ref{sec:gts}) for function $f$; when $f$ returns, pop
+    stack and store returned result in $y$
+  \end{itemize}
+\item $\langle\code{call},f,e_1,\ldots,e_n\rangle$
+  \begin{itemize}
+  \item $f\in\Func$, $e_1,\ldots,e_n\in\Expr$
+  \item $n=\numparams(f)$
+  \item $\etype(e_i)=\vtype(v_i)$, where $\params(f)=v_1\cdots v_n$
+  \item \emph{meaning}: like above, but return type may be \code{void}
+    or returned value could just be ignored
+  \end{itemize}
+\item $\langle\code{fork},p,f,e_1,\ldots,e_n\rangle$
+  \begin{itemize}
+  \item $p\in\Var$, $f\in\Func$, $e_1,\ldots,e_n\in\Expr$
+  \item $n=\numparams(f)$
+  \item $\etype(e_i)=\vtype(v_i)$, where $\params(f)=v_1\cdots v_n$
+  \item $\returntype(f)=\void$
+  \item $\vtype(p)=\proc$
+  \item \emph{meaning}: evaluate expressions $e_1,\ldots,e_n$;
+    create new process and invoke function $f$ in it;
+    return, immediately, a reference to the new process and store
+    that reference in $p$
+  \end{itemize}
+\item $\langle\code{join},e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$
+  \item $\etype(e)=\proc$
+  \item \emph{meaning}: evaluate $e$ and wait for the referenced process to terminate
+  \end{itemize}
+\item $\langle\code{return},e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$
+  \item \emph{meaning}: evaluate $e$, pop the call stack and return
+    control, along with the value, to caller
+  \end{itemize}
+\item $\langle\code{return}\rangle$
+  \begin{itemize}
+  \item \emph{meaning}: pop the call stack and return control to caller;
+    only to be used in functions returning \code{void}
+  \end{itemize}
+\item $\langle\code{write},e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$
+  \item \emph{meaning}: evaluate $e$ and send result to output
+  \end{itemize}
+\item $\langle\code{noop}\rangle$
+  \begin{itemize}
+  \item \emph{meaning}: does nothing
+  \end{itemize}
+\item $\langle\code{assert}, e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$, $\vtype(e)=\bool$
+  \item \emph{meaning}: evaluate $e$; if result is false, stop
+    execution and report error
+  \end{itemize}
+\item  $\langle\code{assume}, e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$, $\vtype(e)=\bool$
+  \item \emph{meaning}: assume $e$ holds (i.e., if $e$ does not hold,
+    the execution sequence is not a real execution)
+  \end{itemize}
+\end{enumerate}
+
+\section{Remarks}
+
+The system described is sufficiently general to model pointers. There
+can be (one or more) pointer types and corresponding values.  The
+parallel assignment statement can be used to model statements like
+C's \texttt{*p=e;}.  In the worst case (if no information is known
+about where \texttt{p} could point), one can let $V_2=\Var$.
+Similarly, expressions that involve \texttt{*p} as a right-hand
+side subexpression can always take $V_1=\Var$.
+
+Heaps can also be modeled.  A heap type may be defined and a variable
+of that type declared.  Expressions to modify and read from the heap
+can be defined, as can pointers into the heap.
+
+
+\section{Transition system representation of functions}
+\label{sec:gts}
+
+\begin{definition}
+  Given a CIVL function prototype system and $f\in\Func$,
+  a \emph{guarded transition system} for $f$ 
+  is a tuple $(\Loc,\lscope,\start, T)$, where
+  \begin{itemize}
+  \item $\Loc$ is a set (the set of \emph{locations}),
+  \item $\lscope\colon\Loc\ra\Sigma$ is a function which associates
+    to each $l\in\Loc$ a scope $\lscope(l)\in\Sigma$ belonging to $f$,
+  \item $\start\in\Loc$ (the \emph{start location}),
+  \item $T$ is a set of \emph{guarded transitions}, each of which has
+    the form $\langle l,g,s,l'\rangle$, where
+    \begin{itemize}
+    \item $l,l'\in\Loc$ (the \emph{source} and \emph{target}
+      locations)
+    \item $g\in\Expr(V)$, where $V$ is the set of variables visible at
+      $\lscope(l)$, and $\etype(g)=\bool$ ($g$ is called the
+      \emph{guard}),
+    \item $s$ is a statment all of whose constituent variables,
+      expressions, and function symbols are visible at $\lscope(l)$.
+    \end{itemize}
+  \end{itemize}
+  Furthermore, if the guarded transition system contains a statement
+  of the form $\langle\code{return}\rangle$ then
+  $\returntype(f)=\void$.  If it contains a statement of the form
+  $\langle\code{return},e\rangle$ then
+  \[
+  \etype(e)=\returntype(f).
+  \]
+\end{definition}
+
+\begin{definition}
+  Given a CIVL prototype system, a \emph{CIVL model} $M$ for that
+  system assigns, to each $f\in\Func$, a guarded transition system
+  \[(\Loc_f,\lscope_f, \start_f,T_f)\] for $f$.  Moreover, if $f\neq f'$
+  then
+  $\Loc_f\cap\Loc_{f'}=\emptyset$.
+\end{definition}
+
+\begin{definition}
+  Given a CIVL model $M$, let $\Loc=\bigcup_{f\in\Func}\Loc_f$.
+\end{definition}
+
+\chapter{CIVL Model Semantics}
+\label{sec:semantics}
+
+\section{State}
+\label{sec:state}
+
+Fix a CIVL model $M$.  Recall that a valuation is a type-respecting
+function from $\Var$ to $\Val$.  Given a subset $V\subseteq\Var$ of
+variables, we define a \emph{valuation on $V$} to be a type-respecting
+function from $V$ to $\Val$.  Let $\Eval(V)$ denote the set of all
+valuations on $V$.  Note that $\Eval(\Var)=\Eval$.
+
+\begin{definition}
+  \label{def:state}
+  A \emph{state} of a CIVL model $M$ is a tuple 
+  \[
+  s=(\Delta, \droot, \dparent, \static, \deval, P, \stack),
+  \]
+  where
+  \begin{enumerate}
+  \item $\Delta$ is a finite set (the set of \emph{dynamic scopes} in
+    $s$),
+  \item $\droot\in\Delta$ (the \emph{root dynamic scope}),
+  \item $\dparent\colon \Delta\setminus\{\droot\}\ra\Delta$
+    is a function such that the set 
+    \[
+    \{(\dparent(\delta),\delta)\mid \delta\in
+    \Delta\setminus\{\droot\}\}
+    \]
+    gives $\Delta$ the structure of a rooted tree with root $\droot$,
+    \item $\static\colon\Delta\ra\Sigma$,
+  \item $\static(\droot)=\rootscope$ and $\droot$ is the only
+    $\delta\in\Delta$ satisfying $\static(\delta)=\rootscope$,
+  \item $\static(\dparent(\delta))=\sparent(\static(\delta))$ for any
+    $\delta\in\Delta$,
+  \item $\deval$ is a function that assigns to each $\delta\in\Delta$
+    a valuation $\deval(\delta)\in\Eval(\vars(\static(\delta)))$,
+  \item $P$ (the set of \emph{process IDs} in $s$) 
+    is a finite subset of $\Val_{\proc}$, and
+  \item $\stack\colon P\ra \Frame^*$, where
+    \[
+    \Frame=\{(\delta,l)\in\Delta\times\Loc\mid\lscope(l)=\static(\delta)\}.
+    \]
+  \end{enumerate}
+  Let $\State$ denote the set of all states of $M$.
+\end{definition}
+
+% say entrance and exit from scopes does not have to be "structured".
+
+Remarks:
+\begin{enumerate}
+\item We will also refer to dynamic scopes as \emph{dyscopes}.
+\item The elements of $\Delta$ contain no intrinsic information.
+  Instead, all of the information concerning dyscopes is encoded
+  in the functions that take elements of $\Delta$ as arguments.  Hence
+  we might just as well call the elements of $\Delta$ ``dynamic scope
+  IDs'' (just as we call the elements of $P$ ``process IDs'').  One
+  could use natural numbers for the dyscopes, just as one does
+  for processes.
+\item The reason for using some form of ID for dyscopes and
+  processes, rather than just incorporating the data in the
+  appropriate part of the state, is that both kinds of objects may be
+  shared.  There can be several components of the state that refer to
+  the same dyscope $d$: e.g., $d$ could have several children,
+  each of which has a parent reference to $d$, as well as a reference
+  from a frame.  A process can be referred to by any number of
+  variables of type $\proc$.
+\item If $\sigma=\static(\delta)$, we say that \emph{$\delta$ is an
+    instance of $\sigma$} or \emph{$\sigma$ is the static scope
+    associated to $\delta$}.  In general, a static scope can have any
+  number (including 0) of dynamic instances. The exception is the root
+  scope $\rootscope$, which must have exactly one instance ($\droot$).
+\item A valuation $\deval(\delta)$ assigns a value to each variable in
+  the static scope associated to $\delta$.  The function $\deval$
+  thereby encodes the value of all variables ``in scope'' in state
+  $s$.
+\item The sequence $\stack(p)$ encodes the state of the call stack of
+  process $p$.  The elements of the sequence are called
+  \emph{activation frames}.  The first frame in the sequence, i.e.,
+  the frame in position $0$, is the bottom of the stack; the last
+  frame is the top of the stack.
+\item  Each frame refers to a dyscope $\delta$ and a
+  location in the static scope associated to $\delta$.
+\end{enumerate}
+
+
+\begin{definition}
+  A dyscope $\delta\in\Delta$ is a \emph{function node}
+  if $\static(\delta)$ is the function scope of some function.
+\end{definition}
+
+\begin{definition}
+  Given any $\delta\in\Delta$, $\fnode(\delta)\in\Delta$ is defined as
+  follows: if $\delta$ is a function node, then
+  $\fnode(\delta)=\delta$, else
+  $\fnode(\delta)=\fnode(\dparent(\delta))$.  We call $\fnode(\delta)$
+  the \emph{function node associated to $\delta$}.
+\end{definition}
+
+The relation $\{(\delta,\delta')\mid \fnode(\delta)=\fnode(\delta')\}$
+is an equivalence relation $\sim$ on $\Delta$.  Let
+$\bar{\Delta}=\Delta/\sim$ and write $[\delta]$ for the equivalence
+class containing $\delta$.
+
+The set of activation frames in a state $s$ may be identified with the 
+set
+\[
+AF(s)=\bigcup_{p\in P}\{p\}\times\{0,\ldots,\len(\stack(p))-1\}
+\]
+Namely, $(p,i)$ corresponds to the $i^{\text{th}}$ entry in the call
+stack $\stack(p)$ (where the elements of the stacks are indexed from
+$0$).
+
+Define $\Psi\colon AF(s)\ra \bar{\Delta}$ as follows: given $(p,i)$,
+let $(\delta,l)$ be the corresponding frame; set $\Psi(p,i)=[\delta]$.
+
+% \begin{definition}
+%   A state $s$ is \emph{well-formed} if all of the following hold:
+%   \begin{enumerate}
+%   \item for any $\delta\in\Delta$, at most one child of $\delta$ is not
+%     a function node,
+%   \item the function $\Psi$ is a one-to-one correspondence,
+%   \item any $\delta$ occurring in the top frame of a call stack
+%     is a leaf node.
+%   \end{enumerate}
+% \end{definition}
+
+
+\section{Jump protocol}
+\label{sec:jump}
+
+% can only jump if \delta is a leaf node.
+% also no other frame can point to a dyscope between \delta
+% and the dyscope corresponding to the function scope
+
+% in any state, a "region" of the dyscope tree can have at
+% most one (exactly one?) stack frame pointing into it.
+
+% a region in a chain of nodes starting from a dyanmic scope corresonding
+% to a function scopes and leading down until you reach another
+% function scope.
+
+% whenever you have more than one child in the dynamic tree, all but
+% 0 or 1 children must be a function scope
+
+% every dyscope is owned by at most one frame
+
+% can a frame point only to a leaf node?  No, but all of its children
+% must be function nodes
+
+% to find out which frame owns which dyscopes:
+
+% approach 1: start from a frame.  frame owns the node it points to.
+% move up parents until you hit a function scope and stop.
+% that is that frame's region.  No other frame can point into its
+% region.  Proof: true in initial state, invariant under
+% call and fork.
+
+% invariant: every leaf node in the dyscope tree is pointed
+% to by the top frame of the call stack of some process
+
+% Define a \emph{well-formed state}:
+
+% every dyscope node has at most one child which is not a function node
+
+% 1-1 correspondence between leaf nodes and top frames of stacks.
+
+% Define regions in the dyscope tree.   (each region contains one
+% function node)
+
+
+\newcommand{\lub}{\sigma_{\upsty{lub}}}
+
+\begin{figure}[t]
+  \begin{algorithm}[H]
+    \Procedure{$\upsty{jump}(s\colon\State, p\colon\Val_{\proc},
+      l'\colon\Loc)\colon\State$}{%
+      let $(\Delta, \droot, \dparent, \static, \deval, P, \stack)=s$\;
+      let $\delta$ be the dyscope of the last frame on $\stack(p)$\;
+      let $\sigma=\static(\delta)$\;
+      let $\sigma'=\lscope(l')$\;
+      let $\lub$ be the least upper bound of $\sigma$ and
+      $\sigma'$ in the tree $\Sigma$\;
+      let $m$ be the minimum integer such that
+      $\sparent^m(\sigma)=\lub$\;
+      let $\delta_{\upsty{lub}}=\dparent^m(\delta)$\;
+      let $n$ be the minimum integer such that
+      $\sparent^{n}(\sigma')=\lub$\;
+      let $\delta_0,\ldots,\delta_{n-1}$ be $n$ distinct objects not in $\Delta$\;
+      let
+      \( \displaystyle
+      \Delta'=\Delta
+      \cup     \{ \delta_0,\ldots,\delta_{n-1} \}
+      %\setminus \{ \dparent^j(\delta)\mid 0\leq j<m\}
+      \)\;
+      define $\dparent'\colon\Delta'\setminus\{\droot\}\ra\Delta'$ by
+      \(
+      \dparent'(\delta')=
+      \begin{cases}
+        \dparent(\delta') & \text{if $\delta'\in\Delta$}\\
+        \delta_{i+1} & \text{if $\delta'=\delta_{i}$ for some $0\leq i<n-1$}\\
+        \delta_{\upsty{lub}} & \text{if $n\geq 1$ and $\delta'=\delta_{n-1}$}
+      \end{cases}
+      \)\;
+      define $\static'\colon\Delta'\ra\Sigma$ by
+      \(
+      \static'(\delta')=
+      \begin{cases}
+        \static(\delta') & \text{if $\delta'\in\Delta$}\\
+        \sparent^i(\sigma') & \text{if $\delta'=\delta_i$ for some $0\leq i<n$}
+      \end{cases}
+      \)\;
+      for $\delta'\in\Delta'$ and $v\in\vars(\static(\delta'))$,
+      let
+      \(
+      \deval'(\delta')(v) =
+      \begin{cases}
+        \deval(\delta')(v) & \text{if $\delta'\in\Delta$}\\
+        \default_t & \text{otherwise}
+      \end{cases}
+      \)\;
+      define $\stack'$ to be the same as $\stack$ except that
+      the last frame on $\stack'(p)$ is replaced with
+      $(\delta_0,l')$ if $n\geq 1$, or with $(\delta_{\upsty{lub}},l')$
+      if $n=0$\;
+      let $s'=(\Delta',\droot,\dparent',\static',\deval',P,\stack')$\;
+      return the result of removing all unreachable dyscopes from $s'$\;
+    }
+  \end{algorithm}
+  \caption{Jump protocol: how the state changes when control moves
+    to a new location within a function.  The procedure may only
+    be called if $\func(\sigma)=\func(\sigma')$, i.e., the jump
+    is contained within one function.}
+  \label{fig:jump}
+\end{figure}
+  
+When control moves from one location to another within a function's
+transition system, dyscopes may be added, because you can jump out of
+scope nests and into new scope nests. The motivating idea is that you
+have to move up the dyscope tree every time you move past a right
+curly brace (i.e., leave a scope) and then push on a new scope for
+each left curly brace you move past. So there is a sequence of upward
+moves followed by a sequence of pushes to get to the new
+location. (And either or both sequences could be empty.)  At the end,
+if any dyscopes become unreachable, they are removed from the state.
+
+Note however, that we do not assume that scopes are associated to
+locations in a nice lexical pattern (or any pattern at all). The
+protocol described here works for any arbitrary assignment of scopes
+to locations.
+
+The precise protocol is described in Figure \ref{fig:jump}.  The
+algorithm shown there takes as input a well-formed state, a process
+ID, and a location $l'$ for the function that $p$ is currently in.
+Say the current dyscope for $p$ is $\delta$, and $l'$ is in
+static scope $\sigma'$. Let $\sigma=\static(\delta)$.  Hence the
+current static scope is $\sigma$ and the new static scope will be $\sigma'$.
+
+First, you have to find the \emph{least upper bound} $\lub$ of
+$\sigma$ and $\sigma'$ in the static scope tree. (Hence $\lub$ is a
+common anecestor of $\sigma$ and $\sigma'$, and if $\sigma''$ is any
+common ancestor of $\sigma$ and $\sigma'$ then $\sigma''$ is an
+ancestor or equal to $\lub$.)  Note that the least upper bound must
+exist since the function scope is a common ancestor of $\sigma$ and
+$\sigma'$.  There is a chain of static scopes from $\sigma$ up to
+$\lub$ and a corresponding chain
+$\delta,\dparent(\delta),\ldots,\dparent^m(\delta)$ in the dynamic
+scope tree.  Let $\delta_{\upsty{lub}}=\dparent^m(\delta)$.  This
+will become the least upper bound of $\delta$ and the new dynamic
+scope corresponding to $\sigma'$ that will be added to the state.
+
+Next you add new dyscopes corresponding to the chain of static
+scopes leading from $\lub$ down to $\sigma'$.  The variables in the
+new scopes are assigned the default values for their respective types.
+The $\dparent$, $\static$, and $\deval$ maps are adjusted
+accordingly.  Finally, the stack is modified by replacing the last
+activation frame with a frame referring to the (possibly) new dynamic
+scope and new location $l'$.
+
+This protocol is executed every time control moves from one location
+to another.
+
+Note that in CIVL all jumps stay within a function.  There is no
+way to jump from one function to another (without returning).
+
+A small variation is the protocol for moving to the start location of
+a function when the function is first pushed on the stack. Since the
+start location is not necessarily in the function scope (it may be a
+proper descendant of that scope), you have to execute the second half
+of the protocol to push a sequence of scopes from the function scope
+to the scope of the start location.
+
+\section{Initial State}
+
+The \emph{initial state} for $M$ is obtained by creating one process
+(let $P=\{0\}$) and having it call the root function $f_0$. 
+Hence start with the state $s$ in which $P=\{0\}$, $\ldots$.
+The initial state is $\upsty{jump}(s,0,\start_{f_0})$.
+
+\section{Transitions}
+
+The transitions follow the usual ``interleaving'' semantics. Given a
+state $\sigma$, one defines the set of enabled transitions in $\sigma$
+as follows. Let $p\in P$. Look at the last frame $(d,l)$ of
+$\stack(p)$ (i.e., the top of the call stack), assuming the stack is
+nonempty. Look at all guarded transitions emanating from $l$. For each
+such transition, evaluate the guard using the valuation formed by
+taking the union of the valuations of all ancestors of $d$ (including
+$d$). In other words, follow the standard ``lexical scoping'' protocol
+to determine the value of any variable that could occur at this point.
+Those transitions whose guard evaluates to $\emph{true}$ are enabled.
+
+For each enabled transition, a new state is generated by executing
+the transition's statement.  For the most part, the semantics are obvious,
+but there are a few details that are a bit subtle.
+
+\section{Calls and Spawns}
+
+Both calls and forks of a function $f$ entail the creation of a new
+frame. First, a new dyscope $d$ corresponding to $\fscope(f)$ is
+created. To find out where to stick that new scope in the dynamic
+scope tree, proceed as follows: begin in the dyscope for the
+process invoking the fork or call and start moving up its parent
+sequence until you reach the first dyscope $d'$ whose associated
+static scope is the defining scope of $f$. (You must reach such a
+scope, or else $f$ would not be visible, and the model would have a
+syntax error!) Insert $d$ right under $d'$, i.e.,
+$\dparent(d)=d'$. This preserves the required correspondence between
+static scopes and dyscopes. Now you move to the start location,
+using the jump protocol, which may involve the creation of additional
+dyscopes under $d$. The new frame references the last dynamic
+scope you created, and the location is the start location of $f$.
+Variables are given their initial values in all the newly created
+dyscopes (however that is done).
+
+All of that is the same whether the statement is a fork or call. The
+only difference is what happens next: for a call, the new frame is
+pushed onto the calling process' call stack. For a fork, a new process
+is ``created'', i.e., you pick a natural number not in $P$ and
+add it to $P$, and push the frame onto the new stack.   To be totally
+deterministic, you could pick the least natural number not in $P$.
+
+\section{Garbage collection}
+
+In a state $s$, a dyscope is unreachable if there is no path
+from a frame in a call stack to that dyscope (following the
+$\dparent$ edges).  You can remove all unreachable dyscopes.
+
+If a process has terminated (has empty stack) and \emph{there are no
+references to that process} in the state, you can just remove the process
+from the state.
+
+In any state, you can renumber the processes (and update the
+references accordingly) however you want, to get rid of gaps, put them
+in a canonic order, etc.
+

@@ -1,0 +1,7 @@
+#include <stdlib.h>
+
+int main(){
+  int val1 = rand(), val2 = rand();
+  
+  $assert val1 == val2;
+}

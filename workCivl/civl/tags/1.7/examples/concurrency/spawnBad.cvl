@@ -1,0 +1,26 @@
+/* Commandline execution:
+ * 		civl verify -inputN=10 spawnBad.cvl
+ * */
+#include<civlc.cvh>
+
+$input int N = 10;
+int s1, s2;
+
+void f1(int n) {
+  s1 = 0;
+  for (int i=0; i<n; i++) s1 += i;
+}
+
+void f2(int n) {
+  s2 = 0;
+  for (int i=0; i<n; i++) s2 += i;
+}
+
+void main() {
+  $proc p = $spawn f1(N);
+  $proc q = $spawn f2(N);
+
+  $assert(s1==s2); // oops, should wait first
+  $wait(p);
+  $wait(q);
+}

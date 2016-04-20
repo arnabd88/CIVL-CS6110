@@ -1,0 +1,15 @@
+#include <civlc.h>
+
+enum hue { chartreuse, burgundy, claret=20, winedark };
+
+void main(){
+  enum hue col, *cp;
+  
+  col = burgundy;
+  
+  cp = &col;
+  $assert(*cp == 1);
+  if (*cp != claret)
+    *cp = claret;
+  $assert(col == 20);
+}

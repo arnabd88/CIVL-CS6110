@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonConfiguration.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.config.common</a> &gt; <span class="el_source">CommonConfiguration.java</span></div><h1>CommonConfiguration.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.config.common;
+
+import java.math.BigInteger;
+
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+
+<span class="fc" id="L7">public class CommonConfiguration implements Configuration {</span>
+
+<span class="fc" id="L9">	private boolean svcomp = false;</span>
+
+<span class="fc" id="L11">	private Architecture architecture = Architecture.UNKNOWN;</span>
+
+	/** number of bits for smallest object that is not a bit-field (byte) */
+<span class="fc" id="L14">	BigInteger CHAR_BIT = new BigInteger(&quot;8&quot;);</span>
+
+	/** minimum value for an object of type signed char */
+<span class="fc" id="L17">	BigInteger SCHAR_MIN = new BigInteger(&quot;-127&quot;); // -(2^7-1)</span>
+
+	/** maximum value for an object of type signed char */
+<span class="fc" id="L20">	BigInteger SCHAR_MAX = new BigInteger(&quot;127&quot;); // 2^7-1</span>
+
+	/** maximum value for an object of type unsigned char */
+<span class="fc" id="L23">	BigInteger UCHAR_MAX = new BigInteger(&quot;255&quot;); // 2^8-1</span>
+
+	/** minimum value for an object of type char */
+<span class="fc" id="L26">	BigInteger CHAR_MIN = SCHAR_MIN;</span>
+
+	/** maximum value for an object of type char */
+<span class="fc" id="L29">	BigInteger CHAR_MAX = SCHAR_MAX;</span>
+
+	/**
+	 * maximum number of bytes in a multibyte character, for any supported
+	 * locale
+	 */
+<span class="fc" id="L35">	BigInteger MB_LEN_MAX = new BigInteger(&quot;1&quot;);</span>
+
+	/** minimum value for an object of type short int */
+<span class="fc" id="L38">	BigInteger SHRT_MIN = new BigInteger(&quot;-32767&quot;); // -(2^15-1);</span>
+
+	/** maximum value for an object of type short int */
+<span class="fc" id="L41">	BigInteger SHRT_MAX = new BigInteger(&quot;32767&quot;); // 2^15-1</span>
+
+	/** maximum value for an object of type unsigned short int */
+<span class="fc" id="L44">	BigInteger USHRT_MAX = new BigInteger(&quot;65535&quot;);// 2^16-1</span>
+
+	/** minimum value for an object of type int */
+<span class="fc" id="L47">	BigInteger INT_MIN = new BigInteger(&quot;-32767&quot;); // -(215-1)</span>
+
+	/** maximum value for an object of type int */
+<span class="fc" id="L50">	BigInteger INT_MAX = new BigInteger(&quot;32767&quot;); // 215-1</span>
+
+	/** maximum value for an object of type unsigned int */
+<span class="fc" id="L53">	BigInteger UINT_MAX = new BigInteger(&quot;65535&quot;); // 2^16-1</span>
+
+	/** minimum value for an object of type long int */
+<span class="fc" id="L56">	BigInteger LONG_MIN = new BigInteger(&quot;-2147483647&quot;);// -(2^31-1)</span>
+
+	/** maximum value for an object of type long int */
+<span class="fc" id="L59">	BigInteger LONG_MAX = new BigInteger(&quot;2147483647&quot;);// 2^31-1</span>
+
+	/** maximum value for an object of type unsigned long int */
+<span class="fc" id="L62">	BigInteger ULONG_MAX = new BigInteger(&quot;4294967295&quot;);// 2^32-1</span>
+
+	/** minimum value for an object of type long long int */
+<span class="fc" id="L65">	BigInteger LLONG_MIN = new BigInteger(&quot;-9223372036854775807&quot;);// -(2^63-1)</span>
+
+	/** maximum value for an object of type long long int */
+<span class="fc" id="L68">	BigInteger LLONG_MAX = new BigInteger(&quot;9223372036854775807&quot;);// 2^63-1</span>
+
+	/** maximum value for an object of type unsigned long long int */
+<span class="fc" id="L71">	BigInteger ULLONG_MAX = new BigInteger(&quot;18446744073709551615&quot;);// 2^64-1</span>
+
+	@Override
+	public BigInteger unsignedCharMax() {
+<span class="nc" id="L75">		return UCHAR_MAX;</span>
+	}
+
+	@Override
+	public BigInteger unsignedShortIntMax() {
+<span class="nc" id="L80">		return USHRT_MAX;</span>
+	}
+
+	@Override
+	public BigInteger unsignedIntMax() {
+<span class="nc" id="L85">		return UINT_MAX;</span>
+	}
+
+	@Override
+	public BigInteger unsignedLongIntMax() {
+<span class="nc" id="L90">		return ULONG_MAX;</span>
+	}
+
+	@Override
+	public BigInteger unsignedLongLongIntMax() {
+<span class="nc" id="L95">		return ULLONG_MAX;</span>
+	}
+
+	@Override
+	public BigInteger signedCharMin() {
+<span class="nc" id="L100">		return SCHAR_MIN;</span>
+	}
+
+	@Override
+	public BigInteger signedCharMax() {
+<span class="nc" id="L105">		return SCHAR_MAX;</span>
+	}
+
+	@Override
+	public BigInteger signedShortIntMin() {
+<span class="nc" id="L110">		return SHRT_MIN;</span>
+	}
+
+	@Override
+	public BigInteger signedShortIntMax() {
+<span class="nc" id="L115">		return SHRT_MAX;</span>
+	}
+
+	@Override
+	public BigInteger signedIntMin() {
+<span class="nc" id="L120">		return INT_MIN;</span>
+	}
+
+	@Override
+	public BigInteger signedIntMax() {
+<span class="nc" id="L125">		return INT_MAX;</span>
+	}
+
+	@Override
+	public BigInteger signedLongIntMin() {
+<span class="nc" id="L130">		return LONG_MIN;</span>
+	}
+
+	@Override
+	public BigInteger signedLongIntMax() {
+<span class="nc" id="L135">		return LONG_MAX;</span>
+	}
+
+	@Override
+	public BigInteger signedLongLongIntMin() {
+<span class="nc" id="L140">		return LLONG_MIN;</span>
+	}
+
+	@Override
+	public BigInteger signedLongLongIntMax() {
+<span class="nc" id="L145">		return LLONG_MAX;</span>
+	}
+
+	public boolean inRangeUnsignedChar(BigInteger value) {
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		return value.compareTo(unsignedCharMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeUnsignedShort(BigInteger value) {
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		return value.compareTo(unsignedShortIntMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeUnsignedInt(BigInteger value) {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		return value.compareTo(unsignedIntMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeUnsignedLongInt(BigInteger value) {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		return value.compareTo(unsignedLongIntMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeUnsignedLongLongInt(BigInteger value) {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		return value.compareTo(unsignedLongLongIntMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeSignedChar(BigInteger value) {
+<span class="nc bnc" id="L169" title="All 4 branches missed.">		return value.compareTo(signedCharMin()) &gt;= 0</span>
+<span class="nc" id="L170">				&amp;&amp; value.compareTo(signedCharMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeSignedShort(BigInteger value) {
+<span class="nc bnc" id="L174" title="All 4 branches missed.">		return value.compareTo(signedShortIntMin()) &gt;= 0</span>
+<span class="nc" id="L175">				&amp;&amp; value.compareTo(signedShortIntMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeSignedInt(BigInteger value) {
+<span class="nc bnc" id="L179" title="All 4 branches missed.">		return value.compareTo(signedIntMin()) &gt;= 0</span>
+<span class="nc" id="L180">				&amp;&amp; value.compareTo(signedIntMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeSignedLongInt(BigInteger value) {
+<span class="nc bnc" id="L184" title="All 4 branches missed.">		return value.compareTo(signedLongIntMin()) &gt;= 0</span>
+<span class="nc" id="L185">				&amp;&amp; value.compareTo(signedLongIntMax()) &lt;= 0;</span>
+	}
+
+	public boolean inRangeSignedLongLongInt(BigInteger value) {
+<span class="nc bnc" id="L189" title="All 4 branches missed.">		return value.compareTo(signedLongLongIntMin()) &gt;= 0</span>
+<span class="nc" id="L190">				&amp;&amp; value.compareTo(signedLongLongIntMax()) &lt;= 0;</span>
+	}
+
+	@Override
+	public BigInteger charMin() {
+<span class="nc" id="L195">		return signedCharMin();</span>
+	}
+
+	@Override
+	public BigInteger charMax() {
+<span class="nc" id="L200">		return signedCharMax();</span>
+	}
+
+	@Override
+	public boolean svcomp() {
+<span class="nc" id="L205">		return this.svcomp;</span>
+	}
+
+	@Override
+	public void setSvcomp(boolean svcomp) {
+<span class="nc" id="L210">		this.svcomp = svcomp;</span>
+<span class="nc" id="L211">	}</span>
+
+	@Override
+	public void setArchitecture(Architecture arch) {
+<span class="nc" id="L215">		this.architecture = arch;</span>
+<span class="nc" id="L216">	}</span>
+
+	@Override
+	public Architecture architecture() {
+<span class="nc" id="L220">		return this.architecture;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PragmaFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.common.astgen</a> &gt; <span class="el_source">PragmaFactory.java</span></div><h1>PragmaFactory.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.front.common.astgen;</span>
+
+import edu.udel.cis.vsl.abc.front.IF.ASTBuilder;
+import edu.udel.cis.vsl.abc.front.IF.ParseTree;
+import edu.udel.cis.vsl.abc.front.c.astgen.CASTBuilder;
+import edu.udel.cis.vsl.abc.front.c.astgen.CIVLPragmaHandler;
+import edu.udel.cis.vsl.abc.front.c.astgen.COmpPragmaHandler;
+import edu.udel.cis.vsl.abc.front.c.ptree.CParseTree;
+
+/**
+ * This factory produces new {@link PragmaHandler}s. Each {@link PragmaHandler}
+ * is used to translate pragma nodes occurring in a single {@link CParseTree}.
+ * 
+ * @author siegel
+ * 
+ */
+public class PragmaFactory {
+
+<span class="nc" id="L19">	public enum PragmaCode {</span>
+<span class="nc" id="L20">		CIVL, OMP</span>
+	}
+
+	private ASTBuilder astBuilder;
+
+<span class="nc" id="L25">	public PragmaFactory(ASTBuilder astBuilder) {</span>
+<span class="nc" id="L26">		this.astBuilder = astBuilder;</span>
+<span class="nc" id="L27">	}</span>
+
+	/**
+	 * Returns a new handler specified by the given pragma identifier (code),
+	 * for working on pragmas occurring in the given parse tree. Example codes
+	 * are &quot;omp&quot; and &quot;CIVL&quot;. The handler can be used repeatedly on different
+	 * pragmas, as long as they all occur in the same parse tree.
+	 * 
+	 * @param code
+	 *            the identifier specifying the pragma domain, such as &quot;omp&quot;
+	 *            (for OpenMP)
+	 * 
+	 * @param parseTree
+	 *            the parse tree representing the translation unit in which the
+	 *            pragmas occur
+	 * @return a new handler for translating pragmas in that tree
+	 */
+	public PragmaHandler newHandler(String code, ParseTree parseTree) {
+<span class="nc bnc" id="L45" title="All 7 branches missed.">		switch (code) {</span>
+		case &quot;CIVL&quot;:
+<span class="nc" id="L47">			return new CIVLPragmaHandler((CASTBuilder) astBuilder, parseTree);</span>
+		case &quot;omp&quot;:
+<span class="nc" id="L49">			return new COmpPragmaHandler((CASTBuilder) astBuilder, parseTree);</span>
+		default:
+<span class="nc" id="L51">			return new TrivialPragmaHandler(code, parseTree);</span>
+		}
+	}
+
+	/**
+	 * Reurns the {@link ASTBuilder} affiliated to this pragma factory. There is
+	 * a 1-1 correspondence between pragma factories and AST builders. The two
+	 * classes work together and are tightly coupled.
+	 * 
+	 * @return the affiliated AST builder
+	 */
+	public ASTBuilder getASTBuilder() {
+<span class="nc" id="L63">		return astBuilder;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

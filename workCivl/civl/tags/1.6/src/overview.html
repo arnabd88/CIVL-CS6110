@@ -1,0 +1,220 @@
+
+<html>
+<body>
+
+	<p>Welcome to CIVL, the Concurrency Intermediate Verification
+		Language tool. CIVL is a Java project for verifying concurrent
+		programs written in CIVL-C, which is a C dialect with extensions to
+		concurrent language constructs. The CIVL project uses ABC, SARL and
+		GMC. The CIVL tool can be used to perform a number of tasks, including
+		the following:
+	<ol>
+		<li>preprocess or pass a CIVL-C program;</i>
+		<li>verify a CIVL-C program;</li>
+		<li>run a CIVL-C program;</li>
+		<li>replay traces for a program.</li>
+	</ol>
+
+	In addition, it provides a framework for developing your own libraries
+	or transformations on ASTs of various language extensions and
+	libraries.
+	</p>
+
+	There is a simple command-line interface for CIVL (see {@link
+	edu.udel.cis.vsl.civl.CIVL CIVL}), but most users will want to use CIVL
+	through the user interface (see {@link
+	edu.udel.cis.vsl.civl.run.IF.UserInterface UserInterface}). To use the
+	API, it is helpful to have some understanding of the modular structure
+	of CIVL. The CIVL source code is decomposed into modules, each with a
+	well-defined interface and set of responsibilities. Some of these
+	modules are decomposed further into sub-modules. The top-level modules
+	are:
+	<ol>
+
+		<li><strong>util</strong>
+			<ol>
+				<li>responsibilities: simple general-purpose utility classes
+					that do not use other parts of CIVL</li>
+				<li>uses: nothing</li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.util.IF}</li>
+				<li>entry point: none</li>
+			</ol></li>
+
+		<li><strong>config</strong>
+			<ol>
+				<li>responsibilities: static configurations of the system</li>
+				<li>uses: <strong>gmc</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.config.IF}</li>
+				<li>entry point: CIVLConfiguration</li>
+			</ol></li>
+
+		<li><strong>transform</strong>
+			<ol>
+				<li>responsibilities: transformations of an AST</li>
+				<li>uses: <strong>config</strong>, <strong>abc</strong>, <strong>sarl</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.transform.IF}</li>
+				<li>entry point: CIVLTransform</li>
+			</ol></li>
+
+		<li><strong>model</strong>
+			<ol>
+				<li>responsibilities: definitions of the control flow graph
+					representation of a CIVL-C program</li>
+				<li>uses: <strong>util</strong>, <strong>config</strong>, <strong>abc</strong>,
+					<strong>gmc</strong>, <strong>sarl</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.model.IF}</li>
+				<li>entry point: Models</li>
+				<li>submodules
+					<ol>
+						<li><strong>expression</strong>
+							<ol>
+								<li>responsibilities: definitions of various expressions of
+									CIVL</li>
+								<li>interface: {@link
+									edu.udel.cis.vsl.civl.model.IF.expression}</li>
+								<li>entry point: none</li>
+							</ol></li>
+						<li><strong>location</strong>
+							<ol>
+								<li>responsibilities: definitions a location in the control
+									flow graph of a CIVL-C program</li>
+								<li>interface: {@link
+									edu.udel.cis.vsl.civl.model.IF.location}</li>
+								<li>entry point: none</li>
+							</ol></li>
+						<li><strong>statement</strong>
+							<ol>
+								<li>responsibilities: definitions of various statements of
+									CIVL</li>
+								<li>interface: {@link
+									edu.udel.cis.vsl.civl.model.IF.statement}</li>
+								<li>entry point: none</li>
+							</ol></li>
+						<li><strong>type</strong>
+							<ol>
+								<li>responsibilities: definitions of various types of CIVL</li>
+								<li>interface: {@link edu.udel.cis.vsl.civl.model.IF.type}</li>
+								<li>entry point: none</li>
+							</ol></li>
+						<li><strong>variable</strong>
+							<ol>
+								<li>responsibilities: definitions of a variable of CIVL</li>
+								<li>interface: {@link
+									edu.udel.cis.vsl.civl.model.IF.variable}</li>
+								<li>entry point: none</li>
+							</ol></li>
+					</ol>
+				</li>
+			</ol></li>
+
+		<li><strong>state</strong>
+			<ol>
+				<li>responsibilities: creation and manipulation of states of a
+					CIVL model.</li>
+				<li>uses: <strong>config</strong>, <strong>model</strong>, <strong>gmc</strong>,
+					<strong>sarl</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.state.IF}</li>
+				<li>entry point: States</li>
+			</ol></li>
+
+		<li><strong>log</strong>
+			<ol>
+				<li>responsibilities: data structures for logging errors during
+					verification.</li>
+				<li>uses: <strong>model</strong>, <strong>state</strong>, <strong>gmc</strong>,
+					<strong>sarl</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.log.IF}</li>
+				<li>entry point: none</li>
+			</ol></li>
+
+		<li><strong>dynamic</strong>
+			<ol>
+				<li>responsibilities: general computations of symbolic
+					expressions, including the pretty printing method.</li>
+				<li>uses: <strong>util</strong>,<strong>model</strong>, <strong>state</strong>,
+					<strong>log</strong>, <strong>sarl</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.dynamic.IF}</li>
+				<li>entry point: Dynamics</li>
+			</ol></li>
+
+		<li><strong>semantics</strong>
+			<ol>
+				<li>responsibilities: implementation of the semantics of
+					CIVL-C.</li>
+				<li>uses: <strong>util</strong>, <strong>config</strong>, <strong>model</strong>,
+					<strong>state</strong>, <strong>log</strong>, <strong>dynamic</strong>,
+					<strong>sarl</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.semantics.IF}</li>
+				<li>entry point: Semantics</li>
+			</ol></li>
+
+		<li><strong>kripke</strong>
+			<ol>
+				<li>responsibilities: implementation of the semantics of
+					CIVL-C.</li>
+				<li>uses: <strong>util</strong>, <strong>config</strong>, <strong>model</strong>,
+					<strong>state</strong>, <strong>log</strong>, <strong>dynamic</strong>,
+					<strong>semantics</strong>, <strong>gmc</strong>, <strong>sarl</strong>
+				</li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.kripke.IF}</li>
+				<li>entry point: Kripkes</li>
+			</ol></li>
+
+		<li><strong>predicate</strong>
+			<ol>
+				<li>responsibilities: definitions of predicates that are
+					required to hold for any CIVL-C programs.</li>
+				<li>uses: <strong>model</strong>, <strong>state</strong>, <strong>log</strong>,
+					<strong>dynamic</strong>, <strong>semantics</strong>, <strong>kripke</strong>,
+					<strong>gmc</strong>, <strong>sarl</strong>
+				</li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.predicate.IF}</li>
+				<li>entry point: none</li>
+			</ol></li>
+
+		<li><strong>gui</strong>
+			<ol>
+				<li>responsibilities: graphical interfaces for viewing
+					counterexample traces.</li>
+				<li>uses: <strong>model</strong>, <strong>state</strong>, <strong>dynamic</strong>,
+					<strong>kripke</strong>, <strong>gmc</strong>, <strong>sarl</strong>
+				</li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.gui.IF}</li>
+				<li>entry point: none</li>
+			</ol></li>
+
+		<li><strong>library</strong>
+			<ol>
+				<li>responsibilities: base implementation of libraries.</li>
+				<li>uses: <strong>model</strong>, <strong>state</strong>, <strong>log</strong>,
+					<strong>dynamic</strong>, <strong>semantics</strong>, <strong>kripke</strong>,
+					<strong>sarl</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.library.IF}</li>
+				<li>entry point: none</li>
+			</ol></li>
+
+		<li><strong>run</strong>
+			<ol>
+				<li>responsibilities: parsing command line inputs and initial
+					configurations of the tool.</li>
+				<li>uses: <strong>kripke</strong>, <strong>model</strong>, <strong>state</strong>,
+					<strong>transform</strong>, <strong>util</strong>, <strong>abc</strong>,
+					<strong>gmc</strong>, <strong>sarl</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl.run.IF}</li>
+				<li>entry point: UserInterface</li>
+			</ol></li>
+
+		<li><strong>main</strong>
+			<ol>
+				<li>responsibilities: parsing command line inputs and initial
+					configurations of the tool</li>
+				<li>uses: <strong>run</strong></li>
+				<li>interface: {@link edu.udel.cis.vsl.civl}</li>
+				<li>entry point: CIVL</li>
+			</ol></li>
+
+	</ol>
+
+</body>
+</html>
+

@@ -1,0 +1,4 @@
+This example is to demonstrates that two programs writing to the same file
+with same data will result in an equivalent file system.
+(CIVL assumes that the file system is never shared by two seperated programs
+when doing functional equivalence checking.)

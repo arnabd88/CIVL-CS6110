@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonWhenNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.statement</a> &gt; <span class="el_source">CommonWhenNode.java</span></div><h1>CommonWhenNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.statement;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.WhenNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonWhenNode extends CommonStatementNode implements WhenNode {
+
+	public CommonWhenNode(Source source, ExpressionNode guard,
+			StatementNode body) {
+<span class="nc" id="L14">		super(source, guard, body);</span>
+<span class="nc" id="L15">	}</span>
+
+	@Override
+	public ExpressionNode getGuard() {
+<span class="nc" id="L19">		return (ExpressionNode) child(0);</span>
+	}
+
+	@Override
+	public StatementNode getBody() {
+<span class="nc" id="L24">		return (StatementNode) child(1);</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L29">		out.print(&quot;When&quot;);</span>
+<span class="nc" id="L30">	}</span>
+
+	@Override
+	public WhenNode copy() {
+<span class="nc" id="L34">		ExpressionNode guard = getGuard();</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">		ExpressionNode guardCopy = guard == null ? null : guard.copy();</span>
+<span class="nc" id="L36">		StatementNode body = getBody();</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		StatementNode bodyCopy = body == null ? null : body.copy();</span>
+
+<span class="nc" id="L39">		return new CommonWhenNode(getSource(), guardCopy, bodyCopy);</span>
+	}
+
+	@Override
+	public StatementKind statementKind() {
+<span class="nc" id="L44">		return StatementKind.WHEN;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

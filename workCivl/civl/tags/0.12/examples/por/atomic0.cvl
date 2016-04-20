@@ -1,0 +1,13 @@
+#include<civlc.h>
+int x=0;
+void f() {
+  x=1;
+}
+void main() {
+  $proc fp = $spawn f();
+  
+  $atomic {
+    $assert(x==0); // false
+  }
+  $wait(fp);
+}

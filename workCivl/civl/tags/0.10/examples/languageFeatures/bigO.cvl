@@ -1,0 +1,14 @@
+/* Commandline execution:
+ *		civl verify bigO.cvl
+ * */
+#include<civlc.h>
+$input double y;
+
+void main() {
+  $assume y > 10;
+  $assume $forall {int i | i > 0} $forall {double x | x > 0} i*x == $O(x);
+  $assume $forall {double z | z > 0} z*$O(z) == $O(z*z);
+  $assert(6.0 == $O(1));
+  $assert(3*y == $O(y));
+  $assert(3*y*y == $O(y*y));
+}

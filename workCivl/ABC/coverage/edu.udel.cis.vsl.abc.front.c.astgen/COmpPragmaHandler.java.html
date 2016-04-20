@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>COmpPragmaHandler.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.astgen</a> &gt; <span class="el_source">COmpPragmaHandler.java</span></div><h1>COmpPragmaHandler.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.c.astgen;
+
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.AMPERSAND;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.ATOMIC;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.BARRIER;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.BITOR;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.BITXOR;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.CAPTURE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.COLLAPSE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.COPYIN;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.COPYPRIVATE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.CRITICAL;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.DATA_CLAUSE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.DEFAULT;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.DYNAMIC;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.FLUSH;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.FOR;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.FST_PRIVATE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.GUIDED;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.IDENTIFIER;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.IF;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.LST_PRIVATE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.MASTER;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.NONE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.NOWAIT;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.NUM_THREADS;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.ORDERED;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.PARALLEL;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.PARALLEL_FOR;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.PARALLEL_SECTIONS;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.PLUS;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.PRIVATE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.READ;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.REDUCTION;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.RUNTIME;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.SCHEDULE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.SECTION;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.SECTIONS;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.SEQ_CST;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.SHARED;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.SINGLE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.STAR;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.STATIC;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.SUB;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.THD_PRIVATE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.UNIQUE_FOR;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.UNIQUE_PARALLEL;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.UPDATE;
+import static edu.udel.cis.vsl.abc.front.c.parse.COmpParser.WRITE;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.TokenStream;
+import org.antlr.runtime.tree.CommonTree;
+
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.PragmaNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpExecutableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpForNode.OmpScheduleKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpParallelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpSyncNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpWorksharingNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpWorksharingNode.OmpWorksharingNodeKind;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.err.IF.ABCUnsupportedException;
+import edu.udel.cis.vsl.abc.front.IF.ParseTree;
+import edu.udel.cis.vsl.abc.front.c.parse.COmpParser;
+import edu.udel.cis.vsl.abc.front.common.astgen.PragmaHandler;
+import edu.udel.cis.vsl.abc.front.common.astgen.SimpleScope;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+/**
+ * This is responsible for translating an OpenMP pragma into OpenMP AST nodes.
+ * Note: the source is first parsed by the general parser (CivlCParser), and
+ * then at the AST builder phase, the OMPPragmaHandler is triggered to translate
+ * the OpenMP pragma.
+ * 
+ * The input is a general pragma node produced by applying the general parser
+ * (CivlCParser) to the pragma source. Since the OpenMP parser uses extra tokens
+ * provided by OmpLexer, it needs to mark those tokens explicitly, which are all
+ * considered as &quot;IDENTIFIER&quot; by CivlCParser; see
+ * {@link #markTokens(PragmaNode)}.
+ * 
+ * @author Manchun Zheng
+ *
+ */
+<span class="nc bnc" id="L104" title="All 2 branches missed.">public class COmpPragmaHandler extends PragmaHandler {</span>
+
+	private ParseTree parseTree;
+
+	private CASTBuilderWorker worker;
+
+	/**
+	 * The node factory used to create new AST nodes.
+	 */
+	private NodeFactory nodeFactory;
+
+	/**
+	 * The token factory used to create new tokens.
+	 */
+	private TokenFactory tokenFactory;
+
+	private COmpParser cOmpParser;
+
+<span class="nc" id="L122">	public COmpPragmaHandler(CASTBuilder builder, ParseTree parseTree) {</span>
+<span class="nc" id="L123">		ASTFactory astFactory = builder.getASTFactory();</span>
+
+<span class="nc" id="L125">		this.parseTree = parseTree;</span>
+<span class="nc" id="L126">		this.worker = builder.getWorker(parseTree);</span>
+<span class="nc" id="L127">		this.nodeFactory = astFactory.getNodeFactory();</span>
+<span class="nc" id="L128">		this.tokenFactory = astFactory.getTokenFactory();</span>
+<span class="nc" id="L129">		this.cOmpParser = new COmpParser();</span>
+<span class="nc" id="L130">	}</span>
+
+	// Private methods...
+
+	/**
+	 * Translates C tokens into OpenMP tokens.
+	 * 
+	 * @param ctokens
+	 *            The list of C tokens to be translated.
+	 * @return
+	 */
+	private void markTokens(PragmaNode pragmaNode) {
+<span class="nc" id="L142">		int number = pragmaNode.getNumTokens();</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (CivlcToken token : pragmaNode.getTokens()) {</span>
+<span class="nc" id="L145">			int type = token.getType();</span>
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (type == IDENTIFIER) {</span>
+<span class="nc bnc" id="L148" title="All 100 branches missed.">				switch (token.getText()) {</span>
+				case &quot;atomic&quot;:
+<span class="nc" id="L150">					token.setType(ATOMIC);</span>
+<span class="nc" id="L151">					break;</span>
+				case &quot;barrier&quot;:
+<span class="nc" id="L153">					token.setType(BARRIER);</span>
+<span class="nc" id="L154">					break;</span>
+				case &quot;capture&quot;:
+<span class="nc" id="L156">					token.setType(CAPTURE);</span>
+<span class="nc" id="L157">					break;</span>
+				case &quot;collapse&quot;:
+<span class="nc" id="L159">					token.setType(COLLAPSE);</span>
+<span class="nc" id="L160">					break;</span>
+				case &quot;copyin&quot;:
+<span class="nc" id="L162">					token.setType(COPYIN);</span>
+<span class="nc" id="L163">					break;</span>
+				case &quot;copyprivate&quot;:
+<span class="nc" id="L165">					token.setType(COPYPRIVATE);</span>
+<span class="nc" id="L166">					break;</span>
+				case &quot;critical&quot;:
+<span class="nc" id="L168">					token.setType(CRITICAL);</span>
+<span class="nc" id="L169">					break;</span>
+				case &quot;default&quot;:
+<span class="nc" id="L171">					token.setType(DEFAULT);</span>
+<span class="nc" id="L172">					break;</span>
+				case &quot;dynamic&quot;:
+<span class="nc" id="L174">					token.setType(DYNAMIC);</span>
+<span class="nc" id="L175">					break;</span>
+				case &quot;firstprivate&quot;:
+<span class="nc" id="L177">					token.setType(FST_PRIVATE);</span>
+<span class="nc" id="L178">					break;</span>
+				case &quot;flush&quot;:
+<span class="nc" id="L180">					token.setType(FLUSH);</span>
+<span class="nc" id="L181">					break;</span>
+				case &quot;guided&quot;:
+<span class="nc" id="L183">					token.setType(GUIDED);</span>
+<span class="nc" id="L184">					break;</span>
+				case &quot;lastprivate&quot;:
+<span class="nc" id="L186">					token.setType(LST_PRIVATE);</span>
+<span class="nc" id="L187">					break;</span>
+				case &quot;master&quot;:
+<span class="nc" id="L189">					token.setType(MASTER);</span>
+<span class="nc" id="L190">					break;</span>
+				case &quot;none&quot;:
+<span class="nc" id="L192">					token.setType(NONE);</span>
+<span class="nc" id="L193">					break;</span>
+				case &quot;nowait&quot;:
+<span class="nc" id="L195">					token.setType(NOWAIT);</span>
+<span class="nc" id="L196">					break;</span>
+				case &quot;num_threads&quot;:
+<span class="nc" id="L198">					token.setType(NUM_THREADS);</span>
+<span class="nc" id="L199">					break;</span>
+				case &quot;ordered&quot;:
+<span class="nc" id="L201">					token.setType(ORDERED);</span>
+<span class="nc" id="L202">					break;</span>
+				case &quot;parallel&quot;:
+<span class="nc" id="L204">					token.setType(PARALLEL);</span>
+<span class="nc" id="L205">					break;</span>
+				case &quot;private&quot;:
+<span class="nc" id="L207">					token.setType(PRIVATE);</span>
+<span class="nc" id="L208">					break;</span>
+				case &quot;read&quot;:
+<span class="nc" id="L210">					token.setType(READ);</span>
+<span class="nc" id="L211">					break;</span>
+				case &quot;reduction&quot;:
+<span class="nc" id="L213">					token.setType(REDUCTION);</span>
+<span class="nc" id="L214">					break;</span>
+				case &quot;runtime&quot;:
+<span class="nc" id="L216">					token.setType(RUNTIME);</span>
+<span class="nc" id="L217">					break;</span>
+				case &quot;schedule&quot;:
+<span class="nc" id="L219">					token.setType(SCHEDULE);</span>
+<span class="nc" id="L220">					break;</span>
+				case &quot;sections&quot;:
+<span class="nc" id="L222">					token.setType(SECTIONS);</span>
+<span class="nc" id="L223">					break;</span>
+				case &quot;section&quot;:
+<span class="nc" id="L225">					token.setType(SECTION);</span>
+<span class="nc" id="L226">					break;</span>
+				case &quot;seq_cst&quot;:
+<span class="nc" id="L228">					token.setType(SEQ_CST);</span>
+<span class="nc" id="L229">					break;</span>
+				case &quot;shared&quot;:
+<span class="nc" id="L231">					token.setType(SHARED);</span>
+<span class="nc" id="L232">					break;</span>
+				case &quot;single&quot;:
+<span class="nc" id="L234">					token.setType(SINGLE);</span>
+<span class="nc" id="L235">					break;</span>
+				case &quot;static&quot;:
+<span class="nc" id="L237">					token.setType(STATIC);</span>
+<span class="nc" id="L238">					break;</span>
+				case &quot;threadprivate&quot;:
+<span class="nc" id="L240">					token.setType(THD_PRIVATE);</span>
+<span class="nc" id="L241">					break;</span>
+				case &quot;update&quot;:
+<span class="nc" id="L243">					token.setType(UPDATE);</span>
+<span class="nc" id="L244">					break;</span>
+				case &quot;write&quot;:
+<span class="nc" id="L246">					token.setType(WRITE);</span>
+					break;
+				default:
+				}
+			}
+		}
+<span class="nc bnc" id="L252" title="All 2 branches missed.">		if (number &gt;= 1)</span>
+<span class="nc" id="L253">			pragmaNode.getToken(number - 1).setNext(null);</span>
+<span class="nc" id="L254">	}</span>
+
+	private OmpWorksharingNode translateWorkshare(Source source,
+			CommonTree workshareTree, OmpWorksharingNodeKind kind) {
+		int numChildren = workshareTree.getChildCount();
+		OmpWorksharingNode workshareNode = nodeFactory.newWorksharingNode(
+				source, kind);
+		boolean hasNowait = false;
+
+		for (int i = 0; i &lt; numChildren; i++) {
+			CommonTree sectionsClause = (CommonTree) workshareTree.getChild(i);
+			int type = sectionsClause.getType();
+
+			switch (type) {
+<span class="nc" id="L268">			case DATA_CLAUSE:</span>
+				this.translateDataClause(source, sectionsClause, workshareNode);
+				break;
+			case NOWAIT:
+				if (!hasNowait) {
+					hasNowait = true;
+				} else {
+					throw new ABCRuntimeException(
+							&quot;At most one nowait directive is allowed in an OpenMP construct.&quot;,
+							(tokenFactory.newSource((CivlcToken) sectionsClause
+									.getToken()).getSummary(false)));
+				}
+				workshareNode.setNowait(true);
+				break;
+			default:
+				throw new ABCRuntimeException(
+						&quot;OMPPragmaHandler: unsupported token&quot;);
+			}
+		}
+		return workshareNode;
+	}
+
+	private OmpForNode translateFor(Source source, CommonTree forTree)
+			throws SyntaxException {
+		int numChildren = forTree.getChildCount();
+		OmpForNode forNode = nodeFactory.newOmpForNode(source, null);
+
+		for (int i = 0; i &lt; numChildren; i++) {
+			CommonTree forClause = (CommonTree) (forTree.getChild(i))
+					.getChild(0);
+			int type = forClause.getType();
+
+			switch (type) {
+<span class="nc" id="L301">			case UNIQUE_FOR:</span>
+				translateUniqueForClause((CommonTree) forClause, forNode);
+				break;
+			case DATA_CLAUSE:
+				this.translateDataClause(source, forClause, forNode);
+				break;
+			case NOWAIT:
+				forNode.setNowait(true);
+				break;
+			default:
+				throw new ABCRuntimeException(&quot;Unreachable&quot;);
+			}
+		}
+
+		return forNode;
+	}
+
+	private void translateUniqueForClause(CommonTree forClause,
+			OmpForNode forNode) throws SyntaxException {
+		CommonTree uniqueForClause = (CommonTree) forClause.getChild(0);
+		int type = uniqueForClause.getType();
+
+		switch (type) {
+<span class="nc" id="L324">		case ORDERED:</span>
+			break;
+		case SCHEDULE:
+			int scheduleType = uniqueForClause.getChild(0).getType();
+
+			switch (scheduleType) {
+			case STATIC:
+				forNode.setSchedule(OmpScheduleKind.STATIC);
+				break;
+			case DYNAMIC:
+				forNode.setSchedule(OmpScheduleKind.DYNAMIC);
+				break;
+			case GUIDED:
+				forNode.setSchedule(OmpScheduleKind.GUIDED);
+				break;
+			default: // case RUNTIME:
+				forNode.setSchedule(OmpScheduleKind.RUNTIME);
+			}
+			if (uniqueForClause.getChildCount() &gt; 1) {
+				CommonTree chunkSizeTree = (CommonTree) uniqueForClause
+						.getChild(1);
+
+				// TODO: is null acceptable for a SimpleScope?
+
+				ExpressionNode chunkSizeNode = worker.translateExpression(
+						chunkSizeTree, null);
+
+				forNode.setChunsize(chunkSizeNode);
+			}
+
+			break;
+		case COLLAPSE: {
+			CommonTree constant = (CommonTree) uniqueForClause.getChild(0);
+			IntegerConstantNode constantNode = nodeFactory
+					.newIntegerConstantNode(null, constant.getText());
+
+			forNode.setCollapse(constantNode.getConstantValue()
+					.getIntegerValue().intValue());
+			break;
+		}
+		default:
+			throw new ABCRuntimeException(&quot;Unreachable&quot;);
+		}
+	}
+
+	private OmpNode translateParallel(Source source, CommonTree paralle)
+			throws SyntaxException {
+		int numChildren = paralle.getChildCount();
+		OmpParallelNode parallelNode = nodeFactory.newOmpParallelNode(source,
+				null);
+		boolean hasIf = false;
+		boolean hasNumThreads = false;
+
+		for (int i = 0; i &lt; numChildren; i++) {
+			CommonTree parallelClause = (CommonTree) paralle.getChild(i);
+			int type = parallelClause.getType();
+
+			switch (type) {
+<span class="nc" id="L382">			case UNIQUE_PARALLEL:</span>
+				int result = this.translateUniqueParallel(parallelClause,
+						parallelNode);
+
+				if (result == IF) {
+					if (!hasIf) {
+						hasIf = true;
+					} else {
+						throw new ABCRuntimeException(
+								&quot;At most one if clause is allowed in an OpenMP parallel construct.&quot;,
+								(tokenFactory.newSource((CivlcToken) parallelClause
+										.getToken()).getSummary(false)));
+					}
+				} else if (result == NUM_THREADS) {
+					if (!hasNumThreads) {
+						hasNumThreads = true;
+					} else {
+						throw new ABCRuntimeException(
+								&quot;At most one num_threads() clause is allowed in an OpenMP parallel construct.&quot;,
+								(tokenFactory.newSource((CivlcToken) parallelClause
+										.getToken()).getSummary(false)));
+					}
+				}
+				break;
+			case DATA_CLAUSE:
+				this.translateDataClause(source, parallelClause, parallelNode);
+				break;
+			default:
+				throw new ABCRuntimeException(&quot;Unreachable&quot;);
+			}
+		}
+		return parallelNode;
+	}
+
+	private int translateUniqueParallel(CommonTree parallelClause,
+			OmpParallelNode parallelNode) throws SyntaxException {
+		CommonTree child = (CommonTree) parallelClause.getChild(0);
+		ExpressionNode expression;
+
+		switch (child.getType()) {
+<span class="nc" id="L422">		case IF:</span>
+			expression = worker.translateExpression(
+					(CommonTree) child.getChild(0), null);
+			parallelNode.setIfClause(expression);
+			return IF;
+		case NUM_THREADS:
+			expression = worker.translateExpression(
+					(CommonTree) child.getChild(0), null);
+			parallelNode.setNumThreads(expression);
+			return NUM_THREADS;
+		default:
+			throw new ABCRuntimeException(&quot;Unreachable&quot;);
+		}
+	}
+
+	private OmpParallelNode translateParallelFor(Source source,
+			CommonTree parallelFor) throws SyntaxException {
+		int numChildren = parallelFor.getChildCount();
+		OmpParallelNode parallelNode = nodeFactory.newOmpParallelNode(source,
+				null);
+		OmpForNode forNode = nodeFactory.newOmpForNode(source, null);
+
+		for (int i = 0; i &lt; numChildren; i++) {
+			CommonTree parallelForClause = (CommonTree) parallelFor.getChild(i);
+			int type = parallelForClause.getType();
+
+			switch (type) {
+<span class="nc" id="L449">			case UNIQUE_PARALLEL:</span>
+				this.translateUniqueParallel(parallelForClause, parallelNode);
+				break;
+			case UNIQUE_FOR:
+				this.translateUniqueForClause(parallelForClause, forNode);
+				break;
+			case DATA_CLAUSE:
+				this.translateDataClause(source, parallelForClause,
+						parallelNode);
+				break;
+			default:
+				throw new ABCRuntimeException(&quot;Unreachable&quot;);
+			}
+		}
+		parallelNode.setStatementNode(forNode);
+		return parallelNode;
+	}
+
+	private OmpParallelNode translateParallelSections(Source source,
+			CommonTree parallelSections) throws SyntaxException {
+		int numChildren = parallelSections.getChildCount();
+		OmpParallelNode parallelNode = nodeFactory.newOmpParallelNode(source,
+				null);
+		OmpWorksharingNode sectionsNode = nodeFactory.newOmpSectionsNode(
+				source, null);
+
+		for (int i = 0; i &lt; numChildren; i++) {
+			CommonTree parallelSectionsClause = (CommonTree) parallelSections
+					.getChild(i);
+			int type = parallelSectionsClause.getType();
+
+			switch (type) {
+<span class="nc" id="L481">			case UNIQUE_PARALLEL:</span>
+				this.translateUniqueParallel(parallelSectionsClause,
+						parallelNode);
+				break;
+			case DATA_CLAUSE:
+				this.translateDataClause(source, parallelSectionsClause,
+						parallelNode);
+				break;
+			default:
+				throw new ABCRuntimeException(&quot;Unreachable&quot;);
+			}
+		}
+		parallelNode.setStatementNode(sectionsNode);
+		return parallelNode;
+	}
+
+	private void translateDataClause(Source source, CommonTree dataClause,
+			OmpExecutableNode ompStatementNode) {
+		int numChildren = dataClause.getChildCount();
+		CommonTree dataClauseEle;
+		int type;
+
+		assert numChildren == 1;
+		dataClauseEle = (CommonTree) dataClause.getChild(0);
+		type = dataClauseEle.getType();
+		switch (type) {
+<span class="nc" id="L507">		case PRIVATE:</span>
+			ompStatementNode.setPrivateList(translateIdentifierList(source,
+					&quot;privateList&quot;, (CommonTree) dataClauseEle.getChild(0)));
+			break;
+		case FST_PRIVATE:
+			ompStatementNode.setFirstprivateList(translateIdentifierList(
+					source, &quot;firstprivateList&quot;,
+					(CommonTree) dataClauseEle.getChild(0)));
+			break;
+		case LST_PRIVATE:
+			ompStatementNode.setLastprivateList(translateIdentifierList(source,
+					&quot;lastprivateList&quot;, (CommonTree) dataClauseEle.getChild(0)));
+			break;
+		case SHARED:
+			ompStatementNode.setSharedList(translateIdentifierList(source,
+					&quot;sharedList&quot;, (CommonTree) dataClauseEle.getChild(0)));
+			break;
+		case COPYIN:
+			ompStatementNode.setCopyinList(translateIdentifierList(source,
+					&quot;copyinList&quot;, (CommonTree) dataClauseEle.getChild(0)));
+			break;
+		case COPYPRIVATE:
+			ompStatementNode.setCopyprivateList(translateIdentifierList(source,
+					&quot;copyprivateList&quot;, (CommonTree) dataClauseEle.getChild(0)));
+			break;
+		case DEFAULT:
+			if (dataClause.getChild(0).getChild(0).getType() == NONE)
+				((OmpParallelNode) ompStatementNode).setDefault(false);
+			break;
+		case REDUCTION:
+			OmpReductionNode reductionNode = translateReductionClause(dataClauseEle);
+			SequenceNode&lt;OmpReductionNode&gt; reductionList = ompStatementNode
+					.reductionList();
+
+			if (reductionList == null) {
+				List&lt;OmpReductionNode&gt; nodes = new ArrayList&lt;&gt;(1);
+
+				nodes.add(reductionNode);
+				reductionList = nodeFactory.newSequenceNode(
+						reductionNode.getSource(), &quot;reductionList&quot;, nodes);
+			}
+			ompStatementNode.setReductionList(reductionList);
+			break;
+		default:
+			throw new ABCRuntimeException(&quot;Invalid data clause&quot;);
+		}
+	}
+
+	private OmpReductionNode translateReductionClause(CommonTree reduction) {
+<span class="nc" id="L556">		int operatorType = reduction.getChild(0).getType();</span>
+<span class="nc" id="L557">		List&lt;IdentifierExpressionNode&gt; list = translateIdentifierList((CommonTree) reduction</span>
+<span class="nc" id="L558">				.getChild(1));</span>
+<span class="nc" id="L559">		Source rootSource = tokenFactory.newSource((CivlcToken) reduction</span>
+<span class="nc" id="L560">				.getToken());</span>
+<span class="nc" id="L561">		SequenceNode&lt;IdentifierExpressionNode&gt; nodes = nodeFactory</span>
+<span class="nc" id="L562">				.newSequenceNode(rootSource, &quot;reductionList&quot;, list);</span>
+
+<span class="nc bnc" id="L564" title="All 2 branches missed.">		if (operatorType == IDENTIFIER) {</span>
+<span class="nc" id="L565">			IdentifierExpressionNode function = this</span>
+<span class="nc" id="L566">					.translateIdentifierExpression((CommonTree) reduction</span>
+<span class="nc" id="L567">							.getChild(0));</span>
+
+<span class="nc" id="L569">			return this.nodeFactory.newOmpFunctionReductionNode(rootSource,</span>
+<span class="nc" id="L570">					function, nodes);</span>
+		} else {
+<span class="nc" id="L572">			Operator operator = translateOperator(reduction.getChild(0)</span>
+<span class="nc" id="L573">					.getType());</span>
+
+<span class="nc" id="L575">			return this.nodeFactory.newOmpSymbolReductionNode(rootSource,</span>
+<span class="nc" id="L576">					operator, nodes);</span>
+		}
+	}
+
+	private Operator translateOperator(int type) {
+		switch (type) {
+<span class="nc" id="L582">		case PLUS:</span>
+			return Operator.PLUSEQ;
+		case STAR:
+			return Operator.TIMESEQ;
+		case SUB:
+			return Operator.MINUSEQ;
+		case AMPERSAND:
+			return Operator.BITANDEQ;
+		case BITXOR:
+			return Operator.BITXOREQ;
+		case BITOR:
+			return Operator.BITOREQ;
+			// case AND:
+			// return Operator.LANDEQ;
+			// case OR:
+			// return Operator.LOREQ;
+		default:
+			throw new ABCUnsupportedException(&quot;reduction operator of type &quot;
+					+ type);
+		}
+	}
+
+	private SequenceNode&lt;IdentifierExpressionNode&gt; translateIdentifierList(
+			Source source, String name, CommonTree identifierList) {
+<span class="nc" id="L606">		List&lt;IdentifierExpressionNode&gt; list = translateIdentifierList(identifierList);</span>
+
+<span class="nc" id="L608">		return nodeFactory.newSequenceNode(source, name, list);</span>
+	}
+
+	private List&lt;IdentifierExpressionNode&gt; translateIdentifierList(
+			CommonTree identifierList) {
+<span class="nc" id="L613">		int numChildren = identifierList.getChildCount();</span>
+<span class="nc" id="L614">		List&lt;IdentifierExpressionNode&gt; list = new ArrayList&lt;&gt;(numChildren);</span>
+
+<span class="nc bnc" id="L616" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L617">			list.add(translateIdentifierExpression((CommonTree) identifierList</span>
+<span class="nc" id="L618">					.getChild(i)));</span>
+		}
+<span class="nc" id="L620">		return list;</span>
+	}
+
+	private IdentifierExpressionNode translateIdentifierExpression(
+			CommonTree identifier) {
+<span class="nc" id="L625">		IdentifierNode identifierNode = translateIdentifier(identifier);</span>
+
+<span class="nc" id="L627">		return nodeFactory.newIdentifierExpressionNode(</span>
+<span class="nc" id="L628">				identifierNode.getSource(), identifierNode);</span>
+	}
+
+	private IdentifierNode translateIdentifier(CommonTree identifier) {
+<span class="nc" id="L632">		CivlcToken token = (CivlcToken) identifier.getToken();</span>
+<span class="nc" id="L633">		Source source = tokenFactory.newSource(token);</span>
+
+<span class="nc" id="L635">		return nodeFactory.newIdentifierNode(source, token.getText());</span>
+	}
+
+	// Public methods....
+
+	@Override
+	public EntityKind getEntityKind() {
+<span class="nc" id="L642">		return EntityKind.PRAGMA_HANDLER;</span>
+	}
+
+	@Override
+	public String getName() {
+<span class="nc" id="L647">		return &quot;omp&quot;;</span>
+	}
+
+	@Override
+	public ParseTree getParseTree() {
+<span class="nc" id="L652">		return parseTree;</span>
+	}
+
+	@Override
+	public ASTNode processPragmaNode(PragmaNode pragmaNode, SimpleScope scope)
+			throws SyntaxException {
+		Source source = pragmaNode.getSource();
+		CivlcTokenSource tokenSource;
+		TokenStream tokens;
+		CommonTree rootTree;
+		int type;
+
+		markTokens(pragmaNode);
+		tokenSource = pragmaNode.newTokenSource();
+		tokens = new CommonTokenStream(tokenSource);
+		rootTree = this.cOmpParser.parse(source, tokens);
+		type = rootTree.getType();
+		switch (type) {
+<span class="nc" id="L670">		case PARALLEL_FOR:</span>
+			return translateParallelFor(source, rootTree);
+		case PARALLEL_SECTIONS:
+			return translateParallelSections(source, rootTree);
+		case PARALLEL:
+			return translateParallel(source, rootTree);
+		case FOR:
+			return translateFor(source, rootTree);
+		case SECTIONS:
+			return translateWorkshare(source, rootTree,
+					OmpWorksharingNodeKind.SECTIONS);
+		case SINGLE:
+			return translateWorkshare(source, rootTree,
+					OmpWorksharingNodeKind.SINGLE);
+		case MASTER:
+			return nodeFactory.newOmpMasterNode(source, null);
+		case CRITICAL: {
+			OmpSyncNode criticalNode = nodeFactory.newOmpCriticalNode(source,
+					null, null);
+
+			if (rootTree.getChildCount() &gt; 0) {
+				criticalNode
+						.setCriticalName(this
+								.translateIdentifier((CommonTree) rootTree
+										.getChild(0)));
+			}
+			return criticalNode;
+		}
+		case ORDERED:
+			return nodeFactory.newOmpOrederedNode(source, null);
+		case SECTION:
+			return nodeFactory.newOmpSectionNode(source, null);
+		case BARRIER:
+			return nodeFactory.newOmpBarrierNode(source);
+		case FLUSH:
+			return nodeFactory.newOmpFlushNode(
+					source,
+					translateIdentifierList(source, &quot;flushList&quot;,
+							(CommonTree) rootTree.getChild(0)));
+		case THD_PRIVATE:
+			return nodeFactory.newOmpThreadprivateNode(
+					source,
+					translateIdentifierList(source, &quot;threadprivateList&quot;,
+							(CommonTree) rootTree.getChild(0)));
+		case ATOMIC:
+			return nodeFactory.newOmpAtomicNode(source, null);
+		default:
+			throw new ABCRuntimeException(&quot;Unreachable&quot;);
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

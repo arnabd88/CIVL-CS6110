@@ -1,0 +1,11 @@
+/* Commandline execution:
+ *		civl verify cast.cvl
+ * */
+#include<civlc.h>
+
+void main() {
+  int i = 0;
+  float j = (float) i;
+  
+  $assert(j == 0.0);
+}

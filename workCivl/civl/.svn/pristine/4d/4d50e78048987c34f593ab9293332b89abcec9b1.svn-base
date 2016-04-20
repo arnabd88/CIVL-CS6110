@@ -1,0 +1,344 @@
+/**********************************************************************************
+ * Copyright (c) 2008-2012 The Khronos Group Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and/or associated documentation files (the
+ * "Materials"), to deal in the Materials without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Materials, and to
+ * permit persons to whom the Materials are furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Materials.
+ *
+ * THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
+ **********************************************************************************/
+
+/* $Revision: 11803 $ on $Date: 2010-06-25 10:02:12 -0700 (Fri, 25 Jun 2010) $ */
+
+#ifndef __CL_PLATFORM_H
+#define __CL_PLATFORM_H
+
+#ifdef __APPLE__
+    /* Contains #defines for AVAILABLE_MAC_OS_X_VERSION_10_6_AND_LATER below */
+    #include <AvailabilityMacros.h>
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#if defined(_WIN32)
+    #define CL_API_ENTRY
+    #define CL_API_CALL     __stdcall
+    #define CL_CALLBACK     __stdcall
+#else
+    #define CL_API_ENTRY
+    #define CL_API_CALL
+    #define CL_CALLBACK
+#endif
+
+#ifdef __APPLE__
+    #define CL_EXTENSION_WEAK_LINK       __attribute__((weak_import))
+    #define CL_API_SUFFIX__VERSION_1_0                  AVAILABLE_MAC_OS_X_VERSION_10_6_AND_LATER
+    #define CL_EXT_SUFFIX__VERSION_1_0                  CL_EXTENSION_WEAK_LINK AVAILABLE_MAC_OS_X_VERSION_10_6_AND_LATER
+    #define CL_API_SUFFIX__VERSION_1_1                  AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER
+    #define GCL_API_SUFFIX__VERSION_1_1                 AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER
+    #define CL_EXT_SUFFIX__VERSION_1_1                  CL_EXTENSION_WEAK_LINK AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER
+    #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED
+    #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED       CL_EXTENSION_WEAK_LINK AVAILABLE_MAC_OS_X_VERSION_10_6_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_7
+    
+    #ifdef AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER
+        #define CL_API_SUFFIX__VERSION_1_2              AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER
+        #define GCL_API_SUFFIX__VERSION_1_2             AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER
+        #define CL_EXT_SUFFIX__VERSION_1_2              CL_EXTENSION_WEAK_LINK AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER
+        #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED
+        #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED   CL_EXTENSION_WEAK_LINK AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_8
+    #else
+        #warning  This path should never happen outside of internal operating system development.  AvailabilityMacros do not function correctly here!
+        #define CL_API_SUFFIX__VERSION_1_2              AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER
+        #define GCL_API_SUFFIX__VERSION_1_2             AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER
+        #define CL_EXT_SUFFIX__VERSION_1_2              CL_EXTENSION_WEAK_LINK AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER
+        #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED
+        #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED   CL_EXTENSION_WEAK_LINK AVAILABLE_MAC_OS_X_VERSION_10_7_AND_LATER
+    #endif
+#else
+    #ifdef __GNUC__ 
+        #ifdef CL_USE_DEPRECATED_OPENCL_1_0_APIS
+            #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED
+            #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED    
+        #else
+            #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED __attribute__((deprecated))
+            #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED    
+        #endif
+    
+        #ifdef CL_USE_DEPRECATED_OPENCL_1_1_APIS
+            #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED    
+            #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED    
+        #else
+            #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED __attribute__((deprecated))
+            #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED    
+        #endif
+    #elif _WIN32
+        #ifdef CL_USE_DEPRECATED_OPENCL_1_0_APIS
+            #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED    
+            #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED    
+        #else
+            #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED 
+            #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED __declspec(deprecated)     
+        #endif
+    
+        #ifdef CL_USE_DEPRECATED_OPENCL_1_1_APIS
+            #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED    
+            #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED    
+        #else
+            #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED 
+            #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED ___declspec(deprecated)     
+        #endif
+    #else
+        #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED
+        #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED
+    
+        #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED
+        #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED
+    #endif
+#endif
+
+#if (defined (_WIN32) && defined(_MSC_VER))
+
+/*
+typedef signed   __int8         cl_char;
+typedef unsigned __int8         cl_uchar;
+typedef signed   __int16        cl_short;
+typedef unsigned __int16        cl_ushort;
+typedef signed   __int32        cl_int;
+typedef unsigned __int32        cl_uint;
+typedef signed   __int64        cl_long;
+typedef unsigned __int64        cl_ulong;
+
+typedef unsigned __int16        cl_half;
+typedef float                   cl_float;
+typedef double                  cl_double;
+*/
+
+// TODO: most of these can be defined as symbolic constants:
+// e.g.:
+// $input $real CL_M_E;
+
+
+/* Macro names and corresponding values defined by OpenCL */
+#define CL_CHAR_BIT         8
+#define CL_SCHAR_MAX        127
+#define CL_SCHAR_MIN        (-127-1)
+#define CL_CHAR_MAX         CL_SCHAR_MAX
+#define CL_CHAR_MIN         CL_SCHAR_MIN
+#define CL_UCHAR_MAX        255
+#define CL_SHRT_MAX         32767
+#define CL_SHRT_MIN         (-32767-1)
+#define CL_USHRT_MAX        65535
+#define CL_INT_MAX          2147483647
+#define CL_INT_MIN          (-2147483647-1)
+#define CL_UINT_MAX         0xffffffffU
+#define CL_LONG_MAX         ((cl_long) 0x7FFFFFFFFFFFFFFFLL)
+#define CL_LONG_MIN         ((cl_long) -0x7FFFFFFFFFFFFFFFLL - 1LL)
+#define CL_ULONG_MAX        ((cl_ulong) 0xFFFFFFFFFFFFFFFFULL)
+
+#define CL_FLT_DIG          6
+#define CL_FLT_MANT_DIG     24
+#define CL_FLT_MAX_10_EXP   +38
+#define CL_FLT_MAX_EXP      +128
+#define CL_FLT_MIN_10_EXP   -37
+#define CL_FLT_MIN_EXP      -125
+#define CL_FLT_RADIX        2
+#define CL_FLT_MAX          340282346638528859811704183484516925440.0f
+#define CL_FLT_MIN          1.175494350822287507969e-38f
+#define CL_FLT_EPSILON      0x1.0p-23f
+
+#define CL_DBL_DIG          15
+#define CL_DBL_MANT_DIG     53
+#define CL_DBL_MAX_10_EXP   +308
+#define CL_DBL_MAX_EXP      +1024
+#define CL_DBL_MIN_10_EXP   -307
+#define CL_DBL_MIN_EXP      -1021
+#define CL_DBL_RADIX        2
+#define CL_DBL_MAX          179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0
+#define CL_DBL_MIN          2.225073858507201383090e-308
+#define CL_DBL_EPSILON      2.220446049250313080847e-16
+
+#define  CL_M_E             2.718281828459045090796
+#define  CL_M_LOG2E         1.442695040888963387005
+#define  CL_M_LOG10E        0.434294481903251816668
+#define  CL_M_LN2           0.693147180559945286227
+#define  CL_M_LN10          2.302585092994045901094
+#define  CL_M_PI            3.141592653589793115998
+#define  CL_M_PI_2          1.570796326794896557999
+#define  CL_M_PI_4          0.785398163397448278999
+#define  CL_M_1_PI          0.318309886183790691216
+#define  CL_M_2_PI          0.636619772367581382433
+#define  CL_M_2_SQRTPI      1.128379167095512558561
+#define  CL_M_SQRT2         1.414213562373095145475
+#define  CL_M_SQRT1_2       0.707106781186547572737
+
+#define  CL_M_E_F           2.71828174591064f
+#define  CL_M_LOG2E_F       1.44269502162933f
+#define  CL_M_LOG10E_F      0.43429449200630f
+#define  CL_M_LN2_F         0.69314718246460f
+#define  CL_M_LN10_F        2.30258512496948f
+#define  CL_M_PI_F          3.14159274101257f
+#define  CL_M_PI_2_F        1.57079637050629f
+#define  CL_M_PI_4_F        0.78539818525314f
+#define  CL_M_1_PI_F        0.31830987334251f
+#define  CL_M_2_PI_F        0.63661974668503f
+#define  CL_M_2_SQRTPI_F    1.12837922573090f
+#define  CL_M_SQRT2_F       1.41421353816986f
+#define  CL_M_SQRT1_2_F     0.70710676908493f
+
+#define CL_NAN              (CL_INFINITY - CL_INFINITY)
+#define CL_HUGE_VALF        ((cl_float) 1e50)
+#define CL_HUGE_VAL         ((cl_double) 1e500)
+#define CL_MAXFLOAT         CL_FLT_MAX
+#define CL_INFINITY         CL_HUGE_VALF
+
+#else
+/*
+#include <stdint.h>
+
+// scalar types  
+typedef int8_t          cl_char;
+typedef uint8_t         cl_uchar;
+typedef int16_t         cl_short    __attribute__((aligned(2)));
+typedef uint16_t        cl_ushort   __attribute__((aligned(2)));
+typedef int32_t         cl_int      __attribute__((aligned(4)));
+typedef uint32_t        cl_uint     __attribute__((aligned(4)));
+typedef int64_t         cl_long     __attribute__((aligned(8)));
+typedef uint64_t        cl_ulong    __attribute__((aligned(8)));
+
+typedef uint16_t        cl_half     __attribute__((aligned(2)));
+typedef float           cl_float    __attribute__((aligned(4)));
+typedef double          cl_double   __attribute__((aligned(8)));
+*/
+/* Macro names and corresponding values defined by OpenCL */
+#define CL_CHAR_BIT         8
+#define CL_SCHAR_MAX        127
+#define CL_SCHAR_MIN        (-127-1)
+#define CL_CHAR_MAX         CL_SCHAR_MAX
+#define CL_CHAR_MIN         CL_SCHAR_MIN
+#define CL_UCHAR_MAX        255
+#define CL_SHRT_MAX         32767
+#define CL_SHRT_MIN         (-32767-1)
+#define CL_USHRT_MAX        65535
+#define CL_INT_MAX          2147483647
+#define CL_INT_MIN          (-2147483647-1)
+#define CL_UINT_MAX         0xffffffffU
+#define CL_LONG_MAX         ((cl_long) 0x7FFFFFFFFFFFFFFFLL)
+#define CL_LONG_MIN         ((cl_long) -0x7FFFFFFFFFFFFFFFLL - 1LL)
+#define CL_ULONG_MAX        ((cl_ulong) 0xFFFFFFFFFFFFFFFFULL)
+
+#define CL_FLT_DIG          6
+#define CL_FLT_MANT_DIG     24
+#define CL_FLT_MAX_10_EXP   +38
+#define CL_FLT_MAX_EXP      +128
+#define CL_FLT_MIN_10_EXP   -37
+#define CL_FLT_MIN_EXP      -125
+#define CL_FLT_RADIX        2
+#define CL_FLT_MAX          0x1.fffffep127f
+#define CL_FLT_MIN          0x1.0p-126f
+#define CL_FLT_EPSILON      0x1.0p-23f
+
+#define CL_DBL_DIG          15
+#define CL_DBL_MANT_DIG     53
+#define CL_DBL_MAX_10_EXP   +308
+#define CL_DBL_MAX_EXP      +1024
+#define CL_DBL_MIN_10_EXP   -307
+#define CL_DBL_MIN_EXP      -1021
+#define CL_DBL_RADIX        2
+#define CL_DBL_MAX          0x1.fffffffffffffp1023
+#define CL_DBL_MIN          0x1.0p-1022
+#define CL_DBL_EPSILON      0x1.0p-52
+
+#define  CL_M_E             2.718281828459045090796
+#define  CL_M_LOG2E         1.442695040888963387005
+#define  CL_M_LOG10E        0.434294481903251816668
+#define  CL_M_LN2           0.693147180559945286227
+#define  CL_M_LN10          2.302585092994045901094
+#define  CL_M_PI            3.141592653589793115998
+#define  CL_M_PI_2          1.570796326794896557999
+#define  CL_M_PI_4          0.785398163397448278999
+#define  CL_M_1_PI          0.318309886183790691216
+#define  CL_M_2_PI          0.636619772367581382433
+#define  CL_M_2_SQRTPI      1.128379167095512558561
+#define  CL_M_SQRT2         1.414213562373095145475
+#define  CL_M_SQRT1_2       0.707106781186547572737
+
+#define  CL_M_E_F           2.71828174591064f
+#define  CL_M_LOG2E_F       1.44269502162933f
+#define  CL_M_LOG10E_F      0.43429449200630f
+#define  CL_M_LN2_F         0.69314718246460f
+#define  CL_M_LN10_F        2.30258512496948f
+#define  CL_M_PI_F          3.14159274101257f
+#define  CL_M_PI_2_F        1.57079637050629f
+#define  CL_M_PI_4_F        0.78539818525314f
+#define  CL_M_1_PI_F        0.31830987334251f
+#define  CL_M_2_PI_F        0.63661974668503f
+#define  CL_M_2_SQRTPI_F    1.12837922573090f
+#define  CL_M_SQRT2_F       1.41421353816986f
+#define  CL_M_SQRT1_2_F     0.70710676908493f
+
+#if defined( __GNUC__ )
+   #define CL_HUGE_VALF     __builtin_huge_valf()
+   #define CL_HUGE_VAL      __builtin_huge_val()
+   #define CL_NAN           __builtin_nanf( "" )
+#else
+   #define CL_HUGE_VALF     ((cl_float) 1e50)
+   #define CL_HUGE_VAL      ((cl_double) 1e500)
+   float nanf( const char * );
+   #define CL_NAN           nanf( "" )  
+#endif
+#define CL_MAXFLOAT         CL_FLT_MAX
+#define CL_INFINITY         CL_HUGE_VALF
+
+#endif
+
+#include <stddef.h>
+
+/* Mirror types to GL types. Mirror types allow us to avoid deciding which headers to load based on whether we are using GL or GLES here. */
+typedef unsigned int cl_GLuint;
+typedef int          cl_GLint;
+typedef unsigned int cl_GLenum;
+//There were vector types, not anymore
+/* Macro to facilitate debugging 
+ * Usage:
+ *   Place CL_PROGRAM_STRING_DEBUG_INFO on the line before the first line of your source. 
+ *   The first line ends with:   CL_PROGRAM_STRING_DEBUG_INFO \"
+ *   Each line thereafter of OpenCL C source must end with: \n\
+ *   The last line ends in ";
+ *
+ *   Example:
+ *
+ *   const char *my_program = CL_PROGRAM_STRING_DEBUG_INFO "\
+ *   kernel void foo( int a, float * b )             \n\
+ *   {                                               \n\
+ *      // my comment                                \n\
+ *      *b[ get_global_id(0)] = a;                   \n\
+ *   }                                               \n\
+ *   ";
+ *
+ * This should correctly set up the line, (column) and file information for your source 
+ * string so you can do source level debugging.
+ */
+#define  __CL_STRINGIFY( _x )               # _x
+#define  _CL_STRINGIFY( _x )                __CL_STRINGIFY( _x )
+#define  CL_PROGRAM_STRING_DEBUG_INFO       "#line "  _CL_STRINGIFY(__LINE__) " \"" __FILE__ "\" \n\n" 
+  
+#ifdef __cplusplus
+}
+#endif
+
+#endif  /* __CL_PLATFORM_H  */

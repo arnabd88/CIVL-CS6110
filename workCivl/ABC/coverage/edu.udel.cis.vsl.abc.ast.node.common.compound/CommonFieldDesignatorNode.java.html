@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonFieldDesignatorNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.compound</a> &gt; <span class="el_source">CommonFieldDesignatorNode.java</span></div><h1>CommonFieldDesignatorNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.compound;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.FieldDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.common.CommonASTNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonFieldDesignatorNode extends CommonASTNode implements
+		FieldDesignatorNode {
+
+	public CommonFieldDesignatorNode(Source source, IdentifierNode field) {
+<span class="nc" id="L14">		super(source, field);</span>
+<span class="nc" id="L15">	}</span>
+
+	@Override
+	public IdentifierNode getField() {
+<span class="nc" id="L19">		return (IdentifierNode) child(0);</span>
+	}
+
+	@Override
+	public void setField(IdentifierNode name) {
+<span class="nc" id="L24">		setChild(0, name);</span>
+<span class="nc" id="L25">	}</span>
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L29">		out.print(&quot;Field&quot;);</span>
+<span class="nc" id="L30">	}</span>
+
+	@Override
+	public FieldDesignatorNode copy() {
+<span class="nc" id="L34">		return new CommonFieldDesignatorNode(getSource(), duplicate(getField()));</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L39">		return NodeKind.FIELD_DESIGNATOR;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

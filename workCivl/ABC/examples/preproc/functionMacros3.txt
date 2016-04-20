@@ -1,0 +1,3 @@
+#define f(X) X is X
+#define g(X,Y) Steve says f(X) is Y.
+g(1,true)

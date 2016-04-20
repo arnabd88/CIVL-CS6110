@@ -1,0 +1,4 @@
+#define f(x) MACRO
+f(
+#define NOT A MACRO
+)

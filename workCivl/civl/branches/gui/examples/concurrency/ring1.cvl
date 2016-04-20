@@ -1,0 +1,17 @@
+#include <civlc.cvh>
+/* Create nprocs processes.  Have them exchange data in a cycle.
+ * Commandline example:
+ *     civl verify -inputNPROCS=3 ring.cvl -simplify=false
+ */
+#include<comm.cvh>
+#include "mp_root.cvh"
+
+void MPI_Process (int rank) {
+  #include "mp_proc.cvh"
+  $comm comm = $comm_create($here, COMM_WORLD, rank);
+  double x=rank, y;
+  
+  sendrecv(&x, 1, (rank+1)%NPROCS, 0, &y, 1, (rank+NPROCS-1)%NPROCS, 0, comm);
+  $assert((y==(rank+NPROCS-1)%NPROCS));
+  $comm_destroy(comm);
+}

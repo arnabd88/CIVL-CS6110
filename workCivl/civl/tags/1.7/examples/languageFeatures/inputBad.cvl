@@ -1,0 +1,21 @@
+#include <civlc.cvh>
+
+typedef struct A{
+  int a;
+  int b;
+} A;
+
+$input A k;
+
+void main(){
+  A* p = &k;
+  A q[2];
+  int * ka = &(k.a);
+  
+  *ka = 5;
+  q[0] = k;
+  q[0].a = 1;
+  q[0].b = 1;
+  p->a = 1;
+  p->b = 1;
+}

@@ -1,0 +1,387 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2d2ae679900c62a71d491a6dadb187d6}{}{\bfseries Common\+Malloc\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civl\+Source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} hscope, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} lscope, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} guard, int malloc\+Id, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} heap\+Pointer\+Expression, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} static\+Element\+Type, Symbolic\+Type dynamic\+Element\+Type, Symbolic\+Array\+Type dynamic\+Object\+Type, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} size\+Expression, Symbolic\+Expression undefined\+Object, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} lhs)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2d2ae679900c62a71d491a6dadb187d6}
+
+\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a957b210a72b5b2b2a9d204f876e93837}{get\+Malloc\+Id} ()
+\begin{DoxyCompactList}\small\item\em The malloc statements in the model are indexed, so each has unique I\+D number. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2230bc67a6731665b833243bb1889545}{get\+Scope\+Expression} ()
+\begin{DoxyCompactList}\small\item\em The first argument to the \$malloc function is an expression of type pointer-\/to-\/heap. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a0728e0ad13f5a6e5728c2aa8a2f9d06c}{get\+Static\+Element\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the static type of the elements that are to be allocated. \end{DoxyCompactList}\item 
+Symbolic\+Type \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a7511914ceafa7f42e33c238715a87a1a}{get\+Dynamic\+Element\+Type} ()
+\begin{DoxyCompactList}\small\item\em This returns the dynamic (symbolic type) corresponding to the static element type. \end{DoxyCompactList}\item 
+Symbolic\+Array\+Type \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2a0a10a21a066972181d84491e8371b2}{get\+Dynamic\+Object\+Type} ()
+\begin{DoxyCompactList}\small\item\em The object is the thing that is allocated; it is an array of some number of elements of the specified type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_add74b5c088aebe654d694a797001df3a}{get\+Size\+Expression} ()
+\begin{DoxyCompactList}\small\item\em The second argument to the \$malloc function is an integer expression specifying the size (number of bytes) to malloc. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af14d4be2f9162433802ac993a8a135b1}{get\+Undefined\+Object} ()
+\begin{DoxyCompactList}\small\item\em For every symbolic type, there is a symbolic constant of that type representing \char`\"{}undefined\char`\"{} value of that type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a0b4a12ff2b0693bb2f8145e856e2f62b}{get\+L\+H\+S} ()
+\begin{DoxyCompactList}\small\item\em Returns the expression on the left-\/hand side of the assignment. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a49642faf7b94ad6dd043445aeccf5260}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a49642faf7b94ad6dd043445aeccf5260}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_aa9d0e074c9f03784ef6d6e7ee05f3062}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_aa9d0e074c9f03784ef6d6e7ee05f3062}{calculate\+Derefs} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_aa9d0e074c9f03784ef6d6e7ee05f3062}
+
+\begin{DoxyCompactList}\small\item\em Calculate if this statement contains any dereference expression. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a29c11fc11007011ee4d4851161a95862}{purely\+Local\+Analysis\+Of\+Variables} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} func\+Scope)
+\begin{DoxyCompactList}\small\item\em if an \&(var) is encountered, then var is considered as no purely local if a statement inside a function with fscope is accessing some variable that is declared in the scope vscope such that fscope.\+is\+Descendant\+Of(vscope), then that variable is not purely local \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af9b0b48e23b90aabc03df0449c479a4a}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af9b0b48e23b90aabc03df0449c479a4a}{purely\+Local\+Analysis} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af9b0b48e23b90aabc03df0449c479a4a}
+
+\begin{DoxyCompactList}\small\item\em Analyze if this statement accesses any non-\/purely-\/local variables. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a9b00c60d1a6baa20d37dd84325689362}{replace\+With} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1ConditionalExpression}{Conditional\+Expression} old\+Expression, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1VariableExpression}{Variable\+Expression} new\+Expression)
+\begin{DoxyCompactList}\small\item\em Modify this statement including its guard by replacing a certain conditional expression with a variable expression, used when translating away conditional expression and a temporal variable is introduced. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af2f8ca342a321307710f9ef6666f5989}{replace\+With} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1ConditionalExpression}{Conditional\+Expression} old\+Expression, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} new\+Expression)
+\begin{DoxyCompactList}\small\item\em Return a new statement by copying this statement and modifying it as well as its guard by replacing a certain conditional expression with a expression, used when translating away conditional expression W\+I\+T\+H\+O\+U\+T introducing temporary variables. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a9999e2f409b9894d13fa9695acdb2fae}{variable\+Addressed\+Of} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Obtain the set of variables visible from a certain scope that are possible to be written in the future. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a254d2223ec9c3540ed74ab5c82735a8a}{variable\+Addressed\+Of} ()
+\begin{DoxyCompactList}\small\item\em Obtain the set of variables whose addresses are referenced. \end{DoxyCompactList}\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_1_1StatementKind}{Statement\+Kind} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a31d263178f3be41bdc25b904af1aa625}{statement\+Kind} ()
+\begin{DoxyCompactList}\small\item\em Obtain the kind of the statement. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a7eb7c19ab44285bffc940ac7488c3561}{}void {\bfseries calculate\+Constant\+Value\+Work} (Symbolic\+Universe universe)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a7eb7c19ab44285bffc940ac7488c3561}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_abc5ed56f401c3b713534f1386df89f48}{}boolean {\bfseries contains\+Here\+Work} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_abc5ed56f401c3b713534f1386df89f48}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a7511914ceafa7f42e33c238715a87a1a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!get\+Dynamic\+Element\+Type@{get\+Dynamic\+Element\+Type}}
+\index{get\+Dynamic\+Element\+Type@{get\+Dynamic\+Element\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{get\+Dynamic\+Element\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+get\+Dynamic\+Element\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a7511914ceafa7f42e33c238715a87a1a}
+
+
+This returns the dynamic (symbolic type) corresponding to the static element type. 
+
+It is obtained by ignoring any array extent expressions. Hence if the static type is \char`\"{}array of float of length 3$\ast$n+1\char`\"{} the dynamic type will be \char`\"{}array of real\char`\"{}. Since that dynamic type includes in its domain array of any length, it is an over-\/estimate of the types of elements that can be allocaged.
+
+In the example, the dynamic type returned would be the symbolic type \char`\"{}real\char`\"{}
+
+\begin{DoxyReturn}{Returns}
+dynamic type corresonding to static element type 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a2a05ca6af44d9b07e71acbd672c92ce0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2a0a10a21a066972181d84491e8371b2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!get\+Dynamic\+Object\+Type@{get\+Dynamic\+Object\+Type}}
+\index{get\+Dynamic\+Object\+Type@{get\+Dynamic\+Object\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{get\+Dynamic\+Object\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Array\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+get\+Dynamic\+Object\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2a0a10a21a066972181d84491e8371b2}
+
+
+The object is the thing that is allocated; it is an array of some number of elements of the specified type. 
+
+This returns the dynamic type of the object (which is always an array type). In the example, it would be \char`\"{}array of real\char`\"{}.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aab8cf4e1964f1c4a884ddc86e4e9c13c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a0b4a12ff2b0693bb2f8145e856e2f62b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!get\+L\+H\+S@{get\+L\+H\+S}}
+\index{get\+L\+H\+S@{get\+L\+H\+S}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{get\+L\+H\+S}]{\setlength{\rightskip}{0pt plus 5cm}{\bf L\+H\+S\+Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+get\+L\+H\+S (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a0b4a12ff2b0693bb2f8145e856e2f62b}
+
+
+Returns the expression on the left-\/hand side of the assignment. 
+
+In the example, this would be {\ttfamily p}. This expression will be assigned a pointer to the first element of the array object created by the malloc.
+
+It may be null, but this is unusual.
+
+\begin{DoxyReturn}{Returns}
+the left hand side of the assignment 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a7c6ffb8ed3f43e217dee0b3f5fefe4ae}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a957b210a72b5b2b2a9d204f876e93837}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!get\+Malloc\+Id@{get\+Malloc\+Id}}
+\index{get\+Malloc\+Id@{get\+Malloc\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{get\+Malloc\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+get\+Malloc\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a957b210a72b5b2b2a9d204f876e93837}
+
+
+The malloc statements in the model are indexed, so each has unique I\+D number. 
+
+This returns it
+
+\begin{DoxyReturn}{Returns}
+the I\+D number of this malloc statement 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a9570887f917256ada3fb6d5222e981e6}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2230bc67a6731665b833243bb1889545}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!get\+Scope\+Expression@{get\+Scope\+Expression}}
+\index{get\+Scope\+Expression@{get\+Scope\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{get\+Scope\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+get\+Scope\+Expression (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2230bc67a6731665b833243bb1889545}
+
+
+The first argument to the \$malloc function is an expression of type pointer-\/to-\/heap. 
+
+This returns that expression. In the example, it is the expression {\ttfamily \&h}.
+
+\begin{DoxyReturn}{Returns}
+the first argument to \$malloc 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_ad7e57b22866ac6462dd24449c1c32f53}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_add74b5c088aebe654d694a797001df3a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!get\+Size\+Expression@{get\+Size\+Expression}}
+\index{get\+Size\+Expression@{get\+Size\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{get\+Size\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+get\+Size\+Expression (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_add74b5c088aebe654d694a797001df3a}
+
+
+The second argument to the \$malloc function is an integer expression specifying the size (number of bytes) to malloc. 
+
+It is typically some multiple of an expression of the form \char`\"{}sizeof(t)\char`\"{}. This method returns the argument.
+
+In the example, it would be the expression {\ttfamily sizeof(double)$\ast$10}
+
+\begin{DoxyReturn}{Returns}
+the second argument to the \$malloc statement, an integer-\/valued expression 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aac53eca91ab139f6717926f69e3dfc13}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a0728e0ad13f5a6e5728c2aa8a2f9d06c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!get\+Static\+Element\+Type@{get\+Static\+Element\+Type}}
+\index{get\+Static\+Element\+Type@{get\+Static\+Element\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{get\+Static\+Element\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+get\+Static\+Element\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a0728e0ad13f5a6e5728c2aa8a2f9d06c}
+
+
+Returns the static type of the elements that are to be allocated. 
+
+Each malloc statement must have a static type associated to it. The type can usually be determined by examining the cast expression which wraps the \$malloc. In the example, the type is \char`\"{}double\char`\"{}.
+
+\begin{DoxyReturn}{Returns}
+the type of elements to malloc. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aa182f4839b69a8d99cdebba5734bc63f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af14d4be2f9162433802ac993a8a135b1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!get\+Undefined\+Object@{get\+Undefined\+Object}}
+\index{get\+Undefined\+Object@{get\+Undefined\+Object}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{get\+Undefined\+Object}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+get\+Undefined\+Object (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af14d4be2f9162433802ac993a8a135b1}
+
+
+For every symbolic type, there is a symbolic constant of that type representing \char`\"{}undefined\char`\"{} value of that type. 
+
+The name of that symbolic constant might very well be \char`\"{}\+U\+N\+D\+E\+F\+I\+N\+E\+D\char`\"{}. This method returns the undefined value whose type is the dynamic\+Object\+Type. This is the expression used in place of an object that has been deallocated (by a {\ttfamily \$free} instruction) until that object is swept up by the garbage collector.
+
+In the example, this would return the symbolic constant U\+N\+D\+E\+F\+I\+N\+E\+D of type array of real.
+
+\begin{DoxyReturn}{Returns}
+undefined expression of dynamic object type 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a6866c8d8b34a27192a52c543a7963984}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a29c11fc11007011ee4d4851161a95862}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!purely\+Local\+Analysis\+Of\+Variables@{purely\+Local\+Analysis\+Of\+Variables}}
+\index{purely\+Local\+Analysis\+Of\+Variables@{purely\+Local\+Analysis\+Of\+Variables}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{purely\+Local\+Analysis\+Of\+Variables}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+purely\+Local\+Analysis\+Of\+Variables (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{func\+Scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a29c11fc11007011ee4d4851161a95862}
+
+
+if an \&(var) is encountered, then var is considered as no purely local if a statement inside a function with fscope is accessing some variable that is declared in the scope vscope such that fscope.\+is\+Descendant\+Of(vscope), then that variable is not purely local 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func\+Scope} & the function scope of the statement \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a957515831f12970b737db375e93168c6}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a9b00c60d1a6baa20d37dd84325689362}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!replace\+With@{replace\+With}}
+\index{replace\+With@{replace\+With}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{replace\+With}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+replace\+With (
+\begin{DoxyParamCaption}
+\item[{{\bf Conditional\+Expression}}]{old\+Expression, }
+\item[{{\bf Variable\+Expression}}]{new\+Expression}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a9b00c60d1a6baa20d37dd84325689362}
+
+
+Modify this statement including its guard by replacing a certain conditional expression with a variable expression, used when translating away conditional expression and a temporal variable is introduced. 
+
+~\newline
+ For example, {\ttfamily x = a ? b \+: c} will be translated into {\ttfamily  if(a) v0 = b; else v0 = c; x = v0; }~\newline
+ Another example, {\ttfamily  \$when(a?b\+:c) x = k;} will be translated into {\ttfamily  if(a) v0 = b; else v0 = c; \$when(v0) x = k; }
+
+
+\begin{DoxyParams}{Parameters}
+{\em old\+Expression} & The conditional expression to be cleared. \\
+\hline
+{\em new\+Expression} & The variable expression of the temporal variable for the conditional expression. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad0a6ccab72e2f14ad33f419a30a64151}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af2f8ca342a321307710f9ef6666f5989}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!replace\+With@{replace\+With}}
+\index{replace\+With@{replace\+With}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{replace\+With}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+replace\+With (
+\begin{DoxyParamCaption}
+\item[{{\bf Conditional\+Expression}}]{old\+Expression, }
+\item[{{\bf Expression}}]{new\+Expression}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af2f8ca342a321307710f9ef6666f5989}
+
+
+Return a new statement by copying this statement and modifying it as well as its guard by replacing a certain conditional expression with a expression, used when translating away conditional expression W\+I\+T\+H\+O\+U\+T introducing temporary variables. 
+
+The original statement can\textquotesingle{}t be modified, because it needs to be used twice to generate the if branch statement and the else branch statement.~\newline
+ For example, {\ttfamily x = a ? b \+: c} will be translated into {\ttfamily  if(a) x = b; else x = c; }~\newline
+ Another example, {\ttfamily  \$when(a?b\+:c) x = k;} will be translated into {\ttfamily  if(a) \$when(b) x=k; else \$when(c) x=k; }
+
+
+\begin{DoxyParams}{Parameters}
+{\em old\+Expression} & The conditional expression to be cleared. \\
+\hline
+{\em new\+Expression} & The new expression to take place of the conditional expression. Usually, it is one of the choice expressions of the conditional expression. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new statement without the conditional expression 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a079bd60264722bf7f9ed3d8ba1b0e188}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a31d263178f3be41bdc25b904af1aa625}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!statement\+Kind@{statement\+Kind}}
+\index{statement\+Kind@{statement\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{statement\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+statement\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a31d263178f3be41bdc25b904af1aa625}
+
+
+Obtain the kind of the statement. 
+
+\begin{DoxyReturn}{Returns}
+The statement\textquotesingle{}s kind. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a29ddc5542644ee105de4b551bdee6147}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a9999e2f409b9894d13fa9695acdb2fae}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a9999e2f409b9894d13fa9695acdb2fae}
+
+
+Obtain the set of variables visible from a certain scope that are possible to be written in the future. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scope} & The given scope. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a57ff1197dacf28ac33b097dc294418dc}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a254d2223ec9c3540ed74ab5c82735a8a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Malloc\+Statement}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a254d2223ec9c3540ed74ab5c82735a8a}
+
+
+Obtain the set of variables whose addresses are referenced. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_abe668e1bcb4297c9e6e7f8f65aeecfc2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/statement/Common\+Malloc\+Statement.\+java\end{DoxyCompactItemize}

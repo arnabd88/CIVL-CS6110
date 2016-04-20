@@ -1,0 +1,94 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Model\+Builder Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Model\+Builder@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Model\+Builder}}
+
+
+Class to provide translation from an A\+S\+T to a model.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Model\+Builder\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder_a61841829989ab5bbefbff27e65103e84}{factory} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder_a5258a3296ed6c43ff463b8440cd5923b}{build\+Model} (G\+M\+C\+Section config, Program program, String name, boolean debugging, Print\+Stream debug\+Out)  throws Command\+Line\+Exception
+\begin{DoxyCompactList}\small\item\em Builds the model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class to provide translation from an A\+S\+T to a model. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder_a5258a3296ed6c43ff463b8440cd5923b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Model\+Builder@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Model\+Builder}!build\+Model@{build\+Model}}
+\index{build\+Model@{build\+Model}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Model\+Builder@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Model\+Builder}}
+\subsubsection[{build\+Model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Model\+Builder.\+build\+Model (
+\begin{DoxyParamCaption}
+\item[{G\+M\+C\+Section}]{config, }
+\item[{Program}]{program, }
+\item[{String}]{name, }
+\item[{boolean}]{debugging, }
+\item[{Print\+Stream}]{debug\+Out}
+\end{DoxyParamCaption}
+) throws Command\+Line\+Exception}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder_a5258a3296ed6c43ff463b8440cd5923b}
+
+
+Builds the model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & The G\+M\+C configuration \\
+\hline
+{\em program} & The A\+B\+C program to translate \\
+\hline
+{\em name} & The name of the model \\
+\hline
+{\em debugging} & \\
+\hline
+{\em debug\+Out} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The model. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Command\+Line\+Exception} & if an input variable initial value specified on the command line has a type which is not compatible with the type of the variable \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonModelBuilder_a4ac73b643d0b142fdb0623000f8c25ed}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Model\+Builder}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder_a61841829989ab5bbefbff27e65103e84}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Model\+Builder@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Model\+Builder}!factory@{factory}}
+\index{factory@{factory}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Model\+Builder@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Model\+Builder}}
+\subsubsection[{factory}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\+Factory} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Model\+Builder.\+factory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder_a61841829989ab5bbefbff27e65103e84}
+\begin{DoxyReturn}{Returns}
+The model factory used by this model builder. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonModelBuilder_a41c78c1a9c96678525c9777e2bce14f3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Model\+Builder}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/Model\+Builder.\+java\end{DoxyCompactItemize}

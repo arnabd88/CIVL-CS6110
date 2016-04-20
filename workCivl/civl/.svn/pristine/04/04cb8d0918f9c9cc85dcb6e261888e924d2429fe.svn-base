@@ -1,0 +1,40 @@
+/*
+* This example demonstrates the usage of the civl system function:
+* void * $translate_ptr(void *ptr, void *obj);
+* Command line execution:
+* civl verify translate_ptr.cvl
+*/
+
+#include<civlc.h>
+
+typedef struct node{
+  int x;
+  int y;
+} node;
+
+typedef struct point{
+  double a;
+  double b;
+}point;
+
+void main(){
+  int *q;
+  double *p;
+  node *list;
+  point set[5];
+  point t;
+  double a[3][3][3];
+  int b[3][3];
+  double (*p1)[] = &a[1][2]; // p has type pointer-to-array-of-double
+  
+  q = (int*)$translate_ptr(p1, &b);
+  $assert(q == &b[1][2]);
+  list = (node*)$malloc($here, sizeof(node)*5);
+  q = & (list+2)->y;
+  p = (double*)$translate_ptr(q, &t);
+  $assert(p == &t.b);
+  p = & t.a;
+  q = (int*)$translate_ptr(p, list);
+  $assert(q == &list->x);
+  $free(list);
+}

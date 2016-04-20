@@ -1,0 +1,154 @@
+
+% \subsection{Example 1}
+
+% Here is a simple example based on a tricky MPI+Pthreads example given
+% to us once by Rajeev Thakur at Argonne. It has nondeterministic
+% behavior which can lead to a deadlock for certain interleavings, even
+% though it does not use wildcards (\code{ANY{\U}SOURCE}). Very subtle
+% bug. I can show you MPI-Spin finding the bug if you are interested. I
+% don't actually have the original code, but could probably dig it up.
+
+% \begin{verbatim}
+% #include <mp.civl>  /* includes basic message-passing library */
+
+% void System() {
+%  proc procs[2];
+
+%  void MPI_Process(int pid) {
+%    proc threads[2];
+
+%    void Thread(int tid) {
+%      int x=0, y=0;
+
+%      for (int j=0; j<2; j++) {
+%        if (pid == 1) {
+%          for (int i=0; i<3; i++) send(procs[pid], &x, 1, procs[1-pid], 0);
+%          for (int i=0; i<3; i++) recv(procs[pid], &y, 1, procs[1-pid], 0);
+%        } else { /* pid==0 */
+%          for (int i=0; i<3; i++) recv(procs[pid], &y, 1, procs[1-pid], 0);
+%          for (int i=0; i<3; i++) send(procs[pid], &x, 1, procs[1-pid], 0);
+%        }
+%      }
+%    }
+
+%    for (int i=0; i<2; i++) threads[i] = fork Thread(i);
+%    for (int i=0; i<2; i++) join threads[i];
+%  }
+
+%  for (int i=0; i<2; i++) procs[i] = fork MPI_Process(i);
+%  for (int i=0; i<2; i++) join procs[i];
+% }
+% \end{verbatim}
+
+\appendix
+
+
+\end{document}
+
+
+OpenMP loop?
+\begin{verbatim}
+T1 x1; ... // private
+U1 y1; ... // shared
+#pragma omp parallel private(x1,...)
+  S(x1,...,y1,...);
+
+=>
+
+T1 x1; ...
+U1 y1; ...
+{ 
+  void _tmp(int _tid) {
+    T1 _x1; ...
+    S(_x1,...,y1,...);
+  }
+  int numThreads = $choose_int(THREAD_MAX);
+  $proc _threads[numThreads];
+  int i;
+
+  for (i=0; i<numThreads; i++)
+    _threads[i] = $spawn _tmp(i);
+  for (i=0; i<numThreads; i++)
+    $wait _threads[i];
+}
+
+--
+
+#pragma parallel
+{ ...
+  int i; ...
+  #pragma for
+  for (i=...) S(i)
+}
+
+=>
+
+{ 
+  void _tmp1(int _tid) {
+    int i; ...
+    {
+      void _tmp2(int _i) { S(_i) }
+      int j;
+      for (j=...) {
+        int w = $choose_int(numThreads);
+      }
+    }
+  }
+    
+
+\end{verbatim}
+
+
+In CIVL-C, functions can be defined in any scope, not just in file
+scope.  The lexical scope structure and placement of function
+definitions determine the static scope tree $\Sigma$ and the function
+prototype system.  A function's defining scope is, as you would
+expect, the scope in which its definition occurs.
+
+The CIVL-C code will not have an explicit ``root'' procedure.
+Instead, a root procedure will be implicitly wrapped around the entire
+code.  The global input variables will become the inputs to the root
+procedure.  A ``\texttt{main}'' procedure must be delcared that takes
+no parameters but can have any return type.  The body of \texttt{main}
+becomes the body of the root procedure.  The return type of
+\texttt{main} becomes the return type of the root procedure.  The
+\texttt{main} procedure itself disappears in translation.
+
+The reason for this protocol is that an arbitrary (sequential) C program
+is a legal (and reasonable) CIVL-C program.  The global variables in the
+C program simply become variables declared in the root scope.
+
+The additional language elements are shown in Figure \ref{fig:cc}.
+
+\begin{figure}[t]
+  \begin{tabular}{ll}
+    \cassert & check something holds \\
+    \cassume & assume something holds \\
+    \catom & defines statements to be executed as one transition\\
+    \catomic & defines statements to be executed without interleaving other processes\\
+    \cchoose & nondeterministic choice statement \\
+    \ccollective & a collective expression\\
+    \censures & procedure postcondition \\
+    \cfalse & boolean value false, used in assertions \\
+    \cheap & the heap type \\
+    \cinput & type qualifier declaring variable to be a program input \\
+    \cinvariant & declare a loop invariant \\
+    \cmalloc & malloc function with additional heap arguments \\
+    \coutput & type qualifier declaring variable to be a program output \\
+    \cproc & the process type \\
+    \crequires & procedure precondition \\
+    \cresult & refers to result returned by procedure in contracts \\
+    \cscope & the scope type, used to give a name to a scope \\
+    \cself & the evaluating process (constant of type \cproc) \\
+    \cspawn & create a new process running procedure \\   
+    \ctrue & boolean value true, used in assertions \\
+    \cwait & wait for a process to terminate \\
+    \cwhen & guarded statement \\
+    \cat & refer to variable in other process, e.g., \texttt{p@x} \\
+    \texttt{*<...>} & scope-qualified pointer type
+  \end{tabular}
+  \caption{CIVL-C primitives.  Some of these are part of the grammar of the language;
+    others are defined in the header file \texttt{civlc.h}.}
+  \label{fig:cc}
+\end{figure}
+

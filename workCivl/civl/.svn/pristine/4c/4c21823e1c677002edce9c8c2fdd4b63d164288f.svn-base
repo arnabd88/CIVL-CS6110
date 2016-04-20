@@ -1,0 +1,28 @@
+/* spawn2.cvl: simple example of spawning two processes.
+ * More difficult to reduce than spawn.cvl, because
+ * both are accessing variables in the same scope.
+ *      civl verify -inputN=10 spawn2.cvl
+ */
+#include<civlc.cvh>
+
+$input int N = 10;
+int s1, s2;
+
+void f1(int n) {
+    s1 = 0;
+    for (int i=0; i<n; i++) s1 += i;
+}
+
+void f2(int n) {
+    s2 = 0;
+    for (int i=0; i<n; i++) s2 += i;
+}
+
+void main() {
+  $proc p = $spawn f1(N);
+  $proc q = $spawn f2(N);
+
+  $wait(p);
+  $wait(q);
+  $assert(s1==s2);
+}

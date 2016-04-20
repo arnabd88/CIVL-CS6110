@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonVariable.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.entity.common</a> &gt; <span class="el_source">CommonVariable.java</span></div><h1>CommonVariable.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.entity.common;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Variable;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+
+public class CommonVariable extends CommonOrdinaryEntity implements Variable {
+
+	private StorageDurationKind storageDurationKind;
+
+	private InitializerNode initializer;
+
+<span class="nc" id="L22">	private Set&lt;Type&gt; typeAlignments = new HashSet&lt;Type&gt;();</span>
+
+<span class="nc" id="L24">	private Set&lt;Value&gt; constantAlignments = new HashSet&lt;Value&gt;();</span>
+
+	public CommonVariable(String name, ProgramEntity.LinkageKind linkage,
+			Type type) {
+<span class="nc" id="L28">		super(EntityKind.VARIABLE, name, linkage, type);</span>
+<span class="nc" id="L29">	}</span>
+
+	@Override
+	public StorageDurationKind getStorageDuration() {
+<span class="nc" id="L33">		return storageDurationKind;</span>
+	}
+
+	@Override
+	public void setStorageDuration(StorageDurationKind duration) {
+<span class="nc" id="L38">		this.storageDurationKind = duration;</span>
+<span class="nc" id="L39">	}</span>
+
+	@Override
+	public InitializerNode getInitializer() {
+<span class="nc" id="L43">		return initializer;</span>
+	}
+
+	@Override
+	public void setInitializer(InitializerNode initializer) {
+<span class="nc" id="L48">		this.initializer = initializer;</span>
+<span class="nc" id="L49">	}</span>
+
+	@Override
+	public Iterator&lt;Type&gt; getTypeAlignments() {
+<span class="nc" id="L53">		return typeAlignments.iterator();</span>
+	}
+
+	@Override
+	public void addTypeAlignment(Type type) {
+<span class="nc" id="L58">		typeAlignments.add(type);</span>
+<span class="nc" id="L59">	}</span>
+
+	@Override
+	public Iterator&lt;Value&gt; getConstantAlignments() {
+<span class="nc" id="L63">		return constantAlignments.iterator();</span>
+	}
+
+	@Override
+	public void addConstantAlignment(Value constant) {
+<span class="nc" id="L68">		constantAlignments.add(constant);</span>
+<span class="nc" id="L69">	}</span>
+
+	@Override
+	public VariableDeclarationNode getDefinition() {
+<span class="nc" id="L73">		return (VariableDeclarationNode) super.getDefinition();</span>
+	}
+
+	@Override
+	public void setDefinition(DeclarationNode declaration) {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (!(declaration instanceof VariableDeclarationNode))</span>
+<span class="nc" id="L79">			throw new IllegalArgumentException(</span>
+<span class="nc" id="L80">					&quot;Variable declaration not instance of VariableDeclarationNode: &quot;</span>
+<span class="nc" id="L81">							+ declaration);</span>
+<span class="nc" id="L82">		super.setDefinition(declaration);</span>
+<span class="nc" id="L83">	}</span>
+
+	@Override
+	public ObjectType getType() {
+<span class="nc" id="L87">		return (ObjectType) super.getType();</span>
+	}
+
+	@Override
+	public void setType(Type type) {
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (!(type instanceof ObjectType))</span>
+<span class="nc" id="L93">			throw new IllegalArgumentException(</span>
+<span class="nc" id="L94">					&quot;Type of variable must be object type&quot;);</span>
+<span class="nc" id="L95">		super.setType(type);</span>
+<span class="nc" id="L96">	}</span>
+
+	@Override
+	public VariableDeclarationNode getDeclaration(int index) {
+<span class="nc" id="L100">		return (VariableDeclarationNode) super.getDeclaration(index);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

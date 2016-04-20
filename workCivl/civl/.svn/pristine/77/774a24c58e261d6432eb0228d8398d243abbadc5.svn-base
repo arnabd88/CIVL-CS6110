@@ -1,0 +1,12 @@
+#include <civlc.h>
+#include <stdio.h>
+
+$input double a[10][10][10];
+
+void main(){
+
+printf("*(&a[0][0][0] + 1000) is out of bound: %.4f\n"
+,		      *(&a[0][0][0] + 1000));
+
+}
+

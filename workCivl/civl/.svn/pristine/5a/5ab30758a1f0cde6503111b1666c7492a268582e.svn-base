@@ -1,0 +1,17 @@
+
+#include<civlc.cvh>
+#include<stdio.h>
+
+$input int X,Y;
+int Z=5;
+
+int main(){
+  _Bool b;
+
+  b=$is_concrete_int(X);
+  $assert(!b);
+  b=$is_concrete_int(Y);
+  $assert(!b);
+  b=$is_concrete_int(Z);
+  $assert(b);
+}

@@ -1,0 +1,6 @@
+
+$input int x;
+
+void main() {
+  $assert( (!x) != x);
+}

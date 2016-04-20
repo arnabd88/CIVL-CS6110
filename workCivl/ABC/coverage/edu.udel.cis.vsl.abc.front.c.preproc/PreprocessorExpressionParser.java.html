@@ -1,0 +1,2516 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PreprocessorExpressionParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.preproc</a> &gt; <span class="el_source">PreprocessorExpressionParser.java</span></div><h1>PreprocessorExpressionParser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.5.2 PreprocessorExpressionParser.g 2016-04-11 02:06:13
+
+package edu.udel.cis.vsl.abc.front.c.preproc;
+
+
+import org.antlr.runtime.*;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+
+import org.antlr.runtime.tree.*;
+
+
+@SuppressWarnings(&quot;all&quot;)
+public class PreprocessorExpressionParser extends Parser {
+<span class="nc" id="L16">	public static final String[] tokenNames = new String[] {</span>
+		&quot;&lt;invalid&gt;&quot;, &quot;&lt;EOR&gt;&quot;, &quot;&lt;DOWN&gt;&quot;, &quot;&lt;UP&gt;&quot;, &quot;ABSTRACT&quot;, &quot;ALIGNAS&quot;, &quot;ALIGNOF&quot;, 
+		&quot;AMPERSAND&quot;, &quot;AND&quot;, &quot;ARROW&quot;, &quot;ASSIGN&quot;, &quot;ASSIGNS&quot;, &quot;AT&quot;, &quot;ATOMIC&quot;, &quot;AUTO&quot;, 
+		&quot;BIG_O&quot;, &quot;BITANDEQ&quot;, &quot;BITOR&quot;, &quot;BITOREQ&quot;, &quot;BITXOR&quot;, &quot;BITXOREQ&quot;, &quot;BOOL&quot;, 
+		&quot;BREAK&quot;, &quot;BinaryExponentPart&quot;, &quot;CALLS&quot;, &quot;CASE&quot;, &quot;CChar&quot;, &quot;CHAR&quot;, &quot;CHARACTER_CONSTANT&quot;, 
+		&quot;CHOOSE&quot;, &quot;CIVLATOM&quot;, &quot;CIVLATOMIC&quot;, &quot;CIVLFOR&quot;, &quot;COLLECTIVE&quot;, &quot;COLON&quot;, 
+		&quot;COMMA&quot;, &quot;COMMENT&quot;, &quot;COMPLEX&quot;, &quot;CONST&quot;, &quot;CONTIN&quot;, &quot;CONTINUE&quot;, &quot;DEFAULT&quot;, 
+		&quot;DEFINED&quot;, &quot;DEPENDS&quot;, &quot;DERIV&quot;, &quot;DEVICE&quot;, &quot;DIV&quot;, &quot;DIVEQ&quot;, &quot;DO&quot;, &quot;DOMAIN&quot;, 
+		&quot;DOT&quot;, &quot;DOTDOT&quot;, &quot;DOUBLE&quot;, &quot;DecimalConstant&quot;, &quot;DecimalFloatingConstant&quot;, 
+		&quot;Digit&quot;, &quot;ELLIPSIS&quot;, &quot;ELSE&quot;, &quot;ENSURES&quot;, &quot;ENUM&quot;, &quot;EQUALS&quot;, &quot;EXISTS&quot;, &quot;EXTERN&quot;, 
+		&quot;EscapeSequence&quot;, &quot;ExponentPart&quot;, &quot;FALSE&quot;, &quot;FATOMIC&quot;, &quot;FLOAT&quot;, &quot;FLOATING_CONSTANT&quot;, 
+		&quot;FOR&quot;, &quot;FORALL&quot;, &quot;FloatingSuffix&quot;, &quot;FractionalConstant&quot;, &quot;GENERIC&quot;, &quot;GLOBAL&quot;, 
+		&quot;GOTO&quot;, &quot;GT&quot;, &quot;GTE&quot;, &quot;GUARD&quot;, &quot;HASH&quot;, &quot;HASHHASH&quot;, &quot;HEADER_NAME&quot;, &quot;HERE&quot;, 
+		&quot;HexEscape&quot;, &quot;HexFractionalConstant&quot;, &quot;HexPrefix&quot;, &quot;HexQuad&quot;, &quot;HexadecimalConstant&quot;, 
+		&quot;HexadecimalDigit&quot;, &quot;HexadecimalFloatingConstant&quot;, &quot;IDENTIFIER&quot;, &quot;IF&quot;, 
+		&quot;IMAGINARY&quot;, &quot;IMPLIES&quot;, &quot;INLINE&quot;, &quot;INPUT&quot;, &quot;INT&quot;, &quot;INTEGER_CONSTANT&quot;, 
+		&quot;INVARIANT&quot;, &quot;IdentifierNonDigit&quot;, &quot;IntegerSuffix&quot;, &quot;LCURLY&quot;, &quot;LEXCON&quot;, 
+		&quot;LONG&quot;, &quot;LPAREN&quot;, &quot;LSLIST&quot;, &quot;LSQUARE&quot;, &quot;LT&quot;, &quot;LTE&quot;, &quot;LongLongSuffix&quot;, 
+		&quot;LongSuffix&quot;, &quot;MINUSMINUS&quot;, &quot;MOD&quot;, &quot;MODEQ&quot;, &quot;NEQ&quot;, &quot;NEWLINE&quot;, &quot;NORETURN&quot;, 
+		&quot;NOT&quot;, &quot;NewLine&quot;, &quot;NonDigit&quot;, &quot;NonZeroDigit&quot;, &quot;NotLineStart&quot;, &quot;OR&quot;, &quot;OTHER&quot;, 
+		&quot;OUTPUT&quot;, &quot;OctalConstant&quot;, &quot;OctalDigit&quot;, &quot;OctalEscape&quot;, &quot;PARFOR&quot;, &quot;PDEFINE&quot;, 
+		&quot;PELIF&quot;, &quot;PELSE&quot;, &quot;PENDIF&quot;, &quot;PERROR&quot;, &quot;PIF&quot;, &quot;PIFDEF&quot;, &quot;PIFNDEF&quot;, &quot;PINCLUDE&quot;, 
+		&quot;PLINE&quot;, &quot;PLUS&quot;, &quot;PLUSEQ&quot;, &quot;PLUSPLUS&quot;, &quot;PP_NUMBER&quot;, &quot;PRAGMA&quot;, &quot;PROCNULL&quot;, 
+		&quot;PUNDEF&quot;, &quot;PURE&quot;, &quot;QMARK&quot;, &quot;RANGE&quot;, &quot;RCURLY&quot;, &quot;READS&quot;, &quot;REAL&quot;, &quot;REGISTER&quot;, 
+		&quot;REQUIRES&quot;, &quot;RESTRICT&quot;, &quot;RESULT&quot;, &quot;RETURN&quot;, &quot;REXCON&quot;, &quot;RPAREN&quot;, &quot;RSLIST&quot;, 
+		&quot;RSQUARE&quot;, &quot;SCOPEOF&quot;, &quot;SChar&quot;, &quot;SELF&quot;, &quot;SEMI&quot;, &quot;SHARED&quot;, &quot;SHIFTLEFT&quot;, 
+		&quot;SHIFTLEFTEQ&quot;, &quot;SHIFTRIGHT&quot;, &quot;SHIFTRIGHTEQ&quot;, &quot;SHORT&quot;, &quot;SIGNED&quot;, &quot;SIZEOF&quot;, 
+		&quot;SPAWN&quot;, &quot;STAR&quot;, &quot;STAREQ&quot;, &quot;STATIC&quot;, &quot;STATICASSERT&quot;, &quot;STRING_LITERAL&quot;, 
+		&quot;STRUCT&quot;, &quot;SUB&quot;, &quot;SUBEQ&quot;, &quot;SWITCH&quot;, &quot;SYSTEM&quot;, &quot;THREADLOCAL&quot;, &quot;TILDE&quot;, 
+		&quot;TRUE&quot;, &quot;TYPEDEF&quot;, &quot;TYPEOF&quot;, &quot;UNIFORM&quot;, &quot;UNION&quot;, &quot;UNSIGNED&quot;, &quot;UniversalCharacterName&quot;, 
+		&quot;UnsignedSuffix&quot;, &quot;VOID&quot;, &quot;VOLATILE&quot;, &quot;WHEN&quot;, &quot;WHILE&quot;, &quot;WS&quot;, &quot;Zero&quot;, &quot;EXPR&quot;, 
+		&quot;PROC&quot;, &quot;ROOT&quot;, &quot;WAIT&quot;
+	};
+	public static final int EOF=-1;
+	public static final int ABSTRACT=4;
+	public static final int ALIGNAS=5;
+	public static final int ALIGNOF=6;
+	public static final int AMPERSAND=7;
+	public static final int AND=8;
+	public static final int ARROW=9;
+	public static final int ASSIGN=10;
+	public static final int ASSIGNS=11;
+	public static final int AT=12;
+	public static final int ATOMIC=13;
+	public static final int AUTO=14;
+	public static final int BIG_O=15;
+	public static final int BITANDEQ=16;
+	public static final int BITOR=17;
+	public static final int BITOREQ=18;
+	public static final int BITXOR=19;
+	public static final int BITXOREQ=20;
+	public static final int BOOL=21;
+	public static final int BREAK=22;
+	public static final int BinaryExponentPart=23;
+	public static final int CALLS=24;
+	public static final int CASE=25;
+	public static final int CChar=26;
+	public static final int CHAR=27;
+	public static final int CHARACTER_CONSTANT=28;
+	public static final int CHOOSE=29;
+	public static final int CIVLATOM=30;
+	public static final int CIVLATOMIC=31;
+	public static final int CIVLFOR=32;
+	public static final int COLLECTIVE=33;
+	public static final int COLON=34;
+	public static final int COMMA=35;
+	public static final int COMMENT=36;
+	public static final int COMPLEX=37;
+	public static final int CONST=38;
+	public static final int CONTIN=39;
+	public static final int CONTINUE=40;
+	public static final int DEFAULT=41;
+	public static final int DEFINED=42;
+	public static final int DEPENDS=43;
+	public static final int DERIV=44;
+	public static final int DEVICE=45;
+	public static final int DIV=46;
+	public static final int DIVEQ=47;
+	public static final int DO=48;
+	public static final int DOMAIN=49;
+	public static final int DOT=50;
+	public static final int DOTDOT=51;
+	public static final int DOUBLE=52;
+	public static final int DecimalConstant=53;
+	public static final int DecimalFloatingConstant=54;
+	public static final int Digit=55;
+	public static final int ELLIPSIS=56;
+	public static final int ELSE=57;
+	public static final int ENSURES=58;
+	public static final int ENUM=59;
+	public static final int EQUALS=60;
+	public static final int EXISTS=61;
+	public static final int EXTERN=62;
+	public static final int EscapeSequence=63;
+	public static final int ExponentPart=64;
+	public static final int FALSE=65;
+	public static final int FATOMIC=66;
+	public static final int FLOAT=67;
+	public static final int FLOATING_CONSTANT=68;
+	public static final int FOR=69;
+	public static final int FORALL=70;
+	public static final int FloatingSuffix=71;
+	public static final int FractionalConstant=72;
+	public static final int GENERIC=73;
+	public static final int GLOBAL=74;
+	public static final int GOTO=75;
+	public static final int GT=76;
+	public static final int GTE=77;
+	public static final int GUARD=78;
+	public static final int HASH=79;
+	public static final int HASHHASH=80;
+	public static final int HEADER_NAME=81;
+	public static final int HERE=82;
+	public static final int HexEscape=83;
+	public static final int HexFractionalConstant=84;
+	public static final int HexPrefix=85;
+	public static final int HexQuad=86;
+	public static final int HexadecimalConstant=87;
+	public static final int HexadecimalDigit=88;
+	public static final int HexadecimalFloatingConstant=89;
+	public static final int IDENTIFIER=90;
+	public static final int IF=91;
+	public static final int IMAGINARY=92;
+	public static final int IMPLIES=93;
+	public static final int INLINE=94;
+	public static final int INPUT=95;
+	public static final int INT=96;
+	public static final int INTEGER_CONSTANT=97;
+	public static final int INVARIANT=98;
+	public static final int IdentifierNonDigit=99;
+	public static final int IntegerSuffix=100;
+	public static final int LCURLY=101;
+	public static final int LEXCON=102;
+	public static final int LONG=103;
+	public static final int LPAREN=104;
+	public static final int LSLIST=105;
+	public static final int LSQUARE=106;
+	public static final int LT=107;
+	public static final int LTE=108;
+	public static final int LongLongSuffix=109;
+	public static final int LongSuffix=110;
+	public static final int MINUSMINUS=111;
+	public static final int MOD=112;
+	public static final int MODEQ=113;
+	public static final int NEQ=114;
+	public static final int NEWLINE=115;
+	public static final int NORETURN=116;
+	public static final int NOT=117;
+	public static final int NewLine=118;
+	public static final int NonDigit=119;
+	public static final int NonZeroDigit=120;
+	public static final int NotLineStart=121;
+	public static final int OR=122;
+	public static final int OTHER=123;
+	public static final int OUTPUT=124;
+	public static final int OctalConstant=125;
+	public static final int OctalDigit=126;
+	public static final int OctalEscape=127;
+	public static final int PARFOR=128;
+	public static final int PDEFINE=129;
+	public static final int PELIF=130;
+	public static final int PELSE=131;
+	public static final int PENDIF=132;
+	public static final int PERROR=133;
+	public static final int PIF=134;
+	public static final int PIFDEF=135;
+	public static final int PIFNDEF=136;
+	public static final int PINCLUDE=137;
+	public static final int PLINE=138;
+	public static final int PLUS=139;
+	public static final int PLUSEQ=140;
+	public static final int PLUSPLUS=141;
+	public static final int PP_NUMBER=142;
+	public static final int PRAGMA=143;
+	public static final int PROCNULL=144;
+	public static final int PUNDEF=145;
+	public static final int PURE=146;
+	public static final int QMARK=147;
+	public static final int RANGE=148;
+	public static final int RCURLY=149;
+	public static final int READS=150;
+	public static final int REAL=151;
+	public static final int REGISTER=152;
+	public static final int REQUIRES=153;
+	public static final int RESTRICT=154;
+	public static final int RESULT=155;
+	public static final int RETURN=156;
+	public static final int REXCON=157;
+	public static final int RPAREN=158;
+	public static final int RSLIST=159;
+	public static final int RSQUARE=160;
+	public static final int SCOPEOF=161;
+	public static final int SChar=162;
+	public static final int SELF=163;
+	public static final int SEMI=164;
+	public static final int SHARED=165;
+	public static final int SHIFTLEFT=166;
+	public static final int SHIFTLEFTEQ=167;
+	public static final int SHIFTRIGHT=168;
+	public static final int SHIFTRIGHTEQ=169;
+	public static final int SHORT=170;
+	public static final int SIGNED=171;
+	public static final int SIZEOF=172;
+	public static final int SPAWN=173;
+	public static final int STAR=174;
+	public static final int STAREQ=175;
+	public static final int STATIC=176;
+	public static final int STATICASSERT=177;
+	public static final int STRING_LITERAL=178;
+	public static final int STRUCT=179;
+	public static final int SUB=180;
+	public static final int SUBEQ=181;
+	public static final int SWITCH=182;
+	public static final int SYSTEM=183;
+	public static final int THREADLOCAL=184;
+	public static final int TILDE=185;
+	public static final int TRUE=186;
+	public static final int TYPEDEF=187;
+	public static final int TYPEOF=188;
+	public static final int UNIFORM=189;
+	public static final int UNION=190;
+	public static final int UNSIGNED=191;
+	public static final int UniversalCharacterName=192;
+	public static final int UnsignedSuffix=193;
+	public static final int VOID=194;
+	public static final int VOLATILE=195;
+	public static final int WHEN=196;
+	public static final int WHILE=197;
+	public static final int WS=198;
+	public static final int Zero=199;
+	public static final int EXPR=200;
+	public static final int PROC=201;
+	public static final int ROOT=202;
+	public static final int WAIT=203;
+
+	// delegates
+	public Parser[] getDelegates() {
+<span class="nc" id="L253">		return new Parser[] {};</span>
+	}
+
+	// delegators
+
+
+	public PreprocessorExpressionParser(TokenStream input) {
+<span class="nc" id="L260">		this(input, new RecognizerSharedState());</span>
+<span class="nc" id="L261">	}</span>
+	public PreprocessorExpressionParser(TokenStream input, RecognizerSharedState state) {
+<span class="nc" id="L263">		super(input, state);</span>
+<span class="nc" id="L264">	}</span>
+
+<span class="nc" id="L266">	protected TreeAdaptor adaptor = new CommonTreeAdaptor();</span>
+
+	public void setTreeAdaptor(TreeAdaptor adaptor) {
+<span class="nc" id="L269">		this.adaptor = adaptor;</span>
+<span class="nc" id="L270">	}</span>
+	public TreeAdaptor getTreeAdaptor() {
+<span class="nc" id="L272">		return adaptor;</span>
+	}
+<span class="nc" id="L274">	@Override public String[] getTokenNames() { return PreprocessorExpressionParser.tokenNames; }</span>
+<span class="nc" id="L275">	@Override public String getGrammarFileName() { return &quot;PreprocessorExpressionParser.g&quot;; }</span>
+
+
+<span class="nc" id="L278">	public static class start_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L281">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;start&quot;
+	// PreprocessorExpressionParser.g:24:1: start : expr EOF -&gt; expr ;
+	public final PreprocessorExpressionParser.start_return start() throws RecognitionException {
+<span class="nc" id="L288">		PreprocessorExpressionParser.start_return retval = new PreprocessorExpressionParser.start_return();</span>
+<span class="nc" id="L289">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L291">		Object root_0 = null;</span>
+
+<span class="nc" id="L293">		Token EOF2=null;</span>
+<span class="nc" id="L294">		ParserRuleReturnScope expr1 =null;</span>
+
+<span class="nc" id="L296">		Object EOF2_tree=null;</span>
+<span class="nc" id="L297">		RewriteRuleTokenStream stream_EOF=new RewriteRuleTokenStream(adaptor,&quot;token EOF&quot;);</span>
+<span class="nc" id="L298">		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule expr&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:24:8: ( expr EOF -&gt; expr )
+			// PreprocessorExpressionParser.g:24:10: expr EOF
+			{
+<span class="nc" id="L304">			pushFollow(FOLLOW_expr_in_start56);</span>
+<span class="nc" id="L305">			expr1=expr();</span>
+<span class="nc" id="L306">			state._fsp--;</span>
+
+<span class="nc" id="L308">			stream_expr.add(expr1.getTree());</span>
+<span class="nc" id="L309">			EOF2=(Token)match(input,EOF,FOLLOW_EOF_in_start58);  </span>
+<span class="nc" id="L310">			stream_EOF.add(EOF2);</span>
+
+			// AST REWRITE
+			// elements: expr
+			// token labels: 
+			// rule labels: retval
+			// token list labels: 
+			// rule list labels: 
+			// wildcard labels: 
+<span class="nc" id="L319">			retval.tree = root_0;</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L322">			root_0 = (Object)adaptor.nil();</span>
+			// 24:19: -&gt; expr
+			{
+<span class="nc" id="L325">				adaptor.addChild(root_0, stream_expr.nextTree());</span>
+			}
+
+
+<span class="nc" id="L329">			retval.tree = root_0;</span>
+
+			}
+
+<span class="nc" id="L333">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L335">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L336">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L339">		catch (RecognitionException re) {</span>
+<span class="nc" id="L340">			reportError(re);</span>
+<span class="nc" id="L341">			recover(input,re);</span>
+<span class="nc" id="L342">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L344">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L346">		}</span>
+<span class="nc" id="L347">		return retval;</span>
+	}
+	// $ANTLR end &quot;start&quot;
+
+
+<span class="nc" id="L352">	public static class expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L355">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;expr&quot;
+	// PreprocessorExpressionParser.g:27:1: expr : logical_or_expr ;
+	public final PreprocessorExpressionParser.expr_return expr() throws RecognitionException {
+<span class="nc" id="L362">		PreprocessorExpressionParser.expr_return retval = new PreprocessorExpressionParser.expr_return();</span>
+<span class="nc" id="L363">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L365">		Object root_0 = null;</span>
+
+<span class="nc" id="L367">		ParserRuleReturnScope logical_or_expr3 =null;</span>
+
+
+		try {
+			// PreprocessorExpressionParser.g:27:8: ( logical_or_expr )
+			// PreprocessorExpressionParser.g:27:10: logical_or_expr
+			{
+<span class="nc" id="L374">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L377">			pushFollow(FOLLOW_logical_or_expr_in_expr75);</span>
+<span class="nc" id="L378">			logical_or_expr3=logical_or_expr();</span>
+<span class="nc" id="L379">			state._fsp--;</span>
+
+<span class="nc" id="L381">			adaptor.addChild(root_0, logical_or_expr3.getTree());</span>
+
+			}
+
+<span class="nc" id="L385">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L387">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L388">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L391">		catch (RecognitionException re) {</span>
+<span class="nc" id="L392">			reportError(re);</span>
+<span class="nc" id="L393">			recover(input,re);</span>
+<span class="nc" id="L394">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L396">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L398">		}</span>
+<span class="nc" id="L399">		return retval;</span>
+	}
+	// $ANTLR end &quot;expr&quot;
+
+
+<span class="nc" id="L404">	public static class logical_or_expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L407">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;logical_or_expr&quot;
+	// PreprocessorExpressionParser.g:36:1: logical_or_expr : ( logical_and_expr -&gt; logical_and_expr ) ( OR arg= logical_and_expr -&gt; ^( OR $logical_or_expr $arg) )* ;
+	public final PreprocessorExpressionParser.logical_or_expr_return logical_or_expr() throws RecognitionException {
+<span class="nc" id="L414">		PreprocessorExpressionParser.logical_or_expr_return retval = new PreprocessorExpressionParser.logical_or_expr_return();</span>
+<span class="nc" id="L415">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L417">		Object root_0 = null;</span>
+
+<span class="nc" id="L419">		Token OR5=null;</span>
+<span class="nc" id="L420">		ParserRuleReturnScope arg =null;</span>
+<span class="nc" id="L421">		ParserRuleReturnScope logical_and_expr4 =null;</span>
+
+<span class="nc" id="L423">		Object OR5_tree=null;</span>
+<span class="nc" id="L424">		RewriteRuleTokenStream stream_OR=new RewriteRuleTokenStream(adaptor,&quot;token OR&quot;);</span>
+<span class="nc" id="L425">		RewriteRuleSubtreeStream stream_logical_and_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule logical_and_expr&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:36:17: ( ( logical_and_expr -&gt; logical_and_expr ) ( OR arg= logical_and_expr -&gt; ^( OR $logical_or_expr $arg) )* )
+			// PreprocessorExpressionParser.g:36:19: ( logical_and_expr -&gt; logical_and_expr ) ( OR arg= logical_and_expr -&gt; ^( OR $logical_or_expr $arg) )*
+			{
+			// PreprocessorExpressionParser.g:36:19: ( logical_and_expr -&gt; logical_and_expr )
+			// PreprocessorExpressionParser.g:36:20: logical_and_expr
+			{
+<span class="nc" id="L434">			pushFollow(FOLLOW_logical_and_expr_in_logical_or_expr89);</span>
+<span class="nc" id="L435">			logical_and_expr4=logical_and_expr();</span>
+<span class="nc" id="L436">			state._fsp--;</span>
+
+<span class="nc" id="L438">			stream_logical_and_expr.add(logical_and_expr4.getTree());</span>
+			// AST REWRITE
+			// elements: logical_and_expr
+			// token labels: 
+			// rule labels: retval
+			// token list labels: 
+			// rule list labels: 
+			// wildcard labels: 
+<span class="nc" id="L446">			retval.tree = root_0;</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L449">			root_0 = (Object)adaptor.nil();</span>
+			// 36:37: -&gt; logical_and_expr
+			{
+<span class="nc" id="L452">				adaptor.addChild(root_0, stream_logical_and_expr.nextTree());</span>
+			}
+
+
+<span class="nc" id="L456">			retval.tree = root_0;</span>
+
+			}
+
+			// PreprocessorExpressionParser.g:37:4: ( OR arg= logical_and_expr -&gt; ^( OR $logical_or_expr $arg) )*
+			loop1:
+			while (true) {
+<span class="nc" id="L463">				int alt1=2;</span>
+<span class="nc" id="L464">				int LA1_0 = input.LA(1);</span>
+<span class="nc bnc" id="L465" title="All 2 branches missed.">				if ( (LA1_0==OR) ) {</span>
+<span class="nc" id="L466">					alt1=1;</span>
+				}
+
+<span class="nc bnc" id="L469" title="All 2 branches missed.">				switch (alt1) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:37:5: OR arg= logical_and_expr
+					{
+<span class="nc" id="L473">					OR5=(Token)match(input,OR,FOLLOW_OR_in_logical_or_expr100);  </span>
+<span class="nc" id="L474">					stream_OR.add(OR5);</span>
+
+<span class="nc" id="L476">					pushFollow(FOLLOW_logical_and_expr_in_logical_or_expr104);</span>
+<span class="nc" id="L477">					arg=logical_and_expr();</span>
+<span class="nc" id="L478">					state._fsp--;</span>
+
+<span class="nc" id="L480">					stream_logical_and_expr.add(arg.getTree());</span>
+					// AST REWRITE
+					// elements: logical_or_expr, arg, OR
+					// token labels: 
+					// rule labels: arg, retval
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L488">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_arg=new RewriteRuleSubtreeStream(adaptor,&quot;rule arg&quot;,arg!=null?arg.getTree():null);</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L492">					root_0 = (Object)adaptor.nil();</span>
+					// 37:29: -&gt; ^( OR $logical_or_expr $arg)
+					{
+						// PreprocessorExpressionParser.g:37:32: ^( OR $logical_or_expr $arg)
+						{
+<span class="nc" id="L497">						Object root_1 = (Object)adaptor.nil();</span>
+<span class="nc" id="L498">						root_1 = (Object)adaptor.becomeRoot(stream_OR.nextNode(), root_1);</span>
+<span class="nc" id="L499">						adaptor.addChild(root_1, stream_retval.nextTree());</span>
+<span class="nc" id="L500">						adaptor.addChild(root_1, stream_arg.nextTree());</span>
+<span class="nc" id="L501">						adaptor.addChild(root_0, root_1);</span>
+						}
+
+					}
+
+
+<span class="nc" id="L507">					retval.tree = root_0;</span>
+
+					}
+<span class="nc" id="L510">					break;</span>
+
+				default :
+<span class="nc" id="L513">					break loop1;</span>
+				}
+<span class="nc" id="L515">			}</span>
+
+			}
+
+<span class="nc" id="L519">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L521">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L522">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L525">		catch (RecognitionException re) {</span>
+<span class="nc" id="L526">			reportError(re);</span>
+<span class="nc" id="L527">			recover(input,re);</span>
+<span class="nc" id="L528">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L530">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L532">		}</span>
+<span class="nc" id="L533">		return retval;</span>
+	}
+	// $ANTLR end &quot;logical_or_expr&quot;
+
+
+<span class="nc" id="L538">	public static class logical_and_expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L541">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;logical_and_expr&quot;
+	// PreprocessorExpressionParser.g:46:1: logical_and_expr : ( equality_expr -&gt; equality_expr ) ( AND arg= equality_expr -&gt; ^( AND $logical_and_expr $arg) )* ;
+	public final PreprocessorExpressionParser.logical_and_expr_return logical_and_expr() throws RecognitionException {
+<span class="nc" id="L548">		PreprocessorExpressionParser.logical_and_expr_return retval = new PreprocessorExpressionParser.logical_and_expr_return();</span>
+<span class="nc" id="L549">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L551">		Object root_0 = null;</span>
+
+<span class="nc" id="L553">		Token AND7=null;</span>
+<span class="nc" id="L554">		ParserRuleReturnScope arg =null;</span>
+<span class="nc" id="L555">		ParserRuleReturnScope equality_expr6 =null;</span>
+
+<span class="nc" id="L557">		Object AND7_tree=null;</span>
+<span class="nc" id="L558">		RewriteRuleTokenStream stream_AND=new RewriteRuleTokenStream(adaptor,&quot;token AND&quot;);</span>
+<span class="nc" id="L559">		RewriteRuleSubtreeStream stream_equality_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule equality_expr&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:46:17: ( ( equality_expr -&gt; equality_expr ) ( AND arg= equality_expr -&gt; ^( AND $logical_and_expr $arg) )* )
+			// PreprocessorExpressionParser.g:46:19: ( equality_expr -&gt; equality_expr ) ( AND arg= equality_expr -&gt; ^( AND $logical_and_expr $arg) )*
+			{
+			// PreprocessorExpressionParser.g:46:19: ( equality_expr -&gt; equality_expr )
+			// PreprocessorExpressionParser.g:46:20: equality_expr
+			{
+<span class="nc" id="L568">			pushFollow(FOLLOW_equality_expr_in_logical_and_expr131);</span>
+<span class="nc" id="L569">			equality_expr6=equality_expr();</span>
+<span class="nc" id="L570">			state._fsp--;</span>
+
+<span class="nc" id="L572">			stream_equality_expr.add(equality_expr6.getTree());</span>
+			// AST REWRITE
+			// elements: equality_expr
+			// token labels: 
+			// rule labels: retval
+			// token list labels: 
+			// rule list labels: 
+			// wildcard labels: 
+<span class="nc" id="L580">			retval.tree = root_0;</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L583">			root_0 = (Object)adaptor.nil();</span>
+			// 46:34: -&gt; equality_expr
+			{
+<span class="nc" id="L586">				adaptor.addChild(root_0, stream_equality_expr.nextTree());</span>
+			}
+
+
+<span class="nc" id="L590">			retval.tree = root_0;</span>
+
+			}
+
+			// PreprocessorExpressionParser.g:47:4: ( AND arg= equality_expr -&gt; ^( AND $logical_and_expr $arg) )*
+			loop2:
+			while (true) {
+<span class="nc" id="L597">				int alt2=2;</span>
+<span class="nc" id="L598">				int LA2_0 = input.LA(1);</span>
+<span class="nc bnc" id="L599" title="All 2 branches missed.">				if ( (LA2_0==AND) ) {</span>
+<span class="nc" id="L600">					alt2=1;</span>
+				}
+
+<span class="nc bnc" id="L603" title="All 2 branches missed.">				switch (alt2) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:47:5: AND arg= equality_expr
+					{
+<span class="nc" id="L607">					AND7=(Token)match(input,AND,FOLLOW_AND_in_logical_and_expr142);  </span>
+<span class="nc" id="L608">					stream_AND.add(AND7);</span>
+
+<span class="nc" id="L610">					pushFollow(FOLLOW_equality_expr_in_logical_and_expr146);</span>
+<span class="nc" id="L611">					arg=equality_expr();</span>
+<span class="nc" id="L612">					state._fsp--;</span>
+
+<span class="nc" id="L614">					stream_equality_expr.add(arg.getTree());</span>
+					// AST REWRITE
+					// elements: AND, logical_and_expr, arg
+					// token labels: 
+					// rule labels: arg, retval
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L622">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L623" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_arg=new RewriteRuleSubtreeStream(adaptor,&quot;rule arg&quot;,arg!=null?arg.getTree():null);</span>
+<span class="nc bnc" id="L624" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L626">					root_0 = (Object)adaptor.nil();</span>
+					// 47:27: -&gt; ^( AND $logical_and_expr $arg)
+					{
+						// PreprocessorExpressionParser.g:47:30: ^( AND $logical_and_expr $arg)
+						{
+<span class="nc" id="L631">						Object root_1 = (Object)adaptor.nil();</span>
+<span class="nc" id="L632">						root_1 = (Object)adaptor.becomeRoot(stream_AND.nextNode(), root_1);</span>
+<span class="nc" id="L633">						adaptor.addChild(root_1, stream_retval.nextTree());</span>
+<span class="nc" id="L634">						adaptor.addChild(root_1, stream_arg.nextTree());</span>
+<span class="nc" id="L635">						adaptor.addChild(root_0, root_1);</span>
+						}
+
+					}
+
+
+<span class="nc" id="L641">					retval.tree = root_0;</span>
+
+					}
+<span class="nc" id="L644">					break;</span>
+
+				default :
+<span class="nc" id="L647">					break loop2;</span>
+				}
+<span class="nc" id="L649">			}</span>
+
+			}
+
+<span class="nc" id="L653">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L655">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L656">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L659">		catch (RecognitionException re) {</span>
+<span class="nc" id="L660">			reportError(re);</span>
+<span class="nc" id="L661">			recover(input,re);</span>
+<span class="nc" id="L662">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L664">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L666">		}</span>
+<span class="nc" id="L667">		return retval;</span>
+	}
+	// $ANTLR end &quot;logical_and_expr&quot;
+
+
+<span class="nc" id="L672">	public static class equality_expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L675">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;equality_expr&quot;
+	// PreprocessorExpressionParser.g:56:1: equality_expr : ( relational_expr -&gt; relational_expr ) (op= equality_operator arg= relational_expr -&gt; ^( $op $equality_expr $arg) )* ;
+	public final PreprocessorExpressionParser.equality_expr_return equality_expr() throws RecognitionException {
+<span class="nc" id="L682">		PreprocessorExpressionParser.equality_expr_return retval = new PreprocessorExpressionParser.equality_expr_return();</span>
+<span class="nc" id="L683">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L685">		Object root_0 = null;</span>
+
+<span class="nc" id="L687">		ParserRuleReturnScope op =null;</span>
+<span class="nc" id="L688">		ParserRuleReturnScope arg =null;</span>
+<span class="nc" id="L689">		ParserRuleReturnScope relational_expr8 =null;</span>
+
+<span class="nc" id="L691">		RewriteRuleSubtreeStream stream_relational_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule relational_expr&quot;);</span>
+<span class="nc" id="L692">		RewriteRuleSubtreeStream stream_equality_operator=new RewriteRuleSubtreeStream(adaptor,&quot;rule equality_operator&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:56:15: ( ( relational_expr -&gt; relational_expr ) (op= equality_operator arg= relational_expr -&gt; ^( $op $equality_expr $arg) )* )
+			// PreprocessorExpressionParser.g:56:17: ( relational_expr -&gt; relational_expr ) (op= equality_operator arg= relational_expr -&gt; ^( $op $equality_expr $arg) )*
+			{
+			// PreprocessorExpressionParser.g:56:17: ( relational_expr -&gt; relational_expr )
+			// PreprocessorExpressionParser.g:56:18: relational_expr
+			{
+<span class="nc" id="L701">			pushFollow(FOLLOW_relational_expr_in_equality_expr174);</span>
+<span class="nc" id="L702">			relational_expr8=relational_expr();</span>
+<span class="nc" id="L703">			state._fsp--;</span>
+
+<span class="nc" id="L705">			stream_relational_expr.add(relational_expr8.getTree());</span>
+			// AST REWRITE
+			// elements: relational_expr
+			// token labels: 
+			// rule labels: retval
+			// token list labels: 
+			// rule list labels: 
+			// wildcard labels: 
+<span class="nc" id="L713">			retval.tree = root_0;</span>
+<span class="nc bnc" id="L714" title="All 2 branches missed.">			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L716">			root_0 = (Object)adaptor.nil();</span>
+			// 56:34: -&gt; relational_expr
+			{
+<span class="nc" id="L719">				adaptor.addChild(root_0, stream_relational_expr.nextTree());</span>
+			}
+
+
+<span class="nc" id="L723">			retval.tree = root_0;</span>
+
+			}
+
+			// PreprocessorExpressionParser.g:57:4: (op= equality_operator arg= relational_expr -&gt; ^( $op $equality_expr $arg) )*
+			loop3:
+			while (true) {
+<span class="nc" id="L730">				int alt3=2;</span>
+<span class="nc" id="L731">				int LA3_0 = input.LA(1);</span>
+<span class="nc bnc" id="L732" title="All 4 branches missed.">				if ( (LA3_0==EQUALS||LA3_0==NEQ) ) {</span>
+<span class="nc" id="L733">					alt3=1;</span>
+				}
+
+<span class="nc bnc" id="L736" title="All 2 branches missed.">				switch (alt3) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:57:5: op= equality_operator arg= relational_expr
+					{
+<span class="nc" id="L740">					pushFollow(FOLLOW_equality_operator_in_equality_expr187);</span>
+<span class="nc" id="L741">					op=equality_operator();</span>
+<span class="nc" id="L742">					state._fsp--;</span>
+
+<span class="nc" id="L744">					stream_equality_operator.add(op.getTree());</span>
+<span class="nc" id="L745">					pushFollow(FOLLOW_relational_expr_in_equality_expr191);</span>
+<span class="nc" id="L746">					arg=relational_expr();</span>
+<span class="nc" id="L747">					state._fsp--;</span>
+
+<span class="nc" id="L749">					stream_relational_expr.add(arg.getTree());</span>
+					// AST REWRITE
+					// elements: equality_expr, op, arg
+					// token labels: 
+					// rule labels: arg, retval, op
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L757">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L758" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_arg=new RewriteRuleSubtreeStream(adaptor,&quot;rule arg&quot;,arg!=null?arg.getTree():null);</span>
+<span class="nc bnc" id="L759" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+<span class="nc bnc" id="L760" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_op=new RewriteRuleSubtreeStream(adaptor,&quot;rule op&quot;,op!=null?op.getTree():null);</span>
+
+<span class="nc" id="L762">					root_0 = (Object)adaptor.nil();</span>
+					// 58:7: -&gt; ^( $op $equality_expr $arg)
+					{
+						// PreprocessorExpressionParser.g:58:10: ^( $op $equality_expr $arg)
+						{
+<span class="nc" id="L767">						Object root_1 = (Object)adaptor.nil();</span>
+<span class="nc" id="L768">						root_1 = (Object)adaptor.becomeRoot(stream_op.nextNode(), root_1);</span>
+<span class="nc" id="L769">						adaptor.addChild(root_1, stream_retval.nextTree());</span>
+<span class="nc" id="L770">						adaptor.addChild(root_1, stream_arg.nextTree());</span>
+<span class="nc" id="L771">						adaptor.addChild(root_0, root_1);</span>
+						}
+
+					}
+
+
+<span class="nc" id="L777">					retval.tree = root_0;</span>
+
+					}
+<span class="nc" id="L780">					break;</span>
+
+				default :
+<span class="nc" id="L783">					break loop3;</span>
+				}
+<span class="nc" id="L785">			}</span>
+
+			}
+
+<span class="nc" id="L789">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L791">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L792">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L795">		catch (RecognitionException re) {</span>
+<span class="nc" id="L796">			reportError(re);</span>
+<span class="nc" id="L797">			recover(input,re);</span>
+<span class="nc" id="L798">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L800">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L802">		}</span>
+<span class="nc" id="L803">		return retval;</span>
+	}
+	// $ANTLR end &quot;equality_expr&quot;
+
+
+<span class="nc" id="L808">	public static class equality_operator_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L811">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;equality_operator&quot;
+	// PreprocessorExpressionParser.g:61:1: equality_operator : ( EQUALS | NEQ );
+	public final PreprocessorExpressionParser.equality_operator_return equality_operator() throws RecognitionException {
+<span class="nc" id="L818">		PreprocessorExpressionParser.equality_operator_return retval = new PreprocessorExpressionParser.equality_operator_return();</span>
+<span class="nc" id="L819">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L821">		Object root_0 = null;</span>
+
+<span class="nc" id="L823">		Token set9=null;</span>
+
+<span class="nc" id="L825">		Object set9_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:62:3: ( EQUALS | NEQ )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L831">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L834">			set9=input.LT(1);</span>
+<span class="nc bnc" id="L835" title="All 4 branches missed.">			if ( input.LA(1)==EQUALS||input.LA(1)==NEQ ) {</span>
+<span class="nc" id="L836">				input.consume();</span>
+<span class="nc" id="L837">				adaptor.addChild(root_0, (Object)adaptor.create(set9));</span>
+<span class="nc" id="L838">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L841">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L842">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L846">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L848">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L849">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L852">		catch (RecognitionException re) {</span>
+<span class="nc" id="L853">			reportError(re);</span>
+<span class="nc" id="L854">			recover(input,re);</span>
+<span class="nc" id="L855">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L857">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L859">		}</span>
+<span class="nc" id="L860">		return retval;</span>
+	}
+	// $ANTLR end &quot;equality_operator&quot;
+
+
+<span class="nc" id="L865">	public static class relational_expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L868">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;relational_expr&quot;
+	// PreprocessorExpressionParser.g:72:1: relational_expr : ( additive_expr -&gt; additive_expr ) (op= relational_operator arg= additive_expr -&gt; ^( $op $relational_expr $arg) )* ;
+	public final PreprocessorExpressionParser.relational_expr_return relational_expr() throws RecognitionException {
+<span class="nc" id="L875">		PreprocessorExpressionParser.relational_expr_return retval = new PreprocessorExpressionParser.relational_expr_return();</span>
+<span class="nc" id="L876">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L878">		Object root_0 = null;</span>
+
+<span class="nc" id="L880">		ParserRuleReturnScope op =null;</span>
+<span class="nc" id="L881">		ParserRuleReturnScope arg =null;</span>
+<span class="nc" id="L882">		ParserRuleReturnScope additive_expr10 =null;</span>
+
+<span class="nc" id="L884">		RewriteRuleSubtreeStream stream_additive_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule additive_expr&quot;);</span>
+<span class="nc" id="L885">		RewriteRuleSubtreeStream stream_relational_operator=new RewriteRuleSubtreeStream(adaptor,&quot;rule relational_operator&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:72:17: ( ( additive_expr -&gt; additive_expr ) (op= relational_operator arg= additive_expr -&gt; ^( $op $relational_expr $arg) )* )
+			// PreprocessorExpressionParser.g:72:19: ( additive_expr -&gt; additive_expr ) (op= relational_operator arg= additive_expr -&gt; ^( $op $relational_expr $arg) )*
+			{
+			// PreprocessorExpressionParser.g:72:19: ( additive_expr -&gt; additive_expr )
+			// PreprocessorExpressionParser.g:72:20: additive_expr
+			{
+<span class="nc" id="L894">			pushFollow(FOLLOW_additive_expr_in_relational_expr245);</span>
+<span class="nc" id="L895">			additive_expr10=additive_expr();</span>
+<span class="nc" id="L896">			state._fsp--;</span>
+
+<span class="nc" id="L898">			stream_additive_expr.add(additive_expr10.getTree());</span>
+			// AST REWRITE
+			// elements: additive_expr
+			// token labels: 
+			// rule labels: retval
+			// token list labels: 
+			// rule list labels: 
+			// wildcard labels: 
+<span class="nc" id="L906">			retval.tree = root_0;</span>
+<span class="nc bnc" id="L907" title="All 2 branches missed.">			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L909">			root_0 = (Object)adaptor.nil();</span>
+			// 72:34: -&gt; additive_expr
+			{
+<span class="nc" id="L912">				adaptor.addChild(root_0, stream_additive_expr.nextTree());</span>
+			}
+
+
+<span class="nc" id="L916">			retval.tree = root_0;</span>
+
+			}
+
+			// PreprocessorExpressionParser.g:73:4: (op= relational_operator arg= additive_expr -&gt; ^( $op $relational_expr $arg) )*
+			loop4:
+			while (true) {
+<span class="nc" id="L923">				int alt4=2;</span>
+<span class="nc" id="L924">				int LA4_0 = input.LA(1);</span>
+<span class="nc bnc" id="L925" title="All 8 branches missed.">				if ( ((LA4_0 &gt;= GT &amp;&amp; LA4_0 &lt;= GTE)||(LA4_0 &gt;= LT &amp;&amp; LA4_0 &lt;= LTE)) ) {</span>
+<span class="nc" id="L926">					alt4=1;</span>
+				}
+
+<span class="nc bnc" id="L929" title="All 2 branches missed.">				switch (alt4) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:73:5: op= relational_operator arg= additive_expr
+					{
+<span class="nc" id="L933">					pushFollow(FOLLOW_relational_operator_in_relational_expr258);</span>
+<span class="nc" id="L934">					op=relational_operator();</span>
+<span class="nc" id="L935">					state._fsp--;</span>
+
+<span class="nc" id="L937">					stream_relational_operator.add(op.getTree());</span>
+<span class="nc" id="L938">					pushFollow(FOLLOW_additive_expr_in_relational_expr262);</span>
+<span class="nc" id="L939">					arg=additive_expr();</span>
+<span class="nc" id="L940">					state._fsp--;</span>
+
+<span class="nc" id="L942">					stream_additive_expr.add(arg.getTree());</span>
+					// AST REWRITE
+					// elements: relational_expr, arg, op
+					// token labels: 
+					// rule labels: arg, retval, op
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L950">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L951" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_arg=new RewriteRuleSubtreeStream(adaptor,&quot;rule arg&quot;,arg!=null?arg.getTree():null);</span>
+<span class="nc bnc" id="L952" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+<span class="nc bnc" id="L953" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_op=new RewriteRuleSubtreeStream(adaptor,&quot;rule op&quot;,op!=null?op.getTree():null);</span>
+
+<span class="nc" id="L955">					root_0 = (Object)adaptor.nil();</span>
+					// 74:7: -&gt; ^( $op $relational_expr $arg)
+					{
+						// PreprocessorExpressionParser.g:74:10: ^( $op $relational_expr $arg)
+						{
+<span class="nc" id="L960">						Object root_1 = (Object)adaptor.nil();</span>
+<span class="nc" id="L961">						root_1 = (Object)adaptor.becomeRoot(stream_op.nextNode(), root_1);</span>
+<span class="nc" id="L962">						adaptor.addChild(root_1, stream_retval.nextTree());</span>
+<span class="nc" id="L963">						adaptor.addChild(root_1, stream_arg.nextTree());</span>
+<span class="nc" id="L964">						adaptor.addChild(root_0, root_1);</span>
+						}
+
+					}
+
+
+<span class="nc" id="L970">					retval.tree = root_0;</span>
+
+					}
+<span class="nc" id="L973">					break;</span>
+
+				default :
+<span class="nc" id="L976">					break loop4;</span>
+				}
+<span class="nc" id="L978">			}</span>
+
+			}
+
+<span class="nc" id="L982">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L984">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L985">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L988">		catch (RecognitionException re) {</span>
+<span class="nc" id="L989">			reportError(re);</span>
+<span class="nc" id="L990">			recover(input,re);</span>
+<span class="nc" id="L991">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L993">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L995">		}</span>
+<span class="nc" id="L996">		return retval;</span>
+	}
+	// $ANTLR end &quot;relational_expr&quot;
+
+
+<span class="nc" id="L1001">	public static class relational_operator_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1004">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;relational_operator&quot;
+	// PreprocessorExpressionParser.g:77:1: relational_operator : ( LT | GT | LTE | GTE );
+	public final PreprocessorExpressionParser.relational_operator_return relational_operator() throws RecognitionException {
+<span class="nc" id="L1011">		PreprocessorExpressionParser.relational_operator_return retval = new PreprocessorExpressionParser.relational_operator_return();</span>
+<span class="nc" id="L1012">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1014">		Object root_0 = null;</span>
+
+<span class="nc" id="L1016">		Token set11=null;</span>
+
+<span class="nc" id="L1018">		Object set11_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:78:3: ( LT | GT | LTE | GTE )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L1024">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L1027">			set11=input.LT(1);</span>
+<span class="nc bnc" id="L1028" title="All 8 branches missed.">			if ( (input.LA(1) &gt;= GT &amp;&amp; input.LA(1) &lt;= GTE)||(input.LA(1) &gt;= LT &amp;&amp; input.LA(1) &lt;= LTE) ) {</span>
+<span class="nc" id="L1029">				input.consume();</span>
+<span class="nc" id="L1030">				adaptor.addChild(root_0, (Object)adaptor.create(set11));</span>
+<span class="nc" id="L1031">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L1034">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L1035">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L1039">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1041">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1042">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1045">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1046">			reportError(re);</span>
+<span class="nc" id="L1047">			recover(input,re);</span>
+<span class="nc" id="L1048">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1050">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1052">		}</span>
+<span class="nc" id="L1053">		return retval;</span>
+	}
+	// $ANTLR end &quot;relational_operator&quot;
+
+
+<span class="nc" id="L1058">	public static class additive_expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1061">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;additive_expr&quot;
+	// PreprocessorExpressionParser.g:89:1: additive_expr : ( multi_expr -&gt; multi_expr ) ( additive_operator arg= multi_expr -&gt; ^( additive_operator $additive_expr $arg) )* ;
+	public final PreprocessorExpressionParser.additive_expr_return additive_expr() throws RecognitionException {
+<span class="nc" id="L1068">		PreprocessorExpressionParser.additive_expr_return retval = new PreprocessorExpressionParser.additive_expr_return();</span>
+<span class="nc" id="L1069">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1071">		Object root_0 = null;</span>
+
+<span class="nc" id="L1073">		ParserRuleReturnScope arg =null;</span>
+<span class="nc" id="L1074">		ParserRuleReturnScope multi_expr12 =null;</span>
+<span class="nc" id="L1075">		ParserRuleReturnScope additive_operator13 =null;</span>
+
+<span class="nc" id="L1077">		RewriteRuleSubtreeStream stream_additive_operator=new RewriteRuleSubtreeStream(adaptor,&quot;rule additive_operator&quot;);</span>
+<span class="nc" id="L1078">		RewriteRuleSubtreeStream stream_multi_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule multi_expr&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:89:15: ( ( multi_expr -&gt; multi_expr ) ( additive_operator arg= multi_expr -&gt; ^( additive_operator $additive_expr $arg) )* )
+			// PreprocessorExpressionParser.g:89:17: ( multi_expr -&gt; multi_expr ) ( additive_operator arg= multi_expr -&gt; ^( additive_operator $additive_expr $arg) )*
+			{
+			// PreprocessorExpressionParser.g:89:17: ( multi_expr -&gt; multi_expr )
+			// PreprocessorExpressionParser.g:89:18: multi_expr
+			{
+<span class="nc" id="L1087">			pushFollow(FOLLOW_multi_expr_in_additive_expr328);</span>
+<span class="nc" id="L1088">			multi_expr12=multi_expr();</span>
+<span class="nc" id="L1089">			state._fsp--;</span>
+
+<span class="nc" id="L1091">			stream_multi_expr.add(multi_expr12.getTree());</span>
+			// AST REWRITE
+			// elements: multi_expr
+			// token labels: 
+			// rule labels: retval
+			// token list labels: 
+			// rule list labels: 
+			// wildcard labels: 
+<span class="nc" id="L1099">			retval.tree = root_0;</span>
+<span class="nc bnc" id="L1100" title="All 2 branches missed.">			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L1102">			root_0 = (Object)adaptor.nil();</span>
+			// 89:29: -&gt; multi_expr
+			{
+<span class="nc" id="L1105">				adaptor.addChild(root_0, stream_multi_expr.nextTree());</span>
+			}
+
+
+<span class="nc" id="L1109">			retval.tree = root_0;</span>
+
+			}
+
+			// PreprocessorExpressionParser.g:90:4: ( additive_operator arg= multi_expr -&gt; ^( additive_operator $additive_expr $arg) )*
+			loop5:
+			while (true) {
+<span class="nc" id="L1116">				int alt5=2;</span>
+<span class="nc" id="L1117">				int LA5_0 = input.LA(1);</span>
+<span class="nc bnc" id="L1118" title="All 4 branches missed.">				if ( (LA5_0==PLUS||LA5_0==SUB) ) {</span>
+<span class="nc" id="L1119">					alt5=1;</span>
+				}
+
+<span class="nc bnc" id="L1122" title="All 2 branches missed.">				switch (alt5) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:90:5: additive_operator arg= multi_expr
+					{
+<span class="nc" id="L1126">					pushFollow(FOLLOW_additive_operator_in_additive_expr339);</span>
+<span class="nc" id="L1127">					additive_operator13=additive_operator();</span>
+<span class="nc" id="L1128">					state._fsp--;</span>
+
+<span class="nc" id="L1130">					stream_additive_operator.add(additive_operator13.getTree());</span>
+<span class="nc" id="L1131">					pushFollow(FOLLOW_multi_expr_in_additive_expr343);</span>
+<span class="nc" id="L1132">					arg=multi_expr();</span>
+<span class="nc" id="L1133">					state._fsp--;</span>
+
+<span class="nc" id="L1135">					stream_multi_expr.add(arg.getTree());</span>
+					// AST REWRITE
+					// elements: additive_expr, additive_operator, arg
+					// token labels: 
+					// rule labels: arg, retval
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L1143">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L1144" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_arg=new RewriteRuleSubtreeStream(adaptor,&quot;rule arg&quot;,arg!=null?arg.getTree():null);</span>
+<span class="nc bnc" id="L1145" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L1147">					root_0 = (Object)adaptor.nil();</span>
+					// 91:7: -&gt; ^( additive_operator $additive_expr $arg)
+					{
+						// PreprocessorExpressionParser.g:91:10: ^( additive_operator $additive_expr $arg)
+						{
+<span class="nc" id="L1152">						Object root_1 = (Object)adaptor.nil();</span>
+<span class="nc" id="L1153">						root_1 = (Object)adaptor.becomeRoot(stream_additive_operator.nextNode(), root_1);</span>
+<span class="nc" id="L1154">						adaptor.addChild(root_1, stream_retval.nextTree());</span>
+<span class="nc" id="L1155">						adaptor.addChild(root_1, stream_arg.nextTree());</span>
+<span class="nc" id="L1156">						adaptor.addChild(root_0, root_1);</span>
+						}
+
+					}
+
+
+<span class="nc" id="L1162">					retval.tree = root_0;</span>
+
+					}
+<span class="nc" id="L1165">					break;</span>
+
+				default :
+<span class="nc" id="L1168">					break loop5;</span>
+				}
+<span class="nc" id="L1170">			}</span>
+
+			}
+
+<span class="nc" id="L1174">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1176">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1177">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1180">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1181">			reportError(re);</span>
+<span class="nc" id="L1182">			recover(input,re);</span>
+<span class="nc" id="L1183">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1185">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1187">		}</span>
+<span class="nc" id="L1188">		return retval;</span>
+	}
+	// $ANTLR end &quot;additive_expr&quot;
+
+
+<span class="nc" id="L1193">	public static class additive_operator_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1196">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;additive_operator&quot;
+	// PreprocessorExpressionParser.g:93:1: additive_operator : ( PLUS | SUB );
+	public final PreprocessorExpressionParser.additive_operator_return additive_operator() throws RecognitionException {
+<span class="nc" id="L1203">		PreprocessorExpressionParser.additive_operator_return retval = new PreprocessorExpressionParser.additive_operator_return();</span>
+<span class="nc" id="L1204">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1206">		Object root_0 = null;</span>
+
+<span class="nc" id="L1208">		Token set14=null;</span>
+
+<span class="nc" id="L1210">		Object set14_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:94:3: ( PLUS | SUB )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L1216">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L1219">			set14=input.LT(1);</span>
+<span class="nc bnc" id="L1220" title="All 4 branches missed.">			if ( input.LA(1)==PLUS||input.LA(1)==SUB ) {</span>
+<span class="nc" id="L1221">				input.consume();</span>
+<span class="nc" id="L1222">				adaptor.addChild(root_0, (Object)adaptor.create(set14));</span>
+<span class="nc" id="L1223">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L1226">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L1227">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L1231">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1233">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1234">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1237">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1238">			reportError(re);</span>
+<span class="nc" id="L1239">			recover(input,re);</span>
+<span class="nc" id="L1240">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1242">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1244">		}</span>
+<span class="nc" id="L1245">		return retval;</span>
+	}
+	// $ANTLR end &quot;additive_operator&quot;
+
+
+<span class="nc" id="L1250">	public static class multi_expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1253">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;multi_expr&quot;
+	// PreprocessorExpressionParser.g:103:1: multi_expr : ( unary_expr -&gt; unary_expr ) ( multi_operator unary_expr -&gt; ^( multi_operator $multi_expr unary_expr ) )* ;
+	public final PreprocessorExpressionParser.multi_expr_return multi_expr() throws RecognitionException {
+<span class="nc" id="L1260">		PreprocessorExpressionParser.multi_expr_return retval = new PreprocessorExpressionParser.multi_expr_return();</span>
+<span class="nc" id="L1261">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1263">		Object root_0 = null;</span>
+
+<span class="nc" id="L1265">		ParserRuleReturnScope unary_expr15 =null;</span>
+<span class="nc" id="L1266">		ParserRuleReturnScope multi_operator16 =null;</span>
+<span class="nc" id="L1267">		ParserRuleReturnScope unary_expr17 =null;</span>
+
+<span class="nc" id="L1269">		RewriteRuleSubtreeStream stream_unary_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule unary_expr&quot;);</span>
+<span class="nc" id="L1270">		RewriteRuleSubtreeStream stream_multi_operator=new RewriteRuleSubtreeStream(adaptor,&quot;rule multi_operator&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:103:12: ( ( unary_expr -&gt; unary_expr ) ( multi_operator unary_expr -&gt; ^( multi_operator $multi_expr unary_expr ) )* )
+			// PreprocessorExpressionParser.g:103:14: ( unary_expr -&gt; unary_expr ) ( multi_operator unary_expr -&gt; ^( multi_operator $multi_expr unary_expr ) )*
+			{
+			// PreprocessorExpressionParser.g:103:14: ( unary_expr -&gt; unary_expr )
+			// PreprocessorExpressionParser.g:103:15: unary_expr
+			{
+<span class="nc" id="L1279">			pushFollow(FOLLOW_unary_expr_in_multi_expr396);</span>
+<span class="nc" id="L1280">			unary_expr15=unary_expr();</span>
+<span class="nc" id="L1281">			state._fsp--;</span>
+
+<span class="nc" id="L1283">			stream_unary_expr.add(unary_expr15.getTree());</span>
+			// AST REWRITE
+			// elements: unary_expr
+			// token labels: 
+			// rule labels: retval
+			// token list labels: 
+			// rule list labels: 
+			// wildcard labels: 
+<span class="nc" id="L1291">			retval.tree = root_0;</span>
+<span class="nc bnc" id="L1292" title="All 2 branches missed.">			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L1294">			root_0 = (Object)adaptor.nil();</span>
+			// 103:26: -&gt; unary_expr
+			{
+<span class="nc" id="L1297">				adaptor.addChild(root_0, stream_unary_expr.nextTree());</span>
+			}
+
+
+<span class="nc" id="L1301">			retval.tree = root_0;</span>
+
+			}
+
+			// PreprocessorExpressionParser.g:104:4: ( multi_operator unary_expr -&gt; ^( multi_operator $multi_expr unary_expr ) )*
+			loop6:
+			while (true) {
+<span class="nc" id="L1308">				int alt6=2;</span>
+<span class="nc" id="L1309">				int LA6_0 = input.LA(1);</span>
+<span class="nc bnc" id="L1310" title="All 6 branches missed.">				if ( (LA6_0==DIV||LA6_0==MOD||LA6_0==STAR) ) {</span>
+<span class="nc" id="L1311">					alt6=1;</span>
+				}
+
+<span class="nc bnc" id="L1314" title="All 2 branches missed.">				switch (alt6) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:104:5: multi_operator unary_expr
+					{
+<span class="nc" id="L1318">					pushFollow(FOLLOW_multi_operator_in_multi_expr407);</span>
+<span class="nc" id="L1319">					multi_operator16=multi_operator();</span>
+<span class="nc" id="L1320">					state._fsp--;</span>
+
+<span class="nc" id="L1322">					stream_multi_operator.add(multi_operator16.getTree());</span>
+<span class="nc" id="L1323">					pushFollow(FOLLOW_unary_expr_in_multi_expr409);</span>
+<span class="nc" id="L1324">					unary_expr17=unary_expr();</span>
+<span class="nc" id="L1325">					state._fsp--;</span>
+
+<span class="nc" id="L1327">					stream_unary_expr.add(unary_expr17.getTree());</span>
+					// AST REWRITE
+					// elements: unary_expr, multi_operator, multi_expr
+					// token labels: 
+					// rule labels: retval
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L1335">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L1336" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L1338">					root_0 = (Object)adaptor.nil();</span>
+					// 105:7: -&gt; ^( multi_operator $multi_expr unary_expr )
+					{
+						// PreprocessorExpressionParser.g:105:10: ^( multi_operator $multi_expr unary_expr )
+						{
+<span class="nc" id="L1343">						Object root_1 = (Object)adaptor.nil();</span>
+<span class="nc" id="L1344">						root_1 = (Object)adaptor.becomeRoot(stream_multi_operator.nextNode(), root_1);</span>
+<span class="nc" id="L1345">						adaptor.addChild(root_1, stream_retval.nextTree());</span>
+<span class="nc" id="L1346">						adaptor.addChild(root_1, stream_unary_expr.nextTree());</span>
+<span class="nc" id="L1347">						adaptor.addChild(root_0, root_1);</span>
+						}
+
+					}
+
+
+<span class="nc" id="L1353">					retval.tree = root_0;</span>
+
+					}
+<span class="nc" id="L1356">					break;</span>
+
+				default :
+<span class="nc" id="L1359">					break loop6;</span>
+				}
+<span class="nc" id="L1361">			}</span>
+
+			}
+
+<span class="nc" id="L1365">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1367">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1368">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1371">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1372">			reportError(re);</span>
+<span class="nc" id="L1373">			recover(input,re);</span>
+<span class="nc" id="L1374">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1376">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1378">		}</span>
+<span class="nc" id="L1379">		return retval;</span>
+	}
+	// $ANTLR end &quot;multi_expr&quot;
+
+
+<span class="nc" id="L1384">	public static class multi_operator_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1387">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;multi_operator&quot;
+	// PreprocessorExpressionParser.g:108:1: multi_operator : ( STAR | DIV | MOD );
+	public final PreprocessorExpressionParser.multi_operator_return multi_operator() throws RecognitionException {
+<span class="nc" id="L1394">		PreprocessorExpressionParser.multi_operator_return retval = new PreprocessorExpressionParser.multi_operator_return();</span>
+<span class="nc" id="L1395">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1397">		Object root_0 = null;</span>
+
+<span class="nc" id="L1399">		Token set18=null;</span>
+
+<span class="nc" id="L1401">		Object set18_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:108:16: ( STAR | DIV | MOD )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L1407">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L1410">			set18=input.LT(1);</span>
+<span class="nc bnc" id="L1411" title="All 6 branches missed.">			if ( input.LA(1)==DIV||input.LA(1)==MOD||input.LA(1)==STAR ) {</span>
+<span class="nc" id="L1412">				input.consume();</span>
+<span class="nc" id="L1413">				adaptor.addChild(root_0, (Object)adaptor.create(set18));</span>
+<span class="nc" id="L1414">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L1417">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L1418">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L1422">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1424">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1425">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1428">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1429">			reportError(re);</span>
+<span class="nc" id="L1430">			recover(input,re);</span>
+<span class="nc" id="L1431">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1433">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1435">		}</span>
+<span class="nc" id="L1436">		return retval;</span>
+	}
+	// $ANTLR end &quot;multi_operator&quot;
+
+
+<span class="nc" id="L1441">	public static class unary_expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1444">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;unary_expr&quot;
+	// PreprocessorExpressionParser.g:117:1: unary_expr : ( primary_expr | unary_operator unary_expr -&gt; ^( unary_operator unary_expr ) );
+	public final PreprocessorExpressionParser.unary_expr_return unary_expr() throws RecognitionException {
+<span class="nc" id="L1451">		PreprocessorExpressionParser.unary_expr_return retval = new PreprocessorExpressionParser.unary_expr_return();</span>
+<span class="nc" id="L1452">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1454">		Object root_0 = null;</span>
+
+<span class="nc" id="L1456">		ParserRuleReturnScope primary_expr19 =null;</span>
+<span class="nc" id="L1457">		ParserRuleReturnScope unary_operator20 =null;</span>
+<span class="nc" id="L1458">		ParserRuleReturnScope unary_expr21 =null;</span>
+
+<span class="nc" id="L1460">		RewriteRuleSubtreeStream stream_unary_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule unary_expr&quot;);</span>
+<span class="nc" id="L1461">		RewriteRuleSubtreeStream stream_unary_operator=new RewriteRuleSubtreeStream(adaptor,&quot;rule unary_operator&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:117:12: ( primary_expr | unary_operator unary_expr -&gt; ^( unary_operator unary_expr ) )
+<span class="nc" id="L1465">			int alt7=2;</span>
+<span class="nc" id="L1466">			int LA7_0 = input.LA(1);</span>
+<span class="nc bnc" id="L1467" title="All 118 branches missed.">			if ( ((LA7_0 &gt;= ALIGNAS &amp;&amp; LA7_0 &lt;= ALIGNOF)||LA7_0==ASSIGNS||(LA7_0 &gt;= ATOMIC &amp;&amp; LA7_0 &lt;= AUTO)||(LA7_0 &gt;= BOOL &amp;&amp; LA7_0 &lt;= BREAK)||(LA7_0 &gt;= CALLS &amp;&amp; LA7_0 &lt;= CASE)||LA7_0==CHAR||LA7_0==CHOOSE||LA7_0==COLLECTIVE||(LA7_0 &gt;= COMPLEX &amp;&amp; LA7_0 &lt;= CONST)||(LA7_0 &gt;= CONTINUE &amp;&amp; LA7_0 &lt;= DEPENDS)||LA7_0==DEVICE||LA7_0==DO||LA7_0==DOUBLE||(LA7_0 &gt;= ELSE &amp;&amp; LA7_0 &lt;= ENUM)||LA7_0==EXTERN||(LA7_0 &gt;= FALSE &amp;&amp; LA7_0 &lt;= FOR)||(LA7_0 &gt;= GENERIC &amp;&amp; LA7_0 &lt;= GOTO)||LA7_0==GUARD||LA7_0==HERE||(LA7_0 &gt;= IDENTIFIER &amp;&amp; LA7_0 &lt;= IMAGINARY)||(LA7_0 &gt;= INLINE &amp;&amp; LA7_0 &lt;= INVARIANT)||(LA7_0 &gt;= LONG &amp;&amp; LA7_0 &lt;= LPAREN)||LA7_0==NORETURN||LA7_0==OUTPUT||LA7_0==PP_NUMBER||LA7_0==PROCNULL||LA7_0==READS||(LA7_0 &gt;= REGISTER &amp;&amp; LA7_0 &lt;= RETURN)||LA7_0==SCOPEOF||LA7_0==SELF||LA7_0==SHARED||(LA7_0 &gt;= SHORT &amp;&amp; LA7_0 &lt;= SPAWN)||(LA7_0 &gt;= STATIC &amp;&amp; LA7_0 &lt;= STATICASSERT)||LA7_0==STRUCT||LA7_0==SWITCH||LA7_0==THREADLOCAL||(LA7_0 &gt;= TRUE &amp;&amp; LA7_0 &lt;= TYPEOF)||(LA7_0 &gt;= UNION &amp;&amp; LA7_0 &lt;= UNSIGNED)||(LA7_0 &gt;= VOID &amp;&amp; LA7_0 &lt;= WHILE)||(LA7_0 &gt;= PROC &amp;&amp; LA7_0 &lt;= WAIT)) ) {</span>
+<span class="nc" id="L1468">				alt7=1;</span>
+			}
+<span class="nc bnc" id="L1470" title="All 8 branches missed.">			else if ( (LA7_0==NOT||LA7_0==PLUS||LA7_0==STAR||LA7_0==SUB) ) {</span>
+<span class="nc" id="L1471">				alt7=2;</span>
+			}
+
+			else {
+<span class="nc" id="L1475">				NoViableAltException nvae =</span>
+					new NoViableAltException(&quot;&quot;, 7, 0, input);
+<span class="nc" id="L1477">				throw nvae;</span>
+			}
+
+<span class="nc bnc" id="L1480" title="All 3 branches missed.">			switch (alt7) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:117:14: primary_expr
+					{
+<span class="nc" id="L1484">					root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L1487">					pushFollow(FOLLOW_primary_expr_in_unary_expr464);</span>
+<span class="nc" id="L1488">					primary_expr19=primary_expr();</span>
+<span class="nc" id="L1489">					state._fsp--;</span>
+
+<span class="nc" id="L1491">					adaptor.addChild(root_0, primary_expr19.getTree());</span>
+
+					}
+<span class="nc" id="L1494">					break;</span>
+				case 2 :
+					// PreprocessorExpressionParser.g:118:5: unary_operator unary_expr
+					{
+<span class="nc" id="L1498">					pushFollow(FOLLOW_unary_operator_in_unary_expr470);</span>
+<span class="nc" id="L1499">					unary_operator20=unary_operator();</span>
+<span class="nc" id="L1500">					state._fsp--;</span>
+
+<span class="nc" id="L1502">					stream_unary_operator.add(unary_operator20.getTree());</span>
+<span class="nc" id="L1503">					pushFollow(FOLLOW_unary_expr_in_unary_expr472);</span>
+<span class="nc" id="L1504">					unary_expr21=unary_expr();</span>
+<span class="nc" id="L1505">					state._fsp--;</span>
+
+<span class="nc" id="L1507">					stream_unary_expr.add(unary_expr21.getTree());</span>
+					// AST REWRITE
+					// elements: unary_expr, unary_operator
+					// token labels: 
+					// rule labels: retval
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L1515">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L1516" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L1518">					root_0 = (Object)adaptor.nil();</span>
+					// 118:31: -&gt; ^( unary_operator unary_expr )
+					{
+						// PreprocessorExpressionParser.g:118:34: ^( unary_operator unary_expr )
+						{
+<span class="nc" id="L1523">						Object root_1 = (Object)adaptor.nil();</span>
+<span class="nc" id="L1524">						root_1 = (Object)adaptor.becomeRoot(stream_unary_operator.nextNode(), root_1);</span>
+<span class="nc" id="L1525">						adaptor.addChild(root_1, stream_unary_expr.nextTree());</span>
+<span class="nc" id="L1526">						adaptor.addChild(root_0, root_1);</span>
+						}
+
+					}
+
+
+<span class="nc" id="L1532">					retval.tree = root_0;</span>
+
+					}
+					break;
+
+			}
+<span class="nc" id="L1538">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1540">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1541">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1544">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1545">			reportError(re);</span>
+<span class="nc" id="L1546">			recover(input,re);</span>
+<span class="nc" id="L1547">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1549">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1551">		}</span>
+<span class="nc" id="L1552">		return retval;</span>
+	}
+	// $ANTLR end &quot;unary_expr&quot;
+
+
+<span class="nc" id="L1557">	public static class unary_operator_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1560">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;unary_operator&quot;
+	// PreprocessorExpressionParser.g:121:1: unary_operator : ( PLUS | SUB | NOT | STAR );
+	public final PreprocessorExpressionParser.unary_operator_return unary_operator() throws RecognitionException {
+<span class="nc" id="L1567">		PreprocessorExpressionParser.unary_operator_return retval = new PreprocessorExpressionParser.unary_operator_return();</span>
+<span class="nc" id="L1568">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1570">		Object root_0 = null;</span>
+
+<span class="nc" id="L1572">		Token set22=null;</span>
+
+<span class="nc" id="L1574">		Object set22_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:121:16: ( PLUS | SUB | NOT | STAR )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L1580">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L1583">			set22=input.LT(1);</span>
+<span class="nc bnc" id="L1584" title="All 8 branches missed.">			if ( input.LA(1)==NOT||input.LA(1)==PLUS||input.LA(1)==STAR||input.LA(1)==SUB ) {</span>
+<span class="nc" id="L1585">				input.consume();</span>
+<span class="nc" id="L1586">				adaptor.addChild(root_0, (Object)adaptor.create(set22));</span>
+<span class="nc" id="L1587">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L1590">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L1591">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L1595">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1597">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1598">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1601">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1602">			reportError(re);</span>
+<span class="nc" id="L1603">			recover(input,re);</span>
+<span class="nc" id="L1604">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1606">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1608">		}</span>
+<span class="nc" id="L1609">		return retval;</span>
+	}
+	// $ANTLR end &quot;unary_operator&quot;
+
+
+<span class="nc" id="L1614">	public static class primary_expr_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1617">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;primary_expr&quot;
+	// PreprocessorExpressionParser.g:127:1: primary_expr : ( pp_number | LPAREN expr RPAREN -&gt; expr | DEFINED ( identifier | LPAREN identifier RPAREN ) -&gt; ^( DEFINED identifier ) | identifier );
+	public final PreprocessorExpressionParser.primary_expr_return primary_expr() throws RecognitionException {
+<span class="nc" id="L1624">		PreprocessorExpressionParser.primary_expr_return retval = new PreprocessorExpressionParser.primary_expr_return();</span>
+<span class="nc" id="L1625">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1627">		Object root_0 = null;</span>
+
+<span class="nc" id="L1629">		Token LPAREN24=null;</span>
+<span class="nc" id="L1630">		Token RPAREN26=null;</span>
+<span class="nc" id="L1631">		Token DEFINED27=null;</span>
+<span class="nc" id="L1632">		Token LPAREN29=null;</span>
+<span class="nc" id="L1633">		Token RPAREN31=null;</span>
+<span class="nc" id="L1634">		ParserRuleReturnScope pp_number23 =null;</span>
+<span class="nc" id="L1635">		ParserRuleReturnScope expr25 =null;</span>
+<span class="nc" id="L1636">		ParserRuleReturnScope identifier28 =null;</span>
+<span class="nc" id="L1637">		ParserRuleReturnScope identifier30 =null;</span>
+<span class="nc" id="L1638">		ParserRuleReturnScope identifier32 =null;</span>
+
+<span class="nc" id="L1640">		Object LPAREN24_tree=null;</span>
+<span class="nc" id="L1641">		Object RPAREN26_tree=null;</span>
+<span class="nc" id="L1642">		Object DEFINED27_tree=null;</span>
+<span class="nc" id="L1643">		Object LPAREN29_tree=null;</span>
+<span class="nc" id="L1644">		Object RPAREN31_tree=null;</span>
+<span class="nc" id="L1645">		RewriteRuleTokenStream stream_RPAREN=new RewriteRuleTokenStream(adaptor,&quot;token RPAREN&quot;);</span>
+<span class="nc" id="L1646">		RewriteRuleTokenStream stream_DEFINED=new RewriteRuleTokenStream(adaptor,&quot;token DEFINED&quot;);</span>
+<span class="nc" id="L1647">		RewriteRuleTokenStream stream_LPAREN=new RewriteRuleTokenStream(adaptor,&quot;token LPAREN&quot;);</span>
+<span class="nc" id="L1648">		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,&quot;rule expr&quot;);</span>
+<span class="nc" id="L1649">		RewriteRuleSubtreeStream stream_identifier=new RewriteRuleSubtreeStream(adaptor,&quot;rule identifier&quot;);</span>
+
+		try {
+			// PreprocessorExpressionParser.g:127:14: ( pp_number | LPAREN expr RPAREN -&gt; expr | DEFINED ( identifier | LPAREN identifier RPAREN ) -&gt; ^( DEFINED identifier ) | identifier )
+<span class="nc" id="L1653">			int alt9=4;</span>
+<span class="nc bnc" id="L1654" title="All 5 branches missed.">			switch ( input.LA(1) ) {</span>
+			case FLOATING_CONSTANT:
+			case INTEGER_CONSTANT:
+			case PP_NUMBER:
+				{
+<span class="nc" id="L1659">				alt9=1;</span>
+				}
+<span class="nc" id="L1661">				break;</span>
+			case LPAREN:
+				{
+<span class="nc" id="L1664">				alt9=2;</span>
+				}
+<span class="nc" id="L1666">				break;</span>
+			case DEFINED:
+				{
+<span class="nc" id="L1669">				alt9=3;</span>
+				}
+<span class="nc" id="L1671">				break;</span>
+			case ALIGNAS:
+			case ALIGNOF:
+			case ASSIGNS:
+			case ATOMIC:
+			case AUTO:
+			case BOOL:
+			case BREAK:
+			case CALLS:
+			case CASE:
+			case CHAR:
+			case CHOOSE:
+			case COLLECTIVE:
+			case COMPLEX:
+			case CONST:
+			case CONTINUE:
+			case DEFAULT:
+			case DEPENDS:
+			case DEVICE:
+			case DO:
+			case DOUBLE:
+			case ELSE:
+			case ENSURES:
+			case ENUM:
+			case EXTERN:
+			case FALSE:
+			case FATOMIC:
+			case FLOAT:
+			case FOR:
+			case GENERIC:
+			case GLOBAL:
+			case GOTO:
+			case GUARD:
+			case HERE:
+			case IDENTIFIER:
+			case IF:
+			case IMAGINARY:
+			case INLINE:
+			case INPUT:
+			case INT:
+			case INVARIANT:
+			case LONG:
+			case NORETURN:
+			case OUTPUT:
+			case PROCNULL:
+			case READS:
+			case REGISTER:
+			case REQUIRES:
+			case RESTRICT:
+			case RESULT:
+			case RETURN:
+			case SCOPEOF:
+			case SELF:
+			case SHARED:
+			case SHORT:
+			case SIGNED:
+			case SIZEOF:
+			case SPAWN:
+			case STATIC:
+			case STATICASSERT:
+			case STRUCT:
+			case SWITCH:
+			case THREADLOCAL:
+			case TRUE:
+			case TYPEDEF:
+			case TYPEOF:
+			case UNION:
+			case UNSIGNED:
+			case VOID:
+			case VOLATILE:
+			case WHEN:
+			case WHILE:
+			case PROC:
+			case ROOT:
+			case WAIT:
+				{
+<span class="nc" id="L1747">				alt9=4;</span>
+				}
+<span class="nc" id="L1749">				break;</span>
+			default:
+<span class="nc" id="L1751">				NoViableAltException nvae =</span>
+					new NoViableAltException(&quot;&quot;, 9, 0, input);
+<span class="nc" id="L1753">				throw nvae;</span>
+			}
+<span class="nc bnc" id="L1755" title="All 5 branches missed.">			switch (alt9) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:127:16: pp_number
+					{
+<span class="nc" id="L1759">					root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L1762">					pushFollow(FOLLOW_pp_number_in_primary_expr523);</span>
+<span class="nc" id="L1763">					pp_number23=pp_number();</span>
+<span class="nc" id="L1764">					state._fsp--;</span>
+
+<span class="nc" id="L1766">					adaptor.addChild(root_0, pp_number23.getTree());</span>
+
+					}
+<span class="nc" id="L1769">					break;</span>
+				case 2 :
+					// PreprocessorExpressionParser.g:128:5: LPAREN expr RPAREN
+					{
+<span class="nc" id="L1773">					LPAREN24=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_primary_expr529);  </span>
+<span class="nc" id="L1774">					stream_LPAREN.add(LPAREN24);</span>
+
+<span class="nc" id="L1776">					pushFollow(FOLLOW_expr_in_primary_expr531);</span>
+<span class="nc" id="L1777">					expr25=expr();</span>
+<span class="nc" id="L1778">					state._fsp--;</span>
+
+<span class="nc" id="L1780">					stream_expr.add(expr25.getTree());</span>
+<span class="nc" id="L1781">					RPAREN26=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_primary_expr533);  </span>
+<span class="nc" id="L1782">					stream_RPAREN.add(RPAREN26);</span>
+
+					// AST REWRITE
+					// elements: expr
+					// token labels: 
+					// rule labels: retval
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L1791">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L1792" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L1794">					root_0 = (Object)adaptor.nil();</span>
+					// 128:24: -&gt; expr
+					{
+<span class="nc" id="L1797">						adaptor.addChild(root_0, stream_expr.nextTree());</span>
+					}
+
+
+<span class="nc" id="L1801">					retval.tree = root_0;</span>
+
+					}
+<span class="nc" id="L1804">					break;</span>
+				case 3 :
+					// PreprocessorExpressionParser.g:129:5: DEFINED ( identifier | LPAREN identifier RPAREN )
+					{
+<span class="nc" id="L1808">					DEFINED27=(Token)match(input,DEFINED,FOLLOW_DEFINED_in_primary_expr543);  </span>
+<span class="nc" id="L1809">					stream_DEFINED.add(DEFINED27);</span>
+
+					// PreprocessorExpressionParser.g:129:13: ( identifier | LPAREN identifier RPAREN )
+<span class="nc" id="L1812">					int alt8=2;</span>
+<span class="nc" id="L1813">					int LA8_0 = input.LA(1);</span>
+<span class="nc bnc" id="L1814" title="All 120 branches missed.">					if ( ((LA8_0 &gt;= ALIGNAS &amp;&amp; LA8_0 &lt;= ALIGNOF)||LA8_0==ASSIGNS||(LA8_0 &gt;= ATOMIC &amp;&amp; LA8_0 &lt;= AUTO)||(LA8_0 &gt;= BOOL &amp;&amp; LA8_0 &lt;= BREAK)||(LA8_0 &gt;= CALLS &amp;&amp; LA8_0 &lt;= CASE)||LA8_0==CHAR||LA8_0==CHOOSE||LA8_0==COLLECTIVE||(LA8_0 &gt;= COMPLEX &amp;&amp; LA8_0 &lt;= CONST)||(LA8_0 &gt;= CONTINUE &amp;&amp; LA8_0 &lt;= DEFAULT)||LA8_0==DEPENDS||LA8_0==DEVICE||LA8_0==DO||LA8_0==DOUBLE||(LA8_0 &gt;= ELSE &amp;&amp; LA8_0 &lt;= ENUM)||LA8_0==EXTERN||(LA8_0 &gt;= FALSE &amp;&amp; LA8_0 &lt;= FLOAT)||LA8_0==FOR||(LA8_0 &gt;= GENERIC &amp;&amp; LA8_0 &lt;= GOTO)||LA8_0==GUARD||LA8_0==HERE||(LA8_0 &gt;= IDENTIFIER &amp;&amp; LA8_0 &lt;= IMAGINARY)||(LA8_0 &gt;= INLINE &amp;&amp; LA8_0 &lt;= INT)||LA8_0==INVARIANT||LA8_0==LONG||LA8_0==NORETURN||LA8_0==OUTPUT||LA8_0==PROCNULL||LA8_0==READS||(LA8_0 &gt;= REGISTER &amp;&amp; LA8_0 &lt;= RETURN)||LA8_0==SCOPEOF||LA8_0==SELF||LA8_0==SHARED||(LA8_0 &gt;= SHORT &amp;&amp; LA8_0 &lt;= SPAWN)||(LA8_0 &gt;= STATIC &amp;&amp; LA8_0 &lt;= STATICASSERT)||LA8_0==STRUCT||LA8_0==SWITCH||LA8_0==THREADLOCAL||(LA8_0 &gt;= TRUE &amp;&amp; LA8_0 &lt;= TYPEOF)||(LA8_0 &gt;= UNION &amp;&amp; LA8_0 &lt;= UNSIGNED)||(LA8_0 &gt;= VOID &amp;&amp; LA8_0 &lt;= WHILE)||(LA8_0 &gt;= PROC &amp;&amp; LA8_0 &lt;= WAIT)) ) {</span>
+<span class="nc" id="L1815">						alt8=1;</span>
+					}
+<span class="nc bnc" id="L1817" title="All 2 branches missed.">					else if ( (LA8_0==LPAREN) ) {</span>
+<span class="nc" id="L1818">						alt8=2;</span>
+					}
+
+					else {
+<span class="nc" id="L1822">						NoViableAltException nvae =</span>
+							new NoViableAltException(&quot;&quot;, 8, 0, input);
+<span class="nc" id="L1824">						throw nvae;</span>
+					}
+
+<span class="nc bnc" id="L1827" title="All 3 branches missed.">					switch (alt8) {</span>
+						case 1 :
+							// PreprocessorExpressionParser.g:129:15: identifier
+							{
+<span class="nc" id="L1831">							pushFollow(FOLLOW_identifier_in_primary_expr547);</span>
+<span class="nc" id="L1832">							identifier28=identifier();</span>
+<span class="nc" id="L1833">							state._fsp--;</span>
+
+<span class="nc" id="L1835">							stream_identifier.add(identifier28.getTree());</span>
+							}
+<span class="nc" id="L1837">							break;</span>
+						case 2 :
+							// PreprocessorExpressionParser.g:129:28: LPAREN identifier RPAREN
+							{
+<span class="nc" id="L1841">							LPAREN29=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_primary_expr551);  </span>
+<span class="nc" id="L1842">							stream_LPAREN.add(LPAREN29);</span>
+
+<span class="nc" id="L1844">							pushFollow(FOLLOW_identifier_in_primary_expr553);</span>
+<span class="nc" id="L1845">							identifier30=identifier();</span>
+<span class="nc" id="L1846">							state._fsp--;</span>
+
+<span class="nc" id="L1848">							stream_identifier.add(identifier30.getTree());</span>
+<span class="nc" id="L1849">							RPAREN31=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_primary_expr555);  </span>
+<span class="nc" id="L1850">							stream_RPAREN.add(RPAREN31);</span>
+
+							}
+							break;
+
+					}
+
+					// AST REWRITE
+					// elements: identifier, DEFINED
+					// token labels: 
+					// rule labels: retval
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+<span class="nc" id="L1864">					retval.tree = root_0;</span>
+<span class="nc bnc" id="L1865" title="All 2 branches missed.">					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,&quot;rule retval&quot;,retval!=null?retval.getTree():null);</span>
+
+<span class="nc" id="L1867">					root_0 = (Object)adaptor.nil();</span>
+					// 130:4: -&gt; ^( DEFINED identifier )
+					{
+						// PreprocessorExpressionParser.g:130:7: ^( DEFINED identifier )
+						{
+<span class="nc" id="L1872">						Object root_1 = (Object)adaptor.nil();</span>
+<span class="nc" id="L1873">						root_1 = (Object)adaptor.becomeRoot(stream_DEFINED.nextNode(), root_1);</span>
+<span class="nc" id="L1874">						adaptor.addChild(root_1, stream_identifier.nextTree());</span>
+<span class="nc" id="L1875">						adaptor.addChild(root_0, root_1);</span>
+						}
+
+					}
+
+
+<span class="nc" id="L1881">					retval.tree = root_0;</span>
+
+					}
+<span class="nc" id="L1884">					break;</span>
+				case 4 :
+					// PreprocessorExpressionParser.g:131:5: identifier
+					{
+<span class="nc" id="L1888">					root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L1891">					pushFollow(FOLLOW_identifier_in_primary_expr574);</span>
+<span class="nc" id="L1892">					identifier32=identifier();</span>
+<span class="nc" id="L1893">					state._fsp--;</span>
+
+<span class="nc" id="L1895">					adaptor.addChild(root_0, identifier32.getTree());</span>
+
+					}
+					break;
+
+			}
+<span class="nc" id="L1901">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1903">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1904">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1907">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1908">			reportError(re);</span>
+<span class="nc" id="L1909">			recover(input,re);</span>
+<span class="nc" id="L1910">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1912">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1914">		}</span>
+<span class="nc" id="L1915">		return retval;</span>
+	}
+	// $ANTLR end &quot;primary_expr&quot;
+
+
+<span class="nc" id="L1920">	public static class white_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1923">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;white&quot;
+	// PreprocessorExpressionParser.g:135:1: white : ( WS | NEWLINE );
+	public final PreprocessorExpressionParser.white_return white() throws RecognitionException {
+<span class="nc" id="L1930">		PreprocessorExpressionParser.white_return retval = new PreprocessorExpressionParser.white_return();</span>
+<span class="nc" id="L1931">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1933">		Object root_0 = null;</span>
+
+<span class="nc" id="L1935">		Token set33=null;</span>
+
+<span class="nc" id="L1937">		Object set33_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:135:8: ( WS | NEWLINE )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L1943">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L1946">			set33=input.LT(1);</span>
+<span class="nc bnc" id="L1947" title="All 4 branches missed.">			if ( input.LA(1)==NEWLINE||input.LA(1)==WS ) {</span>
+<span class="nc" id="L1948">				input.consume();</span>
+<span class="nc" id="L1949">				adaptor.addChild(root_0, (Object)adaptor.create(set33));</span>
+<span class="nc" id="L1950">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L1953">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L1954">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L1958">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L1960">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L1961">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L1964">		catch (RecognitionException re) {</span>
+<span class="nc" id="L1965">			reportError(re);</span>
+<span class="nc" id="L1966">			recover(input,re);</span>
+<span class="nc" id="L1967">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L1969">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L1971">		}</span>
+<span class="nc" id="L1972">		return retval;</span>
+	}
+	// $ANTLR end &quot;white&quot;
+
+
+<span class="nc" id="L1977">	public static class identifier_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L1980">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;identifier&quot;
+	// PreprocessorExpressionParser.g:140:1: identifier : ( IDENTIFIER | c_keyword | civl_keyword | cuda_keyword | gnuc_keyword );
+	public final PreprocessorExpressionParser.identifier_return identifier() throws RecognitionException {
+<span class="nc" id="L1987">		PreprocessorExpressionParser.identifier_return retval = new PreprocessorExpressionParser.identifier_return();</span>
+<span class="nc" id="L1988">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L1990">		Object root_0 = null;</span>
+
+<span class="nc" id="L1992">		Token IDENTIFIER34=null;</span>
+<span class="nc" id="L1993">		ParserRuleReturnScope c_keyword35 =null;</span>
+<span class="nc" id="L1994">		ParserRuleReturnScope civl_keyword36 =null;</span>
+<span class="nc" id="L1995">		ParserRuleReturnScope cuda_keyword37 =null;</span>
+<span class="nc" id="L1996">		ParserRuleReturnScope gnuc_keyword38 =null;</span>
+
+<span class="nc" id="L1998">		Object IDENTIFIER34_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:140:12: ( IDENTIFIER | c_keyword | civl_keyword | cuda_keyword | gnuc_keyword )
+<span class="nc" id="L2002">			int alt10=5;</span>
+<span class="nc bnc" id="L2003" title="All 6 branches missed.">			switch ( input.LA(1) ) {</span>
+			case IDENTIFIER:
+				{
+<span class="nc" id="L2006">				alt10=1;</span>
+				}
+<span class="nc" id="L2008">				break;</span>
+			case ALIGNAS:
+			case ALIGNOF:
+			case ATOMIC:
+			case AUTO:
+			case BOOL:
+			case BREAK:
+			case CASE:
+			case CHAR:
+			case COMPLEX:
+			case CONST:
+			case CONTINUE:
+			case DEFAULT:
+			case DO:
+			case DOUBLE:
+			case ELSE:
+			case ENUM:
+			case EXTERN:
+			case FLOAT:
+			case FOR:
+			case GENERIC:
+			case GOTO:
+			case IF:
+			case IMAGINARY:
+			case INLINE:
+			case INT:
+			case LONG:
+			case NORETURN:
+			case REGISTER:
+			case RESTRICT:
+			case RETURN:
+			case SCOPEOF:
+			case SHORT:
+			case SIGNED:
+			case SIZEOF:
+			case STATIC:
+			case STATICASSERT:
+			case STRUCT:
+			case SWITCH:
+			case THREADLOCAL:
+			case TYPEDEF:
+			case UNION:
+			case UNSIGNED:
+			case VOID:
+			case VOLATILE:
+			case WHILE:
+				{
+<span class="nc" id="L2055">				alt10=2;</span>
+				}
+<span class="nc" id="L2057">				break;</span>
+			case ASSIGNS:
+			case CALLS:
+			case CHOOSE:
+			case COLLECTIVE:
+			case DEPENDS:
+			case ENSURES:
+			case FALSE:
+			case FATOMIC:
+			case GUARD:
+			case HERE:
+			case INPUT:
+			case INVARIANT:
+			case OUTPUT:
+			case PROCNULL:
+			case READS:
+			case REQUIRES:
+			case RESULT:
+			case SELF:
+			case SPAWN:
+			case TRUE:
+			case WHEN:
+			case PROC:
+			case ROOT:
+			case WAIT:
+				{
+<span class="nc" id="L2083">				alt10=3;</span>
+				}
+<span class="nc" id="L2085">				break;</span>
+			case DEVICE:
+			case GLOBAL:
+			case SHARED:
+				{
+<span class="nc" id="L2090">				alt10=4;</span>
+				}
+<span class="nc" id="L2092">				break;</span>
+			case TYPEOF:
+				{
+<span class="nc" id="L2095">				alt10=5;</span>
+				}
+<span class="nc" id="L2097">				break;</span>
+			default:
+<span class="nc" id="L2099">				NoViableAltException nvae =</span>
+					new NoViableAltException(&quot;&quot;, 10, 0, input);
+<span class="nc" id="L2101">				throw nvae;</span>
+			}
+<span class="nc bnc" id="L2103" title="All 6 branches missed.">			switch (alt10) {</span>
+				case 1 :
+					// PreprocessorExpressionParser.g:140:14: IDENTIFIER
+					{
+<span class="nc" id="L2107">					root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2110">					IDENTIFIER34=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_identifier605); </span>
+<span class="nc" id="L2111">					IDENTIFIER34_tree = (Object)adaptor.create(IDENTIFIER34);</span>
+<span class="nc" id="L2112">					adaptor.addChild(root_0, IDENTIFIER34_tree);</span>
+
+					}
+<span class="nc" id="L2115">					break;</span>
+				case 2 :
+					// PreprocessorExpressionParser.g:140:27: c_keyword
+					{
+<span class="nc" id="L2119">					root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2122">					pushFollow(FOLLOW_c_keyword_in_identifier609);</span>
+<span class="nc" id="L2123">					c_keyword35=c_keyword();</span>
+<span class="nc" id="L2124">					state._fsp--;</span>
+
+<span class="nc" id="L2126">					adaptor.addChild(root_0, c_keyword35.getTree());</span>
+
+					}
+<span class="nc" id="L2129">					break;</span>
+				case 3 :
+					// PreprocessorExpressionParser.g:140:39: civl_keyword
+					{
+<span class="nc" id="L2133">					root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2136">					pushFollow(FOLLOW_civl_keyword_in_identifier613);</span>
+<span class="nc" id="L2137">					civl_keyword36=civl_keyword();</span>
+<span class="nc" id="L2138">					state._fsp--;</span>
+
+<span class="nc" id="L2140">					adaptor.addChild(root_0, civl_keyword36.getTree());</span>
+
+					}
+<span class="nc" id="L2143">					break;</span>
+				case 4 :
+					// PreprocessorExpressionParser.g:140:54: cuda_keyword
+					{
+<span class="nc" id="L2147">					root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2150">					pushFollow(FOLLOW_cuda_keyword_in_identifier617);</span>
+<span class="nc" id="L2151">					cuda_keyword37=cuda_keyword();</span>
+<span class="nc" id="L2152">					state._fsp--;</span>
+
+<span class="nc" id="L2154">					adaptor.addChild(root_0, cuda_keyword37.getTree());</span>
+
+					}
+<span class="nc" id="L2157">					break;</span>
+				case 5 :
+					// PreprocessorExpressionParser.g:140:69: gnuc_keyword
+					{
+<span class="nc" id="L2161">					root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2164">					pushFollow(FOLLOW_gnuc_keyword_in_identifier621);</span>
+<span class="nc" id="L2165">					gnuc_keyword38=gnuc_keyword();</span>
+<span class="nc" id="L2166">					state._fsp--;</span>
+
+<span class="nc" id="L2168">					adaptor.addChild(root_0, gnuc_keyword38.getTree());</span>
+
+					}
+					break;
+
+			}
+<span class="nc" id="L2174">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L2176">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L2177">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L2180">		catch (RecognitionException re) {</span>
+<span class="nc" id="L2181">			reportError(re);</span>
+<span class="nc" id="L2182">			recover(input,re);</span>
+<span class="nc" id="L2183">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L2185">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L2187">		}</span>
+<span class="nc" id="L2188">		return retval;</span>
+	}
+	// $ANTLR end &quot;identifier&quot;
+
+
+<span class="nc" id="L2193">	public static class c_keyword_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L2196">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;c_keyword&quot;
+	// PreprocessorExpressionParser.g:142:1: c_keyword : ( AUTO | BREAK | CASE | CHAR | CONST | CONTINUE | DEFAULT | DO | DOUBLE | ELSE | ENUM | EXTERN | FLOAT | FOR | GOTO | IF | INLINE | INT | LONG | REGISTER | RESTRICT | RETURN | SHORT | SIGNED | SIZEOF | SCOPEOF | STATIC | STRUCT | SWITCH | TYPEDEF | UNION | UNSIGNED | VOID | VOLATILE | WHILE | ALIGNAS | ALIGNOF | ATOMIC | BOOL | COMPLEX | GENERIC | IMAGINARY | NORETURN | STATICASSERT | THREADLOCAL );
+	public final PreprocessorExpressionParser.c_keyword_return c_keyword() throws RecognitionException {
+<span class="nc" id="L2203">		PreprocessorExpressionParser.c_keyword_return retval = new PreprocessorExpressionParser.c_keyword_return();</span>
+<span class="nc" id="L2204">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L2206">		Object root_0 = null;</span>
+
+<span class="nc" id="L2208">		Token set39=null;</span>
+
+<span class="nc" id="L2210">		Object set39_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:142:11: ( AUTO | BREAK | CASE | CHAR | CONST | CONTINUE | DEFAULT | DO | DOUBLE | ELSE | ENUM | EXTERN | FLOAT | FOR | GOTO | IF | INLINE | INT | LONG | REGISTER | RESTRICT | RETURN | SHORT | SIGNED | SIZEOF | SCOPEOF | STATIC | STRUCT | SWITCH | TYPEDEF | UNION | UNSIGNED | VOID | VOLATILE | WHILE | ALIGNAS | ALIGNOF | ATOMIC | BOOL | COMPLEX | GENERIC | IMAGINARY | NORETURN | STATICASSERT | THREADLOCAL )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L2216">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2219">			set39=input.LT(1);</span>
+<span class="nc bnc" id="L2220" title="All 88 branches missed.">			if ( (input.LA(1) &gt;= ALIGNAS &amp;&amp; input.LA(1) &lt;= ALIGNOF)||(input.LA(1) &gt;= ATOMIC &amp;&amp; input.LA(1) &lt;= AUTO)||(input.LA(1) &gt;= BOOL &amp;&amp; input.LA(1) &lt;= BREAK)||input.LA(1)==CASE||input.LA(1)==CHAR||(input.LA(1) &gt;= COMPLEX &amp;&amp; input.LA(1) &lt;= CONST)||(input.LA(1) &gt;= CONTINUE &amp;&amp; input.LA(1) &lt;= DEFAULT)||input.LA(1)==DO||input.LA(1)==DOUBLE||input.LA(1)==ELSE||input.LA(1)==ENUM||input.LA(1)==EXTERN||input.LA(1)==FLOAT||input.LA(1)==FOR||input.LA(1)==GENERIC||input.LA(1)==GOTO||(input.LA(1) &gt;= IF &amp;&amp; input.LA(1) &lt;= IMAGINARY)||input.LA(1)==INLINE||input.LA(1)==INT||input.LA(1)==LONG||input.LA(1)==NORETURN||input.LA(1)==REGISTER||input.LA(1)==RESTRICT||input.LA(1)==RETURN||input.LA(1)==SCOPEOF||(input.LA(1) &gt;= SHORT &amp;&amp; input.LA(1) &lt;= SIZEOF)||(input.LA(1) &gt;= STATIC &amp;&amp; input.LA(1) &lt;= STATICASSERT)||input.LA(1)==STRUCT||input.LA(1)==SWITCH||input.LA(1)==THREADLOCAL||input.LA(1)==TYPEDEF||(input.LA(1) &gt;= UNION &amp;&amp; input.LA(1) &lt;= UNSIGNED)||(input.LA(1) &gt;= VOID &amp;&amp; input.LA(1) &lt;= VOLATILE)||input.LA(1)==WHILE ) {</span>
+<span class="nc" id="L2221">				input.consume();</span>
+<span class="nc" id="L2222">				adaptor.addChild(root_0, (Object)adaptor.create(set39));</span>
+<span class="nc" id="L2223">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L2226">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L2227">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L2231">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L2233">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L2234">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L2237">		catch (RecognitionException re) {</span>
+<span class="nc" id="L2238">			reportError(re);</span>
+<span class="nc" id="L2239">			recover(input,re);</span>
+<span class="nc" id="L2240">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L2242">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L2244">		}</span>
+<span class="nc" id="L2245">		return retval;</span>
+	}
+	// $ANTLR end &quot;c_keyword&quot;
+
+
+<span class="nc" id="L2250">	public static class civl_keyword_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L2253">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;civl_keyword&quot;
+	// PreprocessorExpressionParser.g:151:1: civl_keyword : ( ASSIGNS | CHOOSE | COLLECTIVE | DEPENDS | ENSURES | FALSE | GUARD | INPUT | INVARIANT | OUTPUT | PROC | READS | REQUIRES | RESULT | SELF | PROCNULL | SPAWN | TRUE | HERE | ROOT | WAIT | WHEN | FATOMIC | CALLS );
+	public final PreprocessorExpressionParser.civl_keyword_return civl_keyword() throws RecognitionException {
+<span class="nc" id="L2260">		PreprocessorExpressionParser.civl_keyword_return retval = new PreprocessorExpressionParser.civl_keyword_return();</span>
+<span class="nc" id="L2261">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L2263">		Object root_0 = null;</span>
+
+<span class="nc" id="L2265">		Token set40=null;</span>
+
+<span class="nc" id="L2267">		Object set40_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:151:14: ( ASSIGNS | CHOOSE | COLLECTIVE | DEPENDS | ENSURES | FALSE | GUARD | INPUT | INVARIANT | OUTPUT | PROC | READS | REQUIRES | RESULT | SELF | PROCNULL | SPAWN | TRUE | HERE | ROOT | WAIT | WHEN | FATOMIC | CALLS )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L2273">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2276">			set40=input.LT(1);</span>
+<span class="nc bnc" id="L2277" title="All 46 branches missed.">			if ( input.LA(1)==ASSIGNS||input.LA(1)==CALLS||input.LA(1)==CHOOSE||input.LA(1)==COLLECTIVE||input.LA(1)==DEPENDS||input.LA(1)==ENSURES||(input.LA(1) &gt;= FALSE &amp;&amp; input.LA(1) &lt;= FATOMIC)||input.LA(1)==GUARD||input.LA(1)==HERE||input.LA(1)==INPUT||input.LA(1)==INVARIANT||input.LA(1)==OUTPUT||input.LA(1)==PROCNULL||input.LA(1)==READS||input.LA(1)==REQUIRES||input.LA(1)==RESULT||input.LA(1)==SELF||input.LA(1)==SPAWN||input.LA(1)==TRUE||input.LA(1)==WHEN||(input.LA(1) &gt;= PROC &amp;&amp; input.LA(1) &lt;= WAIT) ) {</span>
+<span class="nc" id="L2278">				input.consume();</span>
+<span class="nc" id="L2279">				adaptor.addChild(root_0, (Object)adaptor.create(set40));</span>
+<span class="nc" id="L2280">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L2283">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L2284">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L2288">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L2290">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L2291">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L2294">		catch (RecognitionException re) {</span>
+<span class="nc" id="L2295">			reportError(re);</span>
+<span class="nc" id="L2296">			recover(input,re);</span>
+<span class="nc" id="L2297">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L2299">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L2301">		}</span>
+<span class="nc" id="L2302">		return retval;</span>
+	}
+	// $ANTLR end &quot;civl_keyword&quot;
+
+
+<span class="nc" id="L2307">	public static class gnuc_keyword_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L2310">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;gnuc_keyword&quot;
+	// PreprocessorExpressionParser.g:158:1: gnuc_keyword : TYPEOF ;
+	public final PreprocessorExpressionParser.gnuc_keyword_return gnuc_keyword() throws RecognitionException {
+<span class="nc" id="L2317">		PreprocessorExpressionParser.gnuc_keyword_return retval = new PreprocessorExpressionParser.gnuc_keyword_return();</span>
+<span class="nc" id="L2318">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L2320">		Object root_0 = null;</span>
+
+<span class="nc" id="L2322">		Token TYPEOF41=null;</span>
+
+<span class="nc" id="L2324">		Object TYPEOF41_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:158:15: ( TYPEOF )
+			// PreprocessorExpressionParser.g:158:18: TYPEOF
+			{
+<span class="nc" id="L2330">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2333">			TYPEOF41=(Token)match(input,TYPEOF,FOLLOW_TYPEOF_in_gnuc_keyword945); </span>
+<span class="nc" id="L2334">			TYPEOF41_tree = (Object)adaptor.create(TYPEOF41);</span>
+<span class="nc" id="L2335">			adaptor.addChild(root_0, TYPEOF41_tree);</span>
+
+			}
+
+<span class="nc" id="L2339">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L2341">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L2342">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L2345">		catch (RecognitionException re) {</span>
+<span class="nc" id="L2346">			reportError(re);</span>
+<span class="nc" id="L2347">			recover(input,re);</span>
+<span class="nc" id="L2348">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L2350">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L2352">		}</span>
+<span class="nc" id="L2353">		return retval;</span>
+	}
+	// $ANTLR end &quot;gnuc_keyword&quot;
+
+
+<span class="nc" id="L2358">	public static class cuda_keyword_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L2361">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;cuda_keyword&quot;
+	// PreprocessorExpressionParser.g:160:1: cuda_keyword : ( DEVICE | GLOBAL | SHARED );
+	public final PreprocessorExpressionParser.cuda_keyword_return cuda_keyword() throws RecognitionException {
+<span class="nc" id="L2368">		PreprocessorExpressionParser.cuda_keyword_return retval = new PreprocessorExpressionParser.cuda_keyword_return();</span>
+<span class="nc" id="L2369">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L2371">		Object root_0 = null;</span>
+
+<span class="nc" id="L2373">		Token set42=null;</span>
+
+<span class="nc" id="L2375">		Object set42_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:160:14: ( DEVICE | GLOBAL | SHARED )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L2381">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2384">			set42=input.LT(1);</span>
+<span class="nc bnc" id="L2385" title="All 6 branches missed.">			if ( input.LA(1)==DEVICE||input.LA(1)==GLOBAL||input.LA(1)==SHARED ) {</span>
+<span class="nc" id="L2386">				input.consume();</span>
+<span class="nc" id="L2387">				adaptor.addChild(root_0, (Object)adaptor.create(set42));</span>
+<span class="nc" id="L2388">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L2391">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L2392">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L2396">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L2398">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L2399">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L2402">		catch (RecognitionException re) {</span>
+<span class="nc" id="L2403">			reportError(re);</span>
+<span class="nc" id="L2404">			recover(input,re);</span>
+<span class="nc" id="L2405">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L2407">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L2409">		}</span>
+<span class="nc" id="L2410">		return retval;</span>
+	}
+	// $ANTLR end &quot;cuda_keyword&quot;
+
+
+<span class="nc" id="L2415">	public static class pp_number_return extends ParserRuleReturnScope {</span>
+		Object tree;
+		@Override
+<span class="nc" id="L2418">		public Object getTree() { return tree; }</span>
+	};
+
+
+	// $ANTLR start &quot;pp_number&quot;
+	// PreprocessorExpressionParser.g:165:1: pp_number : ( INTEGER_CONSTANT | FLOATING_CONSTANT | PP_NUMBER );
+	public final PreprocessorExpressionParser.pp_number_return pp_number() throws RecognitionException {
+<span class="nc" id="L2425">		PreprocessorExpressionParser.pp_number_return retval = new PreprocessorExpressionParser.pp_number_return();</span>
+<span class="nc" id="L2426">		retval.start = input.LT(1);</span>
+
+<span class="nc" id="L2428">		Object root_0 = null;</span>
+
+<span class="nc" id="L2430">		Token set43=null;</span>
+
+<span class="nc" id="L2432">		Object set43_tree=null;</span>
+
+		try {
+			// PreprocessorExpressionParser.g:165:11: ( INTEGER_CONSTANT | FLOATING_CONSTANT | PP_NUMBER )
+			// PreprocessorExpressionParser.g:
+			{
+<span class="nc" id="L2438">			root_0 = (Object)adaptor.nil();</span>
+
+
+<span class="nc" id="L2441">			set43=input.LT(1);</span>
+<span class="nc bnc" id="L2442" title="All 6 branches missed.">			if ( input.LA(1)==FLOATING_CONSTANT||input.LA(1)==INTEGER_CONSTANT||input.LA(1)==PP_NUMBER ) {</span>
+<span class="nc" id="L2443">				input.consume();</span>
+<span class="nc" id="L2444">				adaptor.addChild(root_0, (Object)adaptor.create(set43));</span>
+<span class="nc" id="L2445">				state.errorRecovery=false;</span>
+			}
+			else {
+<span class="nc" id="L2448">				MismatchedSetException mse = new MismatchedSetException(null,input);</span>
+<span class="nc" id="L2449">				throw mse;</span>
+			}
+			}
+
+<span class="nc" id="L2453">			retval.stop = input.LT(-1);</span>
+
+<span class="nc" id="L2455">			retval.tree = (Object)adaptor.rulePostProcessing(root_0);</span>
+<span class="nc" id="L2456">			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);</span>
+
+		}
+<span class="nc" id="L2459">		catch (RecognitionException re) {</span>
+<span class="nc" id="L2460">			reportError(re);</span>
+<span class="nc" id="L2461">			recover(input,re);</span>
+<span class="nc" id="L2462">			retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);</span>
+		}
+<span class="nc" id="L2464">		finally {</span>
+			// do for sure before leaving
+<span class="nc" id="L2466">		}</span>
+<span class="nc" id="L2467">		return retval;</span>
+	}
+	// $ANTLR end &quot;pp_number&quot;
+
+	// Delegated rules
+
+
+
+<span class="nc" id="L2475">	public static final BitSet FOLLOW_expr_in_start56 = new BitSet(new long[]{0x0000000000000000L});</span>
+<span class="nc" id="L2476">	public static final BitSet FOLLOW_EOF_in_start58 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2477">	public static final BitSet FOLLOW_logical_or_expr_in_expr75 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2478">	public static final BitSet FOLLOW_logical_and_expr_in_logical_or_expr89 = new BitSet(new long[]{0x0000000000000002L,0x0400000000000000L});</span>
+<span class="nc" id="L2479">	public static final BitSet FOLLOW_OR_in_logical_or_expr100 = new BitSet(new long[]{0x4E112F622B606860L,0x10300187DC044E3EL,0xDD5B7C2A1F414800L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2480">	public static final BitSet FOLLOW_logical_and_expr_in_logical_or_expr104 = new BitSet(new long[]{0x0000000000000002L,0x0400000000000000L});</span>
+<span class="nc" id="L2481">	public static final BitSet FOLLOW_equality_expr_in_logical_and_expr131 = new BitSet(new long[]{0x0000000000000102L});</span>
+<span class="nc" id="L2482">	public static final BitSet FOLLOW_AND_in_logical_and_expr142 = new BitSet(new long[]{0x4E112F622B606860L,0x10300187DC044E3EL,0xDD5B7C2A1F414800L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2483">	public static final BitSet FOLLOW_equality_expr_in_logical_and_expr146 = new BitSet(new long[]{0x0000000000000102L});</span>
+<span class="nc" id="L2484">	public static final BitSet FOLLOW_relational_expr_in_equality_expr174 = new BitSet(new long[]{0x1000000000000002L,0x0004000000000000L});</span>
+<span class="nc" id="L2485">	public static final BitSet FOLLOW_equality_operator_in_equality_expr187 = new BitSet(new long[]{0x4E112F622B606860L,0x10300187DC044E3EL,0xDD5B7C2A1F414800L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2486">	public static final BitSet FOLLOW_relational_expr_in_equality_expr191 = new BitSet(new long[]{0x1000000000000002L,0x0004000000000000L});</span>
+<span class="nc" id="L2487">	public static final BitSet FOLLOW_additive_expr_in_relational_expr245 = new BitSet(new long[]{0x0000000000000002L,0x0000180000003000L});</span>
+<span class="nc" id="L2488">	public static final BitSet FOLLOW_relational_operator_in_relational_expr258 = new BitSet(new long[]{0x4E112F622B606860L,0x10300187DC044E3EL,0xDD5B7C2A1F414800L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2489">	public static final BitSet FOLLOW_additive_expr_in_relational_expr262 = new BitSet(new long[]{0x0000000000000002L,0x0000180000003000L});</span>
+<span class="nc" id="L2490">	public static final BitSet FOLLOW_multi_expr_in_additive_expr328 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000000L,0x0010000000000800L});</span>
+<span class="nc" id="L2491">	public static final BitSet FOLLOW_additive_operator_in_additive_expr339 = new BitSet(new long[]{0x4E112F622B606860L,0x10300187DC044E3EL,0xDD5B7C2A1F414800L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2492">	public static final BitSet FOLLOW_multi_expr_in_additive_expr343 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000000L,0x0010000000000800L});</span>
+<span class="nc" id="L2493">	public static final BitSet FOLLOW_unary_expr_in_multi_expr396 = new BitSet(new long[]{0x0000400000000002L,0x0001000000000000L,0x0000400000000000L});</span>
+<span class="nc" id="L2494">	public static final BitSet FOLLOW_multi_operator_in_multi_expr407 = new BitSet(new long[]{0x4E112F622B606860L,0x10300187DC044E3EL,0xDD5B7C2A1F414800L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2495">	public static final BitSet FOLLOW_unary_expr_in_multi_expr409 = new BitSet(new long[]{0x0000400000000002L,0x0001000000000000L,0x0000400000000000L});</span>
+<span class="nc" id="L2496">	public static final BitSet FOLLOW_primary_expr_in_unary_expr464 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2497">	public static final BitSet FOLLOW_unary_operator_in_unary_expr470 = new BitSet(new long[]{0x4E112F622B606860L,0x10300187DC044E3EL,0xDD5B7C2A1F414800L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2498">	public static final BitSet FOLLOW_unary_expr_in_unary_expr472 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2499">	public static final BitSet FOLLOW_pp_number_in_primary_expr523 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2500">	public static final BitSet FOLLOW_LPAREN_in_primary_expr529 = new BitSet(new long[]{0x4E112F622B606860L,0x10300187DC044E3EL,0xDD5B7C2A1F414800L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2501">	public static final BitSet FOLLOW_expr_in_primary_expr531 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000040000000L});</span>
+<span class="nc" id="L2502">	public static final BitSet FOLLOW_RPAREN_in_primary_expr533 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2503">	public static final BitSet FOLLOW_DEFINED_in_primary_expr543 = new BitSet(new long[]{0x4E112B622B606860L,0x10100185DC044E2EL,0xDD4B3C2A1F410000L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2504">	public static final BitSet FOLLOW_identifier_in_primary_expr547 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2505">	public static final BitSet FOLLOW_LPAREN_in_primary_expr551 = new BitSet(new long[]{0x4E112B622B606860L,0x10100085DC044E2EL,0xDD4B3C2A1F410000L,0x0000000000000E3CL});</span>
+<span class="nc" id="L2506">	public static final BitSet FOLLOW_identifier_in_primary_expr553 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000040000000L});</span>
+<span class="nc" id="L2507">	public static final BitSet FOLLOW_RPAREN_in_primary_expr555 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2508">	public static final BitSet FOLLOW_identifier_in_primary_expr574 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2509">	public static final BitSet FOLLOW_IDENTIFIER_in_identifier605 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2510">	public static final BitSet FOLLOW_c_keyword_in_identifier609 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2511">	public static final BitSet FOLLOW_civl_keyword_in_identifier613 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2512">	public static final BitSet FOLLOW_cuda_keyword_in_identifier617 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2513">	public static final BitSet FOLLOW_gnuc_keyword_in_identifier621 = new BitSet(new long[]{0x0000000000000002L});</span>
+<span class="nc" id="L2514">	public static final BitSet FOLLOW_TYPEOF_in_gnuc_keyword945 = new BitSet(new long[]{0x0000000000000002L});</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,10 @@
+# This properties file is intended for configuring vsl, 
+# our server for all tests. If the environment of vsl is
+# changed, then this file need to be updated accordingly.
+root=/opt/vsl
+antlr.jar=${root}/lib/antlr-complete.jar
+antlr.runtime.jar=${root}/lib/antlr-runtime.jar
+hamcrest.jar=${root}/lib/hamcrest-core.jar
+jacoco.jar=${root}/src/jacoco/lib/jacocoant.jar
+junit.jar=${root}/lib/junit.jar
+sarl.jar=/usa/svn/work/sarl/trunk/latest/sarl.jar

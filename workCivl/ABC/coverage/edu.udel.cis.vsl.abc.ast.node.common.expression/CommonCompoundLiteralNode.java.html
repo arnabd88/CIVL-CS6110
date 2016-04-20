@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonCompoundLiteralNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.expression</a> &gt; <span class="el_source">CommonCompoundLiteralNode.java</span></div><h1>CommonCompoundLiteralNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.expression;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CompoundLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonCompoundLiteralNode extends CommonExpressionNode implements
+		CompoundLiteralNode {
+
+	public CommonCompoundLiteralNode(Source source, TypeNode typeNode,
+			CompoundInitializerNode initializerList) {
+<span class="nc" id="L15">		super(source, typeNode, initializerList);</span>
+<span class="nc" id="L16">	}</span>
+
+	@Override
+	public boolean isConstantExpression() {
+<span class="nc" id="L20">		return false;</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L25">		out.print(&quot;CompoundLiteralNode&quot;);</span>
+<span class="nc" id="L26">	}</span>
+
+	@Override
+	public TypeNode getTypeNode() {
+<span class="nc" id="L30">		return (TypeNode) this.child(0);</span>
+	}
+
+	@Override
+	public CompoundInitializerNode getInitializerList() {
+<span class="nc" id="L35">		return (CompoundInitializerNode) this.child(1);</span>
+	}
+
+	@Override
+	public CompoundLiteralNode copy() {
+<span class="nc" id="L40">		return new CommonCompoundLiteralNode(getSource(),</span>
+<span class="nc" id="L41">				duplicate(getTypeNode()), duplicate(getInitializerList()));</span>
+	}
+
+	@Override
+	public ExpressionKind expressionKind() {
+<span class="nc" id="L46">		return ExpressionKind.COMPOUND_LITERAL;</span>
+	}
+
+	@Override
+	public boolean isSideEffectFree(boolean errorsAreSideEffects) {
+<span class="nc" id="L51">		return getInitializerList().isSideEffectFree(errorsAreSideEffects);</span>
+	}
+
+	@Override
+	public void setInitializerList(CompoundInitializerNode arg) {
+<span class="nc" id="L56">		setChild(1, arg);</span>
+<span class="nc" id="L57">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

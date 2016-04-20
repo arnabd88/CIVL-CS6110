@@ -1,0 +1,58 @@
+#include<civlc.cvh>
+int n = 0;
+void foo(){
+  int k = n;
+  k = k + 1;
+}
+
+void main(){
+  int i = 0;
+  
+  $atomic{
+    if(i < 0)
+      i = 1;
+    else 
+      i = 2;
+  }
+	
+  $atomic
+    if(i < 0)
+      i = 1;
+    else 
+      i = 2;
+  
+  $assert(i == 2);
+	
+  $atomic{
+    switch(i){
+    case 1: i = 2;
+    case 2: i = 3;
+    default: i = 5;
+    }
+  }
+  
+  $assert(i == 5);
+	
+  $atomic{
+    i = 0;
+    for(int j = 0; j < 10; j++){
+      i += j;
+    }
+  }
+	
+  $assert(i == 45);
+	
+  $spawn foo();
+  
+  //nested atomic and non-pure-local atomic block
+  $atomic{
+    n += 1;
+    $atomic{
+      i+=2;
+      i += 3; 
+    }
+    n += 9;
+  }
+	
+  $assert(n == 10);
+}

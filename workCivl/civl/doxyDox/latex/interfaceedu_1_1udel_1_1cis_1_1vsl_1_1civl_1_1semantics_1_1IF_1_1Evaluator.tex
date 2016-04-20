@@ -1,0 +1,632 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator}}
+
+
+This is the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} main evaluator.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a7d053e0a012c65e8c285b55d69d0d1cb}{dereference} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} pointer\+Expression, Symbolic\+Expression pointer, boolean checked\+Output)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Given a pointer value, dereferences it in the given state to yield the symbolic expression value stored at the referenced location. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_aebbf366a34283a80cf1b6ec599fc7b47}{error\+Logger} ()
+\begin{DoxyCompactList}\small\item\em Returns the error logger object of this evaluator. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_af2a23ba023164864718980818e53568a}{evaluate} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} expression, boolean check\+Undefined\+Value)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Evaluates the expression and returns the result, which is a symbolic expression value. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a5e40aabad431e530f457cc9a606faf43}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} {\bfseries evaluate} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} expression)  throws Unsatisfiable\+Path\+Condition\+Exception\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a5e40aabad431e530f457cc9a606faf43}
+
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Triple}{Triple}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function}, Integer $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ae088a8a0262cf90f2e5c8febab999d43}{evaluate\+Function\+Identifier} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} function\+Pointer, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Evaluates a function pointer expression. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a5cfbcaf3d75bd2b4d6ba31451b25b4f5}{evaluate\+Sizeof\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Evaluate the size of a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a86629e51ec364d6e9996b116dd6fba47}{get\+String\+Expression} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression char\+Pointer)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Given a pointer to char, returns the symbolic expression of type array of char which is the string pointed to. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_aa0450cda9d9457f31fbd68076a564bc4}{model\+Factory} ()
+\begin{DoxyCompactList}\small\item\em The model factory should be the unique one used in the system. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ab051cc7155755a0c75b56f1cffd87cc0}{pointer\+Add} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}{Binary\+Expression} expression, Symbolic\+Expression pointer, Numeric\+Expression offset)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Evaluates pointer addition. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_addbd6a2316ecd2e89bd29c3f1d878b1a}{pointer\+Subtraction} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1BinaryExpression}{Binary\+Expression} expression, Symbolic\+Expression left\+Ptr, Symbolic\+Expression right\+Ptr)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} pointer subtraction. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a8ae34a0c82e4e2dcd91ec5e94daa908a}{reference} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} operand)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Creates a pointer value by evaluating a left-\/hand-\/side expression in the given state. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_afd5e399d742b2fcb8bf20d9a354ed925}{state\+Factory} ()
+\begin{DoxyCompactList}\small\item\em The state factory should be the unique one used in the system. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a9520cf53287c29ab57e22da335ead295}{symbolic\+Utility} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic utility object of this evaluator. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_afe4e831762502e4a5b43eeaa89a9396c}{symbolic\+Analyzer} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic analyzer object of this evaluator. \end{DoxyCompactList}\item 
+Symbolic\+Universe \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a0a9ac7185a439c0eb14ee08d6d9d1694}{universe} ()
+\begin{DoxyCompactList}\small\item\em The symbolic universe should be the unique one used in the system. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a162e0e5ca97cb8387262320d948f6d7f}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Triple}{Triple}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, String\+Buffer, Boolean $>$ {\bfseries get\+String} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} char\+Pointer\+Expr, Symbolic\+Expression char\+Pointer)  throws Unsatisfiable\+Path\+Condition\+Exception\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a162e0e5ca97cb8387262320d948f6d7f}
+
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation}, Numeric\+Expression\mbox{[}$\,$\mbox{]}$>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a472056af07db8c828ad7a65de4e1e1a1}{evaluate\+Pointer\+Add} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, Symbolic\+Expression ptr, Numeric\+Expression offset, boolean if\+Check\+Output, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Do a pointer addition operation on the given pointer with the given offset. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ac953d8c9b3b4a1d5553ae28df823f157}{}List$<$ Reference\+Expression $>$ {\bfseries leaf\+Node\+References\+Of\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type)  throws Unsatisfiable\+Path\+Condition\+Exception\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ac953d8c9b3b4a1d5553ae28df823f157}
+
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, Symbolic\+Array\+Type $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ae7f6a8345e28f9538b9a6058d939b24f}{evaluate\+C\+I\+V\+L\+Array\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLArrayType}{C\+I\+V\+L\+Array\+Type} type)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Evaluating the symbolic array type from a \hyperlink{}{C\+I\+V\+L\+Array\+Type} based on current state and specific process. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ab1d1677a6a17f256097a27be49a5f359}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1MemoryUnitExpressionEvaluator}{Memory\+Unit\+Expression\+Evaluator} {\bfseries memory\+Unit\+Evaluator} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ab1d1677a6a17f256097a27be49a5f359}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a818296dda87a957ea427cb40e0acb3f2}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} {\bfseries evaluate\+Cast\+Worker} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} cast\+Type, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} arg)  throws Unsatisfiable\+Path\+Condition\+Exception\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a818296dda87a957ea427cb40e0acb3f2}
+
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a292a5f3000d30fc6e72a181faf80f8b1}{havoc} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Symbolic\+Type type)
+\begin{DoxyCompactList}\small\item\em returns an arbitrary symbolic constant with the given type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} main evaluator. 
+
+First, it is responsible for evaluating all expressions. Second, it also provides some utility methods to be used by library executor/evaluator/enabler, like the methods related to heap. Third, it implements helper methods for the partial order reduction in pointer reachability analysis. T\+O\+D\+O\+: does it have state?
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a7d053e0a012c65e8c285b55d69d0d1cb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!dereference@{dereference}}
+\index{dereference@{dereference}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{dereference}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+dereference (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{{\bf Expression}}]{pointer\+Expression, }
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{boolean}]{checked\+Output}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a7d053e0a012c65e8c285b55d69d0d1cb}
+
+
+Given a pointer value, dereferences it in the given state to yield the symbolic expression value stored at the referenced location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Source code information for error report. \\
+\hline
+{\em state} & The state where the operation happens. \\
+\hline
+{\em process} & The process information (name, P\+I\+D) for error report. \\
+\hline
+{\em pointer} & \hyperlink{structA}{A} pointer value which refers to some sub-\/structure in the state, and is to dereferenced. \\
+\hline
+{\em checked\+Output} & If this dereference operation is to read the variable (opposed to write). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value pointed to 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_abfa659119a8261cff75d477519654c0f}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_aebbf366a34283a80cf1b6ec599fc7b47}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!error\+Logger@{error\+Logger}}
+\index{error\+Logger@{error\+Logger}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{error\+Logger}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Error\+Logger} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+error\+Logger (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_aebbf366a34283a80cf1b6ec599fc7b47}
+
+
+Returns the error logger object of this evaluator. 
+
+\begin{DoxyReturn}{Returns}
+The error logger object of this evaluator. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a416c6bea70e96a33023cc3e99ec261c9}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_af2a23ba023164864718980818e53568a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{evaluate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+evaluate (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Expression}}]{expression, }
+\item[{boolean}]{check\+Undefined\+Value}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_af2a23ba023164864718980818e53568a}
+
+
+Evaluates the expression and returns the result, which is a symbolic expression value. 
+
+If a potential error is encountered while evaluating the expression (e.\+g. possible division by 0 in x/y), the error is logged, a correcting side effect (e.\+g. y!=0) is added to the path condition, and execution continues. It is possible for the side effect to make the path condition unsatisfiable. When this happens, an Unsatisfiable\+Path\+Condition\+Exception is thrown.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the state in which the evaluation takes place \\
+\hline
+{\em pid} & the P\+I\+D of the process which is evaluating the expression \\
+\hline
+{\em expression} & the (static) expression being evaluated \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the result of the evaluation 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & if a side effect that results from evaluating the expression causes the path condition to become unsatisfiable \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a47a1a366607321c68600beb69bdb85ab}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ae7f6a8345e28f9538b9a6058d939b24f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!evaluate\+C\+I\+V\+L\+Array\+Type@{evaluate\+C\+I\+V\+L\+Array\+Type}}
+\index{evaluate\+C\+I\+V\+L\+Array\+Type@{evaluate\+C\+I\+V\+L\+Array\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{evaluate\+C\+I\+V\+L\+Array\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<${\bf State}, Symbolic\+Array\+Type$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+evaluate\+C\+I\+V\+L\+Array\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf C\+I\+V\+L\+Array\+Type}}]{type}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ae7f6a8345e28f9538b9a6058d939b24f}
+
+
+Evaluating the symbolic array type from a \hyperlink{}{C\+I\+V\+L\+Array\+Type} based on current state and specific process. 
+
+This function supplements the built-\/in function \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3f01f0f60e869508ee46927aa5012b22}{C\+I\+V\+L\+Type\#get\+Dynamic\+Type(\+Symbolic\+Universe)} by providing the missing extent information.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em type} & The C\+I\+V\+L\+Array\+Type object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a37563637a31ec9f55ea6cecff2873d33}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ae088a8a0262cf90f2e5c8febab999d43}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!evaluate\+Function\+Identifier@{evaluate\+Function\+Identifier}}
+\index{evaluate\+Function\+Identifier@{evaluate\+Function\+Identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{evaluate\+Function\+Identifier}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Triple}$<${\bf State}, {\bf C\+I\+V\+L\+Function}, Integer$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+evaluate\+Function\+Identifier (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Expression}}]{function\+Pointer, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ae088a8a0262cf90f2e5c8febab999d43}
+
+
+Evaluates a function pointer expression. 
+
+T\+O\+D\+O\+: add I\+D for functions in the model. T\+O\+D\+O\+: get rid of this function by adding a helper function to extract a function from a function pointer value. No need to have special handling for function pointer\+: can treat it like ordinary pointers.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state where the evaluation happens. \\
+\hline
+{\em pid} & The P\+I\+D of the process that triggers this evaluation. \\
+\hline
+{\em function\+Pointer} & The function pointer expression to be evaluated. \\
+\hline
+{\em source} & The source code information for error report \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new state after the evaluation with possible side effect, the function that the function pointer points to, and the dyscope I\+D of the function that the given function pointer refers to. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_adc6dd5399e2a536cf06bf24c3d6b4bf9}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a472056af07db8c828ad7a65de4e1e1a1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!evaluate\+Pointer\+Add@{evaluate\+Pointer\+Add}}
+\index{evaluate\+Pointer\+Add@{evaluate\+Pointer\+Add}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{evaluate\+Pointer\+Add}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<${\bf Evaluation}, Numeric\+Expression\mbox{[}$\,$\mbox{]}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+evaluate\+Pointer\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{Symbolic\+Expression}]{ptr, }
+\item[{Numeric\+Expression}]{offset, }
+\item[{boolean}]{if\+Check\+Output, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a472056af07db8c828ad7a65de4e1e1a1}
+
+
+Do a pointer addition operation on the given pointer with the given offset. 
+
+The given pointer will be casted to the deepest array element reference before the operation (e.\+g. for {\ttfamily int a\mbox{[}2\mbox{]}\mbox{[}2\mbox{]};}, if giving pointer \&a, it will be casted to \&a\mbox{[}0\mbox{]}\mbox{[}0\mbox{]}).
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em process} & The information of the process \\
+\hline
+{\em ptr} & The pointer will be added by a offset \\
+\hline
+{\em offset} & The numeric offset will be added to a pointer \\
+\hline
+{\em source} & The C\+I\+V\+L\+Source of the statement. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} pair of evaluation of the result of the operation and a map contains the array elements sizes information of the array pointed by the given pointer which helps saving computing time for caller functions. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a12e5329977df322e97c239871f8177d8}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a5cfbcaf3d75bd2b4d6ba31451b25b4f5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!evaluate\+Sizeof\+Type@{evaluate\+Sizeof\+Type}}
+\index{evaluate\+Sizeof\+Type@{evaluate\+Sizeof\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{evaluate\+Sizeof\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+evaluate\+Sizeof\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf C\+I\+V\+L\+Type}}]{type}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a5cfbcaf3d75bd2b4d6ba31451b25b4f5}
+
+
+Evaluate the size of a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type. 
+
+T\+O\+D\+O is this necessarily public?
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code element to be used for error report. \\
+\hline
+{\em state} & The state where the evaluation happens. \\
+\hline
+{\em pid} & The I\+D of the process that triggers the evaluation. \\
+\hline
+{\em type} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type whose size is to be evaluated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the result of the evaluation, including the symbolic expression of the size of the type and a state 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a8893314efaf52d49a2d3db62baa5b200}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a86629e51ec364d6e9996b116dd6fba47}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!get\+String\+Expression@{get\+String\+Expression}}
+\index{get\+String\+Expression@{get\+String\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{get\+String\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+get\+String\+Expression (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{char\+Pointer}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a86629e51ec364d6e9996b116dd6fba47}
+
+
+Given a pointer to char, returns the symbolic expression of type array of char which is the string pointed to. 
+
+The method will succeed if any of the following holds\+: (1) the pointer points to element 0 of an array of char. In that case, it is just assumed that the string is the whole array. (2) the pointer points to element i of an array of char, where i is a concrete positive integer and the array length is also concrete. In that case, the elements of the array are scanned starting from position i until the first null character is reached, or the end of the array is reached, and the string is constructed from those scanned characters (including the null character). In other situations, this method may fail, in which case it throws an exception.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the state in which this evaluation is taking place \\
+\hline
+{\em source} & the source information used to report errors \\
+\hline
+{\em char\+Pointer} & a symbolic expression which is a pointer to a char \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the symbolic expression which is an array of type char representing the string pointed to 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & of something goes wrong evaluating the string \\
+\hline
+{\em C\+I\+V\+L\+Unimplemented\+Feature\+Exception} & if it is not possible to extract the string expression. \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a0ad771706f43f1cbba709b8ffe816e2b}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a292a5f3000d30fc6e72a181faf80f8b1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!havoc@{havoc}}
+\index{havoc@{havoc}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{havoc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+havoc (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{Symbolic\+Type}]{type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a292a5f3000d30fc6e72a181faf80f8b1}
+
+
+returns an arbitrary symbolic constant with the given type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a8c9138a366632db843ca39c5fa4a5bd8}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_aa0450cda9d9457f31fbd68076a564bc4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!model\+Factory@{model\+Factory}}
+\index{model\+Factory@{model\+Factory}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{model\+Factory}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\+Factory} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+model\+Factory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_aa0450cda9d9457f31fbd68076a564bc4}
+
+
+The model factory should be the unique one used in the system. 
+
+Compute reachable memory units by referencing a variable at a certain state. For example, given int x = 9; int$\ast$ y =  int $\ast$z = y; Then the reachable memory units from z is \{\&z, \&x\}. 
+
+T\+O\+D\+O\+: check if we can get rid of variable\+Value; add precondition if it is necessary for some reason.
+
+
+\begin{DoxyParams}{Parameters}
+{\em variable\+Value} & The value of the variable. \\
+\hline
+{\em dy\+Scope\+I\+D} & The dynamic scope id of the variable. \\
+\hline
+{\em vid} & The id of the variable in the scope. \\
+\hline
+{\em state} & The state where the computation happens. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The set of memory units that reachable from the given variable. Every member of the set is a pointer value, and is a pointer to a memory unit.
+
+The model factory of the evaluator. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_aa2850d34b89e037f7269c34a39741101}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ab051cc7155755a0c75b56f1cffd87cc0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!pointer\+Add@{pointer\+Add}}
+\index{pointer\+Add@{pointer\+Add}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{pointer\+Add}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+pointer\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf Binary\+Expression}}]{expression, }
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{Numeric\+Expression}]{offset}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_ab051cc7155755a0c75b56f1cffd87cc0}
+
+
+Evaluates pointer addition. 
+
+Pointer addition involves the addition of a pointer expression and an integer. T\+O\+D\+O\+: check if Binary\+Expression expression is necessary.~\newline
+ Note\+: The given pointer for this function won\textquotesingle{}t be casted to the deepest array element reference which is the only difference from the other function \hyperlink{}{evaluate\+Pointer\+Add(\+State, String, Symbolic\+Expression, Numeric\+Expresion, boolean, C\+I\+V\+L\+Source)} . ~\newline
+ e.\+g. for {\ttfamily int a\mbox{[}2\mbox{]}\mbox{[}2\mbox{]}}, passing pointer \char`\"{}a\mbox{[}0\mbox{]} + 1\char`\"{} will turn out a new pointer \char`\"{}a\mbox{[}1\mbox{]}\char`\"{}.
+
+\begin{DoxyAuthor}{Author}
+Ziqing Luo
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the pre-\/state \\
+\hline
+{\em pid} & the P\+I\+D of the process evaluating the pointer addition \\
+\hline
+{\em expression} & the pointer addition expression \\
+\hline
+{\em pointer} & the result of evaluating argument 0 of expression \\
+\hline
+{\em offset} & the result of evaluating argument 1 of expression \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the result of evaluating the sum of the pointer and the integer 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_abb0ca940d4749ccac9b3e5995e7dda52}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1CommonContractConditionGenerator_a815b87b4a015317609c374e15a828774}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Common\+Contract\+Condition\+Generator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_addbd6a2316ecd2e89bd29c3f1d878b1a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!pointer\+Subtraction@{pointer\+Subtraction}}
+\index{pointer\+Subtraction@{pointer\+Subtraction}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{pointer\+Subtraction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+pointer\+Subtraction (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf Binary\+Expression}}]{expression, }
+\item[{Symbolic\+Expression}]{left\+Ptr, }
+\item[{Symbolic\+Expression}]{right\+Ptr}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_addbd6a2316ecd2e89bd29c3f1d878b1a}
+
+
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} pointer subtraction. 
+
+Pointer subtraction operation, a binary operation, whose two operands are both pointers to qualified or unqualified versions of compatible complete object types. Returns the difference of the two operands. Both pointers must point to elements of the same array or one past the last element of the same array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em process} & The information of the process \\
+\hline
+{\em expression} & The expression of the pointer subtraction statement \\
+\hline
+{\em left\+Ptr} & The pointer at the left side of the minus operator \\
+\hline
+{\em right\+Ptr} & The pointer at the right side of the minus operator\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the difference of the subscripts of the two array elements 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_ad519044578bac65ecd81d1d455eab74d}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a8ae34a0c82e4e2dcd91ec5e94daa908a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!reference@{reference}}
+\index{reference@{reference}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{reference}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+reference (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf L\+H\+S\+Expression}}]{operand}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a8ae34a0c82e4e2dcd91ec5e94daa908a}
+
+
+Creates a pointer value by evaluating a left-\/hand-\/side expression in the given state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model state \\
+\hline
+{\em pid} & the process I\+D of the process in which this evaluation is taking place \\
+\hline
+{\em operand} & the left hand side expression we are taking the address of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the pointer value 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a7c3c429a7eb6fc522d4fc8484f69d48a}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_afd5e399d742b2fcb8bf20d9a354ed925}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!state\+Factory@{state\+Factory}}
+\index{state\+Factory@{state\+Factory}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{state\+Factory}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State\+Factory} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+state\+Factory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_afd5e399d742b2fcb8bf20d9a354ed925}
+
+
+The state factory should be the unique one used in the system. 
+
+\begin{DoxyReturn}{Returns}
+The state factory of the evaluator. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_af829d561994b7fed63516b08a1eab74c}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_afe4e831762502e4a5b43eeaa89a9396c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!symbolic\+Analyzer@{symbolic\+Analyzer}}
+\index{symbolic\+Analyzer@{symbolic\+Analyzer}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{symbolic\+Analyzer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Symbolic\+Analyzer} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+symbolic\+Analyzer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_afe4e831762502e4a5b43eeaa89a9396c}
+
+
+Returns the symbolic analyzer object of this evaluator. 
+
+\begin{DoxyReturn}{Returns}
+The symbolic analyzer object of this evaluator. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a2b71c67fa246fdcb9121f4d9e4341c9f}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a9520cf53287c29ab57e22da335ead295}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!symbolic\+Utility@{symbolic\+Utility}}
+\index{symbolic\+Utility@{symbolic\+Utility}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{symbolic\+Utility}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Symbolic\+Utility} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+symbolic\+Utility (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a9520cf53287c29ab57e22da335ead295}
+
+
+Returns the symbolic utility object of this evaluator. 
+
+\begin{DoxyReturn}{Returns}
+The symbolic utility object of this evaluator. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a1a026669aaadbbe84c7bb014c518dbc5}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a0a9ac7185a439c0eb14ee08d6d9d1694}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}!universe@{universe}}
+\index{universe@{universe}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Evaluator}}
+\subsubsection[{universe}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Universe edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Evaluator.\+universe (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator_a0a9ac7185a439c0eb14ee08d6d9d1694}
+
+
+The symbolic universe should be the unique one used in the system. 
+
+\begin{DoxyReturn}{Returns}
+The symbolic universe of the evaluator. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonEvaluator_a1928221045cc691e75ba9368b16ddb09}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Evaluator}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/\+I\+F/Evaluator.\+java\end{DoxyCompactItemize}

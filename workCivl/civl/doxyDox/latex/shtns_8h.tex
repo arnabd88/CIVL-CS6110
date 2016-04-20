@@ -1,0 +1,449 @@
+\hypertarget{shtns_8h}{}\section{/home/arnabd/workspace/civl/trunk/examples/omp/shtns/shtns.h File Reference}
+\label{shtns_8h}\index{/home/arnabd/workspace/civl/trunk/examples/omp/shtns/shtns.\+h@{/home/arnabd/workspace/civl/trunk/examples/omp/shtns/shtns.\+h}}
+
+
+\hyperlink{shtns_8h}{shtns.\+h} is the definition file for S\+H\+Tns \+: include this file in your source code to use S\+H\+Tns.  
+
+
+{\ttfamily \#include $<$complex.\+h$>$}\\*
+Include dependency graph for shtns.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{shtns_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{shtns_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structshtns__info}{shtns\+\_\+info}
+\begin{DoxyCompactList}\small\item\em structure containing useful information about the S\+H\+T. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{shtns_8h_ade5d09d8c3ec871e812e7790a0b01f83}{}\#define \hyperlink{shtns_8h_ade5d09d8c3ec871e812e7790a0b01f83}{S\+H\+T\+\_\+\+N\+O\+\_\+\+C\+S\+\_\+\+P\+H\+A\+S\+E}~(256$\ast$4)\label{shtns_8h_ade5d09d8c3ec871e812e7790a0b01f83}
+
+\begin{DoxyCompactList}\small\item\em don\textquotesingle{}t include Condon-\/\+Shortley phase (add to last argument of \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create}) \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_abd75c12787686789ceb3280723d746d9}{}\#define \hyperlink{shtns_8h_abd75c12787686789ceb3280723d746d9}{S\+H\+T\+\_\+\+R\+E\+A\+L\+\_\+\+N\+O\+R\+M}~(256$\ast$8)\label{shtns_8h_abd75c12787686789ceb3280723d746d9}
+
+\begin{DoxyCompactList}\small\item\em use a \char`\"{}real\char`\"{} normalization. (add to last argument of \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create}) \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a6b3a4368b5b30539ffbf5e9ff8f4bdd4}{}\#define \hyperlink{shtns_8h_a6b3a4368b5b30539ffbf5e9ff8f4bdd4}{S\+H\+T\+\_\+\+N\+A\+T\+I\+V\+E\+\_\+\+L\+A\+Y\+O\+U\+T}~0\label{shtns_8h_a6b3a4368b5b30539ffbf5e9ff8f4bdd4}
+
+\begin{DoxyCompactList}\small\item\em Tells shtns\+\_\+init to use native. \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_afb18b3521340a8b32fbaa2c844a54614}{}\#define \hyperlink{shtns_8h_afb18b3521340a8b32fbaa2c844a54614}{S\+H\+T\+\_\+\+T\+H\+E\+T\+A\+\_\+\+C\+O\+N\+T\+I\+G\+U\+O\+U\+S}~256\label{shtns_8h_afb18b3521340a8b32fbaa2c844a54614}
+
+\begin{DoxyCompactList}\small\item\em use theta\+\_\+fast \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a12ff0a9132f42a832e9a3aa256d5d3a5}{}\#define \hyperlink{shtns_8h_a12ff0a9132f42a832e9a3aa256d5d3a5}{S\+H\+T\+\_\+\+P\+H\+I\+\_\+\+C\+O\+N\+T\+I\+G\+U\+O\+U\+S}~(256$\ast$2)\label{shtns_8h_a12ff0a9132f42a832e9a3aa256d5d3a5}
+
+\begin{DoxyCompactList}\small\item\em use phi\+\_\+fast \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a5d5172ec9069a28f234e9733c3f103ba}{}\#define \hyperlink{shtns_8h_a5d5172ec9069a28f234e9733c3f103ba}{S\+H\+T\+\_\+\+S\+O\+U\+T\+H\+\_\+\+P\+O\+L\+E\+\_\+\+F\+I\+R\+S\+T}~(256$\ast$32)\label{shtns_8h_a5d5172ec9069a28f234e9733c3f103ba}
+
+\begin{DoxyCompactList}\small\item\em latitudinal data are stored starting from south pole. \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_ae9c15190ef84a248a059159f3e3e0cdf}{}\#define \hyperlink{shtns_8h_ae9c15190ef84a248a059159f3e3e0cdf}{S\+H\+T\+\_\+\+S\+C\+A\+L\+A\+R\+\_\+\+O\+N\+L\+Y}~(256$\ast$16)\label{shtns_8h_ae9c15190ef84a248a059159f3e3e0cdf}
+
+\begin{DoxyCompactList}\small\item\em don\textquotesingle{}t compute vector matrices. (add to flags in shtns\+\_\+set\+\_\+grid) \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a45dcc83c6a9f8e1a6573876aa9e765cf}{}\#define \hyperlink{shtns_8h_a45dcc83c6a9f8e1a6573876aa9e765cf}{S\+H\+T\+\_\+\+L\+O\+A\+D\+\_\+\+S\+A\+V\+E\+\_\+\+C\+F\+G}~(256$\ast$64)\label{shtns_8h_a45dcc83c6a9f8e1a6573876aa9e765cf}
+
+\begin{DoxyCompactList}\small\item\em try to load and save the config. (add to flags in shtns\+\_\+set\+\_\+grid) \end{DoxyCompactList}\item 
+\#define \hyperlink{shtns_8h_a1e277702adc8ec86b6dc8a05f76f14de}{N\+S\+P\+A\+T\+\_\+\+A\+L\+L\+O\+C}(shtns)~(shtns-\/$>$nspat)
+\begin{DoxyCompactList}\small\item\em total number of \textquotesingle{}doubles\textquotesingle{} required for a spatial field (includes F\+F\+T\+W reserved space). \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a28e00a1666fc2f5fa56867fb10c024a8}{}\#define \hyperlink{shtns_8h_a28e00a1666fc2f5fa56867fb10c024a8}{P\+H\+I\+\_\+\+D\+E\+G}(shtns,  ip)~(360./(shtns-\/$>$nphi$\ast$shtns-\/$>$mres))$\ast$(ip)\label{shtns_8h_a28e00a1666fc2f5fa56867fb10c024a8}
+
+\begin{DoxyCompactList}\small\item\em phi angle value in degrees for given index ip. \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a8b38219497d08f68d8e83682f20fd3bc}{}\#define \hyperlink{shtns_8h_a8b38219497d08f68d8e83682f20fd3bc}{P\+H\+I\+\_\+\+R\+A\+D}(shtns,  ip)~(M\+\_\+\+P\+I/(shtns-\/$>$nphi$\ast$shtns-\/$>$mres))$\ast$(2$\ast$ip)\label{shtns_8h_a8b38219497d08f68d8e83682f20fd3bc}
+
+\begin{DoxyCompactList}\small\item\em phi angle value in radians for given index ip. \end{DoxyCompactList}\item 
+\hypertarget{group__sht_ga9e013843483dd0523c913300d9db5da6}{}\#define \hyperlink{group__sht_ga9e013843483dd0523c913300d9db5da6}{S\+H\+\_\+to\+\_\+grad\+\_\+spat}(shtns,  S,  Gt,  Gp)~\hyperlink{group__sht_ga665f43382fa5fc22b63ebcd8d9a0cf71}{S\+Hsph\+\_\+to\+\_\+spat}(shtns, S, Gt, Gp)\label{group__sht_ga9e013843483dd0523c913300d9db5da6}
+
+\begin{DoxyCompactList}\small\item\em Compute the spatial representation of the gradient of a scalar S\+H field. Alias for \hyperlink{group__sht_ga665f43382fa5fc22b63ebcd8d9a0cf71}{S\+Hsph\+\_\+to\+\_\+spat}. \end{DoxyCompactList}\item 
+\hypertarget{group__sht_gaf91985a54c71208a97f80621fb88be23}{}\#define \hyperlink{group__sht_gaf91985a54c71208a97f80621fb88be23}{S\+H\+\_\+to\+\_\+grad\+\_\+spat\+\_\+l}(shtns,  S,  Gt,  Gp,  ltr)~S\+Hsph\+\_\+to\+\_\+spat\+\_\+l(shtns, S, Gt, Gp, ltr)\label{group__sht_gaf91985a54c71208a97f80621fb88be23}
+
+\begin{DoxyCompactList}\small\item\em Compute the spatial representation of the gradient of a scalar S\+H field. Alias for S\+Hsph\+\_\+to\+\_\+spat\+\_\+l. \end{DoxyCompactList}\item 
+\hypertarget{group__sht_gaced9b8d9b2d1bfc91004d8c6f288c1f5}{}\#define \hyperlink{group__sht_gaced9b8d9b2d1bfc91004d8c6f288c1f5}{S\+H\+\_\+to\+\_\+grad\+\_\+spat\+\_\+ml}(shtns,  im,  S,  Gt,  Gp,  ltr)~S\+Hsph\+\_\+to\+\_\+spat\+\_\+ml(shtns, im, S, Gt, Gp, ltr)\label{group__sht_gaced9b8d9b2d1bfc91004d8c6f288c1f5}
+
+\begin{DoxyCompactList}\small\item\em Compute the spatial representation of the gradient of a scalar S\+H field. Alias for S\+Hsph\+\_\+to\+\_\+spat\+\_\+l. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}{\bf Access to spherical harmonic components}\par
+{\em The following macros give access to single spherical harmonic coefficient or perform loops spanning all of them. }\begin{DoxyCompactItemize}
+\item 
+\hypertarget{shtns_8h_aee0d42089971d399238da3aaca4d9ca1}{}\#define \hyperlink{shtns_8h_aee0d42089971d399238da3aaca4d9ca1}{Li\+M}(shtns,  l,  im)~( shtns-\/$>$lmidx\mbox{[}im\mbox{]} + (l) )\label{shtns_8h_aee0d42089971d399238da3aaca4d9ca1}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{shtns_8h_aee0d42089971d399238da3aaca4d9ca1}{Li\+M(l,im)} \+: macro returning array index for given l and im. \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a4de9189f537244462ac58d50da6028cd}{}\#define \hyperlink{shtns_8h_a4de9189f537244462ac58d50da6028cd}{L\+M}(shtns,  l,  m)~( shtns-\/$>$lmidx\mbox{[}((unsigned)(m))/shtns-\/$>$mres\mbox{]} + (l) )\label{shtns_8h_a4de9189f537244462ac58d50da6028cd}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{shtns_8h_a4de9189f537244462ac58d50da6028cd}{L\+M(l,m)} \+: macro returning array index for given l and m. \end{DoxyCompactList}\item 
+\#define \hyperlink{shtns_8h_aa3162746f198939da947f4eae8ecfd24}{L\+M\+\_\+\+L\+O\+O\+P}(shtns,  action)~\{ int lm=0; do \{ action \} while(++lm $<$ shtns-\/$>$nlm); \}
+\begin{DoxyCompactList}\small\item\em \hyperlink{shtns_8h_aa3162746f198939da947f4eae8ecfd24}{L\+M\+\_\+\+L\+O\+O\+P( action )} \+: macro that performs \char`\"{}action\char`\"{} for every (l,m), with lm set, but neither l, m nor im. \end{DoxyCompactList}\item 
+\#define \hyperlink{shtns_8h_ac352f3aed9b889f73ff84f74f5acfadb}{L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P}(shtns,  action)~\{ int lm=0; do \{ int l=shtns-\/$>$li\mbox{[}lm\mbox{]}; action \} while(++lm $<$ shtns-\/$>$nlm); \}
+\begin{DoxyCompactList}\small\item\em L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P \+: loop over all (l,im) and perform \char`\"{}action\char`\"{} \+: l and lm are defined (but N\+O\+T m and im). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{shtns_8h_ad888f6757997fc95dbe36157288cf8e8}{}typedef \hyperlink{structcomplex}{complex} double {\bfseries cplx}\label{shtns_8h_ad888f6757997fc95dbe36157288cf8e8}
+
+\item 
+\hypertarget{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{}typedef struct \hyperlink{structshtns__info}{shtns\+\_\+info} $\ast$ \hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}\label{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}
+
+\begin{DoxyCompactList}\small\item\em pointer to data structure describing an S\+H\+T, returned by \hyperlink{group__init_ga8199210424d47f2b0bce9bd7d0f9957d}{shtns\+\_\+init()} or \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952}{shtns\+\_\+norm} \{ \hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952aacca9a864ee3735535a11c2e78d0aaff}{sht\+\_\+orthonormal}, 
+\hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952a847427b41ce9433cd47af020869fb0e1}{sht\+\_\+fourpi}, 
+\hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952ac9612ef0c13117c8ba08d1f8861ee442}{sht\+\_\+schmidt}
+ \}
+\begin{DoxyCompactList}\small\item\em different Spherical Harmonic normalizations. \end{DoxyCompactList}\item 
+enum \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type} \{ \\*
+\hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7bae43c9863c490b02cb0c8b5d94da8ec19}{sht\+\_\+gauss}, 
+\hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba41bfd186173224521817edfe69eb11fd}{sht\+\_\+auto}, 
+\hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7baa3c53845663c12402ff56ad01f3076a2}{sht\+\_\+reg\+\_\+fast}, 
+\hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba3aa526d68651107a8a3db912a4da1f4b}{sht\+\_\+reg\+\_\+dct}, 
+\\*
+\hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba0823fb600f399ba416b4c0c52ef7a0de}{sht\+\_\+quick\+\_\+init}, 
+\hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba181b63ae50741aeba379e2cef1bfb619}{sht\+\_\+reg\+\_\+poles}, 
+\hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7bac45458acb259c22aec393442ba24b1c7}{sht\+\_\+gauss\+\_\+fly}
+ \}
+\begin{DoxyCompactList}\small\item\em different S\+H\+T types and algorithms \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+long \hyperlink{shtns_8h_ac8cbfbde7069f7760509a72ce480ecc7}{nlm\+\_\+calc} (long lmax, long mmax, long mres)
+\begin{DoxyCompactList}\small\item\em compute number of spherical harmonics modes (l,m) for given size parameters. Does not require any previous setup. \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a31bea8e2176c28afdf75e750a95b5429}{}void \hyperlink{shtns_8h_a31bea8e2176c28afdf75e750a95b5429}{shtns\+\_\+verbose} (int)\label{shtns_8h_a31bea8e2176c28afdf75e750a95b5429}
+
+\begin{DoxyCompactList}\small\item\em controls output during initialization\+: 0=no output (default), 1=some output, 2=degug (if compiled in) \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a51d8452d2b531d46e9851642f0e13735}{}void \hyperlink{shtns_8h_a51d8452d2b531d46e9851642f0e13735}{shtns\+\_\+print\+\_\+version} (void)\label{shtns_8h_a51d8452d2b531d46e9851642f0e13735}
+
+\begin{DoxyCompactList}\small\item\em print version information to stdout. \end{DoxyCompactList}\item 
+\hypertarget{shtns_8h_a975b8b707baf6f4ec2cbce2e24408764}{}void \hyperlink{shtns_8h_a975b8b707baf6f4ec2cbce2e24408764}{shtns\+\_\+print\+\_\+cfg} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg})\label{shtns_8h_a975b8b707baf6f4ec2cbce2e24408764}
+
+\begin{DoxyCompactList}\small\item\em print information about given config to stdout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}{\bf initialization}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} \hyperlink{group__init_ga8199210424d47f2b0bce9bd7d0f9957d}{shtns\+\_\+init} (enum \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type} flags, int lmax, int mmax, int mres, int nlat, int nphi)
+\begin{DoxyCompactList}\small\item\em Simple initialization of the spherical harmonic transforms of given size. Calls \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} and \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto}. \end{DoxyCompactList}\item 
+\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} (int lmax, int mmax, int mres, enum \hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952}{shtns\+\_\+norm} norm)
+\begin{DoxyCompactList}\small\item\em Defines the sizes of the spectral description. Use for advanced initialization. \end{DoxyCompactList}\item 
+int \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, enum \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type} flags, double eps, int nlat, int nphi)
+\begin{DoxyCompactList}\small\item\em Precompute everything for a given spatial grid. Use for advanced initialization, after \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create}. \end{DoxyCompactList}\item 
+int \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, enum \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type} flags, double eps, int nl\+\_\+order, int $\ast$nlat, int $\ast$nphi)
+\begin{DoxyCompactList}\small\item\em Precompute everything and choose the optimal nlat and nphi for a given non-\/linear order. \end{DoxyCompactList}\item 
+\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} \hyperlink{group__init_ga8a22f101d85754461107eaa19e3bbd81}{shtns\+\_\+create\+\_\+with\+\_\+grid} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int mmax, int nofft)
+\begin{DoxyCompactList}\small\item\em Copy a given config but allow a different (smaller) mmax and the possibility to enable/disable fft. \end{DoxyCompactList}\item 
+int \hyperlink{group__init_ga4cc3eef247a78a1d910794e88f742e3a}{shtns\+\_\+use\+\_\+threads} (int num\+\_\+threads)
+\begin{DoxyCompactList}\small\item\em Enables multi-\/thread transform using Open\+M\+P with num\+\_\+threads (if available). Returns number of threads that will be used. \end{DoxyCompactList}\item 
+void \hyperlink{group__init_ga65e8f69a3d2e908f67b6fda32ecda4b4}{shtns\+\_\+reset} (void)
+\begin{DoxyCompactList}\small\item\em destroy all configs, free memory, and go back to initial state. \end{DoxyCompactList}\item 
+void \hyperlink{group__init_ga223895ca67b73ad41666eca76c9bd409}{shtns\+\_\+destroy} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg})
+\begin{DoxyCompactList}\small\item\em free memory of given config, which cannot be used afterwards. \end{DoxyCompactList}\item 
+void \hyperlink{group__init_ga5915acd98e96ac6dc3b84d15001e3e92}{shtns\+\_\+unset\+\_\+grid} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg})
+\begin{DoxyCompactList}\small\item\em unset the grid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf special values}\par
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{shtns_8h_aad0ed87420ea2ad7b780b868522ecf3b}{sh00\+\_\+1} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg})
+\begin{DoxyCompactList}\small\item\em return the spherical harmonic representation of 1 (l=0,m=0) \end{DoxyCompactList}\item 
+double \hyperlink{shtns_8h_a15e835a6e4df02cd72d5f4e96d05b1a0}{sh10\+\_\+ct} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg})
+\begin{DoxyCompactList}\small\item\em return the spherical harmonic representation of cos(theta) (l=1,m=0) \end{DoxyCompactList}\item 
+double \hyperlink{shtns_8h_acb46e0d25edc1cf28401041f485a25f1}{sh11\+\_\+st} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg})
+\begin{DoxyCompactList}\small\item\em return the spherical harmonic representation of sin(theta)$\ast$cos(phi) (l=1,m=1) \end{DoxyCompactList}\item 
+double \hyperlink{shtns_8h_aa62e2ff5d7b6e7c13e62effa912ff0de}{shlm\+\_\+e1} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int l, int m)
+\begin{DoxyCompactList}\small\item\em return the l,m S\+H coefficient corresponding to unit energy. \end{DoxyCompactList}\item 
+int \hyperlink{group__init_gaa61a638ab29c0a73eba67e2a00cdf2f0}{shtns\+\_\+gauss\+\_\+wts} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$wts)
+\begin{DoxyCompactList}\small\item\em fill the given array with Gauss weights. returns the number of weights written (0 if not a Gauss grid). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Rotation functions}\par
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__rotation_ga6972fa1a3352053c8d4c6570b704505e}{S\+H\+\_\+\+Zrotate} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, double alpha, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em Rotate a S\+H representation Qlm around the z-\/axis by angle alpha (in radians), which is the same as rotating the reference frame by angle -\/alpha. \end{DoxyCompactList}\item 
+void \hyperlink{group__rotation_ga22c7e9932a68da1f38b2306310f0ec52}{S\+H\+\_\+\+Yrotate} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, double alpha, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em Rotate S\+H representation around Y axis by alpha (in radians). \end{DoxyCompactList}\item 
+void \hyperlink{group__rotation_gaa8001c0f7b7377f16e29b4f69ad6485c}{S\+H\+\_\+\+Yrotate90} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em Rotate S\+H representation around Y axis by 90 degrees. \end{DoxyCompactList}\item 
+void \hyperlink{group__rotation_ga0f8ccf6d430fc57c7e056effbeb245b1}{S\+H\+\_\+\+Xrotate90} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em Rotate S\+H representation around X axis by 90 degrees. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Special operator functions}\par
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__operators_gad51bd2c5d565a6a263d7b72d839dc956}{mul\+\_\+ct\+\_\+matrix} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$mx)
+\begin{DoxyCompactList}\small\item\em compute the matrix (stored in mx, a double array of size 2$\ast$\+N\+L\+M) required to multiply an S\+H representation by cos(theta) using \hyperlink{group__operators_ga12bee435000620a1fc0d93ce27881bae}{S\+H\+\_\+mul\+\_\+mx}. \end{DoxyCompactList}\item 
+void \hyperlink{group__operators_gac53a7e27c628e0aae0f0a3177dc2663d}{st\+\_\+dt\+\_\+matrix} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$mx)
+\begin{DoxyCompactList}\small\item\em compute the matrix (stored in mx, a double array of size 2$\ast$\+N\+L\+M) required to apply sin(theta)$\ast$d/dtheta to an S\+H representation using \hyperlink{group__operators_ga12bee435000620a1fc0d93ce27881bae}{S\+H\+\_\+mul\+\_\+mx}. \end{DoxyCompactList}\item 
+void \hyperlink{group__operators_ga12bee435000620a1fc0d93ce27881bae}{S\+H\+\_\+mul\+\_\+mx} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$mx, cplx $\ast$Qlm, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em Apply a matrix involving l+1 and l-\/1 to an S\+H representation Qlm. Result stored in Rlm (must be different from Qlm). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Scalar transforms}\par
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__sht_gab97ae9ef106cebf95d9a84a8f4482ffa}{spat\+\_\+to\+\_\+\+S\+H} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, double $\ast$Vr, cplx $\ast$Qlm)
+\begin{DoxyCompactList}\small\item\em transform the scalar field Vr into its spherical harmonic representation Qlm. \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_gac1a4d365d025cf96a47188d521f45238}{S\+H\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, double $\ast$Vr)
+\begin{DoxyCompactList}\small\item\em transform the spherical harmonic coefficients Qlm into its spatial representation Vr. \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_gace24abc96ffd0cf8dd5bc282854fa91f}{S\+H\+\_\+to\+\_\+spat\+\_\+cplx} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$alm, cplx $\ast$z)
+\begin{DoxyCompactList}\small\item\em complex scalar synthesis. \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_gacfe564c5f554c04834c2fd02a2cbd660}{spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$z, cplx $\ast$alm)
+\begin{DoxyCompactList}\small\item\em complex scalar analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf 2\+D vector transforms}\par
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__sht_gad85f2449328fa2b730fe79688120989b}{spat\+\_\+to\+\_\+\+S\+Hsphtor} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vt, double $\ast$Vp, cplx $\ast$Slm, cplx $\ast$Tlm)
+\begin{DoxyCompactList}\small\item\em transform the theta and phi components (Vt,Vp) of a vector into its spheroidal-\/toroidal spherical harmonic representation (Slm,Tlm). \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_ga6c6f55a1cb89abacbc53d79a4c13456f}{S\+Hsphtor\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Slm, cplx $\ast$Tlm, double $\ast$Vt, double $\ast$Vp)
+\begin{DoxyCompactList}\small\item\em transform spheroidal-\/toroidal spherical harmonic coefficients (Slm,Tlm) to the spatial theta and phi components (Vt,Vp). \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_ga665f43382fa5fc22b63ebcd8d9a0cf71}{S\+Hsph\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Slm, double $\ast$Vt, double $\ast$Vp)
+\begin{DoxyCompactList}\small\item\em transform spheroidal spherical harmonic coefficients Slm to the spatial theta and phi components (Vt,Vp), effectively computing the gradient of S. \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_ga4db8b51177f7affe61c28a3e4abe3fe5}{S\+Htor\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Tlm, double $\ast$Vt, double $\ast$Vp)
+\begin{DoxyCompactList}\small\item\em transform toroidal spherical harmonic coefficients Tlm to the spatial theta and phi components (Vt,Vp). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf 3\+D transforms (combine scalar and vector)}\par
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__sht_ga7a2abea634001cf27dda2ea89acf72d6}{spat\+\_\+to\+\_\+\+S\+Hqst} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vr, double $\ast$Vt, double $\ast$Vp, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm)
+\begin{DoxyCompactList}\small\item\em 3\+D vector transform from spherical coordinates to radial-\/spheroidal-\/toroidal spectral components (see vsh\+\_\+def). \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_ga2ac092e557f8db54b530452dc8983a3b}{S\+Hqst\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, double $\ast$Vr, double $\ast$Vt, double $\ast$Vp)
+\begin{DoxyCompactList}\small\item\em 3\+D vector transform from spherical coordinates to radial-\/spheroidal-\/toroidal spectral components (see vsh\+\_\+def). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Truncated transforms at given degree l}\par
+{\em wiht l $<$= lmax used for setup.}\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__sht_gae3fc248f047193b63cf5b2fe9116c446}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+H\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vr, cplx $\ast$Qlm, int ltr)\label{group__sht_gae3fc248f047193b63cf5b2fe9116c446}
+
+\item 
+\hypertarget{group__sht_ga58a00ba24cc76f4af7f0ecff0d4ef80d}{}void {\bfseries S\+H\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, double $\ast$Vr, int ltr)\label{group__sht_ga58a00ba24cc76f4af7f0ecff0d4ef80d}
+
+\item 
+\hypertarget{group__sht_ga231b717bf9f76f144ec103e97a7c7d40}{}void {\bfseries S\+Hsphtor\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Slm, cplx $\ast$Tlm, double $\ast$Vt, double $\ast$Vp, int ltr)\label{group__sht_ga231b717bf9f76f144ec103e97a7c7d40}
+
+\item 
+\hypertarget{group__sht_ga0226c3383f94807d7a7afa9242fba111}{}void {\bfseries S\+Hsph\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Slm, double $\ast$Vt, double $\ast$Vp, int ltr)\label{group__sht_ga0226c3383f94807d7a7afa9242fba111}
+
+\item 
+\hypertarget{group__sht_ga0391e57a8dadee0dadbc3ac4eec60910}{}void {\bfseries S\+Htor\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Tlm, double $\ast$Vt, double $\ast$Vp, int ltr)\label{group__sht_ga0391e57a8dadee0dadbc3ac4eec60910}
+
+\item 
+\hypertarget{group__sht_ga1ea304108a74a114fdc607da8f6badb2}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+Hsphtor\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vt, double $\ast$Vp, cplx $\ast$Slm, cplx $\ast$Tlm, int ltr)\label{group__sht_ga1ea304108a74a114fdc607da8f6badb2}
+
+\item 
+\hypertarget{group__sht_gaed306c5bdee05158afab06f621137030}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+Hqst\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vr, double $\ast$Vt, double $\ast$Vp, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, int ltr)\label{group__sht_gaed306c5bdee05158afab06f621137030}
+
+\item 
+\hypertarget{group__sht_gac73a41ba03dc3db8bdcffd0c14cb6562}{}void {\bfseries S\+Hqst\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, double $\ast$Vr, double $\ast$Vt, double $\ast$Vp, int ltr)\label{group__sht_gac73a41ba03dc3db8bdcffd0c14cb6562}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Legendre transform at given m (no fft) and truncated at given degree l $<$= lmax}\par
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__sht_gac9ee9bc094595e1ef3f5de2afdb4b33a}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+H\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Vr, cplx $\ast$Ql, int ltr)\label{group__sht_gac9ee9bc094595e1ef3f5de2afdb4b33a}
+
+\item 
+\hypertarget{group__sht_ga6ec6d0eb0332ec6e350747ee8072e832}{}void {\bfseries S\+H\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Ql, cplx $\ast$Vr, int ltr)\label{group__sht_ga6ec6d0eb0332ec6e350747ee8072e832}
+
+\item 
+\hypertarget{group__sht_ga82acccde540cc820c1886b61569c069a}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+Hsphtor\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Vt, cplx $\ast$Vp, cplx $\ast$Sl, cplx $\ast$Tl, int ltr)\label{group__sht_ga82acccde540cc820c1886b61569c069a}
+
+\item 
+\hypertarget{group__sht_ga66775a6624aedb0c3f9b49aff5ea6aa9}{}void {\bfseries S\+Hsphtor\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Sl, cplx $\ast$Tl, cplx $\ast$Vt, cplx $\ast$Vp, int ltr)\label{group__sht_ga66775a6624aedb0c3f9b49aff5ea6aa9}
+
+\item 
+\hypertarget{group__sht_ga6bf82b2190005834236c03688e32a4e2}{}void {\bfseries S\+Hsph\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Sl, cplx $\ast$Vt, cplx $\ast$Vp, int ltr)\label{group__sht_ga6bf82b2190005834236c03688e32a4e2}
+
+\item 
+\hypertarget{group__sht_ga243ec35f6cbe90fa703283d24679d968}{}void {\bfseries S\+Htor\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Tl, cplx $\ast$Vt, cplx $\ast$Vp, int ltr)\label{group__sht_ga243ec35f6cbe90fa703283d24679d968}
+
+\item 
+\hypertarget{group__sht_ga9214dfb14e9d37aafd57edb7c9eb045c}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+Hqst\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Vr, cplx $\ast$Vt, cplx $\ast$Vp, cplx $\ast$Ql, cplx $\ast$Sl, cplx $\ast$Tl, int ltr)\label{group__sht_ga9214dfb14e9d37aafd57edb7c9eb045c}
+
+\item 
+\hypertarget{group__sht_gaafd84a89216bbe13de7c92b7ecce0153}{}void {\bfseries S\+Hqst\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Ql, cplx $\ast$Sl, cplx $\ast$Tl, cplx $\ast$Vr, cplx $\ast$Vt, cplx $\ast$Vp, int ltr)\label{group__sht_gaafd84a89216bbe13de7c92b7ecce0153}
+
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Local and partial evalutions of a S\+H representation \+:}\par
+{\em Does not require a call to \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto} }\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__local_gabf09188eb9c6351807752e160b4c1723}{}double \hyperlink{group__local_gabf09188eb9c6351807752e160b4c1723}{S\+H\+\_\+to\+\_\+point} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, double cost, double phi)\label{group__local_gabf09188eb9c6351807752e160b4c1723}
+
+\begin{DoxyCompactList}\small\item\em Evaluate scalar S\+H representation {\bfseries Qlm} at physical point defined by {\bfseries cost} = cos(theta) and {\bfseries phi}. \end{DoxyCompactList}\item 
+\hypertarget{group__local_gae6c36bc728d73f6e7b8a212bed4d34c3}{}void {\bfseries S\+H\+\_\+to\+\_\+grad\+\_\+point} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Dr\+Slm, cplx $\ast$Slm, double cost, double phi, double $\ast$vr, double $\ast$vt, double $\ast$vp)\label{group__local_gae6c36bc728d73f6e7b8a212bed4d34c3}
+
+\item 
+\hypertarget{group__local_ga10e38e735afa642698c4c78fda56b045}{}void \hyperlink{group__local_ga10e38e735afa642698c4c78fda56b045}{S\+Hqst\+\_\+to\+\_\+point} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, double cost, double phi, double $\ast$vr, double $\ast$vt, double $\ast$vp)\label{group__local_ga10e38e735afa642698c4c78fda56b045}
+
+\begin{DoxyCompactList}\small\item\em Evaluate vector S\+H representation {\bfseries Qlm} at physical point defined by {\bfseries cost} = cos(theta) and {\bfseries phi}. \end{DoxyCompactList}\item 
+void \hyperlink{group__local_ga19f8e3040d8f37c994ca73573e76b738}{S\+H\+\_\+to\+\_\+lat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, double cost, double $\ast$vr, int nphi, int ltr, int mtr)
+\begin{DoxyCompactList}\small\item\em synthesis at a given latitude, on nphi equispaced longitude points. \end{DoxyCompactList}\item 
+void \hyperlink{group__local_ga7a490f355da08822e437ff6093288e86}{S\+Hqst\+\_\+to\+\_\+lat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, double cost, double $\ast$vr, double $\ast$vt, double $\ast$vp, int nphi, int ltr, int mtr)
+\begin{DoxyCompactList}\small\item\em synthesis at a given latitude, on nphi equispaced longitude points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+\hyperlink{shtns_8h}{shtns.\+h} is the definition file for S\+H\+Tns \+: include this file in your source code to use S\+H\+Tns. 
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{shtns_8h_ac352f3aed9b889f73ff84f74f5acfadb}{}\index{shtns.\+h@{shtns.\+h}!L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P@{L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P}}
+\index{L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P@{L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P(
+\begin{DoxyParamCaption}
+\item[{}]{shtns, }
+\item[{}]{action}
+\end{DoxyParamCaption}
+)~\{ int lm=0; do \{ int l=shtns-\/$>$li\mbox{[}lm\mbox{]}; action \} while(++lm $<$ shtns-\/$>$nlm); \}}\label{shtns_8h_ac352f3aed9b889f73ff84f74f5acfadb}
+
+
+L\+M\+\_\+\+L\+\_\+\+L\+O\+O\+P \+: loop over all (l,im) and perform \char`\"{}action\char`\"{} \+: l and lm are defined (but N\+O\+T m and im). 
+
+{\ttfamily lm} and {\ttfamily m} must be declared int\textquotesingle{}s. {\ttfamily lm} is the loop counter and S\+H array index, while {\ttfamily l} is the S\+H degree. more info \+: spec\+\_\+data \hypertarget{shtns_8h_aa3162746f198939da947f4eae8ecfd24}{}\index{shtns.\+h@{shtns.\+h}!L\+M\+\_\+\+L\+O\+O\+P@{L\+M\+\_\+\+L\+O\+O\+P}}
+\index{L\+M\+\_\+\+L\+O\+O\+P@{L\+M\+\_\+\+L\+O\+O\+P}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{L\+M\+\_\+\+L\+O\+O\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+M\+\_\+\+L\+O\+O\+P(
+\begin{DoxyParamCaption}
+\item[{}]{shtns, }
+\item[{}]{action}
+\end{DoxyParamCaption}
+)~\{ int lm=0; do \{ action \} while(++lm $<$ shtns-\/$>$nlm); \}}\label{shtns_8h_aa3162746f198939da947f4eae8ecfd24}
+
+
+\hyperlink{shtns_8h_aa3162746f198939da947f4eae8ecfd24}{L\+M\+\_\+\+L\+O\+O\+P( action )} \+: macro that performs \char`\"{}action\char`\"{} for every (l,m), with lm set, but neither l, m nor im. 
+
+{\ttfamily lm} must be a declared int and is the loop counter and the S\+H array index. more info \+: spec\+\_\+data \hypertarget{shtns_8h_a1e277702adc8ec86b6dc8a05f76f14de}{}\index{shtns.\+h@{shtns.\+h}!N\+S\+P\+A\+T\+\_\+\+A\+L\+L\+O\+C@{N\+S\+P\+A\+T\+\_\+\+A\+L\+L\+O\+C}}
+\index{N\+S\+P\+A\+T\+\_\+\+A\+L\+L\+O\+C@{N\+S\+P\+A\+T\+\_\+\+A\+L\+L\+O\+C}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{N\+S\+P\+A\+T\+\_\+\+A\+L\+L\+O\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\+S\+P\+A\+T\+\_\+\+A\+L\+L\+O\+C(
+\begin{DoxyParamCaption}
+\item[{}]{shtns}
+\end{DoxyParamCaption}
+)~(shtns-\/$>$nspat)}\label{shtns_8h_a1e277702adc8ec86b6dc8a05f76f14de}
+
+
+total number of \textquotesingle{}doubles\textquotesingle{} required for a spatial field (includes F\+F\+T\+W reserved space). 
+
+only the first shtns.\+nlat$\ast$shtns.nphi are real spatial data, the remaining is used by the Fourier Transform. more info \+: spat 
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{shtns_8h_ae40339bdff1eddb866f48a5342792952}{}\index{shtns.\+h@{shtns.\+h}!shtns\+\_\+norm@{shtns\+\_\+norm}}
+\index{shtns\+\_\+norm@{shtns\+\_\+norm}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{shtns\+\_\+norm}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf shtns\+\_\+norm}}\label{shtns_8h_ae40339bdff1eddb866f48a5342792952}
+
+
+different Spherical Harmonic normalizations. 
+
+see also section norm for details. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{sht\+\_\+orthonormal@{sht\+\_\+orthonormal}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+orthonormal@{sht\+\_\+orthonormal}}\item[{\em 
+\hypertarget{shtns_8h_ae40339bdff1eddb866f48a5342792952aacca9a864ee3735535a11c2e78d0aaff}{}sht\+\_\+orthonormal\label{shtns_8h_ae40339bdff1eddb866f48a5342792952aacca9a864ee3735535a11c2e78d0aaff}
+}]orthonormalized spherical harmonics (default). \index{sht\+\_\+fourpi@{sht\+\_\+fourpi}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+fourpi@{sht\+\_\+fourpi}}\item[{\em 
+\hypertarget{shtns_8h_ae40339bdff1eddb866f48a5342792952a847427b41ce9433cd47af020869fb0e1}{}sht\+\_\+fourpi\label{shtns_8h_ae40339bdff1eddb866f48a5342792952a847427b41ce9433cd47af020869fb0e1}
+}]Geodesy and spectral analysis \+: 4.\+pi normalization. \index{sht\+\_\+schmidt@{sht\+\_\+schmidt}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+schmidt@{sht\+\_\+schmidt}}\item[{\em 
+\hypertarget{shtns_8h_ae40339bdff1eddb866f48a5342792952ac9612ef0c13117c8ba08d1f8861ee442}{}sht\+\_\+schmidt\label{shtns_8h_ae40339bdff1eddb866f48a5342792952ac9612ef0c13117c8ba08d1f8861ee442}
+}]Schmidt semi-\/normalized \+: 4.\+pi/(2l+1) \end{description}
+\end{Desc}
+\hypertarget{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{}\index{shtns.\+h@{shtns.\+h}!shtns\+\_\+type@{shtns\+\_\+type}}
+\index{shtns\+\_\+type@{shtns\+\_\+type}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{shtns\+\_\+type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf shtns\+\_\+type}}\label{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}
+
+
+different S\+H\+T types and algorithms 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{sht\+\_\+gauss@{sht\+\_\+gauss}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+gauss@{sht\+\_\+gauss}}\item[{\em 
+\hypertarget{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7bae43c9863c490b02cb0c8b5d94da8ec19}{}sht\+\_\+gauss\label{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7bae43c9863c490b02cb0c8b5d94da8ec19}
+}]use {\bfseries gaussian grid} and quadrature. \index{sht\+\_\+auto@{sht\+\_\+auto}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+auto@{sht\+\_\+auto}}\item[{\em 
+\hypertarget{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba41bfd186173224521817edfe69eb11fd}{}sht\+\_\+auto\label{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba41bfd186173224521817edfe69eb11fd}
+}]use a regular grid if dct is faster, otherwise defaults to gauss. \index{sht\+\_\+reg\+\_\+fast@{sht\+\_\+reg\+\_\+fast}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+reg\+\_\+fast@{sht\+\_\+reg\+\_\+fast}}\item[{\em 
+\hypertarget{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7baa3c53845663c12402ff56ad01f3076a2}{}sht\+\_\+reg\+\_\+fast\label{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7baa3c53845663c12402ff56ad01f3076a2}
+}]use fastest algorithm, on a {\bfseries regular grid}, mixing dct and regular quadrature. \index{sht\+\_\+reg\+\_\+dct@{sht\+\_\+reg\+\_\+dct}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+reg\+\_\+dct@{sht\+\_\+reg\+\_\+dct}}\item[{\em 
+\hypertarget{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba3aa526d68651107a8a3db912a4da1f4b}{}sht\+\_\+reg\+\_\+dct\label{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba3aa526d68651107a8a3db912a4da1f4b}
+}]use pure dct algorithm, on a {\bfseries regular grid}. \index{sht\+\_\+quick\+\_\+init@{sht\+\_\+quick\+\_\+init}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+quick\+\_\+init@{sht\+\_\+quick\+\_\+init}}\item[{\em 
+\hypertarget{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba0823fb600f399ba416b4c0c52ef7a0de}{}sht\+\_\+quick\+\_\+init\label{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba0823fb600f399ba416b4c0c52ef7a0de}
+}]gauss grid, with minimum initialization time (useful for pre/post-\/processing) \index{sht\+\_\+reg\+\_\+poles@{sht\+\_\+reg\+\_\+poles}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+reg\+\_\+poles@{sht\+\_\+reg\+\_\+poles}}\item[{\em 
+\hypertarget{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba181b63ae50741aeba379e2cef1bfb619}{}sht\+\_\+reg\+\_\+poles\label{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7ba181b63ae50741aeba379e2cef1bfb619}
+}]use a {\bfseries synthesis only} algo {\bfseries including poles}, not suitable for computations. Useful for vizualisation. \index{sht\+\_\+gauss\+\_\+fly@{sht\+\_\+gauss\+\_\+fly}!shtns.\+h@{shtns.\+h}}\index{shtns.\+h@{shtns.\+h}!sht\+\_\+gauss\+\_\+fly@{sht\+\_\+gauss\+\_\+fly}}\item[{\em 
+\hypertarget{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7bac45458acb259c22aec393442ba24b1c7}{}sht\+\_\+gauss\+\_\+fly\label{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7bac45458acb259c22aec393442ba24b1c7}
+}]legendre polynomials are recomputed on-\/the-\/fly for each transform (may be faster on some machines, saves memory and bandwidth). \end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\hypertarget{shtns_8h_ac8cbfbde7069f7760509a72ce480ecc7}{}\index{shtns.\+h@{shtns.\+h}!nlm\+\_\+calc@{nlm\+\_\+calc}}
+\index{nlm\+\_\+calc@{nlm\+\_\+calc}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{nlm\+\_\+calc}]{\setlength{\rightskip}{0pt plus 5cm}long nlm\+\_\+calc (
+\begin{DoxyParamCaption}
+\item[{long}]{lmax, }
+\item[{long}]{mmax, }
+\item[{long}]{mres}
+\end{DoxyParamCaption}
+)}\label{shtns_8h_ac8cbfbde7069f7760509a72ce480ecc7}
+
+
+compute number of spherical harmonics modes (l,m) for given size parameters. Does not require any previous setup. 
+
+
+\begin{DoxyCode}
+1 return (mmax+1)*(lmax+1) - mres*(mmax*(mmax+1))/2; 
+\end{DoxyCode}
+ \hypertarget{shtns_8h_aad0ed87420ea2ad7b780b868522ecf3b}{}\index{shtns.\+h@{shtns.\+h}!sh00\+\_\+1@{sh00\+\_\+1}}
+\index{sh00\+\_\+1@{sh00\+\_\+1}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{sh00\+\_\+1}]{\setlength{\rightskip}{0pt plus 5cm}double sh00\+\_\+1 (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns}
+\end{DoxyParamCaption}
+)}\label{shtns_8h_aad0ed87420ea2ad7b780b868522ecf3b}
+
+
+return the spherical harmonic representation of 1 (l=0,m=0) 
+
+return the spherical harmonic representation of 1 (l=0,m=0) \hypertarget{shtns_8h_a15e835a6e4df02cd72d5f4e96d05b1a0}{}\index{shtns.\+h@{shtns.\+h}!sh10\+\_\+ct@{sh10\+\_\+ct}}
+\index{sh10\+\_\+ct@{sh10\+\_\+ct}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{sh10\+\_\+ct}]{\setlength{\rightskip}{0pt plus 5cm}double sh10\+\_\+ct (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns}
+\end{DoxyParamCaption}
+)}\label{shtns_8h_a15e835a6e4df02cd72d5f4e96d05b1a0}
+
+
+return the spherical harmonic representation of cos(theta) (l=1,m=0) 
+
+return the spherical harmonic representation of cos(theta) (l=1,m=0) \hypertarget{shtns_8h_acb46e0d25edc1cf28401041f485a25f1}{}\index{shtns.\+h@{shtns.\+h}!sh11\+\_\+st@{sh11\+\_\+st}}
+\index{sh11\+\_\+st@{sh11\+\_\+st}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{sh11\+\_\+st}]{\setlength{\rightskip}{0pt plus 5cm}double sh11\+\_\+st (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns}
+\end{DoxyParamCaption}
+)}\label{shtns_8h_acb46e0d25edc1cf28401041f485a25f1}
+
+
+return the spherical harmonic representation of sin(theta)$\ast$cos(phi) (l=1,m=1) 
+
+return the spherical harmonic representation of sin(theta)$\ast$cos(phi) (l=1,m=1) \hypertarget{shtns_8h_aa62e2ff5d7b6e7c13e62effa912ff0de}{}\index{shtns.\+h@{shtns.\+h}!shlm\+\_\+e1@{shlm\+\_\+e1}}
+\index{shlm\+\_\+e1@{shlm\+\_\+e1}!shtns.\+h@{shtns.\+h}}
+\subsubsection[{shlm\+\_\+e1}]{\setlength{\rightskip}{0pt plus 5cm}double shlm\+\_\+e1 (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{int}]{l, }
+\item[{int}]{m}
+\end{DoxyParamCaption}
+)}\label{shtns_8h_aa62e2ff5d7b6e7c13e62effa912ff0de}
+
+
+return the l,m S\+H coefficient corresponding to unit energy. 
+
+return the l,m S\+H coefficient corresponding to unit energy. 

@@ -1,0 +1,346 @@
+// global variables and procedures shared by all threads.
+
+/********************* Types *************/
+
+typedef void *omp_lock_t;  /* represented as a pointer */
+
+typedef void *omp_nest_lock_t; /* represented as a pointer */
+
+typedef enum omp_sched_t {
+  omp_sched_static = 1,
+  omp_sched_dynamic = 2,
+  omp_sched_guided = 3,
+  omp_sched_auto = 4
+} omp_sched_t;
+
+typedef enum omp_proc_bind_t {
+  omp_proc_bind_false = 0,
+  omp_proc_bind_true = 1,
+  omp_proc_bind_master = 2,
+  omp_proc_bind_close = 3,
+  omp_proc_bind_spread = 4
+} omp_proc_bind_t;
+
+/********************* Internal Control Variables *************/
+
+/* dyn-var: whether dynamic adjustment of the number of threads is enabled for encountered 
+parallel regions. There is one copy of this ICV per data environment. 
+The initial value of dyn-var is implementation defined if the implementation supports 
+dynamic adjustment of the number of threads; otherwise, the initial value is false. */
+int OMP_DYNAMIC = 0; //
+
+/* nest-var: whether nested parallelism is enabled for encountered parallel regions. 
+There is one copy of this ICV per data environment. */
+int OMP_NESTED = 0;
+
+/* nthreads-var: controls the number of threads requested for encountered parallel regions. 
+There is one copy of this ICV per data environment. */
+int OMP_NUM_THREADS;
+
+/* thread-limit-var: controls the maximum number of threads participating in the contention group. 
+There is one copy of this ICV per data environment. */
+int OMP_THREAD_LIMIT;
+
+/* max-active-levels-var: controls the maximum number of nested active parallel regions. 
+There is one copy of this ICV per data environment. 
+The initial value of max-active-levels-var is the number of levels of parallelism that 
+the implementation supports. */
+int OMP_MAX_ACTIVE_LEVELS;
+
+/* place-partition-var : controls the place partition available to the execution 
+environment for encountered parallel regions. 
+There is one copy of this ICV per data environment. */
+int OMP_PLACES;
+
+/* the number of nested, active parallel regions enclosing the current task such that 
+all of the parallel regions are enclosed by the outermost initial task region on 
+the current device. There is one copy of this ICV per data environment. */
+int active_levels_var = 0;
+
+/* the number of nested parallel regions enclosing the current task such that all of 
+the parallel regions are enclosed by the outermost initial task region on the current 
+device. There is one copy of this ICV per data environment. */
+int levels_var = 0;
+
+/* bind-var: controls the binding of OpenMP threads to places. When binding is requested, the 
+variable indicates that the execution environment is advised not to move threads between 
+places. The variable can also provide default thread affinity policies.  
+There is one copy of this ICV per data environment. */
+omp_proc_bind_t OMP_PROC_BIND;
+
+/* The following ICVs store values that affect the operation of loop regions. */
+
+/* run-sched-var: controls the schedule that the runtime schedule clause uses for loop regions.   
+There is one copy of this ICV per data environment. */
+omp_sched_t OMP_SCHEDULE;
+
+/* the chunk size */
+int CHUNK_SIZE;
+
+/* controls the implementation defined default scheduling of loop regions.    
+There is one copy of this ICV per data environment. */
+omp_sched_t def_sched_var;
+
+/* stacksize-var: controls the stack size for threads that the OpenMP implementation 
+creates. There is one copy of this ICV per data environment. */
+int OMP_STACKSIZE;
+
+/* wait-policy-var: controls the desired behavior of waiting threads.    
+There is one copy of this ICV per data environment. */
+int OMP_WAIT_POLICY;
+
+/* cancel-var : controls the desired behavior of the cancel construct and cancellation points.  
+There is one copy of this ICV per data environment. */
+int OMP_CANCELLATION = 0;
+
+/* default-device-var: controls the default target device.  
+There is one copy of this ICV per data environment. */
+int OMP_DEFAULT_DEVICE;
+
+/********************* implicit variables *************/
+int in_barrier[1024];
+int num_in_barrier = 0;
+
+/****** routines for modifying and retrieving the values of ICVs ******/
+
+/*void omp_set_dynamic(_Bool value) {
+  OMP_DYNAMIC = value;
+}*/
+
+/*_Bool omp_get_dynamic() {
+  return OMP_DYNAMIC;
+}*/
+
+/*void omp_set_nested(_Bool value) {
+  OMP_NESTED = value;
+}*/
+
+/*_Bool omp_get_nested() {
+  return OMP_NESTED;
+}*/
+
+/* affects the number of threads to be used for subsequent parallel regions that do not 
+specify a num_threads clause, by setting the value of the first element of the 
+nthreads-var ICV of the current task. */
+void omp_set_num_threads(int value) {
+  OMP_NUM_THREADS = value;
+  printf("NUM_THREADS is %d\n", OMP_NUM_THREADS);
+}
+
+/* returns an upper bound on the number of threads that could be used to form 
+a new team if a parallel construct without a num_threads clause were encountered 
+after execution returns from this routine. */
+int omp_get_max_threads() {
+  return OMP_NUM_THREADS;
+}
+
+/* returns the number of threads in the current team. */
+int omp_get_num_threads() {
+  return OMP_NUM_THREADS;
+}
+
+/* returns the number of processors available to the device. */
+int omp_get_num_procs() {
+  return 1;//TODO
+}
+
+/* returns true if the active-levels-var ICV is greater than zero; 
+otherwise, it returns false. */
+int omp_in_parallel() {
+  return active_levels_var;
+}
+
+/* enables or disables dynamic adjustment of the number of threads available 
+for the execution of subsequent parallel regions by setting the value of 
+the dyn-var ICV. */
+void omp_set_dynamic(int dynamic_threads) {
+  return; //do not support dynamic schedule
+}
+
+/* returns the value of the dyn-var ICV, which determines whether dynamic 
+adjustment of the number of threads is enabled or disabled. */
+int omp_get_dynamic() {
+  return OMP_DYNAMIC;
+}
+
+/* returns the value of the cancel-var ICV, which controls the behavior of 
+the cancel construct and cancellation points. */
+int omp_get_cancellation() {
+  return OMP_CANCELLATION;
+}
+
+/* enables or disables nested parallelism, by setting the nest-var ICV. */
+void omp_set_nested(int nested) {
+  OMP_NESTED = nested;
+}
+
+/* returns the value of the nest-var ICV, which determines if nested 
+parallelism is enabled or disabled. */
+int omp_get_nested(void) {
+  return OMP_NESTED;
+}
+
+/* affects the schedule that is applied when runtime is used as schedule kind, 
+by setting the value of the run-sched-var ICV. 
+For the schedule types static, dynamic, and guided the chunk_size is set to the value 
+of the second argument, or to the default chunk_size if the value of the second 
+argument is less than 1; for the schedule type auto the second argument has no meaning; 
+for implementation specific schedule types, the values and associated meanings of 
+the second argument are implementation defined. */
+void omp_set_schedule(omp_sched_t kind, int modifier) {
+  OMP_SCHEDULE = kind;
+  /*switch(kind) {
+    case omp_sched_static:
+    case omp_sched_dynamic:
+    case omp_sched_guided:
+      CHUNK_SIZE = modifier;
+      break;
+    default:
+  }*/
+}
+
+/* returns the schedule that is applied when the runtime schedule is used. */
+void omp_get_schedule(omp_sched_t * kind, int * modifier) {
+  *kind = OMP_SCHEDULE;
+  *modifier = CHUNK_SIZE;
+}
+
+/* returns the maximum number of OpenMP threads available on the device. */
+int omp_get_thread_limit() {
+  return OMP_THREAD_LIMIT;
+}
+
+/* imits the number of nested active parallel regions on the device, by setting the 
+max-active-levels-var ICV. */
+void omp_set_max_active_levels (int max_levels) {
+  OMP_MAX_ACTIVE_LEVELS = max_levels;
+}
+
+/* returns the value of the max-active-levels-var ICV, which determines the 
+maximum number of nested active parallel regions on the device. */
+int omp_get_max_active_levels() {
+  return OMP_MAX_ACTIVE_LEVELS;
+}
+
+/* returns the value of the levels-var ICV. */
+int omp_get_level() {
+  return levels_var;
+}
+
+/* returns, for a given nested level of the current thread, 
+the thread number of the ancestor of the current thread. 
+returns the thread number of the ancestor at a given nest level of the current thread or 
+the thread number of the current thread. If the requested nest level is outside the range 
+of 0 and the nest level of the current thread, as returned by the omp_get_level routine, 
+the routine returns -1. */
+int omp_get_ancestor_thread_num(int level) {
+  if(levels_var < level || level < 0)
+    return -1;
+  return 0; //TODO
+}
+
+/* returns, for a given nested level of the current thread, the size of the thread team to 
+which the ancestor or the current thread belongs.
+returns the size of the thread team to which the ancestor or the current thread belongs. 
+If the requested nested level is outside the range of 0 and the nested level of the current 
+thread, as returned by the omp_get_level routine, the routine returns -1. 
+Inactive parallel regions are regarded like active parallel
+regions executed with one thread. */
+int omp_get_team_size(int level) {
+  if(levels_var < level || level < 0)
+    return -1;
+  return OMP_NUM_THREADS; //TODO
+}
+
+/* returns the value of the active-level-vars ICV. 
+return the number of nested, active parallel regions enclosing the current task such 
+that all of the parallel regions are enclosed by the outermost initial task region on 
+the current device. */
+int omp_get_active_level() {
+  return active_levels_var;
+}
+
+/* returns true if the enclosing task region is final. Otherwise, it returns false. */
+int omp_in_final() {
+  return 1;//TODO
+}
+
+/* returns the thread affinity policy to be used for the subsequent nested parallel 
+regions that do not specify a proc_bind clause. */
+omp_proc_bind_t omp_get_proc_bind(void) {
+   return OMP_PROC_BIND;
+}
+
+/*  controls the default target device by assigning the value of the default-device-var ICV. 
+When called from within a target region the effect of this routine is unspecified. */
+void omp_set_default_device(int device_num) {
+  OMP_DEFAULT_DEVICE = device_num;//TODO
+}
+
+/* returns the default target device. When called from within a target region the effect of 
+this routine is unspecified. */
+int omp_get_default_device() {
+  return OMP_DEFAULT_DEVICE;//TODO
+}
+
+/* returns the number of target devices. When called from within a target region 
+the effect of this routine is unspecified.*/
+int omp_get_num_devices() {
+  return 1;//TODO
+}
+
+/********************* helper functions for loop translation *************/
+
+/*
+For a team of p threads and a loop of n iterations, let ￼ ￼ ￼Upper( n⁄p )￼ ￼ be the integer q that
+ satisfies n = p*q - r, with 0 ≤ r < p . One compliant implementation of the static schedule
+  (with no specified chunk_size) would behave as though chunk_size had been specified with 
+  value q. Another compliant implementation would assign q iterations to the first p-r threads, 
+  and q-1 iterations to the remaining r threads. This illustrates why a conforming program must not rely on the details of a particular implementation.
+A compliant implementation of the guided schedule with a chunk_size value of k would assign q
+ = Upper(n ⁄ p) iterations to the first available thread and set n to the larger of n-q and p*k. 
+ It would then repeat this process until q is greater than or equal to the number of 
+ remaining iterations, at which time the remaining iterations form the final chunk. 
+ Another compliant implementation could use the same method, except with
+q = Upper(n⁄(2p)) , and set n to the larger of n-q and 2*p*k.
+*/
+
+/* Common functions for translating for loops */
+// computes the start index for a given thread
+int __for_start(int tid, int total) {
+  return ((total/OMP_NUM_THREADS) * tid);
+}
+
+//computes the end index for a given thread
+int __for_end(int tid, int total) {
+  return ((total/OMP_NUM_THREADS) * (tid + 1));
+}
+
+//computes the extra index for a given thread
+int __for_extra(int tid, int total) {
+  int offset = total % OMP_NUM_THREADS;
+  
+  if(tid < offset) {
+    return total - offset + tid;
+  }
+  return 0;
+}
+
+/********************* barrier implementation *************/
+
+void __barrier_init() {
+  for (int i=0; i<OMP_NUM_THREADS; i++) in_barrier[i] = 0;
+}
+   
+// model the synchronization of threads in the same block
+void __barrier(int tid) {
+  $atomic {
+  in_barrier[tid] = 1; // I am in the barrier
+    num_in_barrier++; // increment number in barrier
+    if (num_in_barrier == OMP_NUM_THREADS) { // I am last to enter
+      for (int i=0; i<OMP_NUM_THREADS; i++) in_barrier[i] = 0; // release all
+        num_in_barrier = 0; // now none are in barrier
+      }
+    }
+    $when (in_barrier[tid] == 0); // wait till I am released
+  }

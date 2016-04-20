@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ASTNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF</a> &gt; <span class="el_source">ASTNode.java</span></div><h1>ASTNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF;</span>
+
+import java.io.PrintStream;
+import java.util.NoSuchElementException;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTException;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.ArrayDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.FieldDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.EnumeratorDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FieldDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.TypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.GenericSelectionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ResultNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.OrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.SwitchLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.DeclarationListNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+/**
+ * &lt;p&gt;
+ * Root of the AST node type hierarchy. All AST nodes implement this interface.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * An AST node has some number &lt;i&gt;n&lt;/i&gt; of &lt;strong&gt;children&lt;/strong&gt;. Each child
+ * is either an AST node or &lt;code&gt;null&lt;/code&gt;. The children are arranged in an
+ * ordered sequences and numbered from 0.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Every AST node has at most one parent. If a node &lt;i&gt;u&lt;/i&gt; has a (non-
+ * &lt;code&gt;null&lt;/code&gt;) parent &lt;i&gt;v&lt;/i&gt;, then it is guaranteed that &lt;i&gt;u&lt;/i&gt; is a
+ * child of &lt;i&gt;v&lt;/i&gt;. This class is designed so that it is not possible to
+ * violate these invariants.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Nodes are mutable objects. It is possible to modify various aspects of the
+ * node, to remove a node from its parent, to add new children to a node, and so
+ * on.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * At any point in time, a node is either &quot;owned&quot; by an AST or it is &quot;free&quot;. A
+ * node can be owned by at most one AST. A node starts out as free, and becomes
+ * owned by an AST when an AST is created and the node is reachable from the
+ * root node used to create the new AST. The nodes of an AST can become free by
+ * &quot;releasing&quot; the AST, which essentially disolves the AST but leaves the nodes
+ * intact. Modifications to the tree structure (the parent and child relations)
+ * can only occur on free nodes, hence to modify an AST it is necessary to first
+ * release it. After the modifications are complete, a new AST can be formed
+ * from the modified nodes.
+ * &lt;/p&gt;
+ * 
+ * @see #child(int)
+ * @see #numChildren()
+ * @see #parent()
+ * @see ASTFactory#newAST(ASTNode)
+ * @see #getOwner()
+ * @see AST#release()
+ */
+public interface ASTNode {
+
+	/**
+	 * The different kind of AST nodes. Every AST node falls into one of the
+	 * following categories.
+	 * 
+	 * @author siegel
+	 * 
+	 */
+<span class="nc" id="L85">	public enum NodeKind {</span>
+<span class="nc" id="L86">		/**</span>
+		 * An array designator occurs in a compound initializer and specifies an
+		 * index of an array. A node of this kind can be safely cast to
+		 * {@link ArrayDesignatorNode}.
+		 */
+<span class="nc" id="L91">		ARRAY_DESIGNATOR,</span>
+<span class="nc" id="L92">		/**</span>
+		 * A node representing a CIVL-C collective assertion. Not yet
+		 * implemented.
+		 */
+<span class="nc" id="L96">		COLLECTIVE,</span>
+<span class="nc" id="L97">		/**</span>
+		 * A node representing a contract item. A node of this kind can be
+		 * safely cast to {@link ContractNode}.
+		 */
+<span class="nc" id="L101">		CONTRACT, DEPENDS_EVENT,</span>
+<span class="nc" id="L102">		/**</span>
+		 * A list of declarations; such a list can occur as an initializer in a
+		 * &lt;code&gt;for&lt;/code&gt; loop, for example. A node of this kind can be safely
+		 * cast to {@link DeclarationListNode}.
+		 */
+<span class="nc" id="L107">		DECLARATION_LIST,</span>
+<span class="nc" id="L108">		/**</span>
+		 * A designation, which can occur in a compound initializer. A
+		 * designation consists of a sequence of array or field designators to
+		 * pinpoint a location within a compound structure. A node of this kind
+		 * can be safely cast to {@link DesignationNode}.
+		 */
+<span class="nc" id="L114">		DESIGNATION,</span>
+<span class="nc" id="L115">		/**</span>
+		 * An enumerator declaration node represents the declaration of a single
+		 * enumerator constant inside a complete &lt;code&gt;enum&lt;/code&gt; definition. A
+		 * node of this kind can be safely cast to
+		 * {@link EnumeratorDeclarationNode}.
+		 */
+<span class="nc" id="L121">		ENUMERATOR_DECLARATION,</span>
+<span class="nc" id="L122">		/**</span>
+		 * A node representing an expression. A node of this kind can be safely
+		 * cast to {@link ExpressionNode}.
+		 */
+<span class="nc" id="L126">		EXPRESSION,</span>
+<span class="nc" id="L127">		/**</span>
+		 * A single field declaration within a &lt;code&gt;struct&lt;/code&gt; or
+		 * &lt;code&gt;union&lt;/code&gt; definition. A node of this kind can be safely cast
+		 * to {@link FieldDeclarationNode}.
+		 */
+<span class="nc" id="L132">		FIELD_DECLARATION,</span>
+<span class="nc" id="L133">		/**</span>
+		 * A field designator can occur in a designation, which can occur in a
+		 * compound initializer. It identifies a particular field in a structure
+		 * or union. A node of this kind can be safely cast to
+		 * {@link FieldDesignatorNode}.
+		 */
+<span class="nc" id="L139">		FIELD_DESIGNATOR,</span>
+<span class="nc" id="L140">		/**</span>
+		 * A function declaration which is not a function definition, i.e.,
+		 * which does not include the function body. A node of this kind can be
+		 * safely cast to {@link FunctionDeclarationNode}.
+		 */
+<span class="nc" id="L145">		FUNCTION_DECLARATION,</span>
+<span class="nc" id="L146">		/**</span>
+		 * A function definition: this is the declaration of the function that
+		 * includes the function body. A node of this kind may be safely cast to
+		 * {@link FunctionDefinitionNode}.
+		 */
+<span class="nc" id="L151">		FUNCTION_DEFINITION,</span>
+<span class="nc" id="L152">		/**</span>
+		 * A generic selection statement, a C11 construct defined in C11 Sec.
+		 * 6.5.1.1. A node of this kind may be safely cast to
+		 * {@link GenericSelectionNode}.
+		 */
+<span class="nc" id="L157">		GENERIC_SELECTION,</span>
+<span class="nc" id="L158">		/**</span>
+		 * An identifier node. Represents an occurrence of an identifier in the
+		 * program. A node of this kind may be safely cast to
+		 * {@link IdentifierNode}.
+		 */
+<span class="nc" id="L163">		IDENTIFIER,</span>
+<span class="nc" id="L164">		/**</span>
+		 * A node representing an OpenMP construct. May be safely cast to
+		 * {@link OmpNode}.
+		 */
+<span class="nc" id="L168">		OMP_NODE,</span>
+<span class="nc" id="L169">		/**</span>
+		 * A node representing a reduction operator in an OpenMP
+		 * &lt;code&gt;reduction&lt;/code&gt; clause. May be safely cast to
+		 * {@link OmpReductionNode}.
+		 */
+<span class="nc" id="L174">		OMP_REDUCTION_OPERATOR,</span>
+<span class="nc" id="L175">		/**</span>
+		 * A node representing a label in a labeled statement. (Does not include
+		 * a &lt;code&gt;case&lt;/code&gt; or &lt;code&gt;default&lt;/code&gt; label.) May be safely
+		 * cast to {@link OrdinaryLabelNode}.
+		 */
+<span class="nc" id="L180">		ORDINARY_LABEL,</span>
+<span class="nc" id="L181">		/**</span>
+		 * A pair node: a node of type {@link PairNode}&lt;code&gt;&lt; S,T &gt;&lt;/code&gt; for
+		 * some types &lt;code&gt;S&lt;/code&gt; and &lt;code&gt;T&lt;/code&gt; which are subtypes of
+		 * {@link ASTNode}. Such a node has two children, one of type
+		 * &lt;code&gt;S&lt;/code&gt; and one of type &lt;code&gt;T&lt;/code&gt;. A node of this kind
+		 * can be safely cast to {@link PairNode}&lt;code&gt;&lt; ?,? &gt;&lt;/code&gt;.
+		 */
+<span class="nc" id="L188">		PAIR,</span>
+<span class="nc" id="L189">		/**</span>
+		 * A pragma node, corresponding to a &lt;code&gt;#pragma&lt;/code&gt; directive in
+		 * the source code. May be safely cast to {@link PragmaNode}.
+		 */
+<span class="nc" id="L193">		PRAGMA,</span>
+<span class="nc" id="L194">		/**</span>
+		 * A &quot;result&quot;&quot; node represents a use of the special variable
+		 * &lt;code&gt;$result&lt;/code&gt; in a post-condition in a CIVL-C procedure
+		 * contract. It represents the value returned by the procedure. May be
+		 * safely cast to {@link ResultNode}.
+		 */
+<span class="nc" id="L200">		RESULT,</span>
+<span class="nc" id="L201">		/**</span>
+		 * A CIVL-C scope-parameterized declaration. This is soon to be
+		 * deprecated.
+		 */
+<span class="nc" id="L205">		SCOPE_PARAMETERIZED_DECLARATION,</span>
+<span class="nc" id="L206">		/**</span>
+		 * A node which implement the interface {@link SequenceNode}
+		 * &lt;code&gt;&lt; T &gt;&lt;/code&gt;. This is a node whose children all have type
+		 * &lt;code&gt;T&lt;/code&gt;, where &lt;code&gt;T&lt;/code&gt; is a subtype of {@link ASTNode}.
+		 */
+<span class="nc" id="L211">		SEQUENCE,</span>
+<span class="nc" id="L212">		/**</span>
+		 * A node representing a statement. May be safely cast to
+		 * {@link StatementNode}.
+		 */
+<span class="nc" id="L216">		STATEMENT,</span>
+<span class="nc" id="L217">		/**</span>
+		 * A node representing a C11 static assertion. This is a kind of
+		 * assertion which can be checked at &quot;compile time&quot;. A node of this kind
+		 * may be safely cast to {@link StaticAssertionNode}.
+		 */
+<span class="nc" id="L222">		STATIC_ASSERTION,</span>
+<span class="nc" id="L223">		/**</span>
+		 * A switch label is either a label of the form
+		 * &lt;code&gt;case CONSTANT:&lt;/code&gt; or &lt;code&gt;default :&lt;/code&gt; in a
+		 * &lt;code&gt;switch&lt;/code&gt; statement. A node of this kind may be safely cast
+		 * to {@link SwitchLabelNode}.
+		 */
+<span class="nc" id="L229">		SWITCH_LABEL,</span>
+<span class="nc" id="L230">		/**</span>
+		 * A type node, representing any kind of type. A node of this kind may
+		 * be safely cast to {@link TypeNode}.
+		 */
+<span class="nc" id="L234">		TYPE,</span>
+<span class="nc" id="L235">		/**</span>
+		 * A typedef node, representing a &lt;code&gt;typedef&lt;/code&gt; construct in the
+		 * program. A node of this kind may be safely cast to
+		 * {@link TypedefDeclarationNode}.
+		 */
+<span class="nc" id="L240">		TYPEDEF,</span>
+<span class="nc" id="L241">		/**</span>
+		 * A variable declaration node. A node of this kind can be safely cast
+		 * to {@link VariableDeclarationNode}.
+		 */
+<span class="nc" id="L245">		VARIABLE_DECLARATION</span>
+	};
+
+	/**
+	 * Returns the index-th child node of this AST node. The children of a node
+	 * are ordered and numbered starting from 0.
+	 * 
+	 * @param index
+	 *            an integer in the range [0,n-1], where n is the number of
+	 *            children of this node, i.e., the value returned by
+	 *            {@link #numChildren()}
+	 * @return the index-th child of this node; note that this may be
+	 *         &lt;code&gt;null&lt;/code&gt;.
+	 * @throws NoSuchElementException
+	 *             if index is less than 0 or greater than or equal to the
+	 *             number of children
+	 */
+	ASTNode child(int index) throws NoSuchElementException;
+
+	/**
+	 * &lt;p&gt;
+	 * Returns the index of this node among the children of its parent.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The children of a node are ordered and numbered from 0 to &lt;i&gt;n&lt;/i&gt;-1,
+	 * where &lt;i&gt;n&lt;/i&gt; is the number of children. Since an AST is a tree, every
+	 * node has at most one parent. If this node has a parent, this method
+	 * returns the index of this node in its parent's children list. If this
+	 * node does not have a parent, this method returns -1.
+	 * &lt;/p&gt;
+	 * 
+	 * @return the index of this node it its parent's child list, or -1 if it
+	 *         has no parent
+	 */
+	int childIndex();
+
+	/**
+	 * Returns the sequence of children of this node as an iterable object. Do
+	 * not attempt to cast the iterable to another type and/or modify it; if you
+	 * do, all bets are off. Use it only to iterate over the children.
+	 * 
+	 * @return the (ordered) sequence of children nodes of this node; may
+	 *         contain &lt;code&gt;null&lt;/code&gt; values
+	 */
+	Iterable&lt;ASTNode&gt; children();
+
+	/**
+	 * Returns a deep copy of this AST node. The node and all of its descendants
+	 * will be cloned. The cloning does not copy analysis or attribute
+	 * information.
+	 * 
+	 * @return deep copy of this node
+	 */
+	ASTNode copy();
+
+	/**
+	 * Returns the attribute value associated to the given key, or
+	 * &lt;code&gt;null&lt;/code&gt; if no value has been set for that key. Note that
+	 * attribute keys are generated using method
+	 * {@link NodeFactory#newAttribute(String, Class)}.
+	 * 
+	 * @param key
+	 *            an attribute key
+	 * @return the value associated to the key by this node, or
+	 *         &lt;code&gt;null&lt;/code&gt;
+	 */
+	Object getAttribute(AttributeKey key);
+
+	/**
+	 * Returns the &quot;owner&quot; of this AST, i.e., the AST to which this node
+	 * belongs. This can be &lt;code&gt;null&lt;/code&gt;, in which case we say this node is
+	 * &quot;free&quot;.
+	 * 
+	 * @return the owner of this node or &lt;code&gt;null&lt;/code&gt;
+	 */
+	AST getOwner();
+
+	/**
+	 * Gets the scope in which the syntactic element corresponding to this node
+	 * occurs.
+	 * 
+	 * @return the scope
+	 */
+	Scope getScope();
+
+	/**
+	 * Returns the source object that locates the origin of this program
+	 * construct in the original source code. This is used for reporting
+	 * friendly messages to the user. The source element specifies a range of
+	 * tokens in a token stream and can be used to display file name, line
+	 * numbers, and character indexes to precisely target a source region.
+	 * 
+	 * @return source object for this node
+	 */
+	Source getSource();
+
+	/**
+	 * ID number unique within the AST to which this node belongs, or -1 if the
+	 * node is free (not owned by an AST).
+	 * 
+	 * @return if the node is owned by an AST, the node ID number, which is
+	 *         unique among all nodes in this AST; otherwise -1
+	 */
+	int id();
+
+	/**
+	 * &lt;p&gt;
+	 * Removes all children that do not satisfy the predicate and applies this
+	 * method recursively to the remaining children.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * &quot;Removing a node&quot; is interpreted as follows: if &lt;i&gt;u&lt;/i&gt; is an instance
+	 * of {@link SequenceNode}, and a child of &lt;i&gt;u&lt;/i&gt; does not satisfy the
+	 * predicate, then the child is removed and all subsequent elements of the
+	 * sequence are shifted down to remove the gap. If &lt;i&gt;u&lt;/i&gt; is not an
+	 * instance of {@link SequenceNode} and the child does not satisfy the
+	 * predicate then the child is replaced by &lt;code&gt;null&lt;/code&gt;.
+	 * &lt;/p&gt;
+	 * 
+	 * @param keep
+	 *            a node predicate specifying which nodes to keep
+	 */
+	void keepOnly(NodePredicate keep);
+
+	/**
+	 * Returns the node kind: this is an element of the enumerated type
+	 * {@link NodeKind}, which is used to categorize the different kinds of
+	 * nodes.
+	 * 
+	 * @return The node kind
+	 */
+	NodeKind nodeKind();
+
+	/**
+	 * Returns the number of child nodes of this AST node. This includes
+	 * children which are &lt;code&gt;null&lt;/code&gt;!
+	 * 
+	 * @return the number of child nodes of this node
+	 */
+	int numChildren();
+
+	/**
+	 * Returns the parent of this node, or &lt;code&gt;null&lt;/code&gt; if this node has no
+	 * parent.
+	 * 
+	 * @return parent node or &lt;code&gt;null&lt;/code&gt;
+	 * */
+	ASTNode parent();
+
+	/**
+	 * Prints a long-form textual representation of this node. The form usually
+	 * involves multiple lines.
+	 * 
+	 * @param prefix
+	 *            a string which should be prepended to every line of output;
+	 *            typically something like &quot;| | &quot; which is used to control
+	 *            indentation
+	 * @param out
+	 *            stream to which to print
+	 * @param includeSource
+	 *            should the source information be included in the print-out?
+	 *            This incorporates the file name, line number(s), and start and
+	 *            end character indexes for the source code corresponding to
+	 *            this node
+	 * */
+	void print(String prefix, PrintStream out, boolean includeSource);
+
+	/**
+	 * &lt;p&gt;
+	 * Removes the child at given &lt;code&gt;index&lt;/code&gt; from this node.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The index must be in the range [0,n-1], where n is the value returned by
+	 * {@link #numChildren()} in the pre-state (i.e., before this method is
+	 * invoked). If there is no child at the given index (i.e., child is
+	 * &lt;code&gt;null&lt;/code&gt;), this is a no-op.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If the removed child is non-&lt;code&gt;null&lt;/code&gt;, its parent is set to
+	 * &lt;code&gt;null&lt;/code&gt;.
+	 * &lt;/p&gt;
+	 * 
+	 * @param index
+	 *            nonnegative integer in the range [0,n-1], where n is the
+	 *            number of children before executing this method
+	 * @return the child that was removed (may be &lt;code&gt;null&lt;/code&gt;)
+	 * @throws ASTException
+	 *             if this node is not free, or &lt;code&gt;index&lt;/code&gt; is not in the
+	 *             range [0,n-1]
+	 */
+	ASTNode removeChild(int index);
+
+	/**
+	 * Removes this node from its parent. If the parent of this node is already
+	 * &lt;code&gt;null&lt;/code&gt;, this is a no-op.
+	 */
+	void remove();
+
+	/**
+	 * Sets the attribute value associated to the given key. This method also
+	 * checks that the value belongs to the correct class. Note that attribute
+	 * keys are generated by calling method
+	 * {@link NodeFactory#newAttribute(String, Class)}.
+	 * 
+	 * @param key
+	 *            the attribute key
+	 * @param value
+	 *            the attribute value
+	 */
+	void setAttribute(AttributeKey key, Object value);
+
+	/**
+	 * &lt;p&gt;
+	 * Sets the child node at the given index. This node (i.e.,
+	 * &lt;code&gt;this&lt;/code&gt;) must be free (not owned by an AST) when this method is
+	 * called.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The child may be &lt;code&gt;null&lt;/code&gt; or non-&lt;code&gt;null&lt;/code&gt;. A non-
+	 * &lt;code&gt;null&lt;/code&gt; child must have a &lt;code&gt;null&lt;/code&gt; parent, i.e., it
+	 * must not be the child of another node.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If there is already a non-&lt;code&gt;null&lt;/code&gt; child of this node in
+	 * position &lt;code&gt;index&lt;/code&gt;, the old child is removed, i.e., its parent
+	 * is set to &lt;code&gt;null&lt;/code&gt;.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The caller is responsible for ensuring that the child is of the
+	 * appropriate kind and type.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The index can be any nonnegative integer. The list of children will be
+	 * expanded as necessary with &lt;code&gt;null&lt;/code&gt; values in order to
+	 * incorporate the index.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * To illustrate how this method could be used, consider the case of
+	 * swapping two nodes. Supposed &lt;code&gt;u1&lt;/code&gt; and &lt;code&gt;u2&lt;/code&gt; are
+	 * nodes, &lt;code&gt;u1&lt;/code&gt; has a non-&lt;code&gt;null&lt;/code&gt; child in position
+	 * &lt;code&gt;i1&lt;/code&gt;, and &lt;code&gt;u2&lt;/code&gt; has a non-&lt;code&gt;null&lt;/code&gt; child in
+	 * position &lt;code&gt;i2&lt;/code&gt;, and we wish to swap the two children. This
+	 * could be accomplished with the following code:
+	 * 
+	 * &lt;pre&gt;
+	 * ASTNode v1 = u1.removeChild(i1), v2 = u2.removeChild(i2);
+	 * u1.setChild(i1, v2);
+	 * u2.setChild(i2, v1);
+	 * &lt;/pre&gt;
+	 * 
+	 * &lt;/p&gt;
+	 * 
+	 * @param index
+	 *            any nonnegative integer
+	 * @param child
+	 *            a node (or null) to be made the index-th child of this node
+	 * @return the old child in position &lt;code&gt;index&lt;/code&gt; (may be
+	 *         &lt;code&gt;null&lt;/code&gt;)
+	 * @throws ASTException
+	 *             if any of the following hold: (1) this node is not free, (2)
+	 *             &lt;code&gt;index&lt;/code&gt; is negative, or (3) &lt;code&gt;child&lt;/code&gt; is
+	 *             not &lt;code&gt;null&lt;/code&gt; and has a non-&lt;code&gt;null&lt;/code&gt; parent.
+	 */
+	ASTNode setChild(int index, ASTNode child);
+
+	/**
+	 * Sets the ID number of this node.
+	 * 
+	 * @param id
+	 *            the ID number
+	 */
+	void setId(int id);
+
+	/**
+	 * Sets the owner of this node to the given AST.
+	 * 
+	 * @param owner
+	 *            the AST to make the owner of this node
+	 */
+	void setOwner(AST owner);
+
+	/**
+	 * Sets the scope of this syntactic element.
+	 * 
+	 * @param scope
+	 *            the scope
+	 */
+	void setScope(Scope scope);
+
+	/**
+	 * Is the given AST node equivalent to me?
+	 * 
+	 * @param that
+	 *            The given AST node to be compared.
+	 * @return True iff this AST node is equivalent with that AST node.
+	 */
+	boolean equiv(ASTNode that);
+
+	/**
+	 * Returns the first difference between this AST node and that node.
+	 * 
+	 * @param that
+	 *            The given AST node to be compared.
+	 * @return The difference of this AST node and that node, null if both nodes
+	 *         are equivalent.
+	 */
+	DifferenceObject diff(ASTNode that);
+
+	/**
+	 * Returns a short textual representation of this node only.
+	 * 
+	 * @return short textual representation of this node
+	 * */
+	String toString();
+
+	/**
+	 * Finds next non-null node in AST in DFS order.
+	 * 
+	 * @return next non-null node in DFS order or null if there is none
+	 */
+	ASTNode nextDFS();
+
+	/**
+	 * Pretty-prints this AST node (and its descendants) in a form that should
+	 * be similar to the actual programming language.
+	 * 
+	 * @param out
+	 *            stream to which output should be sent
+	 */
+	void prettyPrint(PrintStream out);
+
+	/**
+	 * Returns the pretty representation of this AST node (and its descendants)
+	 * in a form that should be similar to the actual programming language.
+	 * 
+	 * @return the pretty representation of this AST node (and its descendants)
+	 *         in a form that should be similar to the actual programming
+	 *         language.
+	 */
+	StringBuffer prettyRepresentation();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

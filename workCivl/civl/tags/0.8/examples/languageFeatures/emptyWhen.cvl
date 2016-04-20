@@ -1,0 +1,6 @@
+/* Commandline execution:
+ *		civl verify emptyWhen.cvl
+ * */
+void main() {
+  $when($true) {}
+}

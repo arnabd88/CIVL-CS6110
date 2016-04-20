@@ -1,0 +1,11 @@
+#include <civlc.h>
+#include <assert.h>
+
+$abstract int random(void); // ERROR: abstract functions requires >= 1 input
+
+void main() {
+  int x = 0;
+  
+  x = random();
+  assert(x==1);
+}

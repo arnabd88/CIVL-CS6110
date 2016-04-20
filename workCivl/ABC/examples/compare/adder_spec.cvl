@@ -1,0 +1,8 @@
+$input int N;
+$output int sum;
+
+void main(){
+  sum = 0;
+  for(int i = 0; i < N; i++)
+    sum += i;
+}

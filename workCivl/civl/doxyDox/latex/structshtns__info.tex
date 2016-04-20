@@ -1,0 +1,219 @@
+\hypertarget{structshtns__info}{}\section{shtns\+\_\+info Struct Reference}
+\label{structshtns__info}\index{shtns\+\_\+info@{shtns\+\_\+info}}
+
+
+structure containing useful information about the S\+H\+T.  
+
+
+
+
+{\ttfamily \#include $<$sht\+\_\+private.\+h$>$}
+
+
+
+Collaboration diagram for shtns\+\_\+info\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{structshtns__info__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structshtns__info_abd15108a5e4f0687f42a67b1b64a9a47}{}unsigned int \hyperlink{structshtns__info_abd15108a5e4f0687f42a67b1b64a9a47}{nlm}\label{structshtns__info_abd15108a5e4f0687f42a67b1b64a9a47}
+
+\begin{DoxyCompactList}\small\item\em total number of (l,m) spherical harmonics components. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a8a5c45a1fd2227abb668a3b3a4259509}{}unsigned short \hyperlink{structshtns__info_a8a5c45a1fd2227abb668a3b3a4259509}{lmax}\label{structshtns__info_a8a5c45a1fd2227abb668a3b3a4259509}
+
+\begin{DoxyCompactList}\small\item\em maximum degree (lmax) of spherical harmonics. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a38cd0b51312d467b68c2de264b66997b}{}unsigned short \hyperlink{structshtns__info_a38cd0b51312d467b68c2de264b66997b}{mmax}\label{structshtns__info_a38cd0b51312d467b68c2de264b66997b}
+
+\begin{DoxyCompactList}\small\item\em maximum order (mmax$\ast$mres) of spherical harmonics. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_aecf1d8b5744c247e04a0318136390a58}{}unsigned short \hyperlink{structshtns__info_aecf1d8b5744c247e04a0318136390a58}{mres}\label{structshtns__info_aecf1d8b5744c247e04a0318136390a58}
+
+\begin{DoxyCompactList}\small\item\em the periodicity along the phi axis. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a4e3a22a9dff6a9cf670fc007fb974a7c}{}unsigned short \hyperlink{structshtns__info_a4e3a22a9dff6a9cf670fc007fb974a7c}{nphi}\label{structshtns__info_a4e3a22a9dff6a9cf670fc007fb974a7c}
+
+\begin{DoxyCompactList}\small\item\em number of spatial points in Phi direction (longitude) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a12475937302f111720d59b8b11424215}{}unsigned short \hyperlink{structshtns__info_a12475937302f111720d59b8b11424215}{nlat}\label{structshtns__info_a12475937302f111720d59b8b11424215}
+
+\begin{DoxyCompactList}\small\item\em number of spatial points in Theta direction (latitude) ... \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ae333643489525b49fd066ba7bb638696}{}unsigned short \hyperlink{structshtns__info_ae333643489525b49fd066ba7bb638696}{nlat\+\_\+2}\label{structshtns__info_ae333643489525b49fd066ba7bb638696}
+
+\begin{DoxyCompactList}\small\item\em ...and half of it (using (shtns.\+nlat+1)/2 allows odd shtns.\+nlat.) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ad14521718bc234a2197e2d7bb91e0e81}{}int $\ast$ \hyperlink{structshtns__info_ad14521718bc234a2197e2d7bb91e0e81}{lmidx}\label{structshtns__info_ad14521718bc234a2197e2d7bb91e0e81}
+
+\begin{DoxyCompactList}\small\item\em (virtual) index in S\+H array of given im (size mmax+1) \+: \hyperlink{shtns_8h_aee0d42089971d399238da3aaca4d9ca1}{Li\+M(l,im)} = lmidx\mbox{[}im\mbox{]} + l \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ae51719912d1a0c6ce672441e9931a574}{}unsigned short $\ast$ \hyperlink{structshtns__info_ae51719912d1a0c6ce672441e9931a574}{li}\label{structshtns__info_ae51719912d1a0c6ce672441e9931a574}
+
+\begin{DoxyCompactList}\small\item\em degree l for given mode index (size nlm) \+: li\mbox{[}lm\mbox{]} \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a296b42387b5b60f6f4873a7024cd0d5d}{}unsigned short $\ast$ \hyperlink{structshtns__info_a296b42387b5b60f6f4873a7024cd0d5d}{mi}\label{structshtns__info_a296b42387b5b60f6f4873a7024cd0d5d}
+
+\begin{DoxyCompactList}\small\item\em order m for given mode index (size nlm) \+: mi\mbox{[}lm\mbox{]} \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_aef3d64ca3ab3db540077bd2e15c88f8f}{}double $\ast$ {\bfseries ct}\label{structshtns__info_aef3d64ca3ab3db540077bd2e15c88f8f}
+
+\item 
+\hypertarget{structshtns__info_a609589277af64939f7011b669147617b}{}double $\ast$ \hyperlink{structshtns__info_a609589277af64939f7011b669147617b}{st}\label{structshtns__info_a609589277af64939f7011b669147617b}
+
+\begin{DoxyCompactList}\small\item\em cos(theta) and sin(theta) arrays (size nlat) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_aed9bef40a200b6930120b84fa130c41a}{}unsigned int \hyperlink{structshtns__info_aed9bef40a200b6930120b84fa130c41a}{nspat}\label{structshtns__info_aed9bef40a200b6930120b84fa130c41a}
+
+\begin{DoxyCompactList}\small\item\em number of real numbers that must be allocated in a spatial field. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a2b76f5aee91ca7a93387d087ece0fd99}{}short \hyperlink{structshtns__info_a2b76f5aee91ca7a93387d087ece0fd99}{fftc\+\_\+mode}\label{structshtns__info_a2b76f5aee91ca7a93387d087ece0fd99}
+
+\begin{DoxyCompactList}\small\item\em how to perform the complex fft \+: -\/1 = no fft; 0 = interleaved/native; 1 = split/transpose. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a15f3351973710815ee68d0369e48dc43}{}unsigned short \hyperlink{structshtns__info_a15f3351973710815ee68d0369e48dc43}{nthreads}\label{structshtns__info_a15f3351973710815ee68d0369e48dc43}
+
+\begin{DoxyCompactList}\small\item\em number of threads (openmp). \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a6e82a42d5e69391830bf5d7f085333f7}{}unsigned short $\ast$ \hyperlink{structshtns__info_a6e82a42d5e69391830bf5d7f085333f7}{tm}\label{structshtns__info_a6e82a42d5e69391830bf5d7f085333f7}
+
+\begin{DoxyCompactList}\small\item\em start theta value for S\+H (polar optimization \+: near the poles the legendre polynomials go to zero for high m\textquotesingle{}s) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a87e19b6bc65bf3d76cec4432d07bd3ff}{}int \hyperlink{structshtns__info_a87e19b6bc65bf3d76cec4432d07bd3ff}{k\+\_\+stride\+\_\+a}\label{structshtns__info_a87e19b6bc65bf3d76cec4432d07bd3ff}
+
+\begin{DoxyCompactList}\small\item\em stride in theta direction \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ac77e4275a0d03ef91cf9c9329eca6911}{}int \hyperlink{structshtns__info_ac77e4275a0d03ef91cf9c9329eca6911}{m\+\_\+stride\+\_\+a}\label{structshtns__info_ac77e4275a0d03ef91cf9c9329eca6911}
+
+\begin{DoxyCompactList}\small\item\em stride in phi direction (m) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_afa549ef135b12b5060b2afecc1f9e660}{}double $\ast$ \hyperlink{structshtns__info_afa549ef135b12b5060b2afecc1f9e660}{wg}\label{structshtns__info_afa549ef135b12b5060b2afecc1f9e660}
+
+\begin{DoxyCompactList}\small\item\em Gauss weights for Gauss-\/\+Legendre quadrature. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a646d0d38ed4bb1349d5cb5111b66e114}{}double $\ast$ \hyperlink{structshtns__info_a646d0d38ed4bb1349d5cb5111b66e114}{st\+\_\+1}\label{structshtns__info_a646d0d38ed4bb1349d5cb5111b66e114}
+
+\begin{DoxyCompactList}\small\item\em 1/sin(theta); \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a7f48e4f5949246c9dcd2849ed316a770}{}fftw\+\_\+plan {\bfseries ifft}\label{structshtns__info_a7f48e4f5949246c9dcd2849ed316a770}
+
+\item 
+\hypertarget{structshtns__info_a12542e7c997065065acc90d43fb754ba}{}fftw\+\_\+plan {\bfseries fft}\label{structshtns__info_a12542e7c997065065acc90d43fb754ba}
+
+\item 
+\hypertarget{structshtns__info_a7932a301d56a4efd84e53be3d711dc3e}{}fftw\+\_\+plan {\bfseries ifftc}\label{structshtns__info_a7932a301d56a4efd84e53be3d711dc3e}
+
+\item 
+\hypertarget{structshtns__info_a2295a1b3a7c7721aa0fac015065db7eb}{}fftw\+\_\+plan {\bfseries fftc}\label{structshtns__info_a2295a1b3a7c7721aa0fac015065db7eb}
+
+\item 
+\hypertarget{structshtns__info_a2c988173d41df7efc015cfc4d83a3271}{}double $\ast$ {\bfseries alm}\label{structshtns__info_a2c988173d41df7efc015cfc4d83a3271}
+
+\item 
+\hypertarget{structshtns__info_a899cb9483aca3e84b7ff34cd97732937}{}double $\ast$ {\bfseries blm}\label{structshtns__info_a899cb9483aca3e84b7ff34cd97732937}
+
+\item 
+\hypertarget{structshtns__info_a6c6166880ea7087b4eabcfb7cde109bd}{}double $\ast$ {\bfseries l\+\_\+2}\label{structshtns__info_a6c6166880ea7087b4eabcfb7cde109bd}
+
+\item 
+\hypertarget{structshtns__info_ab2247921a83d5c95ae45103cc32d5f85}{}void $\ast$ {\bfseries ftable} \mbox{[}S\+H\+T\+\_\+\+N\+V\+A\+R\mbox{]}\mbox{[}S\+H\+T\+\_\+\+N\+T\+Y\+P\mbox{]}\label{structshtns__info_ab2247921a83d5c95ae45103cc32d5f85}
+
+\item 
+\hypertarget{structshtns__info_afe932b193a8aa72dd29b2ac96b6fea0d}{}double $\ast$$\ast$ {\bfseries ylm}\label{structshtns__info_afe932b193a8aa72dd29b2ac96b6fea0d}
+
+\item 
+\hypertarget{structshtns__info_af475223d5467fb16eff55a29146dd1dd}{}struct \hyperlink{structDtDp}{Dt\+Dp} $\ast$$\ast$ {\bfseries dylm}\label{structshtns__info_af475223d5467fb16eff55a29146dd1dd}
+
+\item 
+\hypertarget{structshtns__info_a3ecae5d8bbdb01fb4a72d8452a930f1a}{}double $\ast$$\ast$ {\bfseries zlm}\label{structshtns__info_a3ecae5d8bbdb01fb4a72d8452a930f1a}
+
+\item 
+\hypertarget{structshtns__info_a903ed684909b80e2899f5e0fb5a52a93}{}struct \hyperlink{structDtDp}{Dt\+Dp} $\ast$$\ast$ {\bfseries dzlm}\label{structshtns__info_a903ed684909b80e2899f5e0fb5a52a93}
+
+\item 
+\hypertarget{structshtns__info_a30fd69b66eeb67e111ef1689bfb2d549}{}int \hyperlink{structshtns__info_a30fd69b66eeb67e111ef1689bfb2d549}{ncplx\+\_\+fft}\label{structshtns__info_a30fd69b66eeb67e111ef1689bfb2d549}
+
+\begin{DoxyCompactList}\small\item\em number of complex numbers to allocate for the fft \+: -\/1 = no fft; 0 = in-\/place fft (no allocation). \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_afacdb118d7b598332508ca8cfa914e15}{}short \hyperlink{structshtns__info_afacdb118d7b598332508ca8cfa914e15}{mtr\+\_\+dct}\label{structshtns__info_afacdb118d7b598332508ca8cfa914e15}
+
+\begin{DoxyCompactList}\small\item\em m truncation for dct. -\/1 means no dct at all. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ad09115673d1275202501773f5a9f4875}{}unsigned short \hyperlink{structshtns__info_ad09115673d1275202501773f5a9f4875}{klim}\label{structshtns__info_ad09115673d1275202501773f5a9f4875}
+
+\begin{DoxyCompactList}\small\item\em Limit to k for non-\/linear terms (dct) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_afe6e0dd06bb2e18ff0fcfaa2168a43f0}{}fftw\+\_\+plan {\bfseries idct}\label{structshtns__info_afe6e0dd06bb2e18ff0fcfaa2168a43f0}
+
+\item 
+\hypertarget{structshtns__info_a40185ae400d63e36277001195f04faa3}{}fftw\+\_\+plan {\bfseries dct\+\_\+m0}\label{structshtns__info_a40185ae400d63e36277001195f04faa3}
+
+\item 
+\hypertarget{structshtns__info_afb9f0119337e2012361457ed314cac05}{}double $\ast$$\ast$ {\bfseries ykm\+\_\+dct}\label{structshtns__info_afb9f0119337e2012361457ed314cac05}
+
+\item 
+\hypertarget{structshtns__info_ada1d3cdc70137b0bf8bdaf5508451917}{}struct \hyperlink{structDtDp}{Dt\+Dp} $\ast$$\ast$ {\bfseries dykm\+\_\+dct}\label{structshtns__info_ada1d3cdc70137b0bf8bdaf5508451917}
+
+\item 
+\hypertarget{structshtns__info_a7c3e2282b236c191e81a9a9d3fc9feed}{}double $\ast$ {\bfseries zlm\+\_\+dct0}\label{structshtns__info_a7c3e2282b236c191e81a9a9d3fc9feed}
+
+\item 
+\hypertarget{structshtns__info_a440051b47f323a0b1dedf581f68f9f11}{}double $\ast$ {\bfseries dzlm\+\_\+dct0}\label{structshtns__info_a440051b47f323a0b1dedf581f68f9f11}
+
+\item 
+\hypertarget{structshtns__info_ad20c0deb989a27aed6088b9768f9b2fe}{}unsigned char {\bfseries nlorder}\label{structshtns__info_ad20c0deb989a27aed6088b9768f9b2fe}
+
+\item 
+\hypertarget{structshtns__info_ad738416ae9253d90862415dbd3a80ac0}{}unsigned char {\bfseries grid}\label{structshtns__info_ad738416ae9253d90862415dbd3a80ac0}
+
+\item 
+\hypertarget{structshtns__info_a263a32c9d6cd574be80951e72130846b}{}short {\bfseries norm}\label{structshtns__info_a263a32c9d6cd574be80951e72130846b}
+
+\item 
+\hypertarget{structshtns__info_aa7d7a9df7c12d972c81de13f54d96751}{}unsigned {\bfseries fftw\+\_\+plan\+\_\+mode}\label{structshtns__info_aa7d7a9df7c12d972c81de13f54d96751}
+
+\item 
+\hypertarget{structshtns__info_a4e392bc079b836a77c775b8ded6b3e77}{}double {\bfseries Y00\+\_\+1}\label{structshtns__info_a4e392bc079b836a77c775b8ded6b3e77}
+
+\item 
+\hypertarget{structshtns__info_a2f90f66e56ff9ec758c41495ab726fb1}{}double {\bfseries Y10\+\_\+ct}\label{structshtns__info_a2f90f66e56ff9ec758c41495ab726fb1}
+
+\item 
+\hypertarget{structshtns__info_a834be88e342aa0cb0eb9f3ace3f2c067}{}double {\bfseries Y11\+\_\+st}\label{structshtns__info_a834be88e342aa0cb0eb9f3ace3f2c067}
+
+\item 
+\hypertarget{structshtns__info_aac4086c96911a59fa9f9708f04ed8492}{}\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} {\bfseries next}\label{structshtns__info_aac4086c96911a59fa9f9708f04ed8492}
+
+\item 
+\hypertarget{structshtns__info_a764707cb443a5a3dc04e5242726562e9}{}const unsigned int \hyperlink{structshtns__info_a764707cb443a5a3dc04e5242726562e9}{nlm}\label{structshtns__info_a764707cb443a5a3dc04e5242726562e9}
+
+\begin{DoxyCompactList}\small\item\em total number of (l,m) spherical harmonics components. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a180c71be6e7bf33c058fd5049ac724a4}{}const unsigned short \hyperlink{structshtns__info_a180c71be6e7bf33c058fd5049ac724a4}{lmax}\label{structshtns__info_a180c71be6e7bf33c058fd5049ac724a4}
+
+\begin{DoxyCompactList}\small\item\em maximum degree (lmax) of spherical harmonics. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a4468777107573c3e38b8c1217e761239}{}const unsigned short \hyperlink{structshtns__info_a4468777107573c3e38b8c1217e761239}{mmax}\label{structshtns__info_a4468777107573c3e38b8c1217e761239}
+
+\begin{DoxyCompactList}\small\item\em maximum order (mmax$\ast$mres) of spherical harmonics. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ae82b68418cde6ad16076b3a04b1b8725}{}const unsigned short \hyperlink{structshtns__info_ae82b68418cde6ad16076b3a04b1b8725}{mres}\label{structshtns__info_ae82b68418cde6ad16076b3a04b1b8725}
+
+\begin{DoxyCompactList}\small\item\em the periodicity along the phi axis. \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a5d110424cd07280d6028209a77846ff7}{}const unsigned short \hyperlink{structshtns__info_a5d110424cd07280d6028209a77846ff7}{nphi}\label{structshtns__info_a5d110424cd07280d6028209a77846ff7}
+
+\begin{DoxyCompactList}\small\item\em number of spatial points in Phi direction (longitude) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a1374b402fb674c589af64c342652d8f2}{}const unsigned short \hyperlink{structshtns__info_a1374b402fb674c589af64c342652d8f2}{nlat}\label{structshtns__info_a1374b402fb674c589af64c342652d8f2}
+
+\begin{DoxyCompactList}\small\item\em number of spatial points in Theta direction (latitude) ... \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ae83324d5307e1aeed0bc529df551e7b0}{}const unsigned short \hyperlink{structshtns__info_ae83324d5307e1aeed0bc529df551e7b0}{nlat\+\_\+2}\label{structshtns__info_ae83324d5307e1aeed0bc529df551e7b0}
+
+\begin{DoxyCompactList}\small\item\em ...and half of it (using (shtns.\+nlat+1)/2 allows odd shtns.\+nlat.) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a2606673117c82134e7d68a108de7de00}{}const int $\ast$const \hyperlink{structshtns__info_a2606673117c82134e7d68a108de7de00}{lmidx}\label{structshtns__info_a2606673117c82134e7d68a108de7de00}
+
+\begin{DoxyCompactList}\small\item\em (virtual) index in S\+H array of given im (size mmax+1) \+: \hyperlink{shtns_8h_aee0d42089971d399238da3aaca4d9ca1}{Li\+M(l,im)} = lmidx\mbox{[}im\mbox{]} + l \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a26398e926ef26bdaa4dedf21fd648887}{}const unsigned short $\ast$const \hyperlink{structshtns__info_a26398e926ef26bdaa4dedf21fd648887}{li}\label{structshtns__info_a26398e926ef26bdaa4dedf21fd648887}
+
+\begin{DoxyCompactList}\small\item\em degree l for given mode index (size nlm) \+: li\mbox{[}lm\mbox{]} \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ac7c8fb32d62b7903f56133e943ab36c0}{}const unsigned short $\ast$const \hyperlink{structshtns__info_ac7c8fb32d62b7903f56133e943ab36c0}{mi}\label{structshtns__info_ac7c8fb32d62b7903f56133e943ab36c0}
+
+\begin{DoxyCompactList}\small\item\em order m for given mode index (size nlm) \+: mi\mbox{[}lm\mbox{]} \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a0f41958818a4a8a7df6ac079f81c8233}{}const double $\ast$const \hyperlink{structshtns__info_a0f41958818a4a8a7df6ac079f81c8233}{ct}\label{structshtns__info_a0f41958818a4a8a7df6ac079f81c8233}
+
+\begin{DoxyCompactList}\small\item\em cos(theta) array (size nlat) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_a1dac28463059674fd24d1df5b05d6600}{}const double $\ast$const \hyperlink{structshtns__info_a1dac28463059674fd24d1df5b05d6600}{st}\label{structshtns__info_a1dac28463059674fd24d1df5b05d6600}
+
+\begin{DoxyCompactList}\small\item\em sin(theta) array (size nlat) \end{DoxyCompactList}\item 
+\hypertarget{structshtns__info_ad3fea3c5794ec7bf3825af15c1135223}{}const unsigned int \hyperlink{structshtns__info_ad3fea3c5794ec7bf3825af15c1135223}{nspat}\label{structshtns__info_ad3fea3c5794ec7bf3825af15c1135223}
+
+\begin{DoxyCompactList}\small\item\em number of real numbers that must be allocated in a spatial field. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+structure containing useful information about the S\+H\+T. 
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/omp/shtns/sht\+\_\+private.\+h\item 
+/home/arnabd/workspace/civl/trunk/examples/omp/shtns/\hyperlink{shtns_8h}{shtns.\+h}\end{DoxyCompactItemize}

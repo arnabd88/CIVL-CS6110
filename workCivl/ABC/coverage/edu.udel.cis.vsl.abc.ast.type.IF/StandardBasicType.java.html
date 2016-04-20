@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>StandardBasicType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.IF</a> &gt; <span class="el_source">StandardBasicType.java</span></div><h1>StandardBasicType.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package edu.udel.cis.vsl.abc.ast.type.IF;</span>
+
+/**
+ * An instance of this class represents a &quot;standard basic type&quot;. The standard
+ * basic types are: the &quot;char&quot; type, the standard signed and unsigned integer
+ * types, and the floating types. See C11 Sec. 6.2.5 for the definition of
+ * &quot;basic type&quot;.
+ * 
+ * Sec. 6.7.2 of the C11 Standard covers &quot;type specifiers&quot;. Each standard basic
+ * type is specified by a sequence of type specifiers. The order in which these
+ * specifiers appear does not matter, but the multiplicity does (e.g.
+ * &quot;long long int&quot; specifies a different type than &quot;long int&quot;). Hence the
+ * sequence may be thought of as a multiset (set with multiplicity). This is the
+ * way it is described in the Standard.
+ * 
+ * A standard basic type may have more than one multiset that specifies it. For
+ * example &quot;long&quot; and &quot;long int&quot; specify the same type.
+ * 
+ * The basic multisets comprise the following elements, with multiplicity:
+ * 
+ * char, short, int, long, float, double, signed, unsigned, bool, complex.
+ * 
+ * The allowable multisets are defined in C11 Sec. 6.7.2.2, and are as follows.
+ * For a line with more than one multiset, each multiset on the line specifies
+ * the same type.
+ * 
+ * &lt;pre&gt;
+ * - char
+ * - signed char
+ * - unsigned char
+ * - short, signed short, short int, or signed short int
+ * - unsigned short, or unsigned short int
+ * - int, signed, or signed int
+ * - unsigned, or unsigned int
+ * - long, signed long, long int, or signed long int
+ * - unsigned long, or unsigned long int
+ * - long long, signed long long, long long int, or signed long long int
+ * - unsigned long long, or unsigned long long int
+ * - float
+ * - double
+ * - long double
+ * - _Bool
+ * - float _Complex
+ * - double _Complex
+ * - long double _Complex
+ * &lt;/pre&gt;
+ * 
+ * @author siegel
+ */
+public interface StandardBasicType extends ArithmeticType {
+
+<span class="fc" id="L52">	public static enum BasicTypeKind {</span>
+<span class="fc" id="L53">		BOOL,</span>
+<span class="fc" id="L54">		CHAR,</span>
+<span class="fc" id="L55">		DOUBLE,</span>
+<span class="fc" id="L56">		DOUBLE_COMPLEX,</span>
+<span class="fc" id="L57">		FLOAT,</span>
+<span class="fc" id="L58">		FLOAT_COMPLEX,</span>
+<span class="fc" id="L59">		INT,</span>
+<span class="fc" id="L60">		LONG,</span>
+<span class="fc" id="L61">		LONG_DOUBLE,</span>
+<span class="fc" id="L62">		LONG_DOUBLE_COMPLEX,</span>
+<span class="fc" id="L63">		LONG_LONG,</span>
+<span class="fc" id="L64">		REAL,</span>
+<span class="fc" id="L65">		SHORT,</span>
+<span class="fc" id="L66">		SIGNED_CHAR,</span>
+<span class="fc" id="L67">		UNSIGNED,</span>
+<span class="fc" id="L68">		UNSIGNED_CHAR,</span>
+<span class="fc" id="L69">		UNSIGNED_LONG,</span>
+<span class="fc" id="L70">		UNSIGNED_LONG_LONG,</span>
+<span class="fc" id="L71">		UNSIGNED_SHORT</span>
+	};
+
+	/**
+	 * Returns the basic type kind.
+	 * 
+	 * @return the basic type kind
+	 */
+	BasicTypeKind getBasicTypeKind();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

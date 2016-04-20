@@ -1,0 +1,85 @@
+/* 
+ * Simple implementation of Conjugate Gradient algorithm for 2x2
+ * symmetric matrix.  Instead of assuming positive-definite-ness, 
+ * we assume that in every division, the denominator is non-0.
+ * Based on https://en.wikipedia.org/wiki/Conjugate_gradient_method
+ */
+
+#include <civlc.cvh>
+#include <stdio.h>
+#define n 2
+
+$input double a1,a2,a3;
+$input double b[n];
+double x[n];
+double xcg[n];
+
+void cg(double A[n][n], double b[n], double x[n]) {
+  double r[n]; //residual
+  double p[n]; //search direction
+  double temp[n];
+  double temp2[n];
+  double rsold; //<r, r> 
+  double rsnew;
+  double alpha;
+  double beta;
+  
+  for (int i=0; i<n; i++) x[i] = 0;
+  for (int i=0; i<n; i++) {
+    temp[i] = 0.0;
+    for(int j=0; j<n; j++) temp[i] += A[i][j]*x[j];
+  }
+  for (int i=0; i<n; i++) r[i] = b[i] - temp[i];
+  rsold = 0.0;
+  for (int i=0; i<n; i++) rsold += r[i]*r[i];
+  for (int i=0; i<n; i++) p[i] = r[i];
+  for (int k=0; k<n; k++) {
+    for (int i=0; i<n; i++) {
+      temp[i] = 0.0;
+      for (int j=0; j<n; j++) temp[i] += A[i][j]*p[j];
+    }
+    alpha = 0.0;
+    for (int i=0; i<n; i++) alpha += p[i]*temp[i];
+    $assume(alpha != 0);
+    alpha = rsold/alpha;
+    // temp2 = r-alpha*temp
+    for (int i=0; i<n; i++) temp2[i] = r[i] -alpha*temp[i];
+    // r = temp2
+    for (int i=0; i<n; i++) r[i] = temp2[i];
+    // temp2 = x+alpha*p
+    for (int i=0; i<n; i++) temp2[i] = x[i] +alpha*p[i];
+    // x = temp2
+    for (int i=0; i<n; i++) x[i] = temp2[i];
+    if (k<n-1) { // STRUCTURE THIS BETTER!!!
+      // rsnew = <r,r>
+      rsnew = 0.0;
+      for (int i=0; i<n; i++) rsnew += r[i]*r[i];
+      $assume(rsold !=0);
+      beta = rsnew/rsold;
+      for (int i=0; i<n; i++) temp2[i] = r[i] +beta*p[i];
+      // p = temp2
+      for (int i=0; i<n; i++) p[i] = temp2[i];
+      rsold = rsnew;
+    }
+  }
+}
+
+void main() {
+  double Ax[n]; 
+  double A[n][n];
+
+  A[0][0] = a1;
+  A[0][1] = a2;
+  A[1][0] = a2;
+  A[1][1] = a3;
+  $assume(b[0]!=0 || b[1]!=0);
+  cg(A,b,xcg);
+  for (int i=0; i<n; i++)
+    printf("x[%d] = %f\n\n",i, xcg[i]);
+  for (int i=0; i<n; i++) {
+    Ax[i] = 0;
+    for (int j=0; j<n; j++)
+      Ax[i] += A[i][j]*xcg[j];
+    $assert(Ax[i] == b[i]);
+  }
+}

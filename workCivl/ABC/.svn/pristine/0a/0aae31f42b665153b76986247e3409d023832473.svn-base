@@ -1,0 +1,33 @@
+#include <civlc.cvh>
+#include <domain.cvh>
+#include <stdio.h>
+
+$input int n;
+
+void decomp($domain domain){
+  $domain_decomposition result;
+  int sum = 0;
+
+  result = $domain_partition(domain, ROUND_ROBIN, n);
+  for(int i = 0; i < n; i++){
+    //printf("The %d'th sub-domain is: %s\n", i, result.subdomains[i]);
+    printf("This is %d'th sub-domain\n", i);
+    $for(int j, k, l: (($domain(3))result.subdomains[i])){
+      printf("The current iteration (j, k, l) is (%d, %d, %d)\n", j, k, l);
+      sum+=1;
+    }
+  }
+  $assert((sum == 45));
+}
+
+void main(){
+  $range r1 = 1 .. 5;
+  $range r2 = 0 .. 4#-2;
+  $range r3 = 3 .. 9#3;
+  $domain(3) dom = ($domain){r1, r2, r3};
+  $domain_decomposition result;
+
+  decomp(dom);
+}
+
+

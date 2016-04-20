@@ -1,0 +1,28 @@
+#include<civlc.cvh>
+#include<domain.cvh>
+#include<stdio.h>
+
+#define N 2
+$input int X, Y, K, L;
+$assume(0 < X && X <= N);
+$assume(0 < Y && Y <= N);
+$assume(1 < K && K <= N+1);
+$assume(1 < L && L <= N+1);
+
+int main(){
+  $range r1=1 .. X # 1, r2=1 .. Y, r3=1 .. K, r4=1 .. L;
+  $domain(2) domPar=($domain(2)){r1, r2};
+  $domain(2) domFor=($domain(2)){r3, r4};
+
+  void thread(int x, int y){
+    printf("x=%d,y=%d,X=%d,Y=%d\n", x, y, X, Y);
+  }
+
+  // domFor is elaborated implicitly before $for
+  $for(int i,j: domFor){
+    printf("i=%d,j=%d,K=%d,L=%d\n", i, j, K, L);
+  }
+  // domPar is elaborated implicitly before $parfor
+  $parfor(int x,y: domPar)
+   thread(x, y);
+}

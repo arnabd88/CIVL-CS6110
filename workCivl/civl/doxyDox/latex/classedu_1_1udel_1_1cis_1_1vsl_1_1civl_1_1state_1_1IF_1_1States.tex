@@ -1,0 +1,58 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+States Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+States@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+States}}
+
+
+Entry point for the state module\+: provides a static method to get a new state factory.  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States_acef5163826941b40627cda90298848c7}{new\+Immutable\+State\+Factory} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Factory, G\+M\+C\+Configuration gmc\+Config, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config)
+\begin{DoxyCompactList}\small\item\em Returns a new immutable state factory based on the given model factory. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States_aadf8e9fafc7fb354765e5f8bd023a991}{}static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} {\bfseries new\+Immutable\+Memory\+Unit\+Factory} (Symbolic\+Universe universe, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} factory)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States_aadf8e9fafc7fb354765e5f8bd023a991}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Entry point for the state module\+: provides a static method to get a new state factory. 
+
+The usual way to get a state factory is to first create a model\+Factory and then invoke {\ttfamily States.\+new\+State\+Factory(model\+Factory)}.
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States_acef5163826941b40627cda90298848c7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+States@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+States}!new\+Immutable\+State\+Factory@{new\+Immutable\+State\+Factory}}
+\index{new\+Immutable\+State\+Factory@{new\+Immutable\+State\+Factory}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+States@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+States}}
+\subsubsection[{new\+Immutable\+State\+Factory}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf State\+Factory} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+States.\+new\+Immutable\+State\+Factory (
+\begin{DoxyParamCaption}
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Memory\+Unit\+Factory}}]{mem\+Factory, }
+\item[{G\+M\+C\+Configuration}]{gmc\+Config, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States_acef5163826941b40627cda90298848c7}
+
+
+Returns a new immutable state factory based on the given model factory. 
+
+This implementation of \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} uses the Immutable Pattern\+: all states (and components) are immutable.
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+Factory} & a model factory \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a new immutable state factory 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/state/\+I\+F/States.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,32 @@
+/* Create 2 processes.  Have them exchange data in a cycle.
+ * Command line verification example:
+ *     civl verify ring3.cvl
+ */
+#include<comm.cvh>
+#define TAG 0
+
+$gcomm GCOMM_WORLD  = $gcomm_create($here, 2); // global comm object
+
+void MPI_Process (int rank) {
+  $comm comm = $comm_create($here, GCOMM_WORLD, rank);
+  int dest = 1-rank;
+  int *x, *y;
+  $message in, out;
+  
+  x = (int*)$malloc($here, sizeof(int));
+  y = (int*)$malloc($here, sizeof(int));
+  *x = rank;
+  out = $message_pack(rank, dest, TAG, x, sizeof(int));
+  $comm_enqueue(comm, out);
+  in = $comm_dequeue(comm, dest, TAG);
+  $message_unpack(in, y, sizeof(int));
+  $free(x);
+  $free(y);
+  $comm_destroy(comm);
+}
+
+void main() {  
+  // for (int i=0; i<2; i++) $spawn MPI_Process(i);
+  $parfor (int i : ($domain){0 .. 1}) MPI_Process(i);
+  $gcomm_destroy(GCOMM_WORLD);
+}

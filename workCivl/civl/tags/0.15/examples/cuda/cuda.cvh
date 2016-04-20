@@ -1,0 +1,174 @@
+
+/* Functions in this file are meant to serve as drop-in CIVL replacements
+ * for the Cuda function of the same name. Because of this, much of the
+ * documentation of these functions is identical to the documentation
+ * for its Cuda counterpart.
+ */
+
+#ifdef __CUDA__
+#else
+#define __CUDA__
+
+#include "civlc.h"
+#include "cuda-helper.cvh"
+#include <string.h>
+#include <stdio.h>
+
+/* Returns in *count the number of devices with compute capability 
+ * greater or equal to 1.0 that are available for execution.
+ */
+cudaError_t cudaGetDeviceCount(int *count) {
+  // possibly this should return an value specified as $input?
+  *count = 1;
+  return cudaSuccess;
+}
+
+/* Creates and event object
+ */
+cudaError_t cudaEventCreate(cudaEvent_t *event) {
+    *event = _eventCreate();
+    return cudaSuccess;
+}
+
+/* Records an event. If stream is non-zero, the event is recorded 
+ * after all preceding operations in stream have been completed; 
+ * otherwise, it is recorded after all preceding operations in the 
+ * CUDA context have been completed. Since operation is asynchronous, 
+ * cudaEventQuery() and/or cudaEventSynchronize() must be used to 
+ * determine when the event has actually been recorded.
+ */
+cudaError_t cudaEventRecord(cudaEvent_t event, cudaStream_t s) {
+    if (event->instances != NULL) {
+        //printf("freeing instance list b\n");
+        $free(event->instances);
+    }
+    if (s == NULL) {
+        event->instances = _allMostRecentKernels();
+        event->numInstances = _context.numStreams + 1;
+    } else {
+        //printf("mallocing instance list c\n");
+        event->instances = (_kernelInstance**)$malloc($root, sizeof(_kernelInstance*));
+        event->instances[0] = s->mostRecent->instance;
+        event->numInstances = 1;
+    }
+}
+
+/* Query the status of all device work preceding the most recent call 
+ * to cudaEventRecord() (in the appropriate compute streams, as 
+ * specified by the arguments to cudaEventRecord()).
+ * 
+ * If this work has successfully been completed by the device, or if 
+ * cudaEventRecord() has not been called on event, then cudaSuccess 
+ * is returned. If this work has not yet been completed by the device 
+ * then cudaErrorNotReady is returned.
+ */
+cudaError_t cudaEventQuery(cudaEvent_t event) {
+    _Bool allKernelsFinished = $true;
+
+    for (int i = 0; i < event->numInstances; i++) {
+        if (event->instances[i]->status != _kernelStatusFinished) {
+            allKernelsFinished = $false;
+            break;
+        }
+    }
+    return allKernelsFinished ? cudaSuccess : cudaErrorNotReady;
+}
+
+/* Wait until the completion of all device work preceding the most 
+ * recent call to cudaEventRecord() (in the appropriate compute streams, 
+ * as specified by the arguments to cudaEventRecord()).
+ *
+ * If cudaEventRecord() has not been called on event, cudaSuccess 
+ * is returned immediately.
+ */
+cudaError_t cudaEventSynchronize(cudaEvent_t event) {
+    _eventWait(event);
+    return cudaSuccess;
+}
+
+/* since "timing" doesn't really make sense in the verification process
+ * I'm not sure what this should do. maybe it shouldn't exist.
+ */
+cudaError_t cudaEventElapsedTime(float *t, cudaEvent_t from, cudaEvent_t to) {
+    *t = 1.0;
+    return cudaSuccess;
+}
+
+/* Destroys the event specified by event.
+ */
+cudaError_t cudaEventDestroy(cudaEvent_t event) {
+    _eventDestroy(event);
+    return cudaSuccess;
+}
+
+/* Creates a new asynchronous stream.
+ */
+cudaError_t cudaStreamCreate(cudaStream_t *pStream) {
+  _cudaStreamNode *newNode = _streamNodeCreate();
+
+  *pStream = _streamCreate();
+  newNode->stream = *pStream;
+  newNode->next = _context.headNode;
+  _context.headNode = newNode;
+  _context.numStreams += 1;
+
+  return cudaSuccess;
+}
+    
+/* Blocks until stream has completed all operations.
+ */
+cudaError_t cudaStreamSynchronize(cudaStream_t stream) {
+    cudaStream_t s;
+
+    if (stream == NULL)
+        s = _context.nullStream;
+    else
+        s = stream;
+    _streamWait(s);
+    return cudaSuccess;
+}
+
+/* Destroys and cleans up the asynchronous stream specified by stream.
+ */
+cudaError_t cudaStreamDestroy(cudaStream_t pStream) {
+  $assert(pStream->usable);
+  pStream->usable = $false;
+  return cudaSuccess;
+}
+
+/* locks until stream has completed all operations.
+ */
+cudaError_t cudaDeviceSynchronize() {
+    _streamWaitAll();
+    _streamWait(_context.nullStream);
+    return cudaSuccess;
+}
+
+/* Copies count bytes from the memory area pointed to by src to the 
+ * memory area pointed to by dst, where kind is one of 
+ * cudaMemcpyHostToHost, cudaMemcpyHostToDevice, cudaMemcpyDeviceToHost, 
+ * or cudaMemcpyDeviceToDevice, and specifies the direction of the 
+ * copy. The memory areas may not overlap.
+ */
+cudaError_t cudaMemcpy ( void *dst, const void *src, size_t count, enum cudaMemcpyKind kind ) {
+  cudaDeviceSynchronize();
+  memcpy(dst, src, count);
+  cudaDeviceSynchronize();
+  return cudaSuccess;
+}
+
+/* Frees the memory space pointed to by devPtr. Similar semantics to free/$free.
+ */
+cudaError_t cudaFree(void *devPtr) {
+  $free(devPtr);
+  return cudaSuccess;
+}
+
+/* Sets device as the current device for the calling host thread. Currently,
+ * only a single device is supported, so this call always succeeds with a noop.
+ */
+cudaError_t cudaSetDevice(int device_id) {
+  return cudaSuccess;
+}
+
+#endif

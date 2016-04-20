@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonOperatorNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.expression</a> &gt; <span class="el_source">CommonOperatorNode.java</span></div><h1>CommonOperatorNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.expression;
+
+import java.io.PrintStream;
+import java.util.LinkedList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonOperatorNode extends CommonExpressionNode implements
+		OperatorNode {
+
+	private Operator operator;
+
+	public CommonOperatorNode(Source source, Operator operator,
+			List&lt;ExpressionNode&gt; arguments) {
+<span class="nc" id="L20">		super(source, arguments);</span>
+<span class="nc" id="L21">		this.operator = operator;</span>
+<span class="nc" id="L22">	}</span>
+
+	@Override
+	public Operator getOperator() {
+<span class="nc" id="L26">		return operator;</span>
+	}
+
+	@Override
+	public void setOperator(Operator operator) {
+<span class="nc" id="L31">		this.operator = operator;</span>
+<span class="nc" id="L32">	}</span>
+
+	@Override
+	public int getNumberOfArguments() {
+<span class="nc" id="L36">		return this.numChildren();</span>
+	}
+
+	@Override
+	public ExpressionNode getArgument(int index) {
+<span class="nc" id="L41">		return (ExpressionNode) child(index);</span>
+	}
+
+	@Override
+	public void setArgument(int index, ExpressionNode value) {
+<span class="nc" id="L46">		setChild(index, value);</span>
+<span class="nc" id="L47">	}</span>
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L51">		out.print(&quot;OperatorNode[operator=&quot; + operator + &quot;]&quot;);</span>
+<span class="nc" id="L52">	}</span>
+
+	private boolean hasConstantOperator() {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		switch (operator) {</span>
+		case ASSIGN:
+		case BITANDEQ:
+		case BITOREQ:
+		case BITXOREQ:
+		case DIVEQ:
+		case MINUSEQ:
+		case MODEQ:
+		case PLUSEQ:
+		case POSTDECREMENT:
+		case POSTINCREMENT:
+		case PREDECREMENT:
+		case PREINCREMENT:
+		case SHIFTLEFTEQ:
+		case SHIFTRIGHTEQ:
+		case TIMESEQ:
+<span class="nc" id="L71">			return false;</span>
+		default:
+<span class="nc" id="L73">			return true;</span>
+		}
+	}
+
+	@Override
+	public boolean isConstantExpression() {
+<span class="nc" id="L79">		int numArgs = getNumberOfArguments();</span>
+
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (!hasConstantOperator())</span>
+<span class="nc" id="L82">			return false;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (!getArgument(i).isConstantExpression())</span>
+<span class="nc" id="L85">				return false;</span>
+		}
+<span class="nc" id="L87">		return true;</span>
+	}
+
+	@Override
+	public OperatorNode copy() {
+<span class="nc" id="L92">		List&lt;ExpressionNode&gt; arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L93">		int numArgs = getNumberOfArguments();</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++)</span>
+<span class="nc" id="L96">			arguments.add(duplicate(getArgument(i)));</span>
+<span class="nc" id="L97">		return new CommonOperatorNode(getSource(), getOperator(), arguments);</span>
+	}
+
+	@Override
+	public ExpressionKind expressionKind() {
+<span class="nc" id="L102">		return ExpressionKind.OPERATOR;</span>
+	}
+
+	@Override
+	public boolean isSideEffectFree(boolean errorsAreSideEffects) {
+<span class="nc bnc" id="L107" title="All 6 branches missed.">		switch (getOperator()) {</span>
+		// always have side effects:
+		case ASSIGN:
+		case MINUSEQ:
+		case PLUSEQ:
+		case POSTDECREMENT:
+		case POSTINCREMENT:
+		case PREDECREMENT:
+		case PREINCREMENT:
+		case DIVEQ:
+		case MODEQ:
+		case TIMESEQ:
+		case BITANDEQ:
+		case BITOREQ:
+		case BITXOREQ:
+		case SHIFTLEFTEQ:
+		case SHIFTRIGHTEQ:
+<span class="nc" id="L124">			return false;</span>
+			// possible numeric arithmetic error only:
+		case DIV:
+		case MOD:
+		case TIMES:
+		case UNARYMINUS:
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (errorsAreSideEffects) {</span>
+				// perhaps check if expressions are constants that are not 0,
+				// for example. But overflow could also be a problem.
+<span class="nc" id="L133">				return false;</span>
+			}
+			break;
+		// possible pointer or numeric arithmetic error:
+		case MINUS:
+		case PLUS:
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (errorsAreSideEffects) {</span>
+<span class="nc" id="L140">				return false;</span>
+			}
+			break;
+		// always a problem:
+		case DEREFERENCE:
+		case SUBSCRIPT:
+<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (errorsAreSideEffects) {</span>
+<span class="nc" id="L147">				return false;</span>
+			}
+			break;
+		// innocuous unless operands have side effects...
+		case ADDRESSOF:
+		case BIG_O:
+		case BITAND:
+		case BITCOMPLEMENT:
+		case BITOR:
+		case BITXOR:
+		case COMMA:
+		case CONDITIONAL:
+		case EQUALS:
+		case GT:
+		case GTE:
+		case IMPLIES:
+		case LAND:
+		case LOR:
+		case LT:
+		case LTE:
+		case NEQ:
+		case NOT:
+		case SHIFTLEFT:
+		case SHIFTRIGHT:
+		case UNARYPLUS:
+		case HASH:
+<span class="nc" id="L173">			break;</span>
+		default:
+			break;
+		} // end of switch
+			// default case: check operands...
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		for (int i = 0; i &lt; getNumberOfArguments(); i++) {</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (!getArgument(i).isSideEffectFree(errorsAreSideEffects))</span>
+<span class="nc" id="L180">				return false;</span>
+		}
+<span class="nc" id="L182">		return true;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (that instanceof OperatorNode)</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			if (this.operator == ((OperatorNode) that).getOperator())</span>
+<span class="nc" id="L189">				return null;</span>
+<span class="nc" id="L190">		return new DifferenceObject(this, that);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

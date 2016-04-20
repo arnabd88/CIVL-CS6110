@@ -1,0 +1,169 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a1f93e38c9ce04f4f556ffafa770a6730}{}{\bfseries Common\+Pointer\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} base\+Type, Symbolic\+Type pointer\+Type)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a1f93e38c9ce04f4f556ffafa770a6730}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_aa8a138a6c6f93a2506fac83b6beabc10}{base\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the type of element pointed to. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_af8b5fe9988a38b3ee410c2985e74f572}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_af8b5fe9988a38b3ee410c2985e74f572}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ab49813d51a2bc4f067fa3c9944937dbb}{is\+Pointer\+Type} ()
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a788028524d642fa1467b040d2b5c65a2}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a788028524d642fa1467b040d2b5c65a2}{get\+Region} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a788028524d642fa1467b040d2b5c65a2}
+
+\begin{DoxyCompactList}\small\item\em Returns the highest scope in the static scope hierarchy in which the target of this pointer could be declared. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ad13444cbb2f441bec8f7176f0ec9ac52}{has\+State} ()
+\begin{DoxyCompactList}\small\item\em If this type contains any array with non-\/constant extent, it \char`\"{}has state\char`\"{} in the sense that the dynamic type may depend on the state. \end{DoxyCompactList}\item 
+Symbolic\+Type \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ade472c99a084bbbb6a890a9e7223d8e9}{get\+Dynamic\+Type} (Symbolic\+Universe universe)
+\begin{DoxyCompactList}\small\item\em This returns the dynamic type corresponding to this static type in which all array extent expressions are ignored, i.\+e., all of the dynamic array types are incomplete. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a0566fe18800958a0b214fda5925dcd70}{is\+Handle\+Type} ()
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a9cbdf3a201c739ed1bf53e520d15099d}{}\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_1_1TypeKind}{Type\+Kind} {\bfseries type\+Kind} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a9cbdf3a201c739ed1bf53e520d15099d}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_acad760d867f0f5c7df21b0ca84c78cc6}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} {\bfseries copy\+As} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} type, Symbolic\+Universe universe)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_acad760d867f0f5c7df21b0ca84c78cc6}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ad0cf039be1ad534b172eb5332156d75b}{}boolean {\bfseries equals} (Object obj)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ad0cf039be1ad534b172eb5332156d75b}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a0c79bb96d1af652818096a496972655d}{is\+Scalar} ()
+\begin{DoxyCompactList}\small\item\em Is this type a scalar type? \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+zirkel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_aa8a138a6c6f93a2506fac83b6beabc10}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}!base\+Type@{base\+Type}}
+\index{base\+Type@{base\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}}
+\subsubsection[{base\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type.\+base\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_aa8a138a6c6f93a2506fac83b6beabc10}
+
+
+Returns the type of element pointed to. 
+
+Result could be \char`\"{}void\char`\"{}, as in C 
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPointerType_a7c445f9f8ed3d203a6fc8b7d566d56f8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Pointer\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ade472c99a084bbbb6a890a9e7223d8e9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}!get\+Dynamic\+Type@{get\+Dynamic\+Type}}
+\index{get\+Dynamic\+Type@{get\+Dynamic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}}
+\subsubsection[{get\+Dynamic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type.\+get\+Dynamic\+Type (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Universe}]{universe}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ade472c99a084bbbb6a890a9e7223d8e9}
+
+
+This returns the dynamic type corresponding to this static type in which all array extent expressions are ignored, i.\+e., all of the dynamic array types are incomplete. 
+
+May be null (only in the case of the primitive type of kind \hyperlink{}{Primitive\+Type\+Kind.\+V\+O\+I\+D}).
+
+\begin{DoxyReturn}{Returns}
+the dynamic type corresponding to this static type with incomplete array type 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3f01f0f60e869508ee46927aa5012b22}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ad13444cbb2f441bec8f7176f0ec9ac52}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}!has\+State@{has\+State}}
+\index{has\+State@{has\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}}
+\subsubsection[{has\+State}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type.\+has\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ad13444cbb2f441bec8f7176f0ec9ac52}
+
+
+If this type contains any array with non-\/constant extent, it \char`\"{}has state\char`\"{} in the sense that the dynamic type may depend on the state. 
+
+\begin{DoxyReturn}{Returns}
+true iff type contains array with non-\/constant extent 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ad06e630b2a547346d274f8b21b36eebb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a0566fe18800958a0b214fda5925dcd70}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}!is\+Handle\+Type@{is\+Handle\+Type}}
+\index{is\+Handle\+Type@{is\+Handle\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}}
+\subsubsection[{is\+Handle\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type.\+is\+Handle\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a0566fe18800958a0b214fda5925dcd70}
+\begin{DoxyReturn}{Returns}
+true iff this type is a handle type (e.\+g., \$gcomm, \$heap, etc) 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a1e009d99e6e769136379d471461a3396}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ab49813d51a2bc4f067fa3c9944937dbb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}!is\+Pointer\+Type@{is\+Pointer\+Type}}
+\index{is\+Pointer\+Type@{is\+Pointer\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}}
+\subsubsection[{is\+Pointer\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type.\+is\+Pointer\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ab49813d51a2bc4f067fa3c9944937dbb}
+\begin{DoxyReturn}{Returns}
+true iff this type is pointer type 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a1cb123f9248c8469b566d1007fd8536c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a0c79bb96d1af652818096a496972655d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}!is\+Scalar@{is\+Scalar}}
+\index{is\+Scalar@{is\+Scalar}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::type\+::\+Common\+Pointer\+Type}}
+\subsubsection[{is\+Scalar}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type.\+is\+Scalar (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a0c79bb96d1af652818096a496972655d}
+
+
+Is this type a scalar type? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a09569c9ab288a65c928c4bb3b2c099e0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/type/Common\+Pointer\+Type.\+java\end{DoxyCompactItemize}

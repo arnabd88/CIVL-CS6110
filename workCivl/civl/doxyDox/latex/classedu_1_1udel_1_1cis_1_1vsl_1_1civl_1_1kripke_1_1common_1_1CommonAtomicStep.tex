@@ -1,0 +1,137 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step@{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step}}
+
+
+This represents an atomic execution step, which represents the execution of exactly one (deterministic) transition.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a4934d6294bde0745d0403601892cb3a8}{Common\+Atomic\+Step} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} post\+State, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} transition)
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a80190ae64e002a85c9a0fc3827610ab1}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a80190ae64e002a85c9a0fc3827610ab1}
+
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a65505f67963263c3f224ae452107f8fa}{set\+Post\+State} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Updates the resulting state of this atomic step. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a0eb7df223fc8700853be108c8906bdc8}{get\+Post\+State} ()
+\begin{DoxyCompactList}\small\item\em Returns the resulting state of this atomic step. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_ae4b90e4bf747f5d02088ff9b274bb649}{get\+Statement} ()
+\begin{DoxyCompactList}\small\item\em Returns the statement associated to this atomic step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This represents an atomic execution step, which represents the execution of exactly one (deterministic) transition. 
+
+This class includes a reference to the post-\/state but not to the pre-\/state. Typically, an atomic step appears in a trace step, and the post-\/state of the previous atomic step is the pre-\/state.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a4934d6294bde0745d0403601892cb3a8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step}!Common\+Atomic\+Step@{Common\+Atomic\+Step}}
+\index{Common\+Atomic\+Step@{Common\+Atomic\+Step}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step}}
+\subsubsection[{Common\+Atomic\+Step}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step.\+Common\+Atomic\+Step (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{post\+State, }
+\item[{{\bf Transition}}]{transition}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a4934d6294bde0745d0403601892cb3a8}
+Creates a new instance of an atomic step. 
+
+Precondition\+: there exists a state in the state space such that executing {\ttfamily transition} from that state resulting in {\ttfamily target} state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em post\+State} & \\
+\hline
+{\em transition} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a0eb7df223fc8700853be108c8906bdc8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step}!get\+Post\+State@{get\+Post\+State}}
+\index{get\+Post\+State@{get\+Post\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step}}
+\subsubsection[{get\+Post\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step.\+get\+Post\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a0eb7df223fc8700853be108c8906bdc8}
+
+
+Returns the resulting state of this atomic step. 
+
+\begin{DoxyReturn}{Returns}
+the resulting state of this atomic step. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_ae6fc545953da2cec242af89c9163aaf4}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_ae4b90e4bf747f5d02088ff9b274bb649}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step}!get\+Statement@{get\+Statement}}
+\index{get\+Statement@{get\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step}}
+\subsubsection[{get\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step.\+get\+Statement (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_ae4b90e4bf747f5d02088ff9b274bb649}
+
+
+Returns the statement associated to this atomic step. 
+
+\begin{DoxyReturn}{Returns}
+the statement associated to this atomic step. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_a11d8a7fe77b7085a88e6981b7008e55c}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a65505f67963263c3f224ae452107f8fa}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step}!set\+Post\+State@{set\+Post\+State}}
+\index{set\+Post\+State@{set\+Post\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Common\+Atomic\+Step}}
+\subsubsection[{set\+Post\+State}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step.\+set\+Post\+State (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a65505f67963263c3f224ae452107f8fa}
+
+
+Updates the resulting state of this atomic step. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state to be used as the resulting state. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_a559b04f1977b61c5054a2cd7f358cd31}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/kripke/common/Common\+Atomic\+Step.\+java\end{DoxyCompactItemize}

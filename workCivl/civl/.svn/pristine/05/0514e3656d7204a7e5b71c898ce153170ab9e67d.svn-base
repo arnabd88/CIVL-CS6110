@@ -1,0 +1,35 @@
+
+don't use "public"
+
+Can an ArrayType be incomplete (null base type?)
+Is there a need for CompleteArrayType (subtype of ArrayType) as in SARL?
+
+Why is a ProcessType not a primitive type?
+
+I think we need a ScopeType too, just like a process type.
+The value held by a scope variable will be a dynamic scope ID
+encoded as a symbolic constant, just like with \proc variables.
+
+A CIVL Pointer type is supposed to also have an (optional?) additional
+scope parameter, which limits the scope into which it can point.
+
+{
+  \scope s; /* gives name s to this scope */
+  int x;
+  ...
+  {
+    int *\region(s) p = &x;
+    ...
+  }
+}
+
+(If not specified, the default scope used in the root dynamic scope.)
+
+Add to PointerType:
+  Scope getRegion();
+  void setRegion(Scope scope);
+
+
+
+
+

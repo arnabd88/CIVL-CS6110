@@ -1,0 +1,16 @@
+#include <civlc.h>
+#define N 5;
+#define M 8;
+
+void main() {
+  $heap h;
+  double **p = (double **) $malloc(&h, N*sizeof(double *));
+  
+  for (int i = 0; i < M; i++) {
+    p[i] = (double *) $malloc(&h
+  }
+  
+  p[4]=3.14;
+  $assert(p[4]==3.14);
+  $free(&h, p);
+}   

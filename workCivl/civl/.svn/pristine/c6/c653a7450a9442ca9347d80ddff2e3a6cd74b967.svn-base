@@ -1,0 +1,196 @@
+/*  Computing the solver for heat equation in multithreads, then compare the 
+ *  result with the solver got in a sequencial way.
+ *
+ *  Command line example:
+ *  civl verify -inputNPROCSB=10 -inputK=0.3 -inputNSTEPS=5 -inputNX=10 diffusion1d.cvl -showAmpleSet
+ *  This diffusion1d program computing the diffusion1d equation in parallel and then compare the result with 
+ *  another result of diffution1d equation computed in sequential.
+ **/ 
+
+#include<civlc.h>
+#include<stdio.h>
+$input int nprocs;
+$input int NPROCSB;
+$input double k;              /* k = alpha^2 * dt/(dx^2) */
+$input int  nsteps;           /* time */
+$input int  NSTEPSB;
+$input int  nx;               /* the length of the array */
+$input int  NXB;
+$input double initialU[nx];
+double seq_u[nx];
+$proc __procs[nprocs];
+$gcomm __MPI_COMM_WORLD;
+$assume nx > nprocs;
+$assume 0 < nprocs && nprocs <= NPROCSB;
+$assume 0 < nsteps && nsteps <= NSTEPSB;
+$assume 2 < nx && nx <= NXB;
+
+void MPI_Process (int rank);
+
+void send(void *buf, int count, int dest, int tag, $comm comm) {
+  $message out = $message_pack(comm->place, dest, tag, buf, count*sizeof(double));
+  $comm_enqueue(comm, out);
+}
+
+void recv(void *buf, int count, int source, int tag, $comm comm) {
+  $message in = $comm_dequeue(comm, source, tag);
+  $message_unpack(in, buf, count*sizeof(double));
+}
+
+void init() {
+  __MPI_COMM_WORLD = $gcomm_create($root, nprocs);
+  for (int i=0; i<nprocs; i++)
+    __procs[i] = $spawn MPI_Process(i);
+}
+
+void finalize() {
+  for (int i=0; i<nprocs; i++)
+    $wait(__procs[i]);
+}
+
+/* computing the solver in a sequential way*/
+void seqDiffusion1d(){
+  double u[nx], u_new[nx];
+  int i;
+
+  //Initiate                                                              
+  for(i=0; i<nx; i++){
+    u[i] = initialU[i];
+    u_new[i] = initialU[i];
+  }
+  //Jacobi Iteration             
+  for(int iter=nsteps; iter>0; iter--){
+    //update                                         
+    for(i=1; i<nx-1; i++){
+      u_new[i] = u[i] + k * (u[i-1] + u[i+1] - 2*u[i]);
+    }
+    for(i=1; i<nx-1; i++){
+      u[i] = u_new[i];
+    }
+  }
+  for(i=0 ;i<nx; i++){
+    seq_u[i] = u[i];
+  }
+}
+
+void main() {
+  seqDiffusion1d();
+  init();
+  finalize();
+}
+
+/* update the array */
+void update(double * u, double * u_new, int start, int nxl){
+  int i;
+  int u_length = nxl; 
+
+  for(i=1; i<u_length+1; i++){
+    u_new[i] = u[i] + k * (u[i-1] + u[i+1] - 2*u[i]);
+  }
+  for(i=1; i<u_length+1; i++){
+    u[i] = u_new[i];
+  }
+}
+
+/* Communicate with left u and right u,
+   send the first interior element to left u and receive for 
+   the last interior element */
+void exchange_ghost_cells(double * u, int left, int right, int start, 
+			  int nxl, $comm comm){
+  int u_length = nxl;
+  // the most left or right us just need to exchange with one side 
+  if(left == -1 && right == -1)
+    return;
+  else if(left == -1){
+    send(&u[u_length], 1, right, 0, comm); 
+    recv(&u[u_length + 1], 1, right, 0, comm);
+  }
+  else if(right == -1){
+    send(&u[1], 1, left, 0, comm); 
+    recv(&u[0], 1, left, 0, comm);
+  }else{
+    send(&u[u_length], 1, right, 0, comm);
+    send(&u[1], 1, left, 0, comm);
+    recv(&u[u_length + 1], 1, right, 0, comm);
+    recv(&u[0], 1, left, 0, comm);
+  }
+}
+
+int firstAndCountForProc(int nx, int nprocs, int rank, int * left_u, int * right_u,
+           int * first){
+  int start, end, left, right;
+  int nxl;
+  
+  nx = nx -2; // the first and last cells are not need to be dsitributed to processes
+  start = (rank * nx)/nprocs + 1;
+  end = ((rank+1)*nx)/nprocs + 1;
+  nxl = end - start;
+  left = rank - 1;
+  right = rank + 1;
+  if(right >= nprocs){
+    right = -1;
+  }
+  /* return the number of interior elements */
+  *first = start;
+  *left_u = left;
+  *right_u = right;
+  return nxl;
+}
+
+/* the numbers of elements in u and u_new are 2 more than u_length because of 
+   ghost elements */
+void initU(double * u, double * u_new, int nxl, int first, int left, int right){
+  int i, j;
+
+  /* initiate interior array */
+  j = first;
+  for(i=1; i< nxl+1; i++){
+    u[i] = initialU[j];
+    u_new[i] = initialU[j];
+    j++;
+  }
+  /* for the most left or right Us, initiate the first ghost element and 
+     the last ghost element */
+  if(left == -1){
+    u[0] = initialU[0];
+    u_new[0] = initialU[0];
+  }
+  if(right == -1){
+    i = nxl + 1;
+    u[i] = initialU[nx-1];
+    u_new[i] = initialU[nx-1];
+  }
+}
+
+void compare(int first, int nxl, double * u){
+  int i;
+  
+  for(i=0; i<nxl; i++){
+    // compare starts from u[1],u[0] is the ghost cell
+    $assert ((seq_u[first + i] == u[i+1]), "i = %d\n", i);
+  }
+}
+
+void MPI_Process (int rank){
+  int first = -1;                            /* the index of the u*/
+  int left_u = -1, right_u = -1;             /* the index of the left u 
+						and right u*/
+  int nxl = -1;                              /* number of elements in this u*/
+  double * u;
+  double * u_new;
+
+  $comm MPI_COMM_WORLD = $comm_create($here, __MPI_COMM_WORLD, rank);
+
+  nxl = firstAndCountForProc(nx, nprocs, rank, &left_u, &right_u, &first);
+  u = (double*)$malloc($here, sizeof(double)*(nxl + 2));
+  u_new = (double*)$malloc($here, sizeof(double)*(nxl + 2));
+  initU(u, u_new, nxl, first, left_u, right_u);
+  /* Jacobi Iterations*/
+  for(int iter=nsteps; iter>0; iter--){
+    exchange_ghost_cells(u, left_u, right_u, first, nxl, MPI_COMM_WORLD);
+    update(u, u_new, first, nxl);
+  }
+  compare(first, nxl, u);
+}
+
+

@@ -1,0 +1,31 @@
+/* Commandline execution:
+ *		civl verify -inputB=3 atomicStatement.cvl
+ * */
+#include<civlc.cvh>
+$input int B = 3;
+$input int N;
+$assume 0<N && N<B;
+int n = 3;
+
+void main(){
+  int x;
+  
+  $atomic{
+    $when(n > 1) n = 3;
+    $atomic{
+      x = N;
+      x = x * 2;
+    }
+    $assert(x == 2*N);
+    // non-determinism allowed in $atomic block
+    $atomic{
+      x = 3;
+      $choose {
+	$when (n>2) { x=2;  }
+	$when (n>1) { x=1;  }
+        default: {x=0;  }
+      }
+    }
+    $assert(x == 2 || x == 1);
+  }
+}

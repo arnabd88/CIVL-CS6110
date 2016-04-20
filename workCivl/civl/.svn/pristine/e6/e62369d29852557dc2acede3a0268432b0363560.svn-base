@@ -1,0 +1,102 @@
+/* dot product of two arrays.
+ *  Command line execution:
+ *  civl verify dot.cvl -inputN_BOUND=8 -inputTHREADS_PER_BLOCK=4 
+ */
+#include <civlc.cvh>
+#include <concurrency.cvh>
+#include <stdio.h>
+
+#define imin(a,b) (a<b?a:b)
+
+$input int THREADS_PER_BLOCK = 4; // thread number per block: must be a power of 2, due to the while loop at the end of gpuThread();
+$input int N_BOUND = 8;
+$input int N;
+$assume(0 < N && N <= N_BOUND);
+int const threadsPerBlock = THREADS_PER_BLOCK;
+int const blocksPerGrid =
+            imin(32, (N+threadsPerBlock-1) / threadsPerBlock );     
+double *a, *b, c, *partial_c;
+
+void gpu(){
+  $proc blocks[blocksPerGrid];
+
+  void gpuBlock(int blockID){
+    int num_in_barrier =0;
+    int barrier_size = 0;
+    double cache[threadsPerBlock];
+    $gbarrier gbarrier = $gbarrier_create($here, threadsPerBlock);
+    $proc threads[threadsPerBlock];
+   
+    void gpuThread(int threadID){
+      int tid = threadID + blockID * threadsPerBlock;
+      int cacheIndex = threadID;
+      double temp = 0;
+      $barrier barrier = $barrier_create($here, gbarrier, threadID);
+      int i;
+      
+      $atomic {
+        while (tid < N) {
+          temp += a[tid] * b[tid];
+          tid += threadsPerBlock * blocksPerGrid;
+        }
+        // set cache values
+        cache[cacheIndex] = temp;
+      }
+      // synchronize threads
+      $barrier_call(barrier);
+      i = threadsPerBlock/2;
+      while (i != 0) {
+        if (cacheIndex < i)
+          cache[cacheIndex] += cache[cacheIndex + i];
+        // synchronize threads
+        $barrier_call(barrier);
+        i /= 2;
+      }
+      if (cacheIndex == 0)
+        partial_c[blockID] = cache[0];
+      $barrier_destroy(barrier);
+    }
+    
+    for(int i = 0; i < threadsPerBlock; i++) {
+      threads[i] = $spawn gpuThread(i);
+    }
+    for(int i = 0; i < threadsPerBlock; i++) {
+      $wait(threads[i]);
+    }
+    $gbarrier_destroy(gbarrier);
+  }
+  // spawns gpublock's
+  for(int i = 0; i < blocksPerGrid; i++) {
+    blocks[i] = $spawn gpuBlock(i);  
+  }
+  // waits for gpublock's
+  for(int i = 0; i < blocksPerGrid; i++) {
+    $wait(blocks[i]);
+  }
+}
+
+int main( void ) {
+  $scope host = $here;
+    
+  // allocate memory on the cpu side
+  a = (double *) $malloc(host, N*sizeof(double));
+  b = (double *) $malloc(host, N*sizeof(double));
+  partial_c = (double *) $malloc(host, blocksPerGrid*sizeof(double));
+  // fill in the host memory with data
+  for (int i=0; i<N; i++) {
+    a[i] = i;
+    b[i] = i*2;
+  }
+  gpu();
+  // finish up on the CPU side
+  c = 0;
+  for (int i=0; i<blocksPerGrid; i++) {
+    c += partial_c[i];
+  }
+  #define sum_squares(x)  (x*(x+1)*(2*x+1)/6)
+  // check result
+  $assert(c == 2 * sum_squares( (double)(N - 1) ));
+  $free(a);
+  $free(b);
+  $free(partial_c);
+}

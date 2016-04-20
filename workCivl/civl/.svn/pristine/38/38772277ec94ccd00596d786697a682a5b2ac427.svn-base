@@ -1,0 +1,20 @@
+/**
+* When the guard has an error, the error should be logged and the execution would 
+* continue by adding some condition into the path condition.
+* command line execution:
+* civl verify badGuard.cvl -errorBound = 10
+*/
+#include<civlc.cvh>
+
+$input int x;
+$input int y;
+
+void main(){
+  $choose {
+    $when(x/y > 10) {
+      $assert((y != 0));
+    }
+    default:
+      ;
+  }
+}

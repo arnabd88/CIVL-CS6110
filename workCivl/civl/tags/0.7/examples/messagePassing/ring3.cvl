@@ -1,0 +1,38 @@
+/* Create nprocs processes.  Have them exchange data in a cycle.
+ * Command line execution:
+ *     civl verify -por=new -inputNPROCS=3 ring3.cvl -simplify=false
+ */
+#include<civlc.h>
+#define TAG 0
+
+$input int NPROCS;
+$input int NB;
+$assume 1 < NPROCS && NPROCS <= NB;
+_Bool initialized = $false;
+$comm MPI_COMM_WORLD;
+
+void MPI_Process (int rank) {
+  double x=rank, y;
+  $message in, out;
+  
+  $when (initialized);
+  out = $message_pack(rank, (rank+1)%NPROCS, TAG, &x, sizeof(double));
+  $comm_enqueue(&MPI_COMM_WORLD, out);
+  in = $comm_dequeue(&MPI_COMM_WORLD, (rank+NPROCS-1)%NPROCS, rank, TAG);
+  $message_unpack(in, &y, sizeof(double));
+
+  $assert(y==(rank+NPROCS-1)%NPROCS);
+}
+
+void main() {
+  $proc procs[NPROCS];
+  
+  $atomic{
+  for (int i=0; i<NPROCS; i++)
+	  procs[i] = $spawn MPI_Process(i);
+  MPI_COMM_WORLD = $comm_create(NPROCS, procs);
+  initialized = $true;
+  }
+  for (int i=0; i<NPROCS; i++)
+    $wait procs[i];
+}

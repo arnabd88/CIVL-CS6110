@@ -1,0 +1,78 @@
+\hypertarget{group__operators}{}\section{Special operators}
+\label{group__operators}\index{Special operators@{Special operators}}
+
+
+Apply special operators in spectral space\+: multiplication by cos(theta), sin(theta).d/dtheta.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__operators_gad51bd2c5d565a6a263d7b72d839dc956}{mul\+\_\+ct\+\_\+matrix} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, double $\ast$mx)
+\begin{DoxyCompactList}\small\item\em fill mx with the coefficients for multiplication by cos(theta) \end{DoxyCompactList}\item 
+void \hyperlink{group__operators_gac53a7e27c628e0aae0f0a3177dc2663d}{st\+\_\+dt\+\_\+matrix} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, double $\ast$mx)
+\begin{DoxyCompactList}\small\item\em fill mx with the coefficients of operator sin(theta).d/dtheta \end{DoxyCompactList}\item 
+void \hyperlink{group__operators_ga12bee435000620a1fc0d93ce27881bae}{S\+H\+\_\+mul\+\_\+mx} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, double $\ast$mx, cplx $\ast$Qlm, cplx $\ast$Rlm)
+\begin{DoxyCompactList}\small\item\em Multiplication of Qlm by a matrix involving l+1 and l-\/1 only. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Apply special operators in spectral space\+: multiplication by cos(theta), sin(theta).d/dtheta. 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{group__operators_gad51bd2c5d565a6a263d7b72d839dc956}{}\index{Special operators@{Special operators}!mul\+\_\+ct\+\_\+matrix@{mul\+\_\+ct\+\_\+matrix}}
+\index{mul\+\_\+ct\+\_\+matrix@{mul\+\_\+ct\+\_\+matrix}!Special operators@{Special operators}}
+\subsubsection[{mul\+\_\+ct\+\_\+matrix}]{\setlength{\rightskip}{0pt plus 5cm}void mul\+\_\+ct\+\_\+matrix (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{double $\ast$}]{mx}
+\end{DoxyParamCaption}
+)}\label{group__operators_gad51bd2c5d565a6a263d7b72d839dc956}
+
+
+fill mx with the coefficients for multiplication by cos(theta) 
+
+compute the matrix (stored in mx, a double array of size 2$\ast$\+N\+L\+M) required to multiply an S\+H representation by cos(theta) using \hyperlink{group__operators_ga12bee435000620a1fc0d93ce27881bae}{S\+H\+\_\+mul\+\_\+mx}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mx} & \+: an array of 2$\ast$\+N\+L\+M double that will be filled with the matrix coefficients. xq\mbox{[}lm\mbox{]} = mx\mbox{[}2$\ast$lm\mbox{]} $\ast$ q\mbox{[}lm-\/1\mbox{]} + mx\mbox{[}2$\ast$lm+1\mbox{]} $\ast$ q\mbox{[}lm+1\mbox{]}; \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__operators_ga12bee435000620a1fc0d93ce27881bae}{}\index{Special operators@{Special operators}!S\+H\+\_\+mul\+\_\+mx@{S\+H\+\_\+mul\+\_\+mx}}
+\index{S\+H\+\_\+mul\+\_\+mx@{S\+H\+\_\+mul\+\_\+mx}!Special operators@{Special operators}}
+\subsubsection[{S\+H\+\_\+mul\+\_\+mx}]{\setlength{\rightskip}{0pt plus 5cm}void S\+H\+\_\+mul\+\_\+mx (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{double $\ast$}]{mx, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{cplx $\ast$}]{Rlm}
+\end{DoxyParamCaption}
+)}\label{group__operators_ga12bee435000620a1fc0d93ce27881bae}
+
+
+Multiplication of Qlm by a matrix involving l+1 and l-\/1 only. 
+
+Apply a matrix involving l+1 and l-\/1 to an S\+H representation Qlm. Result stored in Rlm (must be different from Qlm).
+
+The result is stored in Rlm, which M\+U\+S\+T be different from Qlm. mx is an array of 2$\ast$\+N\+L\+M values as returned by \hyperlink{group__operators_gad51bd2c5d565a6a263d7b72d839dc956}{mul\+\_\+ct\+\_\+matrix} or \hyperlink{group__operators_gac53a7e27c628e0aae0f0a3177dc2663d}{st\+\_\+dt\+\_\+matrix} compute\+: Rlm\mbox{[}lm\mbox{]} = mx\mbox{[}2$\ast$lm\mbox{]} $\ast$ Qlm\mbox{[}lm-\/1\mbox{]} + mx\mbox{[}2$\ast$lm+1\mbox{]} $\ast$ Qlm\mbox{[}lm+1\mbox{]}; \hypertarget{group__operators_gac53a7e27c628e0aae0f0a3177dc2663d}{}\index{Special operators@{Special operators}!st\+\_\+dt\+\_\+matrix@{st\+\_\+dt\+\_\+matrix}}
+\index{st\+\_\+dt\+\_\+matrix@{st\+\_\+dt\+\_\+matrix}!Special operators@{Special operators}}
+\subsubsection[{st\+\_\+dt\+\_\+matrix}]{\setlength{\rightskip}{0pt plus 5cm}void st\+\_\+dt\+\_\+matrix (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{double $\ast$}]{mx}
+\end{DoxyParamCaption}
+)}\label{group__operators_gac53a7e27c628e0aae0f0a3177dc2663d}
+
+
+fill mx with the coefficients of operator sin(theta).d/dtheta 
+
+compute the matrix (stored in mx, a double array of size 2$\ast$\+N\+L\+M) required to apply sin(theta)$\ast$d/dtheta to an S\+H representation using \hyperlink{group__operators_ga12bee435000620a1fc0d93ce27881bae}{S\+H\+\_\+mul\+\_\+mx}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mx} & \+: an array of 2$\ast$\+N\+L\+M double that will be filled with the matrix coefficients. stdq\mbox{[}lm\mbox{]} = mx\mbox{[}2$\ast$lm\mbox{]} $\ast$ q\mbox{[}lm-\/1\mbox{]} + mx\mbox{[}2$\ast$lm+1\mbox{]} $\ast$ q\mbox{[}lm+1\mbox{]}; \\
+\hline
+\end{DoxyParams}

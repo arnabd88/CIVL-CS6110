@@ -1,0 +1,144 @@
+// Tyler Sorensen
+//
+// An attempt to create an "exit barrier"
+// as seen in NVIDIA PTX instructions
+// See "exit" and "bar.sync" instructions in PTX ISA
+//
+// The algorithm implemented uses the general CIVL barrier 
+// module found in examples/concurrency/barrier2.cvl
+//
+// The exit semantics are a combination of barrier
+// resignation as seen in KRoC release of occam and
+// documented in the paper:
+// Higher Level of Process Synchronization by:
+// Peter H. Welch and David C. Wood.
+// and a return statement (to exit the thread)
+//
+// The resignation algorithm is given briefly in 
+// the paper cited above which I attempted to
+// implement. However, this implementation assumes
+// that a resigned thread does not access the barrier 
+// again! It is implemented with the exit barrier
+// semantics in mind, i.e. the thread will cease
+// execution right after resignation. No attempts
+// are made to guard against behavior deviating
+// from this. 
+// Commandline execution:
+//		civl verify exitBarrier.cvl
+
+// TODO: Right now, the thread termination is simply
+// a "return" statement. Anyway for that to actually
+// kill the thread?
+
+#include <civlc.cvh>
+#include <concurrency.cvh>
+
+struct _CIVL_Barrier {
+  int numProcs;   //how many are enrolled to begin with, cannot change
+  int numWaiting; //New variable for exit barriers, how many you need to wait for, can change
+  int *in_barrier;
+  int num_in_barrier;
+  int lock;
+};
+
+typedef struct _CIVL_Barrier CIVL_Barrier;
+
+void CIVL_Barrier_init(int numProcs, CIVL_Barrier *barrier, int *array) {  
+  barrier->numProcs = numProcs;
+  barrier->numWaiting = numProcs;
+  barrier->num_in_barrier = 0;
+  barrier->lock = 0;
+  barrier->in_barrier = array;
+  for (int i=0; i<numProcs; i++)
+    barrier->in_barrier[i] = 0;
+}
+
+void CIVL_barrier(CIVL_Barrier *barrier, int tid) {
+  $when (barrier->lock==0) barrier->lock = 1;
+  barrier->in_barrier[tid] = 1;
+  barrier->num_in_barrier++;
+
+  //simply wait for how many need to be waited for, but
+  //free them all. No exceptions.
+  if (barrier->num_in_barrier == barrier->numWaiting) {
+    for (int i=0; i<barrier->numProcs; i++)
+      barrier->in_barrier[i] = 0;
+    barrier->num_in_barrier = 0;
+  }
+  barrier->lock = 0;
+  $when (barrier->in_barrier[tid] == 0);
+}
+
+//The resign function: Basically the same, but
+//decrement the number waiting for. If 
+//A barrier is waiting on the resigning thread, then free
+//the barrier before leaving. No need to wait also.
+void CIVL_barrier_resign(CIVL_Barrier *barrier, int tid) {
+  $when (barrier->lock==0) barrier->lock = 1;
+  barrier->in_barrier[tid] = 1;
+  barrier->numWaiting--;
+  if (barrier->num_in_barrier == barrier->numWaiting) {
+    for (int i=0; i<barrier->numProcs; i++)
+      barrier->in_barrier[i] = 0;
+    barrier->num_in_barrier = 0;
+  }
+  barrier->lock = 0; 
+}
+
+#define CIVL_barrier_exit(barrier, tid) CIVL_barrier_resign(barrier, tid); return
+
+void main() {
+  int N=4;
+  $proc threads[N];
+  int counter = 0;
+  CIVL_Barrier b;
+  int barrier_array[N];
+  
+  void run_proc0(int tid) {  
+    $assert(counter == 0);
+    CIVL_barrier_exit(&b, tid);
+  }
+
+  void run_proc1(int tid) {
+    $assert(counter == 0);
+    CIVL_barrier(&b, tid);
+    counter++;
+    CIVL_barrier_exit(&b, tid);
+  }
+
+  void run_proc2(int tid) {  
+    $assert(counter == 0);
+    CIVL_barrier(&b, tid);
+    counter++;
+    CIVL_barrier(&b, tid);
+    $assert(counter == 3);
+    CIVL_barrier_exit(&b, tid);   
+  }
+
+  void run_proc3(int tid) {
+    $assert(counter == 0);
+    CIVL_barrier(&b, tid);
+    counter++;
+    CIVL_barrier(&b, tid);
+    $assert(counter == 3);
+    CIVL_barrier(&b, tid);
+    counter--;
+    CIVL_barrier_exit(&b, tid);
+  }
+
+  CIVL_Barrier_init(N, &b, barrier_array);
+
+  //Spawn threads
+  $proc proc0 = $spawn run_proc0(0);
+  $proc proc1 = $spawn run_proc1(1);
+  $proc proc2 = $spawn run_proc2(2);
+  $proc proc3 = $spawn run_proc3(3);
+
+  //wait for threads
+  $wait(proc0);
+  $wait(proc1);
+  $wait(proc2);
+  $wait(proc3);
+
+  $assert(counter == 2);
+}

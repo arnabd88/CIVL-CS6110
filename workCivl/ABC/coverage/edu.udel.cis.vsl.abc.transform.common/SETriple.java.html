@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SETriple.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.transform.common</a> &gt; <span class="el_source">SETriple.java</span></div><h1>SETriple.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.transform.common;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+
+/**
+ * A side effect triple is used by the side effect remover. When removing side
+ * effects from an AST node, the result is a side effect free version of the
+ * node, together with (possibly empty) lists of statements that should come
+ * before or after the use of the node.
+ * 
+ * @author Timothy K. Zirkel
+ * @author Stephen F. Siegel
+ */
+public class SETriple {
+
+	protected List&lt;BlockItemNode&gt; before, after;
+
+	protected ASTNode node;
+
+	/**
+	 * 
+	 * @param before
+	 *            The block items that come before this expression.
+	 * @param expression
+	 *            The side effect free expression.
+	 * @param after
+	 *            The block items that come after this expression.
+	 */
+<span class="nc" id="L34">	public SETriple(List&lt;BlockItemNode&gt; before, ASTNode node,</span>
+			List&lt;BlockItemNode&gt; after) {
+<span class="nc" id="L36">		this.before = before;</span>
+<span class="nc" id="L37">		this.node = node;</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">		if (node != null)</span>
+<span class="nc" id="L39">			node.remove();</span>
+<span class="nc" id="L40">		this.after = after;</span>
+<span class="nc" id="L41">	}</span>
+
+	public SETriple(ASTNode node) {
+<span class="nc" id="L44">		this(new LinkedList&lt;BlockItemNode&gt;(), node,</span>
+<span class="nc" id="L45">				new LinkedList&lt;BlockItemNode&gt;());</span>
+<span class="nc" id="L46">	}</span>
+
+	/**
+	 * @return The block items that come before this expression.
+	 */
+	public List&lt;BlockItemNode&gt; getBefore() {
+<span class="nc" id="L52">		return before;</span>
+	}
+
+	/**
+	 * @return The block items that come after this expression.
+	 */
+	public List&lt;BlockItemNode&gt; getAfter() {
+<span class="nc" id="L59">		return after;</span>
+	}
+
+	/**
+	 * @return the expression.
+	 */
+	public ASTNode getNode() {
+<span class="nc" id="L66">		return node;</span>
+	}
+
+	/**
+	 * @param before
+	 *            The block items that come before this expression.
+	 */
+	public void setBefore(List&lt;BlockItemNode&gt; before) {
+<span class="nc" id="L74">		this.before = before;</span>
+<span class="nc" id="L75">	}</span>
+
+	/**
+	 * @param after
+	 *            The block items that come after this expression.
+	 */
+	public void setAfter(List&lt;BlockItemNode&gt; after) {
+<span class="nc" id="L82">		this.after = after;</span>
+<span class="nc" id="L83">	}</span>
+
+	/**
+	 * @param expression
+	 *            The side effect free expression.
+	 */
+	public void setNode(ASTNode node) {
+<span class="nc" id="L90">		this.node = node;</span>
+<span class="nc" id="L91">	}</span>
+
+	public boolean isTrivial() {
+<span class="nc bnc" id="L94" title="All 4 branches missed.">		return before.isEmpty() &amp;&amp; after.isEmpty();</span>
+	}
+
+	public void addAfter(BlockItemNode item) {
+<span class="nc" id="L98">		after.add(item);</span>
+<span class="nc" id="L99">	}</span>
+
+	public void addBefore(BlockItemNode item) {
+<span class="nc" id="L102">		before.add(item);</span>
+<span class="nc" id="L103">	}</span>
+
+	public void addAllAfter(Collection&lt;BlockItemNode&gt; items) {
+<span class="nc" id="L106">		after.addAll(items);</span>
+<span class="nc" id="L107">	}</span>
+
+	public void addAllBefore(Collection&lt;BlockItemNode&gt; items) {
+<span class="nc" id="L110">		before.addAll(items);</span>
+<span class="nc" id="L111">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L115">		StringBuffer result = new StringBuffer(&quot;[&quot;);</span>
+<span class="nc" id="L116">		boolean first = true;</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (BlockItemNode item : before) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (first)</span>
+<span class="nc" id="L120">				first = false;</span>
+			else
+<span class="nc" id="L122">				result.append(',');</span>
+<span class="nc" id="L123">			result.append(item.toString());</span>
+		}
+<span class="nc" id="L125">		result.append(&quot; | &quot;);</span>
+<span class="nc" id="L126">		result.append(node.toString());</span>
+<span class="nc" id="L127">		result.append(&quot; | &quot;);</span>
+<span class="nc" id="L128">		first = true;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (BlockItemNode item : after) {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (first)</span>
+<span class="nc" id="L131">				first = false;</span>
+			else
+<span class="nc" id="L133">				result.append(',');</span>
+<span class="nc" id="L134">			result.append(item.toString());</span>
+		}
+<span class="nc" id="L136">		result.append(&quot;]&quot;);</span>
+<span class="nc" id="L137">		return result.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

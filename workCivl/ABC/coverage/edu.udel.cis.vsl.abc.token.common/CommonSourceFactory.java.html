@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonSourceFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.common</a> &gt; <span class="el_source">CommonSourceFactory.java</span></div><h1>CommonSourceFactory.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.token.common;
+
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+<span class="fc" id="L7">public class CommonSourceFactory {</span>
+
+	public Source newSource(CivlcToken token) {
+<span class="nc" id="L10">		return new CommonSource(token, token);</span>
+	}
+
+	public Source newSource(CivlcToken first, CivlcToken last) {
+<span class="nc" id="L14">		return new CommonSource(first, last);</span>
+	}
+
+	// public Source newSource(CommonTree tree, CTokenSource tokenSource) {
+	// return new CommonSource(tree, tokenSource);
+	// }
+
+	public Source join(Source source, CivlcToken token) {
+<span class="nc" id="L22">		int firstIndex, lastIndex, index = token.getTokenIndex();</span>
+		CivlcToken first, last;
+
+<span class="nc bnc" id="L25" title="All 2 branches missed.">		if (index &lt; 0)</span>
+<span class="nc" id="L26">			return source;</span>
+<span class="nc" id="L27">		first = source.getFirstToken();</span>
+<span class="nc" id="L28">		last = source.getLastToken();</span>
+<span class="nc" id="L29">		firstIndex = source.getFirstToken().getTokenIndex();</span>
+<span class="nc" id="L30">		lastIndex = source.getLastToken().getTokenIndex();</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">		if (index &lt; firstIndex)</span>
+<span class="nc" id="L32">			return newSource(token, last);</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">		else if (index &gt; lastIndex)</span>
+<span class="nc" id="L34">			return newSource(first, token);</span>
+<span class="nc" id="L35">		return source;</span>
+	}
+
+	public Source join(Source source1, Source source2) {
+<span class="nc" id="L39">		CivlcToken first1 = source1.getFirstToken();</span>
+<span class="nc" id="L40">		CivlcToken last1 = source1.getLastToken();</span>
+<span class="nc" id="L41">		CivlcToken first2 = source2.getFirstToken();</span>
+<span class="nc" id="L42">		CivlcToken last2 = source2.getLastToken();</span>
+<span class="nc" id="L43">		int firstIndex1 = first1.getIndex();</span>
+<span class="nc" id="L44">		int lastIndex1 = last1.getIndex();</span>
+<span class="nc" id="L45">		int firstIndex2 = first2.getIndex();</span>
+<span class="nc" id="L46">		int lastIndex2 = last2.getIndex();</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		CivlcToken newFirst = (firstIndex1 &lt; firstIndex2 ? first1 : first2);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		CivlcToken newLast = (lastIndex1 &gt; lastIndex2 ? last1 : last2);</span>
+
+<span class="nc" id="L50">		return new CommonSource(newFirst, newLast);</span>
+	}
+
+
+	// public SyntaxException newSyntaxException(String message, CommonTree
+	// tree,
+	// CTokenSource tokenSource) {
+	// Source source = newSource(tree, tokenSource);
+	//
+	// return new SyntaxException(message, source);
+	// }
+
+	public UnsourcedException newUnsourcedException(String message) {
+<span class="nc" id="L63">		return new UnsourcedException(message);</span>
+	}
+
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

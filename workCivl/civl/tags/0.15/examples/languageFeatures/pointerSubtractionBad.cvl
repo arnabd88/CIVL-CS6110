@@ -1,0 +1,15 @@
+#include <stddef.h>
+#include <civlc.h>
+
+int main(){
+  double (*p)[2];
+  double a[3][2];
+  double b[3][2];
+  ptrdiff_t diff;
+
+  p = a; //p == &a[0]
+  diff = p - b;
+  return 0;
+}
+
+

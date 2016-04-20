@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonStructureOrUnionType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonStructureOrUnionType.java</span></div><h1>CommonStructureOrUnionType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.CommonEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Field;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+
+<span class="nc bnc" id="L18" title="All 2 branches missed.">public class CommonStructureOrUnionType extends CommonObjectType implements</span>
+		StructureOrUnionType {
+
+<span class="nc" id="L21">	private final static int classCode = CommonStructureOrUnionType.class</span>
+<span class="nc" id="L22">			.hashCode();</span>
+
+	private ProgramEntity entity;
+
+	/** Key, cannot be null. */
+	private Object key;
+
+	/** Tag: may be null */
+	private String tag;
+
+	private boolean isStruct;
+
+	/** Fields: will be null initially, until completed. */
+	private ArrayList&lt;Field&gt; fields;
+
+	/**
+	 * A map from field name to fields, but only for those fields that have
+	 * names.
+	 */
+<span class="nc" id="L41">	private Map&lt;String, Field&gt; fieldMap = new LinkedHashMap&lt;String, Field&gt;();</span>
+
+	public CommonStructureOrUnionType(Object key, String tag, boolean isStruct) {
+<span class="nc" id="L44">		super(TypeKind.STRUCTURE_OR_UNION);</span>
+<span class="nc bnc" id="L45" title="All 4 branches missed.">		assert key != null;</span>
+<span class="nc" id="L46">		this.key = key;</span>
+<span class="nc" id="L47">		this.tag = tag;</span>
+<span class="nc" id="L48">		this.isStruct = isStruct;</span>
+<span class="nc" id="L49">		this.fields = null;</span>
+<span class="nc" id="L50">		this.entity = new CommonEntity(EntityKind.STRUCTURE_OR_UNION, tag,</span>
+<span class="nc" id="L51">				ProgramEntity.LinkageKind.NONE);</span>
+<span class="nc" id="L52">	}</span>
+
+	@Override
+	public Object getKey() {
+<span class="nc" id="L56">		return key;</span>
+	}
+
+	@Override
+	public String getTag() {
+<span class="nc" id="L61">		return tag;</span>
+	}
+
+	@Override
+	public boolean isStruct() {
+<span class="nc" id="L66">		return isStruct;</span>
+	}
+
+	@Override
+	public boolean isUnion() {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		return !isStruct;</span>
+	}
+
+	@Override
+	public int getNumFields() {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (fields == null)</span>
+<span class="nc" id="L77">			return 0;</span>
+<span class="nc" id="L78">		return fields.size();</span>
+	}
+
+	@Override
+	public Field getField(int index) {
+<span class="nc" id="L83">		return fields.get(index);</span>
+	}
+
+	@Override
+	public Iterable&lt;Field&gt; getFields() {
+<span class="nc" id="L88">		return fields;</span>
+	}
+
+	@Override
+	public void complete(Iterable&lt;Field&gt; fields) {
+<span class="nc" id="L93">		this.fields = new ArrayList&lt;Field&gt;();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (Field field : fields) {</span>
+<span class="nc" id="L95">			String name = field.getName();</span>
+
+<span class="nc" id="L97">			this.fields.add(field);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (name != null)</span>
+<span class="nc" id="L99">				fieldMap.put(name, field);</span>
+		}
+<span class="nc" id="L101">	}</span>
+
+	@Override
+	public boolean isComplete() {
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		return fields != null;</span>
+	}
+
+	@Override
+	public boolean isVariablyModified() {
+<span class="nc" id="L110">		return false;</span>
+	}
+
+	/**
+	 * Returns the string that is used to check compatibility of this tag with
+	 * another tag. This removes any suffix beginning with &lt;code&gt;$TU&lt;/code&gt;. In
+	 * CIVL-C semantics, such a suffix is ignored for the purposes of checking
+	 * compatibility of two tags. It is used by CIVL to give unique names to
+	 * tagged entities in different translation units so they can be merged into
+	 * a single AST, but such entities should still be considered compatible.
+	 * 
+	 * NOTE: also removing $anon.
+	 * 
+	 * @return the tag with any suffix beginning with '$' removed
+	 */
+	private String getCompatibilityString() {
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (tag == null)</span>
+<span class="nc" id="L127">			return &quot;&quot;;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (tag.startsWith(&quot;$anon&quot;)) {</span>
+			// &quot;$anon&quot; prefixes are inserted by ABC to give names
+			// to anonymous structures. Since the original tag
+			// was null, that is what should be used for checking
+			// compatibility...
+<span class="nc" id="L133">			return &quot;&quot;;</span>
+		} else {
+<span class="nc" id="L135">			int dollarIndex = tag.indexOf(&quot;$TU&quot;);</span>
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			return dollarIndex &lt; 0 ? tag : tag.substring(0, dollarIndex);</span>
+		}
+	}
+
+	/**
+	 * &quot;Moreover, two structure, union, or enumerated types declared in separate
+	 * translation units are compatible if their tags and members satisfy the
+	 * following requirements: If one is declared with a tag, the other shall be
+	 * declared with the same tag. If both are completed anywhere within their
+	 * respective translation units, then the following additional requirements
+	 * apply: there shall be a one-to-one correspondence between their members
+	 * such that each pair of corresponding members are declared with compatible
+	 * types; if one member of the pair is declared with an alignment specifier,
+	 * the other is declared with an equivalent alignment specifier; and if one
+	 * member of the pair is declared with a name, the other is declared with
+	 * the same name. For two structures, corresponding members shall be
+	 * declared in the same order. For two structures or unions, corresponding
+	 * bit-fields shall have the same widths.&quot;
+	 */
+	private boolean compatibleWith(Type type, Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (type instanceof CommonStructureOrUnionType) {</span>
+<span class="nc" id="L158">			CommonStructureOrUnionType that = (CommonStructureOrUnionType) type;</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (this.tag != null) {</span>
+<span class="nc" id="L161">				if (!this.getCompatibilityString().equals(</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">						that.getCompatibilityString()))</span>
+<span class="nc" id="L163">					return false;</span>
+			} else {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">				if (that.tag != null)</span>
+<span class="nc" id="L166">					return false;</span>
+			}
+<span class="nc bnc" id="L168" title="All 4 branches missed.">			if (this.isComplete() &amp;&amp; that.isComplete()) {</span>
+<span class="nc" id="L169">				int numFields = this.getNumFields();</span>
+
+<span class="nc bnc" id="L171" title="All 2 branches missed.">				if (numFields != that.getNumFields())</span>
+<span class="nc" id="L172">					return false;</span>
+
+<span class="nc" id="L174">				TypeKey newKey = new TypeKey(this);</span>
+<span class="nc" id="L175">				Type oldType = seen.get(newKey);</span>
+
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (oldType != null)</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">					return type == oldType;</span>
+<span class="nc" id="L179">				seen.put(newKey, type);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">				for (int i = 0; i &lt; numFields; i++) {</span>
+<span class="nc" id="L181">					Field thisField = this.getField(i);</span>
+<span class="nc" id="L182">					Field thatField = that.getField(i);</span>
+<span class="nc" id="L183">					String thisName = thisField.getName();</span>
+<span class="nc" id="L184">					String thatName = thatField.getName();</span>
+<span class="nc" id="L185">					ObjectType thisType = thisField.getType();</span>
+<span class="nc" id="L186">					ObjectType thatType = thatField.getType();</span>
+<span class="nc" id="L187">					Value thisWidth = thisField.getBitWidth();</span>
+<span class="nc" id="L188">					Value thatWidth = thatField.getBitWidth();</span>
+
+<span class="nc bnc" id="L190" title="All 2 branches missed.">					if (thisName == null) {</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">						if (thatName != null)</span>
+<span class="nc" id="L192">							return false;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">					} else if (!thisName.equals(thatName))</span>
+<span class="nc" id="L194">						return false;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">					if (thisType == null) {</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">						if (thatType != null)</span>
+<span class="nc" id="L197">							return false;</span>
+					} else {
+<span class="nc bnc" id="L199" title="All 2 branches missed.">						if (thatType == null)</span>
+<span class="nc" id="L200">							return false;</span>
+<span class="nc" id="L201">						if (!((CommonType) thisType).similar(thatType, false,</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">								seen))</span>
+<span class="nc" id="L203">							return false;</span>
+					}
+<span class="nc bnc" id="L205" title="All 2 branches missed.">					if (thisWidth == null) {</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">						if (thatWidth != null)</span>
+<span class="nc" id="L207">							return false;</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">					} else if (!thisWidth.equals(thatWidth))</span>
+<span class="nc" id="L209">						return false;</span>
+				}
+			}
+<span class="nc" id="L212">			return true;</span>
+		}
+<span class="nc" id="L214">		return false;</span>
+	}
+
+	private boolean equivalentTo(Type other, Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (other instanceof CommonStructureOrUnionType) {</span>
+<span class="nc" id="L219">			CommonStructureOrUnionType that = (CommonStructureOrUnionType) other;</span>
+
+<span class="nc bnc" id="L221" title="All 2 branches missed.">			if (this.tag != null) {</span>
+<span class="nc" id="L222">				if (!this.getCompatibilityString().equals(</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">						that.getCompatibilityString()))</span>
+<span class="nc" id="L224">					return false;</span>
+			} else {
+<span class="nc bnc" id="L226" title="All 2 branches missed.">				if (that.tag != null)</span>
+<span class="nc" id="L227">					return false;</span>
+			}
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			if (!this.isComplete()) {</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">				if (that.isComplete())</span>
+<span class="nc" id="L231">					return false;</span>
+			} else {
+<span class="nc bnc" id="L233" title="All 2 branches missed.">				if (!that.isComplete())</span>
+<span class="nc" id="L234">					return false;</span>
+				else {
+<span class="nc" id="L236">					int numFields = this.getNumFields();</span>
+
+<span class="nc bnc" id="L238" title="All 2 branches missed.">					if (numFields != that.getNumFields())</span>
+<span class="nc" id="L239">						return false;</span>
+
+<span class="nc" id="L241">					TypeKey thisKey = new TypeKey(this);</span>
+<span class="nc" id="L242">					Type oldType = seen.get(thisKey);</span>
+
+<span class="nc bnc" id="L244" title="All 2 branches missed.">					if (oldType == null) {</span>
+<span class="nc" id="L245">						seen.put(thisKey, other);</span>
+<span class="nc" id="L246">					} else {</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">						return oldType == other;</span>
+					}
+<span class="nc bnc" id="L249" title="All 2 branches missed.">					for (int i = 0; i &lt; numFields; i++) {</span>
+<span class="nc" id="L250">						Field thisField = this.getField(i);</span>
+<span class="nc" id="L251">						Field thatField = that.getField(i);</span>
+<span class="nc" id="L252">						String thisName = thisField.getName();</span>
+<span class="nc" id="L253">						String thatName = thatField.getName();</span>
+<span class="nc" id="L254">						ObjectType thisType = thisField.getType();</span>
+<span class="nc" id="L255">						ObjectType thatType = thatField.getType();</span>
+<span class="nc" id="L256">						Value thisWidth = thisField.getBitWidth();</span>
+<span class="nc" id="L257">						Value thatWidth = thatField.getBitWidth();</span>
+
+<span class="nc bnc" id="L259" title="All 2 branches missed.">						if (thisName == null) {</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">							if (thatName != null)</span>
+<span class="nc" id="L261">								return false;</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">						} else if (!thisName.equals(thatName))</span>
+<span class="nc" id="L263">							return false;</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">						if (thisType == null) {</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">							if (thatType != null)</span>
+<span class="nc" id="L266">								return false;</span>
+<span class="nc" id="L267">						} else if (!((CommonType) thisType).similar(thatType,</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">								true, seen))</span>
+<span class="nc" id="L269">							return false;</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">						if (thisWidth == null) {</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">							if (thatWidth != null)</span>
+<span class="nc" id="L272">								return false;</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">						} else if (!thisWidth.equals(thatWidth))</span>
+<span class="nc" id="L274">							return false;</span>
+					}
+				}
+			}
+<span class="nc" id="L278">			return true;</span>
+		}
+<span class="nc" id="L280">		return false;</span>
+	}
+
+	@Override
+	public Field getField(String fieldName) {
+<span class="nc" id="L285">		return fieldMap.get(fieldName);</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean abbrv) {
+<span class="nc bnc" id="L290" title="All 2 branches missed.">		out.print(isStruct ? &quot;Structure&quot; : &quot;Union&quot;);</span>
+<span class="nc" id="L291">		out.print(&quot;[tag=&quot; + tag + &quot;, key=&quot; + key + &quot;]&quot;);</span>
+<span class="nc bnc" id="L292" title="All 4 branches missed.">		if (!abbrv &amp;&amp; fields != null) {</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">			for (Field field : fields) {</span>
+<span class="nc" id="L294">				Type fieldType = field.getType();</span>
+<span class="nc" id="L295">				String fieldName = field.getName();</span>
+<span class="nc" id="L296">				Value bitWidth = field.getBitWidth();</span>
+
+<span class="nc" id="L298">				out.println();</span>
+<span class="nc" id="L299">				out.print(prefix + &quot;| Field[name=&quot; + fieldName);</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">				if (bitWidth != null)</span>
+<span class="nc" id="L301">					out.print(&quot;, bitWidth=&quot; + bitWidth);</span>
+<span class="nc" id="L302">				out.print(&quot;]&quot;);</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">				if (fieldType != null) {</span>
+<span class="nc" id="L304">					out.println();</span>
+<span class="nc" id="L305">					out.print(prefix + &quot;| | &quot;);</span>
+<span class="nc" id="L306">					fieldType.print(prefix + &quot;| | &quot;, out, true);</span>
+				}
+			}
+		}
+
+<span class="nc" id="L311">	}</span>
+
+	@Override
+	public boolean isScalar() {
+<span class="nc" id="L315">		return false;</span>
+	}
+
+	@Override
+	public void clear() {
+<span class="nc" id="L320">		fieldMap = new LinkedHashMap&lt;String, Field&gt;();</span>
+<span class="nc" id="L321">		fields = null;</span>
+<span class="nc" id="L322">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc bnc" id="L326" title="All 2 branches missed.">		if (isStruct)</span>
+<span class="nc" id="L327">			return &quot;struct &quot; + tag;</span>
+		else
+<span class="nc" id="L329">			return &quot;union &quot; + tag;</span>
+	}
+
+	@Override
+	public EntityKind getEntityKind() {
+<span class="nc" id="L334">		return entity.getEntityKind();</span>
+	}
+
+	@Override
+	public String getName() {
+<span class="nc" id="L339">		return tag;</span>
+	}
+
+	@Override
+	public Iterable&lt;DeclarationNode&gt; getDeclarations() {
+<span class="nc" id="L344">		return entity.getDeclarations();</span>
+	}
+
+	@Override
+	public DeclarationNode getFirstDeclaration() {
+<span class="nc" id="L349">		return entity.getFirstDeclaration();</span>
+	}
+
+	@Override
+	public int getNumDeclarations() {
+<span class="nc" id="L354">		return entity.getNumDeclarations();</span>
+	}
+
+	@Override
+	public DeclarationNode getDeclaration(int index) {
+<span class="nc" id="L359">		return entity.getDeclaration(index);</span>
+	}
+
+	@Override
+	public void addDeclaration(DeclarationNode declaration) {
+<span class="nc" id="L364">		entity.addDeclaration(declaration);</span>
+<span class="nc" id="L365">	}</span>
+
+	@Override
+	public DeclarationNode getDefinition() {
+<span class="nc" id="L369">		return entity.getDefinition();</span>
+	}
+
+	@Override
+	public void setDefinition(DeclarationNode declaration) {
+<span class="nc" id="L374">		entity.setDefinition(declaration);</span>
+<span class="nc" id="L375">	}</span>
+
+	@Override
+	public ProgramEntity.LinkageKind getLinkage() {
+<span class="nc" id="L379">		return entity.getLinkage();</span>
+	}
+
+	@Override
+	public void setLinkage(ProgramEntity.LinkageKind linkage) {
+<span class="nc bnc" id="L384" title="All 2 branches missed.">		if (linkage != ProgramEntity.LinkageKind.NONE)</span>
+<span class="nc" id="L385">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L386">					&quot;Linkage of structure or union must be NONE&quot;);</span>
+<span class="nc" id="L387">	}</span>
+
+	@Override
+	public StructureOrUnionType getType() {
+<span class="nc" id="L391">		return this;</span>
+	}
+
+	@Override
+	public void setType(Type type) {
+<span class="nc bnc" id="L396" title="All 2 branches missed.">		if (type != this)</span>
+<span class="nc" id="L397">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L398">					&quot;Cannot change type of structure or union&quot;);</span>
+<span class="nc" id="L399">	}</span>
+
+	@Override
+	public boolean isSystem() {
+<span class="nc" id="L403">		return entity.isSystem();</span>
+	}
+
+	@Override
+	public void setIsSystem(boolean value) {
+<span class="nc" id="L408">		entity.setIsSystem(value);</span>
+<span class="nc" id="L409">	}</span>
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L413" title="All 2 branches missed.">		if (obj instanceof CommonStructureOrUnionType) {</span>
+<span class="nc" id="L414">			CommonStructureOrUnionType that = (CommonStructureOrUnionType) obj;</span>
+
+<span class="nc bnc" id="L416" title="All 2 branches missed.">			return isStruct == that.isStruct</span>
+<span class="nc bnc" id="L417" title="All 4 branches missed.">					&amp;&amp; ((tag == null &amp;&amp; that.tag == null) || tag</span>
+<span class="nc bnc" id="L418" title="All 4 branches missed.">							.equals(that.tag)) &amp;&amp; key.equals(that.key);</span>
+		}
+<span class="nc" id="L420">		return false;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L425">		int result = classCode ^ key.hashCode();</span>
+
+<span class="nc bnc" id="L427" title="All 2 branches missed.">		if (tag != null)</span>
+<span class="nc" id="L428">			result ^= tag.hashCode();</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">		if (!isStruct)</span>
+<span class="nc" id="L430">			result ^= 96394720;</span>
+<span class="nc" id="L431">		return result;</span>
+	}
+
+	@Override
+	protected boolean similar(Type other, boolean equivalent,
+			Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L437" title="All 2 branches missed.">		return equivalent ? equivalentTo(other, seen) : compatibleWith(other,</span>
+<span class="nc" id="L438">				seen);</span>
+	}
+
+	@Override
+	public boolean isConstantQualified() {
+<span class="nc bnc" id="L443" title="All 2 branches missed.">		if (fields != null)</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">			for (Field field : this.fields) {</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">				if (field.getType().isConstantQualified())</span>
+<span class="nc" id="L446">					return true;</span>
+			}
+<span class="nc" id="L448">		return false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

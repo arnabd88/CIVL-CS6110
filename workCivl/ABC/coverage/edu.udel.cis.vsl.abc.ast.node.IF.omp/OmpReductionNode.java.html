@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OmpReductionNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.omp</a> &gt; <span class="el_source">OmpReductionNode.java</span></div><h1>OmpReductionNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.omp;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+
+/**
+ * This represents an OpenMP reduction clause. The syntax of a reduction clause
+ * is as follows:
+ * 
+ * &lt;pre&gt;
+ * reduction(reduction-identifier:list)
+ * where reduction-identifier is either an identifier or
+ * one of the following operators:
+ * +, -, *, &amp;, |, ^, &amp;&amp; and ||.
+ * &lt;/pre&gt;
+ * 
+ * @author Manchun Zheng
+ * 
+ */
+public interface OmpReductionNode extends ASTNode {
+
+	/**
+	 * The kind of this reduction clause, either
+	 * &lt;ul&gt;
+	 * &lt;li&gt;OPERATOR if the reduction-identifier is one of the following:+, -, *,
+	 * &amp;, |, ^, &amp;&amp; and ||;&lt;/li&gt; or
+	 * &lt;li&gt;FUNCTION if the reduction-identifier is an identifier.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @author Manchun Zheng
+	 * 
+	 */
+<span class="nc" id="L34">	public enum OmpReductionNodeKind {</span>
+<span class="nc" id="L35">		FUNCTION, OPERATOR</span>
+	}
+
+	/**
+	 * Returns the kind of this reduction clause.
+	 * 
+	 * @return the kind of this reduction clause.
+	 */
+	OmpReductionNodeKind ompReductionOperatorNodeKind();
+
+	/**
+	 * Returns the list of variables associated with this clause.
+	 * 
+	 * @return the list of variables associated with this clause.
+	 */
+	SequenceNode&lt;IdentifierExpressionNode&gt; variables();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

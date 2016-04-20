@@ -1,0 +1,122 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Executor Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Executor@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Executor}}
+
+
+Contracts System Specification\+:~\newline
+  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Executor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Executor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a7d5b351fe40ec72e2f2dc7942b76427f}{}{\bfseries Contract\+Executor} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} state\+Factory, Error\+Log log, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{Library\+Executor\+Loader} loader, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator}{Contract\+Evaluator} evaluator, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} symbolic\+Analyzer, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} error\+Logger, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator}{Contract\+Condition\+Generator} condition\+Generator)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a7d5b351fe40ec72e2f2dc7942b76427f}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a751e0341eabb8965b544dd0f1cdfa26e}{execute} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} transition)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Returns the state that results from executing the statement, or null if path condition becomes unsatisfiable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_ad8b70c7a0a48adfff3e67e3d62a658ec}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_ad8b70c7a0a48adfff3e67e3d62a658ec}{execute\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_ad8b70c7a0a48adfff3e67e3d62a658ec}
+
+\begin{DoxyCompactList}\small\item\em Override for using a different method to execute a function call if and only if the callee function is a contracted function. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a6cbe196a67b85202ddefe1bb729bb976}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a6cbe196a67b85202ddefe1bb729bb976}{assign} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, Symbolic\+Expression pointer, Symbolic\+Expression value, boolean is\+Initialization)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a6cbe196a67b85202ddefe1bb729bb976}
+
+\begin{DoxyCompactList}\small\item\em Override for let it recognize a pointer that cannot be proved as valid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Contracts System Specification\+:~\newline
+ 
+
+\hyperlink{structA}{A} contracted function is a function declared with contracts. \hyperlink{structA}{A} contracted function can be called in a contracts system regardless of the existence of the definition.
+
+\hyperlink{structA}{A} non-\/contracted function is a function without contracts. \hyperlink{structA}{A} non-\/contracted function can only be called when it is defined. i.\+e. there is a definition for the function.
+
+For contracted functions, the definition will be ignored whenever it is called. For defined non-\/contracted functions, the contracts system will do symbolic execution for calls on them. 
+
+How contracts are used in execution\+: 
+\begin{DoxyEnumerate}
+\item Beginning of the verifying function\+: 
+
+Pointers are concretized; Requirements are evaluated and added into the path condition; Remote expressions are derived. 
+
+
+\item 
+
+Ending of the verifying function\+: Evaluating ensurances to boolean results; Frees pointers. Remote expressions are evaluated. 
+
+
+\item 
+
+Right before the calling of the verifying function\+: Evaluating requirements to boolean results. Remote expressions are evaluated. 
+
+
+\item 
+
+Right after the calling of the verifying function\+: Ensurances are evaluated and added into the path conditions. Remote expressions are derived. 
+
+
+\end{DoxyEnumerate}
+
+\begin{DoxyAuthor}{Author}
+ziqing 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a751e0341eabb8965b544dd0f1cdfa26e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Executor}!execute@{execute}}
+\index{execute@{execute}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::contract\+::\+Contract\+Executor}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+contract.\+Contract\+Executor.\+execute (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Transition}}]{transition}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor_a751e0341eabb8965b544dd0f1cdfa26e}
+
+
+Returns the state that results from executing the statement, or null if path condition becomes unsatisfiable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the state that the transition emanates from \\
+\hline
+{\em pid} & the P\+I\+D of the process that the transition \\
+\hline
+{\em transition} & a deterministic transition to be executed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The state after the transition is executed. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor_ac036070596258e5ccf9320a03a0ef77f}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Executor}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/contract/Contract\+Executor.\+java\end{DoxyCompactItemize}

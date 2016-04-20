@@ -1,0 +1,17 @@
+/* This file is to demonstrate the file I/O function printf.
+ * You can use the commandline option -enablePrintf=false to
+ * disable the printing. 
+ * 
+ * This program has no violation.
+ */
+
+#include<stdio.h>
+
+void main(){
+    int a = 9;
+    int b = a + 10;
+    
+    printf("%% a is %d, b is %d\n", a, b);
+    a = a + 1;
+    printf("a is %d.\n", a);
+}

@@ -1,0 +1,33 @@
+#include <string.h>
+#include <stdlib.h>
+#include <civlc.cvh>
+
+int main(){
+
+  char * strin = (char*)$malloc($root, sizeof(char) * 4);
+  //copy by strcpy()
+  char * cpystr = (char*)$malloc($root, sizeof(char) * 4);
+  //copy by memcpy()
+  char * memstr = (char*)$malloc($root, sizeof(char) * 4);
+  int ret;
+
+  strin[0]='a';
+  strin[1]='d';
+  strin[2]='d';
+  strin[3] = 0;
+
+  strcpy(cpystr, strin);
+  memcpy(memstr, strin, (sizeof(char) * 4));
+
+  ret = strcmp(cpystr, strin);
+  $assert((ret == 0));
+  ret = strcmp(memstr, strin);
+  $assert((ret == 0));
+  // Following statements are waiting for int2char bug fixing
+  //  ret = strcmp("add", strin);
+  //  $assert((ret == 0));
+  $free(strin);
+  $free(cpystr);
+  $free(memstr);
+  return 0;
+}

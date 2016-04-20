@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MappedIntegerValue.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.value.common</a> &gt; <span class="el_source">MappedIntegerValue.java</span></div><h1>MappedIntegerValue.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.value.common;
+
+import java.math.BigInteger;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.value.IF.ValueFactory.Answer;
+
+/**
+ * An instance of this class represents an integer value that results from
+ * mapping a mathematical integer into an integer type. The Standard specifies
+ * that for unsigned integer types, the mathematical integer will be reduced
+ * modulo MAX+1 (where MAX is the largest value representable in that type). For
+ * unsigned types, if the mathematical integer does not fit into the range of
+ * the type, the behavior is undefined.
+ * 
+ * @author siegel
+ * 
+ */
+public class MappedIntegerValue extends CommonValue {
+
+<span class="nc" id="L21">	private final static int classCode = MappedIntegerValue.class.hashCode();</span>
+
+	private BigInteger intValue;
+
+	public MappedIntegerValue(IntegerType type, BigInteger intValue) {
+<span class="nc" id="L26">		super(type);</span>
+<span class="nc" id="L27">		this.intValue = intValue;</span>
+<span class="nc" id="L28">	}</span>
+
+	@Override
+	public Answer isZero() {
+<span class="nc" id="L32">		return Answer.MAYBE;</span>
+	}
+
+	public BigInteger getIntValue() {
+<span class="nc" id="L36">		return intValue;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L41">		return &quot;(&quot; + getType() + &quot;)&quot; + intValue;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L46">		return classCode + getType().hashCode() + intValue.hashCode();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

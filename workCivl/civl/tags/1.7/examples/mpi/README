@@ -1,0 +1,14 @@
+These are some MPI programs.  Our goal is to get civl to verify these 
+exactly as they are, translating them automatically to CIVL-C.  
+
+routines directory contains simple mpi examples which are mainly used
+to test our implementation of mpi routines
+
+dev directory contains mpi examples that are under development
+
+seq directory contains sequential versions of the corresponding
+mpi examples.
+
+
+
+

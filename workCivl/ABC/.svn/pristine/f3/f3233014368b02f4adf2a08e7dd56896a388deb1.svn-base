@@ -1,0 +1,120 @@
+                    ABC Installation Instructions
+
+======================= Installation from source =======================
+
+1. Install a Java 7 SDK if you have not already.  Go to
+http://www.oracle.com/technetwork/java/javase/downloads/ for the
+latest from Oracle.  On linux, you can optionally sudo apt-get install
+openjdk-7-jdk.
+
+2. Install Apache ant, if you don't already have it
+(http://ant.apache.org).
+
+3. Download the tgz archive of VSL dependencies from 
+   http://vsl.cis.udel.edu/lib/tools/vsl_depend,
+   choosing the right .tgz according to your platform:
+	
+	vsl_linux32-1.0.tgz	- 32-bit linux
+	vsl_linux64-1.0.tgz	- 64-bit linux
+	vsl_osx64-1.0.tgz	- 64-bit osx
+	
+   Unzip the .tgz file and you will have the folder vsl.
+   Move vsl to /opt (you might need to use sudo for this.
+   Also, if you don't already have a directory called /opt, 
+   you will have to create it with mkdir /opt).
+
+   Suppose that you put the .tgz file (or .tar file if your browser
+   unzipped it automatically to a .tar file) in the directory $Download.
+   You can use the following commands:
+
+   		$ cd $Download
+   		$ tar xzf YourTgzOrTarFile vsl
+   		$ sudo mv vsl /opt
+
+   Now you can type "ls /opt/vsl", and the output should be
+
+   		README.txt    lib        licenses    src
+
+4. svn checkout svn://vsl.cis.udel.edu/abc/trunk abc
+
+5. cd abc
+
+6.  Look at build_default.properties and see if the paths
+are correct for your system.  If they are not, you will have
+to create a file called build.properties (in the same directory),
+copying the content of build_default.properties, but correcting
+values as necessary.  For example, if your VSL dependencies path
+is not in /opt/vsl, then you need to do this,
+modifying the value of entry "root" to be the path to your
+VSL dependencies folder.  Similarly, if the location of sarl.jar
+is not as specified in build_default.properties (the assumption
+is it will be found in directory
+Users/${user.name}/Documents/workspace) then you will
+have to do this,  correcting the value of workspace or sarl.jar.
+
+7. Type "ant" and everything should build without warnings or errors
+and produce abc.jar.  Type "ant test" to run a JUnit test suite.  All
+tests should pass.
+
+If there are any problems, email siegel at udel dot edu.
+
+
+============== Installation from source using Eclipse ==================
+
+1. Start with Eclipse IDE for Java/EE developers, available at
+http://www.eclipse.org/downloads/
+
+2. Do steps 1-3 from above if you have not already.
+
+3. Install an SVN plugin in Eclipse (such as Subversive) if you have
+not already.
+
+4. Install the symbolic algebra and reasoning library SARL.
+In Eclipse, select New Project...from SVN, use the archive 
+svn://vsl.cis.udel.edu/sarl. After entering that, open it 
+up and select the "trunk". After checking out trunk, name 
+the project "SARL". Then follow the instructions in the INSTALL 
+file for Eclipse installation. Build the sarl.jar from within 
+Eclipse by right-clicking (or ctrl-clicking) on the build.xml 
+file and selecting Run As->Ant Build.
+
+5. From within Eclipse, select New Project...from SVN.  The archive is
+svn://vsl.cis.udel.edu/abc.  After entering that, open it up and
+select the "trunk". (It is simplest to just check out the trunk for
+the Eclipse project.)
+
+6. Check out the trunk, and create the project using the New Java
+Project Wizard as usual, naming it "ABC".  The .project, .classpath,
+and other Eclipse meta-data are already in the SVN archive, saving you
+a bunch of work.
+
+7. Navigate to Preferences -> Java -> Build Path -> ClassPath 
+Variables, and then select New to create a classpath variable VSL, 
+and specify its value to be /opt/vsl. Navigate to Preferences -> 
+Run/Debug -> String Substitution -> New, and then define an entry 
+vsl_lib and set its value to be /opt/vsl/lib.
+
+8. Perform Step 6 from the "Installation from Source"
+instructions above.
+
+9. Right click (or ctrl-click on Mac) on build.xml and select
+Run As->Ant Build.  This runs the ant script, which invokes ANTLR
+to build the Java source files from the grammar files.  It also
+compiles all the Java source files and builds the jar.  (The jar
+is not used from within Eclipse, but is used when packaging
+and releasing ABC.)  You may have to "Refresh" the entire project
+after this completes, and/or "Clean" the project.
+
+This step only has to be done once, unless the grammar files change,
+or you want to create an up-to-date jar.   Otherwise, Eclipse
+automatically compiles the Java source whenever it changes.  
+
+10. To run the JUnit tests through Eclipse: Select Run->Run Configurations...
+Create a new JUnit configuration called "ABC Tests".  Select
+"Run all tests in the selected project..." and navigate to the "test"
+folder in the ABC project.  Under the Arguments tab, type "-ea"
+(without the quotes) into the VM arguments field, to enable assertion
+checking.  Under the Environment tab, create an entry DYLD_LIBRARY_PATH (OS X) 
+or LD_LIBRARY_PATH (linux), specify its value by clicking Variables and choose 
+vsl_lib from the list, or you may type ${vsl_lib} in the value entry.   
+Click "Run" to run the tests.

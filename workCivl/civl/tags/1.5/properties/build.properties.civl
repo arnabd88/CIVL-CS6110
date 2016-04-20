@@ -1,0 +1,10 @@
+# Configuration for civl virtual machine
+root=/opt/vsl
+hamcrest.jar=${root}/lib/hamcrest-core.jar
+jacoco.jar=${root}/src/jacoco/lib/jacocoant.jar
+junit.jar=${root}/lib/junit.jar
+antlr.jar=${root}/lib/antlr-4.4-complete.jar
+antlr.runtime.jar=${root}/lib/antlr-runtime-4.4.jar
+sarl.jar=/opt/repos/sarl/trunk/sarl.jar
+gmc.jar=/opt/repos/gmc/trunk/gmc.jar
+abc.jar=/opt/repos/abc/trunk/abc.jar

@@ -1,0 +1,16 @@
+#include<civlc.h>
+
+typedef struct Interval {
+  int left;
+  int right;
+} Interval;
+
+void main() {
+  Interval result;
+  
+  result.left = 0;
+  result.right = 1;
+  
+  $assert result.left == 0;
+  $assert result.right == 1;
+}

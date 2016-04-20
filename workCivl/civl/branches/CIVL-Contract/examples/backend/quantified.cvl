@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <civlc.cvh>
+
+$input int n;
+$assume (n>=0);
+$input int a[n];
+$input int b[n];
+
+void main(){
+  $assert(
+             ($forall {int i | i > 0 && i < n} a[i])
+              && ($forall {int i | i >= 1 && i <= 5} b[i])
+    );
+}
+
+

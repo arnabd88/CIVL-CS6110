@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonOrdinaryLabelNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.label</a> &gt; <span class="el_source">CommonOrdinaryLabelNode.java</span></div><h1>CommonOrdinaryLabelNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.label;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Label;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.OrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.common.declaration.CommonDeclarationNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonOrdinaryLabelNode extends CommonDeclarationNode implements
+		OrdinaryLabelNode {
+
+	private Function function;
+
+	private StatementNode statement;
+
+	public CommonOrdinaryLabelNode(Source source, IdentifierNode name) {
+<span class="nc" id="L21">		super(source, name);</span>
+<span class="nc" id="L22">	}</span>
+
+	@Override
+	public Label getEntity() {
+<span class="nc" id="L26">		return (Label) super.getEntity();</span>
+	}
+
+	@Override
+	public Function getFunction() {
+<span class="nc" id="L31">		return function;</span>
+	}
+
+	@Override
+	public void setFunction(Function function) {
+<span class="nc" id="L36">		this.function = function;</span>
+<span class="nc" id="L37">	}</span>
+
+	@Override
+	public StatementNode getStatement() {
+<span class="nc" id="L41">		return statement;</span>
+	}
+
+	@Override
+	public void setStatement(StatementNode statement) {
+<span class="nc" id="L46">		this.statement = statement;</span>
+<span class="nc" id="L47">	}</span>
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L51">		out.print(&quot;Label&quot;);</span>
+<span class="nc" id="L52">	}</span>
+
+	public String getName() {
+<span class="nc" id="L55">		return getIdentifier().name();</span>
+	}
+
+	@Override
+	public OrdinaryLabelNode copy() {
+<span class="nc" id="L60">		return new CommonOrdinaryLabelNode(getSource(),</span>
+<span class="nc" id="L61">				duplicate(getIdentifier()));</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L66">		return NodeKind.ORDINARY_LABEL;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

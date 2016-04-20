@@ -1,0 +1,143 @@
+/* This header file contains the data types and function prototypes for 
+ * communication.
+ */
+
+#ifndef __COMM__
+#define __COMM__
+
+/* includes civlc.cvh because this library references $scope */
+#include <civlc.cvh>
+#include <bundle.cvh>
+/* *********************** Constants *********************** */
+
+/* Like MPI_ANY_SOURCE, can be used in probe, seek, dequeue
+ * to match a message with any source */
+#define $COMM_ANY_SOURCE -1
+
+/* Like $COMM_ANY_SOURCE above, except for tags */
+#define $COMM_ANY_TAG -2
+
+/* ********************************* Types ********************************* */
+
+/* The message type, declared here as an incomplete
+ * struct type, which is all you need for constructing
+ * the AST.  For the complete version, see the CIVL
+ * project.
+ */
+typedef struct $message {
+  int source;
+  int dest;
+  int tag;
+  $bundle data;
+  int size;
+} $message;
+
+/* A datatype representing a queue of messages.  All message
+ * data is encapsulated inside this value; no external allocation
+ * is used. */ 
+typedef struct $queue $queue;
+ 
+/* A global communicator datatype which must be operated by local communicators.
+ * This communicator type has the same meaning as the communicator type in MPI
+ * standards*/
+typedef struct $gcomm * $gcomm;
+
+/* A datatype representing a local communicator which is used for 
+ * operating global communicators. The local communicator type has 
+ * a handle of a global communicator. This type represents for 
+ * a set of processes which have ranks in common.
+ */
+typedef struct $comm * $comm;
+
+/* ************************* Functions of Message ************************** */
+
+/* creates a new message, copying data from the specified buffer */ 
+$message $message_pack(int source, int dest, int tag, void *data, int size);
+  
+/* returns the message source */ 
+int $message_source($message message);
+
+/* returns the message tag */
+int $message_tag($message message) ;
+
+/* returns the message destination */ 
+int $message_dest($message message) ;
+
+/* returns the message size */ 
+int $message_size($message message); 
+
+/* transfers message data to buf, throwing exception if message
+ * size exceeds specified size */ 
+void $message_unpack($message message, void *buf, int size);
+
+/* ************************** Functions of $gcomm ************************** */
+
+/* Creates a new global communicator object and returns a handle to it.
+ * The global communicator will have size communication places.  The
+ * global communicator defines a communication "universe" and encompasses
+ * message buffers and all other components of the state associated to
+ * message-passing.  The new object will be allocated in the given scope. */
+$system $gcomm $gcomm_create($scope scope, int size);
+
+/* De-allocation a __gcomm__ object. Returns the number of messages
+ * still remaining in the communicator. 
+ *
+ * Parameter gcomm: the  __gcomm__ object that is going to be de-allocated.
+ * Parameter junkMsgs: Output argument, a pointer to a CIVL-C sequence ($seq) 
+ * of $messages.
+ */
+$system int $gcomm_destroy($gcomm gcomm, void * junkMsgs);
+
+/* Returns $true iff gcomm points to a valid object. */
+//_Bool $gcomm_defined($gcomm gcomm);
+
+$system void $gcomm_dup($comm comm, $comm newcomm);
+
+/* *************************** Functions of $comm ************************** */
+
+/* Creates a new local communicator object and returns a handle to it.
+ * The new communicator will be affiliated with the specified global
+ * communicator.   This local communicator handle will be used as an
+ * argument in most message-passing functions.  The place must be in
+ * [0,size-1] and specifies the place in the global communication universe
+ * that will be occupied by the local communicator.  The local communicator
+ * handle may be used by more than one process, but all of those
+ * processes will be viewed as occupying the same place.
+ * Only one call to $comm_create may occur for each gcomm-place pair.
+ * The new object will be allocated in the given scope. */
+$system $comm $comm_create($scope scope, $gcomm gcomm, int place);
+
+/* De-allocation a __comm__ object */
+$system void $comm_destroy($comm comm);
+
+/* Returns the size (number of places) in the global communicator associated
+ * to the given comm. */
+$system int $comm_size($comm comm);
+
+/* Returns the place of the local communicator.  This is the same as the
+ * place argument used to create the local communicator. */
+$system int $comm_place($comm comm);
+
+/* Adds the message to the appropriate message queue in the communication
+ * universe specified by the comm.  The source of the message must equal
+ * the place of the comm. */
+$system void $comm_enqueue($comm comm, $message message);
+
+/* Returns true iff a matching message exists in the communication universe
+ * specified by the comm.  A message matches the arguments if the destination
+ * of the message is the place of the comm, and the sources and tags match. */
+$system _Bool $comm_probe($comm comm, int source, int tag);
+
+/* Finds the first matching message and returns it without modifying
+ * the communication universe.  If no matching message exists, returns a message
+ * with source, dest, and tag all negative. */
+$system $message $comm_seek($comm comm, int source, int tag);
+
+/* Finds the first matching message, removes it from the communicator,
+ * and returns the message */
+$system $message $comm_dequeue($comm comm, int source, int tag);
+
+/* Returns $true iff comm points to a valid object. */
+//_Bool $comm_defined($comm comm);
+
+#endif

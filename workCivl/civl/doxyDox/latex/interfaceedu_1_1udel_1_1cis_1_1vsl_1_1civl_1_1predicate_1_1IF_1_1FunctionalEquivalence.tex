@@ -1,0 +1,68 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1FunctionalEquivalence}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Functional\+Equivalence Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1FunctionalEquivalence}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Functional\+Equivalence@{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Functional\+Equivalence}}
+
+
+\hyperlink{structA}{A} functional equivalence predicate contains a specification output, which is a set of pairs (pathcondition, output variable map), and is checked at the final state of the program.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Functional\+Equivalence\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=269pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1FunctionalEquivalence__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Functional\+Equivalence\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1FunctionalEquivalence__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Map$<$ Boolean\+Expression, Set$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, Symbolic\+Expression\mbox{[}$\,$\mbox{]}$>$ $>$ $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1FunctionalEquivalence_a8534f6b8bb5226b1a83477eedf638e61}{specification\+Outputs} ()
+\begin{DoxyCompactList}\small\item\em The specification output of this predicate, which is a list of tuples of path condition and a map of (output) variables and their values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} functional equivalence predicate contains a specification output, which is a set of pairs (pathcondition, output variable map), and is checked at the final state of the program. 
+
+Given a specification and an implementation, the predicate is true if for every final state (p, o) of the implementation, there exists at least one entry (p\textquotesingle{}, o\textquotesingle{}) in the specification output such that p \&\& p\textquotesingle{} -\/$>$ o=o\textquotesingle{}. Formally, suppose the specification output is \{(p0, o0), (p1, o1), ...\}, then the following predicate must be valid\+: p -\/$>$ (p1 \&\& o=o1 $\vert$$\vert$ p2 \&\& o=o2 $\vert$$\vert$ ...).
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1FunctionalEquivalence_a8534f6b8bb5226b1a83477eedf638e61}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+Functional\+Equivalence@{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+Functional\+Equivalence}!specification\+Outputs@{specification\+Outputs}}
+\index{specification\+Outputs@{specification\+Outputs}!edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+Functional\+Equivalence@{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+Functional\+Equivalence}}
+\subsubsection[{specification\+Outputs}]{\setlength{\rightskip}{0pt plus 5cm}Map$<$Boolean\+Expression, Set$<${\bf Pair}$<${\bf State}, Symbolic\+Expression\mbox{[}$\,$\mbox{]}$>$ $>$ $>$ edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Functional\+Equivalence.\+specification\+Outputs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1FunctionalEquivalence_a8534f6b8bb5226b1a83477eedf638e61}
+
+
+The specification output of this predicate, which is a list of tuples of path condition and a map of (output) variables and their values. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonFunctionalEquivalence_ab1e372ede439564a292e73454c05ca8c}{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+Functional\+Equivalence}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/predicate/\+I\+F/Functional\+Equivalence.\+java\end{DoxyCompactItemize}

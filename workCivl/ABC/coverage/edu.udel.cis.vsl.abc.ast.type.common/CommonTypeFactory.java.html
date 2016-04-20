@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonTypeFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonTypeFactory.java</span></div><h1>CommonTypeFactory.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.EnumeratorDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FieldDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArithmeticType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.AtomicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.DomainType;
+import edu.udel.cis.vsl.abc.ast.type.IF.EnumerationType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Enumerator;
+import edu.udel.cis.vsl.abc.ast.type.IF.Field;
+import edu.udel.cis.vsl.abc.ast.type.IF.FloatingType;
+import edu.udel.cis.vsl.abc.ast.type.IF.FloatingType.FloatKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.FunctionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.MemoryType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.PointerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.QualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.SignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType.SignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType.UnsignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.type.IF.UnqualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.UnsignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+
+/**
+ * An implementation of TypeFactory. The Flyweight Pattern is used on Types so
+ * that, to the extent possible, two types will be equal iff they are the same
+ * object.
+ * 
+ * @author siegel
+ * 
+ */
+public class CommonTypeFactory implements TypeFactory {
+
+	/**
+	 * Minimum value of CHAR_BITS, the number of bits for the smallest object
+	 * that is not a bit-field (i.e., one byte).
+	 */
+<span class="fc" id="L59">	public static final BigInteger CHAR_BIT_MIN = new BigInteger(&quot;8&quot;);</span>
+
+<span class="fc" id="L61">	private Map&lt;Type, Type&gt; typeMap = new LinkedHashMap&lt;Type, Type&gt;();</span>
+
+<span class="fc" id="L63">	private ArrayList&lt;Type&gt; typeList = new ArrayList&lt;Type&gt;();</span>
+
+<span class="fc" id="L65">	private ObjectType voidType = null;</span>
+
+<span class="fc" id="L67">	private ObjectType processType = null;</span>
+
+<span class="fc" id="L69">	private ObjectType heapType = null;</span>
+
+<span class="fc" id="L71">	private MemoryType memoryType = null;</span>
+
+<span class="fc" id="L73">	private ObjectType scopeType = null;</span>
+
+<span class="fc" id="L75">	private DomainType domainType = null;</span>
+
+<span class="fc" id="L77">	private ObjectType rangeType = null;</span>
+
+<span class="fc" id="L79">	private UnsignedIntegerType size_t = null, char16_t = null,</span>
+<span class="fc" id="L80">			char32_t = null;</span>
+
+<span class="fc" id="L82">	private SignedIntegerType ptrdiff_t = null;</span>
+
+<span class="fc" id="L84">	private IntegerType wchar_t = null;</span>
+
+<span class="fc" id="L86">	public CommonTypeFactory() {</span>
+
+<span class="fc" id="L88">	}</span>
+
+	private void insert(Type type) {
+<span class="fc" id="L91">		((CommonType) type).setId(typeMap.size());</span>
+<span class="fc" id="L92">		typeMap.put(type, type);</span>
+<span class="fc" id="L93">		typeList.add(type);</span>
+
+		// Debugging:
+
+		// System.out.println(&quot;Adding type: &quot;+type.toString());
+		// System.out.flush();
+
+<span class="fc" id="L100">	}</span>
+
+	private Type canonicalize(Type type) {
+<span class="fc" id="L103">		Type result = typeMap.get(type);</span>
+
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (result == null) {</span>
+<span class="fc" id="L106">			insert(type);</span>
+<span class="fc" id="L107">			return type;</span>
+		} else {
+<span class="nc" id="L109">			return result;</span>
+		}
+	}
+
+	@Override
+	public StandardBasicType basicType(BasicTypeKind kind) {
+		StandardBasicType result;
+
+<span class="pc bpc" id="L117" title="19 of 20 branches missed.">		switch (kind) {</span>
+		case CHAR:
+<span class="fc" id="L119">			result = new CommonCharType();</span>
+<span class="fc" id="L120">			break;</span>
+		case SIGNED_CHAR:
+<span class="nc" id="L122">			result = new CommonStandardSignedIntegerType(</span>
+<span class="nc" id="L123">					SignedIntKind.SIGNED_CHAR);</span>
+<span class="nc" id="L124">			break;</span>
+		case UNSIGNED_CHAR:
+<span class="nc" id="L126">			result = new CommonStandardUnsignedIntegerType(</span>
+<span class="nc" id="L127">					UnsignedIntKind.UNSIGNED_CHAR);</span>
+<span class="nc" id="L128">			break;</span>
+		case SHORT:
+<span class="nc" id="L130">			result = new CommonStandardSignedIntegerType(SignedIntKind.SHORT);</span>
+<span class="nc" id="L131">			break;</span>
+		case UNSIGNED_SHORT:
+<span class="nc" id="L133">			result = new CommonStandardUnsignedIntegerType(</span>
+<span class="nc" id="L134">					UnsignedIntKind.UNSIGNED_SHORT);</span>
+<span class="nc" id="L135">			break;</span>
+		case INT:
+<span class="nc" id="L137">			result = new CommonStandardSignedIntegerType(SignedIntKind.INT);</span>
+<span class="nc" id="L138">			break;</span>
+		case UNSIGNED:
+<span class="nc" id="L140">			result = new CommonStandardUnsignedIntegerType(</span>
+<span class="nc" id="L141">					UnsignedIntKind.UNSIGNED);</span>
+<span class="nc" id="L142">			break;</span>
+		case LONG:
+<span class="nc" id="L144">			result = new CommonStandardSignedIntegerType(SignedIntKind.LONG);</span>
+<span class="nc" id="L145">			break;</span>
+		case UNSIGNED_LONG:
+<span class="nc" id="L147">			result = new CommonStandardUnsignedIntegerType(</span>
+<span class="nc" id="L148">					UnsignedIntKind.UNSIGNED_LONG);</span>
+<span class="nc" id="L149">			break;</span>
+		case LONG_LONG:
+<span class="nc" id="L151">			result = new CommonStandardSignedIntegerType(</span>
+<span class="nc" id="L152">					SignedIntKind.LONG_LONG);</span>
+<span class="nc" id="L153">			break;</span>
+		case UNSIGNED_LONG_LONG:
+<span class="nc" id="L155">			result = new CommonStandardUnsignedIntegerType(</span>
+<span class="nc" id="L156">					UnsignedIntKind.UNSIGNED_LONG_LONG);</span>
+<span class="nc" id="L157">			break;</span>
+		case FLOAT:
+<span class="nc" id="L159">			result = new CommonFloatingType(FloatKind.FLOAT, false);</span>
+<span class="nc" id="L160">			break;</span>
+		case DOUBLE:
+<span class="nc" id="L162">			result = new CommonFloatingType(FloatKind.DOUBLE, false);</span>
+<span class="nc" id="L163">			break;</span>
+		case LONG_DOUBLE:
+<span class="nc" id="L165">			result = new CommonFloatingType(FloatKind.LONG_DOUBLE, false);</span>
+<span class="nc" id="L166">			break;</span>
+		case REAL:
+<span class="nc" id="L168">			result = new CommonFloatingType(FloatKind.REAL, false);</span>
+<span class="nc" id="L169">			break;</span>
+		case BOOL:
+<span class="nc" id="L171">			result = new CommonStandardUnsignedIntegerType(UnsignedIntKind.BOOL);</span>
+<span class="nc" id="L172">			break;</span>
+		case FLOAT_COMPLEX:
+<span class="nc" id="L174">			result = new CommonFloatingType(FloatKind.FLOAT, true);</span>
+<span class="nc" id="L175">			break;</span>
+		case DOUBLE_COMPLEX:
+<span class="nc" id="L177">			result = new CommonFloatingType(FloatKind.DOUBLE, true);</span>
+<span class="nc" id="L178">			break;</span>
+		case LONG_DOUBLE_COMPLEX:
+<span class="nc" id="L180">			result = new CommonFloatingType(FloatKind.LONG_DOUBLE, true);</span>
+<span class="nc" id="L181">			break;</span>
+		default:
+<span class="nc" id="L183">			throw new RuntimeException(&quot;unreachable&quot;);</span>
+		}
+<span class="fc" id="L185">		return (StandardBasicType) canonicalize(result);</span>
+	}
+
+	@Override
+	public StandardSignedIntegerType signedIntegerType(SignedIntKind kind) {
+<span class="fc" id="L190">		return (StandardSignedIntegerType) canonicalize(new CommonStandardSignedIntegerType(</span>
+<span class="fc" id="L191">				kind));</span>
+	}
+
+	@Override
+	public StandardUnsignedIntegerType unsignedIntegerType(UnsignedIntKind kind) {
+<span class="nc" id="L196">		return (StandardUnsignedIntegerType) canonicalize(new CommonStandardUnsignedIntegerType(</span>
+<span class="nc" id="L197">				kind));</span>
+	}
+
+	@Override
+	public FloatingType floatingType(FloatKind kind, boolean isReal) {
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (isReal) {</span>
+<span class="nc bnc" id="L203" title="All 4 branches missed.">			switch (kind) {</span>
+			case LONG_DOUBLE:
+<span class="nc" id="L205">				return (FloatingType) basicType(BasicTypeKind.LONG_DOUBLE);</span>
+			case DOUBLE:
+<span class="nc" id="L207">				return (FloatingType) basicType(BasicTypeKind.DOUBLE);</span>
+			case FLOAT:
+<span class="nc" id="L209">				return (FloatingType) basicType(BasicTypeKind.FLOAT);</span>
+			default:
+<span class="nc" id="L211">				throw new RuntimeException(&quot;unreachable&quot;);</span>
+			}
+		} else {
+<span class="nc bnc" id="L214" title="All 4 branches missed.">			switch (kind) {</span>
+			case LONG_DOUBLE:
+<span class="nc" id="L216">				return (FloatingType) basicType(BasicTypeKind.LONG_DOUBLE_COMPLEX);</span>
+			case DOUBLE:
+<span class="nc" id="L218">				return (FloatingType) basicType(BasicTypeKind.DOUBLE_COMPLEX);</span>
+			case FLOAT:
+<span class="nc" id="L220">				return (FloatingType) basicType(BasicTypeKind.FLOAT_COMPLEX);</span>
+			default:
+<span class="nc" id="L222">				throw new RuntimeException(&quot;unreachable&quot;);</span>
+			}
+		}
+
+	}
+
+	@Override
+	public ObjectType voidType() {
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (voidType == null) {</span>
+<span class="nc" id="L231">			voidType = new CommonVoidType();</span>
+<span class="nc" id="L232">			insert(voidType);</span>
+		}
+<span class="nc" id="L234">		return voidType;</span>
+
+	}
+
+	@Override
+	public PointerType pointerType(Type referencedType) {
+<span class="nc" id="L240">		return (PointerType) canonicalize(new CommonPointerType(referencedType));</span>
+	}
+
+	@Override
+	public AtomicType atomicType(UnqualifiedObjectType baseType) {
+<span class="nc" id="L245">		return (AtomicType) canonicalize(new CommonAtomicType(baseType));</span>
+	}
+
+	@Override
+	public ArrayType incompleteArrayType(ObjectType elementType) {
+<span class="nc" id="L250">		return (ArrayType) canonicalize(new CommonArrayType(elementType, false));</span>
+	}
+
+	@Override
+	public ArrayType unspecifiedVariableLengthArrayType(ObjectType elementType) {
+<span class="nc" id="L255">		return (ArrayType) canonicalize(new CommonArrayType(elementType, true));</span>
+	}
+
+	@Override
+	public ArrayType variableLengthArrayType(ObjectType elementType,
+			ExpressionNode variableSize) {
+<span class="nc" id="L261">		return (ArrayType) canonicalize(new CommonArrayType(elementType,</span>
+<span class="nc" id="L262">				variableSize));</span>
+	}
+
+	@Override
+	public ArrayType arrayType(ObjectType elementType, IntegerValue constantSize) {
+<span class="nc" id="L267">		return (ArrayType) canonicalize(new CommonArrayType(elementType,</span>
+<span class="nc" id="L268">				constantSize));</span>
+	}
+
+	@Override
+	public StructureOrUnionType structureOrUnionType(Object key,
+			boolean isStruct, String tag) {
+<span class="nc" id="L274">		StructureOrUnionType result = new CommonStructureOrUnionType(key, tag,</span>
+<span class="nc" id="L275">				isStruct);</span>
+
+<span class="nc" id="L277">		return (StructureOrUnionType) canonicalize(result);</span>
+	}
+
+	@Override
+	public Field newField(FieldDeclarationNode declaration, ObjectType type,
+			Value bitWidth) {
+<span class="nc" id="L283">		return new CommonField(declaration, type, bitWidth);</span>
+	}
+
+	@Override
+	public EnumerationType enumerationType(Object key, String tag) {
+<span class="nc" id="L288">		EnumerationType result = new CommonEnumerationType(key, tag);</span>
+
+<span class="nc" id="L290">		return (EnumerationType) canonicalize(result);</span>
+	}
+
+	@Override
+	public Enumerator newEnumerator(EnumeratorDeclarationNode declaration,
+			EnumerationType enumeration, Value value) {
+<span class="nc" id="L296">		return new CommonEnumerator(declaration, enumeration, value);</span>
+	}
+
+	@Override
+	public ObjectType rangeType() {
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		if (rangeType == null) {</span>
+<span class="nc" id="L302">			rangeType = new CommonRangeType();</span>
+<span class="nc" id="L303">			insert(rangeType);</span>
+		}
+<span class="nc" id="L305">		return rangeType;</span>
+	}
+
+	@Override
+	public DomainType domainType() {
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (domainType == null) {</span>
+<span class="nc" id="L311">			domainType = new CommonDomainType();</span>
+<span class="nc" id="L312">			insert(domainType);</span>
+		}
+<span class="nc" id="L314">		return domainType;</span>
+	}
+
+	@Override
+	public DomainType domainType(int dimension) {
+<span class="nc" id="L319">		DomainType result = new CommonDomainType(dimension);</span>
+
+<span class="nc" id="L321">		return (DomainType) canonicalize(result);</span>
+	}
+
+	@Override
+	public Type compositeType(Type type1, Type type2) {
+<span class="nc" id="L326">		TypeKind kind = type1.kind();</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (kind == TypeKind.ARRAY)</span>
+<span class="nc" id="L328">			return compositeArrayType((ArrayType) type1, (ArrayType) type2);</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">		else if (kind == TypeKind.FUNCTION)</span>
+<span class="nc" id="L330">			return compositeFunctionType((FunctionType) type1,</span>
+<span class="nc" id="L331">					(FunctionType) type2);</span>
+		else
+<span class="nc" id="L333">			return type1;</span>
+	}
+
+	/**
+	 * 
+	 * &quot;If both types are array types, the following rules are applied: * If one
+	 * type is an array of known constant size, the composite type is an array
+	 * of that size. * Otherwise, if one type is a variable length array whose
+	 * size is specified by an expression that is not evaluated, the behavior is
+	 * undefined. * Otherwise, if one type is a variable length array whose size
+	 * is specified, the composite type is a variable length array of that size.
+	 * * Otherwise, if one type is a variable length array of unspecified size,
+	 * the composite type is a variable length array of unspecified size. *
+	 * Otherwise, both types are arrays of unknown size and the composite type
+	 * is an array of unknown size. The element type of the composite type is
+	 * the composite type of the two element types.&quot;
+	 * 
+	 * I'm not sure why you would not want to evaluate the size expression. It
+	 * seems to refer to this:
+	 * 
+	 * &quot;Where a size expression is part of the operand of a sizeof operator and
+	 * changing the value of the size expression would not affect the result of
+	 * the operator, it is unspecified whether or not the size expression is
+	 * evaluated.&quot;
+	 * 
+	 * I can't think of an example where the changing the size expression would
+	 * not affect the result of the operator.
+	 * 
+	 * @param type1
+	 * @param type2
+	 * @return
+	 */
+	private ArrayType compositeArrayType(ArrayType type1, ArrayType type2) {
+<span class="nc" id="L366">		ObjectType elementType = (ObjectType) compositeType(</span>
+<span class="nc" id="L367">				type1.getElementType(), type2.getElementType());</span>
+<span class="nc" id="L368">		IntegerValue constantSize1 = type1.getConstantSize(), constantSize2;</span>
+		ExpressionNode sizeExpression1, sizeExpression2;
+
+<span class="nc bnc" id="L371" title="All 2 branches missed.">		if (constantSize1 != null)</span>
+<span class="nc" id="L372">			return arrayType(elementType, constantSize1);</span>
+<span class="nc" id="L373">		constantSize2 = type2.getConstantSize();</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">		if (constantSize2 != null) {</span>
+<span class="nc" id="L375">			return arrayType(elementType, constantSize2);</span>
+		}
+<span class="nc" id="L377">		sizeExpression1 = type1.getVariableSize();</span>
+<span class="nc bnc" id="L378" title="All 2 branches missed.">		if (sizeExpression1 != null)</span>
+<span class="nc" id="L379">			return variableLengthArrayType(elementType, sizeExpression1);</span>
+<span class="nc" id="L380">		sizeExpression2 = type2.getVariableSize();</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">		if (sizeExpression2 != null)</span>
+<span class="nc" id="L382">			return variableLengthArrayType(elementType, sizeExpression2);</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">		if (type1.hasUnspecifiedVariableLength()</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">				|| type2.hasUnspecifiedVariableLength())</span>
+<span class="nc" id="L385">			return unspecifiedVariableLengthArrayType(elementType);</span>
+<span class="nc" id="L386">		return incompleteArrayType(elementType);</span>
+	}
+
+	private ObjectType returnType(FunctionType type1, FunctionType type2) {
+<span class="nc" id="L390">		return (ObjectType) compositeType(type1.getReturnType(),</span>
+<span class="nc" id="L391">				type2.getReturnType());</span>
+	}
+
+	private FunctionType extractParameterTypes(FunctionType type,
+			ObjectType returnType) {
+<span class="nc" id="L396">		return functionType(returnType, type.fromIdentifierList(),</span>
+<span class="nc" id="L397">				type.getParameterTypes(), type.hasVariableArgs());</span>
+	}
+
+	private FunctionType merge(FunctionType type1, FunctionType type2) {
+<span class="nc" id="L401">		List&lt;ObjectType&gt; parameterTypes = new LinkedList&lt;ObjectType&gt;();</span>
+<span class="nc" id="L402">		int numParameters = type1.getNumParameters();</span>
+
+<span class="nc bnc" id="L404" title="All 2 branches missed.">		for (int i = 0; i &lt; numParameters; i++)</span>
+<span class="nc" id="L405">			parameterTypes.add((ObjectType) compositeType(</span>
+<span class="nc" id="L406">					type1.getParameterType(i), type2.getParameterType(i)));</span>
+<span class="nc" id="L407">		return functionType(returnType(type1, type2),</span>
+<span class="nc" id="L408">				type1.fromIdentifierList(), parameterTypes,</span>
+<span class="nc" id="L409">				type1.hasVariableArgs());</span>
+	}
+
+	/**
+	 * &quot;If only one type is a function type with a parameter type list (a
+	 * function prototype), the composite type is a function prototype with the
+	 * parameter type list.&quot;
+	 * 
+	 * &quot;If both types are function types with parameter type lists, the type of
+	 * each parameter in the composite parameter type list is the composite type
+	 * of the corresponding parameters.&quot;
+	 * 
+	 * I assume the return type is the composite type of the two return types.
+	 * 
+	 * @param type1
+	 *            a function type
+	 * @param type2
+	 *            a function type compatible with type1
+	 * @return a composite type
+	 */
+	private FunctionType compositeFunctionType(FunctionType type1,
+			FunctionType type2) {
+<span class="nc bnc" id="L431" title="All 4 branches missed.">		if (!type1.fromIdentifierList() &amp;&amp; type2.fromIdentifierList())</span>
+<span class="nc" id="L432">			return extractParameterTypes(type1, returnType(type1, type2));</span>
+<span class="nc bnc" id="L433" title="All 4 branches missed.">		if (!type2.fromIdentifierList() &amp;&amp; type1.fromIdentifierList())</span>
+<span class="nc" id="L434">			return extractParameterTypes(type2, returnType(type1, type2));</span>
+<span class="nc bnc" id="L435" title="All 4 branches missed.">		if (!type1.fromIdentifierList() &amp;&amp; !type2.fromIdentifierList())</span>
+<span class="nc" id="L436">			return merge(type1, type2);</span>
+<span class="nc bnc" id="L437" title="All 4 branches missed.">		if (!type1.parametersKnown() &amp;&amp; !type2.parametersKnown())</span>
+<span class="nc" id="L438">			return functionType(returnType(type1, type2));</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">		if (type1.parametersKnown())</span>
+<span class="nc" id="L440">			return extractParameterTypes(type1, returnType(type1, type2));</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">		if (type2.parametersKnown())</span>
+<span class="nc" id="L442">			return extractParameterTypes(type2, returnType(type1, type2));</span>
+<span class="nc" id="L443">		return null;</span>
+	}
+
+	@Override
+	public FunctionType functionType(ObjectType returnType) {
+<span class="nc" id="L448">		return (FunctionType) canonicalize(new CommonFunctionType(returnType));</span>
+	}
+
+	@Override
+	public FunctionType functionType(ObjectType returnType,
+			boolean fromIdentifierList, Iterable&lt;ObjectType&gt; parameterTypes,
+			boolean hasVariableArgs) {
+<span class="nc" id="L455">		return (FunctionType) canonicalize(new CommonFunctionType(returnType,</span>
+<span class="nc" id="L456">				fromIdentifierList, parameterTypes, hasVariableArgs));</span>
+	}
+
+	@Override
+	public QualifiedObjectType qualifiedType(UnqualifiedObjectType baseType,
+			boolean constQualified, boolean volatileQualified,
+			boolean restrictQualified, boolean inputQualified,
+			boolean outputQualified) {
+<span class="nc" id="L464">		return (QualifiedObjectType) canonicalize(new CommonQualifiedObjectType(</span>
+<span class="nc" id="L465">				baseType, constQualified, volatileQualified, restrictQualified,</span>
+<span class="nc" id="L466">				inputQualified, outputQualified));</span>
+	}
+
+	@Override
+	public ObjectType qualify(ObjectType startType, boolean constQualified,
+			boolean volatileQualified, boolean restrictQualified,
+			boolean inputQualified, boolean outputQualified) {
+<span class="nc bnc" id="L473" title="All 6 branches missed.">		if (!constQualified &amp;&amp; !volatileQualified &amp;&amp; !restrictQualified)</span>
+<span class="nc" id="L474">			return startType;</span>
+<span class="nc bnc" id="L475" title="All 2 branches missed.">		if (startType.kind() == TypeKind.QUALIFIED) {</span>
+<span class="nc" id="L476">			QualifiedObjectType qualifiedType = (QualifiedObjectType) startType;</span>
+<span class="nc" id="L477">			UnqualifiedObjectType unqualifiedType = qualifiedType.getBaseType();</span>
+
+<span class="nc bnc" id="L479" title="All 2 branches missed.">			return qualifiedType(unqualifiedType, constQualified</span>
+<span class="nc bnc" id="L480" title="All 4 branches missed.">					|| qualifiedType.isConstQualified(), volatileQualified</span>
+<span class="nc bnc" id="L481" title="All 4 branches missed.">					|| qualifiedType.isVolatileQualified(), restrictQualified</span>
+<span class="nc bnc" id="L482" title="All 4 branches missed.">					|| qualifiedType.isRestrictQualified(), inputQualified</span>
+<span class="nc bnc" id="L483" title="All 4 branches missed.">					|| qualifiedType.isInputQualified(), outputQualified</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">					|| qualifiedType.isOutputQualified());</span>
+		}
+<span class="nc" id="L486">		return qualifiedType((UnqualifiedObjectType) startType, constQualified,</span>
+<span class="nc" id="L487">				volatileQualified, restrictQualified, inputQualified,</span>
+<span class="nc" id="L488">				outputQualified);</span>
+	}
+
+	@Override
+	public ObjectType qualify(ObjectType startType, boolean atomic,
+			boolean constQualified, boolean volatileQualified,
+			boolean restrictQualified, boolean inputQualified,
+			boolean outputQualified) {
+<span class="nc" id="L496">		boolean change = false;</span>
+		UnqualifiedObjectType baseType;
+
+<span class="nc bnc" id="L499" title="All 2 branches missed.">		if (startType instanceof QualifiedObjectType) {</span>
+<span class="nc" id="L500">			QualifiedObjectType qualifiedType = (QualifiedObjectType) startType;</span>
+
+<span class="nc" id="L502">			baseType = qualifiedType.getBaseType();</span>
+<span class="nc bnc" id="L503" title="All 2 branches missed.">			if (qualifiedType.isConstQualified())</span>
+<span class="nc" id="L504">				constQualified = true;</span>
+<span class="nc bnc" id="L505" title="All 2 branches missed.">			else if (constQualified)</span>
+<span class="nc" id="L506">				change = true;</span>
+<span class="nc bnc" id="L507" title="All 2 branches missed.">			if (qualifiedType.isVolatileQualified())</span>
+<span class="nc" id="L508">				volatileQualified = true;</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">			else if (volatileQualified)</span>
+<span class="nc" id="L510">				change = true;</span>
+<span class="nc bnc" id="L511" title="All 2 branches missed.">			if (qualifiedType.isRestrictQualified())</span>
+<span class="nc" id="L512">				restrictQualified = true;</span>
+<span class="nc bnc" id="L513" title="All 2 branches missed.">			else if (restrictQualified)</span>
+<span class="nc" id="L514">				change = true;</span>
+<span class="nc bnc" id="L515" title="All 2 branches missed.">			if (qualifiedType.isInputQualified())</span>
+<span class="nc" id="L516">				inputQualified = true;</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">			else if (inputQualified)</span>
+<span class="nc" id="L518">				change = true;</span>
+<span class="nc bnc" id="L519" title="All 2 branches missed.">			if (qualifiedType.isOutputQualified())</span>
+<span class="nc" id="L520">				outputQualified = true;</span>
+<span class="nc bnc" id="L521" title="All 2 branches missed.">			else if (outputQualified)</span>
+<span class="nc" id="L522">				change = true;</span>
+<span class="nc" id="L523">		} else {</span>
+<span class="nc" id="L524">			baseType = (UnqualifiedObjectType) startType;</span>
+<span class="nc bnc" id="L525" title="All 6 branches missed.">			change = constQualified || volatileQualified || restrictQualified;</span>
+		}
+<span class="nc bnc" id="L527" title="All 4 branches missed.">		if (atomic &amp;&amp; !(baseType instanceof AtomicType)) {</span>
+<span class="nc" id="L528">			baseType = atomicType(baseType);</span>
+<span class="nc" id="L529">			change = true;</span>
+		}
+<span class="nc bnc" id="L531" title="All 2 branches missed.">		if (!change)</span>
+<span class="nc" id="L532">			return startType;</span>
+<span class="nc bnc" id="L533" title="All 6 branches missed.">		if (constQualified || restrictQualified || volatileQualified)</span>
+<span class="nc" id="L534">			return qualifiedType(baseType, constQualified, volatileQualified,</span>
+<span class="nc" id="L535">					restrictQualified, inputQualified, outputQualified);</span>
+<span class="nc" id="L536">		return baseType;</span>
+	}
+
+	@Override
+	public int getNumTypes() {
+<span class="nc" id="L541">		return typeMap.size();</span>
+	}
+
+	@Override
+	public Type getType(int id) {
+<span class="nc" id="L546">		return typeList.get(id);</span>
+	}
+
+	@Override
+	public Iterable&lt;Type&gt; getTypes() {
+<span class="nc" id="L551">		return typeMap.keySet();</span>
+	}
+
+	@Override
+	public void printTypes(PrintStream out) {
+<span class="nc" id="L556">		printTypes(&quot;&quot;, out);</span>
+<span class="nc" id="L557">	}</span>
+
+	public void printTypes(String prefix, PrintStream out) {
+<span class="nc bnc" id="L560" title="All 2 branches missed.">		for (Type type : typeList) {</span>
+<span class="nc" id="L561">			out.print(prefix + type.getId() + &quot;: &quot;);</span>
+<span class="nc" id="L562">			type.print(prefix, out, false);</span>
+<span class="nc" id="L563">			out.println();</span>
+		}
+<span class="nc" id="L565">		out.flush();</span>
+<span class="nc" id="L566">	}</span>
+
+	@Override
+	public IntegerType integerPromotion(IntegerType type) {
+<span class="nc bnc" id="L570" title="All 2 branches missed.">		if (type instanceof StandardSignedIntegerType) {</span>
+<span class="nc" id="L571">			SignedIntKind kind = ((StandardSignedIntegerType) type)</span>
+<span class="nc" id="L572">					.getIntKind();</span>
+
+<span class="nc bnc" id="L574" title="All 3 branches missed.">			switch (kind) {</span>
+			case SIGNED_CHAR:
+			case SHORT:
+<span class="nc" id="L577">				return signedIntegerType(SignedIntKind.INT);</span>
+			case INT:
+			case LONG:
+			case LONG_LONG:
+<span class="nc" id="L581">				return type;</span>
+			default:
+<span class="nc" id="L583">				throw new RuntimeException(&quot;unreachable&quot;);</span>
+			}
+		}
+<span class="nc bnc" id="L586" title="All 2 branches missed.">		if (type instanceof StandardUnsignedIntegerType) {</span>
+<span class="nc" id="L587">			UnsignedIntKind kind = ((StandardUnsignedIntegerType) type)</span>
+<span class="nc" id="L588">					.getIntKind();</span>
+
+<span class="nc bnc" id="L590" title="All 4 branches missed.">			switch (kind) {</span>
+			case BOOL:
+<span class="nc" id="L592">				return signedIntegerType(SignedIntKind.INT);</span>
+			case UNSIGNED_CHAR:
+			case UNSIGNED_SHORT:
+				// either int or unsigned int, depending on widths
+<span class="nc" id="L596">				return (IntegerType) canonicalize(new IntegerPromotionType(type));</span>
+			case UNSIGNED:
+			case UNSIGNED_LONG:
+			case UNSIGNED_LONG_LONG:
+<span class="nc" id="L600">				return type;</span>
+			default:
+<span class="nc" id="L602">				throw new RuntimeException(&quot;unreachable&quot;);</span>
+			}
+		}
+		// enumeration type: no way to know compatible integer type
+<span class="nc" id="L606">		return (IntegerType) canonicalize(new IntegerPromotionType(type));</span>
+	}
+
+	@Override
+	public ArithmeticType usualArithmeticConversion(ArithmeticType type1,
+			ArithmeticType type2) {
+		// if (type1.equals(type2))
+		// return type1;
+		// else {
+<span class="nc" id="L615">		ArithmeticType result = floatingArithmeticConversion(type1, type2);</span>
+
+<span class="nc bnc" id="L617" title="All 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L618">			return result;</span>
+<span class="nc bnc" id="L619" title="All 2 branches missed.">		if (!type1.isInteger())</span>
+<span class="nc" id="L620">			throw new RuntimeException(&quot;Unexpected arithmetic type: &quot; + type1);</span>
+<span class="nc bnc" id="L621" title="All 2 branches missed.">		if (!type2.isInteger())</span>
+<span class="nc" id="L622">			throw new RuntimeException(&quot;Unexpected arithmetic type: &quot; + type2);</span>
+
+<span class="nc" id="L624">		IntegerType intType1 = integerPromotion((IntegerType) type1);</span>
+<span class="nc" id="L625">		IntegerType intType2 = integerPromotion((IntegerType) type2);</span>
+
+<span class="nc bnc" id="L627" title="All 2 branches missed.">		if (intType1.equals(intType2))</span>
+<span class="nc" id="L628">			return intType1;</span>
+<span class="nc" id="L629">		return integerArithmeticConversion(intType1, intType2);</span>
+		// }
+	}
+
+	/**
+	 * Returns the usual arithmetic conversion type in the case where at least
+	 * one of the two types is a floating type. If neither is a floating type,
+	 * returns null.
+	 * 
+	 * @param type1
+	 *            an arithmetic type
+	 * @param type2
+	 *            an arithmetic type
+	 * @return null (if neither type is floating) or the floating type which is
+	 *         the usual arithmetic conversion type if at least one of the types
+	 *         is floating
+	 */
+	private FloatingType floatingArithmeticConversion(ArithmeticType type1,
+			ArithmeticType type2) {
+<span class="nc" id="L648">		boolean isFloat1 = type1.isFloating();</span>
+<span class="nc" id="L649">		boolean isFloat2 = type2.isFloating();</span>
+
+<span class="nc bnc" id="L651" title="All 4 branches missed.">		if (!isFloat1 &amp;&amp; !isFloat2) {</span>
+<span class="nc" id="L652">			return null;</span>
+		} else {
+<span class="nc" id="L654">			FloatingType float1 = null, float2 = null;</span>
+<span class="nc" id="L655">			FloatKind kind1 = null, kind2 = null, kind;</span>
+
+<span class="nc bnc" id="L657" title="All 2 branches missed.">			if (isFloat1) {</span>
+<span class="nc" id="L658">				float1 = (FloatingType) type1;</span>
+<span class="nc" id="L659">				kind1 = float1.getFloatKind();</span>
+			}
+<span class="nc bnc" id="L661" title="All 2 branches missed.">			if (isFloat2) {</span>
+<span class="nc" id="L662">				float2 = (FloatingType) type2;</span>
+<span class="nc" id="L663">				kind2 = float2.getFloatKind();</span>
+			}
+<span class="nc bnc" id="L665" title="All 2 branches missed.">			if (kind1 == FloatKind.LONG_DOUBLE)</span>
+<span class="nc" id="L666">				kind = kind1;</span>
+<span class="nc bnc" id="L667" title="All 2 branches missed.">			else if (kind2 == FloatKind.LONG_DOUBLE)</span>
+<span class="nc" id="L668">				kind = kind2;</span>
+<span class="nc bnc" id="L669" title="All 2 branches missed.">			else if (kind1 == FloatKind.DOUBLE)</span>
+<span class="nc" id="L670">				kind = kind1;</span>
+<span class="nc bnc" id="L671" title="All 2 branches missed.">			else if (kind2 == FloatKind.DOUBLE)</span>
+<span class="nc" id="L672">				kind = kind2;</span>
+<span class="nc bnc" id="L673" title="All 2 branches missed.">			else if (kind1 == FloatKind.FLOAT)</span>
+<span class="nc" id="L674">				kind = kind1;</span>
+<span class="nc bnc" id="L675" title="All 2 branches missed.">			else if (kind2 == FloatKind.FLOAT)</span>
+<span class="nc" id="L676">				kind = kind2;</span>
+			else
+<span class="nc" id="L678">				throw new RuntimeException(&quot;unreachable&quot;);</span>
+<span class="nc" id="L679">			return floatingType(kind,</span>
+<span class="nc bnc" id="L680" title="All 4 branches missed.">					type1.inRealDomain() &amp;&amp; type2.inRealDomain());</span>
+		}
+	}
+
+	private IntegerType integerArithmeticConversion(IntegerType type1,
+			IntegerType type2) {
+
+<span class="nc bnc" id="L687" title="All 2 branches missed.">		if (type1.equals(type2))</span>
+<span class="nc" id="L688">			return type1;</span>
+		else {
+<span class="nc" id="L690">			boolean isSigned1 = type1 instanceof SignedIntegerType;</span>
+<span class="nc" id="L691">			boolean isSigned2 = type2 instanceof SignedIntegerType;</span>
+<span class="nc" id="L692">			boolean isUnsigned1 = type1 instanceof UnsignedIntegerType;</span>
+<span class="nc" id="L693">			boolean isUnsigned2 = type2 instanceof UnsignedIntegerType;</span>
+
+<span class="nc bnc" id="L695" title="All 8 branches missed.">			if (isSigned1 &amp;&amp; isSigned2 || isUnsigned1 &amp;&amp; isUnsigned2) {</span>
+				// &quot;no two signed integer types shall have the same rank&quot;
+<span class="nc" id="L697">				int rankComparison = compareConversionRanks(type1, type2);</span>
+
+<span class="nc bnc" id="L699" title="All 2 branches missed.">				if (rankComparison == -1)</span>
+<span class="nc" id="L700">					return type2;</span>
+<span class="nc bnc" id="L701" title="All 2 branches missed.">				if (rankComparison == 1)</span>
+<span class="nc" id="L702">					return type1;</span>
+<span class="nc bnc" id="L703" title="All 2 branches missed.">				if (rankComparison == 0)</span>
+<span class="nc" id="L704">					throw new RuntimeException(</span>
+<span class="nc" id="L705">							&quot;Internal error: two different unsigned integer types &quot;</span>
+<span class="nc" id="L706">									+ &quot;have same conversion rank:\n&quot; + type1</span>
+<span class="nc" id="L707">									+ &quot;\n&quot; + type2);</span>
+<span class="nc bnc" id="L708" title="All 8 branches missed.">			} else if (isSigned1 &amp;&amp; isUnsigned2 || isSigned2 &amp;&amp; isUnsigned1) {</span>
+<span class="nc bnc" id="L709" title="All 2 branches missed.">				IntegerType signedType = (isSigned1 ? type1 : type2);</span>
+<span class="nc bnc" id="L710" title="All 2 branches missed.">				IntegerType unsignedType = (isUnsigned1 ? type1 : type2);</span>
+<span class="nc" id="L711">				int rankComparison = compareConversionRanks(signedType,</span>
+<span class="nc" id="L712">						unsignedType);</span>
+
+<span class="nc bnc" id="L714" title="All 4 branches missed.">				if (rankComparison == -1 || rankComparison == 0) {</span>
+<span class="nc" id="L715">					return unsignedType;</span>
+				}
+			}
+<span class="nc" id="L718">			return (ArithmeticConversionType) canonicalize(new ArithmeticConversionType(</span>
+<span class="nc" id="L719">					type1, type2));</span>
+		}
+	}
+
+	@Override
+	public IntegerType rangeChoice(BigInteger value, IntegerType type1,
+			IntegerType type2) {
+<span class="nc bnc" id="L726" title="All 2 branches missed.">		if (alwaysInRange(value, type1))</span>
+<span class="nc" id="L727">			return type1;</span>
+<span class="nc" id="L728">		return new RangeChoiceType(value, type1, type2);</span>
+	}
+
+	@Override
+	public IntegerType rangeChoice(BigInteger value, IntegerType[] typeList) {
+<span class="nc" id="L733">		return rangeChoice(value, typeList, 0);</span>
+	}
+
+	public IntegerType rangeChoice(int value, IntegerType type1,
+			IntegerType type2) {
+<span class="nc" id="L738">		return rangeChoice(new BigInteger(&quot;&quot; + value), type1, type2);</span>
+	}
+
+	private boolean alwaysInRange(BigInteger value, IntegerType type) {
+<span class="nc bnc" id="L742" title="All 2 branches missed.">		if (type instanceof StandardSignedIntegerType) {</span>
+<span class="nc" id="L743">			StandardSignedIntegerType stype = (StandardSignedIntegerType) type;</span>
+
+<span class="nc bnc" id="L745" title="All 2 branches missed.">			if (value.compareTo(stype.getMinimumMinValue()) &gt;= 0</span>
+<span class="nc bnc" id="L746" title="All 2 branches missed.">					&amp;&amp; value.compareTo(stype.getMinimumMaxValue()) &lt;= 0)</span>
+<span class="nc" id="L747">				return true;</span>
+<span class="nc bnc" id="L748" title="All 2 branches missed.">		} else if (type instanceof StandardUnsignedIntegerType) {</span>
+<span class="nc bnc" id="L749" title="All 2 branches missed.">			if (value.signum() &gt;= 0</span>
+<span class="nc bnc" id="L750" title="All 2 branches missed.">					&amp;&amp; value.compareTo(((StandardUnsignedIntegerType) type)</span>
+<span class="nc" id="L751">							.getMinimumMaxValue()) &lt;= 0)</span>
+<span class="nc" id="L752">				return true;</span>
+<span class="nc bnc" id="L753" title="All 2 branches missed.">		} else if (type instanceof StandardBasicType</span>
+<span class="nc bnc" id="L754" title="All 2 branches missed.">				&amp;&amp; ((StandardBasicType) type).getBasicTypeKind() == BasicTypeKind.CHAR) {</span>
+<span class="nc bnc" id="L755" title="All 2 branches missed.">			if (value.signum() &gt;= 0</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">					&amp;&amp; value.compareTo(CommonStandardSignedIntegerType.SCHAR_MAX_MIN) &lt;= 0)</span>
+<span class="nc" id="L757">				return true;</span>
+		}
+<span class="nc" id="L759">		return false;</span>
+	}
+
+	private IntegerType rangeChoice(BigInteger value, IntegerType[] typeList,
+			int index) {
+<span class="nc" id="L764">		IntegerType type1 = typeList[index];</span>
+
+<span class="nc bnc" id="L766" title="All 2 branches missed.">		if (alwaysInRange(value, type1))</span>
+<span class="nc" id="L767">			return type1;</span>
+<span class="nc bnc" id="L768" title="All 2 branches missed.">		if (index == typeList.length - 1)</span>
+<span class="nc" id="L769">			return new RangeChoiceType(value, type1, null);</span>
+<span class="nc" id="L770">		return new RangeChoiceType(value, type1, rangeChoice(value, typeList,</span>
+<span class="nc" id="L771">				index + 1));</span>
+	}
+
+	@Override
+	public SignedIntegerType ptrdiff_t() {
+<span class="nc bnc" id="L776" title="All 2 branches missed.">		if (ptrdiff_t == null) {</span>
+<span class="nc" id="L777">			ptrdiff_t = new SymbolicSignedIntegerType(&quot;ptrdiff_t&quot;);</span>
+<span class="nc" id="L778">			insert(ptrdiff_t);</span>
+		}
+<span class="nc" id="L780">		return ptrdiff_t;</span>
+	}
+
+	@Override
+	public UnsignedIntegerType size_t() {
+<span class="nc bnc" id="L785" title="All 2 branches missed.">		if (size_t == null) {</span>
+<span class="nc" id="L786">			size_t = new SymbolicUnsignedIntegerType(&quot;size_t&quot;);</span>
+<span class="nc" id="L787">			insert(size_t);</span>
+		}
+<span class="nc" id="L789">		return size_t;</span>
+	}
+
+	@Override
+	public IntegerType wchar_t() {
+<span class="nc bnc" id="L794" title="All 2 branches missed.">		if (wchar_t == null) {</span>
+<span class="nc" id="L795">			wchar_t = new SymbolicIntegerType(&quot;wchar_t&quot;);</span>
+<span class="nc" id="L796">			insert(wchar_t);</span>
+		}
+<span class="nc" id="L798">		return wchar_t;</span>
+	}
+
+	@Override
+	public UnsignedIntegerType char16_t() {
+<span class="nc bnc" id="L803" title="All 2 branches missed.">		if (char16_t == null) {</span>
+<span class="nc" id="L804">			char16_t = new SymbolicUnsignedIntegerType(&quot;char16_t&quot;);</span>
+<span class="nc" id="L805">			insert(char16_t);</span>
+		}
+<span class="nc" id="L807">		return char16_t;</span>
+	}
+
+	@Override
+	public UnsignedIntegerType char32_t() {
+<span class="nc bnc" id="L812" title="All 2 branches missed.">		if (char32_t == null) {</span>
+<span class="nc" id="L813">			char32_t = new SymbolicUnsignedIntegerType(&quot;char32_t&quot;);</span>
+<span class="nc" id="L814">			insert(char32_t);</span>
+		}
+<span class="nc" id="L816">		return char32_t;</span>
+	}
+
+	/**
+	 * Attempts to integer compare conversion ranks and return a definitive
+	 * result, but may return &quot;don't know&quot;. Possible return values and their
+	 * meaning:
+	 * 
+	 * &lt;ul&gt;
+	 * &lt;li&gt;-1: rank(type1) is less than rank(type2)&lt;/li&gt;
+	 * &lt;li&gt;0: rank(type1) equals rank(type2)&lt;/li&gt;
+	 * &lt;li&gt;+1: rank(type1) is greater than rank(type2)&lt;/li&gt;
+	 * &lt;li&gt;any other number: don't know&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @param type1
+	 * @param type2
+	 * @return
+	 */
+	private int compareConversionRanks(IntegerType type1, IntegerType type2) {
+<span class="nc" id="L836">		Integer rank1 = conversionRank(type1);</span>
+<span class="nc" id="L837">		Integer rank2 = conversionRank(type2);</span>
+
+<span class="nc bnc" id="L839" title="All 4 branches missed.">		if (rank1 != null &amp;&amp; rank2 != null) {</span>
+<span class="nc" id="L840">			int difference = rank1 - rank2;</span>
+
+<span class="nc bnc" id="L842" title="All 2 branches missed.">			if (difference == 0)</span>
+<span class="nc" id="L843">				return 0;</span>
+<span class="nc bnc" id="L844" title="All 2 branches missed.">			if (difference &lt; 0)</span>
+<span class="nc" id="L845">				return -1;</span>
+<span class="nc" id="L846">			return 1;</span>
+		}
+<span class="nc" id="L848">		return 2;</span>
+	}
+
+	private Integer conversionRank(IntegerType type) {
+<span class="nc bnc" id="L852" title="All 2 branches missed.">		if (type instanceof StandardBasicType) {</span>
+<span class="nc" id="L853">			BasicTypeKind kind = ((StandardBasicType) type).getBasicTypeKind();</span>
+
+<span class="nc bnc" id="L855" title="All 7 branches missed.">			switch (kind) {</span>
+			case BOOL:
+<span class="nc" id="L857">				return 1;</span>
+			case CHAR:
+			case SIGNED_CHAR:
+			case UNSIGNED_CHAR:
+<span class="nc" id="L861">				return 2;</span>
+			case SHORT:
+			case UNSIGNED_SHORT:
+<span class="nc" id="L864">				return 3;</span>
+			case INT:
+			case UNSIGNED:
+<span class="nc" id="L867">				return 4;</span>
+			case LONG:
+			case UNSIGNED_LONG:
+<span class="nc" id="L870">				return 5;</span>
+			case LONG_LONG:
+			case UNSIGNED_LONG_LONG:
+<span class="nc" id="L873">				return 6;</span>
+			default:
+<span class="nc" id="L875">				throw new RuntimeException(&quot;Unexpected basic integer type: &quot;</span>
+<span class="nc" id="L876">						+ type);</span>
+			}
+		}
+<span class="nc" id="L879">		return null;</span>
+	}
+
+	@Override
+	public ObjectType processType() {
+<span class="nc bnc" id="L884" title="All 2 branches missed.">		if (processType == null) {</span>
+<span class="nc" id="L885">			processType = new CommonProcessType();</span>
+<span class="nc" id="L886">			insert(processType);</span>
+		}
+<span class="nc" id="L888">		return processType;</span>
+	}
+
+	@Override
+	public ObjectType heapType() {
+<span class="nc bnc" id="L893" title="All 2 branches missed.">		if (heapType == null) {</span>
+<span class="nc" id="L894">			heapType = new CommonHeapType();</span>
+<span class="nc" id="L895">			insert(heapType);</span>
+		}
+<span class="nc" id="L897">		return heapType;</span>
+	}
+
+	@Override
+	public MemoryType memoryType() {
+<span class="nc bnc" id="L902" title="All 2 branches missed.">		if (memoryType == null) {</span>
+<span class="nc" id="L903">			memoryType = new CommonMemoryType();</span>
+<span class="nc" id="L904">			insert(memoryType);</span>
+		}
+<span class="nc" id="L906">		return memoryType;</span>
+	}
+
+	@Override
+	public ObjectType scopeType() {
+<span class="nc bnc" id="L911" title="All 2 branches missed.">		if (scopeType == null) {</span>
+<span class="nc" id="L912">			scopeType = new CommonScopeType();</span>
+<span class="nc" id="L913">			insert(scopeType);</span>
+		}
+<span class="nc" id="L915">		return scopeType;</span>
+	}
+
+	@Override
+	public boolean isArrayOfCharType(Type type) {
+<span class="nc bnc" id="L920" title="All 2 branches missed.">		if (type instanceof ArrayType) {</span>
+<span class="nc" id="L921">			ObjectType elementType = ((ArrayType) type).getElementType();</span>
+
+<span class="nc bnc" id="L923" title="All 2 branches missed.">			if (elementType instanceof StandardBasicType) {</span>
+<span class="nc bnc" id="L924" title="All 2 branches missed.">				return ((StandardBasicType) elementType).getBasicTypeKind() == BasicTypeKind.CHAR;</span>
+			}
+		}
+<span class="nc" id="L927">		return false;</span>
+	}
+
+	@Override
+	public boolean isVoidType(Type type) {
+<span class="nc" id="L932">		return type instanceof CommonVoidType;</span>
+	}
+
+	@Override
+	public boolean isBundleType(Type type) {
+<span class="nc bnc" id="L937" title="All 2 branches missed.">		if (type instanceof StructureOrUnionType) {</span>
+<span class="nc" id="L938">			StructureOrUnionType structOrUnionType = (StructureOrUnionType) type;</span>
+
+<span class="nc bnc" id="L940" title="All 2 branches missed.">			if (structOrUnionType.isStruct()</span>
+<span class="nc bnc" id="L941" title="All 2 branches missed.">					&amp;&amp; structOrUnionType.getName().equals(TypeFactory.BUNDLE)) {</span>
+<span class="nc" id="L942">				return true;</span>
+			}
+		}
+<span class="nc" id="L945">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

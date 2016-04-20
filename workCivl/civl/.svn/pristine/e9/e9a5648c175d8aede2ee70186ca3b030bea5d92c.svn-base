@@ -1,0 +1,196 @@
+[0]: TranslationUnit (scope 5067)
+| source: krylov_bug.h:3.0-gmres_bug.c:11.1 "typedef struct\n{\n   char  ... }" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| 0[1]: Typedef (scope 5067)
+| | source: krylov_bug.h:3.0-7.22 "typedef struct\n{\n   char  ... hypre_GMRESFunctions" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | 0[2]: Identifier[hypre_GMRESFunctions] (scope 5067)
+| | | source: krylov_bug.h:7.2-22 "hypre_GMRESFunctions" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | 1[3]: StructureType[type=2110] (scope 5067)
+| | | source: krylov_bug.h:3.8-7.1 "struct\n{\n   char *  ... }" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | 0[4]: Identifier[$anon_struct_0] (scope 5067)
+| | | | source: krylov_bug.h:3.8-7.1 "struct\n{\n   char *  ... }" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | 1[5]: FieldDeclarations (scope 5067)
+| | | | source: krylov_bug.h:5.3-54 "char * (*CAlloc)         ... )" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | 0[6]: FieldDeclaration (scope 5067)
+| | | | | source: krylov_bug.h:5.3-54 "char * (*CAlloc)         ... )" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | 0[7]: Identifier[CAlloc] (scope 5067)
+| | | | | | source: krylov_bug.h:5.12-18 "CAlloc" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | 1[8]: PointerType[type=1637] (scope 5067)
+| | | | | | source: krylov_bug.h:5.3-54 "char * (*CAlloc)         ... )" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | 0[9]: FunctionType[prototypeForm, type=1385] (scope 5067)
+| | | | | | | source: krylov_bug.h:5.3-54 "char * (*CAlloc)         ... )" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | 0[10]: PointerType[type=101] (scope 5067)
+| | | | | | | | source: krylov_bug.h:5.3-9 "char *" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | | 0[11]: BasicType[CHAR, type=1] (scope 5067)
+| | | | | | | | | source: krylov_bug.h:5.3-7 "char" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | 1[12]: FormalParameterList (scope 5068)
+| | | | | | | | source: krylov_bug.h:5.29-52 "int count, int elt_size" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | | 0[13]: ObjectDeclaration (scope 5068)
+| | | | | | | | | source: krylov_bug.h:5.29-38 "int count" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | | | 0[14]: Identifier[count] (scope 5068)
+| | | | | | | | | | source: krylov_bug.h:5.33-38 "count" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | | | 1[15]: BasicType[INT, type=0] (scope 5068)
+| | | | | | | | | | source: krylov_bug.h:5.29-32 "int" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | | 1[16]: ObjectDeclaration (scope 5068)
+| | | | | | | | | source: krylov_bug.h:5.40-52 "int elt_size" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | | | 0[17]: Identifier[elt_size] (scope 5068)
+| | | | | | | | | | source: krylov_bug.h:5.44-52 "elt_size" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | | | 1[18]: BasicType[INT, type=0] (scope 5068)
+| | | | | | | | | | source: krylov_bug.h:5.40-43 "int" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| 1[19]: Typedef (scope 5067)
+| | source: krylov_bug.h:9.0-13.17 "typedef struct\n{\n   int       ... hypre_GMRESData" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | 0[20]: Identifier[hypre_GMRESData] (scope 5067)
+| | | source: krylov_bug.h:13.2-17 "hypre_GMRESData" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | 1[21]: StructureType[type=2111] (scope 5067)
+| | | source: krylov_bug.h:9.8-13.1 "struct\n{\n   int      k_dim; ... }" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | 0[22]: Identifier[$anon_struct_1] (scope 5067)
+| | | | source: krylov_bug.h:9.8-13.1 "struct\n{\n   int      k_dim; ... }" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | 1[23]: FieldDeclarations (scope 5067)
+| | | | source: krylov_bug.h:11.3-17 "int      k_dim" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | 0[24]: FieldDeclaration (scope 5067)
+| | | | | source: krylov_bug.h:11.3-17 "int      k_dim" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | 0[25]: Identifier[k_dim] (scope 5067)
+| | | | | | source: krylov_bug.h:11.12-17 "k_dim" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | 1[26]: BasicType[INT, type=0] (scope 5067)
+| | | | | | source: krylov_bug.h:11.3-6 "int" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| 2[27]: FunctionDeclaration (scope 5067)
+| | source: krylov_bug.h:15.0-64 "void *hypre_GMRESCreate( hypre_GMRESFunctions * ... )" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | 0[28]: Identifier[hypre_GMRESCreate] (scope 5067)
+| | | source: krylov_bug.h:15.6-23 "hypre_GMRESCreate" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | 1[29]: FunctionType[prototypeForm, type=2113] (scope 5067)
+| | | source: krylov_bug.h:15.0-64 "void *hypre_GMRESCreate( hypre_GMRESFunctions * ... )" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | 0[30]: PointerType[type=20] (scope 5067)
+| | | | source: krylov_bug.h:15.0-6 "void *" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | 0[31]: VoidType[type=19] (scope 5067)
+| | | | | source: krylov_bug.h:15.0-4 "void" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | 1[32]: FormalParameterList (scope 5069)
+| | | | source: krylov_bug.h:15.25-62 "hypre_GMRESFunctions *gmres_functions" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | 0[33]: ObjectDeclaration (scope 5069)
+| | | | | source: krylov_bug.h:15.25-62 "hypre_GMRESFunctions *gmres_functions" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | 0[34]: Identifier[gmres_functions] (scope 5069)
+| | | | | | source: krylov_bug.h:15.47-62 "gmres_functions" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | 1[35]: PointerType[type=2112] (scope 5069)
+| | | | | | source: krylov_bug.h:15.25-47 "hypre_GMRESFunctions *" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | 0[36]: TypedefName[type=2110] (scope 5069)
+| | | | | | | source: krylov_bug.h:15.25-45 "hypre_GMRESFunctions" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | 0[37]: Identifier[hypre_GMRESFunctions] (scope 5069)
+| | | | | | | | source: krylov_bug.h:15.25-45 "hypre_GMRESFunctions" included from gmres_bug.c:1.9-23 ""krylov_bug.h""
+| | | | | | | 1 <absent>
+| | 2 <absent>
+| 3[38]: FunctionDefinition (scope 5067)
+| | source: gmres_bug.c:3.0-11.1 "void *\nhypre_GMRESCreate( hypre_GMRESFunctions  ... }"
+| | 0[39]: Identifier[hypre_GMRESCreate] (scope 5067)
+| | | source: gmres_bug.c:4.0-17 "hypre_GMRESCreate"
+| | 1[40]: FunctionType[prototypeForm, type=2113] (scope 5067)
+| | | source: gmres_bug.c:3.0-4.58 "void *\nhypre_GMRESCreate( hypre_GMRESFunctions  ... )"
+| | | 0[41]: PointerType[type=20] (scope 5067)
+| | | | source: gmres_bug.c:3.0-6 "void *"
+| | | | 0[42]: VoidType[type=19] (scope 5067)
+| | | | | source: gmres_bug.c:3.0-4 "void"
+| | | 1[43]: FormalParameterList (scope 5071)
+| | | | source: gmres_bug.c:4.19-56 "hypre_GMRESFunctions *gmres_functions"
+| | | | 0[44]: ObjectDeclaration (scope 5071)
+| | | | | source: gmres_bug.c:4.19-56 "hypre_GMRESFunctions *gmres_functions"
+| | | | | 0[45]: Identifier[gmres_functions] (scope 5071)
+| | | | | | source: gmres_bug.c:4.41-56 "gmres_functions"
+| | | | | 1[46]: PointerType[type=2112] (scope 5071)
+| | | | | | source: gmres_bug.c:4.19-41 "hypre_GMRESFunctions *"
+| | | | | | 0[47]: TypedefName[type=2110] (scope 5071)
+| | | | | | | source: gmres_bug.c:4.19-39 "hypre_GMRESFunctions"
+| | | | | | | 0[48]: Identifier[hypre_GMRESFunctions] (scope 5071)
+| | | | | | | | source: gmres_bug.c:4.19-39 "hypre_GMRESFunctions"
+| | | | | | | 1 <absent>
+| | 2 <absent>
+| | 3[49]: CompoundStatement (scope 5072)
+| | | source: gmres_bug.c:5.0-11.1 "{\n   hypre_GMRESData *gmres_data;\n ... }"
+| | | 0[50]: ObjectDeclaration (scope 5072)
+| | | | source: gmres_bug.c:6.3-30 "hypre_GMRESData *gmres_data"
+| | | | 0[51]: Identifier[gmres_data] (scope 5072)
+| | | | | source: gmres_bug.c:6.20-30 "gmres_data"
+| | | | 1[52]: PointerType[type=2114] (scope 5072)
+| | | | | source: gmres_bug.c:6.3-20 "hypre_GMRESData *"
+| | | | | 0[53]: TypedefName[type=2111] (scope 5072)
+| | | | | | source: gmres_bug.c:6.3-18 "hypre_GMRESData"
+| | | | | | 0[54]: Identifier[hypre_GMRESData] (scope 5072)
+| | | | | | | source: gmres_bug.c:6.3-18 "hypre_GMRESData"
+| | | | | | 1 <absent>
+| | | 1[55]: ExpressionStatement (scope 5072)
+| | | | source: gmres_bug.c:8.3-krylov_bug.h:8.67 "gmres_data = ( (hypre_GMRESData  ... )"
+| | | | 0[56]: OperatorNode[operator=ASSIGN] (scope 5072)
+| | | | | source: gmres_bug.c:8.3-krylov_bug.h:8.67 "gmres_data = ( (hypre_GMRESData  ... )"
+| | | | | initial type: (struct $anon_struct_1) *
+| | | | | 0[57]: IdentifierExpressionNode (scope 5072)
+| | | | | | source: gmres_bug.c:8.3-13 "gmres_data"
+| | | | | | initial type: (struct $anon_struct_1) *
+| | | | | | 0[58]: Identifier[gmres_data] (scope 5072)
+| | | | | | | source: gmres_bug.c:8.3-13 "gmres_data"
+| | | | | 1[59]: CastNode (scope 5072)
+| | | | | | source: krylov_bug.h:1.43-8.67 "( (hypre_GMRESData *)(* ... )" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | initial type: (struct $anon_struct_1) *
+| | | | | | 0[60]: PointerType[type=2114] (scope 5072)
+| | | | | | | source: krylov_bug.h:8.31-1.52 "hypre_GMRESData *" from gmres_bug.c:8.31-46 "hypre_GMRESData"
+| | | | | | | 0[61]: TypedefName[type=2111] (scope 5072)
+| | | | | | | | source: krylov_bug.h:8.31-1.50 "hypre_GMRESData" from gmres_bug.c:8.31-46 "hypre_GMRESData"
+| | | | | | | | 0[62]: Identifier[hypre_GMRESData] (scope 5072)
+| | | | | | | | | source: krylov_bug.h:8.31-1.50 "hypre_GMRESData" from gmres_bug.c:8.31-46 "hypre_GMRESData"
+| | | | | | | | 1 <absent>
+| | | | | | 1[63]: FunctionCallNode (scope 5072)
+| | | | | | | source: krylov_bug.h:1.53-122 "(*( gmres_functions->CAlloc)) ... )" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | initial type: (char) *
+| | | | | | | 0[64]: OperatorNode[operator=DEREFERENCE] (scope 5072)
+| | | | | | | | source: krylov_bug.h:1.53-71 "(*( gmres_functions->CAlloc))" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | initial type: (char) * (int, int)
+| | | | | | | | 0[65]: ArrowNode (scope 5072)
+| | | | | | | | | source: krylov_bug.h:1.55-70 "( gmres_functions->CAlloc)" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | | initial type: ((char) * (int, int)) *
+| | | | | | | | | 0[66]: IdentifierExpressionNode (scope 5072)
+| | | | | | | | | | source: krylov_bug.h:8.51-1.61 "gmres_functions" from gmres_bug.c:8.51-66 "gmres_functions"
+| | | | | | | | | | initial type: (struct $anon_struct_0) *
+| | | | | | | | | | 0[67]: Identifier[gmres_functions] (scope 5072)
+| | | | | | | | | | | source: krylov_bug.h:8.51-1.61 "gmres_functions" from gmres_bug.c:8.51-66 "gmres_functions"
+| | | | | | | | | 1[68]: Identifier[CAlloc] (scope 5072)
+| | | | | | | | | | source: krylov_bug.h:1.63-69 "CAlloc" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | 1[69]: ActualContextParameterList (scope 5072)
+| | | | | | | | source: krylov_bug.h:1.53-122 "(*( gmres_functions->CAlloc)) ... )" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | 2[70]: ActualParameterList (scope 5072)
+| | | | | | | | source: krylov_bug.h:1.53-122 "(*( gmres_functions->CAlloc)) ... )" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | 0[71]: CastNode (scope 5072)
+| | | | | | | | | source: krylov_bug.h:1.72-93 "(unsigned int)( 1)" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | | initial type: unsigned
+| | | | | | | | | conversions
+| | | | | | | | | | ArithmeticConversion[4(unsigned), 0(int)]
+| | | | | | | | | 0[72]: BasicType[UNSIGNED, type=4] (scope 5072)
+| | | | | | | | | | source: krylov_bug.h:1.73-85 "unsigned int" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | | 1[73]: IntegerConstantNode[value=1] (scope 5072)
+| | | | | | | | | | source: krylov_bug.h:1.86-93 "( 1)" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | | | initial type: int
+| | | | | | | | | | constant value: 1
+| | | | | | | | 1[74]: CastNode (scope 5072)
+| | | | | | | | | source: krylov_bug.h:1.95-120 "(unsigned int)sizeof(hypre_GMRESData" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | | initial type: unsigned
+| | | | | | | | | conversions
+| | | | | | | | | | ArithmeticConversion[4(unsigned), 0(int)]
+| | | | | | | | | 0[75]: BasicType[UNSIGNED, type=4] (scope 5072)
+| | | | | | | | | | source: krylov_bug.h:1.96-108 "unsigned int" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | | 1[76]: SizeOfNode (scope 5072)
+| | | | | | | | | | source: krylov_bug.h:1.109-120 "sizeof(hypre_GMRESData" from gmres_bug.c:8.16-30 "hypre_CTAllocF"
+| | | | | | | | | | initial type: Type[kind=OTHER_INTEGER]
+| | | | | | | | | | 0[77]: TypedefName[type=2111] (scope 5072)
+| | | | | | | | | | | source: krylov_bug.h:8.31-1.120 "hypre_GMRESData" from gmres_bug.c:8.31-46 "hypre_GMRESData"
+| | | | | | | | | | | 0[78]: Identifier[hypre_GMRESData] (scope 5072)
+| | | | | | | | | | | | source: krylov_bug.h:8.31-1.120 "hypre_GMRESData" from gmres_bug.c:8.31-46 "hypre_GMRESData"
+| | | | | | | | | | | 1 <absent>
+| | | | | | | 3 <absent>
+| | | 2[79]: ReturnStatement (scope 5072)
+| | | | source: gmres_bug.c:10.3-30 "return (void *) gmres_data;"
+| | | | 0[80]: CastNode (scope 5072)
+| | | | | source: gmres_bug.c:10.10-29 "(void *) gmres_data"
+| | | | | initial type: (void) *
+| | | | | 0[81]: PointerType[type=20] (scope 5072)
+| | | | | | source: gmres_bug.c:10.11-17 "void *"
+| | | | | | 0[82]: VoidType[type=19] (scope 5072)
+| | | | | | | source: gmres_bug.c:10.11-15 "void"
+| | | | | 1[83]: IdentifierExpressionNode (scope 5072)
+| | | | | | source: gmres_bug.c:10.19-29 "gmres_data"
+| | | | | | initial type: (struct $anon_struct_1) *
+| | | | | | 0[84]: Identifier[gmres_data] (scope 5072)
+| | | | | | | source: gmres_bug.c:10.19-29 "gmres_data"

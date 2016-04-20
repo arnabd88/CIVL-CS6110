@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonCharacterConstantNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.expression</a> &gt; <span class="el_source">CommonCharacterConstantNode.java</span></div><h1>CommonCharacterConstantNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.expression;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CharacterConstantNode;
+import edu.udel.cis.vsl.abc.ast.value.IF.CharacterValue;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonCharacterConstantNode extends CommonConstantNode implements
+		CharacterConstantNode {
+
+	public CommonCharacterConstantNode(Source source, String representation,
+			CharacterValue value) {
+<span class="nc" id="L14">		super(source, representation, value.getType());</span>
+<span class="nc" id="L15">		setConstantValue(value);</span>
+<span class="nc" id="L16">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L20">		return &quot;CharacterConstantNode[&quot; + getConstantValue() + &quot;]&quot;;</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L25">		out.print(this);</span>
+<span class="nc" id="L26">	}</span>
+
+	@Override
+	public CharacterValue getConstantValue() {
+<span class="nc" id="L30">		return (CharacterValue) super.getConstantValue();</span>
+	}
+
+	@Override
+	public CharacterConstantNode copy() {
+<span class="nc" id="L35">		return new CommonCharacterConstantNode(getSource(),</span>
+<span class="nc" id="L36">				getStringRepresentation(), getConstantValue());</span>
+	}
+
+	@Override
+	public ConstantKind constantKind() {
+<span class="nc" id="L41">		return ConstantKind.CHAR;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

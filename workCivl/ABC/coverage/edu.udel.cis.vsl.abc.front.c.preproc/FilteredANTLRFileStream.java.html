@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FilteredANTLRFileStream.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.preproc</a> &gt; <span class="el_source">FilteredANTLRFileStream.java</span></div><h1>FilteredANTLRFileStream.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.c.preproc;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import org.antlr.runtime.ANTLRStringStream;
+
+/**
+ * An ANTLR stream which reads from a file and removes any two consecutive
+ * characters that are backslash followed by newline. This is part of the C
+ * translation process.
+ * 
+ * @author siegel
+ */
+public class FilteredANTLRFileStream extends ANTLRStringStream {
+
+	protected File file;
+
+<span class="nc" id="L23">	public FilteredANTLRFileStream(File file, String encoding)</span>
+			throws IOException {
+<span class="nc" id="L25">		this.file = file;</span>
+<span class="nc" id="L26">		load(file, encoding);</span>
+<span class="nc" id="L27">	}</span>
+
+	public FilteredANTLRFileStream(File file) throws IOException {
+<span class="nc" id="L30">		this(file, null);</span>
+<span class="nc" id="L31">	}</span>
+
+<span class="fc" id="L33">	public FilteredANTLRFileStream(String string) throws IOException {</span>
+<span class="fc" id="L34">		this.file = null;</span>
+<span class="fc" id="L35">		load(string);</span>
+<span class="fc" id="L36">	}</span>
+
+	private void load(InputStream fis, int size, String encoding)
+			throws IOException {
+		InputStreamReader isr;
+
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">		if (encoding != null) {</span>
+<span class="nc" id="L43">			isr = new InputStreamReader(fis, encoding);</span>
+<span class="nc" id="L44">		} else {</span>
+<span class="fc" id="L45">			isr = new InputStreamReader(fis);</span>
+		}
+		try {
+<span class="fc" id="L48">			data = new char[size];</span>
+<span class="fc" id="L49">			int numUnfilteredChars = isr.read(data);</span>
+<span class="fc" id="L50">			int numFilteredChars = 0;</span>
+
+<span class="fc bfc" id="L52" title="All 2 branches covered.">			for (int i = 0; i &lt; numUnfilteredChars; i++) {</span>
+<span class="fc" id="L53">				char c = data[i];</span>
+
+<span class="pc bpc" id="L55" title="1 of 4 branches missed.">				if (c == '\\' &amp;&amp; i &lt; numUnfilteredChars - 1</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">						&amp;&amp; data[i + 1] == '\n') {</span>
+<span class="fc" id="L57">					i++;</span>
+<span class="fc" id="L58">				} else {</span>
+<span class="fc" id="L59">					data[numFilteredChars] = c;</span>
+<span class="fc" id="L60">					numFilteredChars++;</span>
+				}
+			}
+			// I believe the following truncation of array data is
+			// unnecessary. It suffices to set n.
+			// super.data = Arrays.copyOf(data, numFilteredChars);
+<span class="fc" id="L66">			super.n = numFilteredChars;</span>
+<span class="pc" id="L67">		} finally {</span>
+<span class="pc" id="L68">			isr.close();</span>
+<span class="nc" id="L69">		}</span>
+<span class="fc" id="L70">	}</span>
+
+	private void load(File file, String encoding) throws IOException {
+<span class="nc" id="L73">		int size = (int) file.length();</span>
+<span class="nc" id="L74">		FileInputStream fis = new FileInputStream(file);</span>
+
+<span class="nc" id="L76">		load(fis, size, encoding);</span>
+<span class="nc" id="L77">	}</span>
+
+	private void load(String string) throws IOException {
+<span class="fc" id="L80">		load(new ByteArrayInputStream(string.getBytes()), string.length(), null);</span>
+<span class="fc" id="L81">	}</span>
+
+	@Override
+	public String getSourceName() {
+<span class="nc" id="L85">		return file.getName();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

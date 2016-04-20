@@ -1,0 +1,32 @@
+/* Commandline execution:
+ *		civl verify -inputnum_elements=5 derivativeBad.cvl
+ *
+ * The assertion checked in this version erroneously expects the method to be third
+ * order accurate in terms of h.
+ * */
+#include<civlc.h>
+#include<stdio.h>
+
+$input double h;
+$input int num_elements;
+$input double initial[num_elements];
+double working[num_elements];
+$abstract $contin(3) double rho(double x);
+$assume h > 0;
+
+void differentiate(double h, int n, double y[], double result[]){
+	int i;
+	
+	$assume $forall {m=0 .. n-1} y[m] == rho(m*h);
+	for(i = 1; i < n-1; i++)
+	{
+		result[i] = (y[i+1]-y[i-1])/(2*h);
+	}
+	result[0] = (y[1]-y[0])/h; 
+	result[n-1] = (y[n-1] - y[n-2])/h;
+	$assert($uniform {k=1 .. n-2} result[k]-$D[rho,{x,1}](k*h) == $O(h*h*h));
+}
+
+void main() {
+	differentiate(h, num_elements, initial, working);
+}

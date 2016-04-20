@@ -1,0 +1,28 @@
+#include <civlc.cvh>
+#include<pointer.cvh>
+
+typedef struct point{
+int x;
+int y;
+} point;
+
+void main(){
+  int a[5] = {[3]=4};
+  _Bool result;
+  point set[3];
+    
+  result = $contains(&a, &a[2]);
+  $assert((result));
+  result = $contains(&a[2], &a[3]);
+  $assert((!result));
+  result = $contains(&a[2], &a[2]);
+  $assert((result)); 
+  for(int i = 0; i < 3; i++){
+    set[i].x = i;
+    set[i].y = i;
+  }
+  result = $contains(&set, &set[1].y);
+  $assert((result));
+  result = $contains(&set[1].x, &set[1].y);
+  $assert((!result));
+}

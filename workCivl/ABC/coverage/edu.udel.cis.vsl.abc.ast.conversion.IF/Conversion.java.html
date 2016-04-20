@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Conversion.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.conversion.IF</a> &gt; <span class="el_source">Conversion.java</span></div><h1>Conversion.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.conversion.IF;</span>
+
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+
+/**
+ * A conversion is an implicit operation that may change a value and/or the type
+ * of the value. Examples include the usual arithmetic conversions, lvalue
+ * conversion, and array and function conversions (which change the type from
+ * array of T to pointer to T, and function returning T to pointer to function
+ * returning T, respectively).
+ * 
+ * @author siegel
+ * 
+ */
+public interface Conversion {
+
+	/**
+	 * Kind of conversions
+	 */
+<span class="nc" id="L20">	public enum ConversionKind {</span>
+<span class="nc" id="L21">		/** can be safely casted to {@link ArithmeticConversion} */</span>
+<span class="nc" id="L22">		ARITHMETIC,</span>
+<span class="nc" id="L23">		/** can be safely casted to {@link ArrayConversion} */</span>
+<span class="nc" id="L24">		ARRAY,</span>
+<span class="nc" id="L25">		/** can be safely casted to {@link CompatiblePointerConversion} */</span>
+<span class="nc" id="L26">		COMPATIBLE_POINTER,</span>
+<span class="nc" id="L27">		/** can be safely casted to {@link CompatibleStructureOrUnionConversion} */</span>
+<span class="nc" id="L28">		COMPATIBLE_STRUCT_UNION,</span>
+<span class="nc" id="L29">		/** can be safely casted to {@link FunctionConversion} */</span>
+<span class="nc" id="L30">		FUNCTION,</span>
+<span class="nc" id="L31">		/** can be safely casted to {@link Integer2PointerConversion} */</span>
+<span class="nc" id="L32">		INTEGER_POINTER,</span>
+<span class="nc" id="L33">		/** can be safely casted to {@link LvalueConversion} */</span>
+<span class="nc" id="L34">		LVALUE,</span>
+<span class="nc" id="L35">		/** can be safely casted to {@link MemoryConversion} */</span>
+<span class="nc" id="L36">		MEMORY,</span>
+<span class="nc" id="L37">		/** can be safely casted to {@link NullPointerConversion} */</span>
+<span class="nc" id="L38">		NULL_POINTER,</span>
+<span class="nc" id="L39">		/** can be safely casted to {@link PointerBoolConversion} */</span>
+<span class="nc" id="L40">		POINTER_BOOL,</span>
+<span class="nc" id="L41">		/** can be safely casted to {@link Pointer2IntegerConversion} */</span>
+<span class="nc" id="L42">		POINTER_INTEGER,</span>
+<span class="nc" id="L43">		/** can be safely casted to {@link RegularRangeToDomainConversion} */</span>
+<span class="nc" id="L44">		REG_RANGE_DOMAIN,</span>
+<span class="nc" id="L45">		/** can be safely casted to {@link VoidPointerConversion} */</span>
+<span class="nc" id="L46">		VOID_POINTER</span>
+	}
+
+	/**
+	 * Returns the type of the entity before applying this conversion.
+	 * 
+	 * @return the pre-conversion type
+	 */
+	Type getOldType();
+
+	/**
+	 * Returns the type of the entity after applying this conversion.
+	 * 
+	 * @return the post-conversion type
+	 */
+	Type getNewType();
+
+	/**
+	 * Returns the kind of the conversion.
+	 * 
+	 * @return the kind of the conversion
+	 */
+	ConversionKind conversionKind();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

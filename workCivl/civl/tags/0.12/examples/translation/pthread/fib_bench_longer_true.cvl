@@ -1,0 +1,55 @@
+/*****************************************************************************
+* SOURCE: This is a translation of a Pthread program from 
+* the Pthread benchmarks of SV-COMP 2014.
+* https://svn.sosy-lab.org/software/sv-benchmarks/tags/svcomp14/
+* FILE: fib_bench_longer_true.cvl
+* DESCRIPTION: 
+*   Fix for fib_bench_longer_true program. Simply involves changing the bounds
+*   of the assertion so the threads will interact with the global variable to
+*   produce the desired value.
+* Command line execution:
+* civl verify -inputNUM=6 fib_bench_longer_true.cvl
+******************************************************************************/
+#include "pthread.h"
+#include <civlc.h>
+
+int i=1, j=1;
+
+$input int NUM;
+
+void *t1(void* arg)
+{
+    int k = 0;
+    
+    for (k = 0; k < NUM; k++)
+        i+=j;
+    
+    pthread_exit(NULL, false, NULL, 0); //Different parameters
+}
+
+void *t2(void* arg)
+{
+    int k = 0;
+    
+    for (k = 0; k < NUM; k++)
+        j+=i;
+    
+    pthread_exit(NULL, false, NULL, 0); //Different parameters
+}
+
+int main(int argc, char **argv)
+{
+    pthread_t id1, id2;
+    
+    pthread_create(&id1, NULL, t1, NULL);
+    pthread_create(&id2, NULL, t2, NULL);
+    
+    pthread_join(id1, NULL);  //Added pthread_join, probably error in competition code
+    pthread_join(id2, NULL);
+    
+    if (i > 377 || j > 377) {
+      $assert($false);
+    }
+    
+    return 0;
+}

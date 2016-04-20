@@ -1,0 +1,2468 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ASTPrettyPrinter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.common</a> &gt; <span class="el_source">ASTPrettyPrinter.java</span></div><h1>ASTPrettyPrinter.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.common;
+
+import java.io.PrintStream;
+import java.util.Stack;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode.NodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.PairNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.PragmaNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.StaticAssertionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.AssignsOrReadsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.AssumesNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.BehaviorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CallEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CompositeEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CompositeEventNode.EventOperator;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode.ContractKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsEventNode.DependsEventNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.EnsuresNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.GuardsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.InvariantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPICollectiveBlockNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPIContractExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MemoryEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.RequiresNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.ArrayDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.FieldDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.AbstractFunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.EnumeratorDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FieldDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.TypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.AlignOfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ArrowNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CallsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CastNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CompoundLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ContractVerifyNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DerivativeExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DotNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode.ExpressionKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.QuantifiedExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.RegularRangeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.RemoteExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ScopeOfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeofNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SpawnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StatementExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.LabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.OrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.SwitchLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpDeclarativeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpDeclarativeNode.OmpDeclarativeNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpExecutableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpExecutableNode.OmpExecutableKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpForNode.OmpScheduleKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpFunctionReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpNode.OmpNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpParallelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpSymbolReductionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpSyncNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpSyncNode.OmpSyncNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpWorksharingNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpWorksharingNode.OmpWorksharingNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.AtomicNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode.BlockItemKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ChooseStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.DeclarationListNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ExpressionStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.GotoNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.IfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.JumpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.JumpNode.JumpKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LabeledStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode.LoopKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ReturnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode.StatementKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.SwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.WhenNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.ArrayTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.BasicTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.DomainTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.EnumerationTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.PointerTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.StructureOrUnionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode.TypeNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypedefNameNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeofNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.err.IF.ABCUnsupportedException;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.util.IF.Pair;
+
+/**
+ * This class implements the pretty printing of AST nodes. The purpose is to
+ * print an AST in the original programming language and the output is expected
+ * to be compiled into an equivalent AST.
+ * 
+ * @author Manchun Zheng
+ * 
+ */
+<span class="nc" id="L135">public class ASTPrettyPrinter {</span>
+
+	/* ************************ Private Static Fields ********************** */
+
+<span class="nc" id="L139">	private static String indention = &quot;  &quot;;</span>
+
+<span class="nc" id="L141">	private static int headerLength = 60;</span>
+
+	/* ******************* Package-private Static Methods ****************** */
+
+	// FIX ME : I am public now
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public static void prettyPrint(ASTNode node, PrintStream out) {
+<span class="nc" id="L149">		NodeKind kind = node.nodeKind();</span>
+
+<span class="nc bnc" id="L151" title="All 19 branches missed.">		switch (kind) {</span>
+		case DECLARATION_LIST:
+<span class="nc" id="L153">			out.print(declarationList2Pretty((DeclarationListNode) node));</span>
+<span class="nc" id="L154">			break;</span>
+		case ENUMERATOR_DECLARATION:
+<span class="nc" id="L156">			out.print(enumeratorDeclaration2Pretty((EnumeratorDeclarationNode) node));</span>
+<span class="nc" id="L157">			break;</span>
+		case EXPRESSION:
+<span class="nc" id="L159">			out.print(expression2Pretty((ExpressionNode) node));</span>
+<span class="nc" id="L160">			break;</span>
+		case FIELD_DECLARATION:
+<span class="nc" id="L162">			out.print(fieldDeclaration2Pretty(&quot;&quot;, (FieldDeclarationNode) node));</span>
+<span class="nc" id="L163">			break;</span>
+		case FUNCTION_DECLARATION:
+<span class="nc" id="L165">			pPrintFunctionDeclaration(out, &quot;&quot;, (FunctionDeclarationNode) node);</span>
+<span class="nc" id="L166">			break;</span>
+		case FUNCTION_DEFINITION:
+<span class="nc" id="L168">			pPrintFunctionDeclaration(out, &quot;&quot;, (FunctionDeclarationNode) node);</span>
+<span class="nc" id="L169">			break;</span>
+		case IDENTIFIER:
+<span class="nc" id="L171">			out.print(((IdentifierNode) node).name());</span>
+<span class="nc" id="L172">			break;</span>
+		case OMP_NODE:
+<span class="nc" id="L174">			pPrintOmpNode(out, &quot;&quot;, (OmpNode) node);</span>
+<span class="nc" id="L175">			break;</span>
+		case OMP_REDUCTION_OPERATOR:
+<span class="nc" id="L177">			out.print(ompReduction2Pretty((OmpReductionNode) node));</span>
+<span class="nc" id="L178">			break;</span>
+		case ORDINARY_LABEL:
+		case SWITCH_LABEL:
+<span class="nc" id="L181">			out.print(labelNode2Pretty((LabelNode) node));</span>
+<span class="nc" id="L182">			break;</span>
+		case PRAGMA:
+<span class="nc" id="L184">			pPrintPragma(out, &quot;&quot;, (PragmaNode) node);</span>
+<span class="nc" id="L185">			break;</span>
+		case STATEMENT:
+<span class="nc" id="L187">			pPrintStatement(out, &quot;&quot;, (StatementNode) node, true, false);</span>
+<span class="nc" id="L188">			break;</span>
+		case STATIC_ASSERTION:
+<span class="nc" id="L190">			pPrintStaticAssertion(out, &quot;&quot;, (StaticAssertionNode) node);</span>
+<span class="nc" id="L191">			break;</span>
+		case TYPE:
+<span class="nc" id="L193">			out.print(type2Pretty(&quot;&quot;, (TypeNode) node, true));</span>
+<span class="nc" id="L194">			break;</span>
+		case TYPEDEF:
+<span class="nc" id="L196">			pPrintTypedefDeclaration(out, &quot;&quot;, (TypedefDeclarationNode) node);</span>
+<span class="nc" id="L197">			break;</span>
+		case VARIABLE_DECLARATION:
+<span class="nc" id="L199">			out.print(variableDeclaration2Pretty(&quot;&quot;,</span>
+<span class="nc" id="L200">					(VariableDeclarationNode) node));</span>
+<span class="nc" id="L201">			break;</span>
+		case SEQUENCE:
+<span class="nc" id="L203">			pPrintSequenceNode((SequenceNode&lt;ASTNode&gt;) node, out);</span>
+<span class="nc" id="L204">			break;</span>
+		case PAIR:
+<span class="nc" id="L206">			pPrintPairNode((PairNode&lt;ASTNode, ASTNode&gt;) node, out);</span>
+<span class="nc" id="L207">			break;</span>
+		default:
+<span class="nc" id="L209">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L210">					&quot;the pretty printing of AST node of &quot; + kind</span>
+<span class="nc" id="L211">							+ &quot; kind is not supported yet.&quot;, node.getSource()</span>
+<span class="nc" id="L212">							.getLocation(false));</span>
+		}
+<span class="nc" id="L214">	}</span>
+
+	private static void pPrintPairNode(PairNode&lt;ASTNode, ASTNode&gt; pair,
+			PrintStream out) {
+<span class="nc" id="L218">		ASTNode left = pair.getLeft(), right = pair.getRight();</span>
+
+<span class="nc" id="L220">		out.print(&quot;(&quot;);</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		if (left != null)</span>
+<span class="nc" id="L222">			prettyPrint(left, out);</span>
+		else
+<span class="nc" id="L224">			out.print(&quot;NULL&quot;);</span>
+<span class="nc" id="L225">		out.print(&quot;,&quot;);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (right != null)</span>
+<span class="nc" id="L227">			prettyPrint(right, out);</span>
+		else
+<span class="nc" id="L229">			out.print(&quot;NULL&quot;);</span>
+<span class="nc" id="L230">	}</span>
+
+	private static void pPrintSequenceNode(
+			SequenceNode&lt;? extends ASTNode&gt; sequence, PrintStream out) {
+<span class="nc" id="L234">		int numChildren = sequence.numChildren();</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L236">			ASTNode node = sequence.getSequenceChild(i);</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">			if (i != 0)</span>
+<span class="nc" id="L238">				out.print(&quot;, &quot;);</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">			if (node != null)</span>
+<span class="nc" id="L240">				prettyPrint(node, out);</span>
+		}
+<span class="nc" id="L242">	}</span>
+
+	static void prettyPrint(AST ast, PrintStream out, boolean ignoreStdLibs) {
+<span class="nc" id="L245">		SequenceNode&lt;BlockItemNode&gt; root = ast.getRootNode();</span>
+<span class="nc" id="L246">		int numChildren = root.numChildren();</span>
+<span class="nc" id="L247">		String currentFile = null;</span>
+
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L250">			BlockItemNode child = root.getSequenceChild(i);</span>
+
+<span class="nc bnc" id="L252" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc" id="L253">				String sourceFile = child.getSource().getFirstToken()</span>
+<span class="nc" id="L254">						.getSourceFile().getName();</span>
+
+<span class="nc bnc" id="L256" title="All 2 branches missed.">				if (ignoreStdLibs)</span>
+<span class="nc bnc" id="L257" title="All 121 branches missed.">					switch (sourceFile) {</span>
+					case &quot;assert.h&quot;:
+					case &quot;cuda.h&quot;:
+					case &quot;civlc.cvh&quot;:
+					case &quot;bundle.cvh&quot;:
+					case &quot;comm.cvh&quot;:
+					case &quot;concurrency.cvh&quot;:
+					case &quot;pointer.cvh&quot;:
+					case &quot;scope.cvh&quot;:
+					case &quot;seq.cvh&quot;:
+					case &quot;float.h&quot;:
+					case &quot;math.h&quot;:
+					case &quot;mpi.h&quot;:
+					case &quot;omp.h&quot;:
+					case &quot;op.h&quot;:
+					case &quot;pthread.h&quot;:
+					case &quot;stdarg.h&quot;:
+					case &quot;stdbool.h&quot;:
+					case &quot;stddef.h&quot;:
+					case &quot;stdio.h&quot;:
+					case &quot;stdlib.h&quot;:
+					case &quot;string.h&quot;:
+					case &quot;time.h&quot;:
+					case &quot;civl-omp.cvh&quot;:
+					case &quot;civl-mpi.cvh&quot;:
+					case &quot;civl-cuda.cvh&quot;:
+					case &quot;civl-omp.cvl&quot;:
+					case &quot;civl-mpi.cvl&quot;:
+					case &quot;civl-cuda.cvl&quot;:
+					case &quot;civlc.cvl&quot;:
+					case &quot;concurrency.cvl&quot;:
+					case &quot;stdio-c.cvl&quot;:
+					case &quot;stdio.cvl&quot;:
+					case &quot;omp.cvl&quot;:
+					case &quot;cuda.cvl&quot;:
+					case &quot;mpi.cvl&quot;:
+					case &quot;pthread-c.cvl&quot;:
+					case &quot;pthread.cvl&quot;:
+					case &quot;math.cvl&quot;:
+					case &quot;seq.cvl&quot;:
+					case &quot;string.cvl&quot;:
+						continue;
+					default:
+					}
+<span class="nc bnc" id="L301" title="All 4 branches missed.">				if (currentFile == null || !currentFile.equals(sourceFile)) {</span>
+<span class="nc" id="L302">					int fileLength = sourceFile.length();</span>
+					int leftBarLength, rightBarLength;
+
+<span class="nc" id="L305">					rightBarLength = (headerLength - fileLength - 4) / 2;</span>
+<span class="nc" id="L306">					leftBarLength = headerLength - fileLength - 4</span>
+<span class="nc" id="L307">							- rightBarLength;</span>
+<span class="nc" id="L308">					out.print(&quot;//&quot;);</span>
+<span class="nc" id="L309">					printBar(leftBarLength, '=', out);</span>
+<span class="nc" id="L310">					out.print(&quot; &quot;);</span>
+<span class="nc" id="L311">					out.print(sourceFile);</span>
+<span class="nc" id="L312">					out.print(&quot; &quot;);</span>
+<span class="nc" id="L313">					printBar(rightBarLength, '=', out);</span>
+<span class="nc" id="L314">					out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L315">					currentFile = sourceFile;</span>
+				}
+				// pPrintExternalDef(out, child);
+<span class="nc" id="L318">				pPrintBlockItem(out, &quot;&quot;, child);</span>
+<span class="nc" id="L319">				out.println();</span>
+			}
+		}
+<span class="nc" id="L322">	}</span>
+
+	private static void printBar(int length, char symbol, PrintStream out) {
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		for (int i = 0; i &lt; length; i++)</span>
+<span class="nc" id="L326">			out.print(symbol);</span>
+<span class="nc" id="L327">	}</span>
+
+	/* *************************** Private Methods ************************* */
+
+	// private static void pPrintExternalDef(PrintStream out,
+	// ExternalDefinitionNode extern) {
+	// if (extern instanceof AssumeNode) {
+	// pPrintAssume(out, &quot;&quot;, (AssumeNode) extern);
+	// } else if (extern instanceof AssertNode) {
+	// pPrintAssert(out, &quot;&quot;, (AssertNode) extern);
+	// } else if (extern instanceof EnumerationTypeNode) {
+	// out.print(enumType2Pretty(&quot;&quot;, (EnumerationTypeNode) extern));
+	// out.print(&quot;;&quot;);
+	// } else if (extern instanceof OrdinaryDeclarationNode) {
+	// pPrintOrdinaryDeclaration(out, &quot;&quot;, (OrdinaryDeclarationNode) extern);
+	// } else if (extern instanceof PragmaNode) {
+	// pPrintPragma(out, &quot;&quot;, (PragmaNode) extern);
+	// } else if (extern instanceof StaticAssertionNode) {
+	// pPrintStaticAssertion(out, &quot;&quot;, (StaticAssertionNode) extern);
+	// out.print(&quot;;&quot;);
+	// } else if (extern instanceof StructureOrUnionTypeNode) {
+	// out.print(structOrUnion2Pretty(&quot;&quot;,
+	// (StructureOrUnionTypeNode) extern));
+	// out.print(&quot;;&quot;);
+	// } else if (extern instanceof TypedefDeclarationNode) {
+	// pPrintTypedefDeclaration(out, &quot;&quot;, (TypedefDeclarationNode) extern);
+	// out.print(&quot;;&quot;);
+	// } else if (extern instanceof OmpDeclarativeNode) {
+	// pPrintOmpDeclarative(out, &quot;&quot;, (OmpDeclarativeNode) extern);
+	// }
+	// out.print(&quot;\n&quot;);
+	// }
+
+	private static void pPrintOmpNode(PrintStream out, String prefix,
+			OmpNode ompNode) {
+<span class="nc" id="L362">		OmpNodeKind kind = ompNode.ompNodeKind();</span>
+
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		switch (kind) {</span>
+		case DECLARATIVE:
+<span class="nc" id="L366">			pPrintOmpDeclarative(out, prefix, (OmpDeclarativeNode) ompNode);</span>
+		default:// EXECUTABLE
+<span class="nc" id="L368">			pPrintOmpStatement(out, prefix, (OmpExecutableNode) ompNode);</span>
+		}
+<span class="nc" id="L370">	}</span>
+
+	private static StringBuffer structOrUnion2Pretty(String prefix,
+			StructureOrUnionTypeNode strOrUnion) {
+<span class="nc" id="L374">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L375">		String myIndent = prefix + indention;</span>
+<span class="nc" id="L376">		SequenceNode&lt;FieldDeclarationNode&gt; fields = strOrUnion</span>
+<span class="nc" id="L377">				.getStructDeclList();</span>
+
+<span class="nc" id="L379">		result.append(prefix);</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">		if (strOrUnion.isStruct())</span>
+<span class="nc" id="L381">			result.append(&quot;struct &quot;);</span>
+		else
+<span class="nc" id="L383">			result.append(&quot;union &quot;);</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">		if (strOrUnion.getName() != null)</span>
+<span class="nc" id="L385">			result.append(strOrUnion.getName());</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (fields != null) {</span>
+<span class="nc" id="L387">			int numFields = fields.numChildren();</span>
+
+<span class="nc" id="L389">			result.append(&quot;{&quot;);</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">			for (int i = 0; i &lt; numFields; i++) {</span>
+<span class="nc" id="L391">				FieldDeclarationNode field = fields.getSequenceChild(i);</span>
+
+<span class="nc" id="L393">				result.append(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L394" title="All 2 branches missed.">				if (!(field.getTypeNode() instanceof StructureOrUnionTypeNode))</span>
+<span class="nc" id="L395">					result.append(myIndent);</span>
+<span class="nc" id="L396">				result.append(fieldDeclaration2Pretty(myIndent, field));</span>
+<span class="nc" id="L397">				result.append(&quot;;&quot;);</span>
+			}
+<span class="nc" id="L399">			result.append(&quot;\n&quot;);</span>
+<span class="nc" id="L400">			result.append(prefix);</span>
+<span class="nc" id="L401">			result.append(&quot;}&quot;);</span>
+		}
+<span class="nc" id="L403">		return result;</span>
+	}
+
+	private static StringBuffer fieldDeclaration2Pretty(String prefix,
+			FieldDeclarationNode field) {
+		String type;
+<span class="nc" id="L409">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L410">		String fieldName = field.getName();</span>
+
+<span class="nc" id="L412">		type = type2Pretty(prefix, field.getTypeNode(), true).toString();</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">		if (type.endsWith(&quot;]&quot;)) {</span>
+<span class="nc" id="L414">			Pair&lt;String, String&gt; typeResult = processArrayType(type);</span>
+
+<span class="nc" id="L416">			result.append(typeResult.left);</span>
+<span class="nc" id="L417">			result.append(&quot; &quot;);</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">			if (fieldName != null) {</span>
+<span class="nc" id="L419">				result.append(&quot; &quot;);</span>
+<span class="nc" id="L420">				result.append(fieldName);</span>
+			}
+<span class="nc" id="L422">			result.append(typeResult.right);</span>
+<span class="nc" id="L423">		} else {</span>
+<span class="nc" id="L424">			result.append(type);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">			if (fieldName != null) {</span>
+<span class="nc" id="L426">				result.append(&quot; &quot;);</span>
+<span class="nc" id="L427">				result.append(field.getName());</span>
+			}
+		}
+<span class="nc" id="L430">		return result;</span>
+	}
+
+	private static void pPrintStaticAssertion(PrintStream out, String prefix,
+			StaticAssertionNode assertion) {
+<span class="nc" id="L435">		out.print(prefix);</span>
+<span class="nc" id="L436">		out.print(&quot;(&quot;);</span>
+<span class="nc" id="L437">		out.print(expression2Pretty(assertion.getExpression()));</span>
+<span class="nc" id="L438">		out.print(&quot;, \&quot;&quot;);</span>
+<span class="nc" id="L439">		out.print(assertion.getMessage().getStringRepresentation());</span>
+<span class="nc" id="L440">		out.print(&quot;\&quot;)&quot;);</span>
+<span class="nc" id="L441">	}</span>
+
+	private static void pPrintPragma(PrintStream out, String prefix,
+			PragmaNode pragma) {
+<span class="nc" id="L445">		Iterable&lt;CivlcToken&gt; tokens = pragma.getTokens();</span>
+
+<span class="nc" id="L447">		out.print(prefix);</span>
+<span class="nc" id="L448">		out.print(&quot;#pragma &quot;);</span>
+<span class="nc" id="L449">		out.print(pragma.getPragmaIdentifier().name());</span>
+
+<span class="nc bnc" id="L451" title="All 2 branches missed.">		for (CivlcToken token : tokens) {</span>
+<span class="nc" id="L452">			out.print(&quot; &quot;);</span>
+<span class="nc" id="L453">			out.print(token.getText());</span>
+		}
+<span class="nc" id="L455">	}</span>
+
+	private static StringBuffer enumType2Pretty(String prefix,
+			EnumerationTypeNode enumeration) {
+<span class="nc" id="L459">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L460">		IdentifierNode tag = enumeration.getTag();</span>
+<span class="nc" id="L461">		SequenceNode&lt;EnumeratorDeclarationNode&gt; enumerators = enumeration</span>
+<span class="nc" id="L462">				.enumerators();</span>
+<span class="nc" id="L463">		String myIndent = prefix + indention;</span>
+
+<span class="nc" id="L465">		result.append(prefix);</span>
+<span class="nc" id="L466">		result.append(&quot;enum &quot;);</span>
+<span class="nc bnc" id="L467" title="All 2 branches missed.">		if (tag != null)</span>
+<span class="nc" id="L468">			result.append(tag.name());</span>
+<span class="nc bnc" id="L469" title="All 2 branches missed.">		if (enumerators != null) {</span>
+<span class="nc" id="L470">			int num = enumerators.numChildren();</span>
+
+<span class="nc" id="L472">			result.append(&quot;{&quot;);</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">			for (int i = 0; i &lt; num; i++) {</span>
+<span class="nc" id="L474">				EnumeratorDeclarationNode enumerator = enumerators</span>
+<span class="nc" id="L475">						.getSequenceChild(i);</span>
+
+<span class="nc bnc" id="L477" title="All 2 branches missed.">				if (i != 0)</span>
+<span class="nc" id="L478">					result.append(&quot;,&quot;);</span>
+<span class="nc" id="L479">				result.append(&quot;\n&quot;);</span>
+<span class="nc" id="L480">				result.append(myIndent);</span>
+<span class="nc" id="L481">				result.append(enumeratorDeclaration2Pretty(enumerator));</span>
+			}
+<span class="nc" id="L483">			result.append(&quot;\n&quot;);</span>
+<span class="nc" id="L484">			result.append(prefix);</span>
+<span class="nc" id="L485">			result.append(&quot;}&quot;);</span>
+		}
+<span class="nc" id="L487">		return result;</span>
+	}
+
+	private static StringBuffer enumeratorDeclaration2Pretty(
+			EnumeratorDeclarationNode enumerator) {
+<span class="nc" id="L492">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc" id="L494">		result.append(enumerator.getName());</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">		if (enumerator.getValue() != null) {</span>
+<span class="nc" id="L496">			result.append(&quot;=&quot;);</span>
+<span class="nc" id="L497">			result.append(expression2Pretty(enumerator.getValue()));</span>
+		}
+<span class="nc" id="L499">		return result;</span>
+	}
+
+	private static void pPrintOmpDeclarative(PrintStream out, String prefix,
+			OmpDeclarativeNode ompDeclarative) {
+<span class="nc" id="L504">		OmpDeclarativeNodeKind kind = ompDeclarative.ompDeclarativeNodeKind();</span>
+
+<span class="nc" id="L506">		out.print(&quot;#pragma omp &quot;);</span>
+<span class="nc bnc" id="L507" title="All 3 branches missed.">		switch (kind) {</span>
+		case REDUCTION:
+<span class="nc" id="L509">			out.print(&quot;reduction&quot;);</span>
+<span class="nc" id="L510">			break;</span>
+		case THREADPRIVATE:
+<span class="nc" id="L512">			out.print(&quot;threadprivate&quot;);</span>
+<span class="nc" id="L513">			break;</span>
+		default:
+<span class="nc" id="L515">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L516">					&quot;The OpenMP declarative directive &quot; + kind</span>
+<span class="nc" id="L517">							+ &quot; is not supported yet.&quot;, ompDeclarative</span>
+<span class="nc" id="L518">							.getSource().getLocation(false));</span>
+		}
+<span class="nc" id="L520">		out.print(&quot;(&quot;);</span>
+<span class="nc" id="L521">		out.print(sequenceExpression2Pretty(ompDeclarative.variables()));</span>
+<span class="nc" id="L522">		out.print(&quot;)&quot;);</span>
+<span class="nc" id="L523">	}</span>
+
+	private static void pPrintFunctionDeclaration(PrintStream out,
+			String prefix, FunctionDeclarationNode function) {
+<span class="nc" id="L527">		FunctionTypeNode typeNode = function.getTypeNode();</span>
+<span class="nc" id="L528">		TypeNode returnType = typeNode.getReturnType();</span>
+<span class="nc" id="L529">		SequenceNode&lt;VariableDeclarationNode&gt; paras = typeNode.getParameters();</span>
+<span class="nc" id="L530">		int numOfParas = paras.numChildren();</span>
+<span class="nc" id="L531">		SequenceNode&lt;ContractNode&gt; contracts = function.getContract();</span>
+
+<span class="nc bnc" id="L533" title="All 4 branches missed.">		if (contracts != null &amp;&amp; contracts.numChildren() &gt; 0)</span>
+<span class="nc" id="L534">			pPrintContracts(out, prefix, contracts);</span>
+<span class="nc" id="L535">		out.print(prefix);</span>
+<span class="nc bnc" id="L536" title="All 2 branches missed.">		if (function instanceof AbstractFunctionDefinitionNode)</span>
+<span class="nc" id="L537">			out.print(&quot;$abstract &quot;);</span>
+<span class="nc bnc" id="L538" title="All 2 branches missed.">		if (function.hasGlobalFunctionSpecifier())</span>
+<span class="nc" id="L539">			out.print(&quot;__global__ &quot;);</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">		if (function.hasAtomicFunctionSpeciier())</span>
+<span class="nc" id="L541">			out.print(&quot;$atomic_f &quot;);</span>
+<span class="nc bnc" id="L542" title="All 2 branches missed.">		if (function.hasSystemFunctionSpeciier())</span>
+<span class="nc" id="L543">			out.print(&quot;$system &quot;);</span>
+<span class="nc bnc" id="L544" title="All 2 branches missed.">		if (function.hasInlineFunctionSpecifier())</span>
+<span class="nc" id="L545">			out.print(&quot;inline &quot;);</span>
+<span class="nc bnc" id="L546" title="All 2 branches missed.">		if (function.hasNoreturnFunctionSpecifier())</span>
+<span class="nc" id="L547">			out.print(&quot;_Noreturn &quot;);</span>
+<span class="nc" id="L548">		out.print(type2Pretty(&quot;&quot;, returnType, false));</span>
+<span class="nc" id="L549">		out.print(&quot; &quot;);</span>
+<span class="nc" id="L550">		out.print(function.getName());</span>
+<span class="nc" id="L551">		out.print(&quot;(&quot;);</span>
+<span class="nc bnc" id="L552" title="All 2 branches missed.">		for (int i = 0; i &lt; numOfParas; i++) {</span>
+<span class="nc bnc" id="L553" title="All 2 branches missed.">			if (i != 0)</span>
+<span class="nc" id="L554">				out.print(&quot;, &quot;);</span>
+<span class="nc" id="L555">			out.print(variableDeclaration2Pretty(&quot;&quot;, paras.getSequenceChild(i)));</span>
+		}
+<span class="nc bnc" id="L557" title="All 2 branches missed.">		if (typeNode.hasVariableArgs())</span>
+<span class="nc" id="L558">			out.print(&quot;, ...&quot;);</span>
+<span class="nc" id="L559">		out.print(&quot;)&quot;);</span>
+		// for (int i = 0; i &lt; numContracts; i++) {
+		// out.print(&quot;\n&quot;);
+		// pPrintContract(out, prefix + indention,
+		// contracts.getSequenceChild(i));
+		// }
+
+<span class="nc bnc" id="L566" title="All 2 branches missed.">		if (function instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L567">			CompoundStatementNode body = ((FunctionDefinitionNode) function)</span>
+<span class="nc" id="L568">					.getBody();</span>
+
+<span class="nc" id="L570">			out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L571">			pPrintCompoundStatement(out, prefix + indention, body, true, false);</span>
+<span class="nc" id="L572">		} else {</span>
+<span class="nc" id="L573">			out.print(&quot;;&quot;);</span>
+		}
+<span class="nc" id="L575">	}</span>
+
+	private static void pPrintContracts(PrintStream out, String prefix,
+			SequenceNode&lt;ContractNode&gt; contracts) {
+<span class="nc" id="L579">		String newLinePrefix = prefix + &quot;\n  @ &quot;;</span>
+<span class="nc" id="L580">		int numContracts = contracts.numChildren();</span>
+<span class="nc" id="L581">		boolean isFirst = true;</span>
+
+<span class="nc" id="L583">		out.print(prefix);</span>
+<span class="nc" id="L584">		out.print(&quot;/*@ &quot;);</span>
+<span class="nc bnc" id="L585" title="All 2 branches missed.">		for (int i = 0; i &lt; numContracts; i++) {</span>
+<span class="nc" id="L586">			ContractNode contract = contracts.getSequenceChild(i);</span>
+
+<span class="nc bnc" id="L588" title="All 2 branches missed.">			if (isFirst)</span>
+<span class="nc" id="L589">				isFirst = false;</span>
+			else
+<span class="nc" id="L591">				out.print(newLinePrefix);</span>
+<span class="nc" id="L592">			pPrintContractNode(out, newLinePrefix, contract);</span>
+		}
+<span class="nc" id="L594">		out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L595">		out.print(prefix);</span>
+<span class="nc" id="L596">		out.print(&quot;  @*/\n&quot;);</span>
+
+<span class="nc" id="L598">	}</span>
+
+	private static void pPrintContractNode(PrintStream out, String prefix,
+			ContractNode contract) {
+<span class="nc" id="L602">		ContractKind kind = contract.contractKind();</span>
+
+<span class="nc bnc" id="L604" title="All 11 branches missed.">		switch (kind) {</span>
+		case ASSUMES: {
+<span class="nc" id="L606">			AssumesNode assumes = (AssumesNode) contract;</span>
+
+<span class="nc" id="L608">			out.print(&quot;assumes &quot;);</span>
+<span class="nc" id="L609">			out.print(expression2Pretty(assumes.getPredicate()));</span>
+<span class="nc" id="L610">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L611">			break;</span>
+		}
+		case ASSIGNS_READS: {
+<span class="nc" id="L614">			AssignsOrReadsNode assignsOrReads = (AssignsOrReadsNode) contract;</span>
+			// ExpressionNode condition = assignsOrReads.getCondition();
+
+<span class="nc bnc" id="L617" title="All 2 branches missed.">			if (assignsOrReads.isAssigns())</span>
+<span class="nc" id="L618">				out.print(&quot;assigns &quot;);</span>
+			else
+<span class="nc" id="L620">				out.print(&quot;reads &quot;);</span>
+<span class="nc" id="L621">			pPrintSequenceNode(assignsOrReads.getMemoryList(), out);</span>
+<span class="nc" id="L622">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L623">			break;</span>
+		}
+		case DEPENDS: {
+<span class="nc" id="L626">			DependsNode depends = (DependsNode) contract;</span>
+
+<span class="nc" id="L628">			out.print(&quot;depends &quot;);</span>
+<span class="nc" id="L629">			out.print(sequenceDependsEvent2Pretty(depends.getEventList()));</span>
+<span class="nc" id="L630">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L631">			break;</span>
+		}
+		case ENSURES: {
+<span class="nc" id="L634">			EnsuresNode ensures = (EnsuresNode) contract;</span>
+
+<span class="nc" id="L636">			out.print(&quot;ensures &quot;);</span>
+<span class="nc" id="L637">			out.print(expression2Pretty(ensures.getExpression()));</span>
+<span class="nc" id="L638">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L639">			break;</span>
+		}
+		case GUARDS: {
+<span class="nc" id="L642">			GuardsNode guard = (GuardsNode) contract;</span>
+
+<span class="nc" id="L644">			out.print(&quot;guards &quot;);</span>
+<span class="nc" id="L645">			out.print(expression2Pretty(guard.getExpression()));</span>
+<span class="nc" id="L646">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L647">			break;</span>
+		}
+		case MPI_COLLECTIVE: {
+<span class="nc" id="L650">			MPICollectiveBlockNode colBlock = (MPICollectiveBlockNode) contract;</span>
+<span class="nc" id="L651">			String indentedNewLinePrefix = prefix + &quot;  &quot;;</span>
+
+<span class="nc" id="L653">			out.print(&quot;\\mpi_collective(&quot;);</span>
+<span class="nc" id="L654">			out.print(expression2Pretty(colBlock.getMPIComm()));</span>
+<span class="nc" id="L655">			out.print(&quot;,&quot; + colBlock.getCollectiveKind());</span>
+<span class="nc bnc" id="L656" title="All 2 branches missed.">			for (ContractNode clause : colBlock.getBody()) {</span>
+<span class="nc" id="L657">				pPrintContractNode(out, indentedNewLinePrefix, clause);</span>
+			}
+<span class="nc" id="L659">			break;</span>
+		}
+		case REQUIRES: {
+<span class="nc" id="L662">			RequiresNode requires = (RequiresNode) contract;</span>
+
+<span class="nc" id="L664">			out.print(&quot;requires &quot;);</span>
+<span class="nc" id="L665">			out.print(expression2Pretty(requires.getExpression()));</span>
+<span class="nc" id="L666">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L667">			break;</span>
+		}
+		case BEHAVIOR: {
+<span class="nc" id="L670">			BehaviorNode behavior = (BehaviorNode) contract;</span>
+<span class="nc" id="L671">			SequenceNode&lt;ContractNode&gt; body = behavior.getBody();</span>
+<span class="nc" id="L672">			String indentedNewLinePrefix = prefix + &quot;  &quot;;</span>
+
+<span class="nc" id="L674">			out.print(&quot;behavior &quot;);</span>
+<span class="nc" id="L675">			out.print(behavior.getName().name());</span>
+<span class="nc" id="L676">			out.print(&quot;:&quot;);</span>
+<span class="nc bnc" id="L677" title="All 2 branches missed.">			for (ContractNode clause : body) {</span>
+				// out.print(&quot;\n&quot;);
+<span class="nc" id="L679">				out.print(indentedNewLinePrefix);</span>
+<span class="nc" id="L680">				pPrintContractNode(out, indentedNewLinePrefix, clause);</span>
+			}
+<span class="nc" id="L682">			break;</span>
+		}
+		case INVARIANT: {
+<span class="nc" id="L685">			InvariantNode invariant = (InvariantNode) contract;</span>
+
+<span class="nc bnc" id="L687" title="All 2 branches missed.">			if (invariant.isLoopInvariant())</span>
+<span class="nc" id="L688">				out.print(&quot;loop &quot;);</span>
+<span class="nc" id="L689">			out.print(&quot;invariant &quot;);</span>
+<span class="nc" id="L690">			out.print(expression2Pretty(invariant.getExpression()));</span>
+<span class="nc" id="L691">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L692">			break;</span>
+		}
+		case PURE: {
+<span class="nc" id="L695">			out.print(&quot;pure;&quot;);</span>
+<span class="nc" id="L696">			break;</span>
+		}
+		default:
+<span class="nc" id="L699">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L700">					&quot;pretty printing contract node of &quot; + kind + &quot; kind&quot;);</span>
+		}
+
+<span class="nc" id="L703">	}</span>
+
+	private static StringBuffer sequenceDependsEvent2Pretty(
+			SequenceNode&lt;DependsEventNode&gt; eventList) {
+<span class="nc" id="L707">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L708">		boolean isFirst = true;</span>
+
+<span class="nc bnc" id="L710" title="All 2 branches missed.">		for (DependsEventNode event : eventList) {</span>
+<span class="nc bnc" id="L711" title="All 2 branches missed.">			if (isFirst)</span>
+<span class="nc" id="L712">				isFirst = false;</span>
+			else
+<span class="nc" id="L714">				result.append(&quot;, &quot;);</span>
+<span class="nc" id="L715">			result.append(dependsEvent2Pretty(event));</span>
+		}
+<span class="nc" id="L717">		return result;</span>
+	}
+
+	private static StringBuffer dependsEvent2Pretty(DependsEventNode event) {
+<span class="nc" id="L721">		DependsEventNodeKind kind = event.getEventKind();</span>
+<span class="nc" id="L722">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc bnc" id="L724" title="All 6 branches missed.">		switch (kind) {</span>
+		case MEMORY: {
+<span class="nc" id="L726">			MemoryEventNode rwEvent = (MemoryEventNode) event;</span>
+
+<span class="nc bnc" id="L728" title="All 2 branches missed.">			if (rwEvent.isRead())</span>
+<span class="nc" id="L729">				result.append(&quot;\\read&quot;);</span>
+			else
+<span class="nc" id="L731">				result.append(&quot;\\write&quot;);</span>
+<span class="nc" id="L732">			result.append(&quot;(&quot;);</span>
+<span class="nc" id="L733">			result.append(sequenceExpression2Pretty(rwEvent.getMemoryList()));</span>
+<span class="nc" id="L734">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L735">			break;</span>
+		}
+		case COMPOSITE: {
+<span class="nc" id="L738">			CompositeEventNode opEvent = (CompositeEventNode) event;</span>
+<span class="nc" id="L739">			EventOperator op = opEvent.eventOperator();</span>
+
+<span class="nc" id="L741">			result.append(&quot;(&quot;);</span>
+<span class="nc" id="L742">			result.append(dependsEvent2Pretty(opEvent.getLeft()));</span>
+<span class="nc" id="L743">			result.append(&quot;)&quot;);</span>
+<span class="nc bnc" id="L744" title="All 4 branches missed.">			switch (op) {</span>
+			case UNION:
+<span class="nc" id="L746">				result.append(&quot; + &quot;);</span>
+<span class="nc" id="L747">				break;</span>
+			case DIFFERENCE:
+<span class="nc" id="L749">				result.append(&quot; - &quot;);</span>
+<span class="nc" id="L750">				break;</span>
+			case INTERSECT:
+<span class="nc" id="L752">				result.append(&quot; &amp; &quot;);</span>
+<span class="nc" id="L753">				break;</span>
+			default:
+<span class="nc" id="L755">				throw new ABCUnsupportedException(</span>
+<span class="nc" id="L756">						&quot;pretty printing depends event node with &quot; + kind</span>
+<span class="nc" id="L757">								+ &quot; operator&quot;);</span>
+			}
+<span class="nc" id="L759">			result.append(&quot;(&quot;);</span>
+<span class="nc" id="L760">			result.append(dependsEvent2Pretty(opEvent.getRight()));</span>
+<span class="nc" id="L761">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L762">			break;</span>
+		}
+		case CALL: {
+<span class="nc" id="L765">			CallEventNode callEvent = (CallEventNode) event;</span>
+<span class="nc" id="L766">			SequenceNode&lt;ExpressionNode&gt; args = callEvent.arguments();</span>
+
+<span class="nc" id="L768">			result.append(&quot;\\call(&quot;);</span>
+<span class="nc" id="L769">			result.append(callEvent.getFunction().getIdentifier().name());</span>
+<span class="nc bnc" id="L770" title="All 2 branches missed.">			if (args.numChildren() &gt; 0)</span>
+<span class="nc" id="L771">				result.append(&quot;, &quot;);</span>
+<span class="nc" id="L772">			result.append(sequenceExpression2Pretty(callEvent.arguments()));</span>
+<span class="nc" id="L773">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L774">			break;</span>
+		}
+		case NOACT:
+<span class="nc" id="L777">			result.append(&quot;\\noact&quot;);</span>
+<span class="nc" id="L778">			break;</span>
+		case ANYACT:
+<span class="nc" id="L780">			result.append(&quot;\\anyact&quot;);</span>
+<span class="nc" id="L781">			break;</span>
+		default:
+<span class="nc" id="L783">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L784">					&quot;pretty printing depends event node of &quot; + kind + &quot; kind&quot;);</span>
+		}
+<span class="nc" id="L786">		return result;</span>
+	}
+
+	@SuppressWarnings(&quot;unused&quot;)
+	private static void pPrintContract(PrintStream out, String prefix,
+			ContractNode contract) {
+<span class="nc" id="L792">		ContractKind kind = contract.contractKind();</span>
+
+<span class="nc" id="L794">		out.print(prefix);</span>
+<span class="nc bnc" id="L795" title="All 6 branches missed.">		switch (kind) {</span>
+		case ASSIGNS_READS: {
+<span class="nc" id="L797">			AssignsOrReadsNode assignsOrReads = (AssignsOrReadsNode) contract;</span>
+			// ExpressionNode condition = assignsOrReads.getCondition();
+
+<span class="nc bnc" id="L800" title="All 2 branches missed.">			if (assignsOrReads.isAssigns())</span>
+<span class="nc" id="L801">				out.print(&quot;$assigns&quot;);</span>
+			else
+<span class="nc" id="L803">				out.print(&quot;$reads&quot;);</span>
+			// if (condition != null) {
+			// out.print(&quot; [&quot;);
+			// out.print(expression2Pretty(condition));
+			// out.print(&quot;] &quot;);
+			// }
+<span class="nc" id="L809">			out.print(&quot;{&quot;);</span>
+<span class="nc" id="L810">			pPrintSequenceNode(assignsOrReads.getMemoryList(), out);</span>
+<span class="nc" id="L811">			out.print(&quot;}&quot;);</span>
+<span class="nc" id="L812">			break;</span>
+		}
+		case DEPENDS: {
+<span class="nc" id="L815">			DependsNode depends = (DependsNode) contract;</span>
+			// ExpressionNode condition = depends.getCondition();
+
+<span class="nc" id="L818">			out.print(&quot;depends&quot;);</span>
+			// if (condition != null) {
+			// out.print(&quot; [&quot;);
+			// out.print(expression2Pretty(condition));
+			// out.print(&quot;] &quot;);
+			// }
+<span class="nc" id="L824">			out.print(&quot;{&quot;);</span>
+			// out.print(sequenceExpression2Pretty(depends.getEventList()));
+<span class="nc" id="L826">			out.print(&quot;}&quot;);</span>
+<span class="nc" id="L827">			break;</span>
+		}
+		case ENSURES: {
+<span class="nc" id="L830">			EnsuresNode ensures = (EnsuresNode) contract;</span>
+
+<span class="nc" id="L832">			out.print(&quot;$ensures&quot;);</span>
+<span class="nc" id="L833">			out.print(&quot;{&quot;);</span>
+<span class="nc" id="L834">			out.print(expression2Pretty(ensures.getExpression()));</span>
+<span class="nc" id="L835">			out.print(&quot;}&quot;);</span>
+<span class="nc" id="L836">			break;</span>
+		}
+		case GUARDS: {
+<span class="nc" id="L839">			GuardsNode guard = (GuardsNode) contract;</span>
+
+<span class="nc" id="L841">			out.print(&quot;$guard&quot;);</span>
+<span class="nc" id="L842">			out.print(&quot;{&quot;);</span>
+<span class="nc" id="L843">			out.print(expression2Pretty(guard.getExpression()));</span>
+<span class="nc" id="L844">			out.print(&quot;}&quot;);</span>
+<span class="nc" id="L845">			break;</span>
+		}
+		case REQUIRES: {
+<span class="nc" id="L848">			RequiresNode requires = (RequiresNode) contract;</span>
+
+<span class="nc" id="L850">			out.print(&quot;$requires&quot;);</span>
+<span class="nc" id="L851">			out.print(&quot;{&quot;);</span>
+<span class="nc" id="L852">			out.print(expression2Pretty(requires.getExpression()));</span>
+<span class="nc" id="L853">			out.print(&quot;}&quot;);</span>
+<span class="nc" id="L854">			break;</span>
+		}
+		default:
+<span class="nc" id="L857">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L858">					&quot;pretty printing contract node of &quot; + kind + &quot; kind&quot;);</span>
+		}
+<span class="nc" id="L860">	}</span>
+
+	private static void pPrintCompoundStatement(PrintStream out, String prefix,
+			CompoundStatementNode compound, boolean isBody, boolean isSwitchBody) {
+<span class="nc" id="L864">		int numChildren = compound.numChildren();</span>
+<span class="nc" id="L865">		String myIndent = prefix;</span>
+<span class="nc" id="L866">		String myPrefix = prefix;</span>
+
+<span class="nc bnc" id="L868" title="All 2 branches missed.">		if (isBody) {</span>
+<span class="nc" id="L869">			myPrefix = prefix.substring(0,</span>
+<span class="nc bnc" id="L870" title="All 2 branches missed.">					prefix.length() - 2 &gt; 0 ? prefix.length() - 2 : 0);</span>
+<span class="nc" id="L871">			out.print(myPrefix);</span>
+<span class="nc" id="L872">		} else {</span>
+<span class="nc" id="L873">			out.print(myPrefix);</span>
+<span class="nc" id="L874">			myIndent = prefix + indention;</span>
+		}
+<span class="nc" id="L876">		out.print(&quot;{\n&quot;);</span>
+<span class="nc bnc" id="L877" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L878">			BlockItemNode child = compound.getSequenceChild(i);</span>
+
+<span class="nc bnc" id="L880" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc bnc" id="L881" title="All 4 branches missed.">				if (isSwitchBody &amp;&amp; !(child instanceof LabeledStatementNode))</span>
+<span class="nc" id="L882">					pPrintBlockItem(out, myIndent + indention, child);</span>
+				else
+<span class="nc" id="L884">					pPrintBlockItem(out, myIndent, child);</span>
+<span class="nc" id="L885">				out.print(&quot;\n&quot;);</span>
+			}
+		}
+<span class="nc" id="L888">		out.print(myPrefix);</span>
+<span class="nc" id="L889">		out.print(&quot;}&quot;);</span>
+<span class="nc" id="L890">	}</span>
+
+	private static void pPrintBlockItem(PrintStream out, String prefix,
+			BlockItemNode block) {
+<span class="nc" id="L894">		BlockItemKind kind = block.blockItemKind();</span>
+
+<span class="nc bnc" id="L896" title="All 8 branches missed.">		switch (kind) {</span>
+		case STATEMENT:
+<span class="nc" id="L898">			pPrintStatement(out, prefix, (StatementNode) block, false, false);</span>
+<span class="nc" id="L899">			break;</span>
+		case ORDINARY_DECLARATION:
+<span class="nc bnc" id="L901" title="All 2 branches missed.">			if (block instanceof VariableDeclarationNode) {</span>
+<span class="nc" id="L902">				out.print(variableDeclaration2Pretty(prefix,</span>
+<span class="nc" id="L903">						(VariableDeclarationNode) block));</span>
+
+<span class="nc" id="L905">				out.print(&quot;;&quot;);</span>
+<span class="nc bnc" id="L906" title="All 2 branches missed.">			} else if (block instanceof FunctionDeclarationNode)</span>
+<span class="nc" id="L907">				pPrintFunctionDeclaration(out, prefix,</span>
+<span class="nc" id="L908">						(FunctionDeclarationNode) block);</span>
+<span class="nc" id="L909">			break;</span>
+		case TYPEDEF:
+<span class="nc" id="L911">			pPrintTypedefDeclaration(out, prefix,</span>
+<span class="nc" id="L912">					(TypedefDeclarationNode) block);</span>
+<span class="nc" id="L913">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L914">			break;</span>
+		case ENUMERATION:
+<span class="nc" id="L916">			out.print(enumType2Pretty(prefix, (EnumerationTypeNode) block)</span>
+<span class="nc" id="L917">					+ &quot;;&quot;);</span>
+<span class="nc" id="L918">			break;</span>
+		case OMP_DECLARATIVE:
+<span class="nc" id="L920">			pPrintOmpDeclarative(out, prefix, (OmpDeclarativeNode) block);</span>
+<span class="nc" id="L921">			break;</span>
+		case PRAGMA:
+<span class="nc" id="L923">			pPrintPragma(out, prefix, (PragmaNode) block);</span>
+<span class="nc" id="L924">			break;</span>
+		case STRUCT_OR_UNION:
+<span class="nc" id="L926">			out.print(structOrUnion2Pretty(prefix,</span>
+<span class="nc" id="L927">					(StructureOrUnionTypeNode) block));</span>
+<span class="nc" id="L928">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L929">			break;</span>
+		default:
+<span class="nc" id="L931">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L932">					&quot;pretty print of block item node of &quot; + kind + &quot; kind&quot;);</span>
+		}
+<span class="nc" id="L934">	}</span>
+
+	private static void pPrintTypedefDeclaration(PrintStream out,
+			String prefix, TypedefDeclarationNode typedef) {
+
+<span class="nc" id="L939">		out.print(prefix);</span>
+<span class="nc" id="L940">		out.print(&quot;typedef &quot;);</span>
+<span class="nc" id="L941">		out.print(type2Pretty(&quot;&quot;, typedef.getTypeNode(), true));</span>
+<span class="nc" id="L942">		out.print(&quot; &quot;);</span>
+<span class="nc" id="L943">		out.print(typedef.getName());</span>
+<span class="nc" id="L944">	}</span>
+
+	private static void pPrintStatement(PrintStream out, String prefix,
+			StatementNode statement, boolean isBody, boolean isSwitchBody) {
+<span class="nc" id="L948">		StatementKind kind = statement.statementKind();</span>
+
+<span class="nc bnc" id="L950" title="All 14 branches missed.">		switch (kind) {</span>
+		// case ASSUME:
+		// pPrintAssume(out, prefix, (AssumeNode) statement);
+		// break;
+		// case ASSERT:
+		// pPrintAssert(out, prefix, (AssertNode) statement);
+		// break;
+		case ATOMIC:
+<span class="nc" id="L958">			pPrintAtomic(out, prefix, (AtomicNode) statement);</span>
+<span class="nc" id="L959">			break;</span>
+		case COMPOUND:
+<span class="nc" id="L961">			pPrintCompoundStatement(out, prefix,</span>
+<span class="nc" id="L962">					(CompoundStatementNode) statement, isBody, isSwitchBody);</span>
+<span class="nc" id="L963">			break;</span>
+		case EXPRESSION:
+<span class="nc" id="L965">			pPrintExpressionStatement(out, prefix,</span>
+<span class="nc" id="L966">					(ExpressionStatementNode) statement);</span>
+<span class="nc" id="L967">			break;</span>
+		case CHOOSE:
+<span class="nc" id="L969">			pPrintChooseStatement(out, prefix, (ChooseStatementNode) statement);</span>
+<span class="nc" id="L970">			break;</span>
+		case CIVL_FOR:
+<span class="nc" id="L972">			pPrintCivlForStatement(out, prefix, (CivlForNode) statement);</span>
+<span class="nc" id="L973">			break;</span>
+		case IF:
+<span class="nc" id="L975">			pPrintIf(out, prefix, (IfNode) statement);</span>
+<span class="nc" id="L976">			break;</span>
+		case JUMP:
+<span class="nc" id="L978">			pPrintJump(out, prefix, (JumpNode) statement);</span>
+<span class="nc" id="L979">			break;</span>
+		case LABELED:
+<span class="nc" id="L981">			pPrintLabeled(out, prefix, (LabeledStatementNode) statement);</span>
+<span class="nc" id="L982">			break;</span>
+		case LOOP:
+<span class="nc" id="L984">			pPrintLoop(out, prefix, (LoopNode) statement);</span>
+<span class="nc" id="L985">			break;</span>
+		case NULL:
+<span class="nc" id="L987">			out.print(prefix);</span>
+<span class="nc" id="L988">			out.print(&quot;;&quot;);</span>
+<span class="nc" id="L989">			break;</span>
+		case OMP:
+<span class="nc" id="L991">			pPrintOmpStatement(out, prefix, (OmpExecutableNode) statement);</span>
+<span class="nc" id="L992">			break;</span>
+		case SWITCH:
+<span class="nc" id="L994">			pPrintSwitch(out, prefix, (SwitchNode) statement);</span>
+<span class="nc" id="L995">			break;</span>
+		case WHEN:
+<span class="nc" id="L997">			pPrintWhen(out, prefix, (WhenNode) statement);</span>
+<span class="nc" id="L998">			break;</span>
+		default:
+<span class="nc" id="L1000">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L1001">					&quot;pretty print of statement node of &quot; + kind + &quot; kind&quot;);</span>
+		}
+<span class="nc" id="L1003">	}</span>
+
+	private static void pPrintChooseStatement(PrintStream out, String prefix,
+			ChooseStatementNode choose) {
+<span class="nc" id="L1007">		int numChildren = choose.numChildren();</span>
+<span class="nc" id="L1008">		String myIndent = prefix + indention;</span>
+
+<span class="nc" id="L1010">		out.print(prefix);</span>
+<span class="nc" id="L1011">		out.println(&quot;$choose{&quot;);</span>
+
+<span class="nc bnc" id="L1013" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L1014">			StatementNode statement = choose.getSequenceChild(i);</span>
+
+<span class="nc" id="L1016">			pPrintStatement(out, myIndent, statement, false, true);</span>
+<span class="nc" id="L1017">			out.print(&quot;\n&quot;);</span>
+		}
+<span class="nc" id="L1019">		out.print(prefix);</span>
+<span class="nc" id="L1020">		out.print(&quot;}&quot;);</span>
+<span class="nc" id="L1021">	}</span>
+
+	// private static void pPrintAssert(PrintStream out, String prefix,
+	// AssertNode assertNode) {
+	// SequenceNode&lt;ExpressionNode&gt; explanation = assertNode.getExplanation();
+	//
+	// out.print(prefix);
+	// out.print(&quot;$assert &quot;);
+	// out.print(expression2Pretty(assertNode.getCondition()));
+	// if (explanation != null) {
+	// int numArgs = explanation.numChildren();
+	//
+	// out.print(&quot; : &quot;);
+	// for (int i = 0; i &lt; numArgs; i++) {
+	// if (i != 0)
+	// out.print(&quot;, &quot;);
+	// out.print(expression2Pretty(explanation.getSequenceChild(i)));
+	// }
+	// }
+	// out.print(&quot;;&quot;);
+	// }
+
+	private static void pPrintOmpStatement(PrintStream out, String prefix,
+			OmpExecutableNode ompStmt) {
+<span class="nc" id="L1045">		OmpExecutableKind kind = ompStmt.ompExecutableKind();</span>
+<span class="nc" id="L1046">		SequenceNode&lt;IdentifierExpressionNode&gt; privateList = ompStmt</span>
+<span class="nc" id="L1047">				.privateList(), firstPrivateList = ompStmt.firstprivateList(), sharedList = ompStmt</span>
+<span class="nc" id="L1048">				.sharedList(), copyinList = ompStmt.copyinList(), copyPrivateList = ompStmt</span>
+<span class="nc" id="L1049">				.copyprivateList(), lastPrivateList = ompStmt.lastprivateList();</span>
+<span class="nc" id="L1050">		SequenceNode&lt;OmpReductionNode&gt; reductionList = ompStmt.reductionList();</span>
+<span class="nc" id="L1051">		boolean nowait = ompStmt.nowait();</span>
+		// String myIndent = prefix + indention;
+<span class="nc" id="L1053">		StatementNode block = ompStmt.statementNode();</span>
+
+<span class="nc" id="L1055">		out.print(prefix);</span>
+<span class="nc" id="L1056">		out.print(&quot;#pragma omp &quot;);</span>
+<span class="nc bnc" id="L1057" title="All 3 branches missed.">		switch (kind) {</span>
+		case PARALLEL:
+<span class="nc" id="L1059">			pPrintOmpParallel(out, prefix, (OmpParallelNode) ompStmt);</span>
+<span class="nc" id="L1060">			break;</span>
+		case SYNCHRONIZATION:
+<span class="nc" id="L1062">			pPrintOmpSync(out, prefix, (OmpSyncNode) ompStmt);</span>
+<span class="nc" id="L1063">			break;</span>
+		default: // case WORKSHARING:
+<span class="nc" id="L1065">			pPrintOmpWorksharing(out, prefix, (OmpWorksharingNode) ompStmt);</span>
+			break;
+		}
+<span class="nc bnc" id="L1068" title="All 2 branches missed.">		if (nowait)</span>
+<span class="nc" id="L1069">			out.print(&quot;nowait&quot;);</span>
+<span class="nc bnc" id="L1070" title="All 2 branches missed.">		if (privateList != null) {</span>
+<span class="nc" id="L1071">			out.print(&quot;private(&quot;);</span>
+<span class="nc" id="L1072">			out.print(sequenceExpression2Pretty(privateList));</span>
+<span class="nc" id="L1073">			out.print(&quot;) &quot;);</span>
+		}
+<span class="nc bnc" id="L1075" title="All 2 branches missed.">		if (firstPrivateList != null) {</span>
+<span class="nc" id="L1076">			out.print(&quot;firstprivate(&quot;);</span>
+<span class="nc" id="L1077">			out.print(sequenceExpression2Pretty(firstPrivateList));</span>
+<span class="nc" id="L1078">			out.print(&quot;) &quot;);</span>
+		}
+<span class="nc bnc" id="L1080" title="All 2 branches missed.">		if (sharedList != null) {</span>
+<span class="nc" id="L1081">			out.print(&quot;shared(&quot;);</span>
+<span class="nc" id="L1082">			out.print(sequenceExpression2Pretty(sharedList));</span>
+<span class="nc" id="L1083">			out.print(&quot;) &quot;);</span>
+		}
+<span class="nc bnc" id="L1085" title="All 2 branches missed.">		if (copyinList != null) {</span>
+<span class="nc" id="L1086">			out.print(&quot;copyin(&quot;);</span>
+<span class="nc" id="L1087">			out.print(sequenceExpression2Pretty(copyinList));</span>
+<span class="nc" id="L1088">			out.print(&quot;) &quot;);</span>
+		}
+<span class="nc bnc" id="L1090" title="All 2 branches missed.">		if (copyPrivateList != null) {</span>
+<span class="nc" id="L1091">			out.print(&quot;copyprivate(&quot;);</span>
+<span class="nc" id="L1092">			out.print(sequenceExpression2Pretty(copyPrivateList));</span>
+<span class="nc" id="L1093">			out.print(&quot;) &quot;);</span>
+		}
+<span class="nc bnc" id="L1095" title="All 2 branches missed.">		if (lastPrivateList != null) {</span>
+<span class="nc" id="L1096">			out.print(&quot;lastprivate(&quot;);</span>
+<span class="nc" id="L1097">			out.print(sequenceExpression2Pretty(lastPrivateList));</span>
+<span class="nc" id="L1098">			out.print(&quot;) &quot;);</span>
+		}
+<span class="nc bnc" id="L1100" title="All 2 branches missed.">		if (reductionList != null) {</span>
+<span class="nc" id="L1101">			out.print(sequenceReduction2Pretty(reductionList));</span>
+		}
+
+<span class="nc bnc" id="L1104" title="All 2 branches missed.">		if (block != null) {</span>
+<span class="nc" id="L1105">			out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L1106">			pPrintStatement(out, prefix, block, false, false);</span>
+		}
+<span class="nc" id="L1108">	}</span>
+
+	private static void pPrintOmpWorksharing(PrintStream out, String prefix,
+			OmpWorksharingNode ompWs) {
+<span class="nc" id="L1112">		OmpWorksharingNodeKind kind = ompWs.ompWorkshareNodeKind();</span>
+
+<span class="nc bnc" id="L1114" title="All 4 branches missed.">		switch (kind) {</span>
+		case FOR: {
+<span class="nc" id="L1116">			OmpForNode forNode = (OmpForNode) ompWs;</span>
+<span class="nc" id="L1117">			int collapse = forNode.collapse();</span>
+<span class="nc" id="L1118">			OmpScheduleKind schedule = forNode.schedule();</span>
+
+<span class="nc" id="L1120">			out.print(&quot;for &quot;);</span>
+<span class="nc bnc" id="L1121" title="All 2 branches missed.">			if (schedule != OmpScheduleKind.NONE) {</span>
+<span class="nc" id="L1122">				out.print(&quot;schedule(&quot;);</span>
+<span class="nc bnc" id="L1123" title="All 5 branches missed.">				switch (forNode.schedule()) {</span>
+				case AUTO:
+<span class="nc" id="L1125">					out.print(&quot;auto&quot;);</span>
+<span class="nc" id="L1126">					break;</span>
+				case DYNAMIC:
+<span class="nc" id="L1128">					out.print(&quot;dynamic&quot;);</span>
+<span class="nc" id="L1129">					break;</span>
+				case GUIDED:
+<span class="nc" id="L1131">					out.print(&quot;guided&quot;);</span>
+<span class="nc" id="L1132">					break;</span>
+				case RUNTIME:
+<span class="nc" id="L1134">					out.print(&quot;runtime&quot;);</span>
+<span class="nc" id="L1135">					break;</span>
+				default:// STATIC
+<span class="nc" id="L1137">					out.print(&quot;static&quot;);</span>
+					break;
+				}
+<span class="nc bnc" id="L1140" title="All 2 branches missed.">				if (forNode.chunkSize() != null) {</span>
+<span class="nc" id="L1141">					out.print(&quot;, &quot;);</span>
+<span class="nc" id="L1142">					out.print(expression2Pretty(forNode.chunkSize()));</span>
+				}
+<span class="nc" id="L1144">				out.print(&quot;) &quot;);</span>
+			}
+<span class="nc bnc" id="L1146" title="All 2 branches missed.">			if (collapse &gt; 1) {</span>
+<span class="nc" id="L1147">				out.print(&quot;collapse(&quot;);</span>
+<span class="nc" id="L1148">				out.print(collapse);</span>
+<span class="nc" id="L1149">				out.print(&quot;) &quot;);</span>
+			}
+<span class="nc bnc" id="L1151" title="All 2 branches missed.">			if (forNode.ordered())</span>
+<span class="nc" id="L1152">				out.print(&quot;ordered &quot;);</span>
+<span class="nc" id="L1153">			break;</span>
+		}
+		case SECTIONS:
+<span class="nc" id="L1156">			out.print(&quot;sections &quot;);</span>
+<span class="nc" id="L1157">			break;</span>
+		case SINGLE:
+<span class="nc" id="L1159">			out.print(&quot;single &quot;);</span>
+<span class="nc" id="L1160">			break;</span>
+		default: // case SECTION:
+<span class="nc" id="L1162">			out.print(&quot;section &quot;);</span>
+		}
+<span class="nc" id="L1164">	}</span>
+
+	private static void pPrintOmpSync(PrintStream out, String prefix,
+			OmpSyncNode ompSync) {
+<span class="nc" id="L1168">		OmpSyncNodeKind kind = ompSync.ompSyncNodeKind();</span>
+
+<span class="nc bnc" id="L1170" title="All 6 branches missed.">		switch (kind) {</span>
+		case MASTER:
+<span class="nc" id="L1172">			out.print(&quot;master &quot;);</span>
+<span class="nc" id="L1173">			break;</span>
+		case CRITICAL:
+<span class="nc" id="L1175">			out.print(&quot;critical&quot;);</span>
+<span class="nc bnc" id="L1176" title="All 2 branches missed.">			if (ompSync.criticalName() != null) {</span>
+<span class="nc" id="L1177">				out.print(&quot;(&quot;);</span>
+<span class="nc" id="L1178">				out.print(ompSync.criticalName().name());</span>
+<span class="nc" id="L1179">				out.print(&quot;)&quot;);</span>
+			}
+<span class="nc" id="L1181">			out.print(&quot; &quot;);</span>
+<span class="nc" id="L1182">			break;</span>
+		case BARRIER:
+<span class="nc" id="L1184">			out.print(&quot;barrier &quot;);</span>
+<span class="nc" id="L1185">			break;</span>
+		case FLUSH:
+<span class="nc" id="L1187">			out.print(&quot;flush &quot;);</span>
+<span class="nc bnc" id="L1188" title="All 2 branches missed.">			if (ompSync.flushedList() != null) {</span>
+<span class="nc" id="L1189">				out.print(&quot;(&quot;);</span>
+<span class="nc" id="L1190">				out.print(sequenceExpression2Pretty(ompSync.flushedList()));</span>
+<span class="nc" id="L1191">				out.print(&quot;)&quot;);</span>
+			}
+<span class="nc" id="L1193">			break;</span>
+		case OMPATOMIC:
+<span class="nc" id="L1195">			out.print(&quot;atomic &quot;);</span>
+<span class="nc" id="L1196">			break;</span>
+		default:// ORDERED
+<span class="nc" id="L1198">			out.print(&quot;ordered &quot;);</span>
+		}
+<span class="nc" id="L1200">	}</span>
+
+	private static void pPrintOmpParallel(PrintStream out, String prefix,
+			OmpParallelNode para) {
+<span class="nc" id="L1204">		ExpressionNode ifClause = para.ifClause(), numThreads = para</span>
+<span class="nc" id="L1205">				.numThreads();</span>
+<span class="nc" id="L1206">		boolean isDefaultShared = para.isDefaultShared();</span>
+
+<span class="nc" id="L1208">		out.print(&quot;parallel &quot;);</span>
+<span class="nc bnc" id="L1209" title="All 2 branches missed.">		if (ifClause != null) {</span>
+<span class="nc" id="L1210">			out.print(&quot;if(&quot;);</span>
+<span class="nc" id="L1211">			out.print(expression2Pretty(ifClause));</span>
+<span class="nc" id="L1212">			out.print(&quot;) &quot;);</span>
+		}
+<span class="nc bnc" id="L1214" title="All 2 branches missed.">		if (numThreads != null) {</span>
+<span class="nc" id="L1215">			out.print(&quot;num_threads(&quot;);</span>
+<span class="nc" id="L1216">			out.print(expression2Pretty(numThreads));</span>
+<span class="nc" id="L1217">			out.print(&quot;) &quot;);</span>
+		}
+<span class="nc bnc" id="L1219" title="All 2 branches missed.">		if (isDefaultShared)</span>
+<span class="nc" id="L1220">			out.print(&quot;default(shared) &quot;);</span>
+		else
+<span class="nc" id="L1222">			out.print(&quot;default(none) &quot;);</span>
+<span class="nc" id="L1223">	}</span>
+
+	private static StringBuffer sequenceReduction2Pretty(
+			SequenceNode&lt;OmpReductionNode&gt; sequence) {
+<span class="nc" id="L1227">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L1228">		int num = sequence.numChildren();</span>
+
+<span class="nc bnc" id="L1230" title="All 2 branches missed.">		for (int i = 0; i &lt; num; i++) {</span>
+<span class="nc" id="L1231">			OmpReductionNode reduction = sequence.getSequenceChild(i);</span>
+
+<span class="nc" id="L1233">			result.append(ompReduction2Pretty(reduction));</span>
+<span class="nc bnc" id="L1234" title="All 2 branches missed.">			if (i &lt; num - 1)</span>
+<span class="nc" id="L1235">				result.append(&quot; &quot;);</span>
+		}
+<span class="nc" id="L1237">		return result;</span>
+	}
+
+	private static StringBuffer ompReduction2Pretty(OmpReductionNode reduction) {
+<span class="nc" id="L1241">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc" id="L1243">		result.append(&quot;reduction(&quot;);</span>
+<span class="nc bnc" id="L1244" title="All 2 branches missed.">		switch (reduction.ompReductionOperatorNodeKind()) {</span>
+		case FUNCTION: {
+<span class="nc" id="L1246">			OmpFunctionReductionNode funcNode = (OmpFunctionReductionNode) reduction;</span>
+
+<span class="nc" id="L1248">			result.append(expression2Pretty(funcNode.function()));</span>
+<span class="nc" id="L1249">			break;</span>
+		}
+		default: // operator
+		{
+<span class="nc" id="L1253">			OmpSymbolReductionNode symbol = (OmpSymbolReductionNode) reduction;</span>
+
+<span class="nc bnc" id="L1255" title="All 9 branches missed.">			switch (symbol.operator()) {</span>
+			case PLUSEQ:
+<span class="nc" id="L1257">				result.append(&quot;+&quot;);</span>
+<span class="nc" id="L1258">				break;</span>
+			case MINUSEQ:
+<span class="nc" id="L1260">				result.append(&quot;-&quot;);</span>
+<span class="nc" id="L1261">				break;</span>
+			case TIMESEQ:
+<span class="nc" id="L1263">				result.append(&quot;*&quot;);</span>
+<span class="nc" id="L1264">				break;</span>
+			case BITANDEQ:
+<span class="nc" id="L1266">				result.append(&quot;&amp;&quot;);</span>
+<span class="nc" id="L1267">				break;</span>
+			case BITOREQ:
+<span class="nc" id="L1269">				result.append(&quot;|&quot;);</span>
+<span class="nc" id="L1270">				break;</span>
+			case BITXOREQ:
+<span class="nc" id="L1272">				result.append(&quot;^&quot;);</span>
+<span class="nc" id="L1273">				break;</span>
+			case LAND:
+<span class="nc" id="L1275">				result.append(&quot;&amp;&amp;&quot;);</span>
+<span class="nc" id="L1276">				break;</span>
+			case LOR:
+<span class="nc" id="L1278">				result.append(&quot;||&quot;);</span>
+<span class="nc" id="L1279">				break;</span>
+			default:
+<span class="nc" id="L1281">				throw new ABCRuntimeException(</span>
+<span class="nc" id="L1282">						&quot;Invalid operator for OpenMP reduction: &quot;</span>
+<span class="nc" id="L1283">								+ symbol.operator(), reduction.getSource()</span>
+<span class="nc" id="L1284">								.getLocation(false));</span>
+			}
+		}
+		}
+<span class="nc" id="L1288">		result.append(&quot;: &quot;);</span>
+<span class="nc" id="L1289">		result.append(sequenceExpression2Pretty(reduction.variables()));</span>
+<span class="nc" id="L1290">		result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1291">		return result;</span>
+	}
+
+	// private static StringBuffer sequenceExpression2Pretty(
+	// SequenceNode&lt;IdentifierExpressionNode&gt; sequence) {
+	// StringBuffer result = new StringBuffer();
+	// int numExpressions = sequence.numChildren();
+	//
+	// for (int i = 0; i &lt; numExpressions; i++) {
+	// IdentifierExpressionNode expression = sequence.getSequenceChild(i);
+	//
+	// if (i != 0)
+	// result.append(&quot;, &quot;);
+	// result.append(expression2Pretty(expression));
+	// }
+	// return result;
+	// }
+	//
+	private static StringBuffer sequenceExpression2Pretty(
+			SequenceNode&lt;? extends ExpressionNode&gt; sequence) {
+<span class="nc" id="L1311">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L1312">		int numExpressions = sequence.numChildren();</span>
+
+<span class="nc bnc" id="L1314" title="All 2 branches missed.">		for (int i = 0; i &lt; numExpressions; i++) {</span>
+<span class="nc" id="L1315">			ExpressionNode expression = sequence.getSequenceChild(i);</span>
+
+<span class="nc bnc" id="L1317" title="All 2 branches missed.">			if (i != 0)</span>
+<span class="nc" id="L1318">				result.append(&quot;, &quot;);</span>
+<span class="nc" id="L1319">			result.append(expression2Pretty(expression));</span>
+		}
+<span class="nc" id="L1321">		return result;</span>
+	}
+
+	private static void pPrintCivlForStatement(PrintStream out, String prefix,
+			CivlForNode civlFor) {
+<span class="nc" id="L1326">		DeclarationListNode vars = civlFor.getVariables();</span>
+<span class="nc" id="L1327">		int numVars = vars.numChildren();</span>
+
+<span class="nc" id="L1329">		out.print(prefix);</span>
+<span class="nc bnc" id="L1330" title="All 2 branches missed.">		if (civlFor.isParallel())</span>
+<span class="nc" id="L1331">			out.print(&quot;$parfor&quot;);</span>
+		else
+<span class="nc" id="L1333">			out.print(&quot;$for&quot;);</span>
+<span class="nc" id="L1334">		out.print(&quot; (int &quot;);</span>
+<span class="nc bnc" id="L1335" title="All 2 branches missed.">		for (int i = 0; i &lt; numVars; i++) {</span>
+<span class="nc bnc" id="L1336" title="All 2 branches missed.">			if (i != 0)</span>
+<span class="nc" id="L1337">				out.print(&quot;, &quot;);</span>
+<span class="nc" id="L1338">			out.print(vars.getSequenceChild(i).getName());</span>
+		}
+<span class="nc" id="L1340">		out.print(&quot;: &quot;);</span>
+<span class="nc" id="L1341">		out.print(expression2Pretty(civlFor.getDomain()));</span>
+<span class="nc" id="L1342">		out.println(&quot;)&quot;);</span>
+<span class="nc" id="L1343">		pPrintStatement(out, prefix + indention, civlFor.getBody(), true, false);</span>
+<span class="nc" id="L1344">	}</span>
+
+	private static void pPrintLoop(PrintStream out, String prefix, LoopNode loop) {
+<span class="nc" id="L1347">		LoopKind loopKind = loop.getKind();</span>
+<span class="nc" id="L1348">		StringBuffer condition = new StringBuffer();</span>
+<span class="nc" id="L1349">		String myIndent = prefix + indention;</span>
+<span class="nc" id="L1350">		StatementNode bodyNode = loop.getBody();</span>
+<span class="nc" id="L1351">		SequenceNode&lt;ContractNode&gt; contracts = loop.loopContracts();</span>
+
+<span class="nc bnc" id="L1353" title="All 2 branches missed.">		if (contracts != null)</span>
+<span class="nc" id="L1354">			pPrintContracts(out, prefix, contracts);</span>
+<span class="nc bnc" id="L1355" title="All 2 branches missed.">		if (loop.getCondition() != null)</span>
+<span class="nc" id="L1356">			condition = expression2Pretty(loop.getCondition());</span>
+<span class="nc bnc" id="L1357" title="All 3 branches missed.">		switch (loopKind) {</span>
+		case WHILE:
+<span class="nc" id="L1359">			out.print(prefix);</span>
+<span class="nc" id="L1360">			out.print(&quot;while (&quot;);</span>
+<span class="nc" id="L1361">			out.print(condition);</span>
+<span class="nc" id="L1362">			out.print(&quot;)&quot;);</span>
+<span class="nc bnc" id="L1363" title="All 2 branches missed.">			if (bodyNode == null)</span>
+<span class="nc" id="L1364">				out.print(&quot;;&quot;);</span>
+			else {
+<span class="nc" id="L1366">				out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L1367">				pPrintStatement(out, myIndent, bodyNode, true, false);</span>
+
+			}
+<span class="nc" id="L1370">			break;</span>
+		case DO_WHILE:
+<span class="nc" id="L1372">			out.print(prefix);</span>
+<span class="nc" id="L1373">			out.print(&quot;do&quot;);</span>
+<span class="nc bnc" id="L1374" title="All 2 branches missed.">			if (bodyNode == null)</span>
+<span class="nc" id="L1375">				out.print(&quot;;&quot;);</span>
+			else {
+<span class="nc" id="L1377">				out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L1378">				pPrintStatement(out, myIndent, bodyNode, true, false);</span>
+			}
+<span class="nc bnc" id="L1380" title="All 2 branches missed.">			if (bodyNode != null</span>
+<span class="nc bnc" id="L1381" title="All 2 branches missed.">					&amp;&amp; !(bodyNode instanceof CompoundStatementNode)) {</span>
+<span class="nc" id="L1382">				out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L1383">				out.print(prefix);</span>
+			}
+<span class="nc" id="L1385">			out.print(&quot;while (&quot;);</span>
+<span class="nc" id="L1386">			out.print(condition);</span>
+<span class="nc" id="L1387">			out.print(&quot;);&quot;);</span>
+<span class="nc" id="L1388">			break;</span>
+		default: // case FOR:
+<span class="nc" id="L1390">			pPrintFor(out, prefix, (ForLoopNode) loop);</span>
+		}
+<span class="nc" id="L1392">	}</span>
+
+	private static void pPrintAtomic(PrintStream out, String prefix,
+			AtomicNode atomicNode) {
+<span class="nc" id="L1396">		out.print(prefix);</span>
+<span class="nc bnc" id="L1397" title="All 2 branches missed.">		if (atomicNode.isAtom())</span>
+<span class="nc" id="L1398">			out.print(&quot;$atom\n&quot;);</span>
+		else
+<span class="nc" id="L1400">			out.print(&quot;$atomic\n&quot;);</span>
+<span class="nc" id="L1401">		pPrintStatement(out, prefix + indention, atomicNode.getBody(), true,</span>
+<span class="nc" id="L1402">				false);</span>
+<span class="nc" id="L1403">	}</span>
+
+	private static void pPrintGoto(PrintStream out, String prefix, GotoNode go2) {
+<span class="nc" id="L1406">		out.print(prefix);</span>
+<span class="nc" id="L1407">		out.print(&quot;goto &quot;);</span>
+<span class="nc" id="L1408">		out.print(go2.getLabel().name());</span>
+<span class="nc" id="L1409">		out.print(&quot;;&quot;);</span>
+<span class="nc" id="L1410">	}</span>
+
+	private static void pPrintLabeled(PrintStream out, String prefix,
+			LabeledStatementNode labeled) {
+<span class="nc" id="L1414">		LabelNode label = labeled.getLabel();</span>
+<span class="nc" id="L1415">		StatementNode statement = labeled.getStatement();</span>
+<span class="nc" id="L1416">		String myIndent = prefix + indention;</span>
+
+<span class="nc" id="L1418">		out.print(prefix);</span>
+<span class="nc" id="L1419">		out.print(labelNode2Pretty(label));</span>
+<span class="nc" id="L1420">		out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L1421">		pPrintStatement(out, myIndent, statement, true, false);</span>
+<span class="nc" id="L1422">	}</span>
+
+	private static StringBuffer labelNode2Pretty(LabelNode label) {
+<span class="nc" id="L1425">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc bnc" id="L1427" title="All 2 branches missed.">		if (label instanceof OrdinaryLabelNode) {</span>
+<span class="nc" id="L1428">			OrdinaryLabelNode ordinary = (OrdinaryLabelNode) label;</span>
+<span class="nc" id="L1429">			result.append(ordinary.getName());</span>
+<span class="nc" id="L1430">			result.append(&quot;:&quot;);</span>
+<span class="nc" id="L1431">		} else {</span>
+			// switch label
+<span class="nc" id="L1433">			SwitchLabelNode switchLabel = (SwitchLabelNode) label;</span>
+<span class="nc" id="L1434">			boolean isDefault = switchLabel.isDefault();</span>
+
+<span class="nc bnc" id="L1436" title="All 2 branches missed.">			if (isDefault)</span>
+<span class="nc" id="L1437">				result.append(&quot;default:&quot;);</span>
+			else {
+<span class="nc" id="L1439">				result.append(&quot;case &quot;);</span>
+<span class="nc" id="L1440">				result.append(expression2Pretty(switchLabel.getExpression()));</span>
+<span class="nc" id="L1441">				result.append(&quot;:&quot;);</span>
+			}
+		}
+<span class="nc" id="L1444">		return result;</span>
+	}
+
+	private static void pPrintSwitch(PrintStream out, String prefix,
+			SwitchNode switchNode) {
+<span class="nc" id="L1449">		out.print(prefix);</span>
+<span class="nc" id="L1450">		out.print(&quot;switch (&quot;);</span>
+<span class="nc" id="L1451">		out.print(expression2Pretty(switchNode.getCondition()));</span>
+<span class="nc" id="L1452">		out.println(&quot;)&quot;);</span>
+<span class="nc" id="L1453">		pPrintStatement(out, prefix + indention, switchNode.getBody(), true,</span>
+<span class="nc" id="L1454">				true);</span>
+<span class="nc" id="L1455">	}</span>
+
+	private static void pPrintJump(PrintStream out, String prefix, JumpNode jump) {
+<span class="nc" id="L1458">		JumpKind kind = jump.getKind();</span>
+
+<span class="nc bnc" id="L1460" title="All 4 branches missed.">		switch (kind) {</span>
+		case GOTO:
+<span class="nc" id="L1462">			pPrintGoto(out, prefix, (GotoNode) jump);</span>
+<span class="nc" id="L1463">			break;</span>
+		case CONTINUE:
+<span class="nc" id="L1465">			out.print(prefix);</span>
+<span class="nc" id="L1466">			out.print(&quot;continue;&quot;);</span>
+<span class="nc" id="L1467">			break;</span>
+		case BREAK:
+<span class="nc" id="L1469">			out.print(prefix);</span>
+<span class="nc" id="L1470">			out.print(&quot;break;&quot;);</span>
+<span class="nc" id="L1471">			break;</span>
+		default: // case RETURN:
+<span class="nc" id="L1473">			pPrintReturn(out, prefix, (ReturnNode) jump);</span>
+		}
+<span class="nc" id="L1475">	}</span>
+
+	private static void pPrintReturn(PrintStream out, String prefix,
+			ReturnNode returnNode) {
+<span class="nc" id="L1479">		ExpressionNode expr = returnNode.getExpression();</span>
+
+<span class="nc" id="L1481">		out.print(prefix);</span>
+<span class="nc" id="L1482">		out.print(&quot;return&quot;);</span>
+<span class="nc bnc" id="L1483" title="All 2 branches missed.">		if (expr != null) {</span>
+<span class="nc" id="L1484">			out.print(&quot; &quot;);</span>
+<span class="nc" id="L1485">			out.print(expression2Pretty(expr));</span>
+		}
+<span class="nc" id="L1487">		out.print(&quot;;&quot;);</span>
+<span class="nc" id="L1488">	}</span>
+
+	private static void pPrintIf(PrintStream out, String prefix, IfNode ifNode) {
+<span class="nc" id="L1491">		ExpressionNode condition = ifNode.getCondition();</span>
+<span class="nc" id="L1492">		StatementNode trueBranch = ifNode.getTrueBranch();</span>
+<span class="nc" id="L1493">		StatementNode falseBranch = ifNode.getFalseBranch();</span>
+<span class="nc" id="L1494">		String myIndent = prefix + indention;</span>
+
+<span class="nc" id="L1496">		out.print(prefix);</span>
+<span class="nc" id="L1497">		out.print(&quot;if (&quot;);</span>
+<span class="nc bnc" id="L1498" title="All 2 branches missed.">		if (condition != null)</span>
+<span class="nc" id="L1499">			out.print(expression2Pretty(condition));</span>
+<span class="nc" id="L1500">		out.print(&quot;)&quot;);</span>
+<span class="nc bnc" id="L1501" title="All 2 branches missed.">		if (trueBranch == null)</span>
+<span class="nc" id="L1502">			out.print(&quot;;&quot;);</span>
+		else {
+<span class="nc" id="L1504">			out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L1505">			pPrintStatement(out, myIndent, trueBranch, true, false);</span>
+		}
+<span class="nc bnc" id="L1507" title="All 2 branches missed.">		if (falseBranch != null) {</span>
+<span class="nc" id="L1508">			out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L1509">			out.print(prefix);</span>
+<span class="nc" id="L1510">			out.print(&quot;else\n&quot;);</span>
+<span class="nc" id="L1511">			pPrintStatement(out, myIndent, falseBranch, true, false);</span>
+		}
+<span class="nc" id="L1513">	}</span>
+
+	private static void pPrintFor(PrintStream out, String prefix,
+			ForLoopNode loop) {
+<span class="nc" id="L1517">		ForLoopInitializerNode init = loop.getInitializer();</span>
+<span class="nc" id="L1518">		ExpressionNode condition = loop.getCondition();</span>
+<span class="nc" id="L1519">		ExpressionNode incrementer = loop.getIncrementer();</span>
+<span class="nc" id="L1520">		StatementNode body = loop.getBody();</span>
+<span class="nc" id="L1521">		String myIndent = prefix + indention;</span>
+<span class="nc" id="L1522">		SequenceNode&lt;ContractNode&gt; contracts = loop.loopContracts();</span>
+
+<span class="nc bnc" id="L1524" title="All 2 branches missed.">		if (contracts != null)</span>
+<span class="nc" id="L1525">			pPrintContracts(out, prefix, contracts);</span>
+<span class="nc" id="L1526">		out.print(prefix);</span>
+<span class="nc" id="L1527">		out.print(&quot;for (&quot;);</span>
+<span class="nc bnc" id="L1528" title="All 2 branches missed.">		if (init != null) {</span>
+<span class="nc bnc" id="L1529" title="All 2 branches missed.">			if (init instanceof ExpressionNode)</span>
+<span class="nc" id="L1530">				out.print(expression2Pretty((ExpressionNode) init));</span>
+<span class="nc bnc" id="L1531" title="All 2 branches missed.">			else if (init instanceof DeclarationListNode)</span>
+<span class="nc" id="L1532">				out.print(declarationList2Pretty((DeclarationListNode) init));</span>
+		}
+<span class="nc" id="L1534">		out.print(&quot;; &quot;);</span>
+<span class="nc bnc" id="L1535" title="All 2 branches missed.">		if (condition != null) {</span>
+<span class="nc" id="L1536">			out.print(expression2Pretty(condition));</span>
+		}
+<span class="nc" id="L1538">		out.print(&quot;; &quot;);</span>
+<span class="nc bnc" id="L1539" title="All 2 branches missed.">		if (incrementer != null) {</span>
+<span class="nc" id="L1540">			out.print(expression2Pretty(incrementer));</span>
+		}
+<span class="nc" id="L1542">		out.print(&quot;)&quot;);</span>
+<span class="nc bnc" id="L1543" title="All 2 branches missed.">		if (body == null)</span>
+<span class="nc" id="L1544">			out.print(&quot;;&quot;);</span>
+		else {
+<span class="nc" id="L1546">			out.print(&quot;\n&quot;);</span>
+<span class="nc" id="L1547">			pPrintStatement(out, myIndent, body, true, false);</span>
+		}
+<span class="nc" id="L1549">	}</span>
+
+	private static StringBuffer declarationList2Pretty(DeclarationListNode list) {
+<span class="nc" id="L1552">		int num = list.numChildren();</span>
+<span class="nc" id="L1553">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc bnc" id="L1555" title="All 2 branches missed.">		for (int i = 0; i &lt; num; i++) {</span>
+<span class="nc" id="L1556">			VariableDeclarationNode var = list.getSequenceChild(i);</span>
+
+<span class="nc bnc" id="L1558" title="All 2 branches missed.">			if (var == null)</span>
+<span class="nc" id="L1559">				continue;</span>
+<span class="nc bnc" id="L1560" title="All 2 branches missed.">			if (i != 0)</span>
+<span class="nc" id="L1561">				result.append(&quot;, &quot;);</span>
+<span class="nc" id="L1562">			result.append(variableDeclaration2Pretty(&quot;&quot;, var));</span>
+		}
+<span class="nc" id="L1564">		return result;</span>
+	}
+
+	private static void pPrintExpressionStatement(PrintStream out,
+			String prefix, ExpressionStatementNode expr) {
+<span class="nc" id="L1569">		out.print(prefix);</span>
+<span class="nc" id="L1570">		out.print(expression2Pretty(expr.getExpression()));</span>
+<span class="nc" id="L1571">		out.print(&quot;;&quot;);</span>
+<span class="nc" id="L1572">	}</span>
+
+	private static void pPrintWhen(PrintStream out, String prefix, WhenNode when) {
+<span class="nc" id="L1575">		String myIndent = prefix + indention;</span>
+
+<span class="nc" id="L1577">		out.print(prefix);</span>
+<span class="nc" id="L1578">		out.print(&quot;$when (&quot;);</span>
+<span class="nc" id="L1579">		out.print(expression2Pretty(when.getGuard()));</span>
+<span class="nc" id="L1580">		out.print(&quot;)\n&quot;);</span>
+<span class="nc" id="L1581">		pPrintStatement(out, myIndent, when.getBody(), true, false);</span>
+<span class="nc" id="L1582">	}</span>
+
+	static private StringBuffer variableDeclaration2Pretty(String prefix,
+			VariableDeclarationNode variable) {
+<span class="nc" id="L1586">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L1587">		InitializerNode init = variable.getInitializer();</span>
+<span class="nc" id="L1588">		TypeNode typeNode = variable.getTypeNode();</span>
+		String type;
+<span class="nc" id="L1590">		String varName = variable.getName();</span>
+
+<span class="nc" id="L1592">		result.append(prefix);</span>
+<span class="nc bnc" id="L1593" title="All 2 branches missed.">		if (typeNode.isInputQualified())</span>
+<span class="nc" id="L1594">			result.append(&quot;$input &quot;);</span>
+<span class="nc bnc" id="L1595" title="All 2 branches missed.">		if (typeNode.isOutputQualified())</span>
+<span class="nc" id="L1596">			result.append(&quot;$output &quot;);</span>
+<span class="nc bnc" id="L1597" title="All 2 branches missed.">		if (typeNode.isAtomicQualified())</span>
+<span class="nc" id="L1598">			result.append(&quot;_Atomic &quot;);</span>
+<span class="nc bnc" id="L1599" title="All 2 branches missed.">		if (typeNode.isConstQualified())</span>
+<span class="nc" id="L1600">			result.append(&quot;const &quot;);</span>
+<span class="nc bnc" id="L1601" title="All 2 branches missed.">		if (typeNode.isRestrictQualified())</span>
+<span class="nc" id="L1602">			result.append(&quot;restrict &quot;);</span>
+<span class="nc bnc" id="L1603" title="All 2 branches missed.">		if (typeNode.isVolatileQualified())</span>
+<span class="nc" id="L1604">			result.append(&quot;volatile &quot;);</span>
+<span class="nc bnc" id="L1605" title="All 2 branches missed.">		if (variable.hasExternStorage())</span>
+<span class="nc" id="L1606">			result.append(&quot;extern &quot;);</span>
+<span class="nc bnc" id="L1607" title="All 2 branches missed.">		if (variable.hasAutoStorage())</span>
+<span class="nc" id="L1608">			result.append(&quot;auto &quot;);</span>
+<span class="nc bnc" id="L1609" title="All 2 branches missed.">		if (variable.hasRegisterStorage())</span>
+<span class="nc" id="L1610">			result.append(&quot;register &quot;);</span>
+<span class="nc bnc" id="L1611" title="All 2 branches missed.">		if (variable.hasStaticStorage())</span>
+<span class="nc" id="L1612">			result.append(&quot;static &quot;);</span>
+<span class="nc bnc" id="L1613" title="All 2 branches missed.">		if (variable.hasThreadLocalStorage())</span>
+<span class="nc" id="L1614">			result.append(&quot;_Thread_local &quot;);</span>
+<span class="nc bnc" id="L1615" title="All 2 branches missed.">		if (variable.hasSharedStorage())</span>
+<span class="nc" id="L1616">			result.append(&quot;__shared__ &quot;);</span>
+<span class="nc" id="L1617">		type = type2Pretty(&quot;&quot;, typeNode, false).toString();</span>
+<span class="nc bnc" id="L1618" title="All 2 branches missed.">		if (type.endsWith(&quot;]&quot;)) {</span>
+<span class="nc" id="L1619">			Pair&lt;String, String&gt; typeResult = processArrayType(type);</span>
+
+<span class="nc" id="L1621">			result.append(typeResult.left);</span>
+<span class="nc" id="L1622">			result.append(&quot; &quot;);</span>
+<span class="nc bnc" id="L1623" title="All 2 branches missed.">			if (varName != null) {</span>
+<span class="nc" id="L1624">				result.append(&quot; &quot;);</span>
+<span class="nc" id="L1625">				result.append(varName);</span>
+			}
+<span class="nc" id="L1627">			result.append(typeResult.right);</span>
+<span class="nc" id="L1628">		} else {</span>
+<span class="nc" id="L1629">			result.append(type);</span>
+<span class="nc bnc" id="L1630" title="All 2 branches missed.">			if (varName != null) {</span>
+<span class="nc" id="L1631">				result.append(&quot; &quot;);</span>
+<span class="nc" id="L1632">				result.append(varName);</span>
+			}
+		}
+<span class="nc bnc" id="L1635" title="All 2 branches missed.">		if (init != null) {</span>
+<span class="nc" id="L1636">			result.append(&quot; = &quot;);</span>
+<span class="nc" id="L1637">			result.append(initializer2Pretty(init));</span>
+		}
+<span class="nc" id="L1639">		return result;</span>
+	}
+
+	// TODO need to be improved for more complicated types
+	// currently works for multiple dimension arrays
+	// e.g. translating (int [20])[10] into int [10][20]
+	private static Pair&lt;String, String&gt; processArrayType(String type) {
+<span class="nc" id="L1646">		int start = type.indexOf('[');</span>
+<span class="nc" id="L1647">		String typeSuffix = type.substring(start);</span>
+<span class="nc" id="L1648">		int length = typeSuffix.length();</span>
+<span class="nc" id="L1649">		Stack&lt;String&gt; extents = new Stack&lt;&gt;();</span>
+<span class="nc" id="L1650">		String newSuffix = &quot;&quot;;</span>
+<span class="nc" id="L1651">		String extent = &quot;&quot;;</span>
+
+<span class="nc bnc" id="L1653" title="All 2 branches missed.">		for (int i = 0; i &lt; length; i++) {</span>
+<span class="nc" id="L1654">			char current = typeSuffix.charAt(i);</span>
+
+<span class="nc" id="L1656">			extent += current;</span>
+<span class="nc bnc" id="L1657" title="All 2 branches missed.">			if (current == ']') {</span>
+<span class="nc" id="L1658">				extents.push(extent);</span>
+<span class="nc" id="L1659">				extent = &quot;&quot;;</span>
+			}
+		}
+<span class="nc bnc" id="L1662" title="All 2 branches missed.">		while (!extents.empty()) {</span>
+<span class="nc" id="L1663">			newSuffix += extents.pop();</span>
+		}
+<span class="nc" id="L1665">		return new Pair&lt;&gt;(type.substring(0, start), newSuffix);</span>
+	}
+
+	private static StringBuffer initializer2Pretty(InitializerNode init) {
+<span class="nc bnc" id="L1669" title="All 2 branches missed.">		if (init instanceof CompoundInitializerNode) {</span>
+<span class="nc" id="L1670">			return compoundInitializer2Pretty((CompoundInitializerNode) init);</span>
+<span class="nc bnc" id="L1671" title="All 2 branches missed.">		} else if (init instanceof ExpressionNode)</span>
+<span class="nc" id="L1672">			return expression2Pretty((ExpressionNode) init);</span>
+		else
+<span class="nc" id="L1674">			throw new ABCRuntimeException(&quot;Invalid initializer: &quot;</span>
+<span class="nc" id="L1675">					+ init.toString());</span>
+	}
+
+	private static StringBuffer compoundInitializer2Pretty(
+			CompoundInitializerNode compound) {
+<span class="nc" id="L1680">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L1681">		int numPairs = compound.numChildren();</span>
+
+<span class="nc" id="L1683">		result.append(&quot;{&quot;);</span>
+<span class="nc bnc" id="L1684" title="All 2 branches missed.">		for (int i = 0; i &lt; numPairs; i++) {</span>
+<span class="nc" id="L1685">			PairNode&lt;DesignationNode, InitializerNode&gt; pair = compound</span>
+<span class="nc" id="L1686">					.getSequenceChild(i);</span>
+<span class="nc" id="L1687">			DesignationNode left = pair.getLeft();</span>
+<span class="nc" id="L1688">			InitializerNode right = pair.getRight();</span>
+<span class="nc bnc" id="L1689" title="All 2 branches missed.">			int numDesig = left == null ? 0 : left.numChildren();</span>
+
+<span class="nc bnc" id="L1691" title="All 2 branches missed.">			if (i != 0)</span>
+<span class="nc" id="L1692">				result.append(&quot;, &quot;);</span>
+<span class="nc bnc" id="L1693" title="All 2 branches missed.">			if (numDesig &gt; 0) {</span>
+<span class="nc bnc" id="L1694" title="All 2 branches missed.">				for (int j = 0; j &lt; numDesig; j++) {</span>
+<span class="nc" id="L1695">					result.append(designator2Pretty(left.getSequenceChild(j)));</span>
+				}
+<span class="nc" id="L1697">				result.append(&quot;=&quot;);</span>
+			}
+<span class="nc" id="L1699">			result.append(initializer2Pretty(right));</span>
+		}
+<span class="nc" id="L1701">		result.append(&quot;}&quot;);</span>
+<span class="nc" id="L1702">		return result;</span>
+	}
+
+	private static StringBuffer designator2Pretty(DesignatorNode designator) {
+<span class="nc" id="L1706">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc bnc" id="L1708" title="All 2 branches missed.">		if (designator instanceof ArrayDesignatorNode) {</span>
+<span class="nc" id="L1709">			result.append(&quot;[&quot;);</span>
+<span class="nc" id="L1710">			result.append(expression2Pretty(((ArrayDesignatorNode) designator)</span>
+<span class="nc" id="L1711">					.getIndex()));</span>
+<span class="nc" id="L1712">			result.append(&quot;]&quot;);</span>
+<span class="nc" id="L1713">		} else {// FieldDesignatorNode</span>
+<span class="nc" id="L1714">			result.append(&quot;.&quot;);</span>
+<span class="nc" id="L1715">			result.append(((FieldDesignatorNode) designator).getField().name());</span>
+		}
+<span class="nc" id="L1717">		return result;</span>
+	}
+
+	// private static void pPrintAssume(PrintStream out, String prefix,
+	// AssumeNode assume) {
+	// out.print(prefix);
+	// out.print(&quot;$assume &quot;);
+	// out.print(expression2Pretty(assume.getExpression()));
+	// out.print(&quot;;&quot;);
+	// }
+
+	private static StringBuffer expression2Pretty(ExpressionNode expression) {
+<span class="nc" id="L1729">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc bnc" id="L1731" title="All 2 branches missed.">		if (expression == null)</span>
+<span class="nc" id="L1732">			return result;</span>
+
+<span class="nc" id="L1734">		ExpressionKind kind = expression.expressionKind();</span>
+
+<span class="nc bnc" id="L1736" title="All 25 branches missed.">		switch (kind) {</span>
+		case ALIGNOF: {
+<span class="nc" id="L1738">			AlignOfNode align = (AlignOfNode) expression;</span>
+
+<span class="nc" id="L1740">			result.append(&quot;_Alignof(&quot;);</span>
+<span class="nc" id="L1741">			result.append(type2Pretty(&quot;&quot;, align.getArgument(), false));</span>
+<span class="nc" id="L1742">			break;</span>
+		}
+		case ARROW: {
+<span class="nc" id="L1745">			ArrowNode arrow = (ArrowNode) expression;</span>
+
+<span class="nc" id="L1747">			result.append(&quot;(&quot;);</span>
+<span class="nc" id="L1748">			result.append(expression2Pretty(arrow.getStructurePointer()));</span>
+<span class="nc" id="L1749">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1750">			result.append(&quot;-&gt;&quot;);</span>
+<span class="nc" id="L1751">			result.append(arrow.getFieldName().name());</span>
+<span class="nc" id="L1752">			break;</span>
+		}
+		case CAST: {
+<span class="nc" id="L1755">			CastNode cast = (CastNode) expression;</span>
+<span class="nc" id="L1756">			ExpressionNode arg = cast.getArgument();</span>
+<span class="nc" id="L1757">			ExpressionKind argKind = arg.expressionKind();</span>
+<span class="nc" id="L1758">			boolean parenNeeded = true;</span>
+
+<span class="nc" id="L1760">			result.append(&quot;(&quot;);</span>
+<span class="nc" id="L1761">			result.append(type2Pretty(&quot;&quot;, cast.getCastType(), false));</span>
+<span class="nc" id="L1762">			result.append(&quot;)&quot;);</span>
+<span class="nc bnc" id="L1763" title="All 2 branches missed.">			if (argKind == ExpressionKind.IDENTIFIER_EXPRESSION</span>
+<span class="nc bnc" id="L1764" title="All 2 branches missed.">					|| argKind == ExpressionKind.CONSTANT</span>
+<span class="nc bnc" id="L1765" title="All 2 branches missed.">					|| argKind == ExpressionKind.COMPOUND_LITERAL)</span>
+<span class="nc" id="L1766">				parenNeeded = false;</span>
+<span class="nc bnc" id="L1767" title="All 2 branches missed.">			if (parenNeeded)</span>
+<span class="nc" id="L1768">				result.append(&quot;(&quot;);</span>
+<span class="nc" id="L1769">			result.append(expression2Pretty(arg));</span>
+<span class="nc bnc" id="L1770" title="All 2 branches missed.">			if (parenNeeded)</span>
+<span class="nc" id="L1771">				result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1772">			break;</span>
+		}
+		case COMPOUND_LITERAL:
+<span class="nc" id="L1775">			return compoundLiteral2Pretty((CompoundLiteralNode) expression);</span>
+		case CONSTANT: {
+<span class="nc" id="L1777">			String constant = ((ConstantNode) expression)</span>
+<span class="nc" id="L1778">					.getStringRepresentation();</span>
+
+<span class="nc bnc" id="L1780" title="All 2 branches missed.">			if (constant.equals(&quot;\\false&quot;))</span>
+<span class="nc" id="L1781">				constant = &quot;$false&quot;;</span>
+<span class="nc bnc" id="L1782" title="All 2 branches missed.">			else if (constant.equals(&quot;\\true&quot;))</span>
+<span class="nc" id="L1783">				constant = &quot;$true&quot;;</span>
+<span class="nc" id="L1784">			result.append(constant);</span>
+<span class="nc" id="L1785">			break;</span>
+		}
+		case DERIVATIVE_EXPRESSION:
+<span class="nc" id="L1788">			return derivative2Pretty((DerivativeExpressionNode) expression);</span>
+		case DOT: {
+<span class="nc" id="L1790">			DotNode dot = (DotNode) expression;</span>
+
+<span class="nc" id="L1792">			result.append(expression2Pretty(dot.getStructure()));</span>
+<span class="nc" id="L1793">			result.append(&quot;.&quot;);</span>
+<span class="nc" id="L1794">			result.append(dot.getFieldName().name());</span>
+<span class="nc" id="L1795">			break;</span>
+		}
+		case FUNCTION_CALL:
+<span class="nc" id="L1798">			return functionCall2Pretty((FunctionCallNode) expression);</span>
+			// TODO
+			// case GENERIC_SELECTION:
+			// break;
+		case IDENTIFIER_EXPRESSION:
+<span class="nc" id="L1803">			result.append(((IdentifierExpressionNode) expression)</span>
+<span class="nc" id="L1804">					.getIdentifier().name());</span>
+<span class="nc" id="L1805">			break;</span>
+		case MPI_CONTRACT_EXPRESSION:
+<span class="nc" id="L1807">			result.append(((MPIContractExpressionNode) expression)</span>
+<span class="nc" id="L1808">					.MPIContractExpressionKind());</span>
+<span class="nc" id="L1809">			break;</span>
+		case OPERATOR:
+<span class="nc" id="L1811">			return operator2Pretty((OperatorNode) expression);</span>
+		case QUANTIFIED_EXPRESSION:
+<span class="nc" id="L1813">			return quantifiedExpression2Pretty((QuantifiedExpressionNode) expression);</span>
+		case REGULAR_RANGE:
+<span class="nc" id="L1815">			return regularRange2Pretty((RegularRangeNode) expression);</span>
+			// TODO
+			// case REMOTE_REFERENCE:
+			// break;
+		case SCOPEOF:
+<span class="nc" id="L1820">			result.append(&quot;$scopeof(&quot;);</span>
+<span class="nc" id="L1821">			result.append(expression2Pretty(((ScopeOfNode) expression)</span>
+<span class="nc" id="L1822">					.expression()));</span>
+<span class="nc" id="L1823">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1824">			break;</span>
+		case SIZEOF:
+<span class="nc" id="L1826">			result.append(&quot;sizeof(&quot;);</span>
+<span class="nc" id="L1827">			result.append(sizeable2Pretty(((SizeofNode) expression)</span>
+<span class="nc" id="L1828">					.getArgument()));</span>
+<span class="nc" id="L1829">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1830">			break;</span>
+		case SPAWN:
+<span class="nc" id="L1832">			result.append(&quot;$spawn &quot;);</span>
+<span class="nc" id="L1833">			result.append(functionCall2Pretty(((SpawnNode) expression)</span>
+<span class="nc" id="L1834">					.getCall()));</span>
+<span class="nc" id="L1835">			break;</span>
+		case CALLS:
+<span class="nc" id="L1837">			result.append(&quot;$calls(&quot;);</span>
+<span class="nc" id="L1838">			result.append(functionCall2Pretty(((CallsNode) expression)</span>
+<span class="nc" id="L1839">					.getCall()));</span>
+<span class="nc" id="L1840">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1841">			break;</span>
+		case CONTRACT_VERIFY:
+<span class="nc" id="L1843">			result.append(&quot;$contractVerify &quot;);</span>
+<span class="nc" id="L1844">			result.append(contractVerify2Pretty(((ContractVerifyNode) expression)));</span>
+<span class="nc" id="L1845">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1846">			break;</span>
+		case REMOTE_REFERENCE:
+<span class="nc" id="L1848">			result.append(&quot;\\remote(&quot;);</span>
+<span class="nc" id="L1849">			result.append(expression2Pretty(((RemoteExpressionNode) expression)</span>
+<span class="nc" id="L1850">					.getIdentifierNode()));</span>
+<span class="nc" id="L1851">			result.append(&quot; , &quot;);</span>
+<span class="nc" id="L1852">			result.append(expression2Pretty(((RemoteExpressionNode) expression)</span>
+<span class="nc" id="L1853">					.getProcessExpression()));</span>
+<span class="nc" id="L1854">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1855">			break;</span>
+		case RESULT:
+<span class="nc" id="L1857">			result.append(&quot;\\result&quot;);</span>
+<span class="nc" id="L1858">			break;</span>
+		case STATEMENT_EXPRESSION:
+<span class="nc" id="L1860">			return statementExpression2Pretty((StatementExpressionNode) expression);</span>
+		case NOTHING:
+<span class="nc" id="L1862">			result.append(&quot;\\nothing&quot;);</span>
+<span class="nc" id="L1863">			break;</span>
+		case WILDCARD:
+<span class="nc" id="L1865">			result.append(&quot;...&quot;);</span>
+<span class="nc" id="L1866">			break;</span>
+		case MEMORY_SET:
+<span class="nc" id="L1868">			result.append(&quot;MEMORY_SET in progress...&quot;);</span>
+<span class="nc" id="L1869">			break;</span>
+		default:
+<span class="nc" id="L1871">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L1872">					&quot;pretty print of expression node of &quot; + kind + &quot; kind&quot;);</span>
+		}
+<span class="nc" id="L1874">		return result;</span>
+	}
+
+	private static StringBuffer statementExpression2Pretty(
+			StatementExpressionNode statementExpression) {
+<span class="nc" id="L1879">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L1880">		CompoundStatementNode compound = statementExpression</span>
+<span class="nc" id="L1881">				.getCompoundStatement();</span>
+
+<span class="nc" id="L1883">		result.append(&quot;(&quot;);</span>
+<span class="nc" id="L1884">		result.append(compound.prettyRepresentation());</span>
+<span class="nc" id="L1885">		result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1886">		return result;</span>
+	}
+
+	private static StringBuffer derivative2Pretty(DerivativeExpressionNode deriv) {
+<span class="nc" id="L1890">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L1891">		int numPartials = deriv.getNumberOfPartials();</span>
+<span class="nc" id="L1892">		int numArgs = deriv.getNumberOfArguments();</span>
+
+<span class="nc" id="L1894">		result.append(&quot;$D[&quot;);</span>
+<span class="nc" id="L1895">		result.append(expression2Pretty(deriv.getFunction()));</span>
+<span class="nc bnc" id="L1896" title="All 2 branches missed.">		for (int i = 0; i &lt; numPartials; i++) {</span>
+<span class="nc" id="L1897">			PairNode&lt;IdentifierExpressionNode, IntegerConstantNode&gt; partial = deriv</span>
+<span class="nc" id="L1898">					.getPartial(i);</span>
+
+<span class="nc" id="L1900">			result.append(&quot;, {&quot;);</span>
+<span class="nc" id="L1901">			result.append(partial.getLeft().getIdentifier().name());</span>
+<span class="nc" id="L1902">			result.append(&quot;,&quot;);</span>
+<span class="nc" id="L1903">			result.append(partial.getRight().getConstantValue());</span>
+<span class="nc" id="L1904">			result.append(&quot;}&quot;);</span>
+		}
+<span class="nc" id="L1906">		result.append(&quot;](&quot;);</span>
+<span class="nc bnc" id="L1907" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L1908">			ExpressionNode arg = deriv.getArgument(i);</span>
+
+<span class="nc bnc" id="L1910" title="All 2 branches missed.">			if (i != 0)</span>
+<span class="nc" id="L1911">				result.append(&quot;, &quot;);</span>
+<span class="nc" id="L1912">			result.append(expression2Pretty(arg));</span>
+		}
+<span class="nc" id="L1914">		result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1915">		return result;</span>
+	}
+
+	private static StringBuffer quantifiedExpression2Pretty(
+			QuantifiedExpressionNode quantified) {
+<span class="nc" id="L1920">		StringBuffer result = new StringBuffer();</span>
+		String quantifier;
+
+<span class="nc bnc" id="L1923" title="All 3 branches missed.">		switch (quantified.quantifier()) {</span>
+		case FORALL:
+<span class="nc" id="L1925">			quantifier = &quot;$forall&quot;;</span>
+<span class="nc" id="L1926">			break;</span>
+		case EXISTS:
+<span class="nc" id="L1928">			quantifier = &quot;$exists&quot;;</span>
+<span class="nc" id="L1929">			break;</span>
+		default:// UNIFORM
+<span class="nc" id="L1931">			quantifier = &quot;$uniform&quot;;</span>
+		}
+<span class="nc" id="L1933">		result.append(quantifier);</span>
+<span class="nc" id="L1934">		result.append(&quot; {&quot;);</span>
+<span class="nc bnc" id="L1935" title="All 2 branches missed.">		if (quantified.isRange()) {</span>
+<span class="nc" id="L1936">			result.append(quantified.variable().getName());</span>
+<span class="nc" id="L1937">			result.append(&quot; = &quot;);</span>
+<span class="nc" id="L1938">			result.append(expression2Pretty(quantified.lower()));</span>
+<span class="nc" id="L1939">			result.append(&quot; .. &quot;);</span>
+<span class="nc" id="L1940">			result.append(expression2Pretty(quantified.upper()));</span>
+<span class="nc" id="L1941">		} else {</span>
+<span class="nc" id="L1942">			result.append(variableDeclaration2Pretty(&quot;&quot;, quantified.variable()));</span>
+<span class="nc" id="L1943">			result.append(&quot; | &quot;);</span>
+<span class="nc" id="L1944">			result.append(expression2Pretty(quantified.restriction()));</span>
+		}
+<span class="nc" id="L1946">		result.append(&quot;} &quot;);</span>
+<span class="nc" id="L1947">		result.append(&quot;(&quot;);</span>
+<span class="nc" id="L1948">		result.append(expression2Pretty(quantified.expression()));</span>
+<span class="nc" id="L1949">		result.append(&quot;)&quot;);</span>
+<span class="nc" id="L1950">		return result;</span>
+	}
+
+	private static StringBuffer compoundLiteral2Pretty(
+			CompoundLiteralNode compound) {
+<span class="nc" id="L1955">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L1956">		CompoundInitializerNode list = compound.getInitializerList();</span>
+		// int numPairs = list.numChildren();
+<span class="nc" id="L1958">		TypeNode typeNode = compound.getTypeNode();</span>
+
+<span class="nc bnc" id="L1960" title="All 2 branches missed.">		if (typeNode != null) {</span>
+<span class="nc" id="L1961">			result.append(&quot;(&quot;);</span>
+<span class="nc" id="L1962">			result.append(type2Pretty(&quot;&quot;, compound.getTypeNode(), false));</span>
+<span class="nc" id="L1963">			result.append(&quot;)&quot;);</span>
+		}
+<span class="nc" id="L1965">		result.append(compoundInitializer2Pretty(list));</span>
+
+<span class="nc" id="L1967">		return result;</span>
+	}
+
+	private static StringBuffer regularRange2Pretty(RegularRangeNode range) {
+<span class="nc" id="L1971">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L1972">		ExpressionNode step = range.getStep();</span>
+
+<span class="nc" id="L1974">		result.append(expression2Pretty(range.getLow()));</span>
+<span class="nc" id="L1975">		result.append(&quot; .. &quot;);</span>
+<span class="nc" id="L1976">		result.append(expression2Pretty(range.getHigh()));</span>
+<span class="nc bnc" id="L1977" title="All 2 branches missed.">		if (step != null) {</span>
+<span class="nc" id="L1978">			result.append(&quot; # &quot;);</span>
+<span class="nc" id="L1979">			result.append(expression2Pretty(step));</span>
+		}
+<span class="nc" id="L1981">		return result;</span>
+	}
+
+	private static StringBuffer sizeable2Pretty(SizeableNode argument) {
+<span class="nc bnc" id="L1985" title="All 2 branches missed.">		if (argument instanceof ExpressionNode)</span>
+<span class="nc" id="L1986">			return expression2Pretty((ExpressionNode) argument);</span>
+<span class="nc" id="L1987">		return type2Pretty(&quot;&quot;, (TypeNode) argument, false);</span>
+	}
+
+	private static StringBuffer functionCall2Pretty(FunctionCallNode call) {
+<span class="nc" id="L1991">		int argNum = call.getNumberOfArguments();</span>
+<span class="nc" id="L1992">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc" id="L1994">		result.append(expression2Pretty(call.getFunction()));</span>
+<span class="nc bnc" id="L1995" title="All 2 branches missed.">		if (call.getNumberOfContextArguments() &gt; 0) {</span>
+<span class="nc" id="L1996">			result.append(&quot;&lt;&lt;&lt;&quot;);</span>
+<span class="nc bnc" id="L1997" title="All 2 branches missed.">			for (int i = 0; i &lt; call.getNumberOfContextArguments(); i++) {</span>
+<span class="nc bnc" id="L1998" title="All 2 branches missed.">				if (i &gt; 0)</span>
+<span class="nc" id="L1999">					result.append(&quot;, &quot;);</span>
+<span class="nc" id="L2000">				result.append(expression2Pretty(call.getContextArgument(i)));</span>
+			}
+<span class="nc" id="L2002">			result.append(&quot;&gt;&gt;&gt;&quot;);</span>
+		}
+<span class="nc" id="L2004">		result.append(&quot;(&quot;);</span>
+<span class="nc bnc" id="L2005" title="All 2 branches missed.">		for (int i = 0; i &lt; argNum; i++) {</span>
+<span class="nc bnc" id="L2006" title="All 2 branches missed.">			if (i &gt; 0)</span>
+<span class="nc" id="L2007">				result.append(&quot;, &quot;);</span>
+<span class="nc" id="L2008">			result.append(expression2Pretty(call.getArgument(i)));</span>
+		}
+<span class="nc" id="L2010">		result.append(&quot;)&quot;);</span>
+<span class="nc" id="L2011">		return result;</span>
+	}
+
+	private static StringBuffer contractVerify2Pretty(ContractVerifyNode call) {
+<span class="nc" id="L2015">		int argNum = call.getNumberOfArguments();</span>
+<span class="nc" id="L2016">		StringBuffer result = new StringBuffer();</span>
+
+<span class="nc" id="L2018">		result.append(expression2Pretty(call.getFunction()));</span>
+<span class="nc bnc" id="L2019" title="All 2 branches missed.">		if (call.getNumberOfContextArguments() &gt; 0) {</span>
+<span class="nc" id="L2020">			result.append(&quot;&lt;&lt;&lt;&quot;);</span>
+<span class="nc bnc" id="L2021" title="All 2 branches missed.">			for (int i = 0; i &lt; call.getNumberOfContextArguments(); i++) {</span>
+<span class="nc bnc" id="L2022" title="All 2 branches missed.">				if (i &gt; 0)</span>
+<span class="nc" id="L2023">					result.append(&quot;, &quot;);</span>
+<span class="nc" id="L2024">				result.append(expression2Pretty(call.getContextArgument(i)));</span>
+			}
+<span class="nc" id="L2026">			result.append(&quot;&gt;&gt;&gt;&quot;);</span>
+		}
+<span class="nc" id="L2028">		result.append(&quot;(&quot;);</span>
+<span class="nc bnc" id="L2029" title="All 2 branches missed.">		for (int i = 0; i &lt; argNum; i++) {</span>
+<span class="nc bnc" id="L2030" title="All 2 branches missed.">			if (i &gt; 0)</span>
+<span class="nc" id="L2031">				result.append(&quot;, &quot;);</span>
+<span class="nc" id="L2032">			result.append(expression2Pretty(call.getArgument(i)));</span>
+		}
+<span class="nc" id="L2034">		result.append(&quot;)&quot;);</span>
+<span class="nc" id="L2035">		return result;</span>
+	}
+
+	private static StringBuffer operator2Pretty(OperatorNode operator) {
+<span class="nc" id="L2039">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L2040">		Operator op = operator.getOperator();</span>
+<span class="nc" id="L2041">		ExpressionNode argNode0 = operator.getArgument(0);</span>
+<span class="nc bnc" id="L2042" title="All 2 branches missed.">		ExpressionNode argNode1 = operator.numChildren() &gt; 1 ? operator</span>
+<span class="nc" id="L2043">				.getArgument(1) : null;</span>
+<span class="nc" id="L2044">		String arg0 = expression2Pretty(argNode0).toString();</span>
+<span class="nc bnc" id="L2045" title="All 2 branches missed.">		String arg1 = argNode1 != null ? expression2Pretty(argNode1).toString()</span>
+<span class="nc" id="L2046">				: null;</span>
+<span class="nc" id="L2047">		String argWtP0 = arg0, argWtP1 = arg1;</span>
+
+<span class="nc bnc" id="L2049" title="All 2 branches missed.">		if (argNode0.expressionKind() == ExpressionKind.OPERATOR)</span>
+<span class="nc" id="L2050">			argWtP0 = &quot;(&quot; + arg0 + &quot;)&quot;;</span>
+<span class="nc bnc" id="L2051" title="All 2 branches missed.">		if (argNode1 != null</span>
+<span class="nc bnc" id="L2052" title="All 2 branches missed.">				&amp;&amp; argNode1.expressionKind() == ExpressionKind.OPERATOR)</span>
+<span class="nc" id="L2053">			argWtP1 = &quot;(&quot; + arg1 + &quot;)&quot;;</span>
+<span class="nc bnc" id="L2054" title="All 47 branches missed.">		switch (op) {</span>
+		case ADDRESSOF:
+<span class="nc" id="L2056">			result.append(&quot;&amp;(&quot;);</span>
+<span class="nc" id="L2057">			result.append(arg0);</span>
+<span class="nc" id="L2058">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L2059">			break;</span>
+		case ASSIGN:
+<span class="nc" id="L2061">			result.append(arg0);</span>
+<span class="nc" id="L2062">			result.append(&quot; = &quot;);</span>
+<span class="nc" id="L2063">			result.append(arg1);</span>
+<span class="nc" id="L2064">			break;</span>
+		case HASH:
+<span class="nc" id="L2066">			result.append(arg0);</span>
+<span class="nc" id="L2067">			result.append(&quot;#&quot;);</span>
+<span class="nc" id="L2068">			result.append(arg1);</span>
+<span class="nc" id="L2069">			break;</span>
+		case BIG_O:
+<span class="nc" id="L2071">			result.append(&quot;$O(&quot;);</span>
+<span class="nc" id="L2072">			result.append(arg0);</span>
+<span class="nc" id="L2073">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L2074">			break;</span>
+		case BITAND:
+<span class="nc" id="L2076">			result.append(argWtP0);</span>
+<span class="nc" id="L2077">			result.append(&quot; &amp; &quot;);</span>
+<span class="nc" id="L2078">			result.append(argWtP1);</span>
+<span class="nc" id="L2079">			break;</span>
+		case BITANDEQ:
+<span class="nc" id="L2081">			result.append(argWtP0);</span>
+<span class="nc" id="L2082">			result.append(&quot; &amp;= &quot;);</span>
+<span class="nc" id="L2083">			result.append(argWtP1);</span>
+<span class="nc" id="L2084">			break;</span>
+		case BITCOMPLEMENT:
+<span class="nc" id="L2086">			result.append(&quot;~&quot;);</span>
+<span class="nc" id="L2087">			result.append(argWtP0);</span>
+<span class="nc" id="L2088">			break;</span>
+		case BITOR:
+<span class="nc" id="L2090">			result.append(argWtP0);</span>
+<span class="nc" id="L2091">			result.append(&quot; | &quot;);</span>
+<span class="nc" id="L2092">			result.append(argWtP1);</span>
+<span class="nc" id="L2093">			break;</span>
+		case BITOREQ:
+<span class="nc" id="L2095">			result.append(argWtP0);</span>
+<span class="nc" id="L2096">			result.append(&quot; |= &quot;);</span>
+<span class="nc" id="L2097">			result.append(argWtP1);</span>
+<span class="nc" id="L2098">			break;</span>
+		case BITXOR:
+<span class="nc" id="L2100">			result.append(argWtP0);</span>
+<span class="nc" id="L2101">			result.append(&quot; ^ &quot;);</span>
+<span class="nc" id="L2102">			result.append(argWtP1);</span>
+<span class="nc" id="L2103">			break;</span>
+		case BITXOREQ:
+<span class="nc" id="L2105">			result.append(argWtP0);</span>
+<span class="nc" id="L2106">			result.append(&quot; ^= &quot;);</span>
+<span class="nc" id="L2107">			result.append(argWtP1);</span>
+<span class="nc" id="L2108">			break;</span>
+		case COMMA:
+<span class="nc" id="L2110">			result.append(arg0);</span>
+<span class="nc" id="L2111">			result.append(&quot;, &quot;);</span>
+<span class="nc" id="L2112">			result.append(arg1);</span>
+<span class="nc" id="L2113">			break;</span>
+		case CONDITIONAL:
+<span class="nc" id="L2115">			result.append(arg0);</span>
+<span class="nc" id="L2116">			result.append(&quot; ? &quot;);</span>
+<span class="nc" id="L2117">			result.append(arg1);</span>
+<span class="nc" id="L2118">			result.append(&quot; : &quot;);</span>
+<span class="nc" id="L2119">			result.append(expression2Pretty(operator.getArgument(2)));</span>
+<span class="nc" id="L2120">			break;</span>
+		case DEREFERENCE:
+<span class="nc" id="L2122">			result.append(&quot;*&quot;);</span>
+<span class="nc" id="L2123">			result.append(arg0);</span>
+<span class="nc" id="L2124">			break;</span>
+		case DIV:
+<span class="nc" id="L2126">			result.append(argWtP0);</span>
+<span class="nc" id="L2127">			result.append(&quot; / &quot;);</span>
+<span class="nc" id="L2128">			result.append(argWtP1);</span>
+<span class="nc" id="L2129">			break;</span>
+		case DIVEQ:
+<span class="nc" id="L2131">			result.append(argWtP0);</span>
+<span class="nc" id="L2132">			result.append(&quot; /= &quot;);</span>
+<span class="nc" id="L2133">			result.append(argWtP1);</span>
+<span class="nc" id="L2134">			break;</span>
+		case EQUALS:
+<span class="nc" id="L2136">			result.append(argWtP0);</span>
+<span class="nc" id="L2137">			result.append(&quot; == &quot;);</span>
+<span class="nc" id="L2138">			result.append(argWtP1);</span>
+<span class="nc" id="L2139">			break;</span>
+		case GT:
+<span class="nc" id="L2141">			result.append(argWtP0);</span>
+<span class="nc" id="L2142">			result.append(&quot; &gt; &quot;);</span>
+<span class="nc" id="L2143">			result.append(argWtP1);</span>
+<span class="nc" id="L2144">			break;</span>
+		case GTE:
+<span class="nc" id="L2146">			result.append(argWtP0);</span>
+<span class="nc" id="L2147">			result.append(&quot; &gt;= &quot;);</span>
+<span class="nc" id="L2148">			result.append(argWtP1);</span>
+<span class="nc" id="L2149">			break;</span>
+		case IMPLIES:
+<span class="nc" id="L2151">			result.append(argWtP0);</span>
+<span class="nc" id="L2152">			result.append(&quot; =&gt; &quot;);</span>
+<span class="nc" id="L2153">			result.append(argWtP1);</span>
+<span class="nc" id="L2154">			break;</span>
+		case LAND:
+<span class="nc" id="L2156">			result.append(argWtP0);</span>
+<span class="nc" id="L2157">			result.append(&quot; &amp;&amp; &quot;);</span>
+<span class="nc" id="L2158">			result.append(argWtP1);</span>
+<span class="nc" id="L2159">			break;</span>
+		case LOR:
+<span class="nc" id="L2161">			result.append(argWtP0);</span>
+<span class="nc" id="L2162">			result.append(&quot; || &quot;);</span>
+<span class="nc" id="L2163">			result.append(argWtP1);</span>
+<span class="nc" id="L2164">			break;</span>
+		case LT:
+<span class="nc" id="L2166">			result.append(argWtP0);</span>
+<span class="nc" id="L2167">			result.append(&quot; &lt; &quot;);</span>
+<span class="nc" id="L2168">			result.append(argWtP1);</span>
+<span class="nc" id="L2169">			break;</span>
+		case LTE:
+<span class="nc" id="L2171">			result.append(argWtP0);</span>
+<span class="nc" id="L2172">			result.append(&quot; &lt;= &quot;);</span>
+<span class="nc" id="L2173">			result.append(argWtP1);</span>
+<span class="nc" id="L2174">			break;</span>
+		case MINUS:
+<span class="nc" id="L2176">			result.append(argWtP0);</span>
+<span class="nc" id="L2177">			result.append(&quot; - &quot;);</span>
+<span class="nc" id="L2178">			result.append(argWtP1);</span>
+<span class="nc" id="L2179">			break;</span>
+		case MINUSEQ:
+<span class="nc" id="L2181">			result.append(argWtP0);</span>
+<span class="nc" id="L2182">			result.append(&quot; -= &quot;);</span>
+<span class="nc" id="L2183">			result.append(argWtP1);</span>
+<span class="nc" id="L2184">			break;</span>
+		case MOD:
+<span class="nc" id="L2186">			result.append(argWtP0);</span>
+<span class="nc" id="L2187">			result.append(&quot; % &quot;);</span>
+<span class="nc" id="L2188">			result.append(argWtP1);</span>
+<span class="nc" id="L2189">			break;</span>
+		case MODEQ:
+<span class="nc" id="L2191">			result.append(argWtP0);</span>
+<span class="nc" id="L2192">			result.append(&quot; %= &quot;);</span>
+<span class="nc" id="L2193">			result.append(argWtP1);</span>
+<span class="nc" id="L2194">			break;</span>
+		case NEQ:
+<span class="nc" id="L2196">			result.append(argWtP0);</span>
+<span class="nc" id="L2197">			result.append(&quot; != &quot;);</span>
+<span class="nc" id="L2198">			result.append(argWtP1);</span>
+<span class="nc" id="L2199">			break;</span>
+		case NOT:
+<span class="nc" id="L2201">			result.append(&quot;!&quot;);</span>
+<span class="nc" id="L2202">			result.append(argWtP0);</span>
+<span class="nc" id="L2203">			break;</span>
+		case PLUS:
+<span class="nc" id="L2205">			result.append(argWtP0);</span>
+<span class="nc" id="L2206">			result.append(&quot; + &quot;);</span>
+<span class="nc" id="L2207">			result.append(argWtP1);</span>
+<span class="nc" id="L2208">			break;</span>
+		case PLUSEQ:
+<span class="nc" id="L2210">			result.append(arg0);</span>
+<span class="nc" id="L2211">			result.append(&quot; += &quot;);</span>
+<span class="nc" id="L2212">			result.append(arg1);</span>
+<span class="nc" id="L2213">			break;</span>
+		case POSTDECREMENT:
+<span class="nc" id="L2215">			result.append(arg0);</span>
+<span class="nc" id="L2216">			result.append(&quot;--&quot;);</span>
+<span class="nc" id="L2217">			break;</span>
+		case POSTINCREMENT:
+<span class="nc" id="L2219">			result.append(arg0);</span>
+<span class="nc" id="L2220">			result.append(&quot;++&quot;);</span>
+<span class="nc" id="L2221">			break;</span>
+		case PREDECREMENT:
+<span class="nc" id="L2223">			result.append(&quot;--&quot;);</span>
+<span class="nc" id="L2224">			result.append(arg0);</span>
+<span class="nc" id="L2225">			break;</span>
+		case PREINCREMENT:
+<span class="nc" id="L2227">			result.append(&quot;++&quot;);</span>
+<span class="nc" id="L2228">			result.append(arg0);</span>
+<span class="nc" id="L2229">			break;</span>
+		case SHIFTLEFT:
+<span class="nc" id="L2231">			result.append(argWtP0);</span>
+<span class="nc" id="L2232">			result.append(&quot; &lt;&lt; &quot;);</span>
+<span class="nc" id="L2233">			result.append(argWtP1);</span>
+<span class="nc" id="L2234">			break;</span>
+		case SHIFTLEFTEQ:
+<span class="nc" id="L2236">			result.append(argWtP0);</span>
+<span class="nc" id="L2237">			result.append(&quot; &lt;&lt;= &quot;);</span>
+<span class="nc" id="L2238">			result.append(argWtP1);</span>
+<span class="nc" id="L2239">			break;</span>
+		case SHIFTRIGHT:
+<span class="nc" id="L2241">			result.append(argWtP0);</span>
+<span class="nc" id="L2242">			result.append(&quot; &gt;&gt; &quot;);</span>
+<span class="nc" id="L2243">			result.append(argWtP1);</span>
+<span class="nc" id="L2244">			break;</span>
+		case SHIFTRIGHTEQ:
+<span class="nc" id="L2246">			result.append(argWtP0);</span>
+<span class="nc" id="L2247">			result.append(&quot; &gt;&gt;= &quot;);</span>
+<span class="nc" id="L2248">			result.append(argWtP1);</span>
+<span class="nc" id="L2249">			break;</span>
+		case SUBSCRIPT:
+<span class="nc" id="L2251">			result.append(arg0);</span>
+<span class="nc" id="L2252">			result.append(&quot;[&quot;);</span>
+<span class="nc" id="L2253">			result.append(arg1);</span>
+<span class="nc" id="L2254">			result.append(&quot;]&quot;);</span>
+<span class="nc" id="L2255">			break;</span>
+		case TIMES:
+<span class="nc" id="L2257">			result.append(argWtP0);</span>
+<span class="nc" id="L2258">			result.append(&quot; * &quot;);</span>
+<span class="nc" id="L2259">			result.append(argWtP1);</span>
+<span class="nc" id="L2260">			break;</span>
+		case TIMESEQ:
+<span class="nc" id="L2262">			result.append(argWtP0);</span>
+<span class="nc" id="L2263">			result.append(&quot; -= &quot;);</span>
+<span class="nc" id="L2264">			result.append(argWtP1);</span>
+<span class="nc" id="L2265">			break;</span>
+		case UNARYMINUS:
+<span class="nc" id="L2267">			result.append(&quot;-&quot;);</span>
+<span class="nc" id="L2268">			result.append(argWtP0);</span>
+<span class="nc" id="L2269">			break;</span>
+		case UNARYPLUS:
+<span class="nc" id="L2271">			result.append(&quot;+&quot;);</span>
+<span class="nc" id="L2272">			result.append(argWtP0);</span>
+<span class="nc" id="L2273">			break;</span>
+		case VALID:
+<span class="nc" id="L2275">			result.append(&quot;\\valid(&quot;);</span>
+<span class="nc" id="L2276">			result.append(arg0);</span>
+<span class="nc" id="L2277">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L2278">			break;</span>
+		default:
+<span class="nc" id="L2280">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L2281">					&quot;pretty print of operator node of &quot; + op + &quot; kind&quot;);</span>
+		}
+<span class="nc" id="L2283">		return result;</span>
+	}
+
+	private static StringBuffer type2Pretty(String prefix, TypeNode type,
+			boolean isTypeDeclaration) {
+<span class="nc" id="L2288">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L2289">		TypeNodeKind kind = type.kind();</span>
+
+<span class="nc" id="L2291">		result.append(prefix);</span>
+<span class="nc bnc" id="L2292" title="All 13 branches missed.">		switch (kind) {</span>
+		case ARRAY: {
+<span class="nc" id="L2294">			ArrayTypeNode arrayType = (ArrayTypeNode) type;</span>
+<span class="nc" id="L2295">			ExpressionNode extent = arrayType.getExtent();</span>
+
+			// result.append(&quot;(&quot;);
+<span class="nc" id="L2298">			result.append(type2Pretty(&quot;&quot;, arrayType.getElementType(),</span>
+<span class="nc" id="L2299">					isTypeDeclaration));</span>
+			// result.append(&quot;)&quot;);
+<span class="nc" id="L2301">			result.append(&quot;[&quot;);</span>
+<span class="nc bnc" id="L2302" title="All 2 branches missed.">			if (extent != null)</span>
+<span class="nc" id="L2303">				result.append(expression2Pretty(extent));</span>
+<span class="nc" id="L2304">			result.append(&quot;]&quot;);</span>
+		}
+<span class="nc" id="L2306">			break;</span>
+		case DOMAIN: {
+<span class="nc" id="L2308">			DomainTypeNode domainType = (DomainTypeNode) type;</span>
+<span class="nc" id="L2309">			ExpressionNode dim = domainType.getDimension();</span>
+
+<span class="nc" id="L2311">			result.append(&quot;$domain&quot;);</span>
+<span class="nc bnc" id="L2312" title="All 2 branches missed.">			if (dim != null) {</span>
+<span class="nc" id="L2313">				result.append(&quot;(&quot;);</span>
+<span class="nc" id="L2314">				result.append(expression2Pretty(dim));</span>
+<span class="nc" id="L2315">				result.append(&quot;)&quot;);</span>
+			}
+<span class="nc" id="L2317">			break;</span>
+		}
+		case VOID:
+<span class="nc" id="L2320">			result.append(&quot;void&quot;);</span>
+<span class="nc" id="L2321">			break;</span>
+		case BASIC:
+<span class="nc" id="L2323">			result.append(basicType2Pretty((BasicTypeNode) type));</span>
+<span class="nc" id="L2324">			break;</span>
+		case ENUMERATION:
+<span class="nc" id="L2326">			EnumerationTypeNode enumType = (EnumerationTypeNode) type;</span>
+
+<span class="nc" id="L2328">			return enumType2Pretty(prefix, enumType);</span>
+			// if (isTypeDeclaration)
+			// result.append(enumType2Pretty(prefix, enumType));
+			// else {
+			// result.append(&quot;enum&quot;);
+			// if (enumType.getIdentifier() != null)
+			// result.append(&quot; &quot; + enumType.getIdentifier().name());
+			// }
+			// break;
+		case STRUCTURE_OR_UNION: {
+<span class="nc" id="L2338">			StructureOrUnionTypeNode strOrUnion = (StructureOrUnionTypeNode) type;</span>
+
+<span class="nc" id="L2340">			return structOrUnion2Pretty(prefix, strOrUnion);</span>
+			// if (isTypeDeclaration)
+			// result.append(structOrUnion2Pretty(prefix, strOrUnion));
+			// else {
+			// if (strOrUnion.isStruct())
+			// result.append(&quot;struct &quot;);
+			// else
+			// result.append(&quot;union &quot;);
+			// result.append(strOrUnion.getName());
+			// }
+			// break;
+		}
+		case POINTER:
+<span class="nc" id="L2353">			result.append(type2Pretty(&quot;&quot;,</span>
+<span class="nc" id="L2354">					((PointerTypeNode) type).referencedType(),</span>
+<span class="nc" id="L2355">					isTypeDeclaration));</span>
+<span class="nc" id="L2356">			result.append(&quot;*&quot;);</span>
+<span class="nc" id="L2357">			break;</span>
+		case TYPEDEF_NAME:
+<span class="nc" id="L2359">			result.append(((TypedefNameNode) type).getName().name());</span>
+<span class="nc" id="L2360">			break;</span>
+		case SCOPE:
+<span class="nc" id="L2362">			result.append(&quot;$scope&quot;);</span>
+<span class="nc" id="L2363">			break;</span>
+		case FUNCTION: {
+<span class="nc" id="L2365">			FunctionTypeNode funcType = (FunctionTypeNode) type;</span>
+<span class="nc" id="L2366">			SequenceNode&lt;VariableDeclarationNode&gt; paras = funcType</span>
+<span class="nc" id="L2367">					.getParameters();</span>
+<span class="nc" id="L2368">			int i = 0;</span>
+
+<span class="nc" id="L2370">			result.append(&quot; (&quot;);</span>
+<span class="nc" id="L2371">			result.append(type2Pretty(prefix, funcType.getReturnType(), false));</span>
+<span class="nc" id="L2372">			result.append(&quot; (&quot;);</span>
+<span class="nc bnc" id="L2373" title="All 2 branches missed.">			for (VariableDeclarationNode para : paras) {</span>
+<span class="nc bnc" id="L2374" title="All 2 branches missed.">				if (i != 0)</span>
+<span class="nc" id="L2375">					result.append(&quot;, &quot;);</span>
+<span class="nc" id="L2376">				result.append(variableDeclaration2Pretty(&quot;&quot;, para));</span>
+<span class="nc" id="L2377">				i++;</span>
+			}
+<span class="nc" id="L2379">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L2380">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L2381">			break;</span>
+		}
+		case RANGE:
+<span class="nc" id="L2384">			result.append(&quot;$range&quot;);</span>
+<span class="nc" id="L2385">			break;</span>
+		case TYPEOF:
+<span class="nc" id="L2387">			result.append(&quot;typeof(&quot;);</span>
+<span class="nc" id="L2388">			result.append(expression2Pretty(((TypeofNode) type)</span>
+<span class="nc" id="L2389">					.getExpressionOperand()));</span>
+<span class="nc" id="L2390">			result.append(&quot;)&quot;);</span>
+<span class="nc" id="L2391">			break;</span>
+		default:
+<span class="nc" id="L2393">			throw new ABCUnsupportedException(&quot;pretty print of type node of &quot;</span>
+<span class="nc" id="L2394">					+ kind + &quot; kind&quot;);</span>
+		}
+<span class="nc" id="L2396">		return result;</span>
+	}
+
+	private static StringBuffer basicType2Pretty(BasicTypeNode type) {
+<span class="nc" id="L2400">		StringBuffer result = new StringBuffer();</span>
+<span class="nc" id="L2401">		BasicTypeKind basicKind = type.getBasicTypeKind();</span>
+
+<span class="nc bnc" id="L2403" title="All 20 branches missed.">		switch (basicKind) {</span>
+		case BOOL:
+<span class="nc" id="L2405">			result.append(&quot;_Bool&quot;);</span>
+<span class="nc" id="L2406">			break;</span>
+		case CHAR:
+<span class="nc" id="L2408">			result.append(&quot;char&quot;);</span>
+<span class="nc" id="L2409">			break;</span>
+		case DOUBLE:
+<span class="nc" id="L2411">			result.append(&quot;double&quot;);</span>
+<span class="nc" id="L2412">			break;</span>
+		case DOUBLE_COMPLEX:
+<span class="nc" id="L2414">			result.append(&quot;double _Complex&quot;);</span>
+<span class="nc" id="L2415">			break;</span>
+		case FLOAT:
+<span class="nc" id="L2417">			result.append(&quot;float&quot;);</span>
+<span class="nc" id="L2418">			break;</span>
+		case FLOAT_COMPLEX:
+<span class="nc" id="L2420">			result.append(&quot;float _Complex&quot;);</span>
+<span class="nc" id="L2421">			break;</span>
+		case INT:
+<span class="nc" id="L2423">			result.append(&quot;int&quot;);</span>
+<span class="nc" id="L2424">			break;</span>
+		case LONG:
+<span class="nc" id="L2426">			result.append(&quot;long&quot;);</span>
+<span class="nc" id="L2427">			break;</span>
+		case LONG_DOUBLE:
+<span class="nc" id="L2429">			result.append(&quot;long double&quot;);</span>
+<span class="nc" id="L2430">			break;</span>
+		case LONG_DOUBLE_COMPLEX:
+<span class="nc" id="L2432">			result.append(&quot;long double _Complex&quot;);</span>
+<span class="nc" id="L2433">			break;</span>
+		case LONG_LONG:
+<span class="nc" id="L2435">			result.append(&quot;long long&quot;);</span>
+<span class="nc" id="L2436">			break;</span>
+		case REAL:
+<span class="nc" id="L2438">			result.append(&quot;real&quot;);</span>
+<span class="nc" id="L2439">			break;</span>
+		case SHORT:
+<span class="nc" id="L2441">			result.append(&quot;short&quot;);</span>
+<span class="nc" id="L2442">			break;</span>
+		case SIGNED_CHAR:
+<span class="nc" id="L2444">			result.append(&quot;signed char&quot;);</span>
+<span class="nc" id="L2445">			break;</span>
+		case UNSIGNED:
+<span class="nc" id="L2447">			result.append(&quot;unsigned&quot;);</span>
+<span class="nc" id="L2448">			break;</span>
+		case UNSIGNED_CHAR:
+<span class="nc" id="L2450">			result.append(&quot;unsigned char&quot;);</span>
+<span class="nc" id="L2451">			break;</span>
+		case UNSIGNED_LONG:
+<span class="nc" id="L2453">			result.append(&quot;unsigned long&quot;);</span>
+<span class="nc" id="L2454">			break;</span>
+		case UNSIGNED_LONG_LONG:
+<span class="nc" id="L2456">			result.append(&quot;unsigned long long&quot;);</span>
+<span class="nc" id="L2457">			break;</span>
+		case UNSIGNED_SHORT:
+<span class="nc" id="L2459">			result.append(&quot;unsigned short&quot;);</span>
+<span class="nc" id="L2460">			break;</span>
+		default:
+<span class="nc" id="L2462">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L2463">					&quot;pretty print of basic type node of &quot; + basicKind + &quot; kind&quot;);</span>
+		}
+<span class="nc" id="L2465">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,170 @@
+/* two_lock_queue.cvl: a "Two-Lock Concurrent
+ * Queue Algorithm", from Michael and Scott,
+ * https://www.cs.rochester.edu/research/synchronization/pseudocode/queues.html.
+ * Originally from "Simple, Fast, and
+ * Practical Non-Blocking and Blocking
+ * Concurrent Queue Algorithms", PODC96.
+ */
+#include <stdio.h>
+#include <civlc.cvh>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <assert.h>
+typedef int lock_t;
+#define FREE 0
+#define lock(l) $when (l==0) l=1;
+#define unlock(l) l=0;
+
+typedef struct node_t {
+  int value;
+  struct node_t *next;
+} node_t;
+
+typedef struct queue_t {
+  node_t *Head;
+  node_t *Tail;
+  lock_t H_lock;
+  lock_t T_lock;
+} queue_t;
+
+void initialize(queue_t *Q) {
+  node_t *node = (node_t*)malloc(sizeof(node_t));
+
+  node->next = NULL;            // Make it the only node in the linked list
+  Q->Head = Q->Tail = node;     // Both Head and Tail point to it
+  Q->H_lock = Q->T_lock = FREE; // Locks are initially free
+}
+  
+void enqueue(queue_t *Q, int value) {
+  node_t *node = (node_t*)malloc(sizeof(node_t)); 
+  
+  node->value = value;          // Copy enqueued value into node
+  node->next = NULL;            // Set next pointer of node to NULL
+  lock(Q->T_lock);              // Acquire T_lock in order to access Tail
+  Q->Tail->next = node;         // Link node at the end of the linked list
+  Q->Tail = node;               // Swing Tail to node
+  unlock(Q->T_lock);            // Release T_lock
+}
+ 
+_Bool dequeue(queue_t *Q, int *pvalue) {
+  node_t *node, *new_head;
+
+  lock(Q->H_lock);              // Acquire H_lock in order to access Head
+  node = Q->Head;               // Read Head
+  new_head = node->next;        // Read next pointer
+  if (new_head == NULL) {       // Is queue empty?
+    unlock(Q->H_lock);          // Release H_lock before return
+    return false;               // Queue was empty
+  }
+  *pvalue = new_head->value;    // Queue not empty.  Read value before release
+  Q->Head = new_head;           // Swing Head to next node
+  unlock(Q->H_lock);            // Release H_lock
+  free(node);                   // Free node
+  return true;                  // Queue was not empty, dequeue succeeded
+}
+
+/*****************************************************/
+/******************** Tests **************************/
+/*****************************************************/
+
+/* Determines whether an array of n integers is 
+ * a permutation of the numbers 0..n-1. */
+_Bool is_permutation(int n, int *data) {
+  _Bool seen[n];
+
+  for (int i=0; i<n; i++)
+    seen[i] = 0;
+  for (int i=0; i<n; i++) {
+    int value = data[i];
+
+    if (value < 0 || value >= n)
+      return 0;
+    if (seen[value])
+      return 0;
+    seen[value] = 1;
+  }
+  return 1;
+}
+
+void test1() {
+  int d;
+  queue_t sq;
+	
+  initialize(&sq);
+  for (int i = 0; i < 10; i++) {
+    enqueue(&sq, i);
+  }
+  for (int i = 0; i < 10; i++) {
+    _Bool result = dequeue(&sq, &d);
+    
+    assert(result);
+    assert(d == i);
+  }
+  free(sq.Head);
+}
+
+void test2(int n) {   //Test whether dequeued array is a permutation
+  queue_t sq;
+  int array[n];
+  
+  initialize(&sq);
+  $parfor(int i: 0 .. (n-1)) {
+    enqueue(&sq, i);
+    dequeue(&sq, &array[i]);
+  }
+  assert(is_permutation(n, array));  
+  free(sq.Head);
+}
+
+void test3(int t, int n) {  //t is the number of threads,
+  int RESULT[t*n];          //n is the number of enqueued values 
+  int R[t][n];      //global array to store scaned result
+  int counter[t];   //global array, each thread has a counter;
+  queue_t sq;
+  
+  void thread(int tid){
+    for(int i=0; i<n; i++) {
+      enqueue(&sq, i+1+tid*n);
+    }
+  }
+  void scan(int x){   // helper method for assertFIFO()
+    int tid = 0;     // thread id
+  
+    tid = (x-1)/n;   //calculate the id of thread;
+    R[tid][counter[tid]++] = x;  //store scaned elements
+  }
+  void assertFIFO(int *data) {  // assert method for testing FIFO
+    for(int i=0; i<t*n; i++)
+      scan(data[i]);  //scan dequeued RESULT[t*n];
+    for(int i=0; i<t; i++)     //assert FIFO for each thread
+      for(int j=0; j<n-1; j++)
+	assert(R[i][j] < R[i][j+1]);
+  }
+  for(int i=0; i<t; i++)   //initialize global R[t][n]
+    for(int j=0; j<n; j++)
+      R[i][j] = 0;   
+  for(int i=0; i<t;i++) ///initialize global counter[t]
+    counter[i] = 0;
+  for(int i=0; i<t*n; i++)
+    RESULT[i] = 0;
+  
+  initialize(&sq);  
+  $parfor(int i: 0 .. t-1)
+    thread(i);
+  for(int i=0; i<t*n; i++)  
+    dequeue(&sq, &RESULT[i]); 
+  for(int i=0; i<t*n; i++){ //print dequeued result
+    if(i%(t*n)==0)
+      printf("dequeue: ");
+    printf("%d\t", RESULT[i]);
+  } 
+  printf("\n");
+  assertFIFO(RESULT);
+  free(sq.Head);   
+}
+
+void main() {
+  test1();
+  test2(3);
+  test3(2, 2);
+}

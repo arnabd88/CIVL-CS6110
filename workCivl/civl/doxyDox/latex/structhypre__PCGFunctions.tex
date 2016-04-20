@@ -1,0 +1,68 @@
+\hypertarget{structhypre__PCGFunctions}{}\section{hypre\+\_\+\+P\+C\+G\+Functions Struct Reference}
+\label{structhypre__PCGFunctions}\index{hypre\+\_\+\+P\+C\+G\+Functions@{hypre\+\_\+\+P\+C\+G\+Functions}}
+
+
+The \{ hypre\+\_\+\+P\+C\+G\+S\+Functions\} object ...  
+
+
+
+
+{\ttfamily \#include $<$krylov.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structhypre__PCGFunctions_a9227081d5e1d60fd52a2578665beadcd}{}char $\ast$($\ast$ {\bfseries C\+Alloc} )(int count, int elt\+\_\+size)\label{structhypre__PCGFunctions_a9227081d5e1d60fd52a2578665beadcd}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a9429469673443de0876467fe65186a6f}{}int($\ast$ {\bfseries Free} )(char $\ast$ptr)\label{structhypre__PCGFunctions_a9429469673443de0876467fe65186a6f}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_aa458c85ad17c7d050f55422e0ec1279f}{}int($\ast$ {\bfseries Comm\+Info} )(void $\ast$\hyperlink{structA}{A}, int $\ast$my\+\_\+id, int $\ast$num\+\_\+procs)\label{structhypre__PCGFunctions_aa458c85ad17c7d050f55422e0ec1279f}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a35e2613ac632ef8b77934cee783e9a20}{}void $\ast$($\ast$ {\bfseries Create\+Vector} )(void $\ast$\hyperlink{structvector}{vector})\label{structhypre__PCGFunctions_a35e2613ac632ef8b77934cee783e9a20}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a48a82a3e380535d99d8322f2e9412ecc}{}int($\ast$ {\bfseries Destroy\+Vector} )(void $\ast$\hyperlink{structvector}{vector})\label{structhypre__PCGFunctions_a48a82a3e380535d99d8322f2e9412ecc}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a24ddb6b13eac2dde67bd898311f57869}{}void $\ast$($\ast$ {\bfseries Matvec\+Create} )(void $\ast$\hyperlink{structA}{A}, void $\ast$x)\label{structhypre__PCGFunctions_a24ddb6b13eac2dde67bd898311f57869}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_aa9173923da123df082398997b230f3c7}{}int($\ast$ {\bfseries Matvec} )(void $\ast$matvec\+\_\+data, double alpha, void $\ast$\hyperlink{structA}{A}, void $\ast$x, double beta, void $\ast$y)\label{structhypre__PCGFunctions_aa9173923da123df082398997b230f3c7}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a9e36a23d7b5b2585d7f522c7b390a0f0}{}int($\ast$ {\bfseries Matvec\+Destroy} )(void $\ast$matvec\+\_\+data)\label{structhypre__PCGFunctions_a9e36a23d7b5b2585d7f522c7b390a0f0}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a4914af1fa866770c49017f5ccecdf1f8}{}double($\ast$ {\bfseries Inner\+Prod} )(void $\ast$x, void $\ast$y)\label{structhypre__PCGFunctions_a4914af1fa866770c49017f5ccecdf1f8}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a90e7623f3a4a15209a7930b9925a4034}{}int($\ast$ {\bfseries Copy\+Vector} )(void $\ast$x, void $\ast$y)\label{structhypre__PCGFunctions_a90e7623f3a4a15209a7930b9925a4034}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_aa8df3a6f606ce4a77b43998569e2cfb9}{}int($\ast$ {\bfseries Clear\+Vector} )(void $\ast$x)\label{structhypre__PCGFunctions_aa8df3a6f606ce4a77b43998569e2cfb9}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a976647903fd8883f1cf774e716696a89}{}int($\ast$ {\bfseries Scale\+Vector} )(double alpha, void $\ast$x)\label{structhypre__PCGFunctions_a976647903fd8883f1cf774e716696a89}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a2f8556b8e22de50bd5678502b290b360}{}int($\ast$ {\bfseries Axpy} )(double alpha, void $\ast$x, void $\ast$y)\label{structhypre__PCGFunctions_a2f8556b8e22de50bd5678502b290b360}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_a71c318780338a5a90131b38998f1524d}{}int($\ast$ {\bfseries precond} )(void $\ast$vdata, void $\ast$\hyperlink{structA}{A}, void $\ast$b, void $\ast$x)\label{structhypre__PCGFunctions_a71c318780338a5a90131b38998f1524d}
+
+\item 
+\hypertarget{structhypre__PCGFunctions_ab46805ba7657a503c7e608b608f7f803}{}int($\ast$ {\bfseries precond\+\_\+setup} )(void $\ast$vdata, void $\ast$\hyperlink{structA}{A}, void $\ast$b, void $\ast$x)\label{structhypre__PCGFunctions_ab46805ba7657a503c7e608b608f7f803}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \{ hypre\+\_\+\+P\+C\+G\+S\+Functions\} object ... 
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/mpi-\/omp/\+A\+M\+G2013/krylov/krylov.\+h\item 
+/home/arnabd/workspace/civl/trunk/examples/mpi-\/omp/\+A\+M\+G2013/krylov/pcg.\+h\end{DoxyCompactItemize}

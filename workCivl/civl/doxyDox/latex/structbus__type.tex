@@ -1,0 +1,59 @@
+\hypertarget{structbus__type}{}\section{bus\+\_\+type Struct Reference}
+\label{structbus__type}\index{bus\+\_\+type@{bus\+\_\+type}}
+
+
+Collaboration diagram for bus\+\_\+type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structbus__type__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structbus__type_a8e02b770017ad35b958a1e37ea8b5d07}{}char const $\ast$ {\bfseries name}\label{structbus__type_a8e02b770017ad35b958a1e37ea8b5d07}
+
+\item 
+\hypertarget{structbus__type_a4618ef7c5c9a126bd17469066b568dbf}{}struct \hyperlink{structbus__attribute}{bus\+\_\+attribute} $\ast$ {\bfseries bus\+\_\+attrs}\label{structbus__type_a4618ef7c5c9a126bd17469066b568dbf}
+
+\item 
+\hypertarget{structbus__type_a75091487b6c9f9db9719fc2685e10bc5}{}struct \hyperlink{structdevice__attribute}{device\+\_\+attribute} $\ast$ {\bfseries dev\+\_\+attrs}\label{structbus__type_a75091487b6c9f9db9719fc2685e10bc5}
+
+\item 
+\hypertarget{structbus__type_acddbc04a58624f33a90566102dcd7de5}{}struct \hyperlink{structdriver__attribute}{driver\+\_\+attribute} $\ast$ {\bfseries drv\+\_\+attrs}\label{structbus__type_acddbc04a58624f33a90566102dcd7de5}
+
+\item 
+\hypertarget{structbus__type_a46fe4c1f28714a06fa0073af7e3c6258}{}int($\ast$ {\bfseries match} )(struct \hyperlink{structdevice}{device} $\ast$, struct \hyperlink{structdevice__driver}{device\+\_\+driver} $\ast$)\label{structbus__type_a46fe4c1f28714a06fa0073af7e3c6258}
+
+\item 
+\hypertarget{structbus__type_aec7aebd8831e1ae2dc58bc0e88c8eeda}{}int($\ast$ {\bfseries uevent} )(struct \hyperlink{structdevice}{device} $\ast$, struct \hyperlink{structkobj__uevent__env}{kobj\+\_\+uevent\+\_\+env} $\ast$)\label{structbus__type_aec7aebd8831e1ae2dc58bc0e88c8eeda}
+
+\item 
+\hypertarget{structbus__type_ad153654adcb2ab7eca4cfb8f1dd61d7a}{}int($\ast$ {\bfseries probe} )(struct \hyperlink{structdevice}{device} $\ast$)\label{structbus__type_ad153654adcb2ab7eca4cfb8f1dd61d7a}
+
+\item 
+\hypertarget{structbus__type_a57b64c5e15343983e371aa6075f0d5c6}{}int($\ast$ {\bfseries remove} )(struct \hyperlink{structdevice}{device} $\ast$)\label{structbus__type_a57b64c5e15343983e371aa6075f0d5c6}
+
+\item 
+\hypertarget{structbus__type_acbfa68947a3927a5b32f2afc328076e4}{}void($\ast$ {\bfseries shutdown} )(struct \hyperlink{structdevice}{device} $\ast$)\label{structbus__type_acbfa68947a3927a5b32f2afc328076e4}
+
+\item 
+\hypertarget{structbus__type_aa23e6048f72b91ce22824aa268f9f2c7}{}int($\ast$ {\bfseries suspend} )(struct \hyperlink{structdevice}{device} $\ast$, \hyperlink{structpm__message}{pm\+\_\+message\+\_\+t})\label{structbus__type_aa23e6048f72b91ce22824aa268f9f2c7}
+
+\item 
+\hypertarget{structbus__type_a9e9d840a53eede307445566196005773}{}int($\ast$ {\bfseries resume} )(struct \hyperlink{structdevice}{device} $\ast$)\label{structbus__type_a9e9d840a53eede307445566196005773}
+
+\item 
+\hypertarget{structbus__type_a038d3b0001730989b452de2adaba3493}{}struct \hyperlink{structdev__pm__ops}{dev\+\_\+pm\+\_\+ops} const $\ast$ {\bfseries pm}\label{structbus__type_a038d3b0001730989b452de2adaba3493}
+
+\item 
+\hypertarget{structbus__type_adc8575a49ad25dbd11461e39dd67df6e}{}struct subsys\+\_\+private $\ast$ {\bfseries p}\label{structbus__type_adc8575a49ad25dbd11461e39dd67df6e}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/svcomp17/linux-\/stable-\/af3071a-\/1-\/130\+\_\+7a-\/drivers-\/-\/hwmon-\/-\/s3c-\/hwmon.\+ko-\/entry\+\_\+point\+\_\+false-\/unreach-\/call.\+cil.\+out.\+c\end{DoxyCompactItemize}

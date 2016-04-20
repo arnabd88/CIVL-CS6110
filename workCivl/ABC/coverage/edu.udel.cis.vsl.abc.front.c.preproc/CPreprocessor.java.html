@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CPreprocessor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.preproc</a> &gt; <span class="el_source">CPreprocessor.java</span></div><h1>CPreprocessor.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.c.preproc;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonToken;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.Tree;
+
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.front.IF.Preprocessor;
+import edu.udel.cis.vsl.abc.front.IF.PreprocessorException;
+<span class="fc" id="L25">import edu.udel.cis.vsl.abc.front.c.preproc.PreprocessorParser.file_return;</span>
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+import edu.udel.cis.vsl.abc.token.IF.Macro;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.util.IF.ANTLRUtils;
+
+/**
+ * The class provides easy access to all services exported by the preproc module
+ * (a la Facade Pattern). It includes a main method which preprocesses the file
+ * and sends result to stdout.
+ * 
+ * @author Stephen F. Siegel, University of Delaware
+ */
+public class CPreprocessor implements Preprocessor {
+
+	public final static String SHORT_FILE_NAME_PREFIX = &quot;f&quot;;
+
+	public final static boolean debug = true;
+
+	private Map&lt;File, SourceFile&gt; sourceFileMap = new LinkedHashMap&lt;&gt;();
+
+	private ArrayList&lt;SourceFile&gt; sourceFiles = new ArrayList&lt;&gt;();
+
+	private Configuration config;
+
+	public CPreprocessor(Configuration config) {
+		this.config = config;
+	}
+
+	@Override
+	public Map&lt;String, Macro&gt; getMacros(Map&lt;String, String&gt; macroDefs)
+			throws PreprocessorException {
+		if ((this.config != null &amp;&amp; this.config.svcomp())
+				|| (macroDefs != null &amp;&amp; macroDefs.size() &gt; 0)) {
+			try {
+				// use temporary file to store the macro definitions
+				String tmpDirBase = System.getProperty(&quot;java.io.tmpdir&quot;);
+				// when -Duser.home=$HOME is used, this returns $HOME
+				if (tmpDirBase.startsWith(&quot;$&quot;)) {
+					tmpDirBase = System.getenv(tmpDirBase.substring(1));
+				}
+
+				File temp = new File(tmpDirBase, &quot;tmp&quot;
+						+ System.currentTimeMillis() + &quot;.h&quot;);
+				// Write to temp file
+				FileWriter tmpWriter = new FileWriter(temp);
+				BufferedWriter tmpOut = new BufferedWriter(tmpWriter);
+				CPreprocessorWorker worker;
+				PreprocessorTokenSource tokenSource;
+				Token token;
+
+				// macros for GNU C features
+				// for now, put this here. Find a better place:
+				if (this.config != null &amp;&amp; this.config.svcomp())
+					tmpOut.write(&quot;#define __attribute__(X)\r\n&quot;);
+				for (String macro : macroDefs.keySet())
+					tmpOut.write(&quot;#define &quot; + macro + &quot; &quot;
+							+ macroDefs.get(macro) + &quot;\r\n&quot;);
+				tmpOut.write(&quot;\r\n&quot;);
+				tmpOut.flush();
+				tmpOut.close();
+				tmpWriter.close();
+				worker = new CPreprocessorWorker(config, this,
+						CPreprocessorWorker.defaultSystemIncludes,
+						CPreprocessorWorker.defaultSystemIncludes,
+						new HashMap&lt;String, Macro&gt;());
+				tokenSource = worker.outputTokenSource(temp, true);
+				do {
+					token = tokenSource.nextToken();
+<span class="nc" id="L94">				} while (token.getType() != PreprocessorLexer.EOF);</span>
+				// delete the temporary file
+				temp.delete();
+				return tokenSource.macroMap;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				// why doesn't this throw an exception????????
+				return new HashMap&lt;String, Macro&gt;();
+			}
+		} else
+			return new HashMap&lt;String, Macro&gt;();
+	}
+
+	/**
+	 * Returns a lexer for the given preprocessor source file. The lexer removes
+	 * all occurrences of backslash-newline, scans and tokenizes the input to
+	 * produce a sequence of tokens in the preprocessor grammar. It does not
+	 * execute the preprocessor directives.
+	 * 
+	 * @param file
+	 *            a preprocessor source file
+	 * @return a lexer for the given file
+	 * @throws IOException
+	 *             if an I/O error occurs while reading the file
+	 */
+	@Override
+<span class="nc" id="L120">	public PreprocessorLexer lexer(File file) throws PreprocessorException {</span>
+		try {
+			CharStream charStream = PreprocessorUtils
+					.newFilteredCharStreamFromFile(file);
+
+			return new PreprocessorLexer(charStream);
+		} catch (IOException e) {
+			throw new PreprocessorException(
+					&quot;I/O error occurred while scanning &quot; + file + &quot;:\n&quot; + e);
+		}
+	}
+
+	/**
+	 * Prints the results of lexical analysis of the source file. Mainly useful
+	 * for debugging.
+	 * 
+	 * @param out
+	 *            a PrintStream to which the output should be sent
+	 * @param file
+	 *            a preprocessor source file
+	 * @throws PreprocessorException
+	 *             if any kind of exception comes from ANTLR's lexer, including
+	 *             a file which does not conform lexically to the preprocessor
+	 *             grammar
+	 */
+	@Override
+	public void lex(PrintStream out, File file) throws PreprocessorException {
+		out.println(&quot;Lexical analysis of &quot; + file + &quot;:&quot;);
+		try {
+<span class="nc" id="L149">			PreprocessorLexer lexer = lexer(file);</span>
+			int numErrors;
+
+			PreprocessorUtils.printTokenSource(out, lexer);
+			numErrors = lexer.getNumberOfSyntaxErrors();
+
+			if (numErrors != 0)
+				throw new PreprocessorException(numErrors
+						+ &quot; syntax errors occurred while scanning &quot; + file);
+		} catch (RuntimeException e) {
+			throw new PreprocessorException(e.getMessage());
+		}
+	}
+
+	/**
+	 * Returns a parser for the given preprocessor source file.
+	 * 
+	 * @param file
+	 *            a preprocessor source file
+	 * @return a parser for that file
+	 * @throws PreprocessorException
+	 *             if an I/O error occurs in attempting to open the file
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+<span class="nc" id="L174">	public PreprocessorParser parser(File file) throws PreprocessorException {</span>
+		PreprocessorLexer lexer = lexer(file);
+		CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+
+		if (config != null &amp;&amp; config.svcomp()) {
+			int numTokens = tokenStream.getNumberOfOnChannelTokens();
+			// the second last token is the token before EOF
+			Token secondLastToken = tokenStream.get(numTokens - 2);
+
+			if (secondLastToken.getType() != PreprocessorParser.NEWLINE) {
+				Token newLineToken = new CommonToken(
+						secondLastToken.getInputStream(),
+						PreprocessorParser.NEWLINE,
+						secondLastToken.getChannel(), -1, -1);
+
+				newLineToken.setText(&quot;\n&quot;);
+				((List&lt;Token&gt;) tokenStream.getTokens()).add(numTokens - 1,
+						newLineToken);
+			}
+		}
+		return new PreprocessorParser(tokenStream);
+	}
+
+	/**
+	 * Scans and parses the given preprocessor source file, sending a textual
+	 * description of the resulting tree to out. This does not execute any
+	 * preprocessor directives. It is useful mainly for debugging.
+	 * 
+	 * @param out
+	 *            print stream to which the tree representation of the file will
+	 *            be sent
+	 * @param file
+	 *            a preprocessor source file.
+	 * @throws PreprocessorException
+	 *             if the file does not conform to the preprocessor grammar, or
+	 *             an I/O error occurs in reading the file
+	 */
+	@Override
+	public void parse(PrintStream out, File file) throws PreprocessorException {
+		try {
+<span class="nc" id="L214">			PreprocessorParser parser = parser(file);</span>
+			file_return fileReturn = parser.file();
+			int numErrors = parser.getNumberOfSyntaxErrors();
+			Tree tree;
+
+			if (numErrors != 0)
+				throw new PreprocessorException(numErrors
+						+ &quot; syntax errors occurred while scanning &quot; + file);
+			out.println(&quot;AST for &quot; + file + &quot;:&quot;);
+			out.flush();
+			tree = (Tree) fileReturn.getTree();
+			ANTLRUtils.printTree(out, tree);
+		} catch (RecognitionException e) {
+			throw new PreprocessorException(
+					&quot;Recognition error while preprocessing:\n&quot; + e);
+		} catch (RuntimeException e) {
+			e.printStackTrace(System.err);
+			throw new PreprocessorException(e.toString());
+		}
+	}
+
+	/**
+	 * Given a preprocessor source file, this returns a Token Source that emits
+	 * the tokens resulting from preprocessing the file.
+	 * 
+	 * @param file
+	 * @return a token source for the token resulting from preprocessing the
+	 *         file
+	 * @throws PreprocessorException
+	 *             if an I/O error occurs
+	 */
+	@Override
+<span class="nc" id="L246">	public PreprocessorTokenSource outputTokenSource(File[] systemIncludePaths,</span>
+			File[] userIncludePaths, Map&lt;String, Macro&gt; implicitMacros,
+			File file) throws PreprocessorException {
+		CPreprocessorWorker worker = new CPreprocessorWorker(config, this,
+				systemIncludePaths, userIncludePaths, implicitMacros);
+
+		return worker.outputTokenSource(file, false);
+	}
+
+	@Override
+<span class="nc" id="L256">	public CivlcTokenSource outputTokenSource(File[] systemIncludePaths,</span>
+			File[] userIncludePaths, Map&lt;String, Macro&gt; implicitMacros,
+			String filename, boolean isSystem) throws PreprocessorException,
+			IOException {
+		CPreprocessorWorker worker = new CPreprocessorWorker(config, this,
+				systemIncludePaths, userIncludePaths, implicitMacros);
+
+		return worker.outputTokenSource(isSystem, filename);
+	}
+
+	/**
+	 * Prints the list of tokens that result from preprocessing the file. One
+	 * token is printed per line, along with information on the origin of that
+	 * token. Useful mainly for debugging.
+	 * 
+	 * @param out
+	 *            where to send output list
+	 * @param file
+	 *            a preprocessor source file
+	 * @throws PreprocessorException
+	 *             if the file fails to adhere to the preprocessor grammar, or
+	 *             an I/O occurs
+	 */
+	@Override
+<span class="nc" id="L280">	public void printOutputTokens(File[] systemIncludePaths,</span>
+			File[] userIncludePaths, Map&lt;String, Macro&gt; implicitMacros,
+			PrintStream out, File file) throws PreprocessorException {
+		CPreprocessorWorker worker = new CPreprocessorWorker(config, this,
+				systemIncludePaths, userIncludePaths, implicitMacros);
+		PreprocessorTokenSource source = worker.outputTokenSource(file, false);
+
+		out.println(&quot;Post-preprocessing token stream for &quot; + file + &quot;:\n&quot;);
+		PreprocessorUtils.printTokenSource(out, source);
+		out.flush();
+	}
+
+	@Override
+<span class="nc" id="L293">	public void printOutput(File[] systemIncludePaths, File[] userIncludePaths,</span>
+			Map&lt;String, Macro&gt; implicitMacros, PrintStream out, File file)
+			throws PreprocessorException {
+		CPreprocessorWorker worker = new CPreprocessorWorker(config, this,
+				systemIncludePaths, userIncludePaths, implicitMacros);
+		PreprocessorTokenSource source = worker.outputTokenSource(file, false);
+
+		PreprocessorUtils.sourceTokenSource(out, source);
+		out.flush();
+	}
+
+	@Override
+<span class="nc" id="L305">	public void printOutputDebug(File[] systemIncludePaths,</span>
+			File[] userIncludePaths, Map&lt;String, Macro&gt; implicitMacros,
+			PrintStream out, File file) throws PreprocessorException {
+		out.println(&quot;Post-preprocessing output for &quot; + file + &quot;:\n&quot;);
+		out.println(&quot;-----------------------------------&gt;&quot;);
+		printOutput(systemIncludePaths, userIncludePaths, implicitMacros, out,
+				file);
+		out.println(&quot;&lt;-----------------------------------&quot;);
+		out.flush();
+	}
+
+	@Override
+<span class="nc" id="L317">	public void debug(File[] systemIncludePaths, File[] userIncludePaths,</span>
+			Map&lt;String, Macro&gt; implicitMacros, PrintStream out, File file)
+			throws PreprocessorException {
+		PreprocessorUtils.source(out, file);
+		out.println();
+		lex(out, file);
+		out.println();
+		parse(out, file);
+		out.println();
+		printOutputTokens(systemIncludePaths, userIncludePaths, implicitMacros,
+				out, file);
+		out.println();
+		printOutputDebug(systemIncludePaths, userIncludePaths, implicitMacros,
+				out, file);
+		out.println();
+	}
+
+	@Override
+<span class="nc" id="L335">	public Collection&lt;SourceFile&gt; getSourceFiles() {</span>
+		return sourceFiles;
+	}
+
+	@Override
+<span class="nc" id="L340">	public SourceFile getSourceFile(File file) {</span>
+		return sourceFileMap.get(file);
+	}
+
+	@Override
+<span class="nc" id="L345">	public int getNumSourceFiles() {</span>
+		return sourceFiles.size();
+	}
+
+	@Override
+<span class="nc" id="L350">	public SourceFile getSourceFile(int index) {</span>
+		return sourceFiles.get(index);
+	}
+
+	@Override
+<span class="nc" id="L355">	public void printSourceFiles(PrintStream out) {</span>
+		out.println(&quot;Source files:&quot;);
+		for (SourceFile sourceFile : sourceFiles) {
+			out.println(sourceFile.getIndexName() + &quot;\t: &quot;
+					+ sourceFile.getPath());
+		}
+		out.println();
+		out.flush();
+	}
+
+	/**
+	 * Looks to see if a {@link SourceFile} object has already been created for
+	 * the given {@link File}. If so, returns that one. Else creates a new one,
+	 * assigns it the next index, and stores it.
+	 * 
+	 * @param file
+	 *            a file that is being read to produce this token source
+	 * @return the {@link SourceFile} corresponding to the given file
+	 */
+<span class="nc" id="L374">	SourceFile getOrMakeSourceFile(File file, boolean tmpFile) {</span>
+		SourceFile result = sourceFileMap.get(file);
+
+		if (result == null) {
+			result = new SourceFile(file, sourceFiles.size());
+			if (!tmpFile) {
+				// don't keep track of temp files created by parsing command
+				// line macros
+				sourceFiles.add(result);
+				sourceFileMap.put(file, result);
+			}
+		}
+		return result;
+	}
+
+<span class="nc" id="L389">	public CivlcTokenSource tokenSourceOfLibrary(String name) {</span>
+		CPreprocessorWorker worker = new CPreprocessorWorker(config, this,
+				new File[0], new File[0], new HashMap&lt;String, Macro&gt;());
+
+		return worker.tokenSourceOfLibrary(name);
+	}
+
+	/**
+	 * This main method is just here for simple tests. The real main method is
+	 * in the main class, ABC.java.
+	 */
+<span class="nc" id="L400">	public final static void main(String[] args) throws PreprocessorException {</span>
+		String filename = args[0];
+		CPreprocessor p = new CPreprocessor(null);
+		File file = new File(filename);
+
+		if (debug)
+			p.debug(CPreprocessorWorker.defaultSystemIncludes,
+					CPreprocessorWorker.defaultUserIncludes,
+					CPreprocessorWorker.defaultImplicitMacros, System.out, file);
+		else
+			p.printOutput(CPreprocessorWorker.defaultSystemIncludes,
+					CPreprocessorWorker.defaultUserIncludes,
+					CPreprocessorWorker.defaultImplicitMacros, System.out, file);
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

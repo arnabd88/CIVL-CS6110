@@ -1,0 +1,31 @@
+/* Commandline execution:
+ * 		civl verify locksBad.cvl
+ * */
+_Bool lock0 = 0;
+_Bool lock1 = 0;
+
+void proc0() {
+  while (1) {
+    $when (!lock0) lock0=1;
+    $when (!lock1) lock1=1;
+    lock0=0;
+    lock1=0;
+  }
+}
+
+void proc1() {
+  while (1) {
+    $when (!lock1) lock1=1;
+    $when (!lock0) lock0=1;
+    lock0=0;
+    lock1=0;
+  }
+}
+
+void main() {
+  $proc p0 = $spawn proc0();
+  $proc p1 = $spawn proc1();
+  
+  $wait(p0);
+  $wait(p1);
+}

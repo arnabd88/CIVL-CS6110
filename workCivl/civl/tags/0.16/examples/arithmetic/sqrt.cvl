@@ -1,0 +1,15 @@
+#include <math.h>
+#include <stdio.h>
+
+$input double x;
+$assume x >= 0.0;
+
+int main(int argc, char * argv[]) {
+  double y = sqrt(x) + 1;
+
+  if(x == 0.0)
+    $assert(y == 1);
+  else
+    $assert(y > 1);
+  return 0;
+}

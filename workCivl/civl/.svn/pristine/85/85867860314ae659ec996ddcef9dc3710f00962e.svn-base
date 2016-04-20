@@ -1,0 +1,112 @@
+/* dot product of two arrays.
+ *  Command line execution:
+ *     
+ */
+#include <civlc.h>
+#include <stdio.h>
+
+#define imin(a,b) (a<b?a:b)
+
+$input int THREADS_PER_BLOCK; // thread number per block: must be a power of 2, due to the while loop at the end of gpuThread();
+$input int N_BOUND;
+$input int N;
+$assume 0 < N && N <= N_BOUND;
+int const threadsPerBlock = THREADS_PER_BLOCK;
+int const blocksPerGrid =
+            imin(32, (N+threadsPerBlock-1) / threadsPerBlock );     
+double *a, *b, c, *partial_c;
+
+void gpu(){
+  $proc blocks[blocksPerGrid];
+
+  void gpuBlock(int blockID){
+    int num_in_barrier =0;
+    int barrier_size = 0;
+    double cache[threadsPerBlock];
+    int in_barrier[threadsPerBlock];
+    $proc threads[threadsPerBlock];
+    
+    void __sync_init(int* in_barrier, int size) {
+      barrier_size = size;
+      for (int i=0; i<size; i++) in_barrier[i] = 0;
+    }
+   
+    // model the synchronization of threads in the same block
+    void __syncthreads(int* in_barrier, int tid) {
+      $atomic {
+        in_barrier[tid] = 1; // I am in the barrier
+        num_in_barrier++; // increment number in barrier
+        if (num_in_barrier == barrier_size) { // I am last to enter
+          for (int i=0; i<barrier_size; i++) in_barrier[i] = 0; // release all
+          num_in_barrier = 0; // now none are in barrier
+        }
+      }
+      $when (in_barrier[tid] == 0); // wait till I am released
+    }
+
+    void gpuThread(int threadID){
+      int tid = threadID + blockID * threadsPerBlock;
+      int cacheIndex = threadID;
+      double temp = 0;
+      
+      $atomic {
+        while (tid < N) {
+          temp += a[tid] * b[tid];
+          tid += threadsPerBlock * blocksPerGrid;
+        }
+        // set cache values
+        cache[cacheIndex] = temp;
+      }
+      // synchronize threads
+      __syncthreads(in_barrier, threadID);
+      int i = threadsPerBlock/2;
+      while (i != 0) {
+        if (cacheIndex < i)
+          cache[cacheIndex] += cache[cacheIndex + i];
+        // synchronize threads
+        __syncthreads(in_barrier, threadID);
+        i /= 2;
+      }
+      if (cacheIndex == 0)
+        partial_c[blockID] = cache[0];
+    }
+
+    __sync_init(in_barrier, threadsPerBlock);
+    for(int i = 0; i < threadsPerBlock; i++) {
+      threads[i] = $spawn gpuThread(i);
+    }
+    for(int i = 0; i < threadsPerBlock; i++) {
+      $wait threads[i];
+    }
+  }
+ 
+  for(int i = 0; i < blocksPerGrid; i++) {
+    blocks[i] = $spawn gpuBlock(i);  
+  }
+  for(int i = 0; i < blocksPerGrid; i++) {
+    $wait blocks[i];
+  }
+}
+
+int main( void ) {
+  $heap host;
+    
+  // allocate memory on the cpu side
+  a = (double *) $malloc(&host, N*sizeof(double));
+  b = (double *) $malloc(&host, N*sizeof(double));
+  partial_c = (double *) $malloc(&host, blocksPerGrid*sizeof(double));
+  // fill in the host memory with data
+  for (int i=0; i<N; i++) {
+    a[i] = i;
+    b[i] = i*2;
+  }
+  gpu();
+  // finish up on the CPU side
+  c = 0;
+  for (int i=0; i<blocksPerGrid; i++) {
+    c += partial_c[i];
+  }
+  #define sum_squares(x)  (x*(x+1)*(2*x+1)/6)
+  // check result
+  $assert(c == 2 * sum_squares( (double)(N - 1) ));
+}

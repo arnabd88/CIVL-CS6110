@@ -1,0 +1,54 @@
+/* dotProduct_orphan.cvl: model of dotProduct_orphan.c.
+ */
+#include <civlc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#define VECLEN 10
+#define THREAD_MAX 4
+/* Does thread t own iteration i in loop with n iterations? */
+#define CIVL_owns(t, n, i) ((i)%(n)==(t))
+
+float a[VECLEN], b[VECLEN], sum;
+
+// note dotprod has been changed to accept
+// _tid and _nthreads, since it can be called
+// from a parallel construct.
+// also, return type has changed to void since it
+// does not return value.
+void dotprod (int _tid, int _nthreads) {
+  int i, tid, _sum=0;
+
+  tid = _tid;
+  // #pragma omp for reduction(+:sum)
+  for (i=0; i < VECLEN; i++) {
+    if (CIVL_owns(_tid, _nthreads, i)) {
+      _sum = _sum + (a[i]*b[i]);
+      printf("  tid= %d i=%d\n",tid,i);
+    }
+  }
+  sum += _sum;
+}
+
+void main () {
+  int i;
+
+  for (i=0; i < VECLEN; i++)
+    a[i] = b[i] = 1.0 * i;
+  sum = 0.0;
+  { // #pragma omp parallel
+    int _nthreads = 1+$choose_int(THREAD_MAX);
+    $proc threads[_nthreads];
+    void parallel_body(int _tid) {
+      dotprod(_tid, _nthreads);
+    }
+
+    for (int tid=0; tid<_nthreads; tid++)
+      threads[tid] = $spawn parallel_body(tid);
+    for (int tid=0; tid<_nthreads; tid++)
+      $wait(threads[tid]);
+  } // end of parallel region
+
+  printf("Sum = %f\n",sum);
+  assert(sum==285);
+}

@@ -1,0 +1,29 @@
+#include <civlc.h>
+int sh = 0;
+
+void Process(){
+  double ** buf;
+  int *p;
+  $scope myScope = $here;
+  
+  p = (int *)$malloc($here, 2 * sizeof(int));
+  buf = (double **)$malloc($here, 2 * sizeof(double *));
+  for(int i=0; i<2; i++){
+    buf[i] = (double *)$malloc(myScope, 
+			       2 * sizeof(double));
+  }
+  $free(p);
+  for(int i=0; i<2; i++){
+    $free(buf[i]);
+  }
+  $free(buf);
+}
+
+void main(){
+  $proc procs[2];
+
+  procs[0] = $spawn Process();
+  procs[1] = $spawn Process();
+  $wait(procs[0]);
+  $wait(procs[1]);
+}

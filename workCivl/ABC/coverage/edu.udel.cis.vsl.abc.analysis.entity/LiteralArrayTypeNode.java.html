@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LiteralArrayTypeNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">LiteralArrayTypeNode.java</span></div><h1>LiteralArrayTypeNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+
+<span class="nc bnc" id="L6" title="All 2 branches missed.">public class LiteralArrayTypeNode extends LiteralTypeNode {</span>
+
+	private LiteralTypeNode elementNode;
+
+	private int length;
+
+	private boolean fixed;
+
+	public LiteralArrayTypeNode(ArrayType type, LiteralTypeNode elementNode) {
+<span class="nc" id="L15">		super(type);</span>
+
+<span class="nc" id="L17">		IntegerValue constantSize = type.getConstantSize();</span>
+
+<span class="nc" id="L19">		this.elementNode = elementNode;</span>
+<span class="nc bnc" id="L20" title="All 4 branches missed.">		assert elementNode.getType().equals(type.getElementType());</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">		if (constantSize != null) {</span>
+<span class="nc" id="L22">			length = constantSize.getIntegerValue().intValue();</span>
+<span class="nc" id="L23">			fixed = true;</span>
+<span class="nc" id="L24">		} else {</span>
+<span class="nc" id="L25">			length = 0;</span>
+<span class="nc" id="L26">			fixed = false;</span>
+		}
+<span class="nc" id="L28">	}</span>
+
+	@Override
+	public ArrayType getType() {
+<span class="nc" id="L32">		return (ArrayType) super.getType();</span>
+	}
+
+	@Override
+	public boolean hasFixedLength() {
+<span class="nc" id="L37">		return fixed;</span>
+	}
+
+	@Override
+	public int length() {
+<span class="nc" id="L42">		return length;</span>
+	}
+
+	public LiteralTypeNode getElementNode() {
+<span class="nc" id="L46">		return elementNode;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L51">		return &quot;Array[&quot; + length + &quot;,&quot; + getElementNode() + &quot;]&quot;;</span>
+	}
+
+	public void setLength(int value) {
+<span class="nc bnc" id="L55" title="All 4 branches missed.">		assert !fixed;</span>
+<span class="nc" id="L56">		this.length = value;</span>
+<span class="nc" id="L57">	}</span>
+
+	@Override
+	public LiteralTypeNode getChild(int index) {
+<span class="nc" id="L61">		return getElementNode();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

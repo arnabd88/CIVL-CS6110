@@ -1,0 +1,9 @@
+/* prove: X!=0 => X*X > 0 */
+#include <civlc.cvh>
+
+$input double x;
+
+int main() {
+  $assume(x!=0);
+  $assert(x*x>0);
+}

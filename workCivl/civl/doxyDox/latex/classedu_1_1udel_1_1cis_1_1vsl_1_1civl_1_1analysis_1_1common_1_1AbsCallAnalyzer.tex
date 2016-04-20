@@ -1,0 +1,164 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer@{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer}}
+
+
+This analyzer is dedicated for analyzing abs(arg) calls (of math library).  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Abs\+Status}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_1_1AbsType}{Abs\+Type}
+\begin{DoxyCompactList}\small\item\em result of absolute call analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_adfc5a21f871babc86462b41b6321fd1c}{Abs\+Call\+Analyzer} (Symbolic\+Universe universe)
+\begin{DoxyCompactList}\small\item\em creates a new instance of absolute value function call analyzer. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_a3cc0e3f03de95e9b88f0cd03213bc03d}{static\+Analysis} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)
+\begin{DoxyCompactList}\small\item\em Static analysis of the given statement. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_a149a736d2a07556f6086a5891269410e}{analyze} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} statement, Symbolic\+Expression\mbox{[}$\,$\mbox{]} argument\+Values)
+\begin{DoxyCompactList}\small\item\em Analyzes a call statement. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_ad1858fef1ac0948b1eaf4a7d3873450b}{print\+Analysis} (Print\+Stream out)
+\begin{DoxyCompactList}\small\item\em Print the results the analyzer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This analyzer is dedicated for analyzing abs(arg) calls (of math library). 
+
+The purpose is keep track of the value of the argument arg\+:
+
+
+\begin{DoxyItemize}
+\item N\+O\+N\+E\+: function is never called (this is the initial state) 
+\item +\+: function is called at least once, and all calls satisfy the argument must be $>$= 0 (i.\+e., you could prove that always arg $>$=0) and at least one call may have an argument that is $>$0 (i.\+e., you could not prove that arg =0) 
+\item 0\+: function is called at least once, and all calls satisfy the argument must be 0 (you could prove that every time arg = 0) 
+\item -\/\+: function is called at least once, and all calls satisfy arg $<$=0 and at least once call satisfy arg $<$0 (dual to +) 
+\item \+: function is called at least once, at least one call has argument which could be $<$0 (i.\+e., you could not prove arg$>$=0), at least one call has argument which could be $>$0 (i.\+e., you could not prove arg$<$=0) 
+\end{DoxyItemize}
+
++\+: Y (pc \&\& arg $>$ 0) +\+: N (pc -\/$>$ arg $<$=0) +\+: ? (none of the above) -\/\+: Y -\/\+: N -\/\+: ? 0\+: Y 0\+: N 0\+: ?
+
+\begin{DoxyAuthor}{Author}
+zmanchun 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_adfc5a21f871babc86462b41b6321fd1c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer}!Abs\+Call\+Analyzer@{Abs\+Call\+Analyzer}}
+\index{Abs\+Call\+Analyzer@{Abs\+Call\+Analyzer}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer}}
+\subsubsection[{Abs\+Call\+Analyzer}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer.\+Abs\+Call\+Analyzer (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Universe}]{universe}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_adfc5a21f871babc86462b41b6321fd1c}
+
+
+creates a new instance of absolute value function call analyzer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em universe} & the symbolic universe to be used for analysis. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_a149a736d2a07556f6086a5891269410e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer}!analyze@{analyze}}
+\index{analyze@{analyze}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer}}
+\subsubsection[{analyze}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer.\+analyze (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Call\+Or\+Spawn\+Statement}}]{statement, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{argument\+Values}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_a149a736d2a07556f6086a5891269410e}
+
+
+Analyzes a call statement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+{\em statement} & \\
+\hline
+{\em argument\+Values} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_adadb1d504a23f54dff34214692116184}{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_ad1858fef1ac0948b1eaf4a7d3873450b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer}!print\+Analysis@{print\+Analysis}}
+\index{print\+Analysis@{print\+Analysis}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer}}
+\subsubsection[{print\+Analysis}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer.\+print\+Analysis (
+\begin{DoxyParamCaption}
+\item[{Print\+Stream}]{out}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_ad1858fef1ac0948b1eaf4a7d3873450b}
+
+
+Print the results the analyzer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_a0b87629a9e6c5703ef5f03fac75a1ad8}{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_a3cc0e3f03de95e9b88f0cd03213bc03d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer}!static\+Analysis@{static\+Analysis}}
+\index{static\+Analysis@{static\+Analysis}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::common\+::\+Abs\+Call\+Analyzer}}
+\subsubsection[{static\+Analysis}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer.\+static\+Analysis (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_a3cc0e3f03de95e9b88f0cd03213bc03d}
+
+
+Static analysis of the given statement. 
+
+Basically, it answers the question is the analyzer applicable for the given statement?
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_a28ee3910b374f9c74207d1b3238e11e1}{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/analysis/common/Abs\+Call\+Analyzer.\+java\end{DoxyCompactItemize}

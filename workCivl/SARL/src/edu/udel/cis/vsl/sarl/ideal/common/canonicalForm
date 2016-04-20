@@ -1,0 +1,95 @@
+/* PrimitivePower canonical form*/
+
+Description: define how PrimitivePower operations like power, multiply, divide, and add should transform to the canonical form.
+
+1. power: input is general expression of the form power(x, y), raise it to z power.
+	isRational:
+		Returns the value of the rational number as integer	                     
+	isInteger:
+		if z is positive integer, power(x,y)^z;
+		if a is negative integer, SARLException;
+		if a is zero, 
+			if base is zero, SARLException
+			else	return 1;
+	else:
+		power(power(x,y), z) —> power(x,y*z)
+
+2. multiply: input is (x^a)(y^b)
+	if x or y = 0, SARLException
+	else if x == y, (x^a)(y^b) -> x^(a+b)
+	else if a ==b, (xy)^a
+	else (x^a)(y^b)
+
+3. divide: input is (x^a)/(y^b)
+	if x == y, output is x^(a-b)
+	else if a == b, (x/y)^a
+	else (x^a)/(y^b)
+
+4. add: input is (x^a)+(y^b)
+	if x == y && a == b
+		2*x^a
+	else
+		output is (x^a)+(y^b)
+
+		
+		--------------
+		
+Can new normal form just be: PrimitivePowers can have any numeric expression
+for exponent? (not just concrete int anymore)
+no longer polynomials, but so what?
+no longer expansion?
+
+
+-----
+
+
+incremental step:
+
+during simpification, simplify a monic by looking for the "true bases" of each 
+primitive power and combining.
+
+The true base of x^n is:
+  if x = POWER(a,b), the true base in true base of a, otherwise true base is x
+  
+the following can happen immediately:
+power(ab,c) ---> power(a,c)*power(b,c)
+power(power(a,b),c) ---> power(a,b*c)
+power(a/b,c) ---> power(a,c)/power(b,c)
+etc
+
+power(RationalExpression, exp)
+power(Monomial, exp)
+power(Monic, exp)
+power(PrimitivePower, exp)
+power(Primitive, exp)
+
+n is a monic
+exp = c*n/d
+if c<0, replace with -c and invert at end
+if c is one, proceed with exp=n/d
+let c=c1/c2, where c1 and c2 are integers.  replace with
+
+exp=c1*(1/c2)*n/d, c1 positive integer.  replace with
+
+result = ConcreteExpPower[power(base, (1/c2)*n/d), c1]
+
+Write concretePower(base, exp), where exp is a concrete integer.
+
+
+powerConcreteExp(NumericExpression base, int exp);
+etc.
+
+
+----
+
+simplifyMonic:
+
+given pp=PrimitivePower[x,n]:
+
+trueBasePair(pp):
+  if x=POWER(b,e) then [b,e*n] else [x,n]
+add them up.
+
+Pair<Primitive,RationalExpression>
+  
+

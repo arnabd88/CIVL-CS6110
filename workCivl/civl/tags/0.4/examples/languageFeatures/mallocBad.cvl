@@ -1,0 +1,11 @@
+#include <civlc.h>
+
+// Uses pointer after free.
+void main() {
+  $heap h;
+  double *p = (double *) $malloc(&h, 5*sizeof(double));
+  
+  p[4]=3.14;
+  $free(&h, p);
+  $assert(p[4]==3.14);
+}   

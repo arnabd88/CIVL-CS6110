@@ -1,0 +1,16 @@
+#include<string.h>
+#include<stdlib.h>
+
+void main(){
+  char* s;
+  int len;
+  
+  s = (char*)malloc(sizeof(char) * 4);
+  
+  //s[0] = 'a';
+  //s[1] = 'b';
+  strcpy(s, "abcd");
+  len = strlen(s);
+  len = strlen(s + 1);
+  free(s);
+}

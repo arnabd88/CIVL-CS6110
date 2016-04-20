@@ -1,0 +1,187 @@
+/* VerifyThis 2016 - Challenge 2: Binary Tree Traversal
+ * https://docs.google.com/document/d/1TvvoRovDQtmuXth6vcWtUNCQCNmzZO9X_DdcxM9aXbQ/edit
+ *
+ * We are given a binary tree with the following properties:
+ * - It is well formed, in the sense that following a child pointer (left or
+ *   right) and then following a parent pointer brings us to the original 
+ *   node. Moreover, the parent pointer of the root is null.
+ * - It has at least one node, and each node has 0 or 2 children.
+ * We do not know the initial value of the mark fields.
+ * Our goal is to set all mark fields to true. The algorithm below (Morris
+ * 1979) works in time linear in the number of nodes, as usual, but uses 
+ * only a constant amount of extra space.
+ *
+ * Tasks. Prove that:
+ * (1) upon termination of the algorithm, all mark fields are set
+ * (2) the tree shape does not change
+ * (3) the code does not crash, and
+ * (4) the code terminates.
+ * (bonus) the nodes are visited in depth-first order
+ *
+ * This solution verifies tasks (1) to (4). 
+ *
+ * Author: Stephen Siegel
+ */
+#include <civlc.cvh>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+$input int DB = 5; // depth bound
+
+typedef struct _tree {
+  struct _tree *left;
+  struct _tree *right;
+  struct _tree *parent;
+  _Bool mark;
+} *Tree;
+
+// algorithm to mark every node in tree...
+void markTree(Tree root) {
+  Tree x, y;
+
+  x = root;
+  while (true) {
+    x->mark = $true;
+    if (x->left == NULL && x->right == NULL) {
+      y = x->parent;
+    } else {
+      y = x->left;
+      x->left = x->right;
+      x->right = x->parent;
+      x->parent = y;
+    }
+    x = y;
+    if (x==NULL)
+      break;
+  }
+}
+
+// make a new Tree from given children, allocating on heap
+Tree makeTree(Tree left, Tree right, _Bool mark) {
+  Tree result = (Tree)malloc(sizeof(struct _tree));
+
+  result->left = left;
+  result->right = right;
+  result->mark = mark;
+  result->parent = NULL;
+  if (left != NULL)
+    left->parent = result;
+  if (right != NULL)
+    right->parent = result;
+  return result;
+}
+
+// construct an arbitrary tree of depth at most "depth"
+Tree makeArbitrary(int depth) {
+  if (depth == 0)
+    return NULL;
+
+  // nondeterministic choice between two things:
+  // 0: return tree with 0 nodes
+  // 1: return tree with 2 nodes
+  if ($choose_int(2) == 0)
+    return makeTree(NULL, NULL, false);
+
+  Tree t1 = makeArbitrary(depth - 1);
+  Tree t2 = makeArbitrary(depth - 1);
+  Tree result = makeTree(t1, t2, false);
+
+  return result;
+}
+
+// print tree, for debugging only...
+void printTree(Tree tree) {
+  if (tree == NULL)
+    printf("NULL\n");
+  else {
+    printf("Begin Tree: %p\n", tree);
+    printf("Mark: ");
+    if (tree->mark)
+      printf("true\n");
+    else
+      printf("false\n");
+    printf("Parent: %p\n", tree->parent);
+    printf("Left:\n");
+    printTree(tree->left);
+    printf("Right:\n");
+    printTree(tree->right);
+    printf("End Tree\n");
+  }
+}
+
+// deep copy a tree, ignoring marks...
+Tree copyTree(Tree root) {
+  if (root == NULL)
+    return NULL;
+
+  Tree t1 = copyTree(root->left);
+  Tree t2 = copyTree(root->right);
+
+  return makeTree(t1, t2, false);
+}
+
+// free all nodes in the tree rooted at root...
+void freeTree(Tree root) {
+  if (root != NULL) {
+    freeTree(root->left);
+    freeTree(root->right);
+    free(root);
+  }
+}
+
+// example for debuggin only...
+Tree makeExample1() {
+  Tree n1 = makeTree(NULL, NULL, false);
+  Tree n2 = makeTree(NULL, NULL, true);
+  Tree n3 = makeTree(n1, n2, false);
+
+  return n3;
+}
+
+// example for debuggin only...
+Tree makeExample2() {
+  Tree n1 = makeTree(NULL, NULL, false);
+  Tree n2 = makeTree(NULL, n1, false);
+  Tree n3 = makeTree(NULL, n2, false);
+
+  return n3;
+}
+
+// checks every node in Tree t is marked...
+_Bool checkAllMarked(Tree t) {
+  if (t != NULL) {
+    if (!(t->mark)) return false;
+    if (!checkAllMarked(t->left)) return false;
+    if (!checkAllMarked(t->right)) return false;
+  }
+  return true;
+}
+
+// checks two trees have same "shape"
+void checkIso(Tree t1, Tree t2) {
+  if (t1 == NULL)
+    $assert(t2 == NULL);
+  if (t2 == NULL)
+    $assert(t1 == NULL);
+  if (t1 != NULL) {
+    checkIso(t1->left, t2->left);
+    checkIso(t1->right, t2->right);
+  }
+}
+
+// generate arbitrary tree up to depth bound
+// and check all marked, termination, no invalid
+// pointer operations, and resulting tree has unchanged
+// shape...
+int main() {
+  Tree t1 = makeArbitrary(DB);
+  Tree t2 = copyTree(t1);
+
+  $assume(t1 != NULL);
+  markTree(t1);
+  $assert(checkAllMarked(t1));
+  checkIso(t1, t2);
+  freeTree(t1);
+  freeTree(t2);
+}

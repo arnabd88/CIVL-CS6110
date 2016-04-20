@@ -1,0 +1,12 @@
+#include <civlc.cvh>
+#include <stdio.h>
+
+$input int x;
+
+void main(){
+  $assume(x > 0);
+  $pathCondition();
+  $assume (x < 0);
+  $pathCondition();
+}
+

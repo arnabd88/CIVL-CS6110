@@ -1,0 +1,12 @@
+/* division.cvl: simple real division, whose correctness
+ * depends on real arithmetic.
+ */
+$input double x;
+$input double y;
+$assume y!=0;
+
+void main() {
+  double z = x/y;
+
+  $assert y*z==x;
+}

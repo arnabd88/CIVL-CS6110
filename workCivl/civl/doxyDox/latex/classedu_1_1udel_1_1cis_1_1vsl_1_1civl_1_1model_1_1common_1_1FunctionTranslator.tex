@@ -1,0 +1,247 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator}}
+
+
+This class translates an A\+S\+T node of a function body and completes the resulting function accordingly.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_ab8f7532c64158bab7e7edfc6d317ec2c}{translate\+Function} ()
+\begin{DoxyCompactList}\small\item\em Processes the function body of a function definition node. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a2cd1ddb2d868c15ee651007290768855}{translate\+Root\+Function} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} system\+Scope, A\+S\+T\+Node root\+Node)
+\begin{DoxyCompactList}\small\item\em This method translates the \char`\"{}\+\_\+\+C\+I\+V\+L\+\_\+\+System\char`\"{} function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a31010823e5438cc39a303b53320bf09f}{array\+To\+Pointer} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} array)
+\begin{DoxyCompactList}\small\item\em If the given \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} expression e has array type, this returns the expression \&e\mbox{[}0\mbox{]}. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a39d87c6833a134db46815caaaa59090b}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ Function, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} $>$ {\bfseries get\+Function} (Identifier\+Expression\+Node ident)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a39d87c6833a134db46815caaaa59090b}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_abffed5c830dabfc2d81fcb88b4513767}{translate\+Result\+Node} (Result\+Node result\+Node, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Translates a Result\+Node as an new variable, and adds it into a corresponding scope. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_af5d48154e1e42420091ab609a97d93e0}{translate\+Expression\+Node} (Expression\+Node expression\+Node, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope, boolean translate\+Conversions)
+\begin{DoxyCompactList}\small\item\em Translate an Expression\+Node object in the A\+S\+T into a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} Expression object. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a1d0dd34e986dbcef67c5deeffca737ea}{translate\+Function\+Call\+Expression} (Function\+Call\+Node call\+Node, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} function call used as an expression. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a5a2c9a4487df6e8c582102eaf8caac5c}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{Fragment} {\bfseries translate\+Contract\+Verify\+Expression} (Contract\+Verify\+Node con\+Veri\+Node, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a5a2c9a4487df6e8c582102eaf8caac5c}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a2f3f4e258998de9c0f2b58ef7265e041}{translate\+Operator\+Node} (Operator\+Node operator\+Node, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Translate an operator expression from the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} A\+S\+T to the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_aa3881d82c716b1e1cdaad4ee55f0115d}{translate\+A\+B\+C\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope, Type abc\+Type)
+\begin{DoxyCompactList}\small\item\em Working on replacing process type with this. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class translates an A\+S\+T node of a function body and completes the resulting function accordingly. 
+
+The only incomplete translation is the call or spawn statements involved in this function, which dont have the corresponding function of invocation set appropriately.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a31010823e5438cc39a303b53320bf09f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}!array\+To\+Pointer@{array\+To\+Pointer}}
+\index{array\+To\+Pointer@{array\+To\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}}
+\subsubsection[{array\+To\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator.\+array\+To\+Pointer (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression}}]{array}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a31010823e5438cc39a303b53320bf09f}
+
+
+If the given \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} expression e has array type, this returns the expression \&e\mbox{[}0\mbox{]}. 
+
+Otherwise returns e unchanged.~\newline
+ This method should be called on every L\+H\+S expression e when it is used in a place where a R\+H\+S expression is called for, except in the following cases\+: (1) e is the first argument to the S\+U\+B\+S\+C\+R\+I\+P\+T operator (i.\+e., e occurs in the context e\mbox{[}i\mbox{]}), or (2) e is the argument to the \char`\"{}sizeof\char`\"{} operator.~\newline
+ note\+: argument to \& should never have array type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & any \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} expression e \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+either the original expression or \&e\mbox{[}0\mbox{]} 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_aa3881d82c716b1e1cdaad4ee55f0115d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}!translate\+A\+B\+C\+Type@{translate\+A\+B\+C\+Type}}
+\index{translate\+A\+B\+C\+Type@{translate\+A\+B\+C\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}}
+\subsubsection[{translate\+A\+B\+C\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator.\+translate\+A\+B\+C\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf Scope}}]{scope, }
+\item[{Type}]{abc\+Type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_aa3881d82c716b1e1cdaad4ee55f0115d}
+
+
+Working on replacing process type with this. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source \\
+\hline
+{\em scope} & The scope \\
+\hline
+{\em abc\+Type} & The A\+B\+C type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_af5d48154e1e42420091ab609a97d93e0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}!translate\+Expression\+Node@{translate\+Expression\+Node}}
+\index{translate\+Expression\+Node@{translate\+Expression\+Node}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}}
+\subsubsection[{translate\+Expression\+Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator.\+translate\+Expression\+Node (
+\begin{DoxyParamCaption}
+\item[{Expression\+Node}]{expression\+Node, }
+\item[{{\bf Scope}}]{scope, }
+\item[{boolean}]{translate\+Conversions}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_af5d48154e1e42420091ab609a97d93e0}
+
+
+Translate an Expression\+Node object in the A\+S\+T into a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} Expression object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em expression\+Node} & The expression node \\
+\hline
+{\em scope} & The scope \\
+\hline
+{\em translate\+Conversions} & The translation conversions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} Expression object 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_ab8f7532c64158bab7e7edfc6d317ec2c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}!translate\+Function@{translate\+Function}}
+\index{translate\+Function@{translate\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}}
+\subsubsection[{translate\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator.\+translate\+Function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_ab8f7532c64158bab7e7edfc6d317ec2c}
+
+
+Processes the function body of a function definition node. 
+
+At least one function declaration for this function should have been processed already, so the corresponding \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} function should already exist. \hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a1d0dd34e986dbcef67c5deeffca737ea}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}!translate\+Function\+Call\+Expression@{translate\+Function\+Call\+Expression}}
+\index{translate\+Function\+Call\+Expression@{translate\+Function\+Call\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}}
+\subsubsection[{translate\+Function\+Call\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator.\+translate\+Function\+Call\+Expression (
+\begin{DoxyParamCaption}
+\item[{Function\+Call\+Node}]{call\+Node, }
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a1d0dd34e986dbcef67c5deeffca737ea}
+
+
+\hyperlink{structA}{A} function call used as an expression. 
+
+At present, this should only happen when the function is an abstract function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em call\+Node} & The A\+S\+T representation of the function call. \\
+\hline
+{\em scope} & The scope containing this expression. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The model representation of the function call expression. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a2f3f4e258998de9c0f2b58ef7265e041}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}!translate\+Operator\+Node@{translate\+Operator\+Node}}
+\index{translate\+Operator\+Node@{translate\+Operator\+Node}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}}
+\subsubsection[{translate\+Operator\+Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator.\+translate\+Operator\+Node (
+\begin{DoxyParamCaption}
+\item[{Operator\+Node}]{operator\+Node, }
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a2f3f4e258998de9c0f2b58ef7265e041}
+
+
+Translate an operator expression from the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} A\+S\+T to the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em operator\+Node} & The operator expression. \\
+\hline
+{\em scope} & The (static) scope containing the expression. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The model representation of the expression. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_abffed5c830dabfc2d81fcb88b4513767}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}!translate\+Result\+Node@{translate\+Result\+Node}}
+\index{translate\+Result\+Node@{translate\+Result\+Node}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}}
+\subsubsection[{translate\+Result\+Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator.\+translate\+Result\+Node (
+\begin{DoxyParamCaption}
+\item[{Result\+Node}]{result\+Node, }
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_abffed5c830dabfc2d81fcb88b4513767}
+
+
+Translates a Result\+Node as an new variable, and adds it into a corresponding scope. 
+
+The \$result expression can only be translated by \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ContractTranslator}{Contract\+Translator}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em result\+Node} & The \hyperlink{}{Result\+Node} appears in a contract clause \\
+\hline
+{\em scope} & The scope of the contract clause, same as the scope of function arguments \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a2cd1ddb2d868c15ee651007290768855}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}!translate\+Root\+Function@{translate\+Root\+Function}}
+\index{translate\+Root\+Function@{translate\+Root\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Translator}}
+\subsubsection[{translate\+Root\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Translator.\+translate\+Root\+Function (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{system\+Scope, }
+\item[{A\+S\+T\+Node}]{root\+Node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionTranslator_a2cd1ddb2d868c15ee651007290768855}
+
+
+This method translates the \char`\"{}\+\_\+\+C\+I\+V\+L\+\_\+\+System\char`\"{} function. 
+
+The result should be a function with the following\+: 
+\begin{DoxyItemize}
+\item statements in the global scope, and 
+\item statements in the main function body. 
+\end{DoxyItemize}Initially, the model builder worker have no information about the main function node. Thus the translation starts at translating the root\+Node, obtaining a list of initialization statements declared in the root scope and the A\+S\+T node of the main function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em system\+Scope} & The root scope of the model. \\
+\hline
+{\em root\+Node} & The root node of the A\+S\+T for translation. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em C\+I\+V\+L\+Syntax\+Exception} & if no main function node could be found in the root\+Node\textquotesingle{}s children. \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/Function\+Translator.\+java\end{DoxyCompactItemize}

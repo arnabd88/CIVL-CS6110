@@ -1,0 +1,370 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp@{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp}}
+
+
+The G\+U\+I that is responsible for creating and running \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} run configurations.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1RunConfigDataNode}{Run\+Config\+Data\+Node} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ab3a38950d7c91daca0b2dd973b961eb0}{get\+Curr\+Config} ()
+\begin{DoxyCompactList}\small\item\em Gets the current \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1RunConfigDataNode}{Run\+Config\+Data\+Node}. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a8d6848d4ca68df96dc3a4f5c44214533}{set\+Serialize\+Path} (String path)
+\begin{DoxyCompactList}\small\item\em Sets the path to the directory that hold serialized Run\+Config\+Data\+Nodes. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a9f7c1725920265026c81fef73e288a5f}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a9f7c1725920265026c81fef73e288a5f}{load\+Saved\+Configs\+Map} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a9f7c1725920265026c81fef73e288a5f}
+
+\begin{DoxyCompactList}\small\item\em This function loads all of the serialized run configurations into a map for easy access. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_aeb1ebd53188158c935b9ccd3db6666a9}{list\+Files\+For\+Folder} (final File folder)
+\begin{DoxyCompactList}\small\item\em Gets all of the files in a specific folder. \end{DoxyCompactList}\item 
+Component \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_acfe49ec9e3b079d647dc2350c23fe08a}{get\+Component\+By\+Name} (String name)
+\begin{DoxyCompactList}\small\item\em Allows the user to get a specific \hyperlink{}{Component} by name. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a290b0b6e4c62a9bc469558d4ffbee228}{add\+To\+Map} (Component comp)
+\begin{DoxyCompactList}\small\item\em Adds the specified \hyperlink{}{Component} to the component\+Map. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVL__Command}{C\+I\+V\+L\+\_\+\+Command} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a8d45b5568ec51378eeba217322f38fcc}{get\+Command} (String com\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVL__Command}{C\+I\+V\+L\+\_\+\+Command} associated with the input String, which represents a command name. \end{DoxyCompactList}\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1common_1_1NormalCommandLine_1_1NormalCommandKind}{Normal\+Command\+Kind} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ada887a24027d91c9e0d0a271096ba7aa}{com\+Name\+To\+Com\+Kind} (\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1CommandLine_1_1CommandName}{Command\+Name} name)
+\begin{DoxyCompactList}\small\item\em Converts a Command\+Name to a Normal\+Command\+Kind. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1common_1_1NormalCommandLine}{Normal\+Command\+Line} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a5876ca5e61e9e430f58917df1ea57e2f}{create\+Normal\+Command\+Line} ()
+\begin{DoxyCompactList}\small\item\em Creates a command line object that the G\+U\+I will use to run the configurations. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ac9d2ff28a8aa801f9dd5510dbd1ed18c}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1common_1_1CompareCommandLine}{Compare\+Command\+Line} {\bfseries create\+Compare\+Command\+Line} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ac9d2ff28a8aa801f9dd5510dbd1ed18c}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a992dc002e0acb1d9d349a2a4b07e8c66}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a992dc002e0acb1d9d349a2a4b07e8c66}{show\+Options} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a992dc002e0acb1d9d349a2a4b07e8c66}
+
+\begin{DoxyCompactList}\small\item\em Shows the options for the option table of the current run configuration. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a6d3a13c6cbc1b493a176acefe6eff478}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a6d3a13c6cbc1b493a176acefe6eff478}{show\+Inputs} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a6d3a13c6cbc1b493a176acefe6eff478}
+
+\begin{DoxyCompactList}\small\item\em Shows the inputs for the option table of the current run configuration. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a4a00f3b8bd64513698df6c3125bfa7e0}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a4a00f3b8bd64513698df6c3125bfa7e0}{show\+Selected\+Files} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a4a00f3b8bd64513698df6c3125bfa7e0}
+
+\begin{DoxyCompactList}\small\item\em Shows the selected files for the option table of the current run configuration. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ab0d1d5a4f61e613e90956b7862782f35}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ab0d1d5a4f61e613e90956b7862782f35}{set\+Options} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ab0d1d5a4f61e613e90956b7862782f35}
+
+\begin{DoxyCompactList}\small\item\em Sets the options in the table when values are changed. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ae652123359824dddcc5e930124df3c52}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ae652123359824dddcc5e930124df3c52}{set\+Inputs} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ae652123359824dddcc5e930124df3c52}
+
+\begin{DoxyCompactList}\small\item\em Sets the inputs based on the current Run\+Configuration\textquotesingle{}s selected file. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a796c2bdc218afa3a10c98cdb3e1590d3}{delete\+Selected\+File} (int row)
+\begin{DoxyCompactList}\small\item\em Sets the selected files based on what files have been chosen for the given Run\+Configuration\+Data\+Node. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a848f0f6170f9fb8950c4f8d874fa6081}{save} (String value, String opt\+Name)
+\begin{DoxyCompactList}\small\item\em Saves the sys\+Path\+String or user\+Path\+String. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a19f8e5f20cd9f7f2a4844133f60a9454}{set\+Column\+Size} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable}{C\+I\+V\+L\+Table} tbl, int size, int col)
+\begin{DoxyCompactList}\small\item\em Sets the columns\textquotesingle{} width in the given table to size. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ac1c266b6a987b5ae9ed6c170f33a0095}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ac1c266b6a987b5ae9ed6c170f33a0095}{draw\+View} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ac1c266b6a987b5ae9ed6c170f33a0095}
+
+\begin{DoxyCompactList}\small\item\em Draws the view for the selected \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1RunConfigDataNode}{Run\+Config\+Data\+Node}. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a3274ee67d6ce770b43ac53b134acbebc}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a3274ee67d6ce770b43ac53b134acbebc}{init\+Commands\+Panel} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a3274ee67d6ce770b43ac53b134acbebc}
+
+\begin{DoxyCompactList}\small\item\em Creates the command \hyperlink{}{J\+Panel}. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_abd9f8d12d6fb4a05a334de9efe4605ef}{init\+Container} ()
+\begin{DoxyCompactList}\small\item\em Creates the container \hyperlink{}{J\+Panel}. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a5822480b80a43d944816abb4c74dacc3}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a5822480b80a43d944816abb4c74dacc3}{init\+Execute} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a5822480b80a43d944816abb4c74dacc3}
+
+\begin{DoxyCompactList}\small\item\em Creates the execute \hyperlink{}{J\+Panel}. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_af9733c322ec45236c4e13dc29ed538d4}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_af9733c322ec45236c4e13dc29ed538d4}{init\+Header} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_af9733c322ec45236c4e13dc29ed538d4}
+
+\begin{DoxyCompactList}\small\item\em Creates the header \hyperlink{}{J\+Panel}. \end{DoxyCompactList}\item 
+Default\+Mutable\+Tree\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a82568a73c3eefed8bd3bf66e5fcc7a9c}{init\+Nodes} ()
+\begin{DoxyCompactList}\small\item\em Creates all of the the \hyperlink{}{Default\+Mutable\+Tree\+Node} that will be used for the \hyperlink{}{J\+Tree}, jt\+\_\+commands. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_af7b372ff2611eb90f7392732a4ece869}{init\+Listeners} (final \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp}{G\+U\+I\+\_\+revamp} gui)
+\begin{DoxyCompactList}\small\item\em Creates the listeners for the various \hyperlink{}{Component} in the G\+U\+I. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_aac6d63766c1a2b0e294b6b53dc1ac6e3}{init\+Layouts} ()
+\begin{DoxyCompactList}\small\item\em Sets up the layouts that will be used in the G\+U\+I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a91b5ccd88af3e3361662b7cfd853a707}{}int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a91b5ccd88af3e3361662b7cfd853a707}{i}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a91b5ccd88af3e3361662b7cfd853a707}
+
+\begin{DoxyCompactList}\small\item\em See the method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a290b0b6e4c62a9bc469558d4ffbee228}{add\+To\+Map(\+Component)}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The G\+U\+I that is responsible for creating and running \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} run configurations. 
+
+\begin{DoxyAuthor}{Author}
+noyes 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a290b0b6e4c62a9bc469558d4ffbee228}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!add\+To\+Map@{add\+To\+Map}}
+\index{add\+To\+Map@{add\+To\+Map}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{add\+To\+Map}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+add\+To\+Map (
+\begin{DoxyParamCaption}
+\item[{Component}]{comp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a290b0b6e4c62a9bc469558d4ffbee228}
+
+
+Adds the specified \hyperlink{}{Component} to the component\+Map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em comp} & The \hyperlink{}{Component} to be added. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ada887a24027d91c9e0d0a271096ba7aa}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!com\+Name\+To\+Com\+Kind@{com\+Name\+To\+Com\+Kind}}
+\index{com\+Name\+To\+Com\+Kind@{com\+Name\+To\+Com\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{com\+Name\+To\+Com\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Normal\+Command\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+com\+Name\+To\+Com\+Kind (
+\begin{DoxyParamCaption}
+\item[{{\bf Command\+Name}}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ada887a24027d91c9e0d0a271096ba7aa}
+
+
+Converts a Command\+Name to a Normal\+Command\+Kind. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & the Command\+Name of the command \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The converted Normal\+Command\+Kind 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a5876ca5e61e9e430f58917df1ea57e2f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!create\+Normal\+Command\+Line@{create\+Normal\+Command\+Line}}
+\index{create\+Normal\+Command\+Line@{create\+Normal\+Command\+Line}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{create\+Normal\+Command\+Line}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Normal\+Command\+Line} edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+create\+Normal\+Command\+Line (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a5876ca5e61e9e430f58917df1ea57e2f}
+
+
+Creates a command line object that the G\+U\+I will use to run the configurations. 
+
+\begin{DoxyReturn}{Returns}
+The command line for the desired configuration 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a796c2bdc218afa3a10c98cdb3e1590d3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!delete\+Selected\+File@{delete\+Selected\+File}}
+\index{delete\+Selected\+File@{delete\+Selected\+File}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{delete\+Selected\+File}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+delete\+Selected\+File (
+\begin{DoxyParamCaption}
+\item[{int}]{row}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a796c2bdc218afa3a10c98cdb3e1590d3}
+
+
+Sets the selected files based on what files have been chosen for the given Run\+Configuration\+Data\+Node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em the} & row the delete occurs in \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a8d45b5568ec51378eeba217322f38fcc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!get\+Command@{get\+Command}}
+\index{get\+Command@{get\+Command}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{get\+Command}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+\_\+\+Command} edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+get\+Command (
+\begin{DoxyParamCaption}
+\item[{String}]{com\+Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a8d45b5568ec51378eeba217322f38fcc}
+
+
+Gets the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVL__Command}{C\+I\+V\+L\+\_\+\+Command} associated with the input String, which represents a command name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em com\+Name} & The name of a command as a String \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVL__Command}{C\+I\+V\+L\+\_\+\+Command} with that name. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_acfe49ec9e3b079d647dc2350c23fe08a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!get\+Component\+By\+Name@{get\+Component\+By\+Name}}
+\index{get\+Component\+By\+Name@{get\+Component\+By\+Name}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{get\+Component\+By\+Name}]{\setlength{\rightskip}{0pt plus 5cm}Component edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+get\+Component\+By\+Name (
+\begin{DoxyParamCaption}
+\item[{String}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_acfe49ec9e3b079d647dc2350c23fe08a}
+
+
+Allows the user to get a specific \hyperlink{}{Component} by name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the \hyperlink{}{Component} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The desired \hyperlink{}{Component} 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ab3a38950d7c91daca0b2dd973b961eb0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!get\+Curr\+Config@{get\+Curr\+Config}}
+\index{get\+Curr\+Config@{get\+Curr\+Config}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{get\+Curr\+Config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Run\+Config\+Data\+Node} edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+get\+Curr\+Config (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_ab3a38950d7c91daca0b2dd973b961eb0}
+
+
+Gets the current \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1RunConfigDataNode}{Run\+Config\+Data\+Node}. 
+
+\begin{DoxyReturn}{Returns}
+The current \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1RunConfigDataNode}{Run\+Config\+Data\+Node} 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_abd9f8d12d6fb4a05a334de9efe4605ef}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!init\+Container@{init\+Container}}
+\index{init\+Container@{init\+Container}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{init\+Container}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+init\+Container (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_abd9f8d12d6fb4a05a334de9efe4605ef}
+
+
+Creates the container \hyperlink{}{J\+Panel}. 
+
+Deletes the file from the selected files list for the current config\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_aac6d63766c1a2b0e294b6b53dc1ac6e3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!init\+Layouts@{init\+Layouts}}
+\index{init\+Layouts@{init\+Layouts}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{init\+Layouts}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+init\+Layouts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_aac6d63766c1a2b0e294b6b53dc1ac6e3}
+
+
+Sets up the layouts that will be used in the G\+U\+I. 
+
+N\+O\+T\+E\+: The group layouts are automatically generated code from a G\+U\+I builder, if any changes to the layouts is to be made it is advisable that you re-\/create the layouts using the editor of your choice rather than manually editing the code below. \hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_af7b372ff2611eb90f7392732a4ece869}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!init\+Listeners@{init\+Listeners}}
+\index{init\+Listeners@{init\+Listeners}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{init\+Listeners}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+init\+Listeners (
+\begin{DoxyParamCaption}
+\item[{final {\bf G\+U\+I\+\_\+revamp}}]{gui}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_af7b372ff2611eb90f7392732a4ece869}
+
+
+Creates the listeners for the various \hyperlink{}{Component} in the G\+U\+I. 
+
+Tree Selection Listener
+
+Browse File Listener
+
+The action that sets values to their default values
+
+Applies the changes to the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1RunConfigDataNode}{Run\+Config\+Data\+Node} and serializes it.
+
+Runs the G\+U\+I
+
+The Delete Config Action\+Listener
+
+The new configuration Action\+Listener
+
+The action for duplicating a configuration
+
+Listener that detects when the user is editing the name of the run configuration
+
+Listener that detects when the user is editing the name of the run configuration\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a82568a73c3eefed8bd3bf66e5fcc7a9c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!init\+Nodes@{init\+Nodes}}
+\index{init\+Nodes@{init\+Nodes}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{init\+Nodes}]{\setlength{\rightskip}{0pt plus 5cm}Default\+Mutable\+Tree\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+init\+Nodes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a82568a73c3eefed8bd3bf66e5fcc7a9c}
+
+
+Creates all of the the \hyperlink{}{Default\+Mutable\+Tree\+Node} that will be used for the \hyperlink{}{J\+Tree}, jt\+\_\+commands. 
+
+\begin{DoxyReturn}{Returns}
+The node that will be the root of jt\+\_\+commands 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_aeb1ebd53188158c935b9ccd3db6666a9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!list\+Files\+For\+Folder@{list\+Files\+For\+Folder}}
+\index{list\+Files\+For\+Folder@{list\+Files\+For\+Folder}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{list\+Files\+For\+Folder}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+list\+Files\+For\+Folder (
+\begin{DoxyParamCaption}
+\item[{final File}]{folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_aeb1ebd53188158c935b9ccd3db6666a9}
+
+
+Gets all of the files in a specific folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder} & the folder to load files from \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a848f0f6170f9fb8950c4f8d874fa6081}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!save@{save}}
+\index{save@{save}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{save}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+save (
+\begin{DoxyParamCaption}
+\item[{String}]{value, }
+\item[{String}]{opt\+Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a848f0f6170f9fb8950c4f8d874fa6081}
+
+
+Saves the sys\+Path\+String or user\+Path\+String. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & the path string set by the user in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1PathChooser}{Path\+Chooser} \\
+\hline
+{\em opt\+Name} & Either sys\+Path\+String or user\+Path\+String \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a19f8e5f20cd9f7f2a4844133f60a9454}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!set\+Column\+Size@{set\+Column\+Size}}
+\index{set\+Column\+Size@{set\+Column\+Size}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{set\+Column\+Size}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+set\+Column\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Table}}]{tbl, }
+\item[{int}]{size, }
+\item[{int}]{col}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a19f8e5f20cd9f7f2a4844133f60a9454}
+
+
+Sets the columns\textquotesingle{} width in the given table to size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tbl} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable}{C\+I\+V\+L\+Table} containing the columns \\
+\hline
+{\em size} & The new size for the columns\\
+\hline
+{\em col} & The column(by index) we are resizing \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a8d6848d4ca68df96dc3a4f5c44214533}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}!set\+Serialize\+Path@{set\+Serialize\+Path}}
+\index{set\+Serialize\+Path@{set\+Serialize\+Path}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+G\+U\+I\+\_\+revamp}}
+\subsubsection[{set\+Serialize\+Path}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+G\+U\+I\+\_\+revamp.\+set\+Serialize\+Path (
+\begin{DoxyParamCaption}
+\item[{String}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1GUI__revamp_a8d6848d4ca68df96dc3a4f5c44214533}
+
+
+Sets the path to the directory that hold serialized Run\+Config\+Data\+Nodes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path we would to serialize the Run\+Config\+Data\+Nodes to \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/gui/common/G\+U\+I\+\_\+revamp.\+java\end{DoxyCompactItemize}

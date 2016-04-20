@@ -1,0 +1,314 @@
+\hypertarget{group__sht}{}\section{Spherical Harmonic transform functions.}
+\label{group__sht}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+
+
+All these function perform a global spherical harmonic transform.  
+
+
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__sht_ga9e013843483dd0523c913300d9db5da6}{}\#define \hyperlink{group__sht_ga9e013843483dd0523c913300d9db5da6}{S\+H\+\_\+to\+\_\+grad\+\_\+spat}(shtns,  S,  Gt,  Gp)~\hyperlink{group__sht_ga665f43382fa5fc22b63ebcd8d9a0cf71}{S\+Hsph\+\_\+to\+\_\+spat}(shtns, S, Gt, Gp)\label{group__sht_ga9e013843483dd0523c913300d9db5da6}
+
+\begin{DoxyCompactList}\small\item\em Compute the spatial representation of the gradient of a scalar S\+H field. Alias for \hyperlink{group__sht_ga665f43382fa5fc22b63ebcd8d9a0cf71}{S\+Hsph\+\_\+to\+\_\+spat}. \end{DoxyCompactList}\item 
+\hypertarget{group__sht_gaf91985a54c71208a97f80621fb88be23}{}\#define \hyperlink{group__sht_gaf91985a54c71208a97f80621fb88be23}{S\+H\+\_\+to\+\_\+grad\+\_\+spat\+\_\+l}(shtns,  S,  Gt,  Gp,  ltr)~S\+Hsph\+\_\+to\+\_\+spat\+\_\+l(shtns, S, Gt, Gp, ltr)\label{group__sht_gaf91985a54c71208a97f80621fb88be23}
+
+\begin{DoxyCompactList}\small\item\em Compute the spatial representation of the gradient of a scalar S\+H field. Alias for S\+Hsph\+\_\+to\+\_\+spat\+\_\+l. \end{DoxyCompactList}\item 
+\hypertarget{group__sht_gaced9b8d9b2d1bfc91004d8c6f288c1f5}{}\#define \hyperlink{group__sht_gaced9b8d9b2d1bfc91004d8c6f288c1f5}{S\+H\+\_\+to\+\_\+grad\+\_\+spat\+\_\+ml}(shtns,  im,  S,  Gt,  Gp,  ltr)~S\+Hsph\+\_\+to\+\_\+spat\+\_\+ml(shtns, im, S, Gt, Gp, ltr)\label{group__sht_gaced9b8d9b2d1bfc91004d8c6f288c1f5}
+
+\begin{DoxyCompactList}\small\item\em Compute the spatial representation of the gradient of a scalar S\+H field. Alias for S\+Hsph\+\_\+to\+\_\+spat\+\_\+l. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Scalar transforms}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__sht_gab97ae9ef106cebf95d9a84a8f4482ffa}{spat\+\_\+to\+\_\+\+S\+H} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, double $\ast$Vr, cplx $\ast$Qlm)
+\begin{DoxyCompactList}\small\item\em transform the scalar field Vr into its spherical harmonic representation Qlm. \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_gac1a4d365d025cf96a47188d521f45238}{S\+H\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$Qlm, double $\ast$Vr)
+\begin{DoxyCompactList}\small\item\em transform the spherical harmonic coefficients Qlm into its spatial representation Vr. \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_gace24abc96ffd0cf8dd5bc282854fa91f}{S\+H\+\_\+to\+\_\+spat\+\_\+cplx} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$alm, cplx $\ast$z)
+\begin{DoxyCompactList}\small\item\em complex scalar synthesis. \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_gacfe564c5f554c04834c2fd02a2cbd660}{spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, cplx $\ast$z, cplx $\ast$alm)
+\begin{DoxyCompactList}\small\item\em complex scalar analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{2\+D vector transforms}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__sht_gad85f2449328fa2b730fe79688120989b}{spat\+\_\+to\+\_\+\+S\+Hsphtor} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vt, double $\ast$Vp, cplx $\ast$Slm, cplx $\ast$Tlm)
+\begin{DoxyCompactList}\small\item\em transform the theta and phi components (Vt,Vp) of a vector into its spheroidal-\/toroidal spherical harmonic representation (Slm,Tlm). \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_ga6c6f55a1cb89abacbc53d79a4c13456f}{S\+Hsphtor\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Slm, cplx $\ast$Tlm, double $\ast$Vt, double $\ast$Vp)
+\begin{DoxyCompactList}\small\item\em transform spheroidal-\/toroidal spherical harmonic coefficients (Slm,Tlm) to the spatial theta and phi components (Vt,Vp). \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_ga665f43382fa5fc22b63ebcd8d9a0cf71}{S\+Hsph\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Slm, double $\ast$Vt, double $\ast$Vp)
+\begin{DoxyCompactList}\small\item\em transform spheroidal spherical harmonic coefficients Slm to the spatial theta and phi components (Vt,Vp), effectively computing the gradient of S. \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_ga4db8b51177f7affe61c28a3e4abe3fe5}{S\+Htor\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Tlm, double $\ast$Vt, double $\ast$Vp)
+\begin{DoxyCompactList}\small\item\em transform toroidal spherical harmonic coefficients Tlm to the spatial theta and phi components (Vt,Vp). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{3\+D transforms (combine scalar and vector)}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__sht_ga7a2abea634001cf27dda2ea89acf72d6}{spat\+\_\+to\+\_\+\+S\+Hqst} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vr, double $\ast$Vt, double $\ast$Vp, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm)
+\begin{DoxyCompactList}\small\item\em 3\+D vector transform from spherical coordinates to radial-\/spheroidal-\/toroidal spectral components (see vsh\+\_\+def). \end{DoxyCompactList}\item 
+void \hyperlink{group__sht_ga2ac092e557f8db54b530452dc8983a3b}{S\+Hqst\+\_\+to\+\_\+spat} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, double $\ast$Vr, double $\ast$Vt, double $\ast$Vp)
+\begin{DoxyCompactList}\small\item\em 3\+D vector transform from spherical coordinates to radial-\/spheroidal-\/toroidal spectral components (see vsh\+\_\+def). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Truncated transforms at given degree l}
+\label{_amgrp9c729953e7f509873eb2a2b1b84dfbb8}%
+wiht l $<$= lmax used for setup.\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__sht_gae3fc248f047193b63cf5b2fe9116c446}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+H\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vr, cplx $\ast$Qlm, int ltr)\label{group__sht_gae3fc248f047193b63cf5b2fe9116c446}
+
+\item 
+\hypertarget{group__sht_ga58a00ba24cc76f4af7f0ecff0d4ef80d}{}void {\bfseries S\+H\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, double $\ast$Vr, int ltr)\label{group__sht_ga58a00ba24cc76f4af7f0ecff0d4ef80d}
+
+\item 
+\hypertarget{group__sht_ga231b717bf9f76f144ec103e97a7c7d40}{}void {\bfseries S\+Hsphtor\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Slm, cplx $\ast$Tlm, double $\ast$Vt, double $\ast$Vp, int ltr)\label{group__sht_ga231b717bf9f76f144ec103e97a7c7d40}
+
+\item 
+\hypertarget{group__sht_ga0226c3383f94807d7a7afa9242fba111}{}void {\bfseries S\+Hsph\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Slm, double $\ast$Vt, double $\ast$Vp, int ltr)\label{group__sht_ga0226c3383f94807d7a7afa9242fba111}
+
+\item 
+\hypertarget{group__sht_ga0391e57a8dadee0dadbc3ac4eec60910}{}void {\bfseries S\+Htor\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Tlm, double $\ast$Vt, double $\ast$Vp, int ltr)\label{group__sht_ga0391e57a8dadee0dadbc3ac4eec60910}
+
+\item 
+\hypertarget{group__sht_ga1ea304108a74a114fdc607da8f6badb2}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+Hsphtor\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vt, double $\ast$Vp, cplx $\ast$Slm, cplx $\ast$Tlm, int ltr)\label{group__sht_ga1ea304108a74a114fdc607da8f6badb2}
+
+\item 
+\hypertarget{group__sht_gaed306c5bdee05158afab06f621137030}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+Hqst\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, double $\ast$Vr, double $\ast$Vt, double $\ast$Vp, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, int ltr)\label{group__sht_gaed306c5bdee05158afab06f621137030}
+
+\item 
+\hypertarget{group__sht_gac73a41ba03dc3db8bdcffd0c14cb6562}{}void {\bfseries S\+Hqst\+\_\+to\+\_\+spat\+\_\+l} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, cplx $\ast$Qlm, cplx $\ast$Slm, cplx $\ast$Tlm, double $\ast$Vr, double $\ast$Vt, double $\ast$Vp, int ltr)\label{group__sht_gac73a41ba03dc3db8bdcffd0c14cb6562}
+
+\end{DoxyCompactItemize}
+\subsection*{Legendre transform at given m (no fft) and truncated at given degree l $<$= lmax}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__sht_gac9ee9bc094595e1ef3f5de2afdb4b33a}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+H\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Vr, cplx $\ast$Ql, int ltr)\label{group__sht_gac9ee9bc094595e1ef3f5de2afdb4b33a}
+
+\item 
+\hypertarget{group__sht_ga6ec6d0eb0332ec6e350747ee8072e832}{}void {\bfseries S\+H\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Ql, cplx $\ast$Vr, int ltr)\label{group__sht_ga6ec6d0eb0332ec6e350747ee8072e832}
+
+\item 
+\hypertarget{group__sht_ga82acccde540cc820c1886b61569c069a}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+Hsphtor\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Vt, cplx $\ast$Vp, cplx $\ast$Sl, cplx $\ast$Tl, int ltr)\label{group__sht_ga82acccde540cc820c1886b61569c069a}
+
+\item 
+\hypertarget{group__sht_ga66775a6624aedb0c3f9b49aff5ea6aa9}{}void {\bfseries S\+Hsphtor\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Sl, cplx $\ast$Tl, cplx $\ast$Vt, cplx $\ast$Vp, int ltr)\label{group__sht_ga66775a6624aedb0c3f9b49aff5ea6aa9}
+
+\item 
+\hypertarget{group__sht_ga6bf82b2190005834236c03688e32a4e2}{}void {\bfseries S\+Hsph\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Sl, cplx $\ast$Vt, cplx $\ast$Vp, int ltr)\label{group__sht_ga6bf82b2190005834236c03688e32a4e2}
+
+\item 
+\hypertarget{group__sht_ga243ec35f6cbe90fa703283d24679d968}{}void {\bfseries S\+Htor\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Tl, cplx $\ast$Vt, cplx $\ast$Vp, int ltr)\label{group__sht_ga243ec35f6cbe90fa703283d24679d968}
+
+\item 
+\hypertarget{group__sht_ga9214dfb14e9d37aafd57edb7c9eb045c}{}void {\bfseries spat\+\_\+to\+\_\+\+S\+Hqst\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Vr, cplx $\ast$Vt, cplx $\ast$Vp, cplx $\ast$Ql, cplx $\ast$Sl, cplx $\ast$Tl, int ltr)\label{group__sht_ga9214dfb14e9d37aafd57edb7c9eb045c}
+
+\item 
+\hypertarget{group__sht_gaafd84a89216bbe13de7c92b7ecce0153}{}void {\bfseries S\+Hqst\+\_\+to\+\_\+spat\+\_\+ml} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg}, int im, cplx $\ast$Ql, cplx $\ast$Sl, cplx $\ast$Tl, cplx $\ast$Vr, cplx $\ast$Vt, cplx $\ast$Vp, int ltr)\label{group__sht_gaafd84a89216bbe13de7c92b7ecce0153}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+All these function perform a global spherical harmonic transform. 
+
+Their first argument is a shtns\+\_\+cfg variable (which is a pointer to a \hyperlink{structshtns__info}{shtns\+\_\+info} struct) obtained by a previous call to \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} or \hyperlink{group__init_ga8199210424d47f2b0bce9bd7d0f9957d}{shtns\+\_\+init}. \begin{DoxySeeAlso}{See also}
+spat 
+
+spec 
+
+vsh 
+\end{DoxySeeAlso}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__sht_gac1a4d365d025cf96a47188d521f45238}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!S\+H\+\_\+to\+\_\+spat@{S\+H\+\_\+to\+\_\+spat}}
+\index{S\+H\+\_\+to\+\_\+spat@{S\+H\+\_\+to\+\_\+spat}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{S\+H\+\_\+to\+\_\+spat}]{\setlength{\rightskip}{0pt plus 5cm}void S\+H\+\_\+to\+\_\+spat (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{double $\ast$}]{Vr}
+\end{DoxyParamCaption}
+)}\label{group__sht_gac1a4d365d025cf96a47188d521f45238}
+
+
+transform the spherical harmonic coefficients Qlm into its spatial representation Vr. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em shtns} & = a configuration created by \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} with a grid set by \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid} or \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto} \\
+\hline
+\mbox{\tt in}  & {\em Qlm} & = spherical harmonics coefficients \+: cplx array of size shtns-\/$>$nlm. \\
+\hline
+\mbox{\tt out}  & {\em Vr} & = spatial scalar field \+: double array of size shtns-\/$>$nspat. \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__sht_gace24abc96ffd0cf8dd5bc282854fa91f}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!S\+H\+\_\+to\+\_\+spat\+\_\+cplx@{S\+H\+\_\+to\+\_\+spat\+\_\+cplx}}
+\index{S\+H\+\_\+to\+\_\+spat\+\_\+cplx@{S\+H\+\_\+to\+\_\+spat\+\_\+cplx}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{S\+H\+\_\+to\+\_\+spat\+\_\+cplx}]{\setlength{\rightskip}{0pt plus 5cm}void S\+H\+\_\+to\+\_\+spat\+\_\+cplx (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{alm, }
+\item[{cplx $\ast$}]{z}
+\end{DoxyParamCaption}
+)}\label{group__sht_gace24abc96ffd0cf8dd5bc282854fa91f}
+
+
+complex scalar synthesis. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em shtns} & = a configuration created by \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} with a grid set by \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid} or \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto} \\
+\hline
+\mbox{\tt in}  & {\em alm\mbox{[}l$\ast$(l+1)+m\mbox{]}} & is the S\+H coefficient of order l and degree m (with -\/l $<$= m $<$= l) \mbox{[}total of (L\+M\+A\+X+1)$^\wedge$2 coefficients\mbox{]} \\
+\hline
+\mbox{\tt out}  & {\em z} & = complex spatial field\\
+\hline
+\end{DoxyParams}
+complex scalar synthesis.
+
+in\+: alm\mbox{[}l$\ast$(l+1)+m\mbox{]} is the S\+H coefficients of order l and degree m (with -\/l $<$= m $<$= l) for a total of (L\+M\+A\+X+1)$^\wedge$2 coefficients. out\+: complex spatial field. \hypertarget{group__sht_ga2ac092e557f8db54b530452dc8983a3b}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!S\+Hqst\+\_\+to\+\_\+spat@{S\+Hqst\+\_\+to\+\_\+spat}}
+\index{S\+Hqst\+\_\+to\+\_\+spat@{S\+Hqst\+\_\+to\+\_\+spat}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{S\+Hqst\+\_\+to\+\_\+spat}]{\setlength{\rightskip}{0pt plus 5cm}void S\+Hqst\+\_\+to\+\_\+spat (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{cplx $\ast$}]{Slm, }
+\item[{cplx $\ast$}]{Tlm, }
+\item[{double $\ast$}]{Vr, }
+\item[{double $\ast$}]{Vt, }
+\item[{double $\ast$}]{Vp}
+\end{DoxyParamCaption}
+)}\label{group__sht_ga2ac092e557f8db54b530452dc8983a3b}
+
+
+3\+D vector transform from spherical coordinates to radial-\/spheroidal-\/toroidal spectral components (see vsh\+\_\+def). 
+
+They should be prefered over separate calls to scalar and 2\+D vector transforms as they are often significantly faster. \hypertarget{group__sht_ga665f43382fa5fc22b63ebcd8d9a0cf71}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!S\+Hsph\+\_\+to\+\_\+spat@{S\+Hsph\+\_\+to\+\_\+spat}}
+\index{S\+Hsph\+\_\+to\+\_\+spat@{S\+Hsph\+\_\+to\+\_\+spat}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{S\+Hsph\+\_\+to\+\_\+spat}]{\setlength{\rightskip}{0pt plus 5cm}void S\+Hsph\+\_\+to\+\_\+spat (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{, }
+\item[{cplx $\ast$}]{Slm, }
+\item[{double $\ast$}]{Vt, }
+\item[{double $\ast$}]{Vp}
+\end{DoxyParamCaption}
+)}\label{group__sht_ga665f43382fa5fc22b63ebcd8d9a0cf71}
+
+
+transform spheroidal spherical harmonic coefficients Slm to the spatial theta and phi components (Vt,Vp), effectively computing the gradient of S. 
+
+\begin{DoxySeeAlso}{See also}
+vsh 
+\end{DoxySeeAlso}
+\hypertarget{group__sht_ga6c6f55a1cb89abacbc53d79a4c13456f}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!S\+Hsphtor\+\_\+to\+\_\+spat@{S\+Hsphtor\+\_\+to\+\_\+spat}}
+\index{S\+Hsphtor\+\_\+to\+\_\+spat@{S\+Hsphtor\+\_\+to\+\_\+spat}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{S\+Hsphtor\+\_\+to\+\_\+spat}]{\setlength{\rightskip}{0pt plus 5cm}void S\+Hsphtor\+\_\+to\+\_\+spat (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{, }
+\item[{cplx $\ast$}]{Slm, }
+\item[{cplx $\ast$}]{Tlm, }
+\item[{double $\ast$}]{Vt, }
+\item[{double $\ast$}]{Vp}
+\end{DoxyParamCaption}
+)}\label{group__sht_ga6c6f55a1cb89abacbc53d79a4c13456f}
+
+
+transform spheroidal-\/toroidal spherical harmonic coefficients (Slm,Tlm) to the spatial theta and phi components (Vt,Vp). 
+
+\begin{DoxySeeAlso}{See also}
+vsh 
+\end{DoxySeeAlso}
+\hypertarget{group__sht_ga4db8b51177f7affe61c28a3e4abe3fe5}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!S\+Htor\+\_\+to\+\_\+spat@{S\+Htor\+\_\+to\+\_\+spat}}
+\index{S\+Htor\+\_\+to\+\_\+spat@{S\+Htor\+\_\+to\+\_\+spat}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{S\+Htor\+\_\+to\+\_\+spat}]{\setlength{\rightskip}{0pt plus 5cm}void S\+Htor\+\_\+to\+\_\+spat (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{, }
+\item[{cplx $\ast$}]{Tlm, }
+\item[{double $\ast$}]{Vt, }
+\item[{double $\ast$}]{Vp}
+\end{DoxyParamCaption}
+)}\label{group__sht_ga4db8b51177f7affe61c28a3e4abe3fe5}
+
+
+transform toroidal spherical harmonic coefficients Tlm to the spatial theta and phi components (Vt,Vp). 
+
+\begin{DoxySeeAlso}{See also}
+vsh 
+\end{DoxySeeAlso}
+\hypertarget{group__sht_gacfe564c5f554c04834c2fd02a2cbd660}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H@{spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H}}
+\index{spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H@{spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H}]{\setlength{\rightskip}{0pt plus 5cm}void spat\+\_\+cplx\+\_\+to\+\_\+\+S\+H (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{cplx $\ast$}]{z, }
+\item[{cplx $\ast$}]{alm}
+\end{DoxyParamCaption}
+)}\label{group__sht_gacfe564c5f554c04834c2fd02a2cbd660}
+
+
+complex scalar analysis. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em shtns} & = a configuration created by \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} with a grid set by \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid} or \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto} \\
+\hline
+\mbox{\tt in}  & {\em z} & = complex spatial field \\
+\hline
+\mbox{\tt out}  & {\em alm\mbox{[}l$\ast$(l+1)+m\mbox{]}} & is the S\+H coefficient of order l and degree m (with -\/l $<$= m $<$= l) \mbox{[}total of (L\+M\+A\+X+1)$^\wedge$2 coefficients\mbox{]}\\
+\hline
+\end{DoxyParams}
+complex scalar analysis.
+
+in\+: complex spatial field. out\+: alm\mbox{[}l$\ast$(l+1)+m\mbox{]} is the S\+H coefficients of order l and degree m (with -\/l $<$= m $<$= l) for a total of (L\+M\+A\+X+1)$^\wedge$2 coefficients. \hypertarget{group__sht_gab97ae9ef106cebf95d9a84a8f4482ffa}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!spat\+\_\+to\+\_\+\+S\+H@{spat\+\_\+to\+\_\+\+S\+H}}
+\index{spat\+\_\+to\+\_\+\+S\+H@{spat\+\_\+to\+\_\+\+S\+H}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{spat\+\_\+to\+\_\+\+S\+H}]{\setlength{\rightskip}{0pt plus 5cm}void spat\+\_\+to\+\_\+\+S\+H (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{double $\ast$}]{Vr, }
+\item[{cplx $\ast$}]{Qlm}
+\end{DoxyParamCaption}
+)}\label{group__sht_gab97ae9ef106cebf95d9a84a8f4482ffa}
+
+
+transform the scalar field Vr into its spherical harmonic representation Qlm. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em shtns} & = a configuration created by \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} with a grid set by \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid} or \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto} \\
+\hline
+\mbox{\tt in}  & {\em Vr} & = spatial scalar field \+: double array of size shtns-\/$>$nspat. \\
+\hline
+\mbox{\tt out}  & {\em Qlm} & = spherical harmonics coefficients \+: cplx array of size shtns-\/$>$nlm. \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__sht_ga7a2abea634001cf27dda2ea89acf72d6}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!spat\+\_\+to\+\_\+\+S\+Hqst@{spat\+\_\+to\+\_\+\+S\+Hqst}}
+\index{spat\+\_\+to\+\_\+\+S\+Hqst@{spat\+\_\+to\+\_\+\+S\+Hqst}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{spat\+\_\+to\+\_\+\+S\+Hqst}]{\setlength{\rightskip}{0pt plus 5cm}void spat\+\_\+to\+\_\+\+S\+Hqst (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{, }
+\item[{double $\ast$}]{Vr, }
+\item[{double $\ast$}]{Vt, }
+\item[{double $\ast$}]{Vp, }
+\item[{cplx $\ast$}]{Qlm, }
+\item[{cplx $\ast$}]{Slm, }
+\item[{cplx $\ast$}]{Tlm}
+\end{DoxyParamCaption}
+)}\label{group__sht_ga7a2abea634001cf27dda2ea89acf72d6}
+
+
+3\+D vector transform from spherical coordinates to radial-\/spheroidal-\/toroidal spectral components (see vsh\+\_\+def). 
+
+They should be prefered over separate calls to scalar and 2\+D vector transforms as they are often significantly faster. \hypertarget{group__sht_gad85f2449328fa2b730fe79688120989b}{}\index{Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}!spat\+\_\+to\+\_\+\+S\+Hsphtor@{spat\+\_\+to\+\_\+\+S\+Hsphtor}}
+\index{spat\+\_\+to\+\_\+\+S\+Hsphtor@{spat\+\_\+to\+\_\+\+S\+Hsphtor}!Spherical Harmonic transform functions.@{Spherical Harmonic transform functions.}}
+\subsubsection[{spat\+\_\+to\+\_\+\+S\+Hsphtor}]{\setlength{\rightskip}{0pt plus 5cm}void spat\+\_\+to\+\_\+\+S\+Hsphtor (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{, }
+\item[{double $\ast$}]{Vt, }
+\item[{double $\ast$}]{Vp, }
+\item[{cplx $\ast$}]{Slm, }
+\item[{cplx $\ast$}]{Tlm}
+\end{DoxyParamCaption}
+)}\label{group__sht_gad85f2449328fa2b730fe79688120989b}
+
+
+transform the theta and phi components (Vt,Vp) of a vector into its spheroidal-\/toroidal spherical harmonic representation (Slm,Tlm). 
+
+\begin{DoxySeeAlso}{See also}
+vsh 
+\end{DoxySeeAlso}

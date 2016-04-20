@@ -1,0 +1,408 @@
+\part{Introduction}
+\label{part:intro}
+
+\chapter{Acknowledgement}
+
+The CIVL project is funded by the U.S.\ National Science Foundation
+under awards CCF-1346769 and CCF-1346756.
+
+\chapter{What is CIVL?}
+
+\textbf{CIVL} stands for \emph{Concurrency Intermediate Verification
+  Language}.   The \emph{CIVL platform} encompasses:
+\begin{enumerate}
+\item the programming language \textbf{CIVL-C}, a dialect of C with
+  additional primitives supporting concurrency, specification, and modeling;
+\item verification and 
+  analysis tools, including a symbolic execution-based model checker for
+  checking various properties of, or finding defects in, CIVL-C
+  programs; and
+\item tools that translate from many commonly used
+  languages/APIs to CIVL-C.
+\end{enumerate}
+
+The CIVL-C language is primarily intended to be an intermediate
+representation for verification. A C program using
+MPI~\cite{mpi-forum:2012:mpi30}, CUDA~\cite{cuda-programming-guide},
+OpenMP~\cite{openmp-standard}, OpenCL~\cite{opencl-standard}, or
+another API (or even some combination of APIs), will be automatically
+translated into CIVL-C and then verified. The advantages of such a
+framework are clear: the developer of a new verification technique
+could implement it for CIVL-C and then immediately see its impact
+across a broad range of concurrent programs. Likewise, when a new
+concurrency API is introduced, one only needs to implement a
+translator from it to CIVL-C in order to reap the benefits of all the
+verification tools in the platform. Programmers would have a valuable
+verification and debugging tool, while API designers could use CIVL as
+a ``sandbox'' to investigate possible API modifications, additions,
+and interactions.
+
+This manual covers all aspects of the CIVL framework, and is organized in parts
+as follows:
+\begin{enumerate}
+\item this introduction, including ``quick start'' instructions for
+  downloading and installing CIVL and several examples;
+\item a complete description of the CIVL-C language;
+\item a formal semantics for the language; and
+\item a description of the tools in the framework.
+\end{enumerate}
+
+\chapter{Installation and Quick Start}
+
+This chapter gives instructions for downloading and installing CIVL,
+and running the verification tool on an example.
+
+\textbf{Note.} The following instructions explain how to install CIVL
+under the directory \texttt{/opt}, which is the standard installation
+point. If you do not wish to install CIVL there (e.g., because you
+don't want to use \texttt{sudo}, or you want to install it in your
+home directory), you can just modify the instructions by replacing
+\texttt{/opt} with another directory. You will just need to edit the
+script file \texttt{civl} appropriately, replacing the default paths
+with your chosen paths.
+
+\begin{enumerate}
+\item Download and unpack the appropriate pre-compiled library of CIVL
+  dependencies from
+  \url{http://vsl.cis.udel.edu/tools/vsl_depend/}.
+  There are versions for Darwin (OS X), 32-bit Linux, and 64-bit Linux.
+  After unpacking, you should have a directory named \texttt{vsl}.
+\item If you do not already have a directory \texttt{/opt},
+  create it; use \texttt{sudo} as needed (\verb!sudo mkdir /opt!).
+\item Move the directory \texttt{vsl} into \texttt{/opt}
+  (\verb!mv vsl /opt!).
+\item Download and unpack the latest stable release of CIVL from 
+  \url{http://vsl.cis.udel.edu/civl}.  Again there are versions
+  for Darwin, 32-bit Linux, and 64-bit Linux.
+\item The resulting directory should be named
+  \texttt{CIVL-\textit{tag}} for some string \textit{tag} which
+  identifies the version of CIVL you downloaded.  Move this directory
+  into \texttt{/opt} (\texttt{mv\ CIVL-\textit{tag}\ /opt}).
+\item There should now be an executable script at
+  \texttt{/opt/CIVL-\textit{tag}/bin/civl}.  Move this script into
+  your path, or create a symlink from somewhere in your path to it, or
+  add the directory \texttt{/opt/CIVL-\textit{tag}/bin} to your path.
+\end{enumerate}
+
+From the command line, you should now be able to type ``\texttt{civl
+  help}'' and see a help message describing the command line syntax.
+
+Copy the file
+\texttt{/opt/CIVL-\textit{tag}/examples/concurrency/locksBad.cvl} to
+your working directory.  Look at the program: it is a simple 2-process
+program with two shared variables used as locks.  The two processes
+try to obtain the locks in opposite order, which can lead to a
+deadlock if both processes obtain their first lock before either
+obtains the second.  Type ``\verb!civl verify locksBad.cvl!''.  You
+should see some output culminating in a message
+\begin{verbatim}
+The program MAY NOT be correct.  See CIVLREP/locksBad_log.txt
+\end{verbatim}
+
+Type ``\verb!civl replay locksBad.cvl!''.  You should see a
+step-by-step account of how the program arrived at the deadlock.
+
+
+\chapter{Examples}
+
+In this section we show a few simple CIVL-C programs which illustrate
+some of the pertinent features of the language. We also show the results
+of running some of the tools on them.
+
+\section{Dining Philosophers}
+
+Dijkstra's well-known Dining Philosophers system can be encoded in
+CIVL-C as shown in Figure \ref{fig:dining}.
+
+\begin{figure}[t]
+  \begin{small}
+\begin{verbatim}
+#include <civlc.h>
+
+$input int B; // upper bound on number of philosophers
+$input int n; // number of philosophers
+$assume 2<=n && n<=B;
+_Bool forks[n]; // Each fork will be on the table (0) or in a hand (1). 
+
+void dine(int id) {
+  int left = id;
+  int right = (id + 1) % n;
+
+  while (1) {
+    $when (forks[left] == 0) forks[left] = 1;
+    $when (forks[right] == 0) forks[right] = 1;
+    forks[right] = 0;
+    forks[left] = 0;
+  }
+}
+
+void main() {
+  for (int i = 0; i < n; i++) forks[i] = 0;
+  for (int i = 0; i < n; i++) $spawn dine(i);
+}
+\end{verbatim}
+  \end{small}
+  \caption{\texttt{diningBad.cvl}: CIVL-C encoding of Dijkstra's Dining Philosophers}
+  \label{fig:dining}
+\end{figure}
+
+In this encoding, an upper bound \ct{B} is placed on the number of
+philosophers \ct{n}.   When verifying this program, a concrete value
+will be specified for \ct{B}.  Hence the result of verification will
+apply to all \ct{n} between $2$ and \ct{B}, inclusive.
+
+Both \ct{B} and \ct{n} are delcared as \emph{input} variables using
+the type qualifier \cinput.  An input variable may be
+initialized with any valid value of its type.  In contrast, non-input
+variables declared in file scope will be initialized with a
+special \emph{undefined} value; if such a variable is read before it
+is defined, an error will be reported. In addition, any input variable
+may have a concrete initial value specified on the command line. In
+this case, we will specify a concrete value for \ct{B} on the command
+line but leave \ct{n} unconstrained.
+
+An $\cassume$ statement restricts the set of executions of the program
+to include only those traces in which the assumptions hold. In
+contrast with an $\cassert$ statement, CIVL does not check that the
+assumed expression holds, and will not generate an error message if it
+fails to hold. Thus an $\cassume$ statement allows the programmer to
+say to CIVL ``assume that this is true,'' while an $\cassert$
+statement allows the programmer to say to CIVL ``check that this is
+true.''
+
+A $\cwhen$ statement encodes a \emph{guarded command}. The $\cwhen$
+statement includes a boolean expression called the \emph{guard} and a
+statement body. The $\cwhen$ statement is enabled if and only if the
+\emph{guard} evaluates to \emph{true}, in which case the body may be
+executed. The first atomic statement in the body executes atomically
+with the evaluation of the guard, so it is guaranteed that the guard
+will hold when this initial sub-statement executes. Since assignment
+statements are atomic in CIVL, in this example the bodiy of each
+$\cwhen$ statement executes atomically with the guard evaluation.
+
+The $\cspawn$ statement is very similar to a function call. The main
+difference is that the function called is invoked in a new process
+which runs concurrently with the existing processes. The $\cspawn$
+statement itself returns immediately.
+
+The program may be verified for an upper bound of $5$ by typing the
+following at the command line:
+\begin{verbatim}
+  civl verify -inputB=5 diningBad.cvl
+\end{verbatim}
+
+The output indicates that a deadlock has been found and a
+counterexample has been produced and saved. We can examine the
+counterexample, but it is more helpful to work with a \emph{minimal}
+counterexample, i.e., a deadlocking trace of minimal length. To find a
+minimal counterexample, we issue the command
+
+\begin{verbatim}
+  civl verify -inputB=5 -min diningBad.cvl
+\end{verbatim}
+
+\begin{figure}[t]
+  \begin{small}
+\begin{verbatim}
+CIVL v0.13 of 2014-08-22 -- http://vsl.cis.udel.edu/civl
+Error 0 encountered at depth 129:
+...
+Error 25 encountered at depth 16:
+CIVL execution error (kind: DEADLOCK, certainty: PROVEABLE)
+A deadlock is possible:
+  Path condition: true
+  Enabling predicate: false
+ProcessState 0: terminated
+ProcessState 1: at location 26, f0:21.30-42 "forks[right]"
+  Enabling predicate: false
+ProcessState 2: at location 26, f0:21.30-42 "forks[right]"
+  Enabling predicate: false
+at f0:21.30-42 "forks[right]".
+State 664
+| Path condition
+| | true
+| Dynamic scopes
+| | dyscope 0 (parent=-1, static=0)
+| | | reachers = {1,2}
+| | | variables
+| | | | __atomic_lock_var = process<-1>
+| | | | B = 5
+| | | | n = 2
+| | | | forks = X_s0v4[0:=1, 1:=1]
+...
+| Process states
+...
+| | process 2
+| | | atomicCount = 0
+| | | call stack
+| | | | Frame[function=dine, location=25, f0:21.30-42 "forks[right]", scope=3]
+...
+=================== Stats ===================
+   validCalls          : 15327
+   proverCalls         : 17
+   memory (bytes)      : 18554880
+   time (s)            : 2.17
+   maxProcs            : 6
+   statesInstantiated  : 9264
+   statesSaved         : 665
+   statesSeen          : 1758
+   statesMatched       : 1177
+   steps               : 2993
+   transitions         : 2934
+
+The program MAY NOT be correct.  See CIVLREP/diningBad_log.txt
+\end{verbatim}
+  \end{small}
+  \caption{Output from \texttt{civl verify -inputB=5 -min diningBad.cvl}}
+  \label{fig:diningOut}
+\end{figure}
+
+The result of this command is shown in Figure \ref{fig:diningOut}. The
+output indicates that a minimal counterexample has length 19, i.e.,
+involves 20 states and 19 transitions (the depth of 20 is one more
+than 19).    It was the 26th and shortest trace found.  It was deemed
+equivalent to the earlier traces and hence the earlier ones were
+discarded and only this one saved.  We can replay the trace with the command
+\begin{verbatim}
+  civl replay diningBad.cvl
+\end{verbatim}
+
+\begin{figure}
+  \begin{small}
+\begin{verbatim}
+...
+Transition 1: State 0, proc 0: 
+  0->1: B = 5 at f0:9.0-12 "$input int B";
+  1->2: n = InitialValue(n) at f0:10.0-12 "$input int n";
+  2->3: $assume ((2<=n)&&(n<=B)) at f0:11.0-20 "$assume 2<=n && n ... B";
+  3->5: forks = InitialValue(forks) at f0:13.0-12 "int forks[n]";
+  5->6: i = 0 at f0:28.7-16 "int i = 0";
+--> State 1
+
+Transition 2: State 1, proc 0: 
+  6->8: LOOP_TRUE_BRANCH at f0:28.18-23 "i < n";
+--> State 2
+
+...
+
+Transition 12: State 12, proc 2: 
+  18->19: left = id at f0:16.2-15 "int left = id";
+  19->20: right = ((id+1)%n) at f0:17.2-26 "int right = (id  ... n";
+--> State 13
+
+Transition 13: State 13, proc 2: 
+  20->23: LOOP_TRUE_BRANCH at f0:19.9-10 "1";
+--> State 14
+
+Transition 14: State 14, proc 1: 
+  23->25: forks[left] = 1 at f0:20.29-44 "forks[left] = 1";
+--> State 15
+
+Transition 15: State 15, proc 2: 
+  23->25: forks[left] = 1 at f0:20.29-44 "forks[left] = 1";
+--> State 16
+...
+Violation of Deadlock found in State 16:
+A deadlock is possible:
+  Path condition: true
+  Enabling predicate: false
+ProcessState 0: terminated
+ProcessState 1: at location 25, f0:21.30-42 "forks[right]"
+  Enabling predicate: false
+ProcessState 2: at location 25, f0:21.30-42 "forks[right]"
+  Enabling predicate: false
+
+Trace ends after 15 transitions.
+Violation(s) found.
+...
+\end{verbatim}
+  \end{small}
+  \caption{Output from \texttt{civl replay diningBad.cvl}}
+  \label{fig:diningReplay}
+\end{figure}
+
+The result of this command is shown in Figure \ref{fig:diningReplay}.
+The output indicates that a deadlock has been found involving 2
+philosophers. The trace has 15 transitions; after the initialization
+sequence, each philosopher picks up her left fork.
+
+\section{A Multithreaded MPI Example}
+
+\begin{figure}[t]
+  \begin{small}
+\begin{verbatim}
+#include<civlc.h>
+#define TAG 0
+#define NPROCS 2
+#define NTHREADS 2
+
+$gcomm gcomm = $gcomm_create($here, NPROCS);
+
+void MPI_Process (int rank) {
+  $comm comm = $comm_create($here, gcomm, rank);
+  $proc threads[NTHREADS];
+  
+  void Thread(int tid) {
+    int x = rank;
+    $message in, out = $message_pack(rank, 1-rank, TAG, &x, sizeof(int));
+    
+    for (int j=0; j<2; j++) {
+      if (rank == 1) {
+        for (int i=0; i<2; i++) $comm_enqueue(comm, out);
+        for (int i=0; i<2; i++) in = $comm_dequeue(comm, 1-rank, TAG);
+      } else {
+        for (int i=0; i<2; i++) in = $comm_dequeue(comm, 1-rank, TAG);
+        for (int i=0; i<2; i++) $comm_enqueue(comm, out);
+      }
+    }
+  }
+  
+  for (int i=0; i<NTHREADS; i++) threads[i] = $spawn Thread(i);
+  for (int i=0; i<NTHREADS; i++) $wait(threads[i]);
+  $comm_destroy(comm);
+}
+
+void main() {
+  $proc procs[NPROCS];
+
+  for (int i=0; i<NPROCS; i++) procs[i] = $spawn MPI_Process(i);
+  for (int i=0; i<NPROCS; i++) $wait(procs[i]);
+  $gcomm_destroy(gcomm);
+}
+\end{verbatim}
+  \end{small}
+  \caption{\texttt{mpi-pthreads.cvl}: CIVL-C model of a (defective)
+    multithreaded MPI program.}
+  \label{fig:mpithreads}
+\end{figure}
+
+Figure \ref{fig:mpithreads} is an example of a CIVL-C model of
+multithreaded MPI program.  The program consists of two processes,
+each of which spawns two threads.  All four threads issue
+message-passing operations.
+
+This example illustrates some of the message-passing primitives
+provided in CIVL-C.  A \emph{global communicator} object is allocated
+in the root scope.  The constant $\chere$ has type $\cscope$ and
+refers to the scope in which the expression occurs; in this case it is
+the root (i.e., file) scope.  This global communicator is declared to
+have \texttt{NPROCS} \emph{places}; these are points from which
+messages can be sent or received.  The function \verb!MPI_Process!  is
+used to model an MPI process.  Each instance will create its own
+\emph{local communicator} object which specifies the global
+communicator and a place; this is the object that will be used to send
+or receive messages at that place.
+
+Each process spawns two instances of function \texttt{Thread}.  Each
+thread creates a message object from a buffer, specifying the source
+and destination places, tag, pointer to the beginning of the buffer,
+and the size of the buffer.  The message is \emph{enqueued} into the
+communication universe using the local communicator.  Similarly,
+messages are dequeued by specifying the local communicator, source
+place, and tag.
+
+The program has a subtle defect, which only manifests on very specific
+interleavings of the threads.   This defect can be found using
+\texttt{civl verify}.
+
+

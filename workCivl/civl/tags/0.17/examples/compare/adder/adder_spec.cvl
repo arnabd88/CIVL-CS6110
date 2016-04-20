@@ -1,0 +1,35 @@
+/*****************************************
+ * SOURCE: adder_spec.c by vsl@udel
+ *         The source program is included in FEVS
+ *         vsl.cis.udel.edu/fevs
+ * FILE: adder_spec.cvl
+ * DESCRIPTION: This a manually translated 
+ *   CIVL program which is based on "adder_spec.c"
+ *   This program sums all elements of an array
+ *   up.
+ *
+ * AUTHOR: Ziqing Luo
+ * COMMANS: civl verify adder_spec.cvl 
+ *          -inputNB=10
+ *          or
+ *          make civl_spec
+ *****************************************/
+
+#include<stdio.h>
+$input int NPROCS;   /* useless input variables for civl compare */
+$input int NPROCSB;
+$input int N;
+$input int NB;
+$input double a[N];
+$output double SUM;
+$assume 0 < N && N < NB;
+
+void main() {
+  double result = 0.0;
+  int n = N;
+  int i;
+
+  for (i=0; i<n; i++) result += a[i];
+  SUM = result;
+  printf("%lf\n",result);
+}

@@ -1,0 +1,56 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <civlc.h>
+
+void square(int id, int arr[])
+{
+  arr[id] = arr[id] * arr[id];
+  printf("my id is %d with value %d\n", id, arr[id]);
+}
+
+
+int main(int argc, char** argv)
+{
+  int count = 2;
+  int data[count];
+  
+  for(int i = 0; i < count; i++)
+  {
+    data[i] = i;
+  }
+
+  $proc procs[count];
+  
+  int choose = 1;
+  
+  if (choose == 1)
+  {
+    for(int i = 0; i < count; i++)
+    {
+      //printf("i is %d\n", i);
+      procs[i] = $spawn square(i, data);
+    }
+  
+    for(int i = 0; i < count; i++)
+    {
+      $wait(procs[i]);
+    }
+  }
+  
+  else
+  {
+    $domain(1) dom = {0 .. count - 1};
+    $parfor(int i: dom)
+    {
+      //printf("i is %d\n", i);
+      square(i, data);
+    }
+  }
+  
+  return 0;
+}
+
+
+ 

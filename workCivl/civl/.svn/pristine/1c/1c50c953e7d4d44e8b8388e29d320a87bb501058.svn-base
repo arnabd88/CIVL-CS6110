@@ -1,0 +1,9 @@
+/* splitFormat exception example*/
+#include <civlc.cvl>
+#include <stdio.h>
+
+void main() {
+  int a = 1;
+  
+  printf("The value of a is %j",a);
+}

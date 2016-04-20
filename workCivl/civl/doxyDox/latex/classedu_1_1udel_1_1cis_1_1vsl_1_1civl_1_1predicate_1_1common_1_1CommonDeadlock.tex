@@ -1,0 +1,96 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+Deadlock Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+Deadlock@{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+Deadlock}}
+
+
+An absolute deadlock occurs if all of the following hold\+:  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+Deadlock\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+Deadlock\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_aea1d02b97b5f1a57870173b68593be50}{Common\+Deadlock} (Symbolic\+Universe symbolic\+Universe, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{Enabler} enabler, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonCIVLStatePredicate_aae6b467bb269d59726bab69c91b5ccef}{symbolic\+Analyzer})
+\begin{DoxyCompactList}\small\item\em An absolute deadlock occurs if all of the following hold\+: \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_a7c3b636d4a77087411fe8a434a08ce02}{}String {\bfseries explanation} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_a7c3b636d4a77087411fe8a434a08ce02}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_a22cd5973bc5d7b95dab9c5c6bd23fc5d}{}boolean {\bfseries holds\+At} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_a22cd5973bc5d7b95dab9c5c6bd23fc5d}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_a174024505ed081f2a84b664f5e76084c}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_a174024505ed081f2a84b664f5e76084c}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An absolute deadlock occurs if all of the following hold\+: 
+
+
+\begin{DoxyEnumerate}
+\item not every process has terminated 
+\item no process has an enabled statement (note that a send statement is enabled iff the current number of buffered messages is less than the buffer bound). 
+\end{DoxyEnumerate}
+
+It is to be contrasted with a \char`\"{}potentially deadlocked\char`\"{} state, i.\+e., one in which there may be send transitions enabled, but the send transitions can only execute if buffering is allowed, i.\+e., no matching receives are currently posted. Every absolutely deadlocked state is potentially deadlocked, but not necessarily vice-\/versa.
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_aea1d02b97b5f1a57870173b68593be50}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::common\+::\+Common\+Deadlock@{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::common\+::\+Common\+Deadlock}!Common\+Deadlock@{Common\+Deadlock}}
+\index{Common\+Deadlock@{Common\+Deadlock}!edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::common\+::\+Common\+Deadlock@{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::common\+::\+Common\+Deadlock}}
+\subsubsection[{Common\+Deadlock}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+Deadlock.\+Common\+Deadlock (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Universe}]{symbolic\+Universe, }
+\item[{{\bf Enabler}}]{enabler, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonDeadlock_aea1d02b97b5f1a57870173b68593be50}
+
+
+An absolute deadlock occurs if all of the following hold\+: 
+
+
+\begin{DoxyEnumerate}
+\item not every process has terminated 
+\item no process has an enabled statement (note that a send statement is enabled iff the current number of buffered messages is less than the buffer bound). 
+\end{DoxyEnumerate}
+
+It is to be contrasted with a \char`\"{}potentially deadlocked\char`\"{} state, i.\+e., one in which there may be send transitions enabled, but the send transitions can only execute if buffering is allowed, i.\+e., no matching receives are currently posted. Every absolutely deadlocked state is potentially deadlocked, but not necessarily vice-\/versa.
+
+
+\begin{DoxyParams}{Parameters}
+{\em symbolic\+Universe} & The symbolic universe for creating symbolic expressions. \\
+\hline
+{\em enabler} & The enabler of the system. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/predicate/common/Common\+Deadlock.\+java\end{DoxyCompactItemize}

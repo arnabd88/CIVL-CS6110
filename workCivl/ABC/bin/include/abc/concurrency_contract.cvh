@@ -1,0 +1,120 @@
+/* This header file contains the function prototypes for 
+ * concurrency.
+ */
+
+#ifndef __CONCURRENCY__
+#define __CONCURRENCY__
+
+/* includes civlc.cvh because this library references $scope */
+#include <civlc.cvh>
+#include <bundle.cvh>
+
+/* ********************************* Types ********************************* */
+
+/* A data type representing a global barrier which must be operated by local
+ * barriers. 
+ */
+typedef struct $gbarrier * $gbarrier;
+ 
+/* A data type representing a global barrier which used for 
+ * operating global barriers. The local barrier type has 
+ * a handle of a global barrier.
+ */
+typedef struct $barrier * $barrier;
+
+/* ******************************* Functions ******************************* */
+
+/* Creates a new barrier object and returns a handle to it.
+ * The barrier has the specified size.
+ * The new object will be allocated in the given scope. */
+/*@ requires scope <= $root;
+  @ requires size >= 0;
+  @ $depends \nothing;
+  @ $guards $true;
+  @ assigns \nothing;
+  @ */
+$gbarrier $gbarrier_create($scope scope, int size);
+
+/* Destroys the gbarrier */
+/*@ requires barrier != \null; 
+  @ $guards $true;
+  @ $depends \nothing;
+  @ assigns barrier;//barrier has pointer type, and is converted into $memory type automatically
+  @ */
+void $gbarrier_destroy($gbarrier barrier);
+
+/* checks if the global barrier has a vacancy at the specified place */
+/*@ requires place >= 0;
+  @*/
+bool $gbarrier_vacant($gbarrier barrier, int place);
+
+/* returns the process reference that takes the given place of the global barrier */
+$proc $gbarrier_process_at($gbarrier barrier, int place);
+
+/* Creates a new local barrier object and returns a handle to it.
+ * The new barrier will be affiliated with the specified global
+ * barrier.   This local barrier handle will be used as an
+ * argument in most barrier functions.  The place must be in
+ * [0,size-1] and specifies the place in the global barrier
+ * that will be occupied by the local barrier.  
+ * Only one call to $barrier_create may occur for each barrier-place pair.
+ * The new object will be allocated in the given scope. */
+/*@ requires scope <= $root && gbarrier!=\null && place >= 0;
+ *@ ensures $gbarrier_process_at(gbarrier, place)==$self;
+ *@ $depends $calls($barrier_create, $everything, gbarrier, place);
+ *@ assigns \nothing;
+ *@ behavior success:
+ *@   assumes $gbarrier_vacant(gbarrier, place);
+ *@   allocates \result, scope;
+ *@ behavior failure:
+ *@   assumes !$gbarrier_vacant(gbarrier, place);
+ *@   allocates \nothing, scope;
+ *@ complete behaviors;
+ *@ disjoint behaviors;
+ */
+$barrier $barrier_create($scope scope, $gbarrier gbarrier, int place);
+
+/* Destroys the barrier. */
+/*@ requires barrier != \null ==> \freeable{Here}(barrier);
+  @ assigns \nothing;
+  @ frees barrier;
+  @ ensures barrier !=null ==> \allocable{Here}{barrier}; // what does it mean by \allocable?
+  @ // the above is actually copied from ACSL reference where there is an example of contracts for free().
+  @ 
+  @*/
+void $barrier_destroy($barrier barrier);
+
+/* Calls the barrier associated with this local barrier object.*/
+/*@ $depends \nothing;
+  @ assigns \nothing; // although the barrier records is updated but it gets cleaned up when the method returns
+  @*/
+void $barrier_call($barrier barrier);
+
+/********* Functions For Collective Arrive Checking Record *********/
+/* Collective checker record entry */
+typedef struct $collect_record  $collect_record;
+
+/* Global collective operation checker */
+typedef struct $gcollect_checker * $gcollect_checker;
+
+/* Local handle of the collective operation checker */
+typedef struct $collect_checker * $collect_checker;
+
+/* Creates and initializes the global collective operation checker */
+$gcollect_checker $gcollect_checker_create($scope scope);
+
+/* Destroy a global collective operation checker */
+void $gcollect_checker_destroy($gcollect_checker checker);
+
+/* Creates and initializes the local collective operation checker */
+$collect_checker $collect_checker_create($scope scope, 
+				       $gcollect_checker gchecker);
+
+/* Destroy a local collective operation checker */
+void $collect_checker_destroy($collect_checker checker);
+
+/* Do a check for a collecive operation of one process */
+_Bool $collect_check($collect_checker checker, int place, int nprocs,
+		    $bundle entries);
+
+#endif

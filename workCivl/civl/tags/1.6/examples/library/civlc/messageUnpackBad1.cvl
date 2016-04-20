@@ -1,0 +1,13 @@
+#include <civlc.cvh>
+#include <comm.cvh>
+
+void main(){
+  int x[2] = {1,2}, *y;
+  $message m = $message_pack(0, 1, 2, x, sizeof(int)*2);
+  
+  y = (int *)$malloc($root, sizeof(int)*2);
+  $message_unpack(m, y, sizeof(int)*2);
+  $assert((x[0] == y[0] && x[1] == y[1]));
+  m = $message_pack(0, 1, 2, x, sizeof(int)*2);
+  $message_unpack(m, y, sizeof(int)); //should throw an error, since message size exceeds the specified size.
+}

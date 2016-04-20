@@ -1,0 +1,10 @@
+#include<civlc.cvh>
+
+$input double x;
+int main(){
+  double t=$pow(x, 0.5),y;
+  y=t*t;
+  $assert(x==y);
+  y=$pow(t, 2);
+  $assert(x==y);
+}

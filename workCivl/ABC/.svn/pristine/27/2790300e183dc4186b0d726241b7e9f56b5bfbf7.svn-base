@@ -1,0 +1,21 @@
+#define X
+#define Y 10
+
+#ifdef X
+RIGHT
+RIGHT
+#else
+WRONG WRONG
+#endif
+
+#ifndef Y
+WRONG
+#else
+RIGHT
+#endif
+
+#ifdef Z
+WRONG
+#endif
+
+RIGHT

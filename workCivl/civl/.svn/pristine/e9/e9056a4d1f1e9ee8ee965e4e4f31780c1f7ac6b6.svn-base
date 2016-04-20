@@ -1,0 +1,33 @@
+#include<civlc.h>
+
+$input int N;
+$assume N > 0 && N <= 2;
+
+typedef struct Node {
+  double value;
+  struct Node* next;
+} Node;
+
+void main() {
+  $heap h;
+  Node* head;
+  Node* current = (Node *) $malloc(&h, sizeof(Node));
+  Node final;
+  
+  head = current;
+  head->value = 0.0;
+  {
+    Node* newNode = (Node *) $malloc(&h, sizeof(Node));
+    
+    newNode->value = 2.71828;
+    current->next = newNode;
+    current = newNode;
+  }
+  current->next = NULL;
+  final = *head;
+  while (final.next != NULL) {
+    final = *(final.next);
+  }
+  $assert final.value == 2.71828;
+  $assert final.value == current->value;
+}

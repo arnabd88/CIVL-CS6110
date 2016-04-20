@@ -1,0 +1,221 @@
+% number subsubsections and put them in the table of contents...
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\newcommand{\notimp}{\emph{Status:} Not yet implemented.}
+
+% algorithm2e package settings...
+
+\SetInd{1mm}{2mm}
+\SetVlineSkip{.5mm}
+\SetKw{Break}{break}
+\SetKw{Assert}{assert}
+\SetKw{Integer}{Integer}
+\SetKw{Array}{array}
+\SetKw{Of}{of}
+\SetKwFor{Procedure}{procedure}{is}{end procedure}
+\SetKwInOut{Uses}{uses}
+\SetKwInOut{Invariant}{invariant}
+
+% Type/font styles...
+\newcommand{\upsty}[1]{\textup{\textsf{#1}}}
+\newcommand{\setsty}[1]{\textup{\textsf{\textcolor{blue}{#1}}}}
+\newcommand{\code}[1]{\texttt{\textcolor{blue}{#1}}}
+\newcommand{\ct}[1]{\texttt{#1}}
+
+% Theorem environments...
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[subsection]
+
+% Symbols...
+\renewcommand{\implies}{\Rightarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\lb}{\texttt{\char`\{}}
+\newcommand{\rb}{\texttt{\char`\}}}
+\newcommand{\U}{\texttt{\char`\_}}
+%\newcommand{\U}{{\ttfamily\symbol{'137}}}
+\newcommand{\UU}{\U\U}
+
+% Static notions...
+\newcommand{\rootscope}{\setsty{root}} % root static scope
+\newcommand{\start}{\setsty{start}} % start location $l_0$
+\newcommand{\Var}{\setsty{Var}} % set of all variables
+\newcommand{\bool}{\setsty{bool}} % boolean type
+\newcommand{\proc}{\setsty{proc}} % process reference type
+\newcommand{\Val}{\setsty{Val}} % set of all values
+\newcommand{\vtype}{\setsty{vtype}} % type of variable
+\newcommand{\etype}{\setsty{etype}} % type of expression
+\newcommand{\Type}{\setsty{Type}} % set of all types
+\newcommand{\Expr}{\setsty{Expr}} % set of all expressions
+\newcommand{\Eval}{\setsty{Eval}} % set of all valuations on variables
+\newcommand{\eval}{\setsty{eval}} % evaluation of an expression
+\newcommand{\sparent}{\setsty{sparent}} % parent of a static scope
+\newcommand{\dparent}{\setsty{dparent}} % parent of a dynamic scope
+\newcommand{\fscope}{\setsty{fscope}} % scope of a function
+\newcommand{\lscope}{\setsty{lscope}} % scope of a location
+\newcommand{\static}{\setsty{static}} % static scope associated to a dynamic one
+\newcommand{\stack}{\setsty{stack}} % call stack
+\newcommand{\vars}{\setsty{vars}} % variables declared in a scope
+\newcommand{\ancestors}{\setsty{ancestors}} % as in tree
+\newcommand{\descendants}{\setsty{descendants}} % as in tree
+\newcommand{\returntype}{\setsty{returnType}} % function's return type
+\newcommand{\numparams}{\setsty{numParams}} % number of params for a func.
+\newcommand{\params}{\setsty{params}} % sequence of formal parameters
+\newcommand{\void}{\setsty{void}} % type for func. returning nothing
+\newcommand{\Loc}{\setsty{Loc}} % locations in function's trans. sys.
+\newcommand{\Func}{\mathcal{F}} % set of function symbols
+\newcommand{\true}{\textit{true}} % boolean value true
+\newcommand{\false}{\textit{false}} % boolean value false
+\newcommand{\default}{\setsty{default}} % default value of type
+\newcommand{\len}{\setsty{length}} % length of sequence
+\newcommand{\func}{\setsty{func}} % function a static scope belongs to
+
+% Dynamic notions...
+\newcommand{\fnode}{\setsty{fnode}} % function node of dyscope
+\newcommand{\State}{\setsty{State}} % set of all states of model
+\newcommand{\deval}{\setsty{deval}} % valuation on dyscope
+\newcommand{\droot}{\setsty{droot}} % root dyscope
+\newcommand{\Frame}{\setsty{Frame}} % set of activation frames
+
+% Tables...
+\newcommand{\notationtable}{%
+  \begin{tabular}{lll}
+    Symbol & Section & Meaning\\ \hline
+    $\B$ & \S\ref{sec:notation} & \{\true,\false\}\\
+    $\N$ & \S\ref{sec:notation} & \{0,1,2,\ldots\}\\
+    $\ancestors$ & \S\ref{sec:notation} & set of ancestors of node in a tree (inclusive)\\
+    $\descendants$ & \S\ref{sec:notation} & set of descendants of node
+    in a tree (inclusive)\\
+    $\len$ & \S\ref{sec:notation} & length of a sequence\\
+    $\Var$ & \S\ref{sec:context} & the set of all variables\\
+    $\bool$ & \S\ref{sec:context} & the boolean type\\
+    $\proc$ & \S\ref{sec:context} & the process reference type\\
+    $\Val$ & \S\ref{sec:context} & the set of all values\\
+    $\Val_t$ & \S\ref{sec:context} & values of type $t$\\
+    $\default_t$ & \S\ref{sec:context} & default value of type $t$\\
+    $\vtype$ & \S\ref{sec:context} & function $\Var\ra\Type$ giving type of each variable\\
+    $\Eval$ & \S\ref{sec:context} & set of all valuations on $\Var$\\
+    $\Eval(V)$ & \S\ref{sec:state} & set of all valuations on variables in $V\subseteq\Var$\\
+    $\Expr$ & \S\ref{sec:context} & set of typed expressions over $\Var$\\
+    $\etype$ & \S\ref{sec:context} & $\Expr\ra\Type$, gives type of each expression\\
+    $\eval$ & \S\ref{sec:context} & $\Expr\times\Eval\ra\Val$, the evaluation function\\
+    $\mathcal{C}$ & \S\ref{sec:context} & a CIVL context\\
+    $\Sigma$ & \S\ref{sec:scopes} & set of all static scopes\\
+    $\rootscope$ & \S\ref{sec:scopes} & the root scope (member of $\Sigma$)\\
+    $\sparent$ & \S\ref{sec:scopes} & $\Sigma\setminus\{\rootscope\}\ra\Sigma$, parent function in static scope tree\\
+    $\vars$ & \S\ref{sec:scopes} & $\Sigma\ra 2^{\Var}$, specifies variables declared in scope\\
+    $\Lambda$ & \S\ref{sec:scopes} & a lexical scope system\\
+    $\void$ & \S\ref{sec:functions} & type used for function that does not return  a value\\
+    $\Type'$ & \S\ref{sec:functions} & $\Type\cup\{\void\}$\\
+    $\Func$ & \S\ref{sec:functions} & set of function symbols\\
+    $\fscope$ & \S\ref{sec:functions} & $\Func\ra\Sigma\setminus\{\rootscope\}$, gives function scope of each function\\
+    $\returntype$ & \S\ref{sec:functions} & $\Func\ra\Type'$, gives return type of each function\\
+%    $\numparams$ & \S\ref{sec:functions} & $\Func\ra\N$, gives number of inputs for each function\\
+    $\params$ & \S\ref{sec:functions} & $\Func\ra\Var^*$, formal
+    parameter sequence for $f\in\Func$\\
+    $f_0$ & \S\ref{sec:functions} & the root function (member of
+    $\mathcal{F}$)\\
+    $\func$ & \S\ref{sec:functions} & $\Sigma\ra\Func$, function to
+    which scope belongs\\
+    $\Loc_f$ & \S\ref{sec:gts} & set of locations for $f\in\Func$\\
+    $\lscope_f$ & \S\ref{sec:gts} & $\Loc_f\ra\Sigma$, gives scope of each location for $f\in\Func$\\
+    $\start_f$ & \S\ref{sec:gts} & start location for $f\in\Func$ (member of $\Loc_f$)\\
+    $T_f$ & \S\ref{sec:gts} & set of guarded transitions for $f\in\Func$\\
+  \end{tabular}
+}
+
+
+% CIVL-C keywords
+
+\newcommand{\cckey}{\$}
+\newcommand{\cc}[1]{\mbox{\texttt{\cckey{}#1}}}
+\newcommand{\cabstract}{\cc{abstract}}
+\newcommand{\ccontains}{\cc{contains}}
+\newcommand{\ccopy}{\cc{copy}}
+\newcommand{\cproc}{\cc{proc}}
+\newcommand{\cprocdefined}{\cc{proc{\U}defined}}
+\newcommand{\cprocNull}{\cc{proc{\U}null}}
+\newcommand{\cself}{\cc{self}}
+\newcommand{\cinput}{\cc{input}}
+\newcommand{\coutput}{\cc{output}}
+\newcommand{\cspawn}{\cc{spawn}}
+\newcommand{\cwait}{\cc{wait}}
+\newcommand{\cwaitall}{\cc{waitall}}
+\newcommand{\cassert}{\cc{assert}}
+\newcommand{\ctrue}{\cc{true}}
+\newcommand{\cfalse}{\cc{false}}
+\newcommand{\cassume}{\cc{assume}}
+\newcommand{\catom}{\cc{atom}}
+\newcommand{\catomic}{\cc{atomic}}
+\newcommand{\cwhen}{\cc{when}}
+\newcommand{\cchoose}{\cc{choose}}
+\newcommand{\cchooseint}{\cc{choose{\U}int}}
+\newcommand{\cinvariant}{\cc{invariant}}
+\newcommand{\crequires}{\cc{requires}}
+\newcommand{\censures}{\cc{ensures}}
+\newcommand{\cexit}{\cc{exit}}
+\newcommand{\cresult}{\cc{result}}
+\newcommand{\cat}{\texttt{@}}
+\newcommand{\ccollective}{\cc{collective}}
+\newcommand{\cequals}{\cc{equals}}
+\newcommand{\cfor}{\cc{for}}
+\newcommand{\cparfor}{\cc{parfor}}
+
+%\newcommand{\cheap}{\cc{heap}}
+\newcommand{\cscope}{\cc{scope}}
+\newcommand{\cscopedefined}{\cc{scope{\U}defined}}
+\newcommand{\cscopeof}{\cc{scopeof}}
+\newcommand{\cscopeparent}{\cc{scope{\U}parent}}
+\newcommand{\cscoperoot}{\cc{root}}
+\newcommand{\chere}{\cc{here}}
+\newcommand{\cregion}{\cc{region}}
+\newcommand{\cmalloc}{\cc{malloc}}
+\newcommand{\cfree}{\cc{free}}
+
+\newcommand{\cbundle}{\cc{bundle}}
+\newcommand{\cbundlesize}{\cc{bundle{\U}size}}
+\newcommand{\cbundlepack}{\cc{bundle{\U}pack}}
+\newcommand{\cbundleunpack}{\cc{bundle{\U}unpack}}
+\newcommand{\cbundleunpackapply}{\cc{bundle{\U}unpack{\U}apply}}
+
+\newcommand{\cmessage}{\cc{message}}
+\newcommand{\cmessagepack}{\cc{message{\U}pack}}
+\newcommand{\cmessagesource}{\cc{message{\U}source}}
+\newcommand{\cmessagetag}{\cc{message{\U}tag}}
+\newcommand{\cmessagedest}{\cc{message{\U}dest}}
+\newcommand{\cmessagesize}{\cc{message{\U}size}}
+\newcommand{\cmessageunpack}{\cc{message{\U}unpack}}
+
+
+\newcommand{\ccomm}{\cc{comm}}
+\newcommand{\ccommcreate}{\cc{comm{\U}create}}
+\newcommand{\cgcomm}{\cc{gcomm}}
+\newcommand{\cgcommcreate}{\cc{gcomm{\U}create}}
+
+\newcommand{\cbarrier}{\cc{barrier}}
+\newcommand{\cgbarrier}{\cc{gbarrier}}
+\newcommand{\cgbarriercreate}{\cc{gbarrier{\U}create}}
+\newcommand{\cbarriercreate}{\cc{barrier{\U}create}}
+\newcommand{\cbarriercall}{\cc{barrier{\U}call}}
+\newcommand{\cgbarrierdestroy}{\cc{gbarrier{\U}destroy}}
+\newcommand{\cbarrierdestroy}{\cc{barrier{\U}destroy}}
+
+\newcommand{\cseqinit}{\cc{seq{\U}init}}
+\newcommand{\cseqlen}{\cc{seq{\U}length}}
+\newcommand{\cseqinsert}{\cc{seq{\U}insert}}
+\newcommand{\cseqrm}{\cc{seq{\U}remove}}
+
+\newcommand{\cforall}{\cc{forall}}
+\newcommand{\cexists}{\cc{exists}}
+\newcommand{\cimplies}{\ct{=>}}
+
+\newcommand{\crange}{\cc{range}}
+\newcommand{\cdomain}{\cc{domain}}
+\newcommand{\cdomainof}[1]{\cc{domain}\ct{(}#1\ct{)}}
+
+% version information
+\newcommand{\version}{v0.17}
+\newcommand{\versiondate}{2015-02-09}

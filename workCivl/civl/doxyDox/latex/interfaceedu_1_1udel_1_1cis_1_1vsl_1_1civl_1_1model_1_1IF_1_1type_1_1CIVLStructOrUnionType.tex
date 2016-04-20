@@ -1,0 +1,253 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+
+
+Represents a \char`\"{}record\char`\"{} type (i.\+e.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=237pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a7f891e55942dd42ba62def8d49584d34}{is\+Complete} ()
+\begin{DoxyCompactList}\small\item\em Is this struct or union type complete? \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_abfdb5d5bd9cae0e46e7fa812a4423b2d}{num\+Fields} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of fields in this struct or union type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1StructOrUnionField}{Struct\+Or\+Union\+Field} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ad7047d0216f93a7f88154782b01a1aa7}{get\+Field} (int index)
+\begin{DoxyCompactList}\small\item\em Returns the index-\/th field of this struct or union type. \end{DoxyCompactList}\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1StructOrUnionField}{Struct\+Or\+Union\+Field} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ab62a9776d13c476bd9b64cbafd7c2c77}{fields} ()
+\begin{DoxyCompactList}\small\item\em Returns an iterable object over all the fields of this struct type, in ascending order. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_aa5f4f8294027abd003a9a9a46bfa2b17}{name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this struct or union type. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a5bf832121ab1e9fc99ad0b0070822a69}{complete} (Collection$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1StructOrUnionField}{Struct\+Or\+Union\+Field} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ab62a9776d13c476bd9b64cbafd7c2c77}{fields})
+\begin{DoxyCompactList}\small\item\em Completes this struct type by specifying the fields as a collection. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_acc4501ea0a3d7ba21b58c7bd13ff33c7}{complete} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1StructOrUnionField}{Struct\+Or\+Union\+Field}\mbox{[}$\,$\mbox{]} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ab62a9776d13c476bd9b64cbafd7c2c77}{fields})
+\begin{DoxyCompactList}\small\item\em Completes this struct type by specifying the fields as an array. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a53b4201f98801190209ce9e49b00f183}{set\+Handle\+Object\+Type} (boolean value)
+\begin{DoxyCompactList}\small\item\em Updates the option whether this type is the object type of some handle type, with the given value. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ae14ab2c94cd3252065a851c1be63e987}{}int {\bfseries get\+Field\+Index} (String field)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ae14ab2c94cd3252065a851c1be63e987}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a \char`\"{}record\char`\"{} type (i.\+e. 
+
+a struct or union). This is essentially a tuple type with a name.
+
+This type has state. Initially, it is incomplete, meaning the component types are not specified. It is completed by specifying them. This is necessary to allow circular definitions such as linked lists.
+
+Two \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} struct or union types are considered equal iff they are equal as objects. They can be different even if the fields and names are equal.
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a5bf832121ab1e9fc99ad0b0070822a69}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}!complete@{complete}}
+\index{complete@{complete}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+\subsubsection[{complete}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+complete (
+\begin{DoxyParamCaption}
+\item[{Collection$<$ {\bf Struct\+Or\+Union\+Field} $>$}]{fields}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a5bf832121ab1e9fc99ad0b0070822a69}
+
+
+Completes this struct type by specifying the fields as a collection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fields} & the fields \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLInternalException}{C\+I\+V\+L\+Internal\+Exception}} & if this struct type is already complete \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_a9b0ddb6ba5ac52b6c331f1c72fbd21f2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_acc4501ea0a3d7ba21b58c7bd13ff33c7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}!complete@{complete}}
+\index{complete@{complete}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+\subsubsection[{complete}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+complete (
+\begin{DoxyParamCaption}
+\item[{{\bf Struct\+Or\+Union\+Field}\mbox{[}$\,$\mbox{]}}]{fields}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_acc4501ea0a3d7ba21b58c7bd13ff33c7}
+
+
+Completes this struct type by specifying the fields as an array. 
+
+The array is copied.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fields} & the fields \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLInternalException}{C\+I\+V\+L\+Internal\+Exception}} & if this struct type is already complete \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_aff7aef2050932b25d225a3b629ac5de4}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ab62a9776d13c476bd9b64cbafd7c2c77}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}!fields@{fields}}
+\index{fields@{fields}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+\subsubsection[{fields}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf Struct\+Or\+Union\+Field}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+fields (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ab62a9776d13c476bd9b64cbafd7c2c77}
+
+
+Returns an iterable object over all the fields of this struct type, in ascending order. 
+
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} list of the field types in this struct. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLInternalException}{C\+I\+V\+L\+Internal\+Exception}} & if this type is not complete \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_aa9a0fafc21cd6289a0fba94762e692d5}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ad7047d0216f93a7f88154782b01a1aa7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}!get\+Field@{get\+Field}}
+\index{get\+Field@{get\+Field}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+\subsubsection[{get\+Field}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Struct\+Or\+Union\+Field} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+get\+Field (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_ad7047d0216f93a7f88154782b01a1aa7}
+
+
+Returns the index-\/th field of this struct or union type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & nonnegative integer in range \mbox{[}0,num\+Fields-\/1\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index-\/th field 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLInternalException}{C\+I\+V\+L\+Internal\+Exception}} & if this type is not complete \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_a785f632973f73117f7ba979068fa37ca}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a7f891e55942dd42ba62def8d49584d34}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}!is\+Complete@{is\+Complete}}
+\index{is\+Complete@{is\+Complete}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+\subsubsection[{is\+Complete}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+is\+Complete (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a7f891e55942dd42ba62def8d49584d34}
+
+
+Is this struct or union type complete? 
+
+\begin{DoxyReturn}{Returns}
+true iff this is complete 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_aad630d03a338e83bfac66c2022bce3fc}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_aa5f4f8294027abd003a9a9a46bfa2b17}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}!name@{name}}
+\index{name@{name}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Identifier} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_aa5f4f8294027abd003a9a9a46bfa2b17}
+
+
+Returns the name of this struct or union type. 
+
+\begin{DoxyReturn}{Returns}
+The name of this struct or union. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_ade0c0ae79083a2dc08ac34dd4f3945a0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_abfdb5d5bd9cae0e46e7fa812a4423b2d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}!num\+Fields@{num\+Fields}}
+\index{num\+Fields@{num\+Fields}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+\subsubsection[{num\+Fields}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+num\+Fields (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_abfdb5d5bd9cae0e46e7fa812a4423b2d}
+
+
+Returns the number of fields in this struct or union type. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLInternalException}{C\+I\+V\+L\+Internal\+Exception}} & if the type is not complete \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+the number of fields 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_a0aab5f996fb71241d5003ad7e673cb5b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a53b4201f98801190209ce9e49b00f183}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}!set\+Handle\+Object\+Type@{set\+Handle\+Object\+Type}}
+\index{set\+Handle\+Object\+Type@{set\+Handle\+Object\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Struct\+Or\+Union\+Type}}
+\subsubsection[{set\+Handle\+Object\+Type}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+set\+Handle\+Object\+Type (
+\begin{DoxyParamCaption}
+\item[{boolean}]{value}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLStructOrUnionType_a53b4201f98801190209ce9e49b00f183}
+
+
+Updates the option whether this type is the object type of some handle type, with the given value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to be used. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_a13f0c78b266e2485a675737cf0ad9468}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/type/C\+I\+V\+L\+Struct\+Or\+Union\+Type.\+java\end{DoxyCompactItemize}

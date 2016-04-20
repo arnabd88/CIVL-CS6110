@@ -1,0 +1,27 @@
+#include <civlc.h>
+#include <stdio.h>
+#include <assert.h>
+
+
+
+void *t1() 
+{
+  while(1){
+    printf("stuff");
+  }
+}
+
+int main(void) 
+{
+  $proc id1, id2;
+
+  id1 = $spawn t1();
+  id2 = $spawn t1();
+  if($proc_defined(id1) && $proc_defined(id2)) { 
+    if(id1 == id2){
+      printf("blah");
+    }
+  }
+  $wait(id1);
+  $wait(id2);
+}

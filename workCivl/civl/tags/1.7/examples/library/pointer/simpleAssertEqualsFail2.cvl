@@ -1,0 +1,20 @@
+#include <pointer.cvh>
+#include <stdlib.h>
+
+typedef struct INT_DOUBLE {
+  int head;
+  double tail;
+}INT_DOUBLE;
+
+int main() {
+  INT_DOUBLE * array;
+
+  array = (INT_DOUBLE*)malloc(2 * sizeof(INT_DOUBLE));
+  array[0].head = 1;
+  array[0].tail = 2.3;
+  array[1].head = 1;
+  array[1].tail = 2.3;
+  $assert_equals(&array, &array[0], "Pointer to an array and pointer to the first element of an array are different.\n");
+  free(array);		    
+  return 0;
+}

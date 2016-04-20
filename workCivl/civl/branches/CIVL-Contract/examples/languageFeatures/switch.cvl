@@ -1,0 +1,21 @@
+/* Commandline execution:
+ *		civl verify switch.cvl
+ * */
+#include <civlc.cvh>
+$input int i;
+$assume(i >= 0 && i < 10);
+
+void main() {
+  switch (i) {
+    case 0:
+      $assert(i == 0);
+      break;
+    case 1:
+    case 2:
+    case 3:
+      $assert(i < 4);
+      break;
+    default:
+      $assert(i > 3);
+  }
+}

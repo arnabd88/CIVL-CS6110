@@ -1,0 +1,3 @@
+
+
+$system int foo(void);

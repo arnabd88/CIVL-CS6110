@@ -1,0 +1,108 @@
+#include <civlc.cvh>
+#include <seq.cvh>
+
+typedef struct Point{
+  double x;
+  double y;
+} Point;
+
+typedef struct Line{
+  Point start;
+  Point end;
+} Line;
+
+typedef union MyUnion{
+  int a;
+  double b;
+} MyUnion;
+
+$input int x;
+$input int y;
+$input MyUnion MU;
+$input double dx;
+$input double dy;
+$input int _A[];
+$input _Bool B;
+$input $proc p;
+$input Point pt;
+$assume(p != $self);
+$input $scope sc;
+$assume(sc != $root);
+$assume(dx!=0);
+$proc p1;
+$abstract int random(int t);
+
+void structs(){
+  Point p0={0,0}, p1={1,1}, p2;
+  Line l0={p0, p1}, l1={p1,p2}, l2={p2, p0};
+  Line lines[3];
+
+  //$assume(y>=0 && y<3);
+  //lines[y]=l1;
+  p2.x=2;
+  p2.y=2;
+  lines[0]=l0;
+  lines[1]=l1;
+  lines[2]=l2;
+}
+
+int call(int f(int), int arg){
+  return f(arg);
+}
+
+int sum(int n){
+  int result=0;
+
+  for(int i=1; i<=n; i++)
+    result+=i;
+  return result;
+}
+
+void main(){
+  int (*k)(int)=&sum;
+  int A[10];
+  int*p;
+  int n, n1, n2, n3, n4, n5, n6, n7, n8, n9;
+  _Bool b, b1, b2, b3;
+  double d1,d2;
+  int null;
+  MyUnion mu;
+
+  A[1]=8;
+  A[2]=9;
+  A[3]=7;
+  n=A[2];
+  $assume(0<=x && x<10);
+  A[x]=9;
+  n=A[x];
+  n=x+y;
+  n=$seq_length(&_A);
+  b = x && y;
+  b=x<y;
+  b=x<=y;
+  b=(_Bool)x;
+  $assume(x!=0);
+  n1=y/x;
+  d1=dy/dx;
+  n2=y%x;
+  n3=x*y;
+  n4=-y;
+  b1=x!=y;
+  b2=!B;
+  b3= B || b1;
+  n5=x-y;
+  b=x==y;
+  n6=pt.x;
+  n7=random(n);
+  n8=x*x*x*x*x;
+  n9=MU.a;
+  d2=MU.b;
+  mu.a=n6;
+  structs();
+  p=(int*)$malloc($root, sizeof(int)*10);
+  call(k, 2);
+  p1=$spawn sum(1);
+  p[5]=5;
+  $wait(p1);
+  $free(p);
+}

@@ -1,0 +1,138 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement}}
+
+
+When translating an \$atomic/\$atom block, we need to create a noop statement at the beginning and at the end of the block.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a84ce2e3e55a4a7f3173931b7172d3909}{Common\+Atomic\+Lock\+Assign\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civl\+Source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} hscope, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} lscope, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} guard, boolean is\+Entering, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} lhs, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} rhs)
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a21a32640c88b469a0b810a1c6bfc79e8}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a21a32640c88b469a0b810a1c6bfc79e8}
+
+\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a70bf6dc254ba55623479926bd79da4cf}{variable\+Addressed\+Of} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Obtain the set of variables visible from a certain scope that are possible to be written in the future. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a69e7444a3611345e8562569bfdda8c78}{variable\+Addressed\+Of} ()
+\begin{DoxyCompactList}\small\item\em Obtain the set of variables whose addresses are referenced. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a92bd68fdc6ace1da4c8491ffbe33612d}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a92bd68fdc6ace1da4c8491ffbe33612d}{calculate\+Derefs} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a92bd68fdc6ace1da4c8491ffbe33612d}
+
+\begin{DoxyCompactList}\small\item\em Calculate if this statement contains any dereference expression. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a542ab6ed6c5d192de8d1500d79b5bd6f}{}boolean {\bfseries enter\+Atomic} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a542ab6ed6c5d192de8d1500d79b5bd6f}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a7a282e56234a684d743544b296e4b540}{}boolean {\bfseries leave\+Atomic} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a7a282e56234a684d743544b296e4b540}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+When translating an \$atomic/\$atom block, we need to create a noop statement at the beginning and at the end of the block. 
+
+In order to have more information about the transitions, we create this class to extend \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement}{Common\+Noop\+Statement}. Currently, there is a field \hyperlink{}{enter} to denote if the statement is 
+\begin{DoxyEnumerate}
+\item entering an \$atomic block; or 
+\item leaving an \$atomic block. 
+\end{DoxyEnumerate}
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a84ce2e3e55a4a7f3173931b7172d3909}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement}!Common\+Atomic\+Lock\+Assign\+Statement@{Common\+Atomic\+Lock\+Assign\+Statement}}
+\index{Common\+Atomic\+Lock\+Assign\+Statement@{Common\+Atomic\+Lock\+Assign\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement}}
+\subsubsection[{Common\+Atomic\+Lock\+Assign\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement.\+Common\+Atomic\+Lock\+Assign\+Statement (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{civl\+Source, }
+\item[{{\bf Scope}}]{hscope, }
+\item[{{\bf Scope}}]{lscope, }
+\item[{{\bf Location}}]{source, }
+\item[{{\bf Expression}}]{guard, }
+\item[{boolean}]{is\+Entering, }
+\item[{{\bf L\+H\+S\+Expression}}]{lhs, }
+\item[{{\bf Expression}}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a84ce2e3e55a4a7f3173931b7172d3909}
+
+\begin{DoxyParams}{Parameters}
+{\em civl\+Source} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of this statement. More information in \hyperlink{}{C\+I\+V\+L\+Source}. \\
+\hline
+{\em source} & The source location of this goto statement \\
+\hline
+{\em atomic\+Kind} & The atomic kind of this statement \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a70bf6dc254ba55623479926bd79da4cf}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a70bf6dc254ba55623479926bd79da4cf}
+
+
+Obtain the set of variables visible from a certain scope that are possible to be written in the future. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scope} & The given scope. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a57ff1197dacf28ac33b097dc294418dc}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a69e7444a3611345e8562569bfdda8c78}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::statement\+::\+Common\+Atomic\+Lock\+Assign\+Statement}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a69e7444a3611345e8562569bfdda8c78}
+
+
+Obtain the set of variables whose addresses are referenced. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_abe668e1bcb4297c9e6e7f8f65aeecfc2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/statement/Common\+Atomic\+Lock\+Assign\+Statement.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,50 @@
+\hypertarget{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF}{}\section{Package edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F}
+\label{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F}}
+
+
+Module {\bfseries semantics} implements the semantics of C\+I\+V\+L-\/\+C.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator}{Contract\+Condition\+Generator}
+\begin{DoxyCompactList}\small\item\em \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator}{Contract\+Condition\+Generator} provides a set of interfaces for deriving contract clauses. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation}
+\begin{DoxyCompactList}\small\item\em Represents the result of evaluating an expression in two parts\+: the (possibly) new state resulting from side-\/effects arising from the evaluation, and the value resulting from the evaluation. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator}
+\begin{DoxyCompactList}\small\item\em This is the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} main evaluator. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor}
+\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Format}{Format}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluator}{Library\+Evaluator}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} Library \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} provides a method to \char`\"{}evaluate\char`\"{} the guard of each system function call. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader}
+\begin{DoxyCompactList}\small\item\em The library evaluator loader provides the mechanism for loading the library evaluator of a certain library. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor}{Library\+Executor}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} Library \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} provides the semantics for system functions defined in a library. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{Library\+Executor\+Loader}
+\begin{DoxyCompactList}\small\item\em The library executor loader provides the mechanism for loading the library executor of a certain library. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryLoaderException}{Library\+Loader\+Exception}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} library loader exception is produced by errors occur during when a library executor/evaluator/enabler loader attempts to load a specific library executor/evaluator/enabler. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1MemoryUnitExpressionEvaluator}{Memory\+Unit\+Expression\+Evaluator}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1NoopTransition}{Noop\+Transition}
+\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics}{Semantics}
+\begin{DoxyCompactList}\small\item\em Entry point of the module civl.\+semantics. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer}
+\begin{DoxyCompactList}\small\item\em This class provides methods dealing with symbolic expressions and states, which represent some common-\/used operations like obtaining a sub-\/array from a given array, etc. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition}
+\begin{DoxyCompactList}\small\item\em This represents a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} transition, which is deterministic and enabled at a certain state. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence}{Transition\+Sequence}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} transition sequence contains a list of transitions and the state from which they emanate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module {\bfseries semantics} implements the semantics of C\+I\+V\+L-\/\+C. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}

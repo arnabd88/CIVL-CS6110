@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EntityInfo.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.program.common</a> &gt; <span class="el_source">EntityInfo.java</span></div><h1>EntityInfo.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.program.common;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity;
+
+/**
+ * &lt;p&gt;
+ * An EntityInfo object records information about a set of entities from
+ * different translation units that share the same name. It then specifies the
+ * actions that must be taken to transform the ASTs representing the translation
+ * units before they can be merged into a single AST.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Suppose there are n translation units. Each translation unit can have at most
+ * one file-scope tagged entity (for example) with the given tag. Similar
+ * comment applies for the ordinary namespace (for functions, variables,
+ * typedefs). Hence this info object will deal with at most n entities, and each
+ * of those entities will come from a distinct translation unit.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * The info object is created with &quot;empty&quot; information. It is built up by calls
+ * to method {@link #add(int, Entity)}. Note that it is required that calls to
+ * this method occur with increasing translation unit ID.
+ * &lt;/p&gt;
+ * 
+ * 
+ * 
+ * @author siegel
+ * 
+ */
+public abstract class EntityInfo {
+
+	// Fields...
+
+	/**
+	 * The total number of translation units in the system being analyzed. Not
+	 * all of these will necessarily have an entity with this name.
+	 */
+	private int numTranslationUnits;
+
+	/**
+	 * The name of the entity, e.g., the variable name or function name for an
+	 * ordinary entity, or the tag for a struct, union, or enum. This may be
+	 * null: e.g., for an anonymous struct, union, or enum.
+	 */
+	private String name;
+
+	/**
+	 * The number of translation units that have an entity with this name in a
+	 * particular namespace (ordinary or tagged).
+	 */
+<span class="nc" id="L54">	private int numEntities = 0;</span>
+
+	// Constructors...
+
+<span class="nc" id="L58">	public EntityInfo(String name, int numTranslationUnits) {</span>
+<span class="nc" id="L59">		this.name = name;</span>
+<span class="nc" id="L60">		this.numTranslationUnits = numTranslationUnits;</span>
+<span class="nc" id="L61">	}</span>
+
+	// Supporting methods...
+
+	protected String newName(int tuid) {
+<span class="nc" id="L66">		return name + &quot;$TU&quot; + tuid;</span>
+	}
+
+	// Abstract methods...
+
+	/**
+	 * Adds the given entity to this info object. The contract is the same as
+	 * that of {@link #add(int, Entity)}. That method simply invokes this one
+	 * and increments the counter that records the number of entities added.
+	 * 
+	 * @param tuid
+	 *            the index of the translation unit to which the given entity
+	 *            belongs
+	 * @param entity
+	 *            the entity to add
+	 */
+	protected abstract void addEntity(int tuid, ProgramEntity entity);
+
+	// Public methods...
+
+	/**
+	 * Returns the number of entities added to this info object.
+	 * 
+	 * @return the number of entities added
+	 */
+	public int getNumEntities() {
+<span class="nc" id="L92">		return numEntities;</span>
+	}
+
+	/**
+	 * Returns the (common) name of the entities controled by this info object.
+	 * 
+	 * @return the entity name
+	 */
+	public String getName() {
+<span class="nc" id="L101">		return name;</span>
+	}
+
+	/**
+	 * Adds the given entity belonging to the specified translation unit to this
+	 * info object.
+	 * 
+	 * Preconditions:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;The entity must belong to the translation unit with index tuid.&lt;/li&gt;
+	 * &lt;li&gt;The entity must have name equal to the name specified when this
+	 * object was created&lt;/li&gt;
+	 * &lt;li&gt;The additions must occur in the order of increasing tuid. I.e., in
+	 * any two successive calls to this method on the same object, the tuid
+	 * argument must increase.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * 
+	 * @param tuid
+	 *            index of translation unit to which the given entity belongs
+	 * @param entity
+	 *            a tagged entity with tag equal to the tag associated to this
+	 *            info object
+	 */
+	public void add(int tuid, ProgramEntity entity) {
+<span class="nc" id="L126">		addEntity(tuid, entity);</span>
+<span class="nc" id="L127">		numEntities++;</span>
+<span class="nc" id="L128">	}</span>
+
+	public int getNumTranslationUnits() {
+<span class="nc" id="L131">		return numTranslationUnits;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,162 @@
+\hypertarget{mp_8h}{}\section{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mp.h File Reference}
+\label{mp_8h}\index{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mp.\+h@{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mp.\+h}}
+
+
+multicore matrix operations  
+
+
+{\ttfamily \#include $<$m4ri/mzd.\+h$>$}\\*
+Include dependency graph for mp.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mp_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{mp_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mp_8h_a6f20fd7688ec801054f4dc8ed9cf8e49}{mzd\+\_\+mul\+\_\+mp} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B, int cutoff)
+\begin{DoxyCompactList}\small\item\em Matrix multiplication via the cubic multiplication algorithm on multiple cores, i.\+e. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mp_8h_a1f346e4f55f813e5382f5d35607e0a84}{mzd\+\_\+addmul\+\_\+mp} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B, int cutoff)
+\begin{DoxyCompactList}\small\item\em Matrix multiplication and in-\/place addition via the cubic matrix multiplication algorithm on multiple cores, i.\+e. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mp_8h_a84636c233f0fa37354c6670bd3af72f0}{\+\_\+mzd\+\_\+addmul\+\_\+mp4} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B, int cutoff)
+\begin{DoxyCompactList}\small\item\em Matrix multiplication and in-\/place addition via cubic matrix multiplication algorithm on up to four cores, i.\+e. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mp_8h_ab19af18c2e870e38a4d4c7c4ee4eb32b}{\+\_\+mzd\+\_\+mul\+\_\+mp4} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B, int cutoff)
+\begin{DoxyCompactList}\small\item\em Matrix multiplication via cubic matrix multiplication algorithm on up to four cores, i.\+e. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+multicore matrix operations 
+
+\begin{DoxyAuthor}{Author}
+Martin Albrecht \href{mailto:martinralbrecht@googlemail.com}{\tt martinralbrecht@googlemail.\+com} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{mp_8h_a84636c233f0fa37354c6670bd3af72f0}{}\index{mp.\+h@{mp.\+h}!\+\_\+mzd\+\_\+addmul\+\_\+mp4@{\+\_\+mzd\+\_\+addmul\+\_\+mp4}}
+\index{\+\_\+mzd\+\_\+addmul\+\_\+mp4@{\+\_\+mzd\+\_\+addmul\+\_\+mp4}!mp.\+h@{mp.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+addmul\+\_\+mp4}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ \+\_\+mzd\+\_\+addmul\+\_\+mp4 (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B, }
+\item[{int}]{cutoff}
+\end{DoxyParamCaption}
+)}\label{mp_8h_a84636c233f0fa37354c6670bd3af72f0}
+
+
+Matrix multiplication and in-\/place addition via cubic matrix multiplication algorithm on up to four cores, i.\+e. 
+
+compute C = C+ A\+B.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Product matrix \\
+\hline
+{\em \hyperlink{structA}{A}} & Input matrix \hyperlink{structA}{A} \\
+\hline
+{\em B} & Input matrix B \\
+\hline
+{\em cutoff} & Minimal dimension for recursion. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000008}{Todo}]make sure not to overwrite crap after ncols and before width $\ast$ m4ri\+\_\+radix \end{DoxyRefDesc}
+\hypertarget{mp_8h_ab19af18c2e870e38a4d4c7c4ee4eb32b}{}\index{mp.\+h@{mp.\+h}!\+\_\+mzd\+\_\+mul\+\_\+mp4@{\+\_\+mzd\+\_\+mul\+\_\+mp4}}
+\index{\+\_\+mzd\+\_\+mul\+\_\+mp4@{\+\_\+mzd\+\_\+mul\+\_\+mp4}!mp.\+h@{mp.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+mul\+\_\+mp4}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ \+\_\+mzd\+\_\+mul\+\_\+mp4 (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B, }
+\item[{int}]{cutoff}
+\end{DoxyParamCaption}
+)}\label{mp_8h_ab19af18c2e870e38a4d4c7c4ee4eb32b}
+
+
+Matrix multiplication via cubic matrix multiplication algorithm on up to four cores, i.\+e. 
+
+compute C = C+ A\+B.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Product matrix \\
+\hline
+{\em \hyperlink{structA}{A}} & Input matrix \hyperlink{structA}{A} \\
+\hline
+{\em B} & Input matrix B \\
+\hline
+{\em cutoff} & Minimal dimension for recursion. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000009}{Todo}]make sure not to overwrite crap after ncols and before width $\ast$ m4ri\+\_\+radix \end{DoxyRefDesc}
+\hypertarget{mp_8h_a1f346e4f55f813e5382f5d35607e0a84}{}\index{mp.\+h@{mp.\+h}!mzd\+\_\+addmul\+\_\+mp@{mzd\+\_\+addmul\+\_\+mp}}
+\index{mzd\+\_\+addmul\+\_\+mp@{mzd\+\_\+addmul\+\_\+mp}!mp.\+h@{mp.\+h}}
+\subsubsection[{mzd\+\_\+addmul\+\_\+mp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+addmul\+\_\+mp (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B, }
+\item[{int}]{cutoff}
+\end{DoxyParamCaption}
+)}\label{mp_8h_a1f346e4f55f813e5382f5d35607e0a84}
+
+
+Matrix multiplication and in-\/place addition via the cubic matrix multiplication algorithm on multiple cores, i.\+e. 
+
+compute C = C+ A\+B.
+
+This is the wrapper function including bounds checks. See \+\_\+mzd\+\_\+addmul\+\_\+mp4 for implementation details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & product matrix \\
+\hline
+{\em \hyperlink{structA}{A}} & Input matrix \hyperlink{structA}{A} \\
+\hline
+{\em B} & Input matrix B \\
+\hline
+{\em cutoff} & Minimal dimension for recursion. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mp_8h_a6f20fd7688ec801054f4dc8ed9cf8e49}{}\index{mp.\+h@{mp.\+h}!mzd\+\_\+mul\+\_\+mp@{mzd\+\_\+mul\+\_\+mp}}
+\index{mzd\+\_\+mul\+\_\+mp@{mzd\+\_\+mul\+\_\+mp}!mp.\+h@{mp.\+h}}
+\subsubsection[{mzd\+\_\+mul\+\_\+mp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+mul\+\_\+mp (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B, }
+\item[{int}]{cutoff}
+\end{DoxyParamCaption}
+)}\label{mp_8h_a6f20fd7688ec801054f4dc8ed9cf8e49}
+
+
+Matrix multiplication via the cubic multiplication algorithm on multiple cores, i.\+e. 
+
+compute C = A\+B.
+
+This is the wrapper function including bounds checks. See \+\_\+mzd\+\_\+mul\+\_\+mp4 for implementation details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated product matrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Input matrix \hyperlink{structA}{A} \\
+\hline
+{\em B} & Input matrix B \\
+\hline
+{\em cutoff} & Minimal dimension for recursion. \\
+\hline
+\end{DoxyParams}

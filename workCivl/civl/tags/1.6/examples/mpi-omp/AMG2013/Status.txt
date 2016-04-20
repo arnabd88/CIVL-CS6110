@@ -1,0 +1,100 @@
+IJ_mv
+1) Error: Undeclared identifier __FILE__
+at utilities.h:890.47-55 "__FILE__" from HYPRE_IJVector.c:51.6-17 "hypre_error"
+Fixed by adding dummy data
+2) Error: Undeclared identifier hypre_IJVectorDistributePar
+at IJVector.c:41.16-43 "hypre_IJVectorDistributePar"
+Fixed by adding prototype function in header file
+Exception in thread "main" A CIVL internal error has occurred. Please report the error to civl-dev@udel.edu.
+An error occurred when p1(id=1) attempted to load the library evaluator for utilities: edu.udel.cis.vsl.civl.library.utilities.LibutilitiesEvaluator
+at amg2013.c:1733.6-65 "time_index = hypre_InitializeTiming("Setup matrix and rhs")".
+
+examples/mpi-omp/AMG2013/IJ_mv/aux_par_vector.c examples/mpi-omp/AMG2013/IJ_mv/aux_parcsr_matrix.c examples/mpi-omp/AMG2013/IJ_mv/HYPRE_IJMatrix.c examples/mpi-omp/AMG2013/IJ_mv/HYPRE_IJVector.c examples/mpi-omp/AMG2013/IJ_mv/IJMatrix_parcsr.c examples/mpi-omp/AMG2013/IJ_mv/IJMatrix.c examples/mpi-omp/AMG2013/IJ_mv/IJVector_parcsr.c examples/mpi-omp/AMG2013/IJ_mv/IJVector.c
+
+krylov 
+Error: The parameters for the function have not been specified.
+Note that a prototype for a function with 0 parameters must have the form "f(void)"
+at gmres.c:201.10-46 "precond_setup(precond_data, A, b ... )"
+NPE in Call analyzer
+examples/mpi-omp/AMG2013/krylov/gmres.c examples/mpi-omp/AMG2013/krylov/HYPRE_gmres.c examples/mpi-omp/AMG2013/krylov/HYPRE_pcg.c examples/mpi-omp/AMG2013/krylov/pcg.c 
+
+parcsr_ls (also problem with num_threads -> makes it farther with num_threadsID instead)
+Error: No conversion from type of right hand side to that of left:
+(void) *
+struct MPI_Comm
+at gen_redcs_mat.c:449.6-mpi.h:449.30 "new_comm = ((void*) ... )"
+examples/mpi-omp/AMG2013/parcsr_ls/aux_interp.c examples/mpi-omp/AMG2013/parcsr_ls/gen_redcs_mat.c examples/mpi-omp/AMG2013/parcsr_ls/HYPRE_parcsr_amg.c examples/mpi-omp/AMG2013/parcsr_ls/HYPRE_parcsr_gmres.c examples/mpi-omp/AMG2013/parcsr_ls/HYPRE_parcsr_pcg.c examples/mpi-omp/AMG2013/parcsr_ls/par_amg_setup.c examples/mpi-omp/AMG2013/parcsr_ls/par_amg_solve.c examples/mpi-omp/AMG2013/parcsr_ls/par_amg.c examples/mpi-omp/AMG2013/parcsr_ls/par_cg_relax_wt.c examples/mpi-omp/AMG2013/parcsr_ls/par_coarse_parms.c examples/mpi-omp/AMG2013/parcsr_ls/par_coarsen.c examples/mpi-omp/AMG2013/parcsr_ls/par_cycle.c examples/mpi-omp/AMG2013/parcsr_ls/par_difconv.c examples/mpi-omp/AMG2013/parcsr_ls/par_indepset.c examples/mpi-omp/AMG2013/parcsr_ls/par_interp.c examples/mpi-omp/AMG2013/parcsr_ls/par_jacobi_interp.c examples/mpi-omp/AMG2013/parcsr_ls/par_laplace_27pt.c examples/mpi-omp/AMG2013/parcsr_ls/par_laplace.c examples/mpi-omp/AMG2013/parcsr_ls/par_lr_interp.c examples/mpi-omp/AMG2013/parcsr_ls/par_multi_interp.c examples/mpi-omp/AMG2013/parcsr_ls/par_nodal_systems.c examples/mpi-omp/AMG2013/parcsr_ls/par_rap_communication.c examples/mpi-omp/AMG2013/parcsr_ls/par_rap.c examples/mpi-omp/AMG2013/parcsr_ls/par_relax_interface.c examples/mpi-omp/AMG2013/parcsr_ls/par_relax_more.c examples/mpi-omp/AMG2013/parcsr_ls/par_relax.c examples/mpi-omp/AMG2013/parcsr_ls/par_scaled_matnorm.c examples/mpi-omp/AMG2013/parcsr_ls/par_stats.c examples/mpi-omp/AMG2013/parcsr_ls/par_strength.c examples/mpi-omp/AMG2013/parcsr_ls/par_vardifconv.c examples/mpi-omp/AMG2013/parcsr_ls/partial.c examples/mpi-omp/AMG2013/parcsr_ls/pcg_par.c
+
+parcsr_mv - comment out part of #deine for hypre_assert
+1) Error: Undeclared identifier __FILE__
+at utilities.h:890.47-55 "__FILE__" from utilities.h:891.34-45 "hypre_error" from HYPRE_parcsr_matrix.c:43.16-34 "hypre_error_in_arg"
+2) Error: Undeclared identifier hypre_ParCSRCommPkgSendMapStart
+at utilities.h:103.45-76 "hypre_ParCSRCommPkgSendMapStart" from par_csr_matvec.c:103.45-76 "hypre_ParCSRCommPkgSendMapStart"
+examples/mpi-omp/AMG2013/parcsr_mv/HYPRE_parcsr_matrix.c  examples/mpi-omp/AMG2013/parcsr_mv/HYPRE_parcsr_vector.c examples/mpi-omp/AMG2013/parcsr_mv/new_commpkg.c examples/mpi-omp/AMG2013/parcsr_mv/par_csr_assumed_part.c examples/mpi-omp/AMG2013/parcsr_mv/par_csr_communication.c examples/mpi-omp/AMG2013/parcsr_mv/par_csr_matop_marked.c examples/mpi-omp/AMG2013/parcsr_mv/par_csr_matop.c examples/mpi-omp/AMG2013/parcsr_mv/par_csr_matrix.c examples/mpi-omp/AMG2013/parcsr_mv/par_csr_matvec.c examples/mpi-omp/AMG2013/parcsr_mv/par_vector.c
+
+seq_mv
+examples/mpi-omp/AMG2013/seq_mv/big_csr_matrix.c examples/mpi-omp/AMG2013/seq_mv/csr_matop.c examples/mpi-omp/AMG2013/seq_mv/csr_matrix.c examples/mpi-omp/AMG2013/seq_mv/csr_matvec.c examples/mpi-omp/AMG2013/seq_mv/genpart.c examples/mpi-omp/AMG2013/seq_mv/HYPRE_csr_matrix.c examples/mpi-omp/AMG2013/seq_mv/HYPRE_vector.c examples/mpi-omp/AMG2013/seq_mv/vector.c
+
+sstruct_mv
+1) Error: Undeclared identifier __FILE__
+at utilities.h:890.47-55 "__FILE__" from utilities.h:891.34-45 "hypre_error" from sstruct_matrix.c:656.6-24 "hypre_error_in_arg"
+
+2) NPE in SideEffect
+
+examples/mpi-omp/AMG2013/sstruct_mv/box_map.c examples/mpi-omp/AMG2013/sstruct_mv/HYPRE_sstruct_graph.c examples/mpi-omp/AMG2013/sstruct_mv/HYPRE_sstruct_grid.c examples/mpi-omp/AMG2013/sstruct_mv/HYPRE_sstruct_matrix.c examples/mpi-omp/AMG2013/sstruct_mv/HYPRE_sstruct_stencil.c examples/mpi-omp/AMG2013/sstruct_mv/HYPRE_sstruct_vector.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_axpy.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_copy.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_graph.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_grid.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_innerprod.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_matrix.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_matvec.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_overlap_innerprod.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_scale.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_stencil.c examples/mpi-omp/AMG2013/sstruct_mv/sstruct_vector.c
+
+struct_mv
+1) Error: Undeclared identifier __FILE__
+at utilities.h:890.47-55 "__FILE__" from utilities.h:891.34-45 "hypre_error" from box_manager.c:555.9-27 "hypre_error_in_arg"
+2) Error: The parameters for the function have not been specified.
+Note that a prototype for a function with 0 parameters must have the form "f(void)"
+at struct_vector.c:1186.24-36 "fcn(i, j, k)"
+examples/mpi-omp/AMG2013/struct_mv/assumed_part.c examples/mpi-omp/AMG2013/struct_mv/box_algebra.c examples/mpi-omp/AMG2013/struct_mv/box_alloc.c examples/mpi-omp/AMG2013/struct_mv/box_boundary.c examples/mpi-omp/AMG2013/struct_mv/box_manager.c examples/mpi-omp/AMG2013/struct_mv/box_neighbors.c examples/mpi-omp/AMG2013/struct_mv/box.c examples/mpi-omp/AMG2013/struct_mv/communication_info.c examples/mpi-omp/AMG2013/struct_mv/computation.c examples/mpi-omp/AMG2013/struct_mv/grow.c examples/mpi-omp/AMG2013/struct_mv/HYPRE_struct_grid.c examples/mpi-omp/AMG2013/struct_mv/HYPRE_struct_matrix.c examples/mpi-omp/AMG2013/struct_mv/HYPRE_struct_stencil.c examples/mpi-omp/AMG2013/struct_mv/HYPRE_struct_vector.c examples/mpi-omp/AMG2013/struct_mv/new_assemble.c examples/mpi-omp/AMG2013/struct_mv/new_box_neighbors.c examples/mpi-omp/AMG2013/struct_mv/project.c examples/mpi-omp/AMG2013/struct_mv/struct_axpy.c examples/mpi-omp/AMG2013/struct_mv/struct_communication.c examples/mpi-omp/AMG2013/struct_mv/struct_copy.c examples/mpi-omp/AMG2013/struct_mv/struct_grid.c examples/mpi-omp/AMG2013/struct_mv/struct_innerprod.c examples/mpi-omp/AMG2013/struct_mv/struct_io.c examples/mpi-omp/AMG2013/struct_mv/struct_matrix_mask.c examples/mpi-omp/AMG2013/struct_mv/struct_matrix.c examples/mpi-omp/AMG2013/struct_mv/struct_matvec.c examples/mpi-omp/AMG2013/struct_mv/struct_overlap_innerprod.c examples/mpi-omp/AMG2013/struct_mv/struct_scale.c examples/mpi-omp/AMG2013/struct_mv/struct_stencil.c examples/mpi-omp/AMG2013/struct_mv/struct_vector.c
+
+utilities
+CallAnalyzer - NPE
+examples/mpi-omp/AMG2013/utilities/amg_linklist.c examples/mpi-omp/AMG2013/utilities/binsearch.c examples/mpi-omp/AMG2013/utilities/exchange_data.c examples/mpi-omp/AMG2013/utilities/hypre_memory.c examples/mpi-omp/AMG2013/utilities/hypre_qsort.c examples/mpi-omp/AMG2013/utilities/memory_dmalloc.c examples/mpi-omp/AMG2013/utilities/mpistubs.c examples/mpi-omp/AMG2013/utilities/qsplit.c examples/mpi-omp/AMG2013/utilities/thread_mpistubs.c examples/mpi-omp/AMG2013/utilities/threading.c examples/mpi-omp/AMG2013/utilities/timer.c examples/mpi-omp/AMG2013/utilities/timing.c
+examples/mpi-omp/AMG2013/utilities/umalloc_local.c
+
+
+
+
+Parcsr_ls
+change: num_threads -> num_threadsID
+
+Krylov
+change: added types for function params in function pointer
+
+
+
+
+
+
+Current State:
+
+IJ_mv
+library eval error - makes in through all transformations
+
+Krylov
+ClassCastException that happens with function pointers
+
+Parcsr_ls
+ClassCastException in OmpWorker
+
+Parcsr_mv
+Undeclared identifier hypre_ParCSRCommPkgSendMapStart
+
+Seq_mv
+library eval error - makes in through all transformations
+
+Sstruct_mv
+OutOfMemory: GC overhead limit exceeded
+NPE in side effect remover
+
+Struct_mv 
+Changed final_innerprod_result name and added null check
+library eval error - makes in through all transformations
+
+
+Utils
+Can't find sys/times.h

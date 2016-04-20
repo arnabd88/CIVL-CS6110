@@ -1,0 +1,5 @@
+#include<civlc.h>
+
+void main() {
+  $assert 6 == $O(1);
+}

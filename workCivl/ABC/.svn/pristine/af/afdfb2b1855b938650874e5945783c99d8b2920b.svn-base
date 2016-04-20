@@ -1,0 +1,75 @@
+#ifndef __CIVLPTHREAD__
+#define __CIVLPTHREAD__
+
+#include <civlc.cvh>
+#include <pthread.h>
+
+// types
+/* A global pthread pool which must only be operated by local pthread pool. */
+typedef struct _pthread_gpool_t * $pthread_gpool_t;
+
+/* A datatype representing a local pthread pool which is used for 
+ * operating global pthread pools. The local pthread pool type has 
+ * a handle of a global pthread pool.
+ */
+typedef struct _pthread_pool_t * $pthread_pool_t;
+
+// Function Prototypes
+//void _pthread_exit(void *, _Bool);
+
+/* ************************** Functions of $pthread_gpool ************************** */
+
+/* Creates a new global pthread pool and returns a handle to it.
+ * The global pthread will have an incomplete array of pthread constructs. */
+$system $pthread_gpool_t $pthread_gpool_create($scope scope);
+
+/* De-allocation a _pthread_gpool_t object */
+$system void $pthread_gpool_destroy($pthread_gpool_t gpool);
+
+$system void $pthread_gpool_add($pthread_gpool_t gpool, pthread_t * thread);
+
+/* Gets the size of the global thread pool */
+$system int $pthread_gpool_size($pthread_gpool_t gpool);
+
+/* Gets the PID of the index'th thread in the pool */
+$system $proc $pthread_gpool_thread($pthread_gpool_t gpool, int index);
+
+/* Waits for all threads in the pool to terminate */
+$system void $pthread_gpool_join($pthread_gpool_t gpool);
+
+/* *************************** Functions of $pthread_pool ************************** */
+
+/* Creates a new local pthread pool object and returns a handle to it. */
+$system $pthread_pool_t $pthread_pool_create($scope scope, $pthread_gpool_t gpool);
+
+/* Terminates this thread */
+$system void $pthread_pool_terminates($pthread_pool_t pool, void* value);
+
+$system _Bool $pthread_pool_get_terminated($pthread_pool_t pool);
+
+$system _Bool $pthread_pool_is_terminated($pthread_pool_t pool, $proc pid);
+
+/* De-allocation a _pthread_gpool_t object */
+$system void $pthread_pool_destroy($pthread_pool_t pool);
+
+$system pthread_t $pthread_pool_thread($pthread_pool_t pool);
+
+/**
+  * Causes current thread to immediately terminate; if currently in the main method as specified by the 
+  * isMain parameter, the main method will wait for each thread to terminate before it terminates. The value
+  * value_ptr will be made accessible in the location stated in pthread_join
+  * Corresponding specification: p. 1655-6
+  *
+  * @param *value_ptr
+  *            The value to be stored in the location stated by pthread_join
+  * @param isMain
+  *            Is this thread the main thread?
+  * @param *arr 
+  *            The array of threads which need to be waited upon by the main thread
+  * @param len
+  *            The length of the array of threads to be waited upon
+  * @return Returns 0 upon successful completion
+  */
+$system void $pthread_exit(void *value_ptr, $pthread_pool_t $pthread_pool);
+
+#endif

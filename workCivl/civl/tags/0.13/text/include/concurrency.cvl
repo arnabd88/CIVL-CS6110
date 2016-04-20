@@ -1,0 +1,44 @@
+/* This file completes the definitions of types and some functions
+ * for concurrency, which are declared in concurrency.cvh.
+ */
+ 
+#ifdef __CIVLC_CONCURRENCY__
+#else
+#define __CIVLC_CONCURRENCY__
+
+#include<concurrency.cvh>
+
+/* *********************** Types *********************** */
+
+/* A data type representing a global barrier which must be operated by local
+ * barriers.  Completes the declaration of this type in civlc-common.h.
+ */
+struct __gbarrier__ {
+  int nprocs;
+  $proc proc_map[]; // initialized as all $proc_null.
+  _Bool in_barrier[]; // initialized as all false.
+  int num_in_barrier; // initialized as 0.
+};
+
+/* A data type representing a global barrier which used for 
+ * operating global barriers. The local barrier type has 
+ * a handle of a global barrier.
+ * Completes the declaration of this type in civlc-common.h.
+ */
+struct __barrier__ {
+  int place;
+  $gbarrier gbarrier; // initialized as 0.
+};
+
+/* *********************** Functions *********************** */
+
+void $barrier_enter($barrier barrier);
+
+void $barrier_exit($barrier barrier);
+
+void $barrier_call($barrier barrier) {
+  $barrier_enter(barrier);
+  $barrier_exit(barrier);
+}
+
+#endif

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OmpNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.omp</a> &gt; <span class="el_source">OmpNode.java</span></div><h1>OmpNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.omp;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+
+/**
+ * A node representing any kind of an OpenMP pragma. There are two
+ * sub-categories:
+ * &lt;ul&gt;
+ * &lt;li&gt;DECLARATIVE: an OpenMP pragma that is only allowed to be placed in
+ * declarative context;&lt;/li&gt;
+ * &lt;li&gt;EXECUTABLE: an OpenMP pragma that is not declarative.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * @author Manchun Zheng
+ * 
+ */
+public interface OmpNode extends ASTNode {
+	/**
+	 * The kind of this OpenMP pragma.
+	 * 
+	 * @author Manchun Zheng
+	 * 
+	 */
+<span class="nc" id="L24">	public enum OmpNodeKind {</span>
+<span class="nc" id="L25">		DECLARATIVE, EXECUTABLE</span>
+	}
+
+	/**
+	 * The kind of this OpenMP pragma.
+	 * 
+	 * @return the kind of this OpenMP pragma.
+	 */
+	OmpNodeKind ompNodeKind();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

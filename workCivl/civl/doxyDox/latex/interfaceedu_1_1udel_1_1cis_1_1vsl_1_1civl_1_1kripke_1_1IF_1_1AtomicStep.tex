@@ -1,0 +1,98 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step@{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step}}
+
+
+This represents an atomic execution step, which represents the execution of exactly one transition.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_a559b04f1977b61c5054a2cd7f358cd31}{set\+Post\+State} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Updates the resulting state of this atomic step. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_ae6fc545953da2cec242af89c9163aaf4}{get\+Post\+State} ()
+\begin{DoxyCompactList}\small\item\em Returns the resulting state of this atomic step. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_a11d8a7fe77b7085a88e6981b7008e55c}{get\+Statement} ()
+\begin{DoxyCompactList}\small\item\em Returns the statement associated to this atomic step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This represents an atomic execution step, which represents the execution of exactly one transition. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_ae6fc545953da2cec242af89c9163aaf4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step}!get\+Post\+State@{get\+Post\+State}}
+\index{get\+Post\+State@{get\+Post\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step}}
+\subsubsection[{get\+Post\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step.\+get\+Post\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_ae6fc545953da2cec242af89c9163aaf4}
+
+
+Returns the resulting state of this atomic step. 
+
+\begin{DoxyReturn}{Returns}
+the resulting state of this atomic step. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a0eb7df223fc8700853be108c8906bdc8}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_a11d8a7fe77b7085a88e6981b7008e55c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step}!get\+Statement@{get\+Statement}}
+\index{get\+Statement@{get\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step}}
+\subsubsection[{get\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step.\+get\+Statement (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_a11d8a7fe77b7085a88e6981b7008e55c}
+
+
+Returns the statement associated to this atomic step. 
+
+\begin{DoxyReturn}{Returns}
+the statement associated to this atomic step. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_ae4b90e4bf747f5d02088ff9b274bb649}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_a559b04f1977b61c5054a2cd7f358cd31}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step}!set\+Post\+State@{set\+Post\+State}}
+\index{set\+Post\+State@{set\+Post\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Atomic\+Step}}
+\subsubsection[{set\+Post\+State}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Atomic\+Step.\+set\+Post\+State (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep_a559b04f1977b61c5054a2cd7f358cd31}
+
+
+Updates the resulting state of this atomic step. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state to be used as the resulting state. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonAtomicStep_a65505f67963263c3f224ae452107f8fa}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Atomic\+Step}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/kripke/\+I\+F/Atomic\+Step.\+java\end{DoxyCompactItemize}

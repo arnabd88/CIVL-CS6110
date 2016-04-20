@@ -1,0 +1,130 @@
+/* 
+ * Simple implementation of Conjugate Gradient algorithm for 3x3
+ * symmetric matrix.  Instead of assuming positive-definite-ness, 
+ * we assume that in every division, the denominator is non-0.
+ * Based on https://en.wikipedia.org/wiki/Conjugate_gradient_method
+ */
+
+#include <civlc.cvh>
+#include <stdio.h>
+#define n 3
+
+$input double diag1,diag2,diag3,off1,off2,off3;
+$input double b[n];
+double x[n];
+double xcg[n];
+
+void cg(double A[n][n], double b[n], double x[n], int steps) {
+  double r[n];
+  double p[n];
+  double temp[n];
+  double tempp[n];
+  double rsold;
+  double rsnew;
+  double rsfrac;
+  double alpha;
+
+  // x = 0
+  for(int i=0; i<n; i++) x[i] = 0;
+
+  // temp = A*x
+  for(int i=0; i<n; i++) {
+    temp[i] = 0.0;
+    for(int j=0; j<n; j++) {
+      temp[i] += A[i][j]*x[j];
+    }
+  }
+
+  // r = b-temp
+  for(int i=0; i<n; i++) {
+      r[i] = b[i] -temp[i];
+  }
+
+  // rsold = <r,r>
+  rsold = 0.0;
+  for(int i=0; i<n; i++) {
+      rsold += r[i]*r[i];
+  }
+
+  // p=r
+  for(int i=0; i<n; i++) {
+      p[i] = r[i];
+  }
+
+  for(int i=0; i<steps; i++) {
+    // temp = A*p
+    for(int i=0; i<n; i++) {
+      temp[i] = 0.0;
+      for(int j=0; j<n; j++) {
+        temp[i] += A[i][j]*p[j];
+      }
+    }
+    alpha = 0.0;
+    for(int i=0; i<n; i++) {
+      alpha += p[i]*temp[i];
+    }
+    
+    $assume(alpha !=0);
+
+    alpha = rsold/alpha;
+    // tempp = r-alpha*temp
+    for(int i=0; i<n; i++) {
+        tempp[i] = r[i] -alpha*temp[i];
+    }
+    for(int i=0; i<n; i++) {
+        r[i] = tempp[i];
+    }
+    for(int i=0; i<n; i++) {
+        tempp[i] = x[i] +alpha*p[i];
+    }
+    for(int i=0; i<n; i++) {
+        x[i] = tempp[i];
+    }
+    if(i<steps-1) {
+      // rsnew = <r,r>
+      rsnew = 0.0;
+      for(int i=0; i<n; i++) {
+          rsnew += r[i]*r[i];
+      }
+
+      $assume(rsold !=0);
+
+      rsfrac = rsnew/rsold;
+      for(int i=0; i<n; i++) {
+          tempp[i] = r[i] +rsfrac*p[i];
+      }
+      for(int i=0; i<n; i++) {
+          p[i] = tempp[i];
+      }
+      rsold = rsnew;
+    }
+  }
+}
+
+void main() {
+  double bncg[n];
+  double A[n][n];
+
+  A[0][0] = diag1;
+  A[1][1] = diag2;
+  A[2][2] = diag3;
+  A[0][1] = off1;
+  A[1][0] = off1;
+  A[0][2] = off2;
+  A[2][0] = off2;
+  A[1][2] = off3;
+  A[2][1] = off3;
+
+  cg(A,b,xcg,n);
+  printf("\n================Solution x:================\n");
+  for(int i=0; i<n; i++) {
+    printf("x[%d] = %f\n\n",i, xcg[i]);
+  }
+  for(int i=0; i<n; i++) {
+    bncg[i] = 0;
+    for(int j=0; j<n; j++) {
+      bncg[i] += A[i][j]*xcg[j];
+    }
+    $assert(bncg[i] == b[i]);
+  }
+}

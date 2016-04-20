@@ -1,0 +1,136 @@
+/**
+ * This file is modified from the original pathfinder_cuda.cvl 
+ * program by the following way:
+ * First, GPU/GPU_BLOCK/GPU_THREAD no longer access global variables of 
+ * int type, but use their value (by parameter passing) instead.
+ * Second, the process that spawns GPU_BLOCK/GPU_THREAD
+ * doen't reuse itself to run GPU_BLOCK/GPU_THREAD.
+ */
+
+#include<civlc.cvh>
+
+#define pyramid_height 2
+#define rows 3
+#define cols 2
+//BLOCK_SIZE must satisfy (BLOCK_SIZE > pyramid_height*2)
+#define BLOCK_SIZE 5
+#define HALO 1
+
+int borderCols     = (pyramid_height)*HALO;
+int smallBlockCol  = BLOCK_SIZE - (pyramid_height) * HALO * 2;
+int blockCols      = cols/smallBlockCol+((cols%smallBlockCol==0)?0:1);
+
+int result[cols];
+
+int gpuResult[2][cols];
+int gpuWall[rows*cols - cols];
+
+//$input int wall[rows][cols];
+
+#define IN_RANGE(x, min, max)   ((x)>=(min) && (x)<=(max))
+#define CLAMP_RANGE(x, min, max) \
+  if (x < (min)) x = (min); else if (x > (max)) x = (max);
+#define MIN(result, a, b) if ((a)<=(b)) result = (a); else result = (b);
+
+//Not implemented yet.
+//void __syncthreads() {
+//}
+
+void GPU(int iteration, int src, int dst, int startStep, int blocks,
+         int threads, int gBorderCols) {
+		
+  void GPU_BLOCK(int bx, int bIteration, int bBorderCols,
+                 int src, int dst, int startStep){
+    int prev[BLOCK_SIZE];
+    int result[BLOCK_SIZE];
+	        
+    void GPU_THREAD(int tx, int tbx, int tIteration, int tBorderCols,
+                    int src, int dst, int startStep, int* prev, int* result) { 
+      int small_block_cols = BLOCK_SIZE-tIteration*HALO*2;
+      int blkX = small_block_cols*tbx-tBorderCols;
+      int blkXmax = blkX+BLOCK_SIZE-1;
+      int xidx = blkX+tx;
+      int validXmin, validXmax;
+      int W = tx-1;
+      int E = tx+1;
+
+      if (blkX < 0)
+        validXmin = -blkX;
+      else
+        validXmin = 0;
+      if (blkXmax > cols-1)
+        validXmax = BLOCK_SIZE-1-(blkXmax-cols+1);
+      else
+        validXmax = BLOCK_SIZE-1;
+      if (W < validXmin)
+        W = validXmin;
+      if (E > validXmax)
+        E = validXmax;
+
+      int isValid = IN_RANGE(tx, validXmin, validXmax);    
+
+      if (IN_RANGE(xidx, 0, cols-1)) {
+        prev[tx] = gpuResult[src][xidx];
+      }
+
+      int computed;
+	        
+      for (int i=0; i<tIteration; i++) {
+        computed = 0;
+        if (IN_RANGE(tx, i+1, BLOCK_SIZE-i-2) && isValid) {
+          computed = 1;
+          int left = prev[W];
+          int up = prev[tx];
+          int right = prev[E];
+          int shortest;
+          MIN(shortest, left, up);
+          MIN(shortest, shortest, right);
+          int index = cols*(startStep+i)+xidx;
+          result[tx] = shortest + gpuWall[index];
+        }
+        if (i==iteration-1) break;
+        if (computed != 0) prev[tx]= result[tx];
+       	//__syncthreads();
+      }
+      if (computed != 0) {
+        gpuResult[dst][xidx]=result[tx];
+      }
+    }
+
+    $proc thread_procs[BLOCK_SIZE];
+	  
+    for (int tp = 0; tp < BLOCK_SIZE; tp++) {
+      thread_procs[tp] = $spawn GPU_THREAD(tp, bx, bIteration, bBorderCols,
+         src, dst, startStep, prev, result);
+    }
+    for (int tp = 0; tp < BLOCK_SIZE; tp++) {
+      $wait thread_procs[tp];
+    }
+  }
+
+  $proc block_procs[blocks];
+	
+  for (int b = 0; b < blocks; b++)
+    block_procs[b] = $spawn GPU_BLOCK(b, iteration, gBorderCols, src,
+                       dst, startStep);
+  for (int b = 0; b < blocks; b++) $wait block_procs[b];
+}
+
+void calc_path() {
+  int src = 1, dst = 0;
+
+  for (int t = 0; t < rows-1; t+=pyramid_height) {
+    int temp = src;
+    int min;
+
+    src = dst;
+    dst = temp;
+    MIN(min, pyramid_height, rows-t-1);
+    GPU( min, src, dst, t, blockCols, BLOCK_SIZE, borderCols);
+  }    
+}
+
+void main() {
+  $assert BLOCK_SIZE > pyramid_height*2;
+  calc_path();
+}

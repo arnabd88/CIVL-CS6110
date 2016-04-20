@@ -1,0 +1,9 @@
+#include<civlc.cvh>
+#include<stdio.h>
+
+int main(){
+  int x;
+  int* p=NULL;
+
+  $havoc(p);
+}

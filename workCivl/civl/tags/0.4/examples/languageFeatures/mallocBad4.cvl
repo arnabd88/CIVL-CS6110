@@ -1,0 +1,14 @@
+#include <civlc.h>
+
+// Reassign heap before free.
+// This is actually illegal now since there is a limitation of
+// one heap per scope...
+void main() {
+  $heap h, h0;
+  double *p = (double *) $malloc(&h, 5*sizeof(double));
+  
+  h = h0;
+  p[4]=3.14;
+  $assert(p[4]==3.14);
+  $free(&h, p);
+}   

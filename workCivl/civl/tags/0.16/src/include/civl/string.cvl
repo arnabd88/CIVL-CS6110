@@ -1,0 +1,17 @@
+/* CIVL implementation of string.h */
+
+#ifdef __STRING_CIVL__
+#else
+#define __STRING_CIVL__
+
+#include<string.h>
+#include<bundle.cvh>
+
+/* Copies a region of memory */
+void* memcpy(void *p, const void *q, const size_t size) {
+  $bundle bundle = $bundle_pack(q, size);
+  $bundle_unpack(bundle, p);
+  return p;
+}
+
+#endif

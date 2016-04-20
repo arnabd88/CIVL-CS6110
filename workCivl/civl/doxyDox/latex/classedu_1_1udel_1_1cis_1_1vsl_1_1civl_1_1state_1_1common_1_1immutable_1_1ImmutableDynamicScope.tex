@@ -1,0 +1,277 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope}}
+
+
+An \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope}{Immutable\+Dynamic\+Scope} represents the state of a single dynamic scope in the state of a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a18b4e914e85f27fa0080a0e49beb3a64}{equals} (Object obj)
+\begin{DoxyCompactList}\small\item\em Determines if the given object is equal to this one. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_af47871251b839e8ae0215fb9912a4f33}{}int {\bfseries hash\+Code} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_af47871251b839e8ae0215fb9912a4f33}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a13ace8a52ea54d2be1e988969a07815b}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a13ace8a52ea54d2be1e988969a07815b}
+
+\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_acbdf96e7bca13e91e3a880ad65128282}{get\+Parent} ()
+\begin{DoxyCompactList}\small\item\em Returns the dyscope I\+D of the parent of this dynamic scope in the dyscope tree. \end{DoxyCompactList}\item 
+Bit\+Set \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a70d5883a470d4749c9f223df96ca00ce}{get\+Reachers} ()
+\begin{DoxyCompactList}\small\item\em This identifier is not part of the state. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_af957e0a5e8e99f4bd7b3fef61faf0e81}{get\+Value} (int vid)
+\begin{DoxyCompactList}\small\item\em Gets the value of the variable with variable I\+D vid. \end{DoxyCompactList}\item 
+Iterable$<$ Symbolic\+Expression $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_ad64d64173a8b8b516f24d49ea8f8afea}{get\+Values} ()
+\begin{DoxyCompactList}\small\item\em Returns an iterable object over the variable values. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_ab9ba5913c568b43a9678386ba80f9e13}{lexical\+Scope} ()
+\begin{DoxyCompactList}\small\item\em Returns the lexical (static) scope of which this dynamic scope is an instance. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a06a2c219222a4a076a4fdf39d7133b04}{print} (Print\+Stream out, String prefix)
+\begin{DoxyCompactList}\small\item\em Prints a human-\/readable representation of this dynamic scope. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope}{Dynamic\+Scope} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_aeb9b251d983423ac1d14ddc908d4e40d}{set\+Value} (int vid, Symbolic\+Expression value)
+\begin{DoxyCompactList}\small\item\em Sets the value assigned to the vid-\/th variable. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_af45d46cca4afa2dc83596dbf5de7ed02}{number\+Of\+Values} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of variable values stored in the dynamic scope. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope}{Immutable\+Dynamic\+Scope} represents the state of a single dynamic scope in the state of a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. 
+
+It is an instance of a static (lexical) scope. It assigns to each variable in the static scope a value, which is a symbolic expression of the appropriate type.
+
+As the name suggests an \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope}{Immutable\+Dynamic\+Scope} is immutable, at least in all ways visible to the user.
+
+Instances of this class may be \char`\"{}flyweighted\char`\"{} (see the Flyweight Pattern). The methods \hyperlink{}{make\+Canonic(\+Symbolic\+Universe)} and \hyperlink{}{is\+Canonic()} support this pattern.
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+
+Timothy J. Mc\+Clory (tmcclory) 
+
+Stephen F. Siegel (siegel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a18b4e914e85f27fa0080a0e49beb3a64}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!equals@{equals}}
+\index{equals@{equals}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{equals}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+equals (
+\begin{DoxyParamCaption}
+\item[{Object}]{obj}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a18b4e914e85f27fa0080a0e49beb3a64}
+
+
+Determines if the given object is equal to this one. 
+
+Returns true iff\+: (1) obj is an instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope}{Immutable\+Dynamic\+Scope}, (2) the lexical scopes are equal, (3) the parent fields are equal, (4) the variable\+Values arrays have the same length and corresponding values are equal, and (5) the reachers sets are equal.
+
+This implementation is optimized by taking advantage of immutability and flyweighting. \hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_acbdf96e7bca13e91e3a880ad65128282}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!get\+Parent@{get\+Parent}}
+\index{get\+Parent@{get\+Parent}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{get\+Parent}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+get\+Parent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_acbdf96e7bca13e91e3a880ad65128282}
+
+
+Returns the dyscope I\+D of the parent of this dynamic scope in the dyscope tree. 
+
+If this is the root dyscope (i.\+e., the lexical\+Scope is the root static scope), returns -\/1.
+
+\begin{DoxyReturn}{Returns}
+The dyscope I\+D of the parent of this dyscope or -\/1 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope_a0d8df1d26fa6e2ae1626b9ec248ec267}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Dynamic\+Scope}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a70d5883a470d4749c9f223df96ca00ce}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!get\+Reachers@{get\+Reachers}}
+\index{get\+Reachers@{get\+Reachers}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{get\+Reachers}]{\setlength{\rightskip}{0pt plus 5cm}Bit\+Set edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+get\+Reachers (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a70d5883a470d4749c9f223df96ca00ce}
+
+
+This identifier is not part of the state. 
+
+It is never renamed, helping to identify a specific dynamic scope when scopes get collected.
+
+\begin{DoxyReturn}{Returns}
+The identifier of this scope. The identifier of the parent of this dyscope in the dyscope tree. Returns -\/1 when this is the root scope.
+
+The identifier of the parent of this dyscope in the dyscope tree. This name of the dynamic scope, which is not part of the state and is immutable. It is {\ttfamily \char`\"{}d\char`\"{} + identifier}.
+
+The name of this dynamic scope. Returns the reachers field.
+
+the reachers field 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope_aca96dfb76322be4928d42b03036cd41b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Dynamic\+Scope}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_af957e0a5e8e99f4bd7b3fef61faf0e81}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!get\+Value@{get\+Value}}
+\index{get\+Value@{get\+Value}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{get\+Value}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+get\+Value (
+\begin{DoxyParamCaption}
+\item[{int}]{vid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_af957e0a5e8e99f4bd7b3fef61faf0e81}
+
+
+Gets the value of the variable with variable I\+D vid. 
+
+The variables belonging to a static scope are numbered starting from 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em vid} & the variable I\+D, an integer in the range \mbox{[}0,num\+Vars-\/1\mbox{]}, where num\+Vars is the number of variables in the static scope \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value associated to the specified variable 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope_a971e60823b02eb908abac38b6dcfe3a6}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Dynamic\+Scope}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_ad64d64173a8b8b516f24d49ea8f8afea}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!get\+Values@{get\+Values}}
+\index{get\+Values@{get\+Values}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{get\+Values}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<$Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+get\+Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_ad64d64173a8b8b516f24d49ea8f8afea}
+
+
+Returns an iterable object over the variable values. 
+
+The iteration is guaranteed to give the values in variable I\+D order.
+
+\begin{DoxyReturn}{Returns}
+iterable over variable values, starting from variable with vid 0 and going up 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope_a8be3c9e37cdb47cbcd79b7760bc7ad0b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Dynamic\+Scope}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_ab9ba5913c568b43a9678386ba80f9e13}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!lexical\+Scope@{lexical\+Scope}}
+\index{lexical\+Scope@{lexical\+Scope}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{lexical\+Scope}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scope} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+lexical\+Scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_ab9ba5913c568b43a9678386ba80f9e13}
+
+
+Returns the lexical (static) scope of which this dynamic scope is an instance. 
+
+\hyperlink{structA}{A} single static scope may have many (or 0) dynamic scope instances associated to it, but each dynamic scope is an instance of exactly one static scope.
+
+\begin{DoxyReturn}{Returns}
+the static scope associated to this dynamic scope 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope_ae77437896fba8841eea79950d9ffa1d5}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Dynamic\+Scope}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_af45d46cca4afa2dc83596dbf5de7ed02}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!number\+Of\+Values@{number\+Of\+Values}}
+\index{number\+Of\+Values@{number\+Of\+Values}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{number\+Of\+Values}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+number\+Of\+Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_af45d46cca4afa2dc83596dbf5de7ed02}
+
+
+Returns the number of variable values stored in the dynamic scope. 
+
+The number of variable values should be the same as the number of variables of the associated lexical scope.
+
+\begin{DoxyReturn}{Returns}
+the number of variable values stored in the dynamic scope. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope_ae67e10d567c062e675ce0a2865627336}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Dynamic\+Scope}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a06a2c219222a4a076a4fdf39d7133b04}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!print@{print}}
+\index{print@{print}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+print (
+\begin{DoxyParamCaption}
+\item[{Print\+Stream}]{out, }
+\item[{String}]{prefix}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_a06a2c219222a4a076a4fdf39d7133b04}
+
+
+Prints a human-\/readable representation of this dynamic scope. 
+
+The prefix is a string that pre-\/pended to each line of the output. It is typically something like \char`\"{}$\vert$  $\vert$  \char`\"{}, used to give a tabbed tree structure to the output.
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & print stream to which output is sent \\
+\hline
+{\em prefix} & a string to prepend to each line of output \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope_a93555f6df5d24b516924885524ea60eb}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Dynamic\+Scope}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_aeb9b251d983423ac1d14ddc908d4e40d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}!set\+Value@{set\+Value}}
+\index{set\+Value@{set\+Value}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Dynamic\+Scope}}
+\subsubsection[{set\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Dynamic\+Scope} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Dynamic\+Scope.\+set\+Value (
+\begin{DoxyParamCaption}
+\item[{int}]{vid, }
+\item[{Symbolic\+Expression}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope_aeb9b251d983423ac1d14ddc908d4e40d}
+
+
+Sets the value assigned to the vid-\/th variable. 
+
+If this dynamic scope is mutable, this method modifies this dynamic scope and returns this. Otherwise, it returns a new dynamic scope which is equivalent to this one except that the value assigned to the variable is the given value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em vid} & the variable I\+D \\
+\hline
+{\em value} & the value to assign to that variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an instance of Dynamic\+Scope obtained by modifying this instance to reflect the new assignment 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope_a4ec67e84183f3744e68193ac348d8be5}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Dynamic\+Scope}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/state/common/immutable/Immutable\+Dynamic\+Scope.\+java\end{DoxyCompactItemize}

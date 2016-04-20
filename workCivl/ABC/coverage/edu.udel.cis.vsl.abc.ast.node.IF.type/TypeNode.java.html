@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TypeNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.type</a> &gt; <span class="el_source">TypeNode.java</span></div><h1>TypeNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.type;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeableNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+
+public interface TypeNode extends SizeableNode {
+
+	/**
+	 * The different kinds of type names.
+	 */
+<span class="nc" id="L11">	public static enum TypeNodeKind {</span>
+<span class="nc" id="L12">		ARRAY, ATOMIC, BASIC, DOMAIN, ENUMERATION, FUNCTION, POINTER, RANGE, SCOPE, STRUCTURE_OR_UNION, TYPEDEF_NAME, VOID,</span>
+<span class="nc" id="L13">		/**</span>
+		 * typeof() of GNU C extension
+		 */
+<span class="nc" id="L16">		TYPEOF</span>
+	};
+
+	@Override
+	TypeNode copy();
+
+	/**
+	 * Returns the conceptual C type associated to this type node.
+	 * 
+	 * @return the C type defined by this type node
+	 */
+	Type getType();
+
+	/**
+	 * Is this an &quot;_Atomic&quot; qualified type?
+	 * 
+	 * @return true iff this is an &quot;_Atomic&quot; qualified type
+	 */
+	boolean isAtomicQualified();
+
+	/**
+	 * Is this a &quot;const&quot; qualified type?
+	 * 
+	 * @return true iff this is a const qualified type.
+	 */
+	boolean isConstQualified();
+
+	/**
+	 * Is the CIVL-C type qualifier &lt;code&gt;$input&lt;/code&gt; used?
+	 * 
+	 * @return &lt;code&gt;true&lt;/code&gt; if this type is &lt;code&gt;$input&lt;/code&gt;-qualified
+	 */
+	boolean isInputQualified();
+
+	boolean isOutputQualified();
+
+	/**
+	 * Is this a &quot;restrict&quot; qualified type?
+	 * 
+	 * @return true iff this is a &quot;restrict&quot; qualified type.
+	 */
+	boolean isRestrictQualified();
+
+	/**
+	 * Is this a &quot;volatile&quot; qualified type?
+	 * 
+	 * @return true iff this is a volatile qualified type.
+	 */
+	boolean isVolatileQualified();
+
+	/**
+	 * The kind of type name this is. See definition of the enumerated type
+	 * TypeNameKind. These kinds partition the set of all type names.
+	 * 
+	 * If the kind is BASIC, this object can be safely cast to BasicType.
+	 * 
+	 * If the kind is DOMAIN, the object can be safely cast to DomainType.
+	 * 
+	 * If the kind is ENUMERATION, this object can be safely cast to
+	 * EnumerationType.
+	 * 
+	 * If the kind is ARRAY, this object can be safely cast to ArrayType.
+	 * 
+	 * If the kind is STRUCTURE_OR_UNION, this object can be safely cast to
+	 * StructureOrUnionType.
+	 * 
+	 * If the kind is FUNCTION, this object can be safely cast to FunctionType.
+	 * 
+	 * If the kind is POINTER, this object can be safely cast to PointerType.
+	 * 
+	 * If the kind is ATOMIC, this object can be safely cast to AtomicType.
+	 * 
+	 * @return the kind of this type
+	 */
+	TypeNodeKind kind();
+
+	void setAtomicQualified(boolean value);
+
+	void setConstQualified(boolean value);
+
+	void setInputQualified(boolean value);
+
+	void setOutputQualified(boolean value);
+
+	void setRestrictQualified(boolean value);
+
+	/**
+	 * Sets the type that will be returned by subsequent calls to getType().
+	 * 
+	 * @param type
+	 *            the type to associate to this node
+	 */
+	void setType(Type type);
+
+	void setVolatileQualified(boolean value);
+
+	/**
+	 * 
+	 * @return The kind of this type node.
+	 */
+	TypeNodeKind typeNodeKind();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,24 @@
+#include <civlc.cvh>
+#include <stdio.h>
+
+$input int N;
+$input int B = 5;
+$assume(0 < N && N < B);
+
+void main(){
+  int a[N];
+  $int_iter iter;
+  int k = 0;
+  
+  for(int i = 0; i < N; i++)
+    a[i] = i;
+  iter = $int_iter_create($here, a, N);
+  while($int_iter_hasNext(iter)) {
+    int current = $int_iter_next(iter);
+    
+    printf("Current is %d.\n", current);
+    $assert(current == k);
+    k++;
+  }
+  $int_iter_destroy(iter);
+}

@@ -1,0 +1,18 @@
+#include <stdlib.h>
+
+typedef struct arg {
+  double a;
+  double b[3];
+  int * c[2][2][2];
+}arg;
+
+
+int main() {
+  arg * args = (arg *)malloc(sizeof(arg));
+  int array[2] = {1,2};
+
+  args->a = 1;
+  args->b[1] = 1;
+  args->c[1][1][1] = array;
+  free(args);
+}

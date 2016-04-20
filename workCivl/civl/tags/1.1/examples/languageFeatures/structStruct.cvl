@@ -1,0 +1,22 @@
+/* Commandline execution:
+ *		civl verify structStruct.cvl
+ * */
+#include <civlc.cvh>
+
+typedef struct foo {
+  struct {
+    int* a;
+    double b;
+    } bar;
+} foo;
+
+void main() {
+  foo s;
+  int a[4];
+  
+  a[2] = 3;
+  s.bar.b = 5.6;
+  s.bar.a = &a[1];
+  $assert((s.bar.b == 5.6));
+  $assert((s.bar.a[1] == 3));
+}

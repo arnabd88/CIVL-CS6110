@@ -1,0 +1,58 @@
+/**
+ * boundedBuffer_bad.cvl:
+ * This program impelments a bounded-buffer.
+ * It describes two processes, the producer and consumer, 
+ * which share a common, fixed-size buffer
+ * used as a queue. 
+ *
+ * The producer's job is to generate a piece of data, 
+ * put it into the buffer and start again. 
+ * At the same time, the consumer is consuming the data 
+ * (i.e., removing it from the buffer) one piece at a time. *
+ * The problem is to make sure that the producer won't try 
+ * to add data into the buffer if it's full and that the 
+ * consumer won't try to remove data from an empty buffer.
+ *
+ * When there is more than one producer or consumer,
+ * there is a race condition.
+ */
+#include<civlc.cvh>
+$input int BUFFER_SIZE = 100;
+$input int NPRODUCER = 5;
+$input int NCONSUMER = 5;
+int fillCount = 0;
+int emptyCount = BUFFER_SIZE;
+ 
+void producer() {
+  while ($true) {
+    // produce item
+    $when(emptyCount > 0);
+    $assert(emptyCount > 0);
+    emptyCount--;
+    // put item into buffer
+    fillCount++;
+  }
+}
+ 
+void consumer() {
+  while ($true) {
+    $when(fillCount > 0);
+    $assert(fillCount > 0);
+    fillCount--;
+    // remove item from buffer
+    emptyCount++;
+    // consume item
+  }
+}
+
+void main(){
+  $proc producers[NPRODUCER];
+  $proc consumers[NCONSUMER];
+
+  for(int i = 0; i < NCONSUMER; i++)
+    consumers[i] = $spawn consumer();
+  for(int i = 0; i < NPRODUCER; i++)
+    producers[i] = $spawn producer();
+  $waitall(consumers, NCONSUMER);
+  $waitall(producers, NPRODUCER);
+}

@@ -1,0 +1,206 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table@{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table}}
+
+
+This class is used to ensure that the first column of the {\ttfamily \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable}{C\+I\+V\+L\+Table}}(J\+Table) is not editable, as we do not want users to be able to change the option names in the table where selected options are displayed.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Table\+Cell\+Editor \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a751bbda21449555f829a2765476b5178}{get\+Cell\+Editor} (int row, int column)
+\begin{DoxyCompactList}\small\item\em Gets the {\ttfamily C\+I\+V\+L\+\_\+\+Table}\textquotesingle{}s cell editor for a specific cell. \end{DoxyCompactList}\item 
+Table\+Cell\+Renderer \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_aeccb3757dcfa5dbe6d35e8a9066e8d95}{get\+Cell\+Renderer} (int row, int column)
+\begin{DoxyCompactList}\small\item\em Gets the {\ttfamily C\+I\+V\+L\+\_\+\+Table}\textquotesingle{}s cell renderer for a specific cell. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a7abc7eaa9c7a978d06307b6ad5429a25}{is\+Cell\+Editable} (int row, int col)
+\begin{DoxyCompactList}\small\item\em Uses the editable\+Cols field to specify which columns can be edited and which cannot. \end{DoxyCompactList}\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a0cdeac46d4cada1e3ed8159e5f31d8af}{get\+Tool\+Tip\+Text} (Mouse\+Event e)
+\begin{DoxyCompactList}\small\item\em Sets the tool\+Tip text that describes each option. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a41c48015778719a8439d30819aed5e61}{add\+Save\+Table\+Listener} (Save\+Table\+Listener listener)
+\begin{DoxyCompactList}\small\item\em Adds a Save\+Table\+Listener. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a03a8103c2179c3956ea066bc375cfe58}{remove\+Save\+Table\+Listener} (Save\+Table\+Listener listener)
+\begin{DoxyCompactList}\small\item\em Removes a Save\+Table\+Listener. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_ada0e8292a9e9ec4d94ecd97e1f9fe1fd}{}void {\bfseries mouse\+Clicked} (Mouse\+Event e)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_ada0e8292a9e9ec4d94ecd97e1f9fe1fd}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a406a32c9f4f80d32f43455f9d1e0e41d}{}void {\bfseries mouse\+Pressed} (Mouse\+Event e)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a406a32c9f4f80d32f43455f9d1e0e41d}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_ac3158f537970996dd3b0a85082eaa903}{}void {\bfseries mouse\+Released} (Mouse\+Event e)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_ac3158f537970996dd3b0a85082eaa903}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a15ca66e844c252d5963e7b5d59cbf952}{}void {\bfseries mouse\+Entered} (Mouse\+Event e)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a15ca66e844c252d5963e7b5d59cbf952}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a1ab37a831efbc850235927e0b74ae136}{}void {\bfseries mouse\+Exited} (Mouse\+Event e)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a1ab37a831efbc850235927e0b74ae136}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a0f27eb4fd0e966c3479f212fd964cd10}{}boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a0f27eb4fd0e966c3479f212fd964cd10}{deleting}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a0f27eb4fd0e966c3479f212fd964cd10}
+
+\begin{DoxyCompactList}\small\item\em True if the user is deleting a file, otherwise False. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a388b9ff4da24104fbc96edd035013990}{}Event\+Listener\+List \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a388b9ff4da24104fbc96edd035013990}{listener\+List} = new Event\+Listener\+List()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a388b9ff4da24104fbc96edd035013990}
+
+\begin{DoxyCompactList}\small\item\em The list of Event\+Listeners. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is used to ensure that the first column of the {\ttfamily \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable}{C\+I\+V\+L\+Table}}(J\+Table) is not editable, as we do not want users to be able to change the option names in the table where selected options are displayed. 
+
+In addition to this, it contains a custom cell renderer and a custom cell editor to override undesirable J\+Table behavior.
+
+\begin{DoxyAuthor}{Author}
+noyes 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a41c48015778719a8439d30819aed5e61}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}!add\+Save\+Table\+Listener@{add\+Save\+Table\+Listener}}
+\index{add\+Save\+Table\+Listener@{add\+Save\+Table\+Listener}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}}
+\subsubsection[{add\+Save\+Table\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table.\+add\+Save\+Table\+Listener (
+\begin{DoxyParamCaption}
+\item[{Save\+Table\+Listener}]{listener}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a41c48015778719a8439d30819aed5e61}
+
+
+Adds a Save\+Table\+Listener. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em listener} & The Listener we would like to add. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a751bbda21449555f829a2765476b5178}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}!get\+Cell\+Editor@{get\+Cell\+Editor}}
+\index{get\+Cell\+Editor@{get\+Cell\+Editor}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}}
+\subsubsection[{get\+Cell\+Editor}]{\setlength{\rightskip}{0pt plus 5cm}Table\+Cell\+Editor edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table.\+get\+Cell\+Editor (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{int}]{column}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a751bbda21449555f829a2765476b5178}
+
+
+Gets the {\ttfamily C\+I\+V\+L\+\_\+\+Table}\textquotesingle{}s cell editor for a specific cell. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row of the cell. \\
+\hline
+{\em col} & The column of the cell.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The specified {\ttfamily Table\+Cell\+Editor} 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_aeccb3757dcfa5dbe6d35e8a9066e8d95}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}!get\+Cell\+Renderer@{get\+Cell\+Renderer}}
+\index{get\+Cell\+Renderer@{get\+Cell\+Renderer}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}}
+\subsubsection[{get\+Cell\+Renderer}]{\setlength{\rightskip}{0pt plus 5cm}Table\+Cell\+Renderer edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table.\+get\+Cell\+Renderer (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{int}]{column}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_aeccb3757dcfa5dbe6d35e8a9066e8d95}
+
+
+Gets the {\ttfamily C\+I\+V\+L\+\_\+\+Table}\textquotesingle{}s cell renderer for a specific cell. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row of the cell. \\
+\hline
+{\em col} & The column of the cell.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The specified {\ttfamily Table\+Cell\+Renderer} 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a0cdeac46d4cada1e3ed8159e5f31d8af}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}!get\+Tool\+Tip\+Text@{get\+Tool\+Tip\+Text}}
+\index{get\+Tool\+Tip\+Text@{get\+Tool\+Tip\+Text}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}}
+\subsubsection[{get\+Tool\+Tip\+Text}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table.\+get\+Tool\+Tip\+Text (
+\begin{DoxyParamCaption}
+\item[{Mouse\+Event}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a0cdeac46d4cada1e3ed8159e5f31d8af}
+
+
+Sets the tool\+Tip text that describes each option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & The mouse event.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Tool Tip Text for the desired cell. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a7abc7eaa9c7a978d06307b6ad5429a25}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}!is\+Cell\+Editable@{is\+Cell\+Editable}}
+\index{is\+Cell\+Editable@{is\+Cell\+Editable}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}}
+\subsubsection[{is\+Cell\+Editable}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table.\+is\+Cell\+Editable (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{int}]{col}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a7abc7eaa9c7a978d06307b6ad5429a25}
+
+
+Uses the editable\+Cols field to specify which columns can be edited and which cannot. 
+
+This method is called by swing on specific cells to check if they are editable.
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row of the cell. \\
+\hline
+{\em col} & The column of the cell.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} boolean representing if the cell is editable or not. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a03a8103c2179c3956ea066bc375cfe58}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}!remove\+Save\+Table\+Listener@{remove\+Save\+Table\+Listener}}
+\index{remove\+Save\+Table\+Listener@{remove\+Save\+Table\+Listener}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+C\+I\+V\+L\+Table}}
+\subsubsection[{remove\+Save\+Table\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+C\+I\+V\+L\+Table.\+remove\+Save\+Table\+Listener (
+\begin{DoxyParamCaption}
+\item[{Save\+Table\+Listener}]{listener}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1CIVLTable_a03a8103c2179c3956ea066bc375cfe58}
+
+
+Removes a Save\+Table\+Listener. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em listener} & The Listener we would like to remove. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/gui/common/C\+I\+V\+L\+Table.\+java\end{DoxyCompactItemize}

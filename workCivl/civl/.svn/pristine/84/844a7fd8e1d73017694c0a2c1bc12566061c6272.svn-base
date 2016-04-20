@@ -1,0 +1,16 @@
+#include <civlc.cvh>
+#include <stdio.h>
+
+void main(){
+  $range r1 = 1 .. 5;
+  $range r2 = 0 .. 4#-2;
+  $range r3 = 3 .. 9#3;
+  $domain(3) dom = ($domain){r1, r2, r3};
+  int sum = 0;
+  
+  $for(int i,j,k : dom){
+    printf("i, j, k: %d, %d, %d\n", i, j, k);
+    sum += 1;
+  }
+  $assert((sum == 45));
+}

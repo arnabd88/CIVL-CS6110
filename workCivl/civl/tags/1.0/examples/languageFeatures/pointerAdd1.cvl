@@ -1,0 +1,17 @@
+int main(){
+#ifdef ARRAY
+  int a[10];
+#ifdef WRONG
+  int *p=a+11;
+#else
+  int *p=a+10;
+#endif
+#else
+  int x = 9;
+#ifdef WRONG
+  int *p=&x+2;
+#else
+  int *p = &x+1;
+#endif
+#endif
+}

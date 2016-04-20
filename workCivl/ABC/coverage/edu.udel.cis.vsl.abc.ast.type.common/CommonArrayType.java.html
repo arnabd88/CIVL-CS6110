@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonArrayType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonArrayType.java</span></div><h1>CommonArrayType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+
+public class CommonArrayType extends CommonObjectType implements ArrayType {
+
+<span class="nc" id="L14">	private final static int classCode = CommonArrayType.class.hashCode();</span>
+
+	private ObjectType elementType;
+
+	private ExpressionNode variableSize;
+
+	private IntegerValue constantSize;
+
+	private boolean unspecifiedVariableLength;
+
+	/**
+	 * Creates a new array type with given element type and value for
+	 * unspecifiedVariableLength.
+	 * 
+	 * @param elementType
+	 *            a complete object type
+	 * @param unspecifiedVariableLength
+	 *            is this an array declared with &quot;*&quot; for the size expression?
+	 */
+	public CommonArrayType(ObjectType elementType,
+			boolean unspecifiedVariableLength) {
+<span class="nc" id="L35">		super(TypeKind.ARRAY);</span>
+<span class="nc" id="L36">		this.elementType = elementType;</span>
+<span class="nc" id="L37">		this.variableSize = null;</span>
+<span class="nc" id="L38">		this.constantSize = null;</span>
+<span class="nc" id="L39">		this.unspecifiedVariableLength = unspecifiedVariableLength;</span>
+<span class="nc" id="L40">	}</span>
+
+	/**
+	 * Creates a new complete array type in which the extent does not have a
+	 * constant value.
+	 * 
+	 * @param elementType
+	 *            a complete object type
+	 * @param variableSize
+	 *            the expression specifying the length of the array
+	 */
+	public CommonArrayType(ObjectType elementType, ExpressionNode variableSize) {
+<span class="nc" id="L52">		super(TypeKind.ARRAY);</span>
+<span class="nc" id="L53">		this.elementType = elementType;</span>
+<span class="nc" id="L54">		this.variableSize = variableSize;</span>
+<span class="nc" id="L55">		this.constantSize = null;</span>
+<span class="nc" id="L56">		this.unspecifiedVariableLength = false;</span>
+<span class="nc" id="L57">	}</span>
+
+	/**
+	 * Creates a new complete array type in which the extent has a known
+	 * constant value.
+	 * 
+	 * @param elementType
+	 *            complete object type
+	 * @param constantSize
+	 *            the constant obtained by evaluating the extent expression
+	 */
+	public CommonArrayType(ObjectType elementType, IntegerValue constantSize) {
+<span class="nc" id="L69">		super(TypeKind.ARRAY);</span>
+<span class="nc" id="L70">		this.elementType = elementType;</span>
+<span class="nc" id="L71">		this.variableSize = null;</span>
+<span class="nc" id="L72">		this.constantSize = constantSize;</span>
+<span class="nc" id="L73">		this.unspecifiedVariableLength = false;</span>
+<span class="nc" id="L74">	}</span>
+
+	@Override
+	public boolean isComplete() {
+<span class="nc bnc" id="L78" title="All 4 branches missed.">		return variableSize != null || constantSize != null</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">				|| unspecifiedVariableLength;</span>
+	}
+
+	@Override
+	public ObjectType getElementType() {
+<span class="nc" id="L84">		return elementType;</span>
+	}
+
+	@Override
+	public ExpressionNode getVariableSize() {
+<span class="nc" id="L89">		return variableSize;</span>
+	}
+
+	@Override
+	public boolean isVariableLengthArrayType() {
+<span class="nc bnc" id="L94" title="All 4 branches missed.">		return unspecifiedVariableLength || variableSize != null</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				|| !elementType.hasKnownConstantSize();</span>
+	}
+
+	@Override
+	public boolean hasUnspecifiedVariableLength() {
+<span class="nc" id="L100">		return this.unspecifiedVariableLength;</span>
+	}
+
+	@Override
+	public boolean isVariablyModified() {
+<span class="nc bnc" id="L105" title="All 4 branches missed.">		return isVariableLengthArrayType() || elementType.isVariablyModified();</span>
+	}
+
+	@Override
+	public IntegerValue getConstantSize() {
+<span class="nc" id="L110">		return constantSize;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L115">		int result = classCode ^ ((CommonType) elementType).hashCode();</span>
+
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (constantSize != null)</span>
+<span class="nc" id="L118">			result ^= constantSize.hashCode();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		else if (variableSize != null)</span>
+<span class="nc" id="L120">			result ^= variableSize.hashCode();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (unspecifiedVariableLength)</span>
+<span class="nc" id="L122">			result ^= 172830823; // random int</span>
+<span class="nc" id="L123">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (obj instanceof CommonArrayType) {</span>
+<span class="nc" id="L129">			CommonArrayType that = (CommonArrayType) obj;</span>
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			if (!elementType.equals(that.elementType))</span>
+<span class="nc" id="L132">				return false;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			if (constantSize != null) {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">				if (that.constantSize == null)</span>
+<span class="nc" id="L135">					return false;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">				if (!constantSize.equals(that.constantSize))</span>
+<span class="nc" id="L137">					return false;</span>
+			} else {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				if (that.constantSize != null)</span>
+<span class="nc" id="L140">					return false;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">				if (variableSize != null) {</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">					if (that.variableSize == null)</span>
+<span class="nc" id="L143">						return false;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">					if (!variableSize.equals(that.variableSize))</span>
+<span class="nc" id="L145">						return false;</span>
+				} else {
+<span class="nc bnc" id="L147" title="All 2 branches missed.">					if (that.variableSize != null)</span>
+<span class="nc" id="L148">						return false;</span>
+				}
+			}
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			return unspecifiedVariableLength == that.unspecifiedVariableLength;</span>
+		}
+<span class="nc" id="L153">		return false;</span>
+	}
+
+	private boolean equivalentTo(Type other, Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (other instanceof CommonArrayType) {</span>
+<span class="nc" id="L158">			CommonArrayType that = (CommonArrayType) other;</span>
+
+<span class="nc" id="L160">			if (!((CommonType) elementType).similar(that.elementType, true,</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">					seen))</span>
+<span class="nc" id="L162">				return false;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (constantSize != null) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if (that.constantSize == null)</span>
+<span class="nc" id="L165">					return false;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">				if (!constantSize.equals(that.constantSize))</span>
+<span class="nc" id="L167">					return false;</span>
+			} else {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				if (that.constantSize != null)</span>
+<span class="nc" id="L170">					return false;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">				if (variableSize != null) {</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">					if (that.variableSize == null)</span>
+<span class="nc" id="L173">						return false;</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">					if (!variableSize.equals(that.variableSize))</span>
+<span class="nc" id="L175">						return false;</span>
+				} else {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">					if (that.variableSize != null)</span>
+<span class="nc" id="L178">						return false;</span>
+				}
+			}
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			return unspecifiedVariableLength == that.unspecifiedVariableLength;</span>
+		}
+<span class="nc" id="L183">		return false;</span>
+	}
+
+	private boolean compatibleWith(Type type, Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (type instanceof CommonArrayType) {</span>
+<span class="nc" id="L188">			CommonArrayType that = (CommonArrayType) type;</span>
+
+<span class="nc" id="L190">			if (!((CommonType) elementType).similar(that.elementType, false,</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">					seen))</span>
+<span class="nc" id="L192">				return false;</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">			if (constantSize != null &amp;&amp; that.constantSize != null</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">					&amp;&amp; !constantSize.equals(that.constantSize))</span>
+<span class="nc" id="L195">				return false;</span>
+<span class="nc" id="L196">			return true;</span>
+		}
+<span class="nc" id="L198">		return false;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L203">		String result = &quot;ArrayType[elementType=&quot; + elementType;</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (variableSize != null)</span>
+<span class="nc" id="L206">			result += &quot;, size=&quot; + variableSize;</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (constantSize != null)</span>
+<span class="nc" id="L208">			result += &quot;, size=&quot; + constantSize;</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (unspecifiedVariableLength)</span>
+<span class="nc" id="L210">			result += &quot;, unspecifiedVariableLength&quot;;</span>
+<span class="nc" id="L211">		result += &quot;]&quot;;</span>
+<span class="nc" id="L212">		return result;</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean abbrv) {
+<span class="nc" id="L217">		out.println(&quot;Array&quot;);</span>
+<span class="nc" id="L218">		out.print(prefix + &quot;| elementType = &quot;);</span>
+<span class="nc" id="L219">		elementType.print(prefix + &quot;| &quot;, out, true);</span>
+<span class="nc" id="L220">		out.println();</span>
+<span class="nc" id="L221">		out.print(prefix + &quot;| size = &quot;);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (constantSize != null)</span>
+<span class="nc" id="L223">			out.print(constantSize);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		else if (variableSize != null)</span>
+<span class="nc" id="L225">			out.print(variableSize);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		else if (unspecifiedVariableLength)</span>
+<span class="nc" id="L227">			out.print(&quot;unspecified variable length&quot;);</span>
+<span class="nc" id="L228">	}</span>
+
+	@Override
+	public boolean isScalar() {
+<span class="nc" id="L232">		return false;</span>
+	}
+
+	@Override
+	protected boolean similar(Type other, boolean equivalent,
+			Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		return equivalent ? equivalentTo(other, seen) : compatibleWith(other,</span>
+<span class="nc" id="L239">				seen);</span>
+	}
+
+	@Override
+	public boolean isConstantQualified() {
+<span class="nc" id="L244">		return this.elementType.isConstantQualified();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

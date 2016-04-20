@@ -1,0 +1,9 @@
+/* A syntax exception (invalid conversion specifier) example*/
+#include <civlc.cvh>
+#include <stdio.h>
+
+void main() {
+  char c = 's';
+  
+  printf("The value of c is %q",c);
+}

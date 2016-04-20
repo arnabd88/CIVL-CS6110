@@ -1,0 +1,35 @@
+/* Dining philosophers, standard version, which deadlocks.
+ *
+ *		civl verify -inputB=4 diningBad.cvl
+ * or (if you want to find the minimal counterexample)
+ *		civl verify -inputB=4 diningBad.cvl -min
+ */
+#include <civlc.h>
+
+$input int B; // upper bound on number of philosophers
+$input int n; // number of philosophers
+$assume 2<=n && n<=B;
+
+int forks[n]; // Each fork will be on the table (0) or in a hand (1).
+
+void dine(int id) {
+  int left = id;
+  int right = (id + 1) % n;
+
+  while (1) {
+    $when (forks[left] == 0) forks[left] = 1;
+    $when (forks[right] == 0) forks[right] = 1;
+    forks[right] = 0;
+    forks[left] = 0;
+  }
+}
+
+void main() {
+  $proc philosophers[n];
+  
+  for (int i = 0; i < n; i++) forks[i] = 0;
+  for (int i = 0; i < n; i++)
+    philosophers[i] = $spawn dine(i);
+  for (int i = 0; i < n; i++)
+    $wait(philosophers[i]);
+}

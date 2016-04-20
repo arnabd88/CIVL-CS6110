@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PragmaHandler.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.common.astgen</a> &gt; <span class="el_source">PragmaHandler.java</span></div><h1>PragmaHandler.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.common.astgen;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.PragmaNode;
+import edu.udel.cis.vsl.abc.front.IF.ParseException;
+import edu.udel.cis.vsl.abc.front.IF.ParseTree;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * &lt;p&gt;
+ * An entity responsible for dealing with a family of pragmas. Every
+ * &lt;code&gt;#pragma&lt;/code&gt; line begins with an identifier (the first token
+ * following &lt;code&gt;#pragma&lt;/code&gt;), as in
+ * 
+ * &lt;pre&gt;
+ * #pragma CIVL ...
+ * &lt;/pre&gt;
+ * 
+ * That identifier signifies the pragma family.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Each handler is responsible for dealing with pragmas with one code occurring
+ * in one parse tree.
+ * &lt;/p&gt;
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc" id="L31">public abstract class PragmaHandler implements Entity {</span>
+
+	/**
+	 * Returns the parse tree associated to this handler. The handler should
+	 * only be invoked on pragmas occurring in that tree.
+	 * 
+	 * @return the parse tree associated to this pragma
+	 */
+	public abstract ParseTree getParseTree();
+
+	/**
+	 * Translates a pragma node originating from the parse tree. The result can
+	 * be any kind of rooted AST tree. The result will replace the pragma node
+	 * in the AST.
+	 * 
+	 * @param pragmaNode
+	 *            a pragma node that was formed from a pragma occurring in the
+	 *            parse tree. The pragma node comprises the raw, unparsed
+	 *            sequence of tokens occurring in the pragma
+	 * @param scope
+	 *            the simple scope in which the pragma occurrs
+	 * @return the root of the tree which is the result of the translation
+	 * @throws SyntaxException
+	 *             if the pragma does not adhere to the syntax specified by the
+	 *             pragma domain
+	 */
+	public abstract ASTNode processPragmaNode(PragmaNode pragmaNode,
+			SimpleScope scope) throws SyntaxException, ParseException;
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,56 @@
+/* Commandline execution:
+ *		civl verify memcpy.cvl
+ * */
+#include<civlc.cvh>
+#include<string.h>
+
+typedef struct foo {
+  int f0;
+  double f1;
+  int f2;
+  long double f3;
+} foo;
+
+typedef struct bar{
+  foo f0;
+  int f1[8];
+} bar;
+
+void main() {
+  int a[10], b[5];
+  foo foo1, foo2;
+
+  // Basic array component.
+  for (int i = 0; i < 10; i++) {
+    a[i] = i;
+  }
+  memcpy(b, a, 5*sizeof(int));
+  for (int i = 0; i < 5; i++) {
+    $assert(b[i] == i);
+  }
+  
+  // Basic struct copy.
+  foo1.f0 = 3;
+  foo1.f1 = 3.14;
+  foo1.f2 = 0;
+  foo1.f3 = 2.71828;
+  memcpy(&foo2, &foo1, sizeof(foo));
+  $assert(foo2.f0 == 3);
+  $assert(foo2.f1 == 3.14);
+  $assert(foo2.f2 == 0);
+  $assert(foo2.f3 == 2.71828);
+  
+  // Modify struct fields.
+  bar bar1;
+  memcpy(&(bar1.f0), &foo2, sizeof(foo));
+  memcpy(&(bar1.f1[3]), b, 5*sizeof(int));
+  $assert(bar1.f0.f0 == 3);
+  $assert(bar1.f1[3] == 0);
+  memcpy(bar1.f1, a, 4*sizeof(int));
+  $assert(bar1.f1[0] == 0);
+  $assert(bar1.f1[3] == 3);
+  $assert(bar1.f1[5] == 2);
+  $assert(bar1.f0.f1 == 3.14);
+  bar1.f0.f1 = 9.99;
+  $assert(foo2.f1 == 3.14);
+}

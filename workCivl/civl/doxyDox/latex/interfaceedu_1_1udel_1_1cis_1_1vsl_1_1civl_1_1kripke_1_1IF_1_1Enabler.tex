@@ -1,0 +1,79 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Enabler Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Enabler@{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Enabler}}
+
+
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{Enabler} extends \hyperlink{}{Enabler\+I\+F} for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} models.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Enabler\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Enabler\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=244pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler_abcd0dd70189f6c043f754ef060052b87}{get\+Guard} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Computes the guard of a statement. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{Enabler} extends \hyperlink{}{Enabler\+I\+F} for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} models. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler_abcd0dd70189f6c043f754ef060052b87}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Enabler}!get\+Guard@{get\+Guard}}
+\index{get\+Guard@{get\+Guard}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Enabler}}
+\subsubsection[{get\+Guard}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Enabler.\+get\+Guard (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement, }
+\item[{int}]{pid, }
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler_abcd0dd70189f6c043f754ef060052b87}
+
+
+Computes the guard of a statement. 
+
+Since we have System\+Guard\+Expression and Wait\+Guard\+Expression, we don\textquotesingle{}t need to compute the guard for system function calls and wait statements explicitly, which are now handled by the evaluator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & The statement whose guard is to computed. \\
+\hline
+{\em pid} & The I\+D of the process that the statement belongs to. \\
+\hline
+{\em state} & The current state that the computation happens. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The symbolic expression of the guard of the given statement. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1CommonEnabler_a1f81a482c9ea66b1a92e9c527d50d087}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Common\+Enabler}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/kripke/\+I\+F/Enabler.\+java\end{DoxyCompactItemize}

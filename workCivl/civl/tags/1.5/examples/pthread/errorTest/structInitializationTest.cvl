@@ -1,0 +1,15 @@
+typedef struct{
+  int a;
+  int c;
+}s2;
+
+typedef struct{
+  int b;
+  s2 inside;
+}s1;
+
+int main(){
+  s1 test;
+  test = (s1){1,{1,3}};
+  return 0;
+}

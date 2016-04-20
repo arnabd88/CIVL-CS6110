@@ -1,0 +1,26 @@
+/* Commandline execution:
+ *		civl verify -inputrows=3 -inputcols=3 laplace.cvl
+ * */
+#include <civlc.cvh>
+
+$input double h;
+$input int rows = 3;
+$input int cols = 3;
+$input double u[rows][cols];
+double result[rows][cols];
+$assume(h > 0);
+$abstract $contin(4) $real phi($real x, $real y);
+$assume($forall {m=0 .. rows-1} $forall {n=0 .. cols-1} u[m][n] == phi(m*h, n*h));
+
+void laplace() {
+  for (int i = 1; i < rows-1; i++) {
+    for (int j = 1; j < cols-1; j++) {
+      result[i][j] = (u[i-1][j]+u[i][j-1]-4*u[i][j]+u[i+1][j]+u[i][j+1])/(h*h);
+    }
+  }
+  $assert($uniform {i=1 .. rows-2} $uniform {j=1 .. cols-2} result[i][j] - ($D[phi,{x,2}](i*h,j*h)+$D[phi,{y,2}](i*h,j*h)) == $O(h*h));
+}
+
+void main() {
+  laplace();
+}

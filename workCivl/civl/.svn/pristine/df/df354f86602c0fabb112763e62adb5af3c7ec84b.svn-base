@@ -1,0 +1,55 @@
+% LaTeX source for CIVL Reference Manual.
+\documentclass[12pt, oneside, letterpaper]{book}
+\usepackage[letterpaper,textheight=9.5in,left=.75in,%
+  textwidth=7in,bottom=.75in]{geometry}
+%\usepackage[nottoc]{tocbibind}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{bbold}
+\usepackage{url}
+\usepackage[lined,vlined,linesnumbered,noresetcount]{algorithm2e}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+%\usepackage{hyperref}
+\usepackage[bookmarksopen]{hyperref}
+\usepackage{bookmark}
+
+\include{preambular}
+
+\title{%
+  {\huge\bf CIVL}\\
+  \mbox{The Concurrency Intermediate Verification Language}\\
+  Reference Manual\\
+  v0.8
+}
+\author{%
+  Matthew B.\ Dwyer \and
+  Ganesh Gopalakrishnan \and
+  Ziqing Luo \and
+  Zvonimir Rakamaric \and
+  Stephen F.\ Siegel \and
+  Manchun Zheng \and
+  Timothy K.\ Zirkel
+}
+
+\begin{document}
+\pagenumbering{Alph}
+\begin{titlepage}
+\maketitle
+\thispagestyle{empty}
+\end{titlepage}
+\pagenumbering{arabic}
+\clearpage
+\pdfbookmark[part]{\contentsname}{toc}
+\tableofcontents
+\input{part-introduction}
+\input{part-language}
+\input{part-semantics}
+\input{part-tools}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{part}{Bibliography}
+\bibliographystyle{acm}
+\bibliography{civl}
+\end{document}

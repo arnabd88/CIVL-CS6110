@@ -1,0 +1,52 @@
+// global variables and procedures shared by all threads.
+
+/********************* functions provided by omp.h *************/
+$input int OMP_NUM_THREADS;
+int in_barrier[OMP_NUM_THREADS];
+int num_in_barrier = 0;
+
+int omp_get_num_threads() {
+  return OMP_NUM_THREADS;
+}
+
+/********************* helper functions for translation *************/
+
+/* Common functions for translating for loops */
+// computes the start index for a given thread
+int __for_start(int tid, int total) {
+  return ((total/OMP_NUM_THREADS) * tid);
+}
+
+//computes the end index for a given thread
+int __for_end(int tid, int total) {
+  return ((total/OMP_NUM_THREADS) * (tid + 1));
+}
+
+//computes the extra index for a given thread
+int __for_extra(int tid, int total) {
+  int offset = total % OMP_NUM_THREADS;
+  
+  if(tid < offset) {
+    return total - offset + tid;
+  }
+  return 0;
+}
+
+/********************* barrier implementation *************/
+
+void __barrier_init() {
+  for (int i=0; i<OMP_NUM_THREADS; i++) in_barrier[i] = 0;
+}
+   
+// model the synchronization of threads in the same block
+void __barrier(int tid) {
+  $atomic {
+  in_barrier[tid] = 1; // I am in the barrier
+    num_in_barrier++; // increment number in barrier
+    if (num_in_barrier == OMP_NUM_THREADS) { // I am last to enter
+      for (int i=0; i<OMP_NUM_THREADS; i++) in_barrier[i] = 0; // release all
+        num_in_barrier = 0; // now none are in barrier
+      }
+    }
+    $when (in_barrier[tid] == 0); // wait till I am released
+  }

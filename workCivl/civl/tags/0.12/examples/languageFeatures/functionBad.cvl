@@ -1,0 +1,21 @@
+/*
+ * This example is to demonstrate the error checking for a function declared with
+ * non-void return type but has no return statement in its execution.
+ * */
+#include<civlc.h>
+#include<stdio.h>
+
+int f(){
+  int k = 9;
+  
+  if(k <8 )
+    return k;
+  
+  k = k + 10;
+}
+
+void main(){
+  int a = f();
+  
+  printf("a is %d", a);
+}

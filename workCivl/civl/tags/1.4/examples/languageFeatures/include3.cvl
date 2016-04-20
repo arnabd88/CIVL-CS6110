@@ -1,0 +1,5 @@
+#include <civlc.cvh>
+
+void f2(int n) {
+  $assert(n>=0);
+}

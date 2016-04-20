@@ -1,0 +1,26 @@
+#include<civlc.cvh>
+
+int x=0;
+
+void p1() {
+  $atomic {
+    x=1;
+    $when(x==2);
+    x=3;
+  }
+}
+
+void p2() {
+  $when(x==1);
+  x=2;
+  x=4;
+}
+
+void main() {
+  $proc proc1 = $spawn p1();
+  $proc proc2 = $spawn p2();
+
+  $wait(proc1);
+  $wait(proc2);
+  $assert(x==3); // false
+}

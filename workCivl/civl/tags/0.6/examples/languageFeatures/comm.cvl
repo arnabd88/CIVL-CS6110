@@ -1,0 +1,33 @@
+/* Commandline execution:
+ *		civl verify comm.cvl
+ * */
+#include <civlc.h>
+
+void worker(int value) {
+  for (int i = 0; i < value; i++) {
+    ; // Do work
+  }
+}
+
+void main() {
+  int nprocs = 3;
+  $proc procs[nprocs];
+  $comm comm;
+  $message message;
+  $message message2;
+  int comm_size;
+  
+  procs[0] = $self;
+  procs[1] = $spawn worker(4);
+  procs[2] = $spawn worker(5);
+  comm = $comm_create(nprocs, procs);
+  message = $message_pack(0, 1, 0, &nprocs, sizeof(int));
+  $comm_enqueue(&comm, message);
+  $comm_enqueue(&comm, message);
+  $comm_enqueue(&comm, message);
+  comm_size = $comm_total_size(&comm);
+  $assert(comm_size <= 3);
+  message2 = $comm_dequeue(&comm, 0, 1, 0);
+  $assert(message.source == message2.source);
+  
+}

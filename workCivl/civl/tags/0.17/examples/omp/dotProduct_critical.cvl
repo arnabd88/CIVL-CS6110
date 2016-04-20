@@ -1,0 +1,64 @@
+/* CIVL model of dotProduct_critical.c.  To verify:
+ *   civl verify dotProduct_critical.cvl
+ */
+#include <civlc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+#define N 10
+#define THREAD_MAX 4
+/* Does thread t own iteration i in loop with n iterations? */
+#define CIVL_owns(t, n, i) ((i)%(n)==(t))
+
+_Bool critical_lock = $false;
+
+int main (int argc, char *argv[]) {
+  double a[N], b[N];
+  double sum = 0.0;
+  int nthreads;
+
+  // translation of parallel construct
+  // #pragma omp parallel shared(a,b,sum) private(i, localsum)
+  // note: tid should be private. corrected here.
+  {
+    int _nthreads = 1+$choose_int(THREAD_MAX);
+    $proc threads[_nthreads];
+    $gbarrier gbarrier = $gbarrier_create($here, _nthreads);
+    void thread(int _tid) {
+      int i, tid;
+      double localsum;
+      $barrier barrier = $barrier_create($here, gbarrier, _tid);
+      
+      tid = _tid;
+      if (_tid == 0) {
+	nthreads =_nthreads;
+	printf("Number of threads = %d\n", nthreads);
+      }
+      for (i=0; i < N; i++) {
+	if (CIVL_owns(_tid, _nthreads, i)) {
+	  a[i] = b[i] = (double)i;
+	}
+      }
+      $barrier_call(barrier);
+      localsum = 0;
+      for (i=0; i < N; i++) {
+	if (CIVL_owns(_tid, _nthreads, i)) {
+	  localsum = localsum + (a[i] * b[i]);
+	}
+      }
+      $when (!critical_lock) critical_lock = $true;
+      sum = sum + localsum;
+      critical_lock = $false;
+      $barrier_destroy(barrier);
+    }
+
+    for (int i=0; i<_nthreads; i++)
+      threads[i] = $spawn thread(i);
+    for (int i=0; i<_nthreads; i++)
+      $wait(threads[i]);
+    $gbarrier_destroy(gbarrier);
+  }
+  printf("   Sum = %2.1f\n",sum);
+  assert(sum==285.0);
+}

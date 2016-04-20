@@ -1,0 +1,13 @@
+#include <civlc.cvh>
+#include <stdio.h>
+
+void print(int * p, int rowNum){
+  printf(" value is %d\n", p[1*rowNum+1]);
+}
+
+void main(){
+  int i[2][2] = {1,2,3,4};
+
+  print(&i[0][0], 2);
+
+}

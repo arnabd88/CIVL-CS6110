@@ -1,0 +1,240 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry}}
+
+
+This class represents one complete entry for the snapshots queue used in collective assertion checking.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Contract\+Kind \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_add21e111c0a6e5025967836b8a7d0b3e}{contract\+Kind} ()
+\begin{DoxyCompactList}\small\item\em The \hyperlink{}{Contract\+Clause\+Kind} associates to this entry. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a75e191e9b1d918e414acdcd07099b88d}{is\+Complete} ()
+\begin{DoxyCompactList}\small\item\em If the entry is complete and can be dequeue for evaluation. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a8e33c119feea077a9ab7d618d1293f79}{is\+Recorded} (int place)
+\begin{DoxyCompactList}\small\item\em If the process is recorded. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a5e46ad6c98a1c3d0e1da612ba72f6ca6}{num\+Mono\+States} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of \hyperlink{}{Immutable\+Mono\+State} in this entry. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a5d9af6924cd4b16e13529bd8e76682b7}{identifier} ()
+\begin{DoxyCompactList}\small\item\em Returns the identifier of this entry. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a1da01bf3a1dc4f76159ee3c1a7ee2fbe}{num\+Involved\+Processes} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of processes involved in this entry. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a41f3b2e873b8f0e650cab149bbe4f129}{get\+Msg\+Buffers} ()
+\begin{DoxyCompactList}\small\item\em Returns the message channels stored in this entry. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}\mbox{[}$\,$\mbox{]} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a9ff5196638717b52fd4944aa2e57af48}{get\+All\+Assertions} ()
+\begin{DoxyCompactList}\small\item\em Returns all stored assertion predicates (one for each process) in this entry. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry}{Immutable\+Collective\+Snapshots\+Entry} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a28e4eebde6d0acc743f1ad11705057b9}{insert\+Mono\+State} (int place, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}{Immutable\+Mono\+State} mono\+State, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} assertion)
+\begin{DoxyCompactList}\small\item\em Insert a new \hyperlink{}{Immutable\+Mono\+State} belonging to a D\+I\+F\+F\+E\+R\+E\+N\+T (if the process is existed, an error will be reported) process. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a10b8e1a775b3a8d008cd451d98791ec2}{}Iterable$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable}, Symbolic\+Expression $>$ $>$ {\bfseries pickup\+Joint\+Variables} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a10b8e1a775b3a8d008cd451d98791ec2}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a15270faf469ffe1639ebdc382ff53a7c}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry}{Immutable\+Collective\+Snapshots\+Entry} {\bfseries deliver\+Joint\+Variables} (List$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable}, Symbolic\+Expression $>$$>$ vars)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a15270faf469ffe1639ebdc382ff53a7c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents one complete entry for the snapshots queue used in collective assertion checking. 
+
+Once a entry created, it stores the information of the communicator and corresponds to the communicator.
+
+Every process will add themselves into one entry once they reach the corresponding \char`\"{}collective assertion\char`\"{}.
+
+\begin{DoxyAuthor}{Author}
+ziqing 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_add21e111c0a6e5025967836b8a7d0b3e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!contract\+Kind@{contract\+Kind}}
+\index{contract\+Kind@{contract\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{contract\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}Contract\+Kind edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+contract\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_add21e111c0a6e5025967836b8a7d0b3e}
+
+
+The \hyperlink{}{Contract\+Clause\+Kind} associates to this entry. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_a5542e8b986b9338baa22bd4c09338067}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a9ff5196638717b52fd4944aa2e57af48}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!get\+All\+Assertions@{get\+All\+Assertions}}
+\index{get\+All\+Assertions@{get\+All\+Assertions}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{get\+All\+Assertions}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+get\+All\+Assertions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a9ff5196638717b52fd4944aa2e57af48}
+
+
+Returns all stored assertion predicates (one for each process) in this entry. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_a0b6c8686d4626dc545a7b09c20ab89b6}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a41f3b2e873b8f0e650cab149bbe4f129}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!get\+Msg\+Buffers@{get\+Msg\+Buffers}}
+\index{get\+Msg\+Buffers@{get\+Msg\+Buffers}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{get\+Msg\+Buffers}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+get\+Msg\+Buffers (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a41f3b2e873b8f0e650cab149bbe4f129}
+
+
+Returns the message channels stored in this entry. 
+
+\begin{DoxyReturn}{Returns}
+An array of length 2 of message buffers. one for \char`\"{}p2p\char`\"{} and the other for \char`\"{}col\char`\"{} 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_a7c29ffb4b29955e864a2633903bc68b8}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a5d9af6924cd4b16e13529bd8e76682b7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!identifier@{identifier}}
+\index{identifier@{identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{identifier}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a5d9af6924cd4b16e13529bd8e76682b7}
+
+
+Returns the identifier of this entry. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_a6da2ebf97e140b9ea7f46b57a85bca50}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a28e4eebde6d0acc743f1ad11705057b9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!insert\+Mono\+State@{insert\+Mono\+State}}
+\index{insert\+Mono\+State@{insert\+Mono\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{insert\+Mono\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+Collective\+Snapshots\+Entry} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+insert\+Mono\+State (
+\begin{DoxyParamCaption}
+\item[{int}]{place, }
+\item[{{\bf Immutable\+Mono\+State}}]{mono\+State, }
+\item[{{\bf Expression}}]{assertion}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a28e4eebde6d0acc743f1ad11705057b9}
+
+
+Insert a new \hyperlink{}{Immutable\+Mono\+State} belonging to a D\+I\+F\+F\+E\+R\+E\+N\+T (if the process is existed, an error will be reported) process. 
+
+Returns the number of the stored \hyperlink{}{Immutable\+Mono\+State} after the insertion. If the insertion completes the entry, it changes the result which will be returned by \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a75e191e9b1d918e414acdcd07099b88d}{is\+Complete()}.
+
+The P\+I\+D of the Mono\+State must be in \hyperlink{}{involved\+Processes()} and never be recorded i.\+e. \hyperlink{}{is\+Recorded(\+P\+I\+D)} returns false and \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a75e191e9b1d918e414acdcd07099b88d}{is\+Complete()} returns false. 
+\begin{DoxyParams}{Parameters}
+{\em mono\+State} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_a5655fbc939132a821d75c6865ddbea25}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a75e191e9b1d918e414acdcd07099b88d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!is\+Complete@{is\+Complete}}
+\index{is\+Complete@{is\+Complete}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{is\+Complete}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+is\+Complete (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a75e191e9b1d918e414acdcd07099b88d}
+
+
+If the entry is complete and can be dequeue for evaluation. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_ac2b547b99129f44c114a81b36dd3a29b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a8e33c119feea077a9ab7d618d1293f79}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!is\+Recorded@{is\+Recorded}}
+\index{is\+Recorded@{is\+Recorded}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{is\+Recorded}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+is\+Recorded (
+\begin{DoxyParamCaption}
+\item[{int}]{place}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a8e33c119feea077a9ab7d618d1293f79}
+
+
+If the process is recorded. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em place} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_a95893a825bcf6ffb7786033f45e47d62}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a1da01bf3a1dc4f76159ee3c1a7ee2fbe}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!num\+Involved\+Processes@{num\+Involved\+Processes}}
+\index{num\+Involved\+Processes@{num\+Involved\+Processes}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{num\+Involved\+Processes}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+num\+Involved\+Processes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a1da01bf3a1dc4f76159ee3c1a7ee2fbe}
+
+
+Returns the number of processes involved in this entry. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_a7a120c066e24fc721640b3a0a2c36156}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a5e46ad6c98a1c3d0e1da612ba72f6ca6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}!num\+Mono\+States@{num\+Mono\+States}}
+\index{num\+Mono\+States@{num\+Mono\+States}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::\+I\+F\+::\+Collective\+Snapshots\+Entry}}
+\subsubsection[{num\+Mono\+States}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+Collective\+Snapshots\+Entry.\+num\+Mono\+States (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a5e46ad6c98a1c3d0e1da612ba72f6ca6}
+
+
+Returns the number of \hyperlink{}{Immutable\+Mono\+State} in this entry. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry_a18932f8001bcf4b4bc1534d7483e90a1}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Collective\+Snapshots\+Entry}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/state/\+I\+F/Collective\+Snapshots\+Entry.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,25 @@
+In the examples, those examples will be translating into same thing no matter their vars are quantified or not.
+
+example 1:
+
+a/b=3
+will be translated to 
+Exists q1, r1 : (b * q1 + r1 = a and |r1| < |b| and (sign(a) = sign(r1) || r1 = 0) and q1 = 3)
+
+example2:
+
+a/b + c%d = 5
+will be translated into
+
+Exists q1, r1, q2, r2: (
+q1*b+r1 = a and |r1| < |b| and ( sign(a) = sign(r1) || r1 = 0 )   //this is the translation of a/b
+and q2*d + r2 = c and |r2| < |d| and ( sign(c) = sign(r2) || r2 = 0) // this is the translation of c%d
+and q1 + r2 = 5      // this is the translation of the whole boolean expression
+)
+
+
+________________________________________________________________
+my basic idea is that:
+1. when encounter a divide or modulo (a/b), you will get two things: constraints (b*q + r =a) and value of the expression (q).
+2. when encounter a '+' or '-' or '*' or ..., the result the which is not a boolean expression (like the result of a+b is not a boolean), you will just merge the constraints and pop the value of the expression and the constraints up to the stack.
+3.when you encounter a '=' or '<' or '<=', the result of which is a booleanExpression. you will generate a Exists expression just like those examples. Because we only conside expression within Forall and Exist, so finally we will reach to a BooleanExpression.

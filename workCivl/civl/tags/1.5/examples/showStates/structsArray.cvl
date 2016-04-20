@@ -1,0 +1,20 @@
+typedef struct Point{
+  double x;
+  double y;
+} Point;
+
+typedef struct Line{
+  Point start;
+  Point end;
+} Line;
+
+void main(){
+  Point p0={0,0}, p1={1,1}, p2={2,2};
+  Line l0={p0, p1}, l1={p1,p2}, l2={p2, p0};
+  Line lines[3];
+
+  lines[0]=l0;
+  lines[1]=l1;
+  lines[2]=l2;
+}
+

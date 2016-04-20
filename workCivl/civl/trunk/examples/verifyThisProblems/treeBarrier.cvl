@@ -1,0 +1,195 @@
+/* VerifyThis 2016 - Challenge 3: Static Tree Barriers
+ * https://docs.google.com/document/d/1OvS5b7qXW-xXW1M36JTmSsrc7sjBV-Ni0IO6bKX7yfk/edit
+ * 
+ * Consider a multi-threaded program execution. In each state with N threads,
+ * we assume we have given a binary tree with N nodes. Each node corresponds
+ * to exactly one thread. In the context of this challenge, we do not 
+ * consider thread creation and termination; the number of nodes and their
+ * position in the tree is assumed to be immutable.  Each node has references
+ * to at most two children, and each node except for the root has a reference
+ * to its parent. Moreover, each node stores a boolean value sense and an
+ * integer version. 
+ * The tree described above represents a tree barrier that can be used for
+ * thread synchronization.
+ * Synchronization is performed in two phases. In the synchronization phase,
+ * each thread that calls barrier() on its node waits until all threads have
+ * called barrier. The sense field is used to propagate information about
+ * waiting threads up in the tree. When all threads have called barrier(),
+ * the propagation reaches the root of the tree and initiates the wake-up
+ * phase, which proceeds top-down.
+ * Assume a state in which sense is false and version is zero in all nodes.
+ * Assume further that no thread is currently executing barrier() and that
+ * threads invoke barrier() only on their nodes. The number of threads (and,
+ * thus, the number of nodes in the tree) is constant, but unknown.
+ *
+ * Tasks. Prove that:
+ * (1) the following invariant holds in all states:
+ *     If n.sense is true for any node n then m.sense is true for all nodes
+ *     m in the subtree rooted in n.
+ * (2) for any call n.barrier(), if the call terminates then there was a 
+ *     state during the execution of the method where all nodes had the
+ *     same version.
+ *
+ * This solution only verifies Task (2).
+ */
+#include <civlc.cvh>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdio.h>
+
+// the number of nodes... (tried with N=1,2,3)
+$input int N = 3; // N=4 took 115 seconds
+
+typedef struct _node {
+  $proc p;
+  struct _node *left, *right;
+  struct _node *parent;
+  _Bool sense;
+  int version;
+} *Node;
+
+Node theNodes[N];
+int count = 0;
+
+// check all sensens in u and descendants are true...
+void checkSensesTrue(Node u) {
+  if (u != NULL) {
+    $assert(u->sense);
+    checkSensesTrue(u->left);
+    checkSensesTrue(u->right);
+  }
+}
+
+// the function a thread runs...
+void thread(Node myNode) {
+
+  // the barrier function
+  void barrier() {
+    $assert(!myNode->sense);
+
+    // synchronization phase
+    if (myNode->left != NULL)
+      $when (myNode->left->sense);
+    if (myNode->right != NULL)
+      $when (myNode->right->sense);
+
+    $atomic {
+      myNode->sense = true;
+      checkSensesTrue(myNode);
+      myNode->version++;
+      if (myNode->parent == NULL) {
+	for (int i=0; i<N; i++)
+	  $assert(theNodes[i]->version == myNode->version);
+      }
+    }
+
+
+    // wake-up phase
+    if (myNode->parent == NULL) {
+      myNode->sense = false;
+    }
+
+    $when (!myNode->sense);
+    if (myNode->left != NULL)
+      myNode->left->sense = false;
+    if (myNode->right != NULL)
+      myNode->right->sense = false;
+
+    $assert(!myNode->sense);
+  }
+
+  //myNode->p = $self;
+  // run around barrier 3 times...
+  for (int i=0; i<3; i++) {
+    barrier();
+  }
+}
+
+
+Node makeTree(Node left, Node right) {
+  Node result = (Node)malloc(sizeof(struct _node));
+
+  result->left = left;
+  result->right = right;
+  result->sense = false;
+  result->version = 0;
+  if (left != NULL)
+    left->parent = result;
+  if (right != NULL)
+    right->parent = result;
+  result->parent = NULL;
+  return result;
+}
+
+
+// create an arbitrary tree with numNodes nodes...
+Node makeArbitraryTree(int numNodes) {
+  printf("Entering makeArbitraryTree: numNodes = %d\n", numNodes);
+  if (numNodes == 0)
+    return NULL;
+
+  // how many nodes in left sub-tree?
+  // nondeterministically choose integer in range 0..numNodes-1.
+  // total number of nodes = leftSize + rightSize + 1
+
+  int leftSize = $choose_int(numNodes);
+
+  printf("leftSize = %d\n", leftSize);
+  $assert(leftSize >= 0);
+  $assert(leftSize < numNodes);
+
+  int rightSize = numNodes - (leftSize + 1);
+
+  printf("rightSize = %d\n", rightSize);
+  printf("numNodes = %d\n", numNodes);
+  printf("\n");
+
+  Node leftTree = makeArbitraryTree(leftSize);
+  Node rightTree = makeArbitraryTree(numNodes - leftSize - 1);
+  Node result = makeTree(leftTree, rightTree);
+
+  theNodes[count] = result;
+  count++;
+  return result;
+}
+
+// compute number of nodes in tree...
+int sizeOfTree(Node tree) {
+  if (tree == NULL)
+    return 0;
+
+  int result = 1 + sizeOfTree(tree->left) + sizeOfTree(tree->right);
+
+  return result;  
+}
+
+// free all nodes in the tree...
+void freeTree(Node tree) {
+  if (tree != NULL) {
+    freeTree(tree->left);
+    freeTree(tree->right);
+    free(tree);
+  }
+}
+
+
+int main() {
+  Node theTree = makeArbitraryTree(N);
+
+  $atomic {
+    // sanity check...
+    $assert(sizeOfTree(theTree) == N);
+    $assert(count == N);
+    for (int i=0; i<N; i++)
+      $assert(theNodes[i] != NULL);
+    for (int i=0; i<N; i++) {
+      $proc p = $spawn thread(theNodes[i]);
+
+      theNodes[i]->p = p;
+    }
+  }
+  // now the procs are running, wait for them all to terminate...
+  for (int i=0; i<N; i++)
+    $wait(theNodes[i]->p);
+  freeTree(theTree);
+}

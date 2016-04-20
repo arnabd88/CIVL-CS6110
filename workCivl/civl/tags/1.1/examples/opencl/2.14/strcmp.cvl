@@ -1,0 +1,13 @@
+#include <string.h>
+#include <stdio.h>
+
+
+int main(int argc, char** argv)
+{
+  char * first = "abcd";
+  char * second = "abcd";
+  
+  int x = strcmp(first, second);
+  printf("%d", x);
+  return 0;
+}

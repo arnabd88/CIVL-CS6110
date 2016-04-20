@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OrdinaryEntityInfo.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.program.common</a> &gt; <span class="el_source">OrdinaryEntityInfo.java</span></div><h1>OrdinaryEntityInfo.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.program.common;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.OrdinaryEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Typedef;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.EnumerationTypeNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.EnumerationType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Enumerator;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.util.IF.Pair;
+
+/**
+ * &lt;p&gt;
+ * Records information about a set of ordinary entities from different
+ * translation units that have the same name. Ordinary entities have names in
+ * the ordinary name space; this includes variables, functions, typedefs, and
+ * enumerators, but not the tags used to name structs, unions, and enumerations.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * All of the entities must exist in the file scope of the translation unit.
+ * Also, at most one entity can be associated to each translation unit (since
+ * there is at most one entity in that unit's global scope ordinary namespace
+ * with a given name).
+ * &lt;/p&gt;
+ * 
+ * @author siegel
+ * 
+ */
+public class OrdinaryEntityInfo extends EntityInfo {
+
+	/**
+	 * The entities with external linkage. This is a list of translation unit
+	 * ID-entity pairs.
+	 */
+<span class="nc" id="L41">	private ArrayList&lt;Pair&lt;Integer, OrdinaryEntity&gt;&gt; externals = new ArrayList&lt;&gt;();</span>
+
+	/**
+	 * The entities with internal or no linkage. This is a list of translation
+	 * unit ID-entity pairs.
+	 */
+<span class="nc" id="L47">	private ArrayList&lt;Pair&lt;Integer, OrdinaryEntity&gt;&gt; internals = new ArrayList&lt;&gt;();</span>
+
+	/**
+	 * Constructs new info object with given name (which will be the name of all
+	 * the entities associated to this object).
+	 * 
+	 * @param name
+	 *            the name of entities
+	 * @param numTranslationUnits
+	 *            the total number of translation units in the system being
+	 *            analyzed (not all of these necessarily have an entity with
+	 *            this name)
+	 */
+	public OrdinaryEntityInfo(String name, int numTranslationUnits) {
+<span class="nc" id="L61">		super(name, numTranslationUnits);</span>
+<span class="nc" id="L62">	}</span>
+
+	@Override
+	protected void addEntity(int tuid, ProgramEntity entity) {
+<span class="nc" id="L66">		ProgramEntity.LinkageKind kind = entity.getLinkage();</span>
+<span class="nc" id="L67">		Pair&lt;Integer, OrdinaryEntity&gt; pair = new Pair&lt;&gt;(tuid,</span>
+<span class="nc" id="L68">				(OrdinaryEntity) entity);</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (kind == ProgramEntity.LinkageKind.EXTERNAL)</span>
+<span class="nc" id="L71">			externals.add(pair);</span>
+		else
+<span class="nc" id="L73">			internals.add(pair);</span>
+<span class="nc" id="L74">	}</span>
+
+	/**
+	 * &lt;p&gt;
+	 * Is it the case that all of the entities are typedefs to types that are
+	 * all compatible with each other? If so, you only need one typedef.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Note that the result returned by this method may change if the types are
+	 * changed. This could happen if an incomplete tagged type is completed, for
+	 * example. That could happen if an incomplete type is deemed to be
+	 * equivalent to a complete one in another translation and merged with it.
+	 * Hence it is recommended that First, complete all tagged types that are
+	 * incomplete but are deemed to be consistent. Do that before doing this.
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @return &lt;code&gt;true&lt;/code&gt; iff all of the entities associated to this info
+	 *         object are typedefs for equivalent types
+	 */
+	private boolean areEquivTypedefs() {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (!externals.isEmpty())</span>
+<span class="nc" id="L97">			return false;</span>
+
+<span class="nc" id="L99">		int n = internals.size();</span>
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (n == 0)</span>
+<span class="nc" id="L102">			return false;</span>
+
+<span class="nc" id="L104">		Pair&lt;Integer, OrdinaryEntity&gt; first = internals.get(0);</span>
+<span class="nc" id="L105">		Entity entity0 = first.right;</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (!(entity0 instanceof Typedef))</span>
+<span class="nc" id="L108">			return false;</span>
+
+<span class="nc" id="L110">		Type type0 = ((Typedef) entity0).getType();</span>
+
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		for (int i = 1; i &lt; n; i++) {</span>
+<span class="nc" id="L113">			Pair&lt;Integer, OrdinaryEntity&gt; pair = internals.get(i);</span>
+<span class="nc" id="L114">			Entity entity = pair.right;</span>
+
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (!(entity instanceof Typedef))</span>
+<span class="nc" id="L117">				return false;</span>
+
+<span class="nc" id="L119">			Type type = ((Typedef) entity).getType();</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (!(type0.equivalentTo(type)))</span>
+<span class="nc" id="L122">				return false;</span>
+		}
+<span class="nc" id="L124">		return true;</span>
+	}
+
+	// if all of these are enumerators from same
+	// complete enumeration class, nothing to do.
+	// Otherwise:
+
+	// get entity e_i. if e_i is an enumerator,
+	// get its enumeration E.
+	// Get the rep tuid j of the class
+	// containing i in E; rename to newName(j). Else, rename to
+	// newName(i).
+
+	/**
+	 * Returns an array of length internals.size(); in position i will be the
+	 * new ID number to associate to the entity internals[i]. The new ID number
+	 * will be used to issue a new name to the entity. The exception is if all
+	 * are assigned the same ID number, then there is no need to rename
+	 * anything.
+	 * 
+	 * @param enumMergeMap
+	 *            a map detailing which enumeration types have been merged.
+	 *            Read, not modified, by this method
+	 * 
+	 * @return array giving new ID number for each entity internals[i]
+	 */
+	private int[] computeNewIDs(Map&lt;EnumerationType, Integer&gt; enumMergeMap) {
+<span class="nc" id="L151">		int numInternals = internals.size();</span>
+<span class="nc" id="L152">		int[] newIDs = new int[numInternals];</span>
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (int i = 0; i &lt; numInternals; i++) {</span>
+<span class="nc" id="L155">			Pair&lt;Integer, OrdinaryEntity&gt; pair = internals.get(i);</span>
+<span class="nc" id="L156">			OrdinaryEntity entity = pair.right;</span>
+
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (entity instanceof Enumerator) {</span>
+<span class="nc" id="L159">				EnumerationType enumeration = ((Enumerator) entity).getType();</span>
+<span class="nc" id="L160">				int newID = enumMergeMap.get(enumeration);</span>
+
+<span class="nc" id="L162">				newIDs[i] = newID;</span>
+<span class="nc" id="L163">			} else {</span>
+<span class="nc" id="L164">				newIDs[i] = i;</span>
+			}
+		}
+<span class="nc" id="L167">		return newIDs;</span>
+	}
+
+	private boolean isConstant(int[] array) {
+<span class="nc" id="L171">		int length = array.length;</span>
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (length &gt; 0) {</span>
+<span class="nc" id="L174">			int first = array[0];</span>
+
+<span class="nc bnc" id="L176" title="All 2 branches missed.">			for (int i = 1; i &lt; length; i++)</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (array[i] != first)</span>
+<span class="nc" id="L178">					return false;</span>
+		}
+<span class="nc" id="L180">		return true;</span>
+	}
+
+	public void computeTypedefRemovals(Plan[] plan,
+			Map&lt;EnumerationType, Integer&gt; enumMergeMap) {
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (getNumEntities() &gt; 1) {</span>
+<span class="nc" id="L186">			int numInternals = internals.size();</span>
+
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			if (areEquivTypedefs()) {</span>
+<span class="nc" id="L189">				Pair&lt;Integer, OrdinaryEntity&gt; pair0 = internals.get(0);</span>
+<span class="nc" id="L190">				Typedef typedef0 = (Typedef) pair0.right;</span>
+<span class="nc" id="L191">				int tuid0 = pair0.left;</span>
+
+<span class="nc bnc" id="L193" title="All 2 branches missed.">				for (int i = 1; i &lt; numInternals; i++) {</span>
+<span class="nc" id="L194">					Pair&lt;Integer, OrdinaryEntity&gt; pair = internals.get(i);</span>
+
+<span class="nc" id="L196">					plan[pair.left].addEntityRemoveAction(pair.right);</span>
+				}
+<span class="nc bnc" id="L198" title="All 2 branches missed.">				if (typedef0.getType().kind() == TypeKind.ENUMERATION) {</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">					for (Pair&lt;Integer, OrdinaryEntity&gt; pair : internals) {</span>
+<span class="nc" id="L200">						Typedef typedef = (Typedef) pair.right;</span>
+<span class="nc" id="L201">						EnumerationTypeNode enumTypeNode = (EnumerationTypeNode) typedef</span>
+<span class="nc" id="L202">								.getDefinition().getTypeNode();</span>
+<span class="nc" id="L203">						EnumerationType enumeration = enumTypeNode.getType();</span>
+
+<span class="nc" id="L205">						enumMergeMap.put(enumeration, tuid0);</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L210">	}</span>
+
+	public void computeRenamings(Plan[] plan,
+			Map&lt;EnumerationType, Integer&gt; enumMergeMap) {
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (getNumEntities() &gt; 1) {</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">			if (areEquivTypedefs()) {</span>
+				// already dealt with
+			} else {
+				// rename all internal instances to unique names...
+<span class="nc" id="L219">				int[] newIDs = computeNewIDs(enumMergeMap);</span>
+
+<span class="nc bnc" id="L221" title="All 4 branches missed.">				if (externals.isEmpty() &amp;&amp; isConstant(newIDs)) {</span>
+					// no renaming necessary
+				} else {
+<span class="nc" id="L224">					int numInternals = internals.size();</span>
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">					for (int i = 0; i &lt; numInternals; i++) {</span>
+<span class="nc" id="L227">						Pair&lt;Integer, OrdinaryEntity&gt; pair = internals.get(i);</span>
+<span class="nc" id="L228">						int tuid = pair.left;</span>
+
+<span class="nc" id="L230">						plan[tuid].addRenameAction(pair.right,</span>
+<span class="nc" id="L231">								newName(newIDs[i]));</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L236">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

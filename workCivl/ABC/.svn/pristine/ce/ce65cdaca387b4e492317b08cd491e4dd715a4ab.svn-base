@@ -1,0 +1,3 @@
+#define f(x) x
+f(1) // a macro invocation
+f(2) // a macro invocation

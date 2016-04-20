@@ -1,0 +1,527 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement}}
+
+
+The parent of all statements.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_1_1StatementKind}{Statement\+Kind}
+\begin{DoxyCompactList}\small\item\em Different kinds of statements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad84bcec9f2c570e8e22c23583653469b}{source} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a7cddc694ebc2e1045d444999961646e9}{target} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ac7629b4d6ad28f9821c0ae83a0ad76ba}{guard} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_acf079d1a7cedac4d48c19a3cd9a8b513}{model} ()
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8e8e886ad86a6f5b77872a5eed3dd68b}{set\+Source} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad84bcec9f2c570e8e22c23583653469b}{source})
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2f8ede0cc1f280d02d1d122a2b211841}{set\+Target} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a7cddc694ebc2e1045d444999961646e9}{target})
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a6265d3776f4469fcea28aa59778d03de}{set\+Target\+Temp} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a7cddc694ebc2e1045d444999961646e9}{target})
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2acef2285f15062789abf74419581844}{set\+Guard} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ac7629b4d6ad28f9821c0ae83a0ad76ba}{guard})
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a06a90fc079bcc1cbcfcfa7289f6e7bda}{set\+Model} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_acf079d1a7cedac4d48c19a3cd9a8b513}{model})
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a5961b8cdc3c7fe7a67697dbb4334c964}{statement\+Scope} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a1c9253222d6309bbe5696fc2fd63995b}{has\+Derefs} ()
+\begin{DoxyCompactList}\small\item\em return true iff the statement has at least one dereferences \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2e47f0ce564fc1e70290ac6c3ed700b6}{}void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2e47f0ce564fc1e70290ac6c3ed700b6}{calculate\+Derefs} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2e47f0ce564fc1e70290ac6c3ed700b6}
+
+\begin{DoxyCompactList}\small\item\em Calculate if this statement contains any dereference expression. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a957515831f12970b737db375e93168c6}{purely\+Local\+Analysis\+Of\+Variables} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} func\+Scope)
+\begin{DoxyCompactList}\small\item\em if an \&(var) is encountered, then var is considered as no purely local if a statement inside a function with fscope is accessing some variable that is declared in the scope vscope such that fscope.\+is\+Descendant\+Of(vscope), then that variable is not purely local \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a774094d9a24385d4858513932745b67c}{is\+Purely\+Local} ()
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8393b2b32538e6535bea748863245795}{}void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8393b2b32538e6535bea748863245795}{purely\+Local\+Analysis} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8393b2b32538e6535bea748863245795}
+
+\begin{DoxyCompactList}\small\item\em Analyze if this statement accesses any non-\/purely-\/local variables. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad0a6ccab72e2f14ad33f419a30a64151}{replace\+With} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1ConditionalExpression}{Conditional\+Expression} old\+Expression, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1VariableExpression}{Variable\+Expression} new\+Expression)
+\begin{DoxyCompactList}\small\item\em Modify this statement including its guard by replacing a certain conditional expression with a variable expression, used when translating away conditional expression and a temporal variable is introduced. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a079bd60264722bf7f9ed3d8ba1b0e188}{replace\+With} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1ConditionalExpression}{Conditional\+Expression} old\+Expression, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} new\+Expression)
+\begin{DoxyCompactList}\small\item\em Return a new statement by copying this statement and modifying it as well as its guard by replacing a certain conditional expression with a expression, used when translating away conditional expression W\+I\+T\+H\+O\+U\+T introducing temporary variables. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a57ff1197dacf28ac33b097dc294418dc}{variable\+Addressed\+Of} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Obtain the set of variables visible from a certain scope that are possible to be written in the future. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_abe668e1bcb4297c9e6e7f8f65aeecfc2}{variable\+Addressed\+Of} ()
+\begin{DoxyCompactList}\small\item\em Obtain the set of variables whose addresses are referenced. \end{DoxyCompactList}\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_1_1StatementKind}{Statement\+Kind} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a29ddc5542644ee105de4b551bdee6147}{statement\+Kind} ()
+\begin{DoxyCompactList}\small\item\em Obtain the kind of the statement. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2b44869c836185f39d950c6f705f416d}{}String {\bfseries to\+Step\+String} (\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_1_1AtomicKind}{Atomic\+Kind} atomic\+Kind, int atom\+Count, boolean atomic\+Lock\+Var\+Changed)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2b44869c836185f39d950c6f705f416d}
+
+\item 
+String \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ae52f55b2c6b8eb5d4282374fbedbdfd8}{location\+Step\+String} ()
+\begin{DoxyCompactList}\small\item\em Get the string representation in the form of\+: source location id -\/$>$ target location id e.\+g. \end{DoxyCompactList}\item 
+String \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ae5465d434a76ee46161035029e89b21d}{summary\+Of\+Source} ()
+\begin{DoxyCompactList}\small\item\em The summary of the source code information of the statement. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad6826b5b23561576059c85701b7a1319}{lowest\+Scope} ()
+\begin{DoxyCompactList}\small\item\em Obtains the lowest scope of expression accessed by this statement. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a623b72ebf696f3b8a173b08ded390493}{}void {\bfseries calculate\+Constant\+Value} (Symbolic\+Universe universe)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a623b72ebf696f3b8a173b08ded390493}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a150f04e97c91aecd23dd133621d5dc4d}{}void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a150f04e97c91aecd23dd133621d5dc4d}{reached} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a150f04e97c91aecd23dd133621d5dc4d}
+
+\begin{DoxyCompactList}\small\item\em Mark this statement as reached. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8d994da12afc904464f92ca73ac9f682}{reachable} ()
+\begin{DoxyCompactList}\small\item\em Returns true if the statement has been reached at least once during the verification. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a52298e0fa5a8d8f9e9aa95ec425ee951}{}void {\bfseries set\+C\+I\+V\+L\+Source} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad84bcec9f2c570e8e22c23583653469b}{source})\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a52298e0fa5a8d8f9e9aa95ec425ee951}
+
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ac2af8fe99442e5174b1a13c786981a4d}{contains\+Here} ()
+\begin{DoxyCompactList}\small\item\em checks if the statement (including its guard) contains the constant \$here. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The parent of all statements. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ac2af8fe99442e5174b1a13c786981a4d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!contains\+Here@{contains\+Here}}
+\index{contains\+Here@{contains\+Here}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{contains\+Here}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+contains\+Here (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ac2af8fe99442e5174b1a13c786981a4d}
+
+
+checks if the statement (including its guard) contains the constant \$here. 
+
+e.\+g. (a$>$0\+: s=\$here) would return true;
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a34c65cda37f56ac2a602dae638fa2f07}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ac7629b4d6ad28f9821c0ae83a0ad76ba}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!guard@{guard}}
+\index{guard@{guard}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{guard}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+guard (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ac7629b4d6ad28f9821c0ae83a0ad76ba}
+\begin{DoxyReturn}{Returns}
+The boolean-\/valued guard expression for this statement. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_afd799466de9aca0c89dbbd5f43d3d251}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a1c9253222d6309bbe5696fc2fd63995b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!has\+Derefs@{has\+Derefs}}
+\index{has\+Derefs@{has\+Derefs}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{has\+Derefs}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+has\+Derefs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a1c9253222d6309bbe5696fc2fd63995b}
+
+
+return true iff the statement has at least one dereferences 
+
+\begin{DoxyReturn}{Returns}
+True of False 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a542858551fd806e59221e80555d4473e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a774094d9a24385d4858513932745b67c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!is\+Purely\+Local@{is\+Purely\+Local}}
+\index{is\+Purely\+Local@{is\+Purely\+Local}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{is\+Purely\+Local}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+is\+Purely\+Local (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a774094d9a24385d4858513932745b67c}
+\begin{DoxyReturn}{Returns}
+True iff the statement accesses only purely-\/local variables 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a3e58815500c3246aa59b1a4f7591e666}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ae52f55b2c6b8eb5d4282374fbedbdfd8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!location\+Step\+String@{location\+Step\+String}}
+\index{location\+Step\+String@{location\+Step\+String}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{location\+Step\+String}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+location\+Step\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ae52f55b2c6b8eb5d4282374fbedbdfd8}
+
+
+Get the string representation in the form of\+: source location id -\/$>$ target location id e.\+g. 
+
+3 -\/$>$ 8
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a132fa8eafb7bc855db5f593fc1466b8f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a9e34b76b970547cd88d138c06fd2d560}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad6826b5b23561576059c85701b7a1319}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!lowest\+Scope@{lowest\+Scope}}
+\index{lowest\+Scope@{lowest\+Scope}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{lowest\+Scope}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scope} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+lowest\+Scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad6826b5b23561576059c85701b7a1319}
+
+
+Obtains the lowest scope of expression accessed by this statement. 
+
+\begin{DoxyReturn}{Returns}
+the lowest scope of expression accessed by this statement. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a461d80a11f0127415f6fd9c88bb765e3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_acf079d1a7cedac4d48c19a3cd9a8b513}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!model@{model}}
+\index{model@{model}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_acf079d1a7cedac4d48c19a3cd9a8b513}
+\begin{DoxyReturn}{Returns}
+The model to which this statement belongs. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a0afeefdbd8fa08ab87a0cef2f52ad5b7}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a957515831f12970b737db375e93168c6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!purely\+Local\+Analysis\+Of\+Variables@{purely\+Local\+Analysis\+Of\+Variables}}
+\index{purely\+Local\+Analysis\+Of\+Variables@{purely\+Local\+Analysis\+Of\+Variables}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{purely\+Local\+Analysis\+Of\+Variables}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+purely\+Local\+Analysis\+Of\+Variables (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{func\+Scope}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a957515831f12970b737db375e93168c6}
+
+
+if an \&(var) is encountered, then var is considered as no purely local if a statement inside a function with fscope is accessing some variable that is declared in the scope vscope such that fscope.\+is\+Descendant\+Of(vscope), then that variable is not purely local 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func\+Scope} & the function scope of the statement \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a5d9014e6ab63bf4e8f834671afa349bb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a091557a21f0efb694b14a93c74dfac97}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a29c11fc11007011ee4d4851161a95862}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonReturnStatement_a293fe2d070986f2dfd42471b28e45d68}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Return\+Statement}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAssignStatement_aca8a6dd10293847b179279496d61bf83}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Assign\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8d994da12afc904464f92ca73ac9f682}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!reachable@{reachable}}
+\index{reachable@{reachable}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{reachable}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+reachable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8d994da12afc904464f92ca73ac9f682}
+
+
+Returns true if the statement has been reached at least once during the verification. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_ac426607515a1d6807dcc41371a04bd73}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad0a6ccab72e2f14ad33f419a30a64151}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!replace\+With@{replace\+With}}
+\index{replace\+With@{replace\+With}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{replace\+With}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+replace\+With (
+\begin{DoxyParamCaption}
+\item[{{\bf Conditional\+Expression}}]{old\+Expression, }
+\item[{{\bf Variable\+Expression}}]{new\+Expression}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad0a6ccab72e2f14ad33f419a30a64151}
+
+
+Modify this statement including its guard by replacing a certain conditional expression with a variable expression, used when translating away conditional expression and a temporal variable is introduced. 
+
+~\newline
+ For example, {\ttfamily x = a ? b \+: c} will be translated into {\ttfamily  if(a) v0 = b; else v0 = c; x = v0; }~\newline
+ Another example, {\ttfamily  \$when(a?b\+:c) x = k;} will be translated into {\ttfamily  if(a) v0 = b; else v0 = c; \$when(v0) x = k; }
+
+
+\begin{DoxyParams}{Parameters}
+{\em old\+Expression} & The conditional expression to be cleared. \\
+\hline
+{\em new\+Expression} & The variable expression of the temporal variable for the conditional expression. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a1a118e5f817744bbd084db23f06e9f61}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a5e8ca532838b49a10c6f23a87b2bf168}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a9b00c60d1a6baa20d37dd84325689362}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAssignStatement_a18926fbb79d98128381f514aea009534}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Assign\+Statement}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonReturnStatement_a7c7864e80b26c47300ebb4d58fb5d03e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Return\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a079bd60264722bf7f9ed3d8ba1b0e188}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!replace\+With@{replace\+With}}
+\index{replace\+With@{replace\+With}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{replace\+With}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+replace\+With (
+\begin{DoxyParamCaption}
+\item[{{\bf Conditional\+Expression}}]{old\+Expression, }
+\item[{{\bf Expression}}]{new\+Expression}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a079bd60264722bf7f9ed3d8ba1b0e188}
+
+
+Return a new statement by copying this statement and modifying it as well as its guard by replacing a certain conditional expression with a expression, used when translating away conditional expression W\+I\+T\+H\+O\+U\+T introducing temporary variables. 
+
+The original statement can\textquotesingle{}t be modified, because it needs to be used twice to generate the if branch statement and the else branch statement.~\newline
+ For example, {\ttfamily x = a ? b \+: c} will be translated into {\ttfamily  if(a) x = b; else x = c; }~\newline
+ Another example, {\ttfamily  \$when(a?b\+:c) x = k;} will be translated into {\ttfamily  if(a) \$when(b) x=k; else \$when(c) x=k; }
+
+
+\begin{DoxyParams}{Parameters}
+{\em old\+Expression} & The conditional expression to be cleared. \\
+\hline
+{\em new\+Expression} & The new expression to take place of the conditional expression. Usually, it is one of the choice expressions of the conditional expression. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new statement without the conditional expression 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a3f0aaca4760ec5a6272144296da68fc9}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af2f8ca342a321307710f9ef6666f5989}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAssignStatement_a0ce97b22dc32f26695c0f61c35866804}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Assign\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonReturnStatement_adff65fb86e80ac228ad35410dbdbfea5}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Return\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement_ab378f874c2465b8a9bc15a7c32e1a622}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Noop\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_abf644f2f3467ac50c9007de00dd370be}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonContractVerifyStatement_ae81bb4c54bb9ef0ba9d2fa9ce47fb92f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Contract\+Verify\+Statement}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlForEnterStatement_ac668053596bce9730daa574249253978}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+For\+Enter\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2acef2285f15062789abf74419581844}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!set\+Guard@{set\+Guard}}
+\index{set\+Guard@{set\+Guard}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{set\+Guard}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+set\+Guard (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression}}]{guard}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2acef2285f15062789abf74419581844}
+
+\begin{DoxyParams}{Parameters}
+{\em guard} & the guard to set \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a9daea7bd078663d7c6087c188dd16934}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a06a90fc079bcc1cbcfcfa7289f6e7bda}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!set\+Model@{set\+Model}}
+\index{set\+Model@{set\+Model}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{set\+Model}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+set\+Model (
+\begin{DoxyParamCaption}
+\item[{{\bf Model}}]{model}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a06a90fc079bcc1cbcfcfa7289f6e7bda}
+
+\begin{DoxyParams}{Parameters}
+{\em model} & The \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} to which this statement belongs. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a9604762f9fb819085067edceef893457}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8e8e886ad86a6f5b77872a5eed3dd68b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!set\+Source@{set\+Source}}
+\index{set\+Source@{set\+Source}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{set\+Source}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+set\+Source (
+\begin{DoxyParamCaption}
+\item[{{\bf Location}}]{source}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a8e8e886ad86a6f5b77872a5eed3dd68b}
+
+\begin{DoxyParams}{Parameters}
+{\em source} & the source to set \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a2c015c168e9a0e1abffa81ca26c15792}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2f8ede0cc1f280d02d1d122a2b211841}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!set\+Target@{set\+Target}}
+\index{set\+Target@{set\+Target}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{set\+Target}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+set\+Target (
+\begin{DoxyParamCaption}
+\item[{{\bf Location}}]{target}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a2f8ede0cc1f280d02d1d122a2b211841}
+
+\begin{DoxyParams}{Parameters}
+{\em target} & the target to set \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a7bf34e9e193ffdf558e9fb50f3dc5777}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a6265d3776f4469fcea28aa59778d03de}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!set\+Target\+Temp@{set\+Target\+Temp}}
+\index{set\+Target\+Temp@{set\+Target\+Temp}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{set\+Target\+Temp}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+set\+Target\+Temp (
+\begin{DoxyParamCaption}
+\item[{{\bf Location}}]{target}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a6265d3776f4469fcea28aa59778d03de}
+
+\begin{DoxyParams}{Parameters}
+{\em target} & the target to set \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_ac106378dda7385795bd663bf43bdc878}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad84bcec9f2c570e8e22c23583653469b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!source@{source}}
+\index{source@{source}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Location} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+source (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ad84bcec9f2c570e8e22c23583653469b}
+\begin{DoxyReturn}{Returns}
+The location that is the source of this statement. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a73170ca0abd0f7c6353e659113296fb8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a29ddc5542644ee105de4b551bdee6147}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!statement\+Kind@{statement\+Kind}}
+\index{statement\+Kind@{statement\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{statement\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+statement\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a29ddc5542644ee105de4b551bdee6147}
+
+
+Obtain the kind of the statement. 
+
+\begin{DoxyReturn}{Returns}
+The statement\textquotesingle{}s kind. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a1c6acae09dbd516e69a4bd295f0d68a0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a31d263178f3be41bdc25b904af1aa625}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAssignStatement_a3e8f5b92fedd18788865606ca5ad1094}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Assign\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonReturnStatement_a6e136e75282e3269433eafc433c9c002}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Return\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement_ae266613be199f4354a0381182581ef20}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Noop\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonContractVerifyStatement_a69370a72a94e15627869c3a4ce443e7c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Contract\+Verify\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlForEnterStatement_a21c77dae211263fca10cc37a69d51aff}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+For\+Enter\+Statement}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_ac6946ef56abe33eec0159af4342e1364}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a5961b8cdc3c7fe7a67697dbb4334c964}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!statement\+Scope@{statement\+Scope}}
+\index{statement\+Scope@{statement\+Scope}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{statement\+Scope}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scope} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+statement\+Scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a5961b8cdc3c7fe7a67697dbb4334c964}
+\begin{DoxyReturn}{Returns}
+The highest scope accessed by this statement. Null if no variables accessed. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_aaf1efccad28d5a29a94b59733621df69}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ae5465d434a76ee46161035029e89b21d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!summary\+Of\+Source@{summary\+Of\+Source}}
+\index{summary\+Of\+Source@{summary\+Of\+Source}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{summary\+Of\+Source}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+summary\+Of\+Source (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_ae5465d434a76ee46161035029e89b21d}
+
+
+The summary of the source code information of the statement. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a4536eaec10f0b2a7cb6cbbb35c16ee3a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a7cddc694ebc2e1045d444999961646e9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!target@{target}}
+\index{target@{target}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{target}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Location} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+target (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a7cddc694ebc2e1045d444999961646e9}
+\begin{DoxyReturn}{Returns}
+The location that is the target of this statement. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonStatement_a604aaca80985803d793cf1b2f5c8e202}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a57ff1197dacf28ac33b097dc294418dc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_a57ff1197dacf28ac33b097dc294418dc}
+
+
+Obtain the set of variables visible from a certain scope that are possible to be written in the future. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scope} & The given scope. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_af09882a275174448319e02fd3964f06f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a9999e2f409b9894d13fa9695acdb2fae}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAssignStatement_af477a53c531f3d7f2a8ffe58c1f56c53}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Assign\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonReturnStatement_a581ac7ed6418e35ae05404c50a482640}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Return\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement_ae8532988a9d1cb6eece78c87d28bddd3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Noop\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a70bf6dc254ba55623479926bd79da4cf}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlForEnterStatement_abc813a794a831a16a0bef6b7d5b50f72}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+For\+Enter\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonContractVerifyStatement_a8d19b32604a76bd2462c9328cb3ec095}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Contract\+Verify\+Statement}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_aa5fbcf79046b50c5a495909bb59124a3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_abe668e1bcb4297c9e6e7f8f65aeecfc2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Statement}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Statement.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement_abe668e1bcb4297c9e6e7f8f65aeecfc2}
+
+
+Obtain the set of variables whose addresses are referenced. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_ab4cf1145d2eefe84c2748d144889f7d6}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a254d2223ec9c3540ed74ab5c82735a8a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAssignStatement_aa99a7081a2e5d3f085954c6f2cd4e907}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Assign\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonReturnStatement_a6f24bbb13c09321034fa61796cd2c285}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Return\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonNoopStatement_a2eb5ab7418193c86807025a3e93c1fad}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Noop\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonAtomicLockAssignStatement_a69e7444a3611345e8562569bfdda8c78}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Atomic\+Lock\+Assign\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonContractVerifyStatement_aa33329559cc77fc574f0f246bcdbc4ca}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Contract\+Verify\+Statement}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlForEnterStatement_a6d2c0c3dbbe2d6da67ec893ce35f6dbb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+For\+Enter\+Statement}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_ac5fd6087661f52a1a97e28a05e031f86}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/statement/Statement.\+java\end{DoxyCompactItemize}

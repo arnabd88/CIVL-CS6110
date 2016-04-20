@@ -1,0 +1,9 @@
+This folder consists of the translation from various language extensions to
+CIVL-C:
+cuda: CUDA programs
+mpi:  MPI programs
+mpi-pthread: MPI+Pthread programs
+openmp: OpenMP programs
+pthread: Pthread programs
+
+Each folder contains a Makefile for executing the translated CIVL models.

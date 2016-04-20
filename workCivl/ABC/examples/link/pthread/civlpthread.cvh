@@ -1,0 +1,10 @@
+#ifdef __CIVLPTHREAD__
+#else
+#define __CIVLPTHREAD__
+
+#include <civlc.cvh>
+#include "simplepthread.h"
+
+typedef struct __pthread_pool_t __pthread_pool_t;
+
+#endif

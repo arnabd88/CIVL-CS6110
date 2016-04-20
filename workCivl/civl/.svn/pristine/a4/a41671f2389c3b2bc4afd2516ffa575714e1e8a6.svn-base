@@ -1,0 +1,73 @@
+/*****************************************************************************
+* SOURCE: This is a translation of a Pthread program from the Lawrence Livermore
+* Computing Center POSIX Threads Programming Exercise at:
+* https://computing.llnl.gov/tutorials/pthreads/exercise.html
+* FILE: join.cvl
+* DESCRIPTION:
+*   This example demonstrates how to "wait" for thread completions by using
+*   the Pthread join routine.  Threads are explicitly created in a joinable
+*   state for portability reasons. Use of the pthread_exit status argument is 
+*   also shown. Compare to detached.c
+* Command line execution:
+* civl verify -inputNUM_THREADS=4 join.cvl
+******************************************************************************/
+
+#include "pthread.h"
+#include <civlc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "math.cvh"
+
+$input int NUM_THREADS;
+
+void *BusyWork(void *t)
+{
+  int i;
+  long tid;
+  double result=0.0;
+  tid = (long)*t; // Dereference rather than direct conv
+  
+  printf("Thread %d starting...\n",tid); // Removed l from %ld, unsupported
+  for (i=0; i<100; i++){
+    result = result + sin(i) * tan(i);
+  }
+  printf("Thread %d done. Result = %e\n",tid, result); // Removed l from %ld, unsupported
+  pthread_exit((void*) t, false, NULL, 0); //Different parameters
+}
+
+int main (void)
+{
+  pthread_t thread[NUM_THREADS];
+  pthread_attr_t attr;
+  int rc;
+  long j[NUM_THREADS];
+  long t;
+  void *status;
+
+  /* Initialize and set thread detached attribute */
+  pthread_attr_init(&attr);
+  pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
+  for(t=0; t<NUM_THREADS; t++) {
+    printf("Main: creating thread %d\n", t);
+    j[t] = (long)t;
+    rc = pthread_create(&thread[t], &attr, BusyWork, (void *)&j[t]); //Added address as conversion from
+    if (rc) {														// int directly to void * is unsupported
+      $assert(false, "ERROR; return code from pthread_create() is %d", rc);
+    }
+  }
+
+  /* Free attribute and wait for the other threads */
+  pthread_attr_destroy(&attr); 
+  for(t=0; t<NUM_THREADS; t++) {
+    rc = pthread_join(thread[t], &status);
+    if (rc) {
+      $assert(false, "ERROR; return code from pthread_create() is %d", rc);
+    }
+    //printf("Main: completed join with thread %d having a status of %d\n",t,(long)*status);
+    //Will emulate passing value of status later
+  }
+ 
+  printf("Main: program completed. Exiting.\n");
+  pthread_exit(NULL, false, NULL, 0); //Different parameters
+}

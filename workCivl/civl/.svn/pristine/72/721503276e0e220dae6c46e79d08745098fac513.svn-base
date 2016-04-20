@@ -1,0 +1,94 @@
+// https://www.cs.rochester.edu/research/synchronization/pseudocode/queues.html
+
+#include <civlc.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <assert.h>
+
+typedef int lock_t;
+#define FREE 0
+#define lock(l) $when (l==0) l=1;
+#define unlock(l) l=0;
+
+typedef struct node_t {
+  int value;
+  struct node_t *next;
+} node_t;
+
+typedef struct queue_t {
+  node_t *Head;
+  node_t *Tail;
+  lock_t H_lock;
+  lock_t T_lock;
+} queue_t;
+
+void initialize(queue_t *Q) {
+  node_t *node = (node_t*)malloc(sizeof(node_t));
+
+  node->next = NULL;            // Make it the only node in the linked list
+  Q->Head = Q->Tail = node;     // Both Head and Tail point to it
+  Q->H_lock = Q->T_lock = FREE; // Locks are initially free
+}
+  
+void enqueue(queue_t *Q, int value) {
+  node_t *node = (node_t*)malloc(sizeof(node_t)); // in root scope
+  
+  node->value = value;          // Copy enqueued value into node
+  node->next = NULL;            // Set next pointer of node to NULL
+  lock(Q->T_lock);              // Acquire T_lock in order to access Tail
+  Q->Tail->next = node;         // Link node at the end of the linked list
+  Q->Tail = node;               // Swing Tail to node
+  unlock(Q->T_lock);            // Release T_lock
+}
+ 
+_Bool dequeue(queue_t *Q, int *pvalue) {
+  node_t *node, *new_head;
+
+  lock(Q->H_lock);              // Acquire H_lock in order to access Head
+  node = Q->Head;               // Read Head
+  new_head = node->next;        // Read next pointer
+  if (new_head == NULL) {       // Is queue empty?
+    unlock(Q->H_lock);          // Release H_lock before return
+    return false;               // Queue was empty
+  }
+  *pvalue = new_head->value;    // Queue not empty.  Read value before release
+  Q->Head = new_head;           // Swing Head to next node
+  unlock(Q->H_lock);            // Release H_lock
+  free(node);                   // Free node
+  return true;                  // Queue was not empty, dequeue succeeded
+}
+
+void test1() {
+  queue_t queue;
+  int x;
+
+  initialize(&queue);
+  enqueue(&queue, 99);
+  dequeue(&queue, &x);
+  free(queue.Head);
+  assert(x==99);
+}
+
+void test2() {
+  queue_t q;
+  $proc t0, t1;
+  void thread(int val) { enqueue(&q, val); }
+  int x, y;
+  _Bool result;
+  
+  initialize(&q);
+  t0 = $spawn thread(6);
+  t1 = $spawn thread(7);
+  $wait(t0);
+  $wait(t1);
+  result = dequeue(&q, &x);
+  assert(result);
+  result = dequeue(&q, &y);
+  assert(result);
+  assert ((x==6 && y==7) || (x==7 && y==6));
+  free(q.Head);
+}
+
+void main() {
+  test2();
+}

@@ -1,0 +1,22 @@
+/* This header file contains the core definitions of the CIVL-C language,
+ * including standard types and function prototypes.
+ */
+
+#ifdef __CIVLC_CIVL__
+#else
+#define __CIVLC_CIVL__
+
+#include <civlc.cvh>
+
+/* Completes the declaration of this type in civlc.cvh */
+struct __int_iter__ {
+  int size;
+  int content[];
+  int index; //initialized as 0
+};
+
+void elaborate(int x) {
+  for(int i=0; i<x; i++);
+}
+
+#endif

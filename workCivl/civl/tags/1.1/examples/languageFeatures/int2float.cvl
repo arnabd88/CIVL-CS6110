@@ -1,0 +1,7 @@
+#include<stdlib.h>
+
+void main(){
+  float x =rand()/(float)RAND_MAX;
+
+  x++;
+}

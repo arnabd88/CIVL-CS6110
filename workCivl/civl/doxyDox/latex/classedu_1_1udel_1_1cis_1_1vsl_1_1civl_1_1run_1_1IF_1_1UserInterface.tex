@@ -1,0 +1,222 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface@{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface}}
+
+
+Basic command line and A\+P\+I user interface for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} tools.  
+
+
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ac02b85377ce980e1165e69e4d49075e1}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ac02b85377ce980e1165e69e4d49075e1}{User\+Interface} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ac02b85377ce980e1165e69e4d49075e1}
+
+\begin{DoxyCompactList}\small\item\em Creates a new instance of user interface. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ad0ae937732c9bf59239433d202895a77}{run} (String...\+args)
+\begin{DoxyCompactList}\small\item\em Runs the appropriate \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} tools based on the command line arguments. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_aff1b611b8897e4a2db48247b7d6b01fc}{run} (Collection$<$ String $>$ args)
+\begin{DoxyCompactList}\small\item\em Runs the appropriate \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} tools based on the command line arguments. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a2b1fa8901c76e7d335e22e7383e6fd37}{run} (String args\+String)
+\begin{DoxyCompactList}\small\item\em Runs command specified as one big String. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a1fbbd636ac86808fd12e3ddfb2ad1bc2}{run\+Normal\+Command} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1common_1_1NormalCommandLine}{Normal\+Command\+Line} command\+Line)  throws Command\+Line\+Exception, A\+B\+C\+Exception, I\+O\+Exception, 			\+Misguided\+Execution\+Exception, Svcomp\+Exception 
+\begin{DoxyCompactList}\small\item\em Run a non-\/compare command line, which could be show/run/replay/verify/help/config. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a854316704e112e1b70713409adc459b3}{run\+Compare\+Command} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1common_1_1CompareCommandLine}{Compare\+Command\+Line} compare\+Command)  throws Command\+Line\+Exception, A\+B\+C\+Exception, I\+O\+Exception, 			\+Misguided\+Execution\+Exception, Svcomp\+Exception 
+\begin{DoxyCompactList}\small\item\em Run a compare command, which is either compare verify or compare replay. \end{DoxyCompactList}\item 
+List$<$ Variable\+Declaration\+Node $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ab9eda847ac4ad05aac413c66b0f33e91}{get\+Input\+Variables} (String\mbox{[}$\,$\mbox{]} files)
+\begin{DoxyCompactList}\small\item\em The G\+U\+I will call this method to get the input variables of a given program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a3c956a567775cef4e13af0cdc3f3657f}{}static final boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a3c956a567775cef4e13af0cdc3f3657f}{debug} = false\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a3c956a567775cef4e13af0cdc3f3657f}
+
+\begin{DoxyCompactList}\small\item\em Running in debug mode (which prints debugging information)? \end{DoxyCompactList}\item 
+static final Sorted\+Map$<$ String, Option $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a4a8f3dbc6341e970930ebec3d887d0f9}{defined\+Options} = new Tree\+Map$<$$>$()
+\begin{DoxyCompactList}\small\item\em All options defined for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Basic command line and A\+P\+I user interface for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} tools. 
+
+Modularization of the user interface\+:
+
+$<$ui$>$ preprocess ast program model  random run verify replay $<$/ui$>$
+
+\begin{DoxyAuthor}{Author}
+Stephen F. Siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ab9eda847ac4ad05aac413c66b0f33e91}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}!get\+Input\+Variables@{get\+Input\+Variables}}
+\index{get\+Input\+Variables@{get\+Input\+Variables}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}}
+\subsubsection[{get\+Input\+Variables}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Variable\+Declaration\+Node$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface.\+get\+Input\+Variables (
+\begin{DoxyParamCaption}
+\item[{String\mbox{[}$\,$\mbox{]}}]{files}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ab9eda847ac4ad05aac413c66b0f33e91}
+
+
+The G\+U\+I will call this method to get the input variables of a given program. 
+
+Currently, it is taking a list of files (in fact, the paths of files), parsing and linking the given list of files and finding out the list of input variables declared. Ultimately, this will take a normal command line object, because sometimes macros and some other options affect the way \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} parses/transforms the program, which might result in different input variables.
+
+
+\begin{DoxyParams}{Parameters}
+{\em files} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the list of input variable declaration nodes, which contains plenty of information about the input variable, e.\+g., the source, type and name, etc. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Preprocessor\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ad0ae937732c9bf59239433d202895a77}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}!run@{run}}
+\index{run@{run}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface.\+run (
+\begin{DoxyParamCaption}
+\item[{String...}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_ad0ae937732c9bf59239433d202895a77}
+
+
+Runs the appropriate \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} tools based on the command line arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & command line arguments \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true iff everything succeeded and no errors were found 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_aff1b611b8897e4a2db48247b7d6b01fc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}!run@{run}}
+\index{run@{run}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface.\+run (
+\begin{DoxyParamCaption}
+\item[{Collection$<$ String $>$}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_aff1b611b8897e4a2db48247b7d6b01fc}
+
+
+Runs the appropriate \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} tools based on the command line arguments. 
+
+This variant provided in case a collection is more convenient than an array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & command line arguments as collection \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true iff everything succeeded and no errors were found 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a2b1fa8901c76e7d335e22e7383e6fd37}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}!run@{run}}
+\index{run@{run}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface.\+run (
+\begin{DoxyParamCaption}
+\item[{String}]{args\+String}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a2b1fa8901c76e7d335e22e7383e6fd37}
+
+
+Runs command specified as one big String. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em args\+String} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a854316704e112e1b70713409adc459b3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}!run\+Compare\+Command@{run\+Compare\+Command}}
+\index{run\+Compare\+Command@{run\+Compare\+Command}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}}
+\subsubsection[{run\+Compare\+Command}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface.\+run\+Compare\+Command (
+\begin{DoxyParamCaption}
+\item[{{\bf Compare\+Command\+Line}}]{compare\+Command}
+\end{DoxyParamCaption}
+) throws Command\+Line\+Exception, A\+B\+C\+Exception, I\+O\+Exception, 			Misguided\+Execution\+Exception, {\bf Svcomp\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a854316704e112e1b70713409adc459b3}
+
+
+Run a compare command, which is either compare verify or compare replay. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em compare\+Command} & The compare command to be run \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the result of running the command 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Command\+Line\+Exception} & \\
+\hline
+{\em A\+B\+C\+Exception} & \\
+\hline
+{\em I\+O\+Exception} & \\
+\hline
+{\em Misguided\+Execution\+Exception} & \\
+\hline
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1SvcompException}{Svcomp\+Exception}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a1fbbd636ac86808fd12e3ddfb2ad1bc2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}!run\+Normal\+Command@{run\+Normal\+Command}}
+\index{run\+Normal\+Command@{run\+Normal\+Command}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}}
+\subsubsection[{run\+Normal\+Command}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface.\+run\+Normal\+Command (
+\begin{DoxyParamCaption}
+\item[{{\bf Normal\+Command\+Line}}]{command\+Line}
+\end{DoxyParamCaption}
+) throws Command\+Line\+Exception, A\+B\+C\+Exception, I\+O\+Exception, 			Misguided\+Execution\+Exception, {\bf Svcomp\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a1fbbd636ac86808fd12e3ddfb2ad1bc2}
+
+
+Run a non-\/compare command line, which could be show/run/replay/verify/help/config. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command\+Line} & The command line to be run. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the result of running the command line 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Command\+Line\+Exception} & \\
+\hline
+{\em A\+B\+C\+Exception} & \\
+\hline
+{\em I\+O\+Exception} & \\
+\hline
+{\em Misguided\+Execution\+Exception} & \\
+\hline
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1SvcompException}{Svcomp\+Exception}} & \\
+\hline
+\end{DoxyExceptions}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a4a8f3dbc6341e970930ebec3d887d0f9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}!defined\+Options@{defined\+Options}}
+\index{defined\+Options@{defined\+Options}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+User\+Interface}}
+\subsubsection[{defined\+Options}]{\setlength{\rightskip}{0pt plus 5cm}final Sorted\+Map$<$String, Option$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+User\+Interface.\+defined\+Options = new Tree\+Map$<$$>$()\hspace{0.3cm}{\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1UserInterface_a4a8f3dbc6341e970930ebec3d887d0f9}
+
+
+All options defined for \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. 
+
+Key is the name of the option. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/run/\+I\+F/User\+Interface.\+java\end{DoxyCompactItemize}

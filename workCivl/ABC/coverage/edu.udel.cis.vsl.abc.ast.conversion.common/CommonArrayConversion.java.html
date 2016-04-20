@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonArrayConversion.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.conversion.common</a> &gt; <span class="el_source">CommonArrayConversion.java</span></div><h1>CommonArrayConversion.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.conversion.common;
+
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ArrayConversion;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.PointerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+
+public class CommonArrayConversion extends CommonConversion implements
+		ArrayConversion {
+
+	public CommonArrayConversion(Type oldType, PointerType newType) {
+<span class="nc" id="L12">		super(oldType, newType);</span>
+<span class="nc" id="L13">	}</span>
+
+	@Override
+	public ArrayType getOldType() {
+<span class="nc" id="L17">		return (ArrayType) super.getOldType();</span>
+	}
+
+	@Override
+	public PointerType getNewType() {
+<span class="nc" id="L22">		return (PointerType) super.getNewType();</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L27">		return &quot;Array&quot; + super.toString();</span>
+	}
+
+	@Override
+	public ConversionKind conversionKind() {
+<span class="nc" id="L32">		return ConversionKind.ARRAY;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

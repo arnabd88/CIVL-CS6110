@@ -1,0 +1,75 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+Tree\+Util Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+Tree\+Util@{edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+Tree\+Util}}
+
+
+This class is used to remember the expansion state of nodes in a J\+Tree.  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_acfabe139d036a84cc59cd5b8bcc20409}{}static boolean {\bfseries is\+Descendant} (Tree\+Path path1, Tree\+Path path2)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_acfabe139d036a84cc59cd5b8bcc20409}
+
+\item 
+static String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_a9671c867e6937b4d3112706a9872ade0}{get\+Expansion\+State} (J\+Tree tree, int row)
+\begin{DoxyCompactList}\small\item\em Get the expansion state of the node at a certain row in a J\+Tree. \end{DoxyCompactList}\item 
+static void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_ae195b447b6d7a5007157d9cdf6708336}{restore\+Expanstion\+State} (J\+Tree tree, int row, String expansion\+State)
+\begin{DoxyCompactList}\small\item\em Restore the expansion state of a node in a J\+Tree. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_a5b46d8f189b4e2910e7cb49224bb8089}{}static int {\bfseries contains\+Node} (J\+Tree tree, Default\+Mutable\+Tree\+Node \hyperlink{structnode}{node})\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_a5b46d8f189b4e2910e7cb49224bb8089}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is used to remember the expansion state of nodes in a J\+Tree. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_a9671c867e6937b4d3112706a9872ade0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+Tree\+Util@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+Tree\+Util}!get\+Expansion\+State@{get\+Expansion\+State}}
+\index{get\+Expansion\+State@{get\+Expansion\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+Tree\+Util@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+Tree\+Util}}
+\subsubsection[{get\+Expansion\+State}]{\setlength{\rightskip}{0pt plus 5cm}static String edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+Tree\+Util.\+get\+Expansion\+State (
+\begin{DoxyParamCaption}
+\item[{J\+Tree}]{tree, }
+\item[{int}]{row}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_a9671c867e6937b4d3112706a9872ade0}
+
+
+Get the expansion state of the node at a certain row in a J\+Tree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tree} & The J\+Tree \\
+\hline
+{\em row} & The row in the tree \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_ae195b447b6d7a5007157d9cdf6708336}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+Tree\+Util@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+Tree\+Util}!restore\+Expanstion\+State@{restore\+Expanstion\+State}}
+\index{restore\+Expanstion\+State@{restore\+Expanstion\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+Tree\+Util@{edu\+::udel\+::cis\+::vsl\+::civl\+::gui\+::common\+::\+Tree\+Util}}
+\subsubsection[{restore\+Expanstion\+State}]{\setlength{\rightskip}{0pt plus 5cm}static void edu.\+udel.\+cis.\+vsl.\+civl.\+gui.\+common.\+Tree\+Util.\+restore\+Expanstion\+State (
+\begin{DoxyParamCaption}
+\item[{J\+Tree}]{tree, }
+\item[{int}]{row, }
+\item[{String}]{expansion\+State}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1gui_1_1common_1_1TreeUtil_ae195b447b6d7a5007157d9cdf6708336}
+
+
+Restore the expansion state of a node in a J\+Tree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tree} & The J\+Tree \\
+\hline
+{\em row} & The row in the tree \\
+\hline
+{\em expansion\+State} & The expansion state that you wish to restore \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/gui/common/Tree\+Util.\+java\end{DoxyCompactItemize}

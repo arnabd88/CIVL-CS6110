@@ -1,0 +1,101 @@
+#include <civlc.cvh>
+#include <omp.h>
+#include <civl-omp.cvh>
+#include <stdbool.h>
+
+// implementations of functions in omp.h go here...
+
+struct omp_lock_t{
+  _Bool lock;
+};
+
+/************************** OMP LIB Implementations *******************************/
+
+void omp_init_lock(omp_lock_t *slock){
+  slock->lock = false;
+}
+
+void omp_destroy_lock(omp_lock_t *slock){
+  omp_lock_t blank;
+  *slock = blank;
+}
+
+/* Waits for the lock to available and grabs it,
+ * AND performs a flush_all on the team, as mandated
+ * by the OpenMP Standard. */
+void $omp_set_lock(omp_lock_t *slock, $omp_team team) {
+  $atomic {
+    $when(!slock->lock) slock->lock = true;
+    $omp_flush_all(team);
+  }
+}
+
+/* Releases the lock 
+ * AND performs a flush_all on the team, as mandated
+ * by the OpenMP Standard. */
+void $omp_unset_lock(omp_lock_t *slock, $omp_team team) {
+  $atomic {
+    slock->lock = false;
+    $omp_flush_all(team);
+  }
+}
+
+/* These are replaced by $omp_set_lock and
+ * $omp_unset_lock.  Those functionsn do the
+ * flush on the whole team, as required by
+ * the OpenMP Standard...
+ 
+void omp_set_lock(omp_lock_t *slock){
+  $atomic{
+    $when(!slock->lock){
+      slock->lock = true;
+    }
+  }
+}
+
+void omp_unset_lock(omp_lock_t *slock){
+  $atomic{
+    slock->lock = false;
+  }
+}
+*/
+
+$abstract double OMP_time(int time_count);
+
+double omp_get_wtime() {
+  int OMP_time_count = $next_time_count();
+  double result = OMP_time(OMP_time_count);
+  
+  if (OMP_time_count > 0) {
+    $assume(result > OMP_time(OMP_time_count-1));
+  } else {
+    $assume(result > 0);
+  }
+  return result;
+}
+
+
+/*
+void omp_set_num_threads (int);
+int omp_get_num_threads (void);
+int omp_get_max_threads (void);
+int omp_get_thread_num (void);
+int omp_get_num_procs (void);
+int omp_in_parallel (void);
+void omp_set_dynamic (int);
+int omp_get_dynamic (void);
+void omp_set_nested (int);
+int omp_get_nested (void);
+void omp_init_lock (omp_lock_t *);
+void omp_destroy_lock (omp_lock_t *);
+void omp_set_lock (omp_lock_t *);
+void omp_unset_lock (omp_lock_t *);
+int omp_test_lock (omp_lock_t *);
+void omp_init_nest_lock (omp_nest_lock_t *);
+void omp_destroy_nest_lock (omp_nest_lock_t *);
+void omp_set_nest_lock (omp_nest_lock_t *);
+void omp_unset_nest_lock (omp_nest_lock_t *);
+int omp_test_nest_lock (omp_nest_lock_t *);
+double omp_get_wtime (void);
+double omp_get_wtick (void);
+*/

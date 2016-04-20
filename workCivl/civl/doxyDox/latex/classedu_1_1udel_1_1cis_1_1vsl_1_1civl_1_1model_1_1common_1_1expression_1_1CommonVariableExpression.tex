@@ -1,0 +1,281 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression}}
+
+
+\hyperlink{structA}{A} use of a variable in an expression.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9c515ef459e58aa63970da1a416c89ca}{Common\+Variable\+Expression} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} variable)
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} use of a variable in an expression. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a88afb7e267a638c463a2ec30dbfe13ea}{variable} ()
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_ad41e0d58eb692e499c920059fb9618ac}{set\+Variable} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} variable)
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a40affbb395b298f5dbb9512bab4b1a87}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a40affbb395b298f5dbb9512bab4b1a87}
+
+\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_1_1ExpressionKind}{Expression\+Kind} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9d82fc1d8b16a74db48b2f7563202cfa}{expression\+Kind} ()
+\begin{DoxyCompactList}\small\item\em Returns the kind of this expression. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a5b508f75d4e85790c528bebe7551a63c}{set\+Purely\+Local} (boolean pl)
+\begin{DoxyCompactList}\small\item\em Updates the flag of the expression denoting if it is purely local. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a97555fce345bdc2023e5362c90279015}{purely\+Local\+Analysis\+Of\+Variables} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} func\+Scope)
+\begin{DoxyCompactList}\small\item\em Analyzes if variables accessed by this expression are purely local. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a6d0e2e287288e063b8b34e0abf0fecd8}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a6d0e2e287288e063b8b34e0abf0fecd8}{purely\+Local\+Analysis} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a6d0e2e287288e063b8b34e0abf0fecd8}
+
+\begin{DoxyCompactList}\small\item\em Analyzes if this expression is purely local. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9fa669511697c5883063fb6464173a7a}{variable\+Addressed\+Of} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Compute the set of variables visible from a certain scope that appear in an address-\/of expression. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_afdce12c4a01c50af9027fd5f987c913a}{variable\+Addressed\+Of} ()
+\begin{DoxyCompactList}\small\item\em Compute the set of variables that appear in an address-\/of expression. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a82f9554c7fae0c4870ade14b20998b87}{variable\+Written} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Return the variable that is visible from the given scope, which is possible the left hand side of an assignment statement. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a550b44a0bf02e6bcb71a4679223d6282}{variable\+Written} ()
+\begin{DoxyCompactList}\small\item\em Return the variable that is possible the left hand side of an assignment statement. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_ababe0a32f71a095284a29bfbeebcd840}{}\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression_1_1LHSExpressionKind}{L\+H\+S\+Expression\+Kind} {\bfseries lhs\+Expression\+Kind} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_ababe0a32f71a095284a29bfbeebcd840}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a22392ab681bf94999f4d1b3b3944420f}{}boolean {\bfseries expression\+Equals} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} expression)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a22392ab681bf94999f4d1b3b3944420f}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} use of a variable in an expression. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9c515ef459e58aa63970da1a416c89ca}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!Common\+Variable\+Expression@{Common\+Variable\+Expression}}
+\index{Common\+Variable\+Expression@{Common\+Variable\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{Common\+Variable\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+Common\+Variable\+Expression (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf Variable}}]{variable}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9c515ef459e58aa63970da1a416c89ca}
+
+
+\hyperlink{structA}{A} use of a variable in an expression. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em variable} & The variable. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9d82fc1d8b16a74db48b2f7563202cfa}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!expression\+Kind@{expression\+Kind}}
+\index{expression\+Kind@{expression\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{expression\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+expression\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9d82fc1d8b16a74db48b2f7563202cfa}
+
+
+Returns the kind of this expression. 
+
+\begin{DoxyReturn}{Returns}
+The expression kind 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_a8a49b68d6741423848735c8a354f29cd}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a97555fce345bdc2023e5362c90279015}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!purely\+Local\+Analysis\+Of\+Variables@{purely\+Local\+Analysis\+Of\+Variables}}
+\index{purely\+Local\+Analysis\+Of\+Variables@{purely\+Local\+Analysis\+Of\+Variables}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{purely\+Local\+Analysis\+Of\+Variables}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+purely\+Local\+Analysis\+Of\+Variables (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{func\+Scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a97555fce345bdc2023e5362c90279015}
+
+
+Analyzes if variables accessed by this expression are purely local. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func\+Scope} & The function scope of this expression \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_a6b6fe54d4e37b83906f8a199c2f9aff4}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a5b508f75d4e85790c528bebe7551a63c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!set\+Purely\+Local@{set\+Purely\+Local}}
+\index{set\+Purely\+Local@{set\+Purely\+Local}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{set\+Purely\+Local}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+set\+Purely\+Local (
+\begin{DoxyParamCaption}
+\item[{boolean}]{pl}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a5b508f75d4e85790c528bebe7551a63c}
+
+
+Updates the flag of the expression denoting if it is purely local. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pl} & True iff attempting to set the expression as purely local. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression_a3533c159b737846babf791045ce0264d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+L\+H\+S\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_ad41e0d58eb692e499c920059fb9618ac}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!set\+Variable@{set\+Variable}}
+\index{set\+Variable@{set\+Variable}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{set\+Variable}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+set\+Variable (
+\begin{DoxyParamCaption}
+\item[{{\bf Variable}}]{variable}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_ad41e0d58eb692e499c920059fb9618ac}
+
+\begin{DoxyParams}{Parameters}
+{\em variable} & The variable. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1VariableExpression_a511a724f49893bf7bae1fc91bd42e8fd}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Variable\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a88afb7e267a638c463a2ec30dbfe13ea}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!variable@{variable}}
+\index{variable@{variable}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{variable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+variable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a88afb7e267a638c463a2ec30dbfe13ea}
+\begin{DoxyReturn}{Returns}
+The variable 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1VariableExpression_ad27b6dd469c504a4ef1119172caa5e78}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Variable\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9fa669511697c5883063fb6464173a7a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a9fa669511697c5883063fb6464173a7a}
+
+
+Compute the set of variables visible from a certain scope that appear in an address-\/of expression. 
+
+e.\+g., {\ttfamily (\&a + \&b)} returns {\ttfamily \{a\}} if {\ttfamily a} is in visible from the given scope while {\ttfamily b} invisible from the given scope.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scope} & The scope to focus on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_aecf8770df1ee96920b110079be622157}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_afdce12c4a01c50af9027fd5f987c913a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!variable\+Addressed\+Of@{variable\+Addressed\+Of}}
+\index{variable\+Addressed\+Of@{variable\+Addressed\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{variable\+Addressed\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+variable\+Addressed\+Of (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_afdce12c4a01c50af9027fd5f987c913a}
+
+
+Compute the set of variables that appear in an address-\/of expression. 
+
+e.\+g., {\ttfamily (\&a + \&b)} returns {\ttfamily \{a, b\}}.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression_ac2ad0236534bec54b91ee78ff658cbe0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a82f9554c7fae0c4870ade14b20998b87}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!variable\+Written@{variable\+Written}}
+\index{variable\+Written@{variable\+Written}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{variable\+Written}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+variable\+Written (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a82f9554c7fae0c4870ade14b20998b87}
+
+
+Return the variable that is visible from the given scope, which is possible the left hand side of an assignment statement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scope} & The given scope. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression_a7c69569e91a23d48be0c6ecea456011f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+L\+H\+S\+Expression}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a550b44a0bf02e6bcb71a4679223d6282}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}!variable\+Written@{variable\+Written}}
+\index{variable\+Written@{variable\+Written}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::expression\+::\+Common\+Variable\+Expression}}
+\subsubsection[{variable\+Written}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Variable\+Expression.\+variable\+Written (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonVariableExpression_a550b44a0bf02e6bcb71a4679223d6282}
+
+
+Return the variable that is possible the left hand side of an assignment statement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scope} & The given scope. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression_a78e628bb1248aa61856dcf4a921aff52}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+L\+H\+S\+Expression}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/expression/Common\+Variable\+Expression.\+java\end{DoxyCompactItemize}

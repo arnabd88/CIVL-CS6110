@@ -1,0 +1,13 @@
+/* CIVL implementation of time.h */
+
+#ifdef __TIME_CIVL__
+#else
+#define __TIME_CIVL__
+
+#include<time.h>
+
+struct tm{
+  double v;
+};
+
+#endif

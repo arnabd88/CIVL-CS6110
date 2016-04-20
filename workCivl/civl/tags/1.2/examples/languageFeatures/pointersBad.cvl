@@ -1,0 +1,25 @@
+/* Commandline execution:
+ *		civl verify pointersBad.cvl
+ * */
+#include<civlc.cvh>
+#include<stdlib.h>
+
+$output int out;
+$input int *x_ptr;
+void main() {
+  int a;
+  int* b, *c;
+  int * nilPtr = NULL;
+
+  c = (void *)(-1);
+  b = (int *)malloc(sizeof(int));
+  free(b);
+  $choose {
+    {a = *(&out);}
+    {a = *x_ptr;}
+    {c = &a + 1; a = *c;}
+    {a = *c;}
+    {a = *b;}
+    {a = *nilPtr;}
+  }
+}

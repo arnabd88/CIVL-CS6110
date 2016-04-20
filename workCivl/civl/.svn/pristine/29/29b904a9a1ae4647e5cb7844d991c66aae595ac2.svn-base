@@ -1,0 +1,48 @@
+/* CIVL model of simple hybrid MPI+threads program.
+ * The program has a defect.
+ * Commnad line execution:
+ *     civl verify -min mpi-pthreads.cvl
+ */
+#include<civlc.h>
+#define TAG 0
+
+$comm comm;
+_Bool initialized = $false;
+
+void MPI_Process (int pid) {
+  _Bool threadsInit = $false;
+  $proc threads[2];
+  
+  void Thread(int tid) {
+    int x = pid;
+    $message in, out = $message_pack(pid, 1-pid, TAG, &x, sizeof(int));
+    
+    $when(threadsInit) ;
+    for (int j=0; j<2; j++) {
+      if (pid == 1) {
+        for (int i=0; i<2; i++) $comm_enqueue(&comm, out);
+        for (int i=0; i<2; i++) in = $comm_dequeue(&comm, 1-pid, pid, TAG);
+      } else {
+        for (int i=0; i<2; i++) in = $comm_dequeue(&comm, 1-pid, pid, TAG);
+        for (int i=0; i<2; i++) $comm_enqueue(&comm, out);
+      }
+    }
+  }
+  
+  $when (initialized); 
+  for (int i=0; i<2; i++) {
+    threads[i] = $spawn Thread(i);
+    $comm_add(&comm, threads[i], pid);
+  }
+  threadsInit = $true;
+  for (int i=0; i<2; i++) $wait threads[i];
+}
+
+void main() {
+  $proc procs[2];
+
+  for (int i=0; i<2; i++) procs[i] = $spawn MPI_Process(i);
+  comm = $comm_create(2, procs);
+  initialized = $true;
+  for (int i=0; i<2; i++) $wait procs[i];
+}

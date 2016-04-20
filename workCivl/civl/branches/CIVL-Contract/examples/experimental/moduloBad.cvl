@@ -1,0 +1,6 @@
+#include <civlc.cvh>
+#include <assert.h>
+
+void main () {
+  $assert((-4) % 3 == -1);
+}

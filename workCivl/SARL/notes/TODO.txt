@@ -1,0 +1,29 @@
+ 
+
+Think about how to do quick dispatch to right routine for
+numeric operation.
+
+Implement floating point numbers and finite integer numbers.
+
+Support pointers?
+
+Support a type which is a pair (p, e) where p is a boolean expression
+and e is an expression of any time.  This pair represents the set
+{e(x)|p(x)}.  simplify, operations, translation, ...
+
+(int t>0, t^2) = {1,4,9,...}
+
+equality?
+
+y in S(p,e) iff exists x0 s.t. p(x) and y=e(x)
+
+S(p,e) subset of S(q,f):
+  forall x. p(x) => exists y. (q(y) && e(x)=f(y)) 
+  
+Example:
+  {(x,y)| x>0 && y>0}
+  {(y,x)| x>0 && y>0}
+  
+Canonicalization of symbolic constant names:
+walk through structures in ordered way and re-name.
+what about unordered structures??

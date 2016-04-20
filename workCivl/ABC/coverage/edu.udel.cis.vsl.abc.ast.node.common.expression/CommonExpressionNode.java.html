@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonExpressionNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.expression</a> &gt; <span class="el_source">CommonExpressionNode.java</span></div><h1>CommonExpressionNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.expression;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.Conversion;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.CommonASTNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public abstract class CommonExpressionNode extends CommonASTNode implements
+		ExpressionNode {
+
+	private Type initialType;
+
+	/**
+	 * Has the constant value for this expression been computed? (It may be
+	 * null.) If it has, the constant value is cached in field constantValue.
+	 */
+<span class="nc" id="L25">	private boolean constantComputed = false;</span>
+
+	/**
+	 * If this expression has a constant value, the value may be cached here.
+	 */
+<span class="nc" id="L30">	private Value constantValue = null;</span>
+
+<span class="nc" id="L32">	private ArrayList&lt;Conversion&gt; conversions = new ArrayList&lt;Conversion&gt;();</span>
+
+	public CommonExpressionNode(Source source, List&lt;? extends ASTNode&gt; arguments) {
+<span class="nc" id="L35">		super(source, arguments.iterator());</span>
+<span class="nc" id="L36">	}</span>
+
+	public CommonExpressionNode(Source source) {
+<span class="nc" id="L39">		super(source);</span>
+<span class="nc" id="L40">	}</span>
+
+	public CommonExpressionNode(Source source, ASTNode argument) {
+<span class="nc" id="L43">		super(source, argument);</span>
+<span class="nc" id="L44">	}</span>
+
+	public CommonExpressionNode(Source source, ASTNode argument0,
+			ASTNode argument1) {
+<span class="nc" id="L48">		super(source, argument0, argument1);</span>
+<span class="nc" id="L49">	}</span>
+
+	public CommonExpressionNode(Source source, ASTNode argument0,
+			ASTNode argument1, ASTNode argument2) {
+<span class="nc" id="L53">		super(source, argument0, argument1, argument2);</span>
+<span class="nc" id="L54">	}</span>
+	
+	public CommonExpressionNode(Source source, ASTNode argument0,
+			ASTNode argument1, ASTNode argument2, ASTNode argument3) {
+<span class="nc" id="L58">		super(source, argument0, argument1, argument2, argument3);</span>
+<span class="nc" id="L59">	}</span>
+
+	@Override
+	public int getNumConversions() {
+<span class="nc" id="L63">		return conversions.size();</span>
+	}
+
+	@Override
+	public Conversion getConversion(int index) {
+<span class="nc" id="L68">		return conversions.get(index);</span>
+	}
+
+	@Override
+	public Type getInitialType() {
+<span class="nc" id="L73">		return initialType;</span>
+	}
+
+	@Override
+	public void setInitialType(Type type) {
+<span class="nc" id="L78">		this.initialType = type;</span>
+<span class="nc" id="L79">	}</span>
+
+	@Override
+	public Type getConvertedType() {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (conversions.size() &gt; 0)</span>
+<span class="nc" id="L84">			return conversions.get(conversions.size() - 1).getNewType();</span>
+		else
+<span class="nc" id="L86">			return initialType;</span>
+	}
+
+	public boolean constantComputed() {
+<span class="nc" id="L90">		return constantComputed;</span>
+	}
+
+	public Value getConstantValue() {
+<span class="nc" id="L94">		return constantValue;</span>
+	}
+
+	public void setConstantValue(Value value) {
+<span class="nc" id="L98">		this.constantValue = value;</span>
+<span class="nc" id="L99">		this.constantComputed = true;</span>
+<span class="nc" id="L100">	}</span>
+
+	protected void printExtras(String prefix, PrintStream out) {
+<span class="nc" id="L103">		int numConversions = getNumConversions();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		String typeDescriptor = (initialType == null ? &quot;UNKNOWN&quot; : &quot;&quot;</span>
+<span class="nc" id="L105">				+ initialType.toString());</span>
+
+<span class="nc" id="L107">		out.println();</span>
+<span class="nc" id="L108">		out.print(prefix + &quot;initial type: &quot; + typeDescriptor);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (numConversions &gt; 0) {</span>
+<span class="nc" id="L110">			out.println();</span>
+<span class="nc" id="L111">			out.print(prefix + &quot;conversions&quot;);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			for (int i = 0; i &lt; numConversions; i++) {</span>
+<span class="nc" id="L113">				out.println();</span>
+<span class="nc" id="L114">				out.print(prefix + &quot;| &quot; + getConversion(i));</span>
+			}
+		}
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (constantValue != null) {</span>
+<span class="nc" id="L118">			out.println();</span>
+<span class="nc" id="L119">			out.print(prefix + &quot;constant value: &quot; + constantValue);</span>
+		}
+<span class="nc" id="L121">	}</span>
+
+	@Override
+	public Type getType() {
+<span class="nc" id="L125">		return getConvertedType();</span>
+	}
+
+	@Override
+	public void addConversion(Conversion conversion) {
+<span class="nc" id="L130">		Type lastType = getConvertedType();</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (lastType == null)</span>
+<span class="nc" id="L133">			throw new RuntimeException(</span>
+<span class="nc" id="L134">					&quot;Internal error: adding conversion before initial type defined&quot;);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (!lastType.equals(conversion.getOldType()))</span>
+<span class="nc" id="L136">			throw new IllegalArgumentException(</span>
+<span class="nc" id="L137">					&quot;Old type of conversion is not last type:\n&quot;</span>
+<span class="nc" id="L138">							+ conversion.getOldType() + &quot;\n&quot; + lastType);</span>
+<span class="nc" id="L139">		conversions.add(conversion);</span>
+<span class="nc" id="L140">	}</span>
+
+	@Override
+	public void removeConversions() {
+<span class="nc" id="L144">		conversions = new ArrayList&lt;Conversion&gt;();</span>
+<span class="nc" id="L145">	}</span>
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L149">		return NodeKind.EXPRESSION;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (that instanceof ExpressionNode)</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (this.expressionKind() == ((ExpressionNode) that)</span>
+<span class="nc" id="L156">					.expressionKind())</span>
+<span class="nc" id="L157">				return null;</span>
+<span class="nc" id="L158">		return new DifferenceObject(this, that);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

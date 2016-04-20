@@ -1,0 +1,116 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Model\+Translator Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Model\+Translator@{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Model\+Translator}}
+
+
+\hyperlink{structA}{A} model translator parses, links, transforms a list of source files (C or C\+I\+V\+L-\/\+C programs) into a A\+B\+C program; and then build a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model from that program.  
+
+
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Model\+Translator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ Variable\+Declaration\+Node $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_aa51f6dec9a7c437d3bc27507b991fd15}{get\+Input\+Variables} ()  throws Preprocessor\+Exception, Syntax\+Exception, Parse\+Exception, 			\+I\+O\+Exception 
+\item 
+List$<$ A\+S\+T $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_a0f21fa728644647c22cc39219d31955f}{parse\+Tokens} (List$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ Language, Civlc\+Token\+Source $>$$>$ token\+Sources)  throws Syntax\+Exception, Parse\+Exception 
+\begin{DoxyCompactList}\small\item\em Translates a certain array of tokens into a list of A\+S\+T\textquotesingle{}s. \end{DoxyCompactList}\item 
+List$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ Language, Civlc\+Token\+Source $>$ $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_ab77793984cfdaea91e00bb9d609998e4}{preprocess} ()  throws Preprocessor\+Exception 
+\begin{DoxyCompactList}\small\item\em Preprocesses the files associated with this model translator into tokens. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} model translator parses, links, transforms a list of source files (C or C\+I\+V\+L-\/\+C programs) into a A\+B\+C program; and then build a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model from that program. 
+
+Command line options are also taken into account including macros, transformer settings (e.\+g., -\/omp\+No\+Simplify), input variables, system/user include path, etc. 
+
+\hyperlink{structA}{A} model translator takes care of a command line section. E.\+g., the command line {\ttfamily civl compare -\/spec -\/\+D\+N=5 sum.\+c -\/impl -\/\+D\+C\+U\+D\+A -\/input\+N\+B=8 sum.\+c sum\+\_\+cuda.\+c} contains two command line sections \char`\"{}spec\char`\"{} and \char`\"{}impl\char`\"{}, each of which will then be translated to an A\+B\+C program by a specific model translator (different lists of files, different macros, input variables, etc). 
+
+Non-\/compare command line contains one command line section, and thus only one model translator is created.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_aa51f6dec9a7c437d3bc27507b991fd15}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator}!get\+Input\+Variables@{get\+Input\+Variables}}
+\index{get\+Input\+Variables@{get\+Input\+Variables}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator}}
+\subsubsection[{get\+Input\+Variables}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Variable\+Declaration\+Node$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Model\+Translator.\+get\+Input\+Variables (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throws Preprocessor\+Exception, Syntax\+Exception, Parse\+Exception, 			I\+O\+Exception\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_aa51f6dec9a7c437d3bc27507b991fd15}
+\begin{DoxyReturn}{Returns}
+the input variables declared in the given program 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Preprocessor\+Exception} & \\
+\hline
+{\em Syntax\+Exception} & \\
+\hline
+{\em Parse\+Exception} & \\
+\hline
+{\em I\+O\+Exception} & \\
+\hline
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1SvcompException}{Svcomp\+Exception}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_a0f21fa728644647c22cc39219d31955f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator}!parse\+Tokens@{parse\+Tokens}}
+\index{parse\+Tokens@{parse\+Tokens}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator}}
+\subsubsection[{parse\+Tokens}]{\setlength{\rightskip}{0pt plus 5cm}List$<$A\+S\+T$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Model\+Translator.\+parse\+Tokens (
+\begin{DoxyParamCaption}
+\item[{List$<$ {\bf Pair}$<$ Language, Civlc\+Token\+Source $>$$>$}]{token\+Sources}
+\end{DoxyParamCaption}
+) throws Syntax\+Exception, Parse\+Exception\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_a0f21fa728644647c22cc39219d31955f}
+
+
+Translates a certain array of tokens into a list of A\+S\+T\textquotesingle{}s. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token\+Sources} & the array of tokens to be parsed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the list of A\+S\+T\textquotesingle{}s which is the result of parsing the token array. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Syntax\+Exception} & if there is a problem parsing the tokens. \\
+\hline
+{\em Parse\+Exception} & if there is a problem parsing the tokens. \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_ab77793984cfdaea91e00bb9d609998e4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator}!preprocess@{preprocess}}
+\index{preprocess@{preprocess}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Model\+Translator}}
+\subsubsection[{preprocess}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Pair}$<$Language, Civlc\+Token\+Source$>$ $>$ edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Model\+Translator.\+preprocess (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throws Preprocessor\+Exception\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1ModelTranslator_ab77793984cfdaea91e00bb9d609998e4}
+
+
+Preprocesses the files associated with this model translator into tokens. 
+
+\begin{DoxyReturn}{Returns}
+the tokens which are the preprocessed result of the source files. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Preprocessor\+Exception} & if there is any problem preprocessing the source files. \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/run/\+I\+F/Model\+Translator.\+java\end{DoxyCompactItemize}

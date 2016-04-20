@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <civlc.cvh>
+
+$input int X;
+$assume(1 <= X && X <= 3);
+$assume(X % 2 == 0);
+
+int main(void) {
+  $elaborate(X);
+  printf("%d\n", X);
+  $assert(X==2);
+  return 0;
+}

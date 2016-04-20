@@ -1,0 +1,108 @@
+// dot product implementation with critical region.
+
+/*
+   OpenMP example program which computes the dot product of two arrays a and b
+   (that is sum(a[i]*b[i]) ) using explicit synchronization with a critical region.
+   Compile with gcc -O3 -fopenmp omp_critical.c -o omp_critical
+*/
+// Online source: http://users.abo.fi/mats/PP2012/examples/OpenMP/omp_critical.c
+/*  
+ * civl verify -inputNTHREADS=2 -inputN=8 dotProduct_critical.cvl
+ * */
+#include <civlc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "omp.cvh"
+$input int NTHREADS;
+$input int N;
+
+int main (int argc, char *argv[]) {
+  /* implicitly initializing the number of threads */
+  omp_set_num_threads(NTHREADS);
+	
+  double a[N], b[N];
+  double localsum, sum = 0.0;
+  int i, tid, nthreads;
+ 
+  /* helper variables shared by all threads*/
+  _Bool __critical_0 = $false; //default crticial region variable name
+  
+  /* parallel procedure */
+  void __parallel_0(int __tid) {
+    #include "omp_thread.cvh"
+    int __i; 
+    double __localsum; //private(i, localsum)
+
+    tid = omp_get_thread_num();
+    if(tid == 0) { //#pragma omp master
+      nthreads = omp_get_num_threads();
+      printf("Number of threads = %d\n", nthreads);
+    }
+
+    /* The procedure of each thread for the first for loop */
+    void __for_0(int __tid, int __start, int __end, int __extra){
+      for(__i = __start; __i < __end; __i++) {
+        a[__i] = b[__i] = (double)__i;
+      }
+      if(__extra > 0) {
+        a[__extra] = b[__extra] = (double)__extra;
+      }
+      /* implicit barrier at the end of the for construct */
+      __barrier(__tid);
+    }
+	
+    { //#pragma omp for
+      //  for (i=0; i < N; i++)
+      //    localsum = localsum + (a[i] * b[i]);
+      int __start = __for_start(__tid, N);
+      int __end = __for_end(__tid, N);
+      int __extra = __for_extra(__tid, N);
+ 
+      __for_0(__tid, __start, __end, __extra);
+    }
+
+    __localsum = 0.0;
+	
+    /* The procedure of each thread for the second for loop */
+    void __for_1(int __tid, int __start, int __end, int __extra){
+      for(__i = __start; __i < __end; __i++) {
+        __localsum = __localsum + (a[__i] * b[__i]);
+      }
+      if(__extra > 0) {
+        __localsum = __localsum + (a[__extra] * b[__extra]);
+      }
+       /* implicit barrier at the end of the for construct */
+      __barrier(__tid);
+    }
+	
+    {//#pragma omp for
+     //  for (i=0; i < N; i++)
+     //    localsum = localsum + (a[i] * b[i]);
+      int __start = __for_start(__tid, N);
+      int __end = __for_end(__tid, N);
+      int __extra = __for_extra(__tid, N);
+		
+      __for_1(__tid, __start, __end, __extra);
+    }
+	
+    {//#pragma omp critical
+      $when(!__critical_0) __critical_0 = $true;
+      sum = sum+__localsum;
+      __critical_0 = $false;
+    }
+    /* implicit barrier at the end of the parallel construct */
+    __barrier(__tid);
+  }
+  
+  $proc __parallel_0_procs[OMP_NUM_THREADS];
+  
+  __barrier_init();
+  /* Create processes to conduct the parallel region  */
+  for(i = 0; i < OMP_NUM_THREADS; i++) {
+    __parallel_0_procs[i] = $spawn __parallel_0(i);
+  }
+  for(i = 0; i < OMP_NUM_THREADS; i++) {
+    $wait(__parallel_0_procs[i]);
+  }
+  printf("   Sum = %f\n",sum);
+}

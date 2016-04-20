@@ -1,0 +1,28 @@
+/* CIVL implementation of time.h */
+
+#ifndef __TIME_CIVL__
+#define __TIME_CIVL__
+
+#include<time.h>
+#include<civlc.cvh>
+
+struct tm{
+  double v;
+};
+
+time_t time(time_t *timer) {
+  $abstract double _time(int count);
+  int time_count = $next_time_count();
+  double result = _time(time_count);
+  
+  if (time_count > 0) {
+    $assume(result > _time(time_count-1));
+  } else {
+    $assume(result > 0);
+  }
+  if(timer != NULL)
+    *timer = result;
+  return result;
+}
+
+#endif

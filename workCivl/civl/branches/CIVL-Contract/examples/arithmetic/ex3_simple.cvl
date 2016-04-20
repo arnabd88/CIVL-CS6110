@@ -1,0 +1,24 @@
+#include <civlc.cvh>
+#include <math.h>
+#include <stdio.h>
+
+#define L 5
+$input double a, b;
+$assume(a > 0);
+$assume(a == b);
+
+void main() {
+  double y = a;
+  int i;
+  
+  for(i=0; i<L; i++) {
+    y = sqrt(y);
+    printf("the %d time y = %f\n", i, y);
+  }
+  for(int i=0; i<L; i++) {
+    y = y * y;
+    printf("the %d time y = %f\n", i, y);
+  }
+    
+  $assert(y == b);
+}

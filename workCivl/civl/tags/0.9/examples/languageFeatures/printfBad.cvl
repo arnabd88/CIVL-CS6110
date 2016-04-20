@@ -1,0 +1,8 @@
+#include<civlc.h>
+#include<stdio.h>
+
+$input double x;
+
+void main() {
+  printf("x=%f\a", x); //\a currently is not supported by CIVL, so this example will throw a exception
+}

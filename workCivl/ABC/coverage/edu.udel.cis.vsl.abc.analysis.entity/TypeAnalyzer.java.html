@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TypeAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">TypeAnalyzer.java</span></div><h1>TypeAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity.EntityKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.OrdinaryEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope.ScopeKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.TaggedEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Typedef;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.EnumeratorDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FieldDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.ArrayTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.AtomicTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.BasicTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.DomainTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.EnumerationTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.PointerTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.StructureOrUnionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode.TypeNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypedefNameNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeofNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.DomainType;
+import edu.udel.cis.vsl.abc.ast.type.IF.EnumerationType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Enumerator;
+import edu.udel.cis.vsl.abc.ast.type.IF.Field;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.PointerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.QualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.type.IF.UnqualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+import edu.udel.cis.vsl.abc.ast.value.IF.ValueFactory;
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+/**
+ * Analyzes types nodes in the AST, sets the type of the type node and processes
+ * all children.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc bnc" id="L62" title="All 2 branches missed.">public class TypeAnalyzer {</span>
+
+	// ***************************** Fields *******************************
+
+	private EntityAnalyzer entityAnalyzer;
+
+	private TypeFactory typeFactory;
+
+	private NodeFactory nodeFactory;
+
+	private ValueFactory valueFactory;
+
+	// private Configuration configuration;
+	private Language language;
+
+	/**
+	 * The type used for enumerators, i.e., the elements of enumeration types.
+	 * It is an unspecified integer type according to the C Standard.
+	 */
+	private IntegerType enumeratorType;
+
+	// ************************** Constructors ****************************
+
+<span class="nc" id="L85">	TypeAnalyzer(EntityAnalyzer entityAnalyzer, TypeFactory typeFactory) {</span>
+<span class="nc" id="L86">		this.entityAnalyzer = entityAnalyzer;</span>
+<span class="nc" id="L87">		this.nodeFactory = entityAnalyzer.nodeFactory;</span>
+<span class="nc" id="L88">		this.typeFactory = typeFactory;</span>
+<span class="nc" id="L89">		this.valueFactory = entityAnalyzer.valueFactory;</span>
+<span class="nc" id="L90">		this.enumeratorType = (IntegerType) typeFactory</span>
+<span class="nc" id="L91">				.basicType(BasicTypeKind.INT);</span>
+<span class="nc" id="L92">		this.language = entityAnalyzer.language;</span>
+<span class="nc" id="L93">	}</span>
+
+	// ************************** Private Methods **************************
+
+	private SyntaxException error(String message, ASTNode node) {
+<span class="nc" id="L98">		return entityAnalyzer.error(message, node);</span>
+	}
+
+	private SyntaxException error(UnsourcedException e, ASTNode node) {
+<span class="nc" id="L102">		return entityAnalyzer.error(e, node);</span>
+	}
+
+	private Type processBasicType(BasicTypeNode node) throws SyntaxException {
+<span class="nc" id="L106">		UnqualifiedObjectType unqualifiedType = typeFactory.basicType(node</span>
+<span class="nc" id="L107">				.getBasicTypeKind());</span>
+<span class="nc" id="L108">		boolean constQ = node.isConstQualified();</span>
+<span class="nc" id="L109">		boolean volatileQ = node.isVolatileQualified();</span>
+<span class="nc" id="L110">		boolean inputQ = node.isInputQualified();</span>
+<span class="nc" id="L111">		boolean outputQ = node.isOutputQualified();</span>
+
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (node.isRestrictQualified())</span>
+<span class="nc" id="L114">			throw error(&quot;restrict qualifier used with basic type&quot;, node);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (node.isAtomicQualified())</span>
+<span class="nc" id="L116">			unqualifiedType = typeFactory.atomicType(unqualifiedType);</span>
+<span class="nc bnc" id="L117" title="All 8 branches missed.">		if (constQ || volatileQ || inputQ || outputQ)</span>
+<span class="nc" id="L118">			return typeFactory.qualifiedType(unqualifiedType, constQ,</span>
+<span class="nc" id="L119">					volatileQ, false, inputQ, outputQ);</span>
+		else
+<span class="nc" id="L121">			return unqualifiedType;</span>
+	}
+
+	/**
+	 * 
+	 * C11 6.7.6.2(1): &quot;The element type shall not be an incomplete or function
+	 * type. The optional type qualifiers and the keyword static shall appear
+	 * only in a declaration of a function parameter with an array type, and
+	 * then only in the outermost array type derivation.&quot;
+	 * 
+	 * @param node
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private ObjectType processArrayType(ArrayTypeNode node, boolean isParameter)
+			throws SyntaxException {
+<span class="nc" id="L137">		TypeNode elementTypeNode = node.getElementType(); // non-null</span>
+<span class="nc" id="L138">		Type tempElementType = processTypeNode(elementTypeNode);</span>
+		ObjectType elementType;
+		ExpressionNode sizeExpression;
+<span class="nc" id="L141">		boolean constQ = node.isConstQualified();</span>
+<span class="nc" id="L142">		boolean volatileQ = node.isVolatileQualified();</span>
+<span class="nc" id="L143">		boolean restrictQ = node.isRestrictQualified();</span>
+<span class="nc" id="L144">		boolean inputQ = node.isInputQualified();</span>
+<span class="nc" id="L145">		boolean outputQ = node.isOutputQualified();</span>
+		ObjectType result;
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (!(tempElementType instanceof ObjectType))</span>
+<span class="nc" id="L149">			throw error(&quot;Non-object type used for element type of array type&quot;,</span>
+<span class="nc" id="L150">					elementTypeNode);</span>
+<span class="nc" id="L151">		elementType = (ObjectType) tempElementType;</span>
+<span class="nc bnc" id="L152" title="All 4 branches missed.">		if (this.language == Language.C &amp;&amp; !isParameter</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">				&amp;&amp; !elementType.isComplete())</span>
+<span class="nc" id="L154">			throw error(&quot;Element type of array type is not complete&quot;,</span>
+<span class="nc" id="L155">					elementTypeNode);</span>
+		// C11 6.7.3(3):
+		// &quot;The type modified by the _Atomic qualifier shall not be an
+		// array type or a function type.&quot;
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (node.isAtomicQualified())</span>
+<span class="nc" id="L160">			throw error(&quot;_Atomic qualifier used with array type&quot;, node);</span>
+		// C11 6.7.3(9):
+		// &quot;If the specification of an array type includes any type qualifiers,
+		// the element type is so-qualified, not the array type.&quot;
+		// but don't apply that rule to $input and $output
+<span class="nc" id="L165">		elementType = typeFactory.qualify(elementType, constQ, volatileQ,</span>
+<span class="nc" id="L166">				restrictQ, false, false);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (restrictQ</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">				&amp;&amp; elementType instanceof QualifiedObjectType</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				&amp;&amp; ((QualifiedObjectType) elementType).getBaseType().kind() != TypeKind.POINTER)</span>
+<span class="nc" id="L170">			throw error(&quot;Use of restrict qualifier with non-pointer type&quot;, node);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (isParameter) {</span>
+			// no scope restriction on pointer given, so use null...
+<span class="nc" id="L173">			PointerType pointerType = typeFactory.pointerType(elementType);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			UnqualifiedObjectType unqualifiedType = (node.hasAtomicInBrackets() ? typeFactory</span>
+<span class="nc" id="L175">					.atomicType(pointerType) : pointerType);</span>
+
+			// need to process size expression, but ignore it...
+<span class="nc" id="L178">			sizeExpression = node.getExtent();</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (sizeExpression != null)</span>
+<span class="nc" id="L180">				entityAnalyzer.expressionAnalyzer</span>
+<span class="nc" id="L181">						.processExpression(sizeExpression);</span>
+<span class="nc" id="L182">			return typeFactory.qualify(unqualifiedType,</span>
+<span class="nc" id="L183">					node.hasConstInBrackets(), node.hasVolatileInBrackets(),</span>
+<span class="nc" id="L184">					node.hasRestrictInBrackets(), false, false);</span>
+		}
+<span class="nc bnc" id="L186" title="All 4 branches missed.">		if (node.hasAtomicInBrackets() || node.hasConstInBrackets()</span>
+<span class="nc bnc" id="L187" title="All 4 branches missed.">				|| node.hasVolatileInBrackets() || node.hasRestrictInBrackets())</span>
+<span class="nc" id="L188">			throw error(&quot;Type qualifiers in [...] in an array declarator &quot;</span>
+					+ &quot;can only appear in a parameter declaration&quot;,
+<span class="nc" id="L190">					elementTypeNode);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (node.hasUnspecifiedVariableLength()) { // &quot;*&quot;</span>
+<span class="nc" id="L192">			result = typeFactory</span>
+<span class="nc" id="L193">					.unspecifiedVariableLengthArrayType(elementType);</span>
+<span class="nc" id="L194">		} else {</span>
+<span class="nc" id="L195">			sizeExpression = node.getExtent();</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			if (sizeExpression == null) {</span>
+<span class="nc" id="L197">				result = typeFactory.incompleteArrayType(elementType);</span>
+<span class="nc" id="L198">			} else {</span>
+<span class="nc" id="L199">				entityAnalyzer.expressionAnalyzer</span>
+<span class="nc" id="L200">						.processExpression(sizeExpression);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">				if (sizeExpression.isConstantExpression()) {</span>
+<span class="nc" id="L202">					result = typeFactory.arrayType(elementType,</span>
+<span class="nc" id="L203">							(IntegerValue) nodeFactory</span>
+<span class="nc" id="L204">									.getConstantValue(sizeExpression));</span>
+<span class="nc" id="L205">				} else {</span>
+					// C11 6.7.6.2(5): &quot;If the size is an expression that is not
+					// an integer constant expression: if it occurs in a
+					// declaration at function prototype scope, it is treated as
+					// if it were replaced by *&quot;
+<span class="nc bnc" id="L210" title="All 2 branches missed.">					if (node.getScope().getScopeKind() == ScopeKind.FUNCTION_PROTOTYPE)</span>
+<span class="nc" id="L211">						result = typeFactory</span>
+<span class="nc" id="L212">								.unspecifiedVariableLengthArrayType(elementType);</span>
+					else
+<span class="nc" id="L214">						result = typeFactory.variableLengthArrayType(</span>
+<span class="nc" id="L215">								elementType, sizeExpression);</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L219" title="All 4 branches missed.">		if (inputQ || outputQ)</span>
+<span class="nc" id="L220">			result = typeFactory.qualify(result, false, false, false, inputQ,</span>
+<span class="nc" id="L221">					outputQ);</span>
+<span class="nc" id="L222">		return result;</span>
+	}
+
+	private Type processPointerType(PointerTypeNode node)
+			throws SyntaxException {
+<span class="nc" id="L227">		TypeNode referencedTypeNode = node.referencedType();</span>
+<span class="nc" id="L228">		Type referencedType = processTypeNode(referencedTypeNode);</span>
+<span class="nc" id="L229">		UnqualifiedObjectType unqualifiedType = typeFactory</span>
+<span class="nc" id="L230">				.pointerType(referencedType);</span>
+
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (node.isAtomicQualified())</span>
+<span class="nc" id="L233">			unqualifiedType = typeFactory.atomicType(unqualifiedType);</span>
+<span class="nc" id="L234">		return typeFactory.qualify(unqualifiedType, node.isConstQualified(),</span>
+<span class="nc" id="L235">				node.isVolatileQualified(), node.isRestrictQualified(),</span>
+<span class="nc" id="L236">				node.isInputQualified(), node.isOutputQualified());</span>
+	}
+
+	private Type processAtomicType(AtomicTypeNode node) throws SyntaxException {
+		// C11 6.7.2.4(3): &quot;The type name in an atomic type specifier shall not
+		// refer to an array type, a function type, an atomic type, or a
+		// qualified type.&quot;
+<span class="nc" id="L243">		Type baseType = processTypeNode(node.getBaseType());</span>
+<span class="nc" id="L244">		TypeKind kind = baseType.kind();</span>
+
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (kind == TypeKind.ARRAY)</span>
+<span class="nc" id="L247">			throw error(</span>
+<span class="nc" id="L248">					&quot;Type name used in atomic type specifier refers to an array type&quot;,</span>
+<span class="nc" id="L249">					node);</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (kind == TypeKind.FUNCTION)</span>
+<span class="nc" id="L251">			throw error(</span>
+<span class="nc" id="L252">					&quot;Type name used in atomic type specifier refers to a function type&quot;,</span>
+<span class="nc" id="L253">					node);</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if (kind == TypeKind.ATOMIC)</span>
+<span class="nc" id="L255">			throw error(</span>
+<span class="nc" id="L256">					&quot;Type name used in atomic type specifier refers to an atomic type&quot;,</span>
+<span class="nc" id="L257">					node);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (kind == TypeKind.QUALIFIED)</span>
+<span class="nc" id="L259">			throw error(</span>
+<span class="nc" id="L260">					&quot;Type name used in atomic type specifier refers to a qualified type&quot;,</span>
+<span class="nc" id="L261">					node);</span>
+<span class="nc" id="L262">		return typeFactory.atomicType((UnqualifiedObjectType) baseType);</span>
+	}
+
+	private Type processTypedefName(TypedefNameNode typeNode,
+			boolean isParameter) throws SyntaxException {
+<span class="nc" id="L267">		String name = typeNode.getName().name();</span>
+<span class="nc" id="L268">		Scope scope = typeNode.getScope();</span>
+<span class="nc" id="L269">		OrdinaryEntity entity = scope.getLexicalOrdinaryEntity(true, name);</span>
+<span class="nc" id="L270">		EntityKind kind = entity.getEntityKind();</span>
+		Typedef typedef;
+		Type result;
+
+<span class="nc bnc" id="L274" title="All 2 branches missed.">		if (kind != EntityKind.TYPEDEF)</span>
+<span class="nc" id="L275">			throw error(</span>
+<span class="nc" id="L276">					&quot;Internal error: typedef name does not refer to typedef&quot;,</span>
+<span class="nc" id="L277">					typeNode);</span>
+<span class="nc" id="L278">		typedef = (Typedef) entity;</span>
+<span class="nc" id="L279">		typeNode.getName().setEntity(typedef);</span>
+<span class="nc" id="L280">		result = typedef.getType();</span>
+<span class="nc bnc" id="L281" title="All 4 branches missed.">		if (isParameter &amp;&amp; result.kind() == TypeKind.ARRAY) {</span>
+<span class="nc" id="L282">			result = typeFactory.pointerType(((ArrayType) result)</span>
+<span class="nc" id="L283">					.getElementType());</span>
+		}
+<span class="nc" id="L285">		return result;</span>
+	}
+
+	private boolean onlyVoid(SequenceNode&lt;VariableDeclarationNode&gt; parameters) {
+<span class="nc bnc" id="L289" title="All 2 branches missed.">		if (parameters.numChildren() == 1) {</span>
+<span class="nc" id="L290">			VariableDeclarationNode decl = parameters.getSequenceChild(0);</span>
+
+<span class="nc bnc" id="L292" title="All 4 branches missed.">			if (decl != null &amp;&amp; decl.getIdentifier() == null) {</span>
+<span class="nc" id="L293">				TypeNode typeNode = decl.getTypeNode();</span>
+
+<span class="nc bnc" id="L295" title="All 4 branches missed.">				return typeNode != null &amp;&amp; typeNode.kind() == TypeNodeKind.VOID</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">						&amp;&amp; !typeNode.isAtomicQualified()</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">						&amp;&amp; !typeNode.isConstQualified()</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">						&amp;&amp; !typeNode.isRestrictQualified()</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">						&amp;&amp; !typeNode.isVolatileQualified();</span>
+			}
+		}
+<span class="nc" id="L302">		return false;</span>
+	}
+
+	private void checkNoAlignments(VariableDeclarationNode node)
+			throws SyntaxException {
+<span class="nc" id="L307">		SequenceNode&lt;ExpressionNode&gt; seq1 = node.constantAlignmentSpecifiers();</span>
+
+<span class="nc bnc" id="L309" title="All 4 branches missed.">		if (seq1 != null &amp;&amp; seq1.numChildren() &gt; 0) {</span>
+<span class="nc" id="L310">			ExpressionNode alignment = seq1.getSequenceChild(0);</span>
+
+<span class="nc" id="L312">			throw error(</span>
+<span class="nc" id="L313">					&quot;Alignment attribute in parameter declaration; see C11 6.7.5(2)&quot;,</span>
+<span class="nc" id="L314">					alignment);</span>
+		}
+
+<span class="nc" id="L317">		SequenceNode&lt;TypeNode&gt; seq2 = node.typeAlignmentSpecifiers();</span>
+
+<span class="nc bnc" id="L319" title="All 4 branches missed.">		if (seq2 != null &amp;&amp; seq2.numChildren() &gt; 0) {</span>
+<span class="nc" id="L320">			TypeNode alignment = seq2.getSequenceChild(0);</span>
+
+<span class="nc" id="L322">			throw error(</span>
+<span class="nc" id="L323">					&quot;Alignment attribute in parameter declaration; see C11 6.7.5(2)&quot;,</span>
+<span class="nc" id="L324">					alignment);</span>
+		}
+<span class="nc" id="L326">	}</span>
+
+	private Type processFunctionType(FunctionTypeNode node, boolean isParameter)
+			throws SyntaxException {
+		Type result;
+<span class="nc" id="L331">		TypeNode returnTypeNode = node.getReturnType();</span>
+<span class="nc" id="L332">		SequenceNode&lt;VariableDeclarationNode&gt; parameters = node.getParameters();</span>
+<span class="nc" id="L333">		int numParameters = parameters.numChildren();</span>
+<span class="nc" id="L334">		boolean isDefinition = node.parent() instanceof FunctionDefinitionNode;</span>
+<span class="nc" id="L335">		boolean fromIdentifierList = node.hasIdentifierList();</span>
+<span class="nc" id="L336">		boolean hasVariableArgs = node.hasVariableArgs();</span>
+<span class="nc" id="L337">		Type tempReturnType = processTypeNode(returnTypeNode);</span>
+		ObjectType returnType;
+
+		// &quot;A function declarator shall not specify a return type that is a
+		// function type or an array type.&quot;
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (!(tempReturnType instanceof ObjectType))</span>
+<span class="nc" id="L343">			throw error(</span>
+<span class="nc" id="L344">					&quot;Return type in function declaration is not an object type&quot;,</span>
+<span class="nc" id="L345">					returnTypeNode);</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">		if (tempReturnType instanceof ArrayType)</span>
+<span class="nc" id="L347">			throw error(&quot;Return type in function declaration is an array type&quot;,</span>
+<span class="nc" id="L348">					returnTypeNode);</span>
+<span class="nc" id="L349">		returnType = (ObjectType) tempReturnType;</span>
+<span class="nc bnc" id="L350" title="All 6 branches missed.">		if (fromIdentifierList &amp;&amp; !isDefinition &amp;&amp; numParameters == 0) {</span>
+			// no information known about parameters
+<span class="nc" id="L352">			result = typeFactory.functionType(returnType);</span>
+<span class="nc" id="L353">		} else {</span>
+<span class="nc" id="L354">			List&lt;ObjectType&gt; parameterTypes = new LinkedList&lt;ObjectType&gt;();</span>
+
+<span class="nc bnc" id="L356" title="All 4 branches missed.">			if (hasVariableArgs || !onlyVoid(parameters)) {</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">				for (VariableDeclarationNode decl : parameters) {</span>
+					TypeNode parameterTypeNode;
+
+					// C11 6.7.5(2): &quot;An alignment attribute shall not be
+					// specified in a declaration of a typedef, or a bit-field,
+					// or a function, or a parameter, or an object declared
+					// with the register storage-class specifier.&quot;
+<span class="nc" id="L364">					checkNoAlignments(decl);</span>
+					// C11 6.7.6.3(2): &quot;The only storage-class specifier that
+					// shall occur in a parameter declaration is register.&quot;
+					// the others are extern, static, _Thread_local, auto
+<span class="nc bnc" id="L368" title="All 4 branches missed.">					if (decl.hasExternStorage() || decl.hasStaticStorage()</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">							|| decl.hasThreadLocalStorage())</span>
+<span class="nc" id="L370">						throw error(</span>
+<span class="nc" id="L371">								&quot;Illegal storage class specified in parameter declaration; see C11 6.7.6.3(2)&quot;,</span>
+<span class="nc" id="L372">								decl);</span>
+<span class="nc" id="L373">					entityAnalyzer.declarationAnalyzer</span>
+<span class="nc" id="L374">							.processVariableDeclaration(decl, true);</span>
+<span class="nc" id="L375">					parameterTypeNode = decl.getTypeNode();</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">					if (parameterTypeNode == null)</span>
+<span class="nc" id="L377">						throw error(&quot;No type specified for function parameter&quot;,</span>
+<span class="nc" id="L378">								decl);</span>
+<span class="nc" id="L379">					parameterTypes</span>
+<span class="nc" id="L380">							.add((ObjectType) parameterTypeNode.getType());</span>
+				}
+			}
+<span class="nc" id="L383">			result = typeFactory.functionType(returnType, fromIdentifierList,</span>
+<span class="nc" id="L384">					parameterTypes, hasVariableArgs);</span>
+		}
+<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (isParameter)</span>
+<span class="nc" id="L387">			result = typeFactory.pointerType(result);</span>
+<span class="nc" id="L388">		return result;</span>
+	}
+
+	/**
+	 * Creates new enumeration entity and type and adds them to the scope of the
+	 * given node.
+	 * 
+	 * @param node
+	 *            an enumeration type node with non-null enumerators
+	 * @return the new enumeration entity
+	 * @throws SyntaxException
+	 */
+	private EnumerationType createEnumeration(EnumerationTypeNode node)
+			throws SyntaxException {
+<span class="nc" id="L402">		SequenceNode&lt;EnumeratorDeclarationNode&gt; enumerators = node</span>
+<span class="nc" id="L403">				.enumerators();</span>
+<span class="nc" id="L404">		Scope scope = node.getScope();</span>
+<span class="nc" id="L405">		String tag = node.getName(); // could be null</span>
+<span class="nc" id="L406">		List&lt;Enumerator&gt; enumeratorList = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L407">		EnumerationType enumerationType = typeFactory</span>
+<span class="nc" id="L408">				.enumerationType(node, tag);</span>
+<span class="nc" id="L409">		IntegerValue value = null;</span>
+
+		// clear it, in case it was used in previous analysis pass
+<span class="nc" id="L412">		enumerationType.clear();</span>
+<span class="nc" id="L413">		scope.add(enumerationType);</span>
+<span class="nc" id="L414">		enumerationType.setDefinition(node);</span>
+<span class="nc" id="L415">		enumerationType.addDeclaration(node);</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">		for (EnumeratorDeclarationNode decl : enumerators) {</span>
+<span class="nc" id="L417">			ExpressionNode constantNode = decl.getValue();</span>
+			Enumerator enumerator;
+
+<span class="nc bnc" id="L420" title="All 2 branches missed.">			if (constantNode == null) {</span>
+<span class="nc bnc" id="L421" title="All 2 branches missed.">				if (value == null)</span>
+<span class="nc" id="L422">					value = valueFactory.integerValue(enumeratorType, 0);</span>
+				else
+<span class="nc" id="L424">					value = valueFactory.plusOne(value);</span>
+<span class="nc" id="L425">			} else {</span>
+				Value tmpValue;
+
+<span class="nc" id="L428">				entityAnalyzer.expressionAnalyzer</span>
+<span class="nc" id="L429">						.processExpression(constantNode);</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">				if (!constantNode.isConstantExpression())</span>
+<span class="nc" id="L431">					throw error(</span>
+<span class="nc" id="L432">							&quot;Non-constant expression used in enumerator definition&quot;,</span>
+<span class="nc" id="L433">							constantNode);</span>
+<span class="nc" id="L434">				tmpValue = nodeFactory.getConstantValue(constantNode);</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">				if (!(tmpValue instanceof IntegerValue))</span>
+<span class="nc" id="L436">					throw error(</span>
+<span class="nc" id="L437">							&quot;Constant expression of concrete integer type expected, not &quot;</span>
+<span class="nc" id="L438">									+ tmpValue, constantNode);</span>
+<span class="nc" id="L439">				value = (IntegerValue) tmpValue;</span>
+			}
+<span class="nc" id="L441">			enumerator = typeFactory</span>
+<span class="nc" id="L442">					.newEnumerator(decl, enumerationType, value);</span>
+<span class="nc" id="L443">			enumerator.addDeclaration(decl);</span>
+<span class="nc" id="L444">			enumerator.setDefinition(decl);</span>
+<span class="nc" id="L445">			decl.setEntity(enumerator);</span>
+<span class="nc" id="L446">			decl.getIdentifier().setEntity(enumerator);</span>
+<span class="nc" id="L447">			enumeratorList.add(enumerator);</span>
+			try {
+<span class="nc" id="L449">				scope.add(enumerator);</span>
+<span class="nc" id="L450">			} catch (UnsourcedException e) {</span>
+<span class="nc" id="L451">				throw error(e, decl);</span>
+			}
+		}
+<span class="nc" id="L454">		enumerationType.complete(enumeratorList);</span>
+<span class="nc" id="L455">		return enumerationType;</span>
+	}
+
+	/**
+	 * Creates a new structure or union entity and type based on given node.
+	 * Adds it to the scope. This method should only be called if it is known no
+	 * such entity exists.
+	 * 
+	 * @param node
+	 *            a structure or union node
+	 * @return the resulting structure or union entity
+	 * @throws SyntaxException
+	 *             if already exists in scope
+	 */
+	private StructureOrUnionType createStructureOrUnion(
+			StructureOrUnionTypeNode node) throws SyntaxException {
+<span class="nc" id="L471">		Scope scope = node.getScope();</span>
+<span class="nc" id="L472">		IdentifierNode identifier = node.getIdentifier();</span>
+<span class="nc" id="L473">		String tag = node.getName(); // could be null</span>
+<span class="nc" id="L474">		SequenceNode&lt;FieldDeclarationNode&gt; fieldDecls = node</span>
+<span class="nc" id="L475">				.getStructDeclList(); // could be null</span>
+<span class="nc" id="L476">		StructureOrUnionType structureOrUnionType = typeFactory</span>
+<span class="nc" id="L477">				.structureOrUnionType(node, node.isStruct(), tag);</span>
+
+		// in case this was used in previous analysis pass, clear it:
+<span class="nc" id="L480">		structureOrUnionType.clear();</span>
+<span class="nc" id="L481">		scope.add(structureOrUnionType);</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">		if (identifier != null)</span>
+<span class="nc" id="L483">			identifier.setEntity(structureOrUnionType);</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">		if (fieldDecls != null) {</span>
+<span class="nc" id="L485">			completeStructOrUnion(structureOrUnionType, node);</span>
+		}
+<span class="nc" id="L487">		return structureOrUnionType;</span>
+	}
+
+	/**
+	 * Checks that an existing tagged entity &lt;code&gt;old&lt;/code&gt; is consistent with
+	 * one defined by a given structure or union type node &lt;code&gt;node&lt;/code&gt;.
+	 * Consistency entails:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;if &lt;code&gt;node&lt;/code&gt; defines a struct, &lt;code&gt;old&lt;/code&gt; is a struct;
+	 * if &lt;code&gt;node&lt;/code&gt; defines a union, &lt;code&gt;old&lt;/code&gt; is a union&lt;/li&gt;
+	 * &lt;li&gt;at least one of &lt;code&gt;old&lt;/code&gt; and &lt;code&gt;node&lt;/code&gt; is incomplete,
+	 * i.e., does not contain the field declarations&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @param old
+	 *            an existing tagged entity (non-&lt;code&gt;null&lt;/code&gt;)
+	 * @param node
+	 *            a structure or union type node (non-&lt;code&gt;null&lt;/code&gt;)
+	 * @throws SyntaxException
+	 *             if the existing entity and the node are inconsistent
+	 */
+	private void checkConsistency(TaggedEntity old,
+			StructureOrUnionTypeNode node) throws SyntaxException {
+<span class="nc" id="L510">		String tag = node.getName();</span>
+		StructureOrUnionType su;
+
+<span class="nc bnc" id="L513" title="All 2 branches missed.">		if (old.getEntityKind() != EntityKind.STRUCTURE_OR_UNION)</span>
+<span class="nc" id="L514">			throw error(&quot;Re-use of tag &quot; + tag</span>
+<span class="nc" id="L515">					+ &quot; for structure or union.  Previous use was at &quot;</span>
+<span class="nc" id="L516">					+ old.getFirstDeclaration().getSource(), node);</span>
+<span class="nc" id="L517">		su = (StructureOrUnionType) old;</span>
+<span class="nc bnc" id="L518" title="All 2 branches missed.">		if (su.isStruct()) {</span>
+<span class="nc bnc" id="L519" title="All 2 branches missed.">			if (!node.isStruct())</span>
+<span class="nc" id="L520">				throw error(&quot;Previous use of tag &quot; + tag</span>
+<span class="nc" id="L521">						+ &quot; was for structure, current use for union. &quot;</span>
+<span class="nc" id="L522">						+ &quot;Previous use was at &quot;</span>
+<span class="nc" id="L523">						+ old.getFirstDeclaration().getSource(), node);</span>
+		} else {
+<span class="nc bnc" id="L525" title="All 2 branches missed.">			if (node.isStruct())</span>
+<span class="nc" id="L526">				throw error(&quot;Previous use of tag &quot; + tag</span>
+<span class="nc" id="L527">						+ &quot; was for union, current use for structure. &quot;</span>
+<span class="nc" id="L528">						+ &quot;Previous use was at &quot;</span>
+<span class="nc" id="L529">						+ old.getFirstDeclaration().getSource(), node);</span>
+		}
+<span class="nc bnc" id="L531" title="All 4 branches missed.">		if (su.getType().isComplete() &amp;&amp; node.getStructDeclList() != null)</span>
+<span class="nc" id="L532">			throw error(</span>
+<span class="nc" id="L533">					&quot;Re-definition of structure or union.  Previous definition at &quot;</span>
+<span class="nc" id="L534">							+ old.getFirstDeclaration().getSource(), node);</span>
+<span class="nc" id="L535">	}</span>
+
+	/**
+	 * Given an incomplete structure or union entity and a consistent, complete
+	 * structure or union type node, completes the entity using the information
+	 * provided by the node.
+	 * 
+	 * @param structureOrUnion
+	 *            an incomplete structure or union entity (non-&lt;code&gt;null&lt;/code&gt;
+	 *            )
+	 * @param node
+	 *            a complete structure or union type node consistent with the
+	 *            &lt;code&gt;structureOrUnion&lt;/code&gt; (non-&lt;code&gt;null&lt;/code&gt;)
+	 * @throws SyntaxException
+	 *             if a field is declared with a non-object type or bit width is
+	 *             specified with a non-constant expression
+	 * @see {@link #checkConsistency(TaggedEntity, StructureOrUnionTypeNode)}
+	 */
+	private void completeStructOrUnion(
+			StructureOrUnionType structureOrUnionType,
+			StructureOrUnionTypeNode node) throws SyntaxException {
+<span class="nc" id="L556">		SequenceNode&lt;FieldDeclarationNode&gt; fieldDecls = node</span>
+<span class="nc" id="L557">				.getStructDeclList();</span>
+<span class="nc" id="L558">		List&lt;Field&gt; fieldList = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L560">		structureOrUnionType.setDefinition(node);</span>
+<span class="nc bnc" id="L561" title="All 2 branches missed.">		for (FieldDeclarationNode decl : fieldDecls) {</span>
+<span class="nc" id="L562">			TypeNode fieldTypeNode = decl.getTypeNode();</span>
+<span class="nc" id="L563">			ExpressionNode bitWidthExpression = decl.getBitFieldWidth();</span>
+			Value bitWidth;
+			ObjectType fieldType;
+			Field field;
+
+<span class="nc bnc" id="L568" title="All 2 branches missed.">			if (fieldTypeNode == null)</span>
+<span class="nc" id="L569">				fieldType = null;</span>
+			else {
+<span class="nc" id="L571">				Type tempType = processTypeNode(fieldTypeNode);</span>
+
+<span class="nc bnc" id="L573" title="All 2 branches missed.">				if (!(tempType instanceof ObjectType))</span>
+<span class="nc" id="L574">					throw error(</span>
+<span class="nc" id="L575">							&quot;Non-object type for structure or union member&quot;,</span>
+<span class="nc" id="L576">							fieldTypeNode);</span>
+<span class="nc" id="L577">				fieldType = (ObjectType) tempType;</span>
+			}
+<span class="nc bnc" id="L579" title="All 2 branches missed.">			if (bitWidthExpression == null) {</span>
+<span class="nc" id="L580">				bitWidth = null;</span>
+<span class="nc" id="L581">			} else {</span>
+<span class="nc bnc" id="L582" title="All 2 branches missed.">				if (!bitWidthExpression.isConstantExpression())</span>
+<span class="nc" id="L583">					throw error(</span>
+<span class="nc" id="L584">							&quot;Non-constant expression used for bit width in field declaration&quot;,</span>
+<span class="nc" id="L585">							bitWidthExpression);</span>
+<span class="nc" id="L586">				bitWidth = nodeFactory.getConstantValue(bitWidthExpression);</span>
+			}
+<span class="nc" id="L588">			field = typeFactory.newField(decl, fieldType, bitWidth</span>
+			// ,structureOrUnion
+					);
+<span class="nc" id="L591">			decl.setEntity(field);</span>
+<span class="nc bnc" id="L592" title="All 2 branches missed.">			if (decl.getIdentifier() != null)</span>
+<span class="nc" id="L593">				decl.getIdentifier().setEntity(field);</span>
+<span class="nc" id="L594">			fieldList.add(field);</span>
+		}
+<span class="nc" id="L596">		structureOrUnionType.complete(fieldList);</span>
+<span class="nc" id="L597">	}</span>
+
+	/**
+	 * Processes a domain type node. Such a node is specified in source form by
+	 * &lt;code&gt;$domain&lt;/code&gt; or &lt;code&gt;$domain(expr)&lt;/code&gt;, where
+	 * &lt;code&gt;expr&lt;/code&gt; is a constant expression of integer type
+	 * 
+	 * @param node
+	 *            a domain type node (non-&lt;code&gt;null&lt;/code&gt;)
+	 * @return the domain type specified by the node
+	 * @throws SyntaxException
+	 *             if the dimension expression is present but does not have
+	 *             integer type or is not a constant expression
+	 */
+	private DomainType processDomainType(DomainTypeNode node)
+			throws SyntaxException {
+<span class="nc" id="L613">		ExpressionNode dimensionNode = node.getDimension();</span>
+		DomainType result;
+
+<span class="nc bnc" id="L616" title="All 2 branches missed.">		if (dimensionNode != null) {</span>
+			Value value;
+
+<span class="nc" id="L619">			entityAnalyzer.expressionAnalyzer.processExpression(dimensionNode);</span>
+<span class="nc" id="L620">			value = nodeFactory.getConstantValue(dimensionNode);</span>
+<span class="nc bnc" id="L621" title="All 4 branches missed.">			if (value == null || !(value instanceof IntegerValue))</span>
+<span class="nc" id="L622">				throw error(&quot;$domain requires constant integer argument&quot;, node);</span>
+			else {
+<span class="nc" id="L624">				IntegerValue integerValue = (IntegerValue) value;</span>
+<span class="nc" id="L625">				int dimension = integerValue.getIntegerValue().intValue();</span>
+
+<span class="nc" id="L627">				result = typeFactory.domainType(dimension);</span>
+			}
+<span class="nc" id="L629">		} else</span>
+<span class="nc" id="L630">			result = typeFactory.domainType();</span>
+<span class="nc" id="L631">		return result;</span>
+	}
+
+	// ************************* Exported Methods **************************
+
+	/**
+	 * Processes a type node and sets the type field of that type node to the
+	 * type computed from the type node.
+	 * 
+	 * @param typeNode
+	 *            a type node which may or may not have been processed already
+	 * @return the type computed from the type node
+	 * @throws SyntaxException
+	 *             if there is a syntax problem with the type node
+	 */
+	Type processTypeNode(TypeNode typeNode) throws SyntaxException {
+<span class="nc" id="L647">		return processTypeNode(typeNode, false);</span>
+	}
+
+	/**
+	 * &lt;p&gt;
+	 * Processes a {@link TypeNode}. The Type defined by that type node is
+	 * computed and associated to the TypeNode.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * This method may also entail the creation and/or modification of entities.
+	 * For example, if the type node defines a strucuture or union type, or
+	 * enumeration type, then the corresponding entities may be created or
+	 * completed.
+	 * &lt;/p&gt;
+	 * 
+	 * @param typeNode
+	 *            a non-&lt;code&gt;null&lt;/code&gt; type node
+	 * @return the type specified by that node
+	 * @throws SyntaxException
+	 *             if any static errors are detected in the processing of the
+	 *             type node
+	 */
+	Type processTypeNode(TypeNode typeNode, boolean isParameter)
+			throws SyntaxException {
+<span class="nc" id="L672">		TypeNodeKind kind = typeNode.kind();</span>
+		Type type;
+
+<span class="nc bnc" id="L675" title="All 14 branches missed.">		switch (kind) {</span>
+		case VOID:
+<span class="nc" id="L677">			type = typeFactory.voidType();</span>
+<span class="nc" id="L678">			break;</span>
+		case BASIC:
+<span class="nc" id="L680">			type = processBasicType((BasicTypeNode) typeNode);</span>
+<span class="nc" id="L681">			break;</span>
+		case ENUMERATION:
+<span class="nc" id="L683">			type = processEnumerationType((EnumerationTypeNode) typeNode);</span>
+<span class="nc" id="L684">			break;</span>
+		case ARRAY:
+<span class="nc" id="L686">			type = processArrayType((ArrayTypeNode) typeNode, isParameter);</span>
+<span class="nc" id="L687">			break;</span>
+		case STRUCTURE_OR_UNION:
+<span class="nc" id="L689">			type = processStructureOrUnionType((StructureOrUnionTypeNode) typeNode);</span>
+<span class="nc" id="L690">			break;</span>
+		case FUNCTION:
+<span class="nc" id="L692">			type = processFunctionType((FunctionTypeNode) typeNode, isParameter);</span>
+<span class="nc" id="L693">			break;</span>
+		case POINTER:
+<span class="nc" id="L695">			type = processPointerType((PointerTypeNode) typeNode);</span>
+<span class="nc" id="L696">			break;</span>
+		case ATOMIC:
+<span class="nc" id="L698">			type = processAtomicType((AtomicTypeNode) typeNode);</span>
+<span class="nc" id="L699">			break;</span>
+		case TYPEDEF_NAME:
+<span class="nc" id="L701">			type = processTypedefName((TypedefNameNode) typeNode, isParameter);</span>
+<span class="nc" id="L702">			break;</span>
+		case SCOPE:
+<span class="nc" id="L704">			type = typeFactory.scopeType();</span>
+<span class="nc" id="L705">			break;</span>
+		case DOMAIN:
+<span class="nc" id="L707">			type = processDomainType((DomainTypeNode) typeNode);</span>
+<span class="nc" id="L708">			break;</span>
+		case RANGE:
+<span class="nc" id="L710">			type = typeFactory.rangeType();</span>
+<span class="nc" id="L711">			break;</span>
+		case TYPEOF: {
+<span class="nc" id="L713">			ExpressionNode expression = ((TypeofNode) typeNode)</span>
+<span class="nc" id="L714">					.getExpressionOperand();</span>
+<span class="nc" id="L715">			entityAnalyzer.expressionAnalyzer.processExpression(expression);</span>
+<span class="nc" id="L716">			type = expression.getType();</span>
+<span class="nc" id="L717">			break;</span>
+		}
+		default:
+<span class="nc" id="L720">			throw new RuntimeException(&quot;Unreachable&quot;);</span>
+		}
+<span class="nc bnc" id="L722" title="All 4 branches missed.">		assert type != null;</span>
+<span class="nc" id="L723">		typeNode.setType(type);</span>
+<span class="nc" id="L724">		return type;</span>
+	}
+
+	/**
+	 * &lt;p&gt;
+	 * See C11 6.7.2.2 and 6.7.2.3. The procedure is as follows:
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If there is no tag: there has to be an enumerator list, and this defines
+	 * a new unnamed entity and enumeration type in the current scope.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If there is a tag, proceed as follows:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;
+	 * If there is an enumerator list: check that there is no tagged entity with
+	 * the same tag in the current scope. If this check fails, syntax error.
+	 * Create a new enumeration entity and type, add it to the current scope.&lt;/li&gt;
+	 * &lt;li&gt;
+	 * If there is not an enumerator list: check (1) there is a visible tagged
+	 * entity with the same tag; (2) that tagged entity is an enum; and (3) that
+	 * previous enum is complete. If any of these fails: syntax error. Else, use
+	 * the old entity and type.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Note that the situation is slightly different than that for structures or
+	 * unions. An incomplete structure or union declaration may occur before the
+	 * structure or union is complete. In contrast, an enumeration must be
+	 * complete the first time it is declared, and an incomplete version may
+	 * occur only after that point.
+	 * &lt;/p&gt;
+	 * 
+	 * @param node
+	 * @return
+	 * @throws SyntaxException
+	 */
+	Type processEnumerationType(EnumerationTypeNode node)
+			throws SyntaxException {
+<span class="nc" id="L766">		Scope scope = node.getScope();</span>
+<span class="nc" id="L767">		IdentifierNode identifier = node.getIdentifier(); // could be null</span>
+<span class="nc" id="L768">		String tag = node.getName(); // could be null</span>
+<span class="nc" id="L769">		SequenceNode&lt;EnumeratorDeclarationNode&gt; enumerators = node</span>
+<span class="nc" id="L770">				.enumerators(); // could be null</span>
+		EnumerationType enumeration;
+		Type result;
+
+<span class="nc bnc" id="L774" title="All 2 branches missed.">		if (node.isRestrictQualified())</span>
+<span class="nc" id="L775">			throw error(&quot;Use of restrict qualifier with non-pointer type&quot;, node);</span>
+<span class="nc bnc" id="L776" title="All 2 branches missed.">		if (tag != null) {</span>
+<span class="nc bnc" id="L777" title="All 2 branches missed.">			if (enumerators != null) {</span>
+<span class="nc" id="L778">				TaggedEntity oldEntity = scope.getTaggedEntity(tag);</span>
+
+<span class="nc bnc" id="L780" title="All 2 branches missed.">				if (oldEntity != null)</span>
+<span class="nc" id="L781">					throw error(&quot;Re-use of tag &quot; + tag</span>
+<span class="nc" id="L782">							+ &quot; for enumeration.  Previous use was at &quot;</span>
+<span class="nc" id="L783">							+ oldEntity.getFirstDeclaration().getSource(), node);</span>
+<span class="nc" id="L784">				enumeration = createEnumeration(node);</span>
+<span class="nc" id="L785">			} else {</span>
+<span class="nc" id="L786">				TaggedEntity oldEntity = scope.getLexicalTaggedEntity(tag);</span>
+
+<span class="nc bnc" id="L788" title="All 2 branches missed.">				if (oldEntity == null)</span>
+<span class="nc" id="L789">					throw error(</span>
+<span class="nc" id="L790">							&quot;See C11 6.7.2.3(3):\n\&quot;A type specifier of the form\n&quot;</span>
+									+ &quot;    enum identifier\n&quot;
+									+ &quot;without an enumerator list shall only appear after the type\n&quot;
+<span class="nc" id="L793">									+ &quot;it specifies is complete.\&quot;&quot;, node);</span>
+<span class="nc bnc" id="L794" title="All 2 branches missed.">				if (!(oldEntity instanceof EnumerationType))</span>
+<span class="nc" id="L795">					throw error(</span>
+<span class="nc" id="L796">							&quot;Re-use of tag &quot;</span>
+<span class="nc" id="L797">									+ tag</span>
+<span class="nc" id="L798">									+ &quot; for enumeration when tag is visible with different kind.  Previous use was at &quot;</span>
+<span class="nc" id="L799">									+ oldEntity.getFirstDeclaration()</span>
+<span class="nc" id="L800">											.getSource(), node);</span>
+<span class="nc" id="L801">				enumeration = (EnumerationType) oldEntity;</span>
+<span class="nc bnc" id="L802" title="All 4 branches missed.">				assert enumeration.isComplete();</span>
+				// if not, you would have caught the earlier incomplete use
+<span class="nc" id="L804">				enumeration.addDeclaration(node);</span>
+			}
+<span class="nc" id="L806">		} else {</span>
+			// no tag: create new anonymous enumeration
+<span class="nc bnc" id="L808" title="All 2 branches missed.">			if (enumerators == null)</span>
+<span class="nc" id="L809">				throw error(&quot;Anonymous enumeration with no enumerator list&quot;,</span>
+<span class="nc" id="L810">						node);</span>
+<span class="nc" id="L811">			enumeration = createEnumeration(node);</span>
+		}
+<span class="nc" id="L813">		node.setEntity(enumeration);</span>
+<span class="nc bnc" id="L814" title="All 2 branches missed.">		if (identifier != null)</span>
+<span class="nc" id="L815">			identifier.setEntity(enumeration);</span>
+		{
+<span class="nc" id="L817">			boolean constQ = node.isConstQualified();</span>
+<span class="nc" id="L818">			boolean volatileQ = node.isVolatileQualified();</span>
+<span class="nc" id="L819">			UnqualifiedObjectType unqualifiedType = enumeration.getType();</span>
+
+<span class="nc bnc" id="L821" title="All 2 branches missed.">			if (node.isAtomicQualified())</span>
+<span class="nc" id="L822">				unqualifiedType = typeFactory.atomicType(unqualifiedType);</span>
+<span class="nc bnc" id="L823" title="All 4 branches missed.">			if (constQ || volatileQ)</span>
+<span class="nc" id="L824">				result = typeFactory.qualifiedType(unqualifiedType, constQ,</span>
+<span class="nc" id="L825">						volatileQ, false, false, false);</span>
+			else
+<span class="nc" id="L827">				result = unqualifiedType;</span>
+		}
+<span class="nc" id="L829">		node.setType(result);</span>
+<span class="nc" id="L830">		return result;</span>
+	}
+
+	/**
+	 * &lt;p&gt;
+	 * See C11 6.7.2.1 and 6.7.2.3. The procedure is as follows:
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If there is no tag, there has to be a declarator list, and this defines a
+	 * new unnamed struct or union entity and type in the current scope. If
+	 * there is no declarator list, a syntax exception is thrown.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If there is a tag, proceed as follows:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;
+	 * If there is a declarator list: see if there exists a tagged entity with
+	 * the same tag in current scope.
+	 * &lt;ul&gt;
+	 * &lt;li&gt;If there does, check it has the same kind (struct or union) as this
+	 * one, and check that it is incomplete. If either check fails, throw a
+	 * syntax exception. Then complete the old entity using the information from
+	 * the given node.&lt;/li&gt;
+	 * &lt;li&gt;If there does not exist a tagged entity with the same tag in the
+	 * current scope, create a new complete struct/union entity and type and add
+	 * it to the current scope.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;/li&gt;
+	 * &lt;li&gt;
+	 * If there is no declarator list: see if there exists a visible tagged
+	 * entity with the same tag. If there does exist such an entity, check it
+	 * has the same kind as this one (struct or union), and use it. If there
+	 * does not exist such an entity, create a new incomplete struct or union
+	 * entity and type and add it to the current scope.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;/p&gt;
+	 * 
+	 * @param node
+	 *            a structure or union type node
+	 * @return the structure or union type obtained by processing the node
+	 * @throws SyntaxException
+	 *             if any of the consistency checks defined above fails
+	 */
+	Type processStructureOrUnionType(StructureOrUnionTypeNode node)
+			throws SyntaxException {
+<span class="nc" id="L877">		Scope scope = node.getScope();</span>
+<span class="nc" id="L878">		IdentifierNode identifier = node.getIdentifier(); // could be null</span>
+<span class="nc" id="L879">		String tag = node.getName(); // could be null</span>
+<span class="nc" id="L880">		SequenceNode&lt;FieldDeclarationNode&gt; fieldDecls = node</span>
+<span class="nc" id="L881">				.getStructDeclList(); // could be null</span>
+		StructureOrUnionType structureOrUnion;
+		Type result;
+
+<span class="nc bnc" id="L885" title="All 2 branches missed.">		if (node.isRestrictQualified())</span>
+<span class="nc" id="L886">			throw error(&quot;Use of restrict qualifier with non-pointer type&quot;, node);</span>
+<span class="nc bnc" id="L887" title="All 2 branches missed.">		if (tag == null) {</span>
+<span class="nc bnc" id="L888" title="All 2 branches missed.">			if (fieldDecls == null)</span>
+<span class="nc" id="L889">				throw error(</span>
+<span class="nc" id="L890">						&quot;Anonymous structure or union with no declarator list&quot;,</span>
+<span class="nc" id="L891">						node);</span>
+<span class="nc" id="L892">			structureOrUnion = createStructureOrUnion(node);</span>
+<span class="nc" id="L893">		} else {</span>
+<span class="nc bnc" id="L894" title="All 2 branches missed.">			if (fieldDecls != null) {</span>
+<span class="nc" id="L895">				TaggedEntity oldEntity = scope.getTaggedEntity(tag);</span>
+
+<span class="nc bnc" id="L897" title="All 2 branches missed.">				if (oldEntity != null) {</span>
+<span class="nc" id="L898">					checkConsistency(oldEntity, node);</span>
+<span class="nc" id="L899">					structureOrUnion = (StructureOrUnionType) oldEntity;</span>
+<span class="nc" id="L900">					completeStructOrUnion(structureOrUnion, node);</span>
+<span class="nc" id="L901">				} else {</span>
+<span class="nc" id="L902">					structureOrUnion = createStructureOrUnion(node);</span>
+				}
+<span class="nc" id="L904">			} else {</span>
+<span class="nc" id="L905">				TaggedEntity oldEntity = scope.getLexicalTaggedEntity(tag);</span>
+
+<span class="nc bnc" id="L907" title="All 2 branches missed.">				if (oldEntity != null) {</span>
+<span class="nc" id="L908">					checkConsistency(oldEntity, node);</span>
+<span class="nc" id="L909">					structureOrUnion = (StructureOrUnionType) oldEntity;</span>
+<span class="nc" id="L910">				} else {</span>
+<span class="nc" id="L911">					structureOrUnion = createStructureOrUnion(node);</span>
+				}
+			}
+		}
+<span class="nc" id="L915">		structureOrUnion.addDeclaration(node);</span>
+<span class="nc" id="L916">		node.setEntity(structureOrUnion);</span>
+<span class="nc bnc" id="L917" title="All 2 branches missed.">		if (identifier != null)</span>
+<span class="nc" id="L918">			identifier.setEntity(structureOrUnion);</span>
+		{
+<span class="nc" id="L920">			boolean constQ = node.isConstQualified();</span>
+<span class="nc" id="L921">			boolean volatileQ = node.isVolatileQualified();</span>
+<span class="nc" id="L922">			UnqualifiedObjectType unqualifiedType = structureOrUnion.getType();</span>
+
+<span class="nc bnc" id="L924" title="All 2 branches missed.">			if (node.isAtomicQualified())</span>
+<span class="nc" id="L925">				unqualifiedType = typeFactory.atomicType(unqualifiedType);</span>
+<span class="nc bnc" id="L926" title="All 4 branches missed.">			if (constQ || volatileQ)</span>
+<span class="nc" id="L927">				result = typeFactory.qualifiedType(unqualifiedType, constQ,</span>
+<span class="nc" id="L928">						volatileQ, false, false, false);</span>
+			else
+<span class="nc" id="L930">				result = unqualifiedType;</span>
+		}
+<span class="nc" id="L932">		node.setType(result);</span>
+<span class="nc" id="L933">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,17 @@
+#include<civlc.h>
+int x;
+int *p = &x;
+
+void f() {
+  int y=0;
+  {
+    int *q = p;
+    *q = 15;
+  }
+}
+
+void main() {
+  $spawn f();
+  *p = 5; 
+  $assert(*p==5);
+}

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonQualifiedObjectType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonQualifiedObjectType.java</span></div><h1>CommonQualifiedObjectType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.QualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.UnqualifiedObjectType;
+
+public class CommonQualifiedObjectType extends CommonObjectType implements
+		QualifiedObjectType {
+
+	private UnqualifiedObjectType baseType;
+
+<span class="nc" id="L15">	private boolean constQualified = false;</span>
+
+<span class="nc" id="L17">	private boolean volatileQualified = false;</span>
+
+<span class="nc" id="L19">	private boolean restrictQualified = false;</span>
+
+<span class="nc" id="L21">	private boolean inputQualified = false;</span>
+
+<span class="nc" id="L23">	private boolean outputQualified = false;</span>
+
+	public CommonQualifiedObjectType(UnqualifiedObjectType baseType,
+			boolean constQualified, boolean volatileQualified,
+			boolean restrictQualified, boolean inputQualified,
+			boolean outputQualified) {
+<span class="nc" id="L29">		super(TypeKind.QUALIFIED);</span>
+<span class="nc bnc" id="L30" title="All 6 branches missed.">		if (!constQualified &amp;&amp; !volatileQualified &amp;&amp; !restrictQualified</span>
+<span class="nc bnc" id="L31" title="All 4 branches missed.">				&amp;&amp; !inputQualified &amp;&amp; !outputQualified)</span>
+<span class="nc" id="L32">			throw new RuntimeException(&quot;No qualifiers used in qualified type: &quot;</span>
+<span class="nc" id="L33">					+ baseType);</span>
+<span class="nc" id="L34">		this.baseType = baseType;</span>
+<span class="nc" id="L35">		this.constQualified = constQualified;</span>
+<span class="nc" id="L36">		this.volatileQualified = volatileQualified;</span>
+<span class="nc" id="L37">		this.restrictQualified = restrictQualified;</span>
+<span class="nc" id="L38">		this.inputQualified = inputQualified;</span>
+<span class="nc" id="L39">		this.outputQualified = outputQualified;</span>
+<span class="nc" id="L40">	}</span>
+
+	@Override
+	public boolean isConstQualified() {
+<span class="nc" id="L44">		return constQualified;</span>
+	}
+
+	@Override
+	public boolean isVolatileQualified() {
+<span class="nc" id="L49">		return this.volatileQualified;</span>
+	}
+
+	@Override
+	public boolean isRestrictQualified() {
+<span class="nc" id="L54">		return this.restrictQualified;</span>
+	}
+
+	@Override
+	public boolean isInputQualified() {
+<span class="nc" id="L59">		return inputQualified;</span>
+	}
+
+	@Override
+	public boolean isOutputQualified() {
+<span class="nc" id="L64">		return outputQualified;</span>
+	}
+
+	@Override
+	public UnqualifiedObjectType getBaseType() {
+<span class="nc" id="L69">		return baseType;</span>
+	}
+
+	@Override
+	public boolean isComplete() {
+<span class="nc" id="L74">		return baseType.isComplete();</span>
+	}
+
+	@Override
+	public boolean isVariablyModified() {
+<span class="nc" id="L79">		return baseType.isVariablyModified();</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L84">		int result = 1024 * baseType.hashCode();</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (constQualified)</span>
+<span class="nc" id="L87">			result += 3;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (volatileQualified)</span>
+<span class="nc" id="L89">			result += 5;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (restrictQualified)</span>
+<span class="nc" id="L91">			result += 7;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (inputQualified)</span>
+<span class="nc" id="L93">			result += 11;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (outputQualified)</span>
+<span class="nc" id="L95">			result += 13;</span>
+<span class="nc" id="L96">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object object) {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (this == object)</span>
+<span class="nc" id="L102">			return true;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (object instanceof QualifiedObjectType) {</span>
+<span class="nc" id="L104">			QualifiedObjectType that = (QualifiedObjectType) object;</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			return constQualified == that.isConstQualified()</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">					&amp;&amp; volatileQualified == that.isVolatileQualified()</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">					&amp;&amp; restrictQualified == that.isRestrictQualified()</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">					&amp;&amp; inputQualified == that.isInputQualified()</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">					&amp;&amp; outputQualified == that.isOutputQualified()</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">					&amp;&amp; baseType.equals(that.getBaseType());</span>
+		}
+<span class="nc" id="L113">		return false;</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean abbrv) {
+<span class="nc" id="L118">		String seperator = &quot;&quot;;</span>
+
+<span class="nc" id="L120">		out.print(&quot;QualifiedType[&quot;);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (inputQualified) {</span>
+<span class="nc" id="L122">			out.print(seperator + &quot;_input&quot;);</span>
+<span class="nc" id="L123">			seperator = &quot;, &quot;;</span>
+		}
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (outputQualified) {</span>
+<span class="nc" id="L126">			out.print(seperator + &quot;_output&quot;);</span>
+<span class="nc" id="L127">			seperator = &quot;, &quot;;</span>
+		}
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (constQualified) {</span>
+<span class="nc" id="L130">			out.print(seperator + &quot;const&quot;);</span>
+<span class="nc" id="L131">			seperator = &quot;, &quot;;</span>
+		}
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (restrictQualified) {</span>
+<span class="nc" id="L134">			out.print(seperator + &quot;restrict&quot;);</span>
+<span class="nc" id="L135">			seperator = &quot;, &quot;;</span>
+		}
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (volatileQualified) {</span>
+<span class="nc" id="L138">			out.print(seperator + &quot;volatile&quot;);</span>
+<span class="nc" id="L139">			seperator = &quot;, &quot;;</span>
+		}
+<span class="nc" id="L141">		out.println(&quot;]&quot;);</span>
+<span class="nc" id="L142">		out.print(prefix + &quot;| &quot;);</span>
+<span class="nc" id="L143">		baseType.print(prefix + &quot;| &quot;, out, true);</span>
+<span class="nc" id="L144">	}</span>
+
+	@Override
+	public boolean isScalar() {
+<span class="nc" id="L148">		return baseType.isScalar();</span>
+	}
+
+	@Override
+	protected boolean similar(Type other, boolean equivalent,
+			Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (other instanceof QualifiedObjectType) {</span>
+<span class="nc" id="L155">			QualifiedObjectType that = (QualifiedObjectType) other;</span>
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			return constQualified == that.isConstQualified()</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">					&amp;&amp; volatileQualified == that.isVolatileQualified()</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">					&amp;&amp; restrictQualified == that.isRestrictQualified()</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">					&amp;&amp; inputQualified == that.isInputQualified()</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">					&amp;&amp; outputQualified == that.isOutputQualified()</span>
+<span class="nc" id="L162">					&amp;&amp; ((CommonType) baseType).similar(that.getBaseType(),</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">							equivalent, seen);</span>
+		}
+<span class="nc" id="L165">		return false;</span>
+	}
+
+	@Override
+	public boolean isConstantQualified() {
+<span class="nc bnc" id="L170" title="All 4 branches missed.">		return this.constQualified || this.baseType.isConstantQualified();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonASTFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.common</a> &gt; <span class="el_source">CommonASTFactory.java</span></div><h1>CommonASTFactory.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.common;
+
+import java.util.Collection;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+//TODO improve the printing of variable declarations when array type is involved.
+
+public class CommonASTFactory implements ASTFactory {
+
+	private NodeFactory nodeFactory;
+
+	private TokenFactory tokenFactory;
+
+	private TypeFactory typeFactory;
+
+<span class="nc" id="L25">	public CommonASTFactory(NodeFactory nodeFactory, TokenFactory tokenFactory,</span>
+			TypeFactory typeFactory) {
+<span class="nc" id="L27">		this.nodeFactory = nodeFactory;</span>
+<span class="nc" id="L28">		this.tokenFactory = tokenFactory;</span>
+<span class="nc" id="L29">		this.typeFactory = typeFactory;</span>
+<span class="nc" id="L30">	}</span>
+
+	@Override
+	public NodeFactory getNodeFactory() {
+<span class="nc" id="L34">		return nodeFactory;</span>
+	}
+
+	@Override
+	public TokenFactory getTokenFactory() {
+<span class="nc" id="L39">		return tokenFactory;</span>
+	}
+
+	@Override
+	public TypeFactory getTypeFactory() {
+<span class="nc" id="L44">		return typeFactory;</span>
+	}
+
+	@Override
+	public AST newAST(SequenceNode&lt;BlockItemNode&gt; root,
+			Collection&lt;SourceFile&gt; sourceFiles, boolean isWholeprogram)
+			throws SyntaxException {
+<span class="nc" id="L51">		AST unit = new CommonAST(this, root, false, sourceFiles, isWholeprogram);</span>
+
+		// do some preparation?
+<span class="nc" id="L54">		return unit;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

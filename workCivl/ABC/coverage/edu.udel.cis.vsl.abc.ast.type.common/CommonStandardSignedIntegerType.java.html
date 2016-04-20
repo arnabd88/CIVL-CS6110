@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonStandardSignedIntegerType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonStandardSignedIntegerType.java</span></div><h1>CommonStandardSignedIntegerType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.math.BigInteger;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType;
+
+public class CommonStandardSignedIntegerType extends CommonBasicType implements
+		StandardSignedIntegerType {
+
+	/**
+	 * Minimum (in magnitude) value for SCHAR_MIN, the minimum value of an
+	 * object of type signed char.
+	 */
+<span class="fc" id="L14">	public static final BigInteger SCHAR_MIN_MIN = new BigInteger(&quot;-127&quot;); // -(2^7-1)</span>
+
+	/**
+	 * Minimum value for SCHAR_MAX, the maximum value for an object of type
+	 * signed char.
+	 */
+<span class="fc" id="L20">	public static final BigInteger SCHAR_MAX_MIN = new BigInteger(&quot;127&quot;); // 2^7-1</span>
+
+	/**
+	 * Minimum value (in magnitude) for SHRT_MIN, the minimum value for an
+	 * object of type short int.
+	 */
+<span class="fc" id="L26">	public static final BigInteger SHRT_MIN_MIN = new BigInteger(&quot;-32767&quot;); // -(2^15-1);</span>
+
+	/**
+	 * Minimum value for SHRT_MAX, the maximum value for an object of type short
+	 * int.
+	 */
+<span class="fc" id="L32">	public static final BigInteger SHRT_MAX_MIN = new BigInteger(&quot;32767&quot;); // 2^15-1</span>
+
+	/**
+	 * Minimum value (in magnitude) for INT_MIN, the minimum value for an object
+	 * of type int.
+	 */
+<span class="fc" id="L38">	public static final BigInteger INT_MIN_MIN = new BigInteger(&quot;-32767&quot;); // -(215-1)</span>
+
+	/** Minimum value for INT_MAX, the maximum value for an object of type int. */
+<span class="fc" id="L41">	public static final BigInteger INT_MAX_MIN = new BigInteger(&quot;32767&quot;); // 215-1</span>
+
+	/**
+	 * Minimum value (in magnitude) for LONG_MIN, the minimum value for an
+	 * object of type long int.
+	 */
+<span class="fc" id="L47">	public static final BigInteger LONG_MIN_MIN = new BigInteger(&quot;-2147483647&quot;);// -(2^31-1)</span>
+
+	/**
+	 * Minimum value for LONG_MAX, the maximum value for an object of type long
+	 * int.
+	 */
+<span class="fc" id="L53">	public static final BigInteger LONG_MAX_MIN = new BigInteger(&quot;2147483647&quot;);// 2^31-1</span>
+
+	/**
+	 * Minimum value (in magnitude) for LLONG_MIN, the minimum value for an
+	 * object of type long long int.
+	 */
+<span class="fc" id="L59">	public static final BigInteger LLONG_MIN_MIN = new BigInteger(</span>
+<span class="fc" id="L60">			&quot;-9223372036854775807&quot;);// -(2^63-1)</span>
+
+	/**
+	 * Minimum value for LLONG_MAX, the maximum value for an object of type long
+	 * long int.
+	 */
+<span class="fc" id="L66">	public static final BigInteger LLONG_MAX_MIN = new BigInteger(</span>
+<span class="fc" id="L67">			&quot;9223372036854775807&quot;);// 2^63-1</span>
+
+	private static BasicTypeKind integerToBasic(SignedIntKind integerTypeKind) {
+<span class="pc bpc" id="L70" title="5 of 6 branches missed.">		switch (integerTypeKind) {</span>
+		case SIGNED_CHAR:
+<span class="nc" id="L72">			return BasicTypeKind.SIGNED_CHAR;</span>
+		case SHORT:
+<span class="nc" id="L74">			return BasicTypeKind.SHORT;</span>
+		case INT:
+<span class="fc" id="L76">			return BasicTypeKind.INT;</span>
+		case LONG:
+<span class="nc" id="L78">			return BasicTypeKind.LONG;</span>
+		case LONG_LONG:
+<span class="nc" id="L80">			return BasicTypeKind.LONG_LONG;</span>
+		}
+<span class="nc" id="L82">		throw new RuntimeException(&quot;Unreachable&quot;);</span>
+	}
+
+	private SignedIntKind integerTypeKind;
+
+	public CommonStandardSignedIntegerType(SignedIntKind integerTypeKind) {
+<span class="fc" id="L88">		super(integerToBasic(integerTypeKind));</span>
+<span class="fc" id="L89">		this.integerTypeKind = integerTypeKind;</span>
+<span class="fc" id="L90">	}</span>
+
+	@Override
+	public SignedIntKind getIntKind() {
+<span class="nc" id="L94">		return integerTypeKind;</span>
+	}
+
+	@Override
+	public BigInteger getMinimumMaxValue() {
+<span class="nc bnc" id="L99" title="All 6 branches missed.">		switch (integerTypeKind) {</span>
+		case SIGNED_CHAR:
+<span class="nc" id="L101">			return SCHAR_MAX_MIN;</span>
+		case SHORT:
+<span class="nc" id="L103">			return SHRT_MAX_MIN;</span>
+		case INT:
+<span class="nc" id="L105">			return INT_MAX_MIN;</span>
+		case LONG:
+<span class="nc" id="L107">			return LONG_MAX_MIN;</span>
+		case LONG_LONG:
+<span class="nc" id="L109">			return LLONG_MAX_MIN;</span>
+		default:
+<span class="nc" id="L111">			throw new RuntimeException(&quot;unreachable&quot;);</span>
+		}
+	}
+
+	@Override
+	public BigInteger getMinimumMinValue() {
+<span class="nc bnc" id="L117" title="All 6 branches missed.">		switch (integerTypeKind) {</span>
+		case SIGNED_CHAR:
+<span class="nc" id="L119">			return SCHAR_MIN_MIN;</span>
+		case SHORT:
+<span class="nc" id="L121">			return SHRT_MIN_MIN;</span>
+		case INT:
+<span class="nc" id="L123">			return INT_MIN_MIN;</span>
+		case LONG:
+<span class="nc" id="L125">			return LONG_MIN_MIN;</span>
+		case LONG_LONG:
+<span class="nc" id="L127">			return LLONG_MIN_MIN;</span>
+		default:
+<span class="nc" id="L129">			throw new RuntimeException(&quot;unreachable&quot;);</span>
+		}
+	}
+
+	@Override
+	public boolean inMinimumRange(BigInteger intVal) {
+<span class="nc bnc" id="L135" title="All 4 branches missed.">		return intVal.compareTo(getMinimumMinValue()) &gt;= 0</span>
+<span class="nc" id="L136">				&amp;&amp; intVal.compareTo(getMinimumMaxValue()) &lt;= 0;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

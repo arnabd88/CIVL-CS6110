@@ -1,0 +1,103 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Domain\+Iterator\+Statement Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Domain\+Iterator\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Domain\+Iterator\+Statement}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Domain\+Iterator\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Domain\+Iterator\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a709b14125aa8c8a233cc8487a8e9c294}{domain} ()
+\begin{DoxyCompactList}\small\item\em Returns the iteration domain expression, which is the expression following the colon. \end{DoxyCompactList}\item 
+List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a38791f58d77ff3eef2f3c600c157b6da}{loop\+Variables} ()
+\begin{DoxyCompactList}\small\item\em Returns the list of loop variables, ordered from left to right. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a5ee1f23fed4a282e272676e227256100}{get\+Literal\+Dom\+Counter} ()
+\begin{DoxyCompactList}\small\item\em T\+O\+D\+O\+: can it returns Variable instead?~\newline
+ Returns a counter variable used for iterating on a literal domain step by step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Updates the loop variables with the next element of a domain. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a709b14125aa8c8a233cc8487a8e9c294}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement}!domain@{domain}}
+\index{domain@{domain}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement}}
+\subsubsection[{domain}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Domain\+Iterator\+Statement.\+domain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a709b14125aa8c8a233cc8487a8e9c294}
+
+
+Returns the iteration domain expression, which is the expression following the colon. 
+
+\begin{DoxyReturn}{Returns}
+the iteration domain expression 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlForEnterStatement_a2cd214f06c7e29eb2fbb52892d0785c2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+For\+Enter\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a5ee1f23fed4a282e272676e227256100}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement}!get\+Literal\+Dom\+Counter@{get\+Literal\+Dom\+Counter}}
+\index{get\+Literal\+Dom\+Counter@{get\+Literal\+Dom\+Counter}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement}}
+\subsubsection[{get\+Literal\+Dom\+Counter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Domain\+Iterator\+Statement.\+get\+Literal\+Dom\+Counter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a5ee1f23fed4a282e272676e227256100}
+
+
+T\+O\+D\+O\+: can it returns Variable instead?~\newline
+ Returns a counter variable used for iterating on a literal domain step by step. 
+
+\begin{DoxyReturn}{Returns}
+the variable expression of the counter 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlForEnterStatement_a780bee1c591a0333574cf92cff25726e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+For\+Enter\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a38791f58d77ff3eef2f3c600c157b6da}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement}!loop\+Variables@{loop\+Variables}}
+\index{loop\+Variables@{loop\+Variables}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Domain\+Iterator\+Statement}}
+\subsubsection[{loop\+Variables}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Variable}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Domain\+Iterator\+Statement.\+loop\+Variables (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1DomainIteratorStatement_a38791f58d77ff3eef2f3c600c157b6da}
+
+
+Returns the list of loop variables, ordered from left to right. 
+
+\begin{DoxyReturn}{Returns}
+the list of loop variables 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlForEnterStatement_a3858731bfc99b10d69deb441f0f340b7}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+For\+Enter\+Statement}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/statement/Domain\+Iterator\+Statement.\+java\end{DoxyCompactItemize}

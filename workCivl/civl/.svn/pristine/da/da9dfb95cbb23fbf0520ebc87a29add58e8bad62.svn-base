@@ -1,0 +1,36 @@
+/* Commandline execution:
+ *		civl verify atomicBlockResume.cvl
+ * */
+#include <civlc.h>
+
+int x = 1;
+int y = 0;
+int z = 0;
+int sum = 0;
+
+void foo(int i) {
+  $atomic {
+    y = y + i;
+    z++;
+    // blocked here until x is set to 0
+    $when(x==0) 
+    switch(y) {
+      case 1: sum += 1*i; break;
+      case 2: sum += 2*i; break;
+      case 3: sum += 3*i; break;
+    };
+  }
+}
+
+void main(){
+  $proc fp1, fp2;
+  
+  $atomic {
+    fp1 = $spawn foo(1);
+    fp2 = $spawn foo(2);
+    // blocked here until z++ has been executed twice
+    $when (z==2) x = 0;
+  }
+  $wait(fp1);
+  $wait(fp2);
+}

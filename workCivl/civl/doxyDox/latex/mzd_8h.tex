@@ -1,0 +1,981 @@
+\hypertarget{mzd_8h}{}\section{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mzd.h File Reference}
+\label{mzd_8h}\index{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mzd.\+h@{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mzd.\+h}}
+
+
+Dense matrices over G\+F(2) represented as a bit field.  
+
+
+{\ttfamily \#include $<$m4ri\+\_\+config.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$m4ri/misc.\+h$>$}\\*
+{\ttfamily \#include $<$m4ri/debug\+\_\+dump.\+h$>$}\\*
+Include dependency graph for mzd.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mzd_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mzd_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmzd__block__t}{mzd\+\_\+block\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Data containers containing the values packed into words. \end{DoxyCompactList}\item 
+struct \hyperlink{structmzd__t}{mzd\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Dense matrices over G\+F(2). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{mzd_8h_a57791f109fba9d30acdb7c3c02b36a35}{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+A\+X\+\_\+\+M\+Z\+D\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E}~(((size\+\_\+t)1) $<$$<$ 27)
+\begin{DoxyCompactList}\small\item\em Maximum number of words allocated for one \hyperlink{structmzd__t}{mzd\+\_\+t} block. \end{DoxyCompactList}\item 
+\#define \hyperlink{mzd_8h_a76342255744a17091e66e7c16bc863cc}{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+U\+L\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E}~\hyperlink{misc_8h_a74e75242132eaabbc1c512488a135926}{M\+I\+N}(((int)sqrt((double)(4 $\ast$ \+\_\+\+\_\+\+M4\+R\+I\+\_\+\+C\+P\+U\+\_\+\+L3\+\_\+\+C\+A\+C\+H\+E))) / 2, 2048)
+\begin{DoxyCompactList}\small\item\em Matrix multiplication block-\/ing dimension. \end{DoxyCompactList}\item 
+\#define \hyperlink{mzd_8h_adc489a58a3989dad9aecdef73ff12544}{mzd\+\_\+free\+\_\+window}~\hyperlink{mzd_8h_a3ecd0af20cd69fbb29ac3be15cf3b677}{mzd\+\_\+free}
+\begin{DoxyCompactList}\small\item\em Free a matrix window created with mzd\+\_\+init\+\_\+window. \end{DoxyCompactList}\item 
+\#define \hyperlink{mzd_8h_a8ef10f72725525b63bdc96f7c0bf9934}{mzd\+\_\+sub}~\hyperlink{mzd_8h_a11ade9c76a1b8f103ca313acdb9ae9e0}{mzd\+\_\+add}
+\begin{DoxyCompactList}\small\item\em Same as mzd\+\_\+add. \end{DoxyCompactList}\item 
+\#define \hyperlink{mzd_8h_a4855f23f629469e453e97cbce794b55d}{\+\_\+mzd\+\_\+sub}~\hyperlink{mzd_8h_ae1489cd61eec65f0967b8fedce94dbdc}{\+\_\+mzd\+\_\+add}
+\begin{DoxyCompactList}\small\item\em Same as mzd\+\_\+sub but without any checks on the input. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structmzd__t}{mzd\+\_\+t} \hyperlink{mzd_8h_a621c5b930998971e9b810e5f686975f6}{mzd\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Dense matrices over G\+F(2). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_af5c7b804117a98609625c81eb982abab}{mzd\+\_\+init} (\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const r, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const c)
+\begin{DoxyCompactList}\small\item\em Create a new matrix of dimension r x c. \end{DoxyCompactList}\item 
+void \hyperlink{mzd_8h_a3ecd0af20cd69fbb29ac3be15cf3b677}{mzd\+\_\+free} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A})
+\begin{DoxyCompactList}\small\item\em Free a matrix created with mzd\+\_\+init. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_a4afa844b6b27f687654c6462c2d3ea2b}{mzd\+\_\+init\+\_\+window} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$M, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const lowr, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const lowc, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const highr, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const highc)
+\begin{DoxyCompactList}\small\item\em Create a window/view into the matrix M. \end{DoxyCompactList}\item 
+void \hyperlink{mzd_8h_a5ad46bee7037c2d93eb2a854a13f5af7}{mzd\+\_\+copy\+\_\+row} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$B, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} i, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} j)
+\begin{DoxyCompactList}\small\item\em copy row j from \hyperlink{structA}{A} to row i from B. \end{DoxyCompactList}\item 
+void \hyperlink{mzd_8h_ada8f91bd35c7489e488cb1f24d2a005a}{mzd\+\_\+col\+\_\+swap} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$M, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const cola, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const colb)
+\begin{DoxyCompactList}\small\item\em Swap the two columns cola and colb. \end{DoxyCompactList}\item 
+void \hyperlink{mzd_8h_a3e386f00bb2f9fe89eab38d70df72ef4}{mzd\+\_\+row\+\_\+add} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$M, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const sourcerow, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const destrow)
+\begin{DoxyCompactList}\small\item\em Add the rows sourcerow and destrow and stores the total in the row destrow. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_a6d9efe1d13e605286cab59a406226fa0}{mzd\+\_\+transpose} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$D\+S\+T, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A})
+\begin{DoxyCompactList}\small\item\em Transpose a matrix. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_aff6f04c806a3fbe4627423a29fc27bca}{mzd\+\_\+mul\+\_\+naive} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B)
+\begin{DoxyCompactList}\small\item\em Naive cubic matrix multiplication. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_ae4cf86d4139ba803e676f132e5bcb545}{mzd\+\_\+addmul\+\_\+naive} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B)
+\begin{DoxyCompactList}\small\item\em Naive cubic matrix multiplication and addition. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_aa838e6fb8dcac16d782429783582b4b2}{\+\_\+mzd\+\_\+mul\+\_\+naive} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B, int const clear)
+\begin{DoxyCompactList}\small\item\em Naive cubic matrix multiplication with the pre-\/transposed B. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_a8461f70ba90563c7b2a825ed00b16202}{\+\_\+mzd\+\_\+mul\+\_\+va} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$v, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, int const clear)
+\begin{DoxyCompactList}\small\item\em Matrix multiplication optimized for v$\ast$\+A where v is a vector. \end{DoxyCompactList}\item 
+void \hyperlink{mzd_8h_a3167fa0d3b20f8a707e1aa98562be7fa}{mzd\+\_\+randomize} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$M)
+\begin{DoxyCompactList}\small\item\em Fill matrix M with uniformly distributed bits. \end{DoxyCompactList}\item 
+void \hyperlink{mzd_8h_afb19458831e01d11bd88f0f982eb5220}{mzd\+\_\+set\+\_\+ui} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$M, unsigned int const value)
+\begin{DoxyCompactList}\small\item\em Set the matrix M to the value equivalent to the integer value provided. \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{mzd_8h_ab7a8c4841edde200b16c1282bc542626}{mzd\+\_\+gauss\+\_\+delayed} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$M, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const startcol, int const full)
+\begin{DoxyCompactList}\small\item\em Gaussian elimination. \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{mzd_8h_a21397f5c750c8ceb66528c15e06f7a4f}{mzd\+\_\+echelonize\+\_\+naive} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$M, int const full)
+\begin{DoxyCompactList}\small\item\em Gaussian elimination. \end{DoxyCompactList}\item 
+int \hyperlink{mzd_8h_adff5537eda1401062c1b6dd5eccad258}{mzd\+\_\+equal} (\hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B)
+\begin{DoxyCompactList}\small\item\em Return T\+R\+U\+E if \hyperlink{structA}{A} == B. \end{DoxyCompactList}\item 
+int \hyperlink{mzd_8h_a56a5d0c28c8788434f97272d3db1f8d1}{mzd\+\_\+cmp} (\hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B)
+\begin{DoxyCompactList}\small\item\em Return -\/1,0,1 if if \hyperlink{structA}{A} $<$ B, \hyperlink{structA}{A} == B or \hyperlink{structA}{A} $>$ B respectively. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_a9b241de2f3a2fa1f69761f6d6eda5c75}{mzd\+\_\+copy} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$D\+S\+T, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A})
+\begin{DoxyCompactList}\small\item\em Copy matrix \hyperlink{structA}{A} to D\+S\+T. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_a327aa7d6f31117107f60f65c43958fc8}{mzd\+\_\+concat} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B)
+\begin{DoxyCompactList}\small\item\em Concatenate B to \hyperlink{structA}{A} and write the result to C. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_a876ec7ddf9f0b1359f1ce0ed4713a894}{mzd\+\_\+stack} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B)
+\begin{DoxyCompactList}\small\item\em Stack \hyperlink{structA}{A} on top of B and write the result to C. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_a373ee64108d53d92954e4ad1576ceb0c}{mzd\+\_\+submatrix} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$S, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$M, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const lowr, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const lowc, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const highr, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const highc)
+\begin{DoxyCompactList}\small\item\em Copy a submatrix. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_ae07ced27ae0a0afd5bbd52216f3c4f6f}{mzd\+\_\+invert\+\_\+naive} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$I\+N\+V, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$I)
+\begin{DoxyCompactList}\small\item\em Invert the matrix target using Gaussian elimination. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_a11ade9c76a1b8f103ca313acdb9ae9e0}{mzd\+\_\+add} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B)
+\begin{DoxyCompactList}\small\item\em Set C = A+\+B. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_ae1489cd61eec65f0967b8fedce94dbdc}{\+\_\+mzd\+\_\+add} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$C, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$B)
+\begin{DoxyCompactList}\small\item\em Same as mzd\+\_\+add but without any checks on the input. \end{DoxyCompactList}\item 
+int \hyperlink{mzd_8h_a7512692a2c6205ca5e84a2f887d42598}{mzd\+\_\+is\+\_\+zero} (\hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A})
+\begin{DoxyCompactList}\small\item\em Zero test for matrix. \end{DoxyCompactList}\item 
+void \hyperlink{mzd_8h_a340e71998ca4c180606cc1b0da7e9b71}{mzd\+\_\+row\+\_\+clear\+\_\+offset} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$M, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const row, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} const coloffset)
+\begin{DoxyCompactList}\small\item\em Clear the given row, but only begins at the column coloffset. \end{DoxyCompactList}\item 
+int \hyperlink{mzd_8h_af1596d811f0de0d1cce79b7a1ef944b0}{mzd\+\_\+find\+\_\+pivot} (\hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$M, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} start\+\_\+row, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} start\+\_\+col, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} $\ast$r, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} $\ast$c)
+\begin{DoxyCompactList}\small\item\em Find the next nonzero entry in M starting at start\+\_\+row and start\+\_\+col. \end{DoxyCompactList}\item 
+double \hyperlink{mzd_8h_a7e897a93b8887cd180ed8b85ce84ba0d}{mzd\+\_\+density} (\hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{misc_8h_ab3e1df9eeef59797b83f1a79851ead7e}{wi\+\_\+t} res)
+\begin{DoxyCompactList}\small\item\em Return the number of nonzero entries divided by nrows $\ast$ ncols. \end{DoxyCompactList}\item 
+double \hyperlink{mzd_8h_ac1f87f47ed6cfc4a47c9292d2362f7bb}{\+\_\+mzd\+\_\+density} (\hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A}, \hyperlink{misc_8h_ab3e1df9eeef59797b83f1a79851ead7e}{wi\+\_\+t} res, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} r, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} c)
+\begin{DoxyCompactList}\small\item\em Return the number of nonzero entries divided by nrows $\ast$ ncols considering only the submatrix starting at (r,c). \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{mzd_8h_a473effa04000ce6d01d2efd54f0774ae}{mzd\+\_\+first\+\_\+zero\+\_\+row} (\hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A})
+\begin{DoxyCompactList}\small\item\em Return the first row with all zero entries. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_ac8b71a8684b3678a1c8da50ff30d34b4}{mzd\+\_\+extract\+\_\+u} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$U, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A})
+\begin{DoxyCompactList}\small\item\em Return upper triangular submatrix of \hyperlink{structA}{A}. \end{DoxyCompactList}\item 
+\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$ \hyperlink{mzd_8h_ab1f6b8ca76646178229e2ff07a9e1743}{mzd\+\_\+extract\+\_\+l} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$L, \hyperlink{structmzd__t}{mzd\+\_\+t} const $\ast$\hyperlink{structA}{A})
+\begin{DoxyCompactList}\small\item\em Return lower triangular submatrix of \hyperlink{structA}{A}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Dense matrices over G\+F(2) represented as a bit field. 
+
+\begin{DoxyAuthor}{Author}
+Gregory Bard \href{mailto:bard@fordham.edu}{\tt bard@fordham.\+edu} 
+
+Martin Albrecht \href{mailto:martinralbrecht+m4ri@googlemail.com}{\tt martinralbrecht+m4ri@googlemail.\+com} 
+
+Carlo Wood \href{mailto:carlo@alinoe.com}{\tt carlo@alinoe.\+com} 
+\end{DoxyAuthor}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{mzd_8h_a57791f109fba9d30acdb7c3c02b36a35}{}\index{mzd.\+h@{mzd.\+h}!\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+A\+X\+\_\+\+M\+Z\+D\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E@{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+A\+X\+\_\+\+M\+Z\+D\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E}}
+\index{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+A\+X\+\_\+\+M\+Z\+D\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E@{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+A\+X\+\_\+\+M\+Z\+D\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+A\+X\+\_\+\+M\+Z\+D\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+A\+X\+\_\+\+M\+Z\+D\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E~(((size\+\_\+t)1) $<$$<$ 27)}\label{mzd_8h_a57791f109fba9d30acdb7c3c02b36a35}
+
+
+Maximum number of words allocated for one \hyperlink{structmzd__t}{mzd\+\_\+t} block. 
+
+\begin{DoxyNote}{Note}
+This value must fit in an int, even though it\textquotesingle{}s type is size\+\_\+t. 
+\end{DoxyNote}
+\hypertarget{mzd_8h_a76342255744a17091e66e7c16bc863cc}{}\index{mzd.\+h@{mzd.\+h}!\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+U\+L\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E@{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+U\+L\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E}}
+\index{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+U\+L\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E@{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+U\+L\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+U\+L\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+\_\+\+M4\+R\+I\+\_\+\+M\+U\+L\+\_\+\+B\+L\+O\+C\+K\+S\+I\+Z\+E~{\bf M\+I\+N}(((int)sqrt((double)(4 $\ast$ \+\_\+\+\_\+\+M4\+R\+I\+\_\+\+C\+P\+U\+\_\+\+L3\+\_\+\+C\+A\+C\+H\+E))) / 2, 2048)}\label{mzd_8h_a76342255744a17091e66e7c16bc863cc}
+
+
+Matrix multiplication block-\/ing dimension. 
+
+Defines the number of rows of the matrix \hyperlink{structA}{A} that are processed as one block during the execution of a multiplication algorithm. \hypertarget{mzd_8h_a4855f23f629469e453e97cbce794b55d}{}\index{mzd.\+h@{mzd.\+h}!\+\_\+mzd\+\_\+sub@{\+\_\+mzd\+\_\+sub}}
+\index{\+\_\+mzd\+\_\+sub@{\+\_\+mzd\+\_\+sub}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+sub}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+mzd\+\_\+sub~{\bf \+\_\+mzd\+\_\+add}}\label{mzd_8h_a4855f23f629469e453e97cbce794b55d}
+
+
+Same as mzd\+\_\+sub but without any checks on the input. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated difference matrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em B} & Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_adc489a58a3989dad9aecdef73ff12544}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+free\+\_\+window@{mzd\+\_\+free\+\_\+window}}
+\index{mzd\+\_\+free\+\_\+window@{mzd\+\_\+free\+\_\+window}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+free\+\_\+window}]{\setlength{\rightskip}{0pt plus 5cm}\#define mzd\+\_\+free\+\_\+window~{\bf mzd\+\_\+free}}\label{mzd_8h_adc489a58a3989dad9aecdef73ff12544}
+
+
+Free a matrix window created with mzd\+\_\+init\+\_\+window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a8ef10f72725525b63bdc96f7c0bf9934}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+sub@{mzd\+\_\+sub}}
+\index{mzd\+\_\+sub@{mzd\+\_\+sub}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+sub}]{\setlength{\rightskip}{0pt plus 5cm}\#define mzd\+\_\+sub~{\bf mzd\+\_\+add}}\label{mzd_8h_a8ef10f72725525b63bdc96f7c0bf9934}
+
+
+Same as mzd\+\_\+add. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated difference matrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em B} & Matrix \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{mzd_8h_a621c5b930998971e9b810e5f686975f6}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+t@{mzd\+\_\+t}}
+\index{mzd\+\_\+t@{mzd\+\_\+t}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf mzd\+\_\+t}  {\bf mzd\+\_\+t}}\label{mzd_8h_a621c5b930998971e9b810e5f686975f6}
+
+
+Dense matrices over G\+F(2). 
+
+The most fundamental data type in this library. 
+
+\subsection{Function Documentation}
+\hypertarget{mzd_8h_ae1489cd61eec65f0967b8fedce94dbdc}{}\index{mzd.\+h@{mzd.\+h}!\+\_\+mzd\+\_\+add@{\+\_\+mzd\+\_\+add}}
+\index{\+\_\+mzd\+\_\+add@{\+\_\+mzd\+\_\+add}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+add}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ \+\_\+mzd\+\_\+add (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_ae1489cd61eec65f0967b8fedce94dbdc}
+
+
+Same as mzd\+\_\+add but without any checks on the input. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated sum matrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em B} & Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_ac1f87f47ed6cfc4a47c9292d2362f7bb}{}\index{mzd.\+h@{mzd.\+h}!\+\_\+mzd\+\_\+density@{\+\_\+mzd\+\_\+density}}
+\index{\+\_\+mzd\+\_\+density@{\+\_\+mzd\+\_\+density}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+density}]{\setlength{\rightskip}{0pt plus 5cm}double \+\_\+mzd\+\_\+density (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf wi\+\_\+t}}]{res, }
+\item[{{\bf rci\+\_\+t}}]{r, }
+\item[{{\bf rci\+\_\+t}}]{c}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_ac1f87f47ed6cfc4a47c9292d2362f7bb}
+
+
+Return the number of nonzero entries divided by nrows $\ast$ ncols considering only the submatrix starting at (r,c). 
+
+If res = 0 then 100 samples per row are made, if res $>$ 0 the function takes res sized steps within each row (res = 1 uses every word).
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em res} & Resolution of sampling (in words) \\
+\hline
+{\em r} & Row to start counting \\
+\hline
+{\em c} & Column to start counting \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_aa838e6fb8dcac16d782429783582b4b2}{}\index{mzd.\+h@{mzd.\+h}!\+\_\+mzd\+\_\+mul\+\_\+naive@{\+\_\+mzd\+\_\+mul\+\_\+naive}}
+\index{\+\_\+mzd\+\_\+mul\+\_\+naive@{\+\_\+mzd\+\_\+mul\+\_\+naive}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+mul\+\_\+naive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ \+\_\+mzd\+\_\+mul\+\_\+naive (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B, }
+\item[{int const}]{clear}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_aa838e6fb8dcac16d782429783582b4b2}
+
+
+Naive cubic matrix multiplication with the pre-\/transposed B. 
+
+That is, compute C such that C == A\+B$^\wedge$t.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated product matrix. \\
+\hline
+{\em \hyperlink{structA}{A}} & Input matrix \hyperlink{structA}{A}. \\
+\hline
+{\em B} & Pre-\/transposed input matrix B. \\
+\hline
+{\em clear} & Whether to clear C before accumulating A\+B \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a8461f70ba90563c7b2a825ed00b16202}{}\index{mzd.\+h@{mzd.\+h}!\+\_\+mzd\+\_\+mul\+\_\+va@{\+\_\+mzd\+\_\+mul\+\_\+va}}
+\index{\+\_\+mzd\+\_\+mul\+\_\+va@{\+\_\+mzd\+\_\+mul\+\_\+va}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+mul\+\_\+va}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ \+\_\+mzd\+\_\+mul\+\_\+va (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{v, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{int const}]{clear}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a8461f70ba90563c7b2a825ed00b16202}
+
+
+Matrix multiplication optimized for v$\ast$\+A where v is a vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated product matrix. \\
+\hline
+{\em v} & Input matrix v. \\
+\hline
+{\em \hyperlink{structA}{A}} & Input matrix \hyperlink{structA}{A}. \\
+\hline
+{\em clear} & If set clear C first, otherwise add result to C. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a11ade9c76a1b8f103ca313acdb9ae9e0}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+add@{mzd\+\_\+add}}
+\index{mzd\+\_\+add@{mzd\+\_\+add}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+add}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+add (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a11ade9c76a1b8f103ca313acdb9ae9e0}
+
+
+Set C = A+\+B. 
+
+C is also returned. If C is N\+U\+L\+L then a new matrix is created which must be freed by mzd\+\_\+free.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated sum matrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em B} & Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_ae4cf86d4139ba803e676f132e5bcb545}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+addmul\+\_\+naive@{mzd\+\_\+addmul\+\_\+naive}}
+\index{mzd\+\_\+addmul\+\_\+naive@{mzd\+\_\+addmul\+\_\+naive}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+addmul\+\_\+naive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+addmul\+\_\+naive (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_ae4cf86d4139ba803e676f132e5bcb545}
+
+
+Naive cubic matrix multiplication and addition. 
+
+That is, compute C such that C == C + A\+B.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated product matrix. \\
+\hline
+{\em \hyperlink{structA}{A}} & Input matrix \hyperlink{structA}{A}. \\
+\hline
+{\em B} & Input matrix B.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Normally, if you will multiply several times by b, it is smarter to calculate b\+T yourself, and keep it, and then use the function called \+\_\+mzd\+\_\+mul\+\_\+naive 
+\end{DoxyNote}
+\hypertarget{mzd_8h_a56a5d0c28c8788434f97272d3db1f8d1}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+cmp@{mzd\+\_\+cmp}}
+\index{mzd\+\_\+cmp@{mzd\+\_\+cmp}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+cmp}]{\setlength{\rightskip}{0pt plus 5cm}int mzd\+\_\+cmp (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a56a5d0c28c8788434f97272d3db1f8d1}
+
+
+Return -\/1,0,1 if if \hyperlink{structA}{A} $<$ B, \hyperlink{structA}{A} == B or \hyperlink{structA}{A} $>$ B respectively. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em B} & Matrix.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This comparison is not well defined mathematically and relatively arbitrary since elements of G\+F(2) don\textquotesingle{}t have an ordering. 
+\end{DoxyNote}
+\hypertarget{mzd_8h_ada8f91bd35c7489e488cb1f24d2a005a}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+col\+\_\+swap@{mzd\+\_\+col\+\_\+swap}}
+\index{mzd\+\_\+col\+\_\+swap@{mzd\+\_\+col\+\_\+swap}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+col\+\_\+swap}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+col\+\_\+swap (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{M, }
+\item[{{\bf rci\+\_\+t} const}]{cola, }
+\item[{{\bf rci\+\_\+t} const}]{colb}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_ada8f91bd35c7489e488cb1f24d2a005a}
+
+
+Swap the two columns cola and colb. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix. \\
+\hline
+{\em cola} & Column index. \\
+\hline
+{\em colb} & Column index. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a327aa7d6f31117107f60f65c43958fc8}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+concat@{mzd\+\_\+concat}}
+\index{mzd\+\_\+concat@{mzd\+\_\+concat}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+concat}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+concat (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a327aa7d6f31117107f60f65c43958fc8}
+
+
+Concatenate B to \hyperlink{structA}{A} and write the result to C. 
+
+That is,
+
+\begin{DoxyVerb}[ A ], [ B ] -> [ A  B ] = C
+\end{DoxyVerb}
+
+
+The inputs are not modified but a new matrix is created.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Matrix, may be N\+U\+L\+L for automatic creation \\
+\hline
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em B} & Matrix\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This is sometimes called augment. 
+\end{DoxyNote}
+\hypertarget{mzd_8h_a9b241de2f3a2fa1f69761f6d6eda5c75}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+copy@{mzd\+\_\+copy}}
+\index{mzd\+\_\+copy@{mzd\+\_\+copy}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+copy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+copy (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{D\+S\+T, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a9b241de2f3a2fa1f69761f6d6eda5c75}
+
+
+Copy matrix \hyperlink{structA}{A} to D\+S\+T. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em D\+S\+T} & May be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Source matrix. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a5ad46bee7037c2d93eb2a854a13f5af7}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+copy\+\_\+row@{mzd\+\_\+copy\+\_\+row}}
+\index{mzd\+\_\+copy\+\_\+row@{mzd\+\_\+copy\+\_\+row}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+copy\+\_\+row}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+copy\+\_\+row (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{B, }
+\item[{{\bf rci\+\_\+t}}]{i, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf rci\+\_\+t}}]{j}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a5ad46bee7037c2d93eb2a854a13f5af7}
+
+
+copy row j from \hyperlink{structA}{A} to row i from B. 
+
+The offsets of \hyperlink{structA}{A} and B must match and the number of columns of \hyperlink{structA}{A} must be less than or equal to the number of columns of B.
+
+
+\begin{DoxyParams}{Parameters}
+{\em B} & Target matrix. \\
+\hline
+{\em i} & Target row index. \\
+\hline
+{\em \hyperlink{structA}{A}} & Source matrix. \\
+\hline
+{\em j} & Source row index. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a7e897a93b8887cd180ed8b85ce84ba0d}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+density@{mzd\+\_\+density}}
+\index{mzd\+\_\+density@{mzd\+\_\+density}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+density}]{\setlength{\rightskip}{0pt plus 5cm}double mzd\+\_\+density (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf wi\+\_\+t}}]{res}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a7e897a93b8887cd180ed8b85ce84ba0d}
+
+
+Return the number of nonzero entries divided by nrows $\ast$ ncols. 
+
+If res = 0 then 100 samples per row are made, if res $>$ 0 the function takes res sized steps within each row (res = 1 uses every word).
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em res} & Resolution of sampling (in words) \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a21397f5c750c8ceb66528c15e06f7a4f}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+echelonize\+\_\+naive@{mzd\+\_\+echelonize\+\_\+naive}}
+\index{mzd\+\_\+echelonize\+\_\+naive@{mzd\+\_\+echelonize\+\_\+naive}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+echelonize\+\_\+naive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} mzd\+\_\+echelonize\+\_\+naive (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{M, }
+\item[{int const}]{full}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a21397f5c750c8ceb66528c15e06f7a4f}
+
+
+Gaussian elimination. 
+
+This will do Gaussian elimination on the matrix m. If full=F\+A\+L\+S\+E, then it will do triangular style elimination, and if full=T\+R\+U\+E, it will do Gauss-\/\+Jordan style, or full elimination.
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix \\
+\hline
+{\em full} & Gauss-\/\+Jordan style or upper triangular form only.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{echelonform_8h_a1b261150883fb32d5e82f2b42eae96ab}{mzd\+\_\+echelonize\+\_\+m4ri()}, \hyperlink{echelonform_8h_a779e61f88a20054fc3ef94d0786f8b20}{mzd\+\_\+echelonize\+\_\+pluq()} 
+\end{DoxySeeAlso}
+\hypertarget{mzd_8h_adff5537eda1401062c1b6dd5eccad258}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+equal@{mzd\+\_\+equal}}
+\index{mzd\+\_\+equal@{mzd\+\_\+equal}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+equal}]{\setlength{\rightskip}{0pt plus 5cm}int mzd\+\_\+equal (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_adff5537eda1401062c1b6dd5eccad258}
+
+
+Return T\+R\+U\+E if \hyperlink{structA}{A} == B. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em B} & Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_ab1f6b8ca76646178229e2ff07a9e1743}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+extract\+\_\+l@{mzd\+\_\+extract\+\_\+l}}
+\index{mzd\+\_\+extract\+\_\+l@{mzd\+\_\+extract\+\_\+l}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+extract\+\_\+l}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+extract\+\_\+l (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{L, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_ab1f6b8ca76646178229e2ff07a9e1743}
+
+
+Return lower triangular submatrix of \hyperlink{structA}{A}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em L} & Output matrix, if N\+U\+L\+L a new matrix will be returned \\
+\hline
+{\em \hyperlink{structA}{A}} & Source matrix\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L 
+\end{DoxyReturn}
+\hypertarget{mzd_8h_ac8b71a8684b3678a1c8da50ff30d34b4}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+extract\+\_\+u@{mzd\+\_\+extract\+\_\+u}}
+\index{mzd\+\_\+extract\+\_\+u@{mzd\+\_\+extract\+\_\+u}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+extract\+\_\+u}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+extract\+\_\+u (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{U, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_ac8b71a8684b3678a1c8da50ff30d34b4}
+
+
+Return upper triangular submatrix of \hyperlink{structA}{A}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em U} & Output matrix, if N\+U\+L\+L a new matrix will be returned \\
+\hline
+{\em \hyperlink{structA}{A}} & Source matrix\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+U 
+\end{DoxyReturn}
+\hypertarget{mzd_8h_af1596d811f0de0d1cce79b7a1ef944b0}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+find\+\_\+pivot@{mzd\+\_\+find\+\_\+pivot}}
+\index{mzd\+\_\+find\+\_\+pivot@{mzd\+\_\+find\+\_\+pivot}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+find\+\_\+pivot}]{\setlength{\rightskip}{0pt plus 5cm}int mzd\+\_\+find\+\_\+pivot (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{M, }
+\item[{{\bf rci\+\_\+t}}]{start\+\_\+row, }
+\item[{{\bf rci\+\_\+t}}]{start\+\_\+col, }
+\item[{{\bf rci\+\_\+t} $\ast$}]{r, }
+\item[{{\bf rci\+\_\+t} $\ast$}]{c}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_af1596d811f0de0d1cce79b7a1ef944b0}
+
+
+Find the next nonzero entry in M starting at start\+\_\+row and start\+\_\+col. 
+
+This function walks down rows in the inner loop and columns in the outer loop. If a nonzero entry is found this function returns 1 and zero otherwise.
+
+If and only if a nonzero entry is found r and c are updated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix \\
+\hline
+{\em start\+\_\+row} & Index of row where to start search \\
+\hline
+{\em start\+\_\+col} & Index of column where to start search \\
+\hline
+{\em r} & Row index updated if pivot is found \\
+\hline
+{\em c} & Column index updated if pivot is found \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a473effa04000ce6d01d2efd54f0774ae}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+first\+\_\+zero\+\_\+row@{mzd\+\_\+first\+\_\+zero\+\_\+row}}
+\index{mzd\+\_\+first\+\_\+zero\+\_\+row@{mzd\+\_\+first\+\_\+zero\+\_\+row}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+first\+\_\+zero\+\_\+row}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} mzd\+\_\+first\+\_\+zero\+\_\+row (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a473effa04000ce6d01d2efd54f0774ae}
+
+
+Return the first row with all zero entries. 
+
+If no such row can be found returns nrows.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a3ecd0af20cd69fbb29ac3be15cf3b677}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+free@{mzd\+\_\+free}}
+\index{mzd\+\_\+free@{mzd\+\_\+free}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+free}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a3ecd0af20cd69fbb29ac3be15cf3b677}
+
+
+Free a matrix created with mzd\+\_\+init. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_ab7a8c4841edde200b16c1282bc542626}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+gauss\+\_\+delayed@{mzd\+\_\+gauss\+\_\+delayed}}
+\index{mzd\+\_\+gauss\+\_\+delayed@{mzd\+\_\+gauss\+\_\+delayed}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+gauss\+\_\+delayed}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} mzd\+\_\+gauss\+\_\+delayed (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{M, }
+\item[{{\bf rci\+\_\+t} const}]{startcol, }
+\item[{int const}]{full}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_ab7a8c4841edde200b16c1282bc542626}
+
+
+Gaussian elimination. 
+
+This will do Gaussian elimination on the matrix m but will start not at column 0 necc but at column startcol. If full=F\+A\+L\+S\+E, then it will do triangular style elimination, and if full=T\+R\+U\+E, it will do Gauss-\/\+Jordan style, or full elimination.
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix \\
+\hline
+{\em startcol} & First column to consider for reduction. \\
+\hline
+{\em full} & Gauss-\/\+Jordan style or upper triangular form only. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_af5c7b804117a98609625c81eb982abab}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+init@{mzd\+\_\+init}}
+\index{mzd\+\_\+init@{mzd\+\_\+init}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf rci\+\_\+t} const}]{r, }
+\item[{{\bf rci\+\_\+t} const}]{c}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_af5c7b804117a98609625c81eb982abab}
+
+
+Create a new matrix of dimension r x c. 
+
+Use mzd\+\_\+free to kill it.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & Number of rows \\
+\hline
+{\em c} & Number of columns \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a4afa844b6b27f687654c6462c2d3ea2b}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+init\+\_\+window@{mzd\+\_\+init\+\_\+window}}
+\index{mzd\+\_\+init\+\_\+window@{mzd\+\_\+init\+\_\+window}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+init\+\_\+window}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+init\+\_\+window (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{M, }
+\item[{{\bf rci\+\_\+t} const}]{lowr, }
+\item[{{\bf rci\+\_\+t} const}]{lowc, }
+\item[{{\bf rci\+\_\+t} const}]{highr, }
+\item[{{\bf rci\+\_\+t} const}]{highc}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a4afa844b6b27f687654c6462c2d3ea2b}
+
+
+Create a window/view into the matrix M. 
+
+\hyperlink{structA}{A} matrix window for M is a meta structure on the matrix M. It is setup to point into the matrix so M {\itshape must} {\itshape not} be freed while the matrix window is used.
+
+This function puts the restriction on the provided parameters that all parameters must be within range for M which is not enforced currently .
+
+Use mzd\+\_\+free\+\_\+window to free the window.
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix \\
+\hline
+{\em lowr} & Starting row (inclusive) \\
+\hline
+{\em lowc} & Starting column (inclusive, must be multiple of m4ri\+\_\+radix) \\
+\hline
+{\em highr} & End row (exclusive) \\
+\hline
+{\em highc} & End column (exclusive) \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_ae07ced27ae0a0afd5bbd52216f3c4f6f}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+invert\+\_\+naive@{mzd\+\_\+invert\+\_\+naive}}
+\index{mzd\+\_\+invert\+\_\+naive@{mzd\+\_\+invert\+\_\+naive}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+invert\+\_\+naive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+invert\+\_\+naive (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{I\+N\+V, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{I}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_ae07ced27ae0a0afd5bbd52216f3c4f6f}
+
+
+Invert the matrix target using Gaussian elimination. 
+
+To avoid recomputing the identity matrix over and over again, I may be passed in as identity parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em I\+N\+V} & Preallocated space for inversion matrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Matrix to be reduced. \\
+\hline
+{\em I} & Identity matrix. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a7512692a2c6205ca5e84a2f887d42598}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+is\+\_\+zero@{mzd\+\_\+is\+\_\+zero}}
+\index{mzd\+\_\+is\+\_\+zero@{mzd\+\_\+is\+\_\+zero}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+is\+\_\+zero}]{\setlength{\rightskip}{0pt plus 5cm}int mzd\+\_\+is\+\_\+zero (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a7512692a2c6205ca5e84a2f887d42598}
+
+
+Zero test for matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Input matrix. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_aff6f04c806a3fbe4627423a29fc27bca}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+mul\+\_\+naive@{mzd\+\_\+mul\+\_\+naive}}
+\index{mzd\+\_\+mul\+\_\+naive@{mzd\+\_\+mul\+\_\+naive}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+mul\+\_\+naive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+mul\+\_\+naive (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_aff6f04c806a3fbe4627423a29fc27bca}
+
+
+Naive cubic matrix multiplication. 
+
+That is, compute C such that C == A\+B.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Preallocated product matrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Input matrix \hyperlink{structA}{A}. \\
+\hline
+{\em B} & Input matrix B.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Normally, if you will multiply several times by b, it is smarter to calculate b\+T yourself, and keep it, and then use the function called \+\_\+mzd\+\_\+mul\+\_\+naive 
+\end{DoxyNote}
+\hypertarget{mzd_8h_a3167fa0d3b20f8a707e1aa98562be7fa}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+randomize@{mzd\+\_\+randomize}}
+\index{mzd\+\_\+randomize@{mzd\+\_\+randomize}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+randomize}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+randomize (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{M}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a3167fa0d3b20f8a707e1aa98562be7fa}
+
+
+Fill matrix M with uniformly distributed bits. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000010}{Todo}]Allow the user to provide a R\+N\+G callback. \end{DoxyRefDesc}
+\hypertarget{mzd_8h_a3e386f00bb2f9fe89eab38d70df72ef4}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+row\+\_\+add@{mzd\+\_\+row\+\_\+add}}
+\index{mzd\+\_\+row\+\_\+add@{mzd\+\_\+row\+\_\+add}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+row\+\_\+add}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+row\+\_\+add (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{M, }
+\item[{{\bf rci\+\_\+t} const}]{sourcerow, }
+\item[{{\bf rci\+\_\+t} const}]{destrow}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a3e386f00bb2f9fe89eab38d70df72ef4}
+
+
+Add the rows sourcerow and destrow and stores the total in the row destrow. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix \\
+\hline
+{\em sourcerow} & Index of source row \\
+\hline
+{\em destrow} & Index of target row\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+this can be done much faster with mzd\+\_\+combine. 
+\end{DoxyNote}
+\hypertarget{mzd_8h_a340e71998ca4c180606cc1b0da7e9b71}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+row\+\_\+clear\+\_\+offset@{mzd\+\_\+row\+\_\+clear\+\_\+offset}}
+\index{mzd\+\_\+row\+\_\+clear\+\_\+offset@{mzd\+\_\+row\+\_\+clear\+\_\+offset}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+row\+\_\+clear\+\_\+offset}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+row\+\_\+clear\+\_\+offset (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{M, }
+\item[{{\bf rci\+\_\+t} const}]{row, }
+\item[{{\bf rci\+\_\+t} const}]{coloffset}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a340e71998ca4c180606cc1b0da7e9b71}
+
+
+Clear the given row, but only begins at the column coloffset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix \\
+\hline
+{\em row} & Index of row \\
+\hline
+{\em coloffset} & Column offset \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_afb19458831e01d11bd88f0f982eb5220}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+set\+\_\+ui@{mzd\+\_\+set\+\_\+ui}}
+\index{mzd\+\_\+set\+\_\+ui@{mzd\+\_\+set\+\_\+ui}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+set\+\_\+ui}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+set\+\_\+ui (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{M, }
+\item[{unsigned int const}]{value}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_afb19458831e01d11bd88f0f982eb5220}
+
+
+Set the matrix M to the value equivalent to the integer value provided. 
+
+Specifically, this function does nothing if value\%2 == 0 and returns the identity matrix if value\%2 == 1.
+
+If the matrix is not square then the largest possible square submatrix is set to the identity matrix.
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix \\
+\hline
+{\em value} & Either 0 or 1 \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a876ec7ddf9f0b1359f1ce0ed4713a894}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+stack@{mzd\+\_\+stack}}
+\index{mzd\+\_\+stack@{mzd\+\_\+stack}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+stack}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{C, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{B}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a876ec7ddf9f0b1359f1ce0ed4713a894}
+
+
+Stack \hyperlink{structA}{A} on top of B and write the result to C. 
+
+That is,
+
+\begin{DoxyVerb}[ A ], [ B ] -> [ A ] = C
+                [ B ]
+\end{DoxyVerb}
+
+
+The inputs are not modified but a new matrix is created.
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & Matrix, may be N\+U\+L\+L for automatic creation \\
+\hline
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+{\em B} & Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a373ee64108d53d92954e4ad1576ceb0c}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+submatrix@{mzd\+\_\+submatrix}}
+\index{mzd\+\_\+submatrix@{mzd\+\_\+submatrix}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+submatrix}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+submatrix (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{S, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{M, }
+\item[{{\bf rci\+\_\+t} const}]{lowr, }
+\item[{{\bf rci\+\_\+t} const}]{lowc, }
+\item[{{\bf rci\+\_\+t} const}]{highr, }
+\item[{{\bf rci\+\_\+t} const}]{highc}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a373ee64108d53d92954e4ad1576ceb0c}
+
+
+Copy a submatrix. 
+
+Note that the upper bounds are not included.
+
+
+\begin{DoxyParams}{Parameters}
+{\em S} & Preallocated space for submatrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em M} & Matrix \\
+\hline
+{\em lowr} & start rows \\
+\hline
+{\em lowc} & start column \\
+\hline
+{\em highr} & stop row (this row is {\itshape not} included) \\
+\hline
+{\em highc} & stop column (this column is {\itshape not} included) \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzd_8h_a6d9efe1d13e605286cab59a406226fa0}{}\index{mzd.\+h@{mzd.\+h}!mzd\+\_\+transpose@{mzd\+\_\+transpose}}
+\index{mzd\+\_\+transpose@{mzd\+\_\+transpose}!mzd.\+h@{mzd.\+h}}
+\subsubsection[{mzd\+\_\+transpose}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+t}$\ast$ mzd\+\_\+transpose (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{D\+S\+T, }
+\item[{{\bf mzd\+\_\+t} const $\ast$}]{A}
+\end{DoxyParamCaption}
+)}\label{mzd_8h_a6d9efe1d13e605286cab59a406226fa0}
+
+
+Transpose a matrix. 
+
+This function uses the fact that\+: \begin{DoxyVerb}   [ A B ]T    [AT CT]
+   [ C D ]  =  [BT DT] \end{DoxyVerb}
+ and thus rearranges the blocks recursively.
+
+
+\begin{DoxyParams}{Parameters}
+{\em D\+S\+T} & Preallocated return matrix, may be N\+U\+L\+L for automatic creation. \\
+\hline
+{\em \hyperlink{structA}{A}} & Matrix \\
+\hline
+\end{DoxyParams}
+it seems this is taken care of in the subroutines, re-\/enable if running into problems 

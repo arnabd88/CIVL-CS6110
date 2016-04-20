@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonRealFloatingValue.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.value.common</a> &gt; <span class="el_source">CommonRealFloatingValue.java</span></div><h1>CommonRealFloatingValue.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.value.common;
+
+import java.math.BigInteger;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.FloatingType;
+import edu.udel.cis.vsl.abc.ast.value.IF.RealFloatingValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.ValueFactory.Answer;
+
+<span class="nc bnc" id="L9" title="All 2 branches missed.">public class CommonRealFloatingValue extends CommonValue implements</span>
+		RealFloatingValue {
+
+<span class="nc" id="L12">	private final static int classCode = CommonRealFloatingValue.class</span>
+<span class="nc" id="L13">			.hashCode();</span>
+
+	/**
+	 * The &quot;radix&quot; or &quot;base&quot; in which the number is interpreted. Must be 10 or
+	 * 16.
+	 */
+	private int radix;
+
+	/**
+	 * The value of the digits preceding the decimal point
+	 */
+	private BigInteger wholePartValue;
+
+	/**
+	 * The value of the digits following the decimal point, but excluding the
+	 * exponent part.
+	 */
+	private BigInteger fractionPartValue;
+
+	/**
+	 * The number of digits in the fraction part.
+	 */
+	private int fractionLength;
+
+	/**
+	 * The value of the exponent.
+	 */
+	private BigInteger exponentValue;
+
+	public CommonRealFloatingValue(FloatingType type, int radix,
+			BigInteger wholePartValue, BigInteger fractionPartValue,
+			int fractionLength, BigInteger exponentValue) {
+<span class="nc" id="L45">		super(type);</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">		assert wholePartValue != null;</span>
+<span class="nc bnc" id="L47" title="All 4 branches missed.">		assert fractionPartValue != null;</span>
+<span class="nc bnc" id="L48" title="All 4 branches missed.">		assert exponentValue != null;</span>
+<span class="nc" id="L49">		this.radix = radix;</span>
+<span class="nc" id="L50">		this.wholePartValue = wholePartValue;</span>
+<span class="nc" id="L51">		this.fractionPartValue = fractionPartValue;</span>
+<span class="nc" id="L52">		this.fractionLength = fractionLength;</span>
+<span class="nc" id="L53">		this.exponentValue = exponentValue;</span>
+<span class="nc" id="L54">	}</span>
+
+	@Override
+	public FloatingType getType() {
+<span class="nc" id="L58">		return (FloatingType) super.getType();</span>
+	}
+
+	@Override
+	public int getRadix() {
+<span class="nc" id="L63">		return radix;</span>
+	}
+
+	@Override
+	public double getDoubleValue() {
+<span class="nc" id="L68">		double result = wholePartValue.doubleValue();</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (radix == 16) {</span>
+<span class="nc" id="L71">			result += fractionPartValue.doubleValue()</span>
+<span class="nc" id="L72">					* Math.pow(2, -4 * fractionLength);</span>
+<span class="nc" id="L73">			result *= Math.pow(2, exponentValue.doubleValue());</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		} else if (radix == 10) {</span>
+<span class="nc" id="L75">			result += fractionPartValue.doubleValue()</span>
+<span class="nc" id="L76">					* Math.pow(10, -fractionLength);</span>
+<span class="nc" id="L77">			result *= Math.pow(10, exponentValue.doubleValue());</span>
+<span class="nc" id="L78">		} else {</span>
+<span class="nc" id="L79">			throw new RuntimeException(&quot;Only know base 10 and 16&quot;);</span>
+		}
+<span class="nc" id="L81">		return result;</span>
+	}
+
+	@Override
+	public BigInteger getWholePartValue() {
+<span class="nc" id="L86">		return wholePartValue;</span>
+	}
+
+	@Override
+	public BigInteger getFractionPartValue() {
+<span class="nc" id="L91">		return fractionPartValue;</span>
+	}
+
+	@Override
+	public int getFractionLength() {
+<span class="nc" id="L96">		return fractionLength;</span>
+	}
+
+	@Override
+	public BigInteger getExponentValue() {
+<span class="nc" id="L101">		return exponentValue;</span>
+	}
+
+	@Override
+	public boolean equals(Object object) {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (this == object)</span>
+<span class="nc" id="L107">			return true;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (this instanceof CommonRealFloatingValue) {</span>
+<span class="nc" id="L109">			CommonRealFloatingValue that = (CommonRealFloatingValue) object;</span>
+
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			return getType().equals(that.getType())</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">					&amp;&amp; exponentValue.equals(that.exponentValue)</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">					&amp;&amp; fractionPartValue.equals(that.fractionPartValue)</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">					&amp;&amp; fractionLength == that.fractionLength</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">					&amp;&amp; radix == that.radix</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">					&amp;&amp; wholePartValue.equals(that.wholePartValue);</span>
+		}
+<span class="nc" id="L118">		return false;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L123">		return classCode + getType().hashCode() + exponentValue.hashCode()</span>
+<span class="nc" id="L124">				+ fractionLength + fractionPartValue.hashCode() + radix</span>
+<span class="nc" id="L125">				+ wholePartValue.hashCode();</span>
+	}
+
+	@Override
+	public Answer isZero() {
+<span class="nc bnc" id="L130" title="All 4 branches missed.">		return wholePartValue.signum() == 0 &amp;&amp; fractionPartValue.signum() == 0 ? Answer.YES</span>
+<span class="nc" id="L131">				: Answer.NO;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L136">		return &quot;FloatingConstant[radix=&quot; + radix + &quot;, wholePart=&quot;</span>
+<span class="nc" id="L137">				+ wholePartValue + &quot;, fractionPart=&quot; + fractionPartValue</span>
+<span class="nc" id="L138">				+ &quot;, fractionLength=&quot; + fractionLength + &quot;, exponent=&quot;</span>
+<span class="nc" id="L139">				+ exponentValue + &quot;, doubleValue=&quot; + getDoubleValue() + &quot;]&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

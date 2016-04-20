@@ -1,0 +1,72 @@
+ModelFactory.java: reading by S.F. Siegel on 2/27/2013. 
+
+Is there a reason for using Vector instead of
+another collection type for arguments?  For example, 
+List or ArrayList, or Iterable.
+
+what is the blank javadoc comment at the top of the file?
+
+it would help if the general comment contained some guide
+as to how to use the methods to build a model.  In particular,
+in what order are things called?  (Scopes first, then 
+functions, then ,..., finally model).
+
+the argument to scope takes the Function to which the scope belongs.
+However, isn't the function determined by the parent scope?
+I forget exactly how this works.   I think there are certain
+scopes which are "function scopes" which belong to a particular
+function f.  It isn't clear me to how to use this---do I produce
+the function first, and then the scope to go with it...???
+Maybe there needs to be more than one method here?
+
+Choose statement: what is the argument?  Does it have to be
+an integer expression?
+
+Types:  need heap type, record type, pointer type, and union type?
+How do you 
+create a circular type?  (You could use pattern from ABC: you can
+define a record type without specifying its components, then
+define a pointer to that incomplete type, then later complete
+the record type.)
+
+How do you get the length of an array?  (Like in Java, there
+is array.length).  Should there be a "length" expression?
+
+Need expressions to read/update records (like arrays), pointer 
+operations (& and *).  In CIVL-C we have a qualifier on pointer
+types which specifies scope, limiting the scope to which a 
+pointer of that type can point. [Need to add that to ABC too.]
+
+How do you access the system library functions memcpy, malloc,
+free?
+
+---
+
+Still stuff left over from CVT that needs to be removed:
+
+	/**
+	 * @param syncVariableMap
+	 *            A map from sync variables to the corresponding _CVT_sync_
+	 *            control variable.
+	 */
+	public void setSyncVariableMap(Map<Variable, Variable> syncVariableMap);
+
+	/**
+	 * @return A map from sync variables to the corresponding _CVT_sync_ control
+	 *         variable.
+	 */
+	public Map<Variable, Variable> syncVariableMap();
+
+	/**
+	 * Get the corresponding _CVT_sync_ control variable for a sync variable.
+	 * Returns null if not found.
+	 * 
+	 * @param syncVariable
+	 *            A sync variable.
+	 * @return The _CVT_sync_ control variable corresponding to the sync
+	 *         variable. Null if not found.
+	 */
+	public Variable syncControlVariable(Variable syncVariable);
+
+
+ 

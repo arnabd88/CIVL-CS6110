@@ -1,0 +1,15 @@
+/* Commandline execution:
+ *		civl verify implies.cvl
+ * */
+#include<civlc.h>
+$input int k;
+
+void main() {
+  int a[10];
+  int i;
+  
+  for (i = 0; i < 10; i++) {
+    a[i] = i;
+  }
+  $assert(k > 5 && k < 10 => a[k] > 5);
+}

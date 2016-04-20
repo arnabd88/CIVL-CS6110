@@ -1,0 +1,194 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor@{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a2afd19f13aad9d348605e10490aab263}{}{\bfseries Libcomm\+Executor} (String name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_afe2a7474184cb94b790a80eb36706865}{primary\+Executor}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ac38a7c7971f70f8c969e55538a17f016}{model\+Factory}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}{symbolic\+Util}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a7a1213c02b2d29a79f550c7090594967}{symbolic\+Analyzer}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a223e603cab7a909db88f49c256b2ce98}{civl\+Config}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{Library\+Executor\+Loader} lib\+Executor\+Loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} lib\+Evaluator\+Loader)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a2afd19f13aad9d348605e10490aab263}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a63cdf3422becd2d35181bc01408f7f2a}{execute} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} statement, String function\+Name)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a9c720393a3eb31afee54741252835e66}{put\+Msg\+In\+Channel} (Symbolic\+Expression message\+Buffer, Symbolic\+Expression message, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civlsource)
+\begin{DoxyCompactList}\small\item\em Public helper function of inserting a message into the destination position of a given message buffer. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ Symbolic\+Expression, Symbolic\+Expression $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a236aeaba1497f4549c850f4e8ab86022}{get\+Msg\+Outof\+Channel} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, Symbolic\+Expression message\+Buffer, Numeric\+Expression source, Numeric\+Expression dest, Numeric\+Expression tag, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civlsource)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Public helper method for getting a message out of the given message buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a18a75c375b70ca4909f2bafdcea13764}{new\+Gcomm\+Buffer} (Symbolic\+Universe \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a15e177f8c241bccac36c3ac9fd65a0b7}{universe}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a793947b7f5a2562067a2e4a81f1097cb}{model}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}{symbolic\+Util}, Boolean\+Expression context, Numeric\+Expression nprocs)
+\begin{DoxyCompactList}\small\item\em Helper function for creating an empty buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a63cdf3422becd2d35181bc01408f7f2a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor}!execute@{execute}}
+\index{execute@{execute}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor.\+execute (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Call\+Or\+Spawn\+Statement}}]{statement, }
+\item[{String}]{function\+Name}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a63cdf3422becd2d35181bc01408f7f2a}
+Executes the given call statement for a certain process at the given state. 
+
+Precondition\+: the given call statement is enabled for the process with the given pid, and the function of the call statement is provided by this library. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state where the call statement is to be executed. \\
+\hline
+{\em pid} & The P\+I\+D of the process that the statement belongs to. \\
+\hline
+{\em statement} & The call statement to be executed. \\
+\hline
+{\em function\+Name} & The name of the system function that this call is going to executed. Note\+: we need this when the function of the call statement is a function pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The resulting state after executing the call statement. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor_a383136ab6e875742f46b5dbd94673984}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a236aeaba1497f4549c850f4e8ab86022}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor}!get\+Msg\+Outof\+Channel@{get\+Msg\+Outof\+Channel}}
+\index{get\+Msg\+Outof\+Channel@{get\+Msg\+Outof\+Channel}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor}}
+\subsubsection[{get\+Msg\+Outof\+Channel}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<$Symbolic\+Expression, Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor.\+get\+Msg\+Outof\+Channel (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{Symbolic\+Expression}]{message\+Buffer, }
+\item[{Numeric\+Expression}]{source, }
+\item[{Numeric\+Expression}]{dest, }
+\item[{Numeric\+Expression}]{tag, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{civlsource}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a236aeaba1497f4549c850f4e8ab86022}
+
+
+Public helper method for getting a message out of the given message buffer. 
+
+Pre-\/condition\+: The message must already exist in the channel.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em process} & The String identifier of the process \\
+\hline
+{\em message\+Buffer} & The message buffer \\
+\hline
+{\em source} & The source of the message \\
+\hline
+{\em dest} & The destination of the message \\
+\hline
+{\em tag} & The message tag \\
+\hline
+{\em civlsource} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The received message and the updated message buffer. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a18a75c375b70ca4909f2bafdcea13764}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor}!new\+Gcomm\+Buffer@{new\+Gcomm\+Buffer}}
+\index{new\+Gcomm\+Buffer@{new\+Gcomm\+Buffer}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor}}
+\subsubsection[{new\+Gcomm\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}static Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor.\+new\+Gcomm\+Buffer (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Universe}]{universe, }
+\item[{{\bf Model}}]{model, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{Boolean\+Expression}]{context, }
+\item[{Numeric\+Expression}]{nprocs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a18a75c375b70ca4909f2bafdcea13764}
+
+
+Helper function for creating an empty buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em universe} & The Symbolic Universe \\
+\hline
+{\em model} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model of the program \\
+\hline
+{\em symbolic\+Util} & The Symbolic\+Utility \\
+\hline
+{\em context} & The path condition of the current state \\
+\hline
+{\em nprocs} & The Numeric\+Expression of the number of processes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a9c720393a3eb31afee54741252835e66}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor}!put\+Msg\+In\+Channel@{put\+Msg\+In\+Channel}}
+\index{put\+Msg\+In\+Channel@{put\+Msg\+In\+Channel}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::comm\+::\+Libcomm\+Executor}}
+\subsubsection[{put\+Msg\+In\+Channel}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor.\+put\+Msg\+In\+Channel (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{message\+Buffer, }
+\item[{Symbolic\+Expression}]{message, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{civlsource}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a9c720393a3eb31afee54741252835e66}
+
+
+Public helper function of inserting a message into the destination position of a given message buffer. 
+
+The function may be called by other library (e.\+g. M\+P\+I Library).
+
+
+\begin{DoxyParams}{Parameters}
+{\em message\+Buffer} & The message buffer which is a 2-\/d array of message queues. \\
+\hline
+{\em source} & The place where the message comes from \\
+\hline
+{\em dest} & The destination where the message goes to \\
+\hline
+{\em message} & The message delivered \\
+\hline
+{\em civlsource} & The C\+I\+V\+L\+Source of this action \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/library/comm/Libcomm\+Executor.\+java\end{DoxyCompactItemize}

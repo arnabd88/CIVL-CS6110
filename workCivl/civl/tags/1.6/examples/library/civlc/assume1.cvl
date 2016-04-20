@@ -1,0 +1,8 @@
+#include<civlc.cvh>
+
+$input double x[2];
+
+int main(){
+  $assume(x[0]!=0 || x[1]!=0);
+  $assert(x[1]!=0);
+}

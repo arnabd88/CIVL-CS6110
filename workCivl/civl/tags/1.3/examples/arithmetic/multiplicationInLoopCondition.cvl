@@ -1,0 +1,16 @@
+#include <civlc.cvh>
+$input int N;
+$input int M;
+$assume(N > 0 && N < 3);
+$assume(M > 0 && M < 3);
+
+void main() {
+  int k = M*N;
+  int a[k];
+  
+  for (int i = 0; i < k; i++) {
+    a[i] = i;
+    if(i == 35) // the upper bound of i should be at least 33 to trigger the exception.
+      break;
+  }
+}

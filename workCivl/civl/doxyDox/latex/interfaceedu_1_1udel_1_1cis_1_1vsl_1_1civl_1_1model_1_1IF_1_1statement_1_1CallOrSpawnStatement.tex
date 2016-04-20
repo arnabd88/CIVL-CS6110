@@ -1,0 +1,221 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement}}
+
+
+\hyperlink{structA}{A} function call or spawn.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a77b65241d9713311e60dcd6fbdac6117}{is\+Call} ()
+\begin{DoxyCompactList}\small\item\em Is this a call (not spawn)? \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a514d4fca6d2ae3fa69a11b23d76bd125}{is\+Spawn} ()
+\begin{DoxyCompactList}\small\item\em Is this a spawn (not call)? \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a2ac023b3d49c44fdc245ef941fad6456}{lhs} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_ae7f9af5b547634bb2894e21875ab22a2}{function} ()
+\begin{DoxyCompactList}\small\item\em T\+O\+D\+O\+: get rid of it. \end{DoxyCompactList}\item 
+List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_acd526acdc6b8651aa60ddcf1db40a92c}{arguments} ()
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a6a76c27700c82aa54d4e86756328eb3c}{set\+Lhs} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a2ac023b3d49c44fdc245ef941fad6456}{lhs})
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a0b9e77fecdfc04b2a18ce8d07c0d50c5}{set\+Function} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1FunctionIdentifierExpression}{Function\+Identifier\+Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_ae7f9af5b547634bb2894e21875ab22a2}{function})
+\begin{DoxyCompactList}\small\item\em T\+O\+D\+O\+: get rid of this, but updates the function expression instead. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_aa6b514d6ff56f73ebaa95794f5a9ba09}{set\+Arguments} (List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_acd526acdc6b8651aa60ddcf1db40a92c}{arguments})
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a0fc135bbaae85b44327fc89adb2af808}{is\+System\+Call} ()
+\begin{DoxyCompactList}\small\item\em Check if the statement is calling a system function. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a4ce41ed79ac5f7a7e1e315c4c300f878}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} {\bfseries function\+Expression} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a4ce41ed79ac5f7a7e1e315c4c300f878}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} function call or spawn. 
+
+Either of the form f(x) or else v=f(x). The function expression is set only once if the function called is known statically.
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_acd526acdc6b8651aa60ddcf1db40a92c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!arguments@{arguments}}
+\index{arguments@{arguments}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{arguments}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Expression}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+arguments (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_acd526acdc6b8651aa60ddcf1db40a92c}
+\begin{DoxyReturn}{Returns}
+The arguments to the function. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a7fa08044d00029a834b8fe3276f2053e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_ae7f9af5b547634bb2894e21875ab22a2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!function@{function}}
+\index{function@{function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Function} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_ae7f9af5b547634bb2894e21875ab22a2}
+
+
+T\+O\+D\+O\+: get rid of it. 
+
+\begin{DoxyReturn}{Returns}
+The function being called. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a9a4cad34320d6a01b85ec35887404aac}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a77b65241d9713311e60dcd6fbdac6117}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!is\+Call@{is\+Call}}
+\index{is\+Call@{is\+Call}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{is\+Call}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+is\+Call (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a77b65241d9713311e60dcd6fbdac6117}
+
+
+Is this a call (not spawn)? 
+
+\begin{DoxyReturn}{Returns}
+true iff this is a call 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_af9a39106523639e13d8236c9d4ea02f0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a514d4fca6d2ae3fa69a11b23d76bd125}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!is\+Spawn@{is\+Spawn}}
+\index{is\+Spawn@{is\+Spawn}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{is\+Spawn}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+is\+Spawn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a514d4fca6d2ae3fa69a11b23d76bd125}
+
+
+Is this a spawn (not call)? 
+
+\begin{DoxyReturn}{Returns}
+true iff this is a spawn 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_adc5e87b68df755592a48ead8e80072fa}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a0fc135bbaae85b44327fc89adb2af808}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!is\+System\+Call@{is\+System\+Call}}
+\index{is\+System\+Call@{is\+System\+Call}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{is\+System\+Call}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+is\+System\+Call (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a0fc135bbaae85b44327fc89adb2af808}
+
+
+Check if the statement is calling a system function. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_aec61f1537f3a8fb7c90c78e3736f659f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a2ac023b3d49c44fdc245ef941fad6456}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!lhs@{lhs}}
+\index{lhs@{lhs}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{lhs}]{\setlength{\rightskip}{0pt plus 5cm}{\bf L\+H\+S\+Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+lhs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a2ac023b3d49c44fdc245ef941fad6456}
+\begin{DoxyReturn}{Returns}
+The left hand side expression if applicable. Else null. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a4f467288197f9a65a6284d240ff5fd29}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_aa6b514d6ff56f73ebaa95794f5a9ba09}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!set\+Arguments@{set\+Arguments}}
+\index{set\+Arguments@{set\+Arguments}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{set\+Arguments}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+set\+Arguments (
+\begin{DoxyParamCaption}
+\item[{List$<$ {\bf Expression} $>$}]{arguments}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_aa6b514d6ff56f73ebaa95794f5a9ba09}
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & The arguments to the function. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a22e527cc48c2b0683935be2a07514451}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a0b9e77fecdfc04b2a18ce8d07c0d50c5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!set\+Function@{set\+Function}}
+\index{set\+Function@{set\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{set\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+set\+Function (
+\begin{DoxyParamCaption}
+\item[{{\bf Function\+Identifier\+Expression}}]{function}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a0b9e77fecdfc04b2a18ce8d07c0d50c5}
+
+
+T\+O\+D\+O\+: get rid of this, but updates the function expression instead. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em function} & The function being called. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_a963a6fe132afcb92e899e1b6b6c4240a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a6a76c27700c82aa54d4e86756328eb3c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}!set\+Lhs@{set\+Lhs}}
+\index{set\+Lhs@{set\+Lhs}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Call\+Or\+Spawn\+Statement}}
+\subsubsection[{set\+Lhs}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Call\+Or\+Spawn\+Statement.\+set\+Lhs (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+H\+S\+Expression}}]{lhs}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement_a6a76c27700c82aa54d4e86756328eb3c}
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & The left hand side expression if applicable. Else null. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCallStatement_ae2531d3a489cfe84952c3cee8d9666b5}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Call\+Statement}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/statement/Call\+Or\+Spawn\+Statement.\+java\end{DoxyCompactItemize}

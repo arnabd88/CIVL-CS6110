@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <mpi.h>
+#include <civlmpi.cvh>
+#include <assert.h>
+
+$input int NPROCS = 5;
+CMPI_Gcomm __MPI_COMM_WORLD;
+void MPI_Process(int place){
+  MPI_Comm MPI_COMM_WORLD = CMPI_Comm_create($here, __MPI_COMM_WORLD, place);
+  int nprocs, rank, msg;
+  MPI_Status status;
+  __MPI_Sys_status__ _my_status = __UNINIT;
+
+  $assert _my_status == __UNINIT;
+  __MPI_Init();
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
+
+  if(rank != 0){
+    msg = rank;
+    MPI_Send(&msg, 1, MPI_INT, 0, 1, MPI_COMM_WORLD);
+  }
+  else{
+    int source;
+
+    msg = -1;	
+    for(int i=1; i<NPROCS; i++){
+      MPI_Recv(&msg, 1, MPI_INT, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD, &status);
+    }
+  }
+
+  CMPI_Comm_destroy(MPI_COMM_WORLD);
+  printf("process %d terminates\n", rank);
+}
+
+void main(){
+
+  $proc procs[NPROCS];
+
+  __MPI_COMM_WORLD = CMPI_Gcomm_create($root, NPROCS);
+  for(int i=0; i<NPROCS; i++)
+    procs[i] = $spawn MPI_Process(i);
+  for(int i=0; i<NPROCS; i++)
+    $wait(procs[i]);
+
+  CMPI_Gcomm_destroy(__MPI_COMM_WORLD);
+}

@@ -1,0 +1,23 @@
+/* Commandline execution:
+ *		civl verify bundleStruct.cvl
+ * */
+#include<civlc.cvh>
+#include<bundle.cvh>
+
+typedef struct Interval {
+  int left;
+  int right;
+} Interval;
+
+void main() {
+  Interval interval0;
+  Interval interval1;
+  $bundle bun;
+
+  interval0.left = 0;
+  interval0.right = 1;
+  bun = $bundle_pack(&interval0, sizeof(Interval));
+  $bundle_unpack(bun, &interval1);
+  $assert(interval0.left==interval1.left);
+  $assert(interval0.right==interval1.right);
+}

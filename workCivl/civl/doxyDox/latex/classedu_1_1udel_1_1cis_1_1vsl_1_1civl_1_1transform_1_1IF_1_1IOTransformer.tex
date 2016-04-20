@@ -1,0 +1,92 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+I\+O\+Transformer Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+I\+O\+Transformer@{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+I\+O\+Transformer}}
+
+
+The I\+O transformer transforms~\newline
+  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+I\+O\+Transformer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+I\+O\+Transformer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_a33978fbb086d9c8c2890400724b86d71}{I\+O\+Transformer} (A\+S\+T\+Factory ast\+Factory)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of I\+O transformer. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_aa9bd88ab598f8782d4778b5f5262ef16}{}A\+S\+T {\bfseries transform} (A\+S\+T ast)  throws Syntax\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_aa9bd88ab598f8782d4778b5f5262ef16}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_aa72124793e4fc926b7f907c5eb9cb744}{}static final String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_aa72124793e4fc926b7f907c5eb9cb744}{C\+O\+D\+E} = \char`\"{}io\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_aa72124793e4fc926b7f907c5eb9cb744}
+
+\begin{DoxyCompactList}\small\item\em The code (short name) of this transformer. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_a82e4543e0d02e1688cbb366059525f8f}{}static final String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_a82e4543e0d02e1688cbb366059525f8f}{L\+O\+N\+G\+\_\+\+N\+A\+M\+E} = \char`\"{}I\+O\+Transformer\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_a82e4543e0d02e1688cbb366059525f8f}
+
+\begin{DoxyCompactList}\small\item\em The long name of the transformer. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_af4b0e106798badc175556da41adf5279}{}static final String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_af4b0e106798badc175556da41adf5279}{S\+H\+O\+R\+T\+\_\+\+D\+E\+S\+C\+R\+I\+P\+T\+I\+O\+N} = \char`\"{}transforms C program with I\+O to \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}-\/C\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_af4b0e106798badc175556da41adf5279}
+
+\begin{DoxyCompactList}\small\item\em The description of this transformer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The I\+O transformer transforms~\newline
+ 
+
+
+\begin{DoxyItemize}
+\item all function calls printf(...) into frpintf(stdout, ...) 
+\item all function calls scanf(...) into fscanf(stdin, ...) 
+\item all function calls fopen(...) into \$fopen(...) 
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+zmanchun 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_a33978fbb086d9c8c2890400724b86d71}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::\+I\+F\+::\+I\+O\+Transformer@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::\+I\+F\+::\+I\+O\+Transformer}!I\+O\+Transformer@{I\+O\+Transformer}}
+\index{I\+O\+Transformer@{I\+O\+Transformer}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::\+I\+F\+::\+I\+O\+Transformer@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::\+I\+F\+::\+I\+O\+Transformer}}
+\subsubsection[{I\+O\+Transformer}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+I\+F.\+I\+O\+Transformer.\+I\+O\+Transformer (
+\begin{DoxyParamCaption}
+\item[{A\+S\+T\+Factory}]{ast\+Factory}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1IF_1_1IOTransformer_a33978fbb086d9c8c2890400724b86d71}
+
+
+Creates a new instance of I\+O transformer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ast\+Factory} & The A\+S\+T factory to be used. \\
+\hline
+{\em input\+Variables} & The input variables specified from command line. \\
+\hline
+{\em config} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} configuration. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/transform/\+I\+F/I\+O\+Transformer.\+java\end{DoxyCompactItemize}

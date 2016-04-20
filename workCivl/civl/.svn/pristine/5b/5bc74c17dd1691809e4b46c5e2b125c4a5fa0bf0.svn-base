@@ -1,0 +1,301 @@
+/* Composite model of sequential and parallel 1d-diffusion solvers.
+ * Compares the results of the sequential and parallel computation to
+ * determine functional equivalence of the two versions.
+ *
+ * The initial values are taken as inputs.   The two global boundary
+ * points are fixed.
+ *
+ *  Command line example:
+ *
+ *  civl verify -inputNPROCSB=3 -inputNSTEPSB=3  \
+ -inputNXB=6 diffusion1d_good.cvl
+ */ 
+#include <comm.cvh>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include "mpi.cvl"
+
+// Definitions from programs:
+#define OWNER(index) ((nprocs*(index+1)-1)/nx)
+
+// inputs:
+$input int NPROCS;           // number of processes for parallel version
+$input int NPROCSB;          // upper bound on nprocs
+$input double K;             // k = alpha^2 * dt/(dx^2)
+$input int NSTEPS;           // number of time steps
+$input int WSTEP;            // write every this many time steps  
+$input int NSTEPSB;          // upperbound on nsteps
+$input int NX;               // global number of discrete spatial points
+$input int NXB;              // upper bound on nx
+$input double u_init[NX];    // initial values for temperature (u)
+
+// assumptions:
+$assume 2 <= NX && NX <= NXB;
+$assume K>0 && K<.5;
+$assume WSTEP >= 1 && WSTEP <= NSTEPS;
+// $assume NX >= NPROCS;
+$assume 1 <= NPROCS && NPROCS <= NPROCSB;
+$assume 1 <= NSTEPS && NSTEPS <= NSTEPSB;
+
+// global variables:
+int output_seq[NX];           // final (color) result of sequential computation
+int output_par[NX];           // final (color) result of parallel computation
+CMPI_Gcomm MPI_GCOMM_WORLD;   // the global communicator object
+
+/* Abstract function representing conversion from temperature to color */
+$abstract int colorOf(double x);
+
+/* Sequential algorithm: performs simulation storing result of final
+ * time step in output_seq  */
+void run_seq() {
+  $scope seq_scope = $here;
+  int nx, nsteps, wstep;
+  double k, *u;
+
+  void init_seq() {
+    int i;
+    int pos = 0; // file position
+
+    // in place of reading these from file:
+    nx = NX;
+    nsteps = NSTEPS;
+    wstep = WSTEP;
+    k = K;
+    printf("Diffusion1d (seq) with nx=%d, k=%f, nsteps=%d, wstep=%d\n",
+	   nx, k, nsteps, wstep);
+    assert(nx>=2);
+    assert(k>0 && k<.5);
+    assert(nsteps >= 1);
+    assert(wstep >= 1 && wstep <=nsteps);
+    u = (double*)$malloc(seq_scope, nx*sizeof(double));
+    assert(u);
+    for (i = 0; i < nx; i++)
+      u[i] = u_init[pos++];
+  }
+
+  void write_frame(int time) {
+    for (int i=0; i<nx; i++){
+      output_seq[i] = colorOf(u[i]);
+    }
+  }
+
+  void update() {
+    int i;
+    double u_new[nx];
+
+    for (i = 1; i < nx-1; i++)
+      u_new[i] =  u[i] + k*(u[i+1] + u[i-1] -2*u[i]);
+    for (i = 1; i < nx-1; i++)
+      u[i] = u_new[i];
+  }
+
+  void _main() {
+    int iter;
+
+    init_seq();
+    write_frame(0);
+    for (iter = 1; iter <= nsteps; iter++) {
+      update();
+      if (iter%wstep==0) write_frame(iter);
+    }
+    free(u);
+  }
+
+  _main();
+}
+
+/* MPI Process in parallel algorithm */
+void MPI_Process (int _rank) {
+  $scope proc_scope = $here;   /* this scope */
+  MPI_Comm MPI_COMM_WORLD;
+
+  int nx = -1;              /* number of discrete points including endpoints */
+  double k = -1;            /* D*dt/(dx*dx) */
+  int nsteps = -1;          /* number of time steps */
+  int wstep = -1;           /* write frame every this many time steps */
+  double *u;                /* temperature function */
+  double *u_new;            /* temp. used to update u */
+
+  int nprocs;    /* number of processes */
+  int rank;      /* the rank of this process */
+  int left;      /* rank of left neighbor */
+  int right;     /* rank of right neighbor on torus */
+  int nxl;       /* horizontal extent of one process */
+  int first;     /* global index for local index 0 */
+  int start;     /* first local index to update */
+  int stop;      /* last local index to update */
+  double *buf;   /* temp. buffer used on proc 0 only */
+
+  int firstForProc(int rank) {
+    return (rank*nx)/nprocs;	
+  }
+
+  int countForProc(int rank) {
+    int a;
+    int b;
+	
+    a = firstForProc(rank+1);
+    b = firstForProc(rank);
+    return a-b;
+  }
+
+  /* init: initializes global variables. */
+  void init() { 
+    int i, j;
+    int pos = 0; // position in input file
+
+    MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    if (rank == 0) {
+      // in place of reading these from file:
+      nx = NX;
+      k = K;
+      nsteps = NSTEPS;
+      wstep = WSTEP;
+      printf("Diffusion1d (par) with nx=%d, k=%f, nsteps=%d, wstep=%d nprocs=%d\n",
+	     nx, k, nsteps, wstep, nprocs);
+    }
+    MPI_Bcast(&nx, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&k, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&nsteps, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&wstep, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    // assert(nx>=nprocs);
+    assert(k>0 && k<.5);
+    assert(nx>=2);
+    assert(nsteps>=1);
+    first = firstForProc(rank);  
+    nxl = countForProc(rank);
+    if (first == 0 || nxl == 0)
+      left = MPI_PROC_NULL;
+    else
+      left = OWNER(first-1);
+    if (first+nxl >= nx || nxl == 0)
+      right = MPI_PROC_NULL;
+    else
+      right = OWNER(first+nxl);  
+    u = (double*)$malloc(proc_scope, (nxl+2)*sizeof(double));
+    assert(u != NULL);
+    u_new = (double*)$malloc(proc_scope, (nxl+2)*sizeof(double));
+    assert(u_new != NULL);
+    if (rank == 0) {
+      buf = (double*)$malloc(proc_scope, (1+nx/nprocs)*sizeof(double));
+      for (i=1; i <= nxl; i++)
+	u[i] = u_init[pos++]; // instead of reading from file
+      for (i=1; i < nprocs; i++) {
+	int count_i = countForProc(i);
+
+	for (j=0; j<count_i; j++)
+	  buf[j] = u_init[pos++];
+	MPI_Send(buf, count_i, MPI_DOUBLE, i, 0, MPI_COMM_WORLD);
+      }
+      // $free(buf);
+    }
+    else {
+      buf = NULL;
+      MPI_Recv(u+1, nxl, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    }
+    if (rank == OWNER(0)) {
+      start = 2;
+    }
+    else {
+      start = 1;
+    }
+    if (rank == OWNER(nx-1)) {
+      stop = nxl - 1;
+    }
+    else {
+      stop = nxl;
+    }
+  }
+
+  void write_frame(int time) {
+    if (rank != 0) {
+      MPI_Send(u+1, nxl, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+    } else {
+      int source, i, j, count, global_index;
+      MPI_Status status;
+  
+      global_index = 0;
+      for (source = 0; source < nprocs; source++) {
+	if (source != 0) {
+	  MPI_Recv(buf, 1+nx/nprocs, MPI_DOUBLE, source, 0,
+		   MPI_COMM_WORLD, &status);
+	  MPI_Get_count(&status, MPI_DOUBLE, &count);
+	} else {
+	  for (i = 1; i <= nxl; i++) buf[i-1] = u[i];
+	  count = nxl;
+	}
+	for (i = 0; i < count; i++) {
+	  output_par[global_index] = colorOf(buf[i]);
+	  global_index++;
+	}
+      }
+    }
+  }
+
+  /* exchange_ghost_cells: updates ghost cells using MPI communication */
+  void exchange_ghost_cells() {
+    MPI_Sendrecv(&u[1], 1, MPI_DOUBLE, left, 0,
+		 &u[nxl+1], 1, MPI_DOUBLE, right, 0,
+		 MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Sendrecv(&u[nxl], 1, MPI_DOUBLE, right, 0,
+		 &u[0], 1, MPI_DOUBLE, left, 0,
+		 MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+  }
+
+  /* update: updates u.  Uses ghost cells.  Purely local operation. */
+  void update() {
+    int i;
+    
+    for (i = start; i <= stop; i++)
+      u_new[i] = u[i] + k*(u[i+1] + u[i-1] - 2*u[i]);
+    for (i = start; i <= stop; i++)
+      u[i] = u_new[i];
+  }
+  
+  void _main() {
+    int iter;
+
+    MPI_Init();
+    MPI_COMM_WORLD = MPI_Comm_create(proc_scope, MPI_GCOMM_WORLD, _rank);
+    init();
+    write_frame(0);
+    for (iter = 1; iter <= nsteps; iter++) {
+      exchange_ghost_cells();
+      update();
+      if (iter%wstep==0) write_frame(iter);
+    }
+    MPI_Finalize();
+    MPI_Comm_destroy(MPI_COMM_WORLD);
+    free(u);
+    free(u_new);
+    if (rank == 0)
+      free(buf);
+  }
+
+  _main();
+}
+
+void run_par() {
+  $proc procs[NPROCS];          // the MPI processes
+
+  MPI_GCOMM_WORLD = CMPI_Gcomm_create($root, NPROCS);
+  for (int i=0; i<NPROCS; i++) procs[i] = $spawn MPI_Process(i);
+  for (int i=0; i<NPROCS; i++) $wait(procs[i]);
+  CMPI_Gcomm_destroy(MPI_GCOMM_WORLD);
+}  
+
+void main() {
+  for (int i=0; i<NX; i++) ;
+  for (int i=0; i<NSTEPS; i++) ;
+  for (int i=0; i<WSTEP; i++) ;
+  for (int i=0; i<NPROCS; i++) ;
+  
+  run_seq();
+  run_par();
+  for (int i=0; i<NX; i++) {
+    printf("output[%d] = %d\n", i, output_seq[i]);
+    $assert(output_seq[i]==output_par[i]);
+  }
+}

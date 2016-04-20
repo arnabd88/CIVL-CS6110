@@ -1,0 +1,24 @@
+#include<civlc.cvh>
+
+$scope root = $here;
+int main(){
+  int *ptr, x=1, y=2;
+
+  $choose{
+    if(x<=1){
+      int a1=0;
+      y=a1;
+    }else{
+      y=x+1;
+    }
+    $when(x<5){
+      $when(y>1){
+	y=10;
+	int z=19;
+	x=z;
+      }
+    }
+    {ptr=(int*)$malloc(root, sizeof(int)); $free(ptr);}
+    {int q=sizeof(int); ptr=(int*)$malloc($here, q); $free(ptr);}
+  }
+}

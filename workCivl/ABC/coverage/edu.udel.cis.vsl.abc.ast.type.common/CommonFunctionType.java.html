@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonFunctionType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonFunctionType.java</span></div><h1>CommonFunctionType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.IF.ASTException;
+import edu.udel.cis.vsl.abc.ast.type.IF.FunctionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+
+/**
+ * 
+ * @author siegel
+ * 
+ */
+public class CommonFunctionType extends CommonType implements FunctionType {
+
+<span class="nc" id="L19">	private static int classCode = CommonFunctionType.class.hashCode();</span>
+
+	private ObjectType returnType;
+
+	private ArrayList&lt;ObjectType&gt; parameterTypes;
+
+	private boolean hasVariableArgs;
+
+	private boolean fromIdentifierList;
+
+	/**
+	 * Constructs a new instance in the case where no information is known about
+	 * the parameters. In this case, fromIdentifierList must be true.
+	 * 
+	 * @param returnType
+	 *            the type returned by a call to the function
+	 */
+	public CommonFunctionType(ObjectType returnType) {
+<span class="nc" id="L37">		super(TypeKind.FUNCTION);</span>
+<span class="nc" id="L38">		this.returnType = returnType;</span>
+<span class="nc" id="L39">		this.fromIdentifierList = true;</span>
+<span class="nc" id="L40">		this.parameterTypes = null;</span>
+<span class="nc" id="L41">		this.hasVariableArgs = false;</span>
+<span class="nc" id="L42">	}</span>
+
+	/**
+	 * Constructs a new instance in the case where the information on the
+	 * parameter types is known.
+	 * 
+	 * @param returnType
+	 *            the type returned by a call to the function
+	 * @param fromIdentifierList
+	 *            was this type generated from a declaration with an identifier
+	 *            list (as opposed to a parameter-type list)?
+	 * @param parameterTypes
+	 *            the type of each parameter
+	 * @param hasVariableArgs
+	 *            does the function have a variable number of arguments
+	 *            (indicated by a &quot;...&quot; in the parameter type list)?
+	 */
+	public CommonFunctionType(ObjectType returnType,
+			boolean fromIdentifierList, Iterable&lt;ObjectType&gt; parameterTypes,
+			boolean hasVariableArgs) {
+<span class="nc" id="L62">		super(TypeKind.FUNCTION);</span>
+<span class="nc" id="L63">		this.returnType = returnType;</span>
+<span class="nc" id="L64">		this.fromIdentifierList = fromIdentifierList;</span>
+<span class="nc" id="L65">		this.parameterTypes = new ArrayList&lt;ObjectType&gt;();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (ObjectType ot : parameterTypes)</span>
+<span class="nc" id="L67">			this.parameterTypes.add(ot);</span>
+<span class="nc" id="L68">		this.hasVariableArgs = hasVariableArgs;</span>
+<span class="nc" id="L69">	}</span>
+
+	@Override
+	public ObjectType getReturnType() {
+<span class="nc" id="L73">		return returnType;</span>
+	}
+
+	@Override
+	public boolean hasVariableArgs() {
+<span class="nc" id="L78">		return hasVariableArgs;</span>
+	}
+
+	// TODO need to make it an option to turn switch checking
+	@Override
+	public int getNumParameters() {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (parameterTypes == null)</span>
+<span class="nc" id="L85">			return 0;</span>
+		// throw new ASTException(
+		// &quot;The parameters for the function have not been specified.&quot;
+		// +
+		// &quot;\nNote that a prototype for a function with 0 parameters must have the form \&quot;f(void)\&quot;&quot;);
+<span class="nc" id="L90">		return parameterTypes.size();</span>
+	}
+
+	@Override
+	public ObjectType getParameterType(int index) {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (parameterTypes == null)</span>
+<span class="nc" id="L96">			throw new ASTException(</span>
+<span class="nc" id="L97">					&quot;The parameters for the function have not been specified.&quot;</span>
+							+ &quot;\nNote that a prototype for a function with 0 parameters must have the form \&quot;f(void)\&quot;&quot;);
+<span class="nc" id="L99">		return parameterTypes.get(index);</span>
+	}
+
+	@Override
+	public Iterable&lt;ObjectType&gt; getParameterTypes() {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (parameterTypes == null)</span>
+<span class="nc" id="L105">			throw new ASTException(</span>
+<span class="nc" id="L106">					&quot;The parameters for the function have not been specified.&quot;</span>
+							+ &quot;\nNote that a prototype for a function with 0 parameters must have the form \&quot;f(void)\&quot;&quot;);
+<span class="nc" id="L108">		return parameterTypes;</span>
+	}
+
+	@Override
+	public boolean isVariablyModified() {
+<span class="nc" id="L113">		return returnType.isVariablyModified();</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L118">		int result = classCode + returnType.hashCode();</span>
+
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (parameterTypes != null) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			for (ObjectType type : parameterTypes)</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">				if (type != null)</span>
+<span class="nc" id="L123">					result += type.hashCode();</span>
+		}
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (hasVariableArgs)</span>
+<span class="nc" id="L126">			result += 128;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (fromIdentifierList)</span>
+<span class="nc" id="L128">			result += 256;</span>
+<span class="nc" id="L129">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object object) {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (this == object)</span>
+<span class="nc" id="L135">			return true;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (object instanceof CommonFunctionType) {</span>
+<span class="nc" id="L137">			CommonFunctionType that = (CommonFunctionType) object;</span>
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (!returnType.equals(that.returnType))</span>
+<span class="nc" id="L140">				return false;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (parameterTypes == null) {</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">				if (that.parameterTypes != null)</span>
+<span class="nc" id="L143">					return false;</span>
+			} else {
+<span class="nc bnc" id="L145" title="All 2 branches missed.">				if (!parameterTypes.equals(that.parameterTypes))</span>
+<span class="nc" id="L146">					return false;</span>
+			}
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			return hasVariableArgs == that.hasVariableArgs</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">					&amp;&amp; fromIdentifierList == that.fromIdentifierList;</span>
+		}
+<span class="nc" id="L151">		return false;</span>
+	}
+
+	private boolean equiv(ArrayList&lt;ObjectType&gt; types1,
+			ArrayList&lt;ObjectType&gt; types2, Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc" id="L156">		int length1 = types1.size();</span>
+<span class="nc" id="L157">		int length2 = types2.size();</span>
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (length1 != length2)</span>
+<span class="nc" id="L160">			return false;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		for (int i = 0; i &lt; length1; i++) {</span>
+<span class="nc" id="L162">			CommonType x1 = (CommonType) types1.get(i);</span>
+<span class="nc" id="L163">			CommonType x2 = (CommonType) types2.get(i);</span>
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">			if (x1 == null) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">				if (x2 != null)</span>
+<span class="nc" id="L167">					return false;</span>
+			} else {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				if (x2 == null)</span>
+<span class="nc" id="L170">					return false;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">				if (!x1.similar(x2, true, seen))</span>
+<span class="nc" id="L172">					return false;</span>
+			}
+		}
+<span class="nc" id="L175">		return true;</span>
+	}
+
+	private boolean equivalentTo(Type type, Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (type instanceof CommonFunctionType) {</span>
+<span class="nc" id="L180">			CommonFunctionType that = (CommonFunctionType) type;</span>
+
+<span class="nc bnc" id="L182" title="All 2 branches missed.">			if (!((CommonType) returnType).similar(that.returnType, true, seen))</span>
+<span class="nc" id="L183">				return false;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">			if (parameterTypes == null) {</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">				if (that.parameterTypes != null)</span>
+<span class="nc" id="L186">					return false;</span>
+			} else {
+<span class="nc bnc" id="L188" title="All 2 branches missed.">				if (!equiv(parameterTypes, that.parameterTypes, seen))</span>
+<span class="nc" id="L189">					return false;</span>
+			}
+<span class="nc bnc" id="L191" title="All 2 branches missed.">			return hasVariableArgs == that.hasVariableArgs</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">					&amp;&amp; fromIdentifierList == that.fromIdentifierList;</span>
+		}
+<span class="nc" id="L194">		return false;</span>
+	}
+
+	/**
+	 * See C11 Sec. 6.7.6.3(15).
+	 * 
+	 * Note: &quot;In the determination of type compatibility and of a composite
+	 * type, each parameter declared with function or array type is taken as
+	 * having the adjusted type and each parameter declared with qualified type
+	 * is taken as having the unqualified version of its declared type.&quot;
+	 * 
+	 * 6.5.2.2(6): &quot;If the expression that denotes the called function has a
+	 * type that does not include a prototype, the integer promotions are
+	 * performed on each argument, and arguments that have type float are
+	 * promoted to double. These are called the default argument promotions.&quot;
+	 */
+	private boolean compatibleWith(Type type, Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (type instanceof CommonFunctionType) {</span>
+<span class="nc" id="L212">			CommonFunctionType that = (CommonFunctionType) type;</span>
+
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (!returnType.compatibleWith(that.returnType))</span>
+				// &quot;For two function types to be compatible, both shall specify
+				// compatible return types.&quot;
+<span class="nc" id="L217">				return false;</span>
+<span class="nc bnc" id="L218" title="All 4 branches missed.">			if (!this.fromIdentifierList &amp;&amp; !that.fromIdentifierList) {</span>
+				// &quot;the parameter type lists, if both are present, shall agree
+				// in the number of parameters and in use of the ellipsis
+				// terminator; corresponding parameters shall have compatible
+				// types.&quot;
+<span class="nc" id="L223">				int numParameters = getNumParameters();</span>
+
+<span class="nc bnc" id="L225" title="All 2 branches missed.">				if (numParameters != that.getNumParameters())</span>
+<span class="nc" id="L226">					return false;</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">				for (int i = 0; i &lt; numParameters; i++) {</span>
+<span class="nc" id="L228">					CommonObjectType parameterType1 = (CommonObjectType) this</span>
+<span class="nc" id="L229">							.getParameterType(i);</span>
+<span class="nc" id="L230">					ObjectType parameterType2 = that.getParameterType(i);</span>
+
+<span class="nc bnc" id="L232" title="All 2 branches missed.">					if (!parameterType1.similar(parameterType2, false, seen))</span>
+<span class="nc" id="L233">						return false;</span>
+				}
+<span class="nc bnc" id="L235" title="All 2 branches missed.">				if (this.hasVariableArgs != that.hasVariableArgs)</span>
+<span class="nc" id="L236">					return false;</span>
+<span class="nc" id="L237">				return true;</span>
+<span class="nc bnc" id="L238" title="All 4 branches missed.">			} else if (!this.fromIdentifierList &amp;&amp; !that.parametersKnown()) {</span>
+				// &quot;If one type has a parameter type list and the other type is
+				// specified by a function declarator that is not part of a
+				// function definition and that contains an empty identifier
+				// list, the parameter list shall not have an ellipsis
+				// terminator and the type of each parameter shall be compatible
+				// with the type that results from the application of the
+				// default argument promotions.&quot; The application of the default
+				// argument promotions to what??? Is this referring to
+				// what happens when the function is called?
+<span class="nc bnc" id="L248" title="All 2 branches missed.">				if (this.hasVariableArgs)</span>
+<span class="nc" id="L249">					return false;</span>
+<span class="nc" id="L250">				return true;</span>
+<span class="nc bnc" id="L251" title="All 4 branches missed.">			} else if (!that.fromIdentifierList &amp;&amp; !this.parametersKnown()) {</span>
+				// symmetric situation
+<span class="nc" id="L253">				return that.compatibleWith(this, seen);</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">			} else if (!this.fromIdentifierList</span>
+<span class="nc bnc" id="L255" title="All 4 branches missed.">					&amp;&amp; (that.fromIdentifierList &amp;&amp; that.parametersKnown())) {</span>
+				// &quot;If one type has a parameter type list and the other type is
+				// specified by a function definition that contains a (possibly
+				// empty) identifier list, both shall agree in the number of
+				// parameters, and the type of each prototype parameter shall be
+				// compatible with the type that results from the application of
+				// the default argument promotions to the type of the
+				// corresponding identifier.&quot;  In other words, the &quot;real&quot; type
+				// of the parameter is the one in the parameter-type list; the
+				// type specified in the function definition has to be
+				// compatible with that after it is promoted.
+<span class="nc" id="L266">				int numParameters = getNumParameters();</span>
+
+<span class="nc bnc" id="L268" title="All 2 branches missed.">				if (numParameters != that.getNumParameters())</span>
+<span class="nc" id="L269">					return false;</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">				for (int i = 0; i &lt; numParameters; i++) {</span>
+<span class="nc" id="L271">					CommonObjectType parameterType1 = (CommonObjectType) this</span>
+<span class="nc" id="L272">							.getParameterType(i);</span>
+<span class="nc" id="L273">					CommonObjectType parameterType2 = (CommonObjectType) that</span>
+<span class="nc" id="L274">							.getParameterType(i);</span>
+
+					// TODO: perform default argument promotion to
+					// parameterType2
+<span class="nc bnc" id="L278" title="All 2 branches missed.">					if (!parameterType1.similar(parameterType2, false, seen))</span>
+<span class="nc" id="L279">						return false;</span>
+				}
+<span class="nc bnc" id="L281" title="All 2 branches missed.">				if (this.hasVariableArgs != that.hasVariableArgs)</span>
+<span class="nc" id="L282">					return false;</span>
+<span class="nc" id="L283">				return true;</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">			} else if (!that.fromIdentifierList</span>
+<span class="nc bnc" id="L285" title="All 4 branches missed.">					&amp;&amp; (this.fromIdentifierList &amp;&amp; this.parametersKnown())) {</span>
+				// symmetric situation
+<span class="nc" id="L287">				return that.compatibleWith(this, seen);</span>
+			} else {
+<span class="nc" id="L289">				return true;</span>
+			}
+		}
+<span class="nc" id="L292">		return false;</span>
+	}
+
+	@Override
+	public boolean fromIdentifierList() {
+<span class="nc" id="L297">		return fromIdentifierList;</span>
+	}
+
+	@Override
+	public boolean parametersKnown() {
+<span class="nc bnc" id="L302" title="All 2 branches missed.">		return parameterTypes != null;</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean abbrv) {
+<span class="nc" id="L307">		out.println(&quot;Function&quot;);</span>
+<span class="nc" id="L308">		out.print(prefix + &quot;| returnType = &quot;);</span>
+<span class="nc" id="L309">		returnType.print(prefix + &quot;| | &quot;, out, true);</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (parameterTypes != null) {</span>
+<span class="nc" id="L311">			out.println();</span>
+<span class="nc" id="L312">			out.print(prefix + &quot;| parameterTypes&quot;);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			for (Type type : parameterTypes) {</span>
+<span class="nc" id="L314">				out.println();</span>
+<span class="nc" id="L315">				out.print(prefix + &quot;| | &quot;);</span>
+<span class="nc" id="L316">				type.print(prefix + &quot;| | &quot;, out, true);</span>
+			}
+		}
+<span class="nc" id="L319">	}</span>
+
+	@Override
+	public boolean isScalar() {
+<span class="nc" id="L323">		return true;</span>
+	}
+
+	@Override
+	protected boolean similar(Type other, boolean equivalent,
+			Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L329" title="All 2 branches missed.">		return equivalent ? equivalentTo(other, seen) : compatibleWith(other,</span>
+<span class="nc" id="L330">				seen);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L335">		String result = &quot;&quot;;</span>
+<span class="nc" id="L336">		boolean isFirst = true;</span>
+
+<span class="nc" id="L338">		result += returnType.toString();</span>
+<span class="nc" id="L339">		result += &quot; (&quot;;</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (parameterTypes != null)</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">			for (ObjectType parameterType : parameterTypes) {</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">				if (isFirst)</span>
+<span class="nc" id="L343">					isFirst = false;</span>
+				else
+<span class="nc" id="L345">					result += &quot;, &quot;;</span>
+<span class="nc" id="L346">				result += parameterType.toString();</span>
+			}
+<span class="nc" id="L348">		result += &quot;)&quot;;</span>
+<span class="nc" id="L349">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

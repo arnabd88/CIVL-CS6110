@@ -1,0 +1,18 @@
+
+
+$input int K;
+$input int N=4;
+$input int A[N];
+$output int B[N];
+
+int main(){
+  if(K > 5)
+    $for(int i: 0 .. N-1)
+      B[i]=A[i];
+  else if(K > 0)
+    $for(int i: 0 .. N-1)
+      B[i]=A[i];
+  else
+    $for(int i: 0 .. N-1)
+      B[i]=A[i]+1;
+}

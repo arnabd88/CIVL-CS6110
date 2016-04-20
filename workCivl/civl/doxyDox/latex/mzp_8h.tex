@@ -1,0 +1,433 @@
+\hypertarget{mzp_8h}{}\section{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mzp.h File Reference}
+\label{mzp_8h}\index{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mzp.\+h@{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/mzp.\+h}}
+
+
+Permutation matrices.  
+
+
+{\ttfamily \#include $<$m4ri/mzd.\+h$>$}\\*
+Include dependency graph for mzp.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mzp_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mzp_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmzp__t}{mzp\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Permutations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{mzp_8h_a84c2392bbd040fce07e31e8c81a34d26}{}typedef struct \hyperlink{structmzp__t}{mzp\+\_\+t} \hyperlink{mzp_8h_a84c2392bbd040fce07e31e8c81a34d26}{mzp\+\_\+t}\label{mzp_8h_a84c2392bbd040fce07e31e8c81a34d26}
+
+\begin{DoxyCompactList}\small\item\em Permutations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$ \hyperlink{mzp_8h_afec6aba046feccbfc51ba637847344d4}{mzp\+\_\+init} (\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} length)
+\begin{DoxyCompactList}\small\item\em Construct an identity permutation. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a42eadbf2417a8b4745d2baaf49746b50}{mzp\+\_\+free} (\hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P)
+\begin{DoxyCompactList}\small\item\em Free a \hyperlink{structmzp__t}{mzp\+\_\+t}. \end{DoxyCompactList}\item 
+\hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$ \hyperlink{mzp_8h_a48bc6d2db4c6cb5f0a26f0010d844b5a}{mzp\+\_\+init\+\_\+window} (\hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} begin, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} end)
+\begin{DoxyCompactList}\small\item\em Create a window/view into the permutation P. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a365368385c501715f06b76149fa4a56e}{mzp\+\_\+free\+\_\+window} (\hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$condemned)
+\begin{DoxyCompactList}\small\item\em Free a permutation window created with mzp\+\_\+init\+\_\+mzp\+\_\+t\+\_\+window(). \end{DoxyCompactList}\item 
+\hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$ \hyperlink{mzp_8h_a22dcc08c158ac41bb1d41f347956681c}{mzp\+\_\+copy} (\hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, const \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$Q)
+\begin{DoxyCompactList}\small\item\em copy permutation Q to P \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_ac0408cb1adafd67651b5f396e826fc56}{mzp\+\_\+set\+\_\+ui} (\hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, unsigned int value)
+\begin{DoxyCompactList}\small\item\em Set the permutation P to the identity permutation. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a3f515e8211e42ef16491f87830de1a0a}{mzd\+\_\+apply\+\_\+p\+\_\+left} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} const $\ast$P)
+\begin{DoxyCompactList}\small\item\em Apply the permutation P to \hyperlink{structA}{A} from the left. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a1073371a4ea74836afe8e0c1558bcb11}{mzd\+\_\+apply\+\_\+p\+\_\+left\+\_\+trans} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} const $\ast$P)
+\begin{DoxyCompactList}\small\item\em Apply the permutation P to \hyperlink{structA}{A} from the left but transpose P before. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a1ddef0bfad085b1e5e68b760fd06f81a}{mzd\+\_\+apply\+\_\+p\+\_\+right} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} const $\ast$P)
+\begin{DoxyCompactList}\small\item\em Apply the permutation P to \hyperlink{structA}{A} from the right. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_af235be3ca4f2eee6ccae9cb7c39e4abb}{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} const $\ast$P)
+\begin{DoxyCompactList}\small\item\em Apply the permutation P to \hyperlink{structA}{A} from the right but transpose P before. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a67f0494ed91282cf3c02fd6b2f6bb56e}{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+even\+\_\+capped} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} const $\ast$P, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} start\+\_\+row, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} start\+\_\+col)
+\begin{DoxyCompactList}\small\item\em Apply the permutation P to \hyperlink{structA}{A} from the right starting at start\+\_\+row. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a8c03fedff5edc92ba3e6604f72de2f93}{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+even\+\_\+capped} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} const $\ast$P, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} start\+\_\+row, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} start\+\_\+col)
+\begin{DoxyCompactList}\small\item\em Apply the permutation P$^\wedge$\+T to \hyperlink{structA}{A} from the right starting at start\+\_\+row. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a3a802eabe225eca6097d1a476378b0ab}{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+tri} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} const $\ast$Q)
+\begin{DoxyCompactList}\small\item\em Apply the permutation P to \hyperlink{structA}{A} from the right, but only on the upper the matrix \hyperlink{structA}{A} above the main diagonal. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a6250a960c1b2791fed8a2768db31ff9a}{mzp\+\_\+print} (\hyperlink{structmzp__t}{mzp\+\_\+t} const $\ast$P)
+\begin{DoxyCompactList}\small\item\em Print the \hyperlink{structmzp__t}{mzp\+\_\+t} P. \end{DoxyCompactList}\item 
+void \hyperlink{mzp_8h_a9beacfc24a7e816555e87a747fc1e1c9}{\+\_\+mzd\+\_\+compress\+\_\+l} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} r1, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} n1, \hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} r2)
+\begin{DoxyCompactList}\small\item\em Compresses the matrix L in a step in blockwise-\/recursive P\+L\+E decomposition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Permutation matrices. 
+
+\begin{DoxyAuthor}{Author}
+Martin Albrecht \href{mailto:M.R.Albrecht@rhul.ac.uk}{\tt M.\+R.\+Albrecht@rhul.\+ac.\+uk} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{mzp_8h_a9beacfc24a7e816555e87a747fc1e1c9}{}\index{mzp.\+h@{mzp.\+h}!\+\_\+mzd\+\_\+compress\+\_\+l@{\+\_\+mzd\+\_\+compress\+\_\+l}}
+\index{\+\_\+mzd\+\_\+compress\+\_\+l@{\+\_\+mzd\+\_\+compress\+\_\+l}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+compress\+\_\+l}]{\setlength{\rightskip}{0pt plus 5cm}void \+\_\+mzd\+\_\+compress\+\_\+l (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf rci\+\_\+t}}]{r1, }
+\item[{{\bf rci\+\_\+t}}]{n1, }
+\item[{{\bf rci\+\_\+t}}]{r2}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a9beacfc24a7e816555e87a747fc1e1c9}
+
+
+Compresses the matrix L in a step in blockwise-\/recursive P\+L\+E decomposition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em r1} & Rank of left matrix. \\
+\hline
+{\em n1} & Column cut which separates left and right matrix. \\
+\hline
+{\em r2} & Rank of right matrix. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyVerb} We are compressing this matrix
+\end{DoxyVerb}
+ \begin{DoxyVerb}           r1           n1
+   ------------------------------------------
+   | \ \____|___        | A01               |
+   |  \     |   \       |                   |
+ r1------------------------------------------ 
+   |   |    |           | \  \_____         |
+   | L1|    |           |  \       \________|
+   |   |    |           | L2|               |
+   ------------------------------------------
+\end{DoxyVerb}
+ \begin{DoxyVerb}to this matrix
+\end{DoxyVerb}
+
+
+\begin{DoxyVerb}           r1           n1
+   ------------------------------------------
+   | \ \____|___        | A01               |
+   |  \     |   \       |                   |
+ r1------------------------------------------ 
+   |    \   |           |    \_____         |
+   |     \  |           |          \________|
+   |      | |           |                   |
+   ------------------------------------------
+\end{DoxyVerb}
+\hypertarget{mzp_8h_a3f515e8211e42ef16491f87830de1a0a}{}\index{mzp.\+h@{mzp.\+h}!mzd\+\_\+apply\+\_\+p\+\_\+left@{mzd\+\_\+apply\+\_\+p\+\_\+left}}
+\index{mzd\+\_\+apply\+\_\+p\+\_\+left@{mzd\+\_\+apply\+\_\+p\+\_\+left}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzd\+\_\+apply\+\_\+p\+\_\+left}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+apply\+\_\+p\+\_\+left (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} const $\ast$}]{P}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a3f515e8211e42ef16491f87830de1a0a}
+
+
+Apply the permutation P to \hyperlink{structA}{A} from the left. 
+
+This is equivalent to row swaps walking from 0 to length-\/1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em P} & Permutation. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a1073371a4ea74836afe8e0c1558bcb11}{}\index{mzp.\+h@{mzp.\+h}!mzd\+\_\+apply\+\_\+p\+\_\+left\+\_\+trans@{mzd\+\_\+apply\+\_\+p\+\_\+left\+\_\+trans}}
+\index{mzd\+\_\+apply\+\_\+p\+\_\+left\+\_\+trans@{mzd\+\_\+apply\+\_\+p\+\_\+left\+\_\+trans}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzd\+\_\+apply\+\_\+p\+\_\+left\+\_\+trans}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+apply\+\_\+p\+\_\+left\+\_\+trans (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} const $\ast$}]{P}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a1073371a4ea74836afe8e0c1558bcb11}
+
+
+Apply the permutation P to \hyperlink{structA}{A} from the left but transpose P before. 
+
+This is equivalent to row swaps walking from length-\/1 to 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em P} & Permutation. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a1ddef0bfad085b1e5e68b760fd06f81a}{}\index{mzp.\+h@{mzp.\+h}!mzd\+\_\+apply\+\_\+p\+\_\+right@{mzd\+\_\+apply\+\_\+p\+\_\+right}}
+\index{mzd\+\_\+apply\+\_\+p\+\_\+right@{mzd\+\_\+apply\+\_\+p\+\_\+right}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzd\+\_\+apply\+\_\+p\+\_\+right}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+apply\+\_\+p\+\_\+right (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} const $\ast$}]{P}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a1ddef0bfad085b1e5e68b760fd06f81a}
+
+
+Apply the permutation P to \hyperlink{structA}{A} from the right. 
+
+This is equivalent to column swaps walking from length-\/1 to 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em P} & Permutation. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a67f0494ed91282cf3c02fd6b2f6bb56e}{}\index{mzp.\+h@{mzp.\+h}!mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+even\+\_\+capped@{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+even\+\_\+capped}}
+\index{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+even\+\_\+capped@{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+even\+\_\+capped}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+even\+\_\+capped}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+even\+\_\+capped (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} const $\ast$}]{P, }
+\item[{{\bf rci\+\_\+t}}]{start\+\_\+row, }
+\item[{{\bf rci\+\_\+t}}]{start\+\_\+col}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a67f0494ed91282cf3c02fd6b2f6bb56e}
+
+
+Apply the permutation P to \hyperlink{structA}{A} from the right starting at start\+\_\+row. 
+
+This is equivalent to column swaps walking from length-\/1 to 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em P} & Permutation. \\
+\hline
+{\em start\+\_\+row} & Start swapping at this row. \\
+\hline
+{\em start\+\_\+col} & Start swapping at this column. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_af235be3ca4f2eee6ccae9cb7c39e4abb}{}\index{mzp.\+h@{mzp.\+h}!mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans@{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans}}
+\index{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans@{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} const $\ast$}]{P}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_af235be3ca4f2eee6ccae9cb7c39e4abb}
+
+
+Apply the permutation P to \hyperlink{structA}{A} from the right but transpose P before. 
+
+Apply the \hyperlink{structmzp__t}{mzp\+\_\+t} P to \hyperlink{structA}{A} from the right but transpose P before.
+
+This is equivalent to column swaps walking from 0 to length-\/1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em P} & Permutation.\\
+\hline
+\end{DoxyParams}
+Apply the permutation P to \hyperlink{structA}{A} from the right but transpose P before.
+
+This is equivalent to column swaps walking from 0 to length-\/1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em P} & Permutation. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a8c03fedff5edc92ba3e6604f72de2f93}{}\index{mzp.\+h@{mzp.\+h}!mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+even\+\_\+capped@{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+even\+\_\+capped}}
+\index{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+even\+\_\+capped@{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+even\+\_\+capped}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+even\+\_\+capped}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+even\+\_\+capped (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} const $\ast$}]{P, }
+\item[{{\bf rci\+\_\+t}}]{start\+\_\+row, }
+\item[{{\bf rci\+\_\+t}}]{start\+\_\+col}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a8c03fedff5edc92ba3e6604f72de2f93}
+
+
+Apply the permutation P$^\wedge$\+T to \hyperlink{structA}{A} from the right starting at start\+\_\+row. 
+
+This is equivalent to column swaps walking from 0 to length-\/1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em P} & Permutation. \\
+\hline
+{\em start\+\_\+row} & Start swapping at this row. \\
+\hline
+{\em start\+\_\+col} & Start swapping at this column. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a3a802eabe225eca6097d1a476378b0ab}{}\index{mzp.\+h@{mzp.\+h}!mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+tri@{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+tri}}
+\index{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+tri@{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+tri}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+tri}]{\setlength{\rightskip}{0pt plus 5cm}void mzd\+\_\+apply\+\_\+p\+\_\+right\+\_\+trans\+\_\+tri (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} const $\ast$}]{Q}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a3a802eabe225eca6097d1a476378b0ab}
+
+
+Apply the permutation P to \hyperlink{structA}{A} from the right, but only on the upper the matrix \hyperlink{structA}{A} above the main diagonal. 
+
+This is equivalent to column swaps walking from length-\/1 to 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Matrix. \\
+\hline
+{\em Q} & Permutation. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a22dcc08c158ac41bb1d41f347956681c}{}\index{mzp.\+h@{mzp.\+h}!mzp\+\_\+copy@{mzp\+\_\+copy}}
+\index{mzp\+\_\+copy@{mzp\+\_\+copy}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzp\+\_\+copy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzp\+\_\+t}$\ast$ mzp\+\_\+copy (
+\begin{DoxyParamCaption}
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{const {\bf mzp\+\_\+t} $\ast$}]{Q}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a22dcc08c158ac41bb1d41f347956681c}
+
+
+copy permutation Q to P 
+
+
+\begin{DoxyParams}{Parameters}
+{\em P} & Target permutation matrix (may be N\+U\+L\+L) \\
+\hline
+{\em Q} & Source permutation matrix (must not be N\+U\+L\+L) \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a42eadbf2417a8b4745d2baaf49746b50}{}\index{mzp.\+h@{mzp.\+h}!mzp\+\_\+free@{mzp\+\_\+free}}
+\index{mzp\+\_\+free@{mzp\+\_\+free}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzp\+\_\+free}]{\setlength{\rightskip}{0pt plus 5cm}void mzp\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a42eadbf2417a8b4745d2baaf49746b50}
+
+
+Free a \hyperlink{structmzp__t}{mzp\+\_\+t}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em P} & Permutation to free. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a365368385c501715f06b76149fa4a56e}{}\index{mzp.\+h@{mzp.\+h}!mzp\+\_\+free\+\_\+window@{mzp\+\_\+free\+\_\+window}}
+\index{mzp\+\_\+free\+\_\+window@{mzp\+\_\+free\+\_\+window}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzp\+\_\+free\+\_\+window}]{\setlength{\rightskip}{0pt plus 5cm}void mzp\+\_\+free\+\_\+window (
+\begin{DoxyParamCaption}
+\item[{{\bf mzp\+\_\+t} $\ast$}]{condemned}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a365368385c501715f06b76149fa4a56e}
+
+
+Free a permutation window created with mzp\+\_\+init\+\_\+mzp\+\_\+t\+\_\+window(). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em condemned} & Permutation Matrix \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_afec6aba046feccbfc51ba637847344d4}{}\index{mzp.\+h@{mzp.\+h}!mzp\+\_\+init@{mzp\+\_\+init}}
+\index{mzp\+\_\+init@{mzp\+\_\+init}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzp\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzp\+\_\+t}$\ast$ mzp\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf rci\+\_\+t}}]{length}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_afec6aba046feccbfc51ba637847344d4}
+
+
+Construct an identity permutation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em length} & Length of the permutation. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a48bc6d2db4c6cb5f0a26f0010d844b5a}{}\index{mzp.\+h@{mzp.\+h}!mzp\+\_\+init\+\_\+window@{mzp\+\_\+init\+\_\+window}}
+\index{mzp\+\_\+init\+\_\+window@{mzp\+\_\+init\+\_\+window}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzp\+\_\+init\+\_\+window}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzp\+\_\+t}$\ast$ mzp\+\_\+init\+\_\+window (
+\begin{DoxyParamCaption}
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{{\bf rci\+\_\+t}}]{begin, }
+\item[{{\bf rci\+\_\+t}}]{end}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a48bc6d2db4c6cb5f0a26f0010d844b5a}
+
+
+Create a window/view into the permutation P. 
+
+Use mzp\+\_\+free\+\_\+mzp\+\_\+t\+\_\+window() to free the window.
+
+
+\begin{DoxyParams}{Parameters}
+{\em P} & Permutation matrix \\
+\hline
+{\em begin} & Starting index (inclusive) \\
+\hline
+{\em end} & Ending index (exclusive) \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_a6250a960c1b2791fed8a2768db31ff9a}{}\index{mzp.\+h@{mzp.\+h}!mzp\+\_\+print@{mzp\+\_\+print}}
+\index{mzp\+\_\+print@{mzp\+\_\+print}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzp\+\_\+print}]{\setlength{\rightskip}{0pt plus 5cm}void mzp\+\_\+print (
+\begin{DoxyParamCaption}
+\item[{{\bf mzp\+\_\+t} const $\ast$}]{P}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_a6250a960c1b2791fed8a2768db31ff9a}
+
+
+Print the \hyperlink{structmzp__t}{mzp\+\_\+t} P. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em P} & Permutation. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mzp_8h_ac0408cb1adafd67651b5f396e826fc56}{}\index{mzp.\+h@{mzp.\+h}!mzp\+\_\+set\+\_\+ui@{mzp\+\_\+set\+\_\+ui}}
+\index{mzp\+\_\+set\+\_\+ui@{mzp\+\_\+set\+\_\+ui}!mzp.\+h@{mzp.\+h}}
+\subsubsection[{mzp\+\_\+set\+\_\+ui}]{\setlength{\rightskip}{0pt plus 5cm}void mzp\+\_\+set\+\_\+ui (
+\begin{DoxyParamCaption}
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{unsigned int}]{value}
+\end{DoxyParamCaption}
+)}\label{mzp_8h_ac0408cb1adafd67651b5f396e826fc56}
+
+
+Set the permutation P to the identity permutation. 
+
+The only allowed value is 1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em P} & Permutation \\
+\hline
+{\em value} & 1\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This interface was chosen to be similar to \hyperlink{mzd_8h_afb19458831e01d11bd88f0f982eb5220}{mzd\+\_\+set\+\_\+ui()}. 
+\end{DoxyNote}

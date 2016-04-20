@@ -1,0 +1,11 @@
+#include<civlc.h>
+
+void waiter($proc target) {
+  $wait(target);
+}
+
+void main() {
+  $proc me = $self;
+  
+  $spawn waiter(me);
+}

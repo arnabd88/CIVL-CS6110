@@ -1,0 +1,3132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SideEffectRemover.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.transform.common</a> &gt; <span class="el_source">SideEffectRemover.java</span></div><h1>SideEffectRemover.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.transform.common;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.PairNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.ArrayDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.FieldDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.EnumeratorDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FieldDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.OrdinaryDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.OrdinaryDeclarationNode.OrdinaryDeclarationKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.TypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ArrowNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CastNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CompoundLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ContractVerifyNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DotNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode.ExpressionKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.GenericSelectionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.QuantifiedExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.RegularRangeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.RemoteExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ScopeOfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeofNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SpawnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StatementExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpExecutableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.AtomicNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode.BlockItemKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ChooseStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.DeclarationListNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ExpressionStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.IfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.JumpNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LabeledStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LoopNode.LoopKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ReturnNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.SwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.WhenNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.EnumerationTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.StructureOrUnionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.AtomicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.DomainType;
+import edu.udel.cis.vsl.abc.ast.type.IF.EnumerationType;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.PointerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.QualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.ast.value.IF.CharacterValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.StringValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.Value;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.err.IF.ABCUnsupportedException;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.transform.IF.BaseTransformer;
+
+// add extra parameter to all the expression translation methods
+// boolean voidExpr: if true, this means the expression return value
+// will not be used.  therefore you have to make sure all
+// real side-effects and error side-effects are in the before/after.
+
+/**
+ * &lt;p&gt;
+ * A transformer which modifies an AST so that no expressions other than a very
+ * few prescribed ones have side effects.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * An expression is &lt;strong&gt;side-effect-free&lt;/strong&gt; if it does not contain a
+ * function call or any subexpression which can modify the state (such as an
+ * assignment). In this definition, an expression which may cause an exception
+ * (division by 0, illegal pointer dereference, etc.) is NOT considered to be a
+ * side-effect.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * A expression e is in &lt;code&gt;normal form&lt;/code&gt; if it has one of the following
+ * forms:
+ * &lt;ul&gt;
+ * 
+ * &lt;li&gt;e is an assignment expression e1=e2, for side-effect-free expressions e1
+ * and e2, and e1 is a lhs expression&lt;/li&gt;
+ * 
+ * &lt;li&gt;e is of the form e1=f(arg0,...), for side-effect-free expressions e1, f,
+ * arg0, .... (function call with left-hand-side)&lt;/li&gt;
+ * 
+ * &lt;li&gt;e is of the form f(arg0,...), for side-effect-free expressions f, arg0,
+ * ... (function call with no left-hand-side)&lt;/li&gt;
+ * 
+ * &lt;li&gt;ditto last two with $spawn inserted before the call&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * A statement is in normal form if: - if it is an expression statement wrapping
+ * e, then e is in normal form - for other kinds of statements: all its member
+ * expressions are side-effect-free and all its member statements are in normal
+ * form.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * A triple is in normal form if all of the statements in the before and after
+ * clauses are in normal form and the expression is in normal form. The goal of
+ * most of the methods below is to produce a triple in normal form which is
+ * equivalent to a given expression or statement. In some cases an additional
+ * goal is that the expression be side-effect-free.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Helper functions: &lt;br&gt;
+ * emptyAfter([a|e|b]): makes the triple's &quot;after&quot; component empty. If the after
+ * component is already empty, does nothing and returns &lt;code&gt;false&lt;/code&gt;.
+ * Otherwise, the triple becomes [a,(var x=e),b|x|], i.e., introducing a
+ * temporary variable to store the value of e and shift the after component to
+ * the before component, and returns &lt;code&gt;true&lt;/code&gt;. &lt;br&gt;
+ * //TODO why do we need this function? &lt;br&gt;
+ * purify([a|e|b]): makes the triple side-effect-free and the &quot;after&quot; component
+ * empty. If the triple already satisfies those properties, this does nothing
+ * and returns &lt;code&gt;false&lt;/code&gt;. Otherwise, the triple becomes [a,(var
+ * x=e),b|x|], i.e., introducing a temporary variable to store the value of e
+ * and shift the after component to the before component, and returns
+ * &lt;code&gt;true&lt;/code&gt;.&lt;br&gt;
+ * //TODO check it &lt;br&gt;
+ * shift([a|e|b], isVoid): modifies the triple to an equivalent form but with a
+ * side-effect-free or &lt;code&gt;null&lt;/code&gt; (if &lt;code&gt;isVoid&lt;/code&gt;) expression,
+ * and an empty &quot;after&quot; component.
+ * &lt;/p&gt;
+ * 
+ * TODO: check if a contract contains side-effects and report an error
+ * 
+ * @author Timothy K. Zirkel
+ * @author Stephen F. Siegel
+ * @author Manchun Zheng
+ */
+<span class="nc bnc" id="L176" title="All 2 branches missed.">public class SideEffectRemover extends BaseTransformer {</span>
+
+	/* Static Fields */
+
+	/**
+	 * The unique identifier of this transformer.
+	 */
+	public final static String CODE = &quot;sef&quot;;
+
+	/**
+	 * The full name of this transformer.
+	 */
+	public final static String LONG_NAME = &quot;SideEffectRemover&quot;;
+
+	/**
+	 * A short description of this transformer.
+	 */
+	public final static String SHORT_DESCRIPTION = &quot;transforms program to side-effect-free form&quot;;
+
+	/**
+	 * The prefix for temporary variables created by this transformer.
+	 */
+<span class="nc" id="L198">	private final static String tempVariablePrefix = &quot;$&quot; + CODE + &quot;$&quot;;</span>
+
+	/* Instance Fields */
+
+	/**
+	 * The number of temporary variables created by this transformer.
+	 */
+<span class="nc" id="L205">	private int tempVariableCounter = 0;</span>
+
+	/* Constructors */
+
+	/**
+	 * Creates a new instance of side effect remover.
+	 * 
+	 * @param astFactory
+	 */
+	public SideEffectRemover(ASTFactory astFactory) {
+<span class="nc" id="L215">		super(CODE, LONG_NAME, SHORT_DESCRIPTION, astFactory);</span>
+<span class="nc" id="L216">	}</span>
+
+	/* Private methods */
+
+	/**
+	 * Given a {@link Type}, creates a new type node tree that will generate
+	 * that type.
+	 * 
+	 * @param type
+	 *            An AST type.
+	 * @return An AST type node corresponding to the type.
+	 */
+	private TypeNode typeNode(Source source, Type type) {
+<span class="nc bnc" id="L229" title="All 13 branches missed.">		switch (type.kind()) {</span>
+		case ARRAY:
+<span class="nc" id="L231">			ArrayType arrayType = (ArrayType) type;</span>
+
+<span class="nc" id="L233">			return nodeFactory.newArrayTypeNode(source,</span>
+<span class="nc" id="L234">					typeNode(source, arrayType.getElementType()), null);</span>
+		case ATOMIC:
+<span class="nc" id="L236">			AtomicType atomicType = (AtomicType) type;</span>
+
+<span class="nc" id="L238">			return nodeFactory.newAtomicTypeNode(source,</span>
+<span class="nc" id="L239">					typeNode(source, atomicType.getBaseType()));</span>
+		case BASIC:
+<span class="nc" id="L241">			StandardBasicType basicType = (StandardBasicType) type;</span>
+
+<span class="nc" id="L243">			return nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L244">					basicType.getBasicTypeKind());</span>
+		case DOMAIN: {
+<span class="nc" id="L246">			DomainType domainType = (DomainType) type;</span>
+
+<span class="nc bnc" id="L248" title="All 2 branches missed.">			if (domainType.hasDimension()) {</span>
+<span class="nc" id="L249">				String dimensionString = Integer.toString(domainType</span>
+<span class="nc" id="L250">						.getDimension());</span>
+				IntegerConstantNode dimensionNode;
+
+				try {
+<span class="nc" id="L254">					dimensionNode = nodeFactory.newIntegerConstantNode(source,</span>
+<span class="nc" id="L255">							dimensionString);</span>
+<span class="nc" id="L256">				} catch (SyntaxException e) {</span>
+<span class="nc" id="L257">					throw new ABCRuntimeException(</span>
+<span class="nc" id="L258">							&quot;error creating integer constant node for &quot;</span>
+<span class="nc" id="L259">									+ dimensionString);</span>
+				}
+<span class="nc" id="L261">				return nodeFactory.newDomainTypeNode(source, dimensionNode);</span>
+			} else
+<span class="nc" id="L263">				return nodeFactory.newDomainTypeNode(source);</span>
+		}
+		case POINTER: {
+<span class="nc" id="L266">			PointerType pointerType = (PointerType) type;</span>
+
+<span class="nc" id="L268">			return nodeFactory.newPointerTypeNode(source,</span>
+<span class="nc" id="L269">					typeNode(source, pointerType.referencedType()));</span>
+		}
+		case VOID:
+<span class="nc" id="L272">			return nodeFactory.newVoidTypeNode(source);</span>
+		case ENUMERATION: {
+			// if original type is anonymous enum, need to spell out
+			// the type again.
+			// if original type has tag, and is visible, can leave out
+			// the enumerators
+<span class="nc" id="L278">			EnumerationType enumType = (EnumerationType) type;</span>
+<span class="nc" id="L279">			String tag = enumType.getTag();</span>
+
+<span class="nc bnc" id="L281" title="All 2 branches missed.">			if (tag != null) {</span>
+<span class="nc" id="L282">				IdentifierNode tagNode = nodeFactory.newIdentifierNode(source,</span>
+<span class="nc" id="L283">						tag);</span>
+<span class="nc" id="L284">				TypeNode result = nodeFactory.newEnumerationTypeNode(source,</span>
+<span class="nc" id="L285">						tagNode, null);</span>
+
+<span class="nc" id="L287">				return result;</span>
+			} else {
+<span class="nc" id="L289">				throw new ABCUnsupportedException(</span>
+<span class="nc" id="L290">						&quot;converting anonymous enumeration type  &quot; + type,</span>
+<span class="nc" id="L291">						source.getSummary(false));</span>
+			}
+		}
+		case STRUCTURE_OR_UNION: {
+<span class="nc" id="L295">			StructureOrUnionType structOrUnionType = (StructureOrUnionType) type;</span>
+
+<span class="nc" id="L297">			return nodeFactory.newStructOrUnionTypeNode(</span>
+<span class="nc" id="L298">					source,</span>
+<span class="nc" id="L299">					structOrUnionType.isStruct(),</span>
+<span class="nc" id="L300">					nodeFactory.newIdentifierNode(source,</span>
+<span class="nc" id="L301">							structOrUnionType.getName()), null);</span>
+		}
+		case SCOPE:
+<span class="nc" id="L304">			return nodeFactory.newScopeTypeNode(source);</span>
+		case OTHER_INTEGER: {
+			// for now, just using &quot;int&quot; for all the &quot;other integer types&quot;
+<span class="nc" id="L307">			return nodeFactory.newBasicTypeNode(source, BasicTypeKind.INT);</span>
+		}
+		case PROCESS: {
+<span class="nc" id="L310">			return nodeFactory.newTypedefNameNode(</span>
+<span class="nc" id="L311">					nodeFactory.newIdentifierNode(source, &quot;$proc&quot;), null);</span>
+		}
+		case QUALIFIED: {
+<span class="nc" id="L314">			QualifiedObjectType qualifiedType = (QualifiedObjectType) type;</span>
+<span class="nc" id="L315">			TypeNode baseTypeNode = this.typeNode(source,</span>
+<span class="nc" id="L316">					qualifiedType.getBaseType());</span>
+
+<span class="nc" id="L318">			baseTypeNode.setConstQualified(qualifiedType.isConstQualified());</span>
+			// baseTypeNode.setAtomicQualified(qualifiedType.is); TODO how to
+			// get _Atomic qualified feature?
+<span class="nc" id="L321">			baseTypeNode.setInputQualified(qualifiedType.isInputQualified());</span>
+<span class="nc" id="L322">			baseTypeNode.setOutputQualified(qualifiedType.isOutputQualified());</span>
+<span class="nc" id="L323">			baseTypeNode.setRestrictQualified(qualifiedType</span>
+<span class="nc" id="L324">					.isRestrictQualified());</span>
+<span class="nc" id="L325">			baseTypeNode.setVolatileQualified(qualifiedType</span>
+<span class="nc" id="L326">					.isVolatileQualified());</span>
+<span class="nc" id="L327">			return baseTypeNode;</span>
+		}
+		case FUNCTION:
+			// TODO
+		case HEAP:
+			// TODO
+		default:
+<span class="nc" id="L334">			throw new ABCUnsupportedException(&quot;converting type &quot; + type</span>
+<span class="nc" id="L335">					+ &quot; to a type node.&quot;, source.getSummary(false));</span>
+		}
+	}
+
+	/**
+	 * Modifies the triple to an equivalent form but with a side-effect-free or
+	 * &lt;code&gt;null&lt;/code&gt; (if &lt;code&gt;isVoid&lt;/code&gt;) expression, and an empty after
+	 * list.
+	 * 
+	 * &lt;p&gt;
+	 * If &lt;code&gt;isVoid&lt;/code&gt;, moves the expression to the before list as an
+	 * expression statement, then adds all the after clauses to the before list.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * If not &lt;code&gt;isVoid&lt;/code&gt;, introduces a new temporary variable t whose
+	 * type is same as the type of the expression, appends a declaration for t
+	 * to the before clause, moves all the after clauses to the end of the
+	 * before clause, and replaces the expression with t.
+	 * &lt;/p&gt;
+	 * 
+	 * @param triple
+	 *            any triple
+	 * @param isVoid
+	 *            is the result of the expression needed (and not just its
+	 *            side-effects)?
+	 */
+	private void shift(ExprTriple triple, boolean isVoid) {
+<span class="nc" id="L363">		ExpressionNode expression = triple.getNode();</span>
+<span class="nc" id="L364">		Source source = expression.getSource();</span>
+
+<span class="nc" id="L366">		expression.remove();</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L368">			triple.addBefore(nodeFactory.newExpressionStatementNode(expression));</span>
+<span class="nc" id="L369">			triple.setNode(null);</span>
+<span class="nc" id="L370">		} else {</span>
+<span class="nc" id="L371">			String tmpId = tempVariablePrefix + tempVariableCounter;</span>
+
+<span class="nc" id="L373">			tempVariableCounter++;</span>
+
+<span class="nc" id="L375">			VariableDeclarationNode decl = nodeFactory</span>
+<span class="nc" id="L376">					.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L377">							nodeFactory.newIdentifierNode(source, tmpId),</span>
+<span class="nc" id="L378">							typeNode(source, expression.getType()), expression);</span>
+
+<span class="nc" id="L380">			triple.setNode(nodeFactory.newIdentifierExpressionNode(source,</span>
+<span class="nc" id="L381">					nodeFactory.newIdentifierNode(source, tmpId)));</span>
+<span class="nc" id="L382">			triple.getBefore().add(decl);</span>
+		}
+<span class="nc" id="L384">		triple.getBefore().addAll(triple.getAfter());</span>
+<span class="nc" id="L385">		triple.setAfter(new LinkedList&lt;BlockItemNode&gt;());</span>
+<span class="nc" id="L386">	}</span>
+
+	/**
+	 * Makes the triple after component empty. If the after component is already
+	 * empty, does nothing and returns &lt;code&gt;false&lt;/code&gt;. Otherwise, invokes
+	 * {@link #shift(ExprTriple)} and returns &lt;code&gt;true&lt;/code&gt;.
+	 * 
+	 * @param triple
+	 *            any triple
+	 * @return &lt;code&gt;true&lt;/code&gt; iff the triple changed
+	 */
+	private boolean emptyAfter(ExprTriple triple) {
+<span class="nc bnc" id="L398" title="All 2 branches missed.">		if (triple.getAfter().isEmpty()) {</span>
+<span class="nc" id="L399">			return false;</span>
+		} else {
+<span class="nc" id="L401">			shift(triple, false);</span>
+<span class="nc" id="L402">			return true;</span>
+		}
+	}
+
+	/**
+	 * Makes the triple expression side-effect-free and the &quot;after&quot; clauses
+	 * empty. If the triple already satisfies those properties, this does
+	 * nothing and returns &lt;code&gt;false&lt;/code&gt;. Otherwise, it performs a
+	 * {@link #shift(ExprTriple)} and returns &lt;code&gt;true&lt;/code&gt;.
+	 * 
+	 * @param triple
+	 *            any triple
+	 * @return &lt;code&gt;true&lt;/code&gt; iff the triple changed
+	 */
+	private boolean purify(ExprTriple triple) {
+<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (triple.getAfter().isEmpty()</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">				&amp;&amp; triple.getNode().isSideEffectFree(false)) {</span>
+<span class="nc bnc" id="L419" title="All 4 branches missed.">			assert triple.getNode().parent() == null;</span>
+<span class="nc" id="L420">			return false;</span>
+		} else {
+<span class="nc" id="L422">			shift(triple, false);</span>
+<span class="nc bnc" id="L423" title="All 4 branches missed.">			assert triple.getNode().parent() == null;</span>
+<span class="nc" id="L424">			return true;</span>
+		}
+	}
+
+	/**
+	 * Makes the triple expression side-effect-free. Transforms the triple into
+	 * an equivalent form in which the expression is side-effect-free. If the
+	 * expression is already side-effect-free, this does nothing and returns
+	 * false. Otherwise, it applies {@link #shift(ExprTriple, boolean)} and
+	 * returns true.
+	 * 
+	 * @param triple
+	 *            any triple
+	 * @return &lt;code&gt;true&lt;/code&gt; iff the triple changed
+	 */
+	private boolean makesef(ExprTriple triple) {
+<span class="nc bnc" id="L440" title="All 2 branches missed.">		if (triple.getNode().isSideEffectFree(false)) {</span>
+<span class="nc" id="L441">			return false;</span>
+		} else {
+<span class="nc" id="L443">			shift(triple, false);</span>
+<span class="nc" id="L444">			return true;</span>
+		}
+	}
+
+	/**
+	 * Is the given expression a call to one of the functions &quot;malloc&quot; or
+	 * &quot;$malloc&quot;?
+	 * 
+	 * @param node
+	 *            any expression node
+	 * @return &lt;code&gt;true&lt;/code&gt; iff the node is a function call node for a
+	 *         function named &quot;malloc&quot; or &quot;$malloc&quot;
+	 */
+	private boolean isMallocCall(ExpressionNode node) {
+<span class="nc bnc" id="L458" title="All 2 branches missed.">		if (node instanceof FunctionCallNode) {</span>
+<span class="nc" id="L459">			ExpressionNode functionNode = ((FunctionCallNode) node)</span>
+<span class="nc" id="L460">					.getFunction();</span>
+
+<span class="nc bnc" id="L462" title="All 2 branches missed.">			if (functionNode instanceof IdentifierExpressionNode) {</span>
+<span class="nc" id="L463">				String functionName = ((IdentifierExpressionNode) functionNode)</span>
+<span class="nc" id="L464">						.getIdentifier().name();</span>
+
+<span class="nc bnc" id="L466" title="All 2 branches missed.">				if (&quot;$malloc&quot;.equals(functionName))</span>
+<span class="nc" id="L467">					return true;</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">				if (&quot;malloc&quot;.equals(functionName))</span>
+<span class="nc" id="L469">					return true;</span>
+			}
+		}
+<span class="nc" id="L472">		return false;</span>
+	}
+
+	/**
+	 * Translates a left-hand-side expression into a triple. The result returned
+	 * will always have empty after clause. The expression component of the
+	 * triple returned will be left-hand-side expression that will refer to the
+	 * same memory unit as the original.
+	 * 
+	 * Example: a[i++] -&gt; [int tmp = i; i=i+1 | a[tmp] | ].
+	 * 
+	 * @param lhs
+	 * @return
+	 */
+	private ExprTriple lhsTranslate(ExpressionNode lhs) {
+<span class="nc" id="L487">		ExpressionKind kind = lhs.expressionKind();</span>
+
+<span class="nc bnc" id="L489" title="All 5 branches missed.">		switch (kind) {</span>
+		case ARROW: {
+			// p-&gt;f = (*p).f
+<span class="nc" id="L492">			ArrowNode arrow = (ArrowNode) lhs;</span>
+<span class="nc" id="L493">			ExprTriple result = translate(arrow.getStructurePointer(), false);</span>
+
+<span class="nc" id="L495">			purify(result);</span>
+<span class="nc" id="L496">			arrow.setStructurePointer(result.getNode());</span>
+<span class="nc" id="L497">			result.setNode(arrow);</span>
+<span class="nc" id="L498">			return result;</span>
+		}
+		case DOT: {
+			// e.f
+<span class="nc" id="L502">			DotNode dotNode = (DotNode) lhs;</span>
+<span class="nc" id="L503">			ExprTriple result = translate(dotNode.getStructure(), false);</span>
+
+<span class="nc" id="L505">			purify(result);</span>
+<span class="nc" id="L506">			dotNode.setStructure(result.getNode());</span>
+<span class="nc" id="L507">			result.setNode(dotNode);</span>
+<span class="nc" id="L508">			return result;</span>
+		}
+		case IDENTIFIER_EXPRESSION:
+<span class="nc" id="L511">			return new ExprTriple(lhs);</span>
+		case OPERATOR: {
+<span class="nc" id="L513">			OperatorNode opNode = (OperatorNode) lhs;</span>
+<span class="nc" id="L514">			Operator op = opNode.getOperator();</span>
+
+<span class="nc bnc" id="L516" title="All 3 branches missed.">			switch (op) {</span>
+			case DEREFERENCE: { // *p
+<span class="nc" id="L518">				ExprTriple result = translate(opNode.getArgument(0), false);</span>
+
+<span class="nc" id="L520">				purify(result);</span>
+<span class="nc" id="L521">				opNode.setArgument(0, result.getNode());</span>
+<span class="nc" id="L522">				result.setNode(opNode);</span>
+<span class="nc" id="L523">				return result;</span>
+			}
+			case SUBSCRIPT: {
+				// expr[i].
+				// expr can be a LHSExpression of array type (like a[j][k])
+				// expr can be an expression of pointer type
+
+<span class="nc" id="L530">				ExprTriple t1 = translate(opNode.getArgument(0), false), t2 = translate(</span>
+<span class="nc" id="L531">						opNode.getArgument(1), false);</span>
+
+<span class="nc" id="L533">				purify(t1);</span>
+<span class="nc" id="L534">				purify(t2);</span>
+<span class="nc" id="L535">				opNode.setArgument(0, t1.getNode());</span>
+<span class="nc" id="L536">				opNode.setArgument(1, t2.getNode());</span>
+<span class="nc" id="L537">				t1.addAllBefore(t2.getBefore());</span>
+<span class="nc" id="L538">				t1.setNode(opNode);</span>
+<span class="nc" id="L539">				return t1;</span>
+			}
+			default:
+<span class="nc" id="L542">				throw new ABCRuntimeException(</span>
+<span class="nc" id="L543">						&quot;Unreachable: unknown LHS operator: &quot; + op);</span>
+			}
+		}
+		default:
+<span class="nc" id="L547">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L548">					&quot;Unreachable: unknown LHS expression kind: &quot; + kind);</span>
+		}
+	}
+
+	/**
+	 * Creates a new integer constant node &quot;1&quot; with given source.
+	 * 
+	 * @param source
+	 *            a source object
+	 * @return a new integer constant node with value 1 and that source
+	 */
+	private IntegerConstantNode newOneNode(Source source) {
+		try {
+<span class="nc" id="L561">			return nodeFactory.newIntegerConstantNode(source, &quot;1&quot;);</span>
+<span class="nc" id="L562">		} catch (SyntaxException e) {</span>
+<span class="nc" id="L563">			throw new ABCRuntimeException(&quot;unreachable&quot;);</span>
+		}
+	}
+
+	/**
+	 * Translates an expression of one of the following forms to a triple: e++,
+	 * e--, ++e, --e. Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * lhs++:
+	 * Let lhstranslate(lhs)=[b|e|].
+	 * translate(lhs++)=[b|e|e=e+1]
+	 * 
+	 * ++lhs:
+	 * Let lhstranslate(lhs)=[b|e|].
+	 * translate(++lhs)=[b,e=e+1|e|]
+	 * &lt;/pre&gt;
+	 * 
+	 * @param opNode
+	 *            an operator node in which the operator is one of the four
+	 *            operators {@link Operator#PREINCREMENT},
+	 *            {@link Operator#POSTINCREMENT}, {@link Operator#PREDECREMENT},
+	 *            {@link Operator#POSTDECREMENT}.
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return an equivalent triple in normal form; expression field will be
+	 *         &lt;code&gt;null&lt;/code&gt; iff &lt;code&gt;isVoid&lt;/code&gt;
+	 */
+	private ExprTriple translateIncrementOrDecrement(OperatorNode opNode,
+			boolean isVoid) {
+<span class="nc" id="L593">		Source source = opNode.getSource();</span>
+<span class="nc" id="L594">		Operator op = opNode.getOperator();</span>
+		Operator unaryOp;
+		boolean pre;
+
+<span class="nc bnc" id="L598" title="All 5 branches missed.">		switch (op) {</span>
+		case PREINCREMENT:
+<span class="nc" id="L600">			unaryOp = Operator.PLUS;</span>
+<span class="nc" id="L601">			pre = true;</span>
+<span class="nc" id="L602">			break;</span>
+		case POSTINCREMENT:
+<span class="nc" id="L604">			unaryOp = Operator.PLUS;</span>
+<span class="nc" id="L605">			pre = false;</span>
+<span class="nc" id="L606">			break;</span>
+		case PREDECREMENT:
+<span class="nc" id="L608">			unaryOp = Operator.MINUS;</span>
+<span class="nc" id="L609">			pre = true;</span>
+<span class="nc" id="L610">			break;</span>
+		case POSTDECREMENT:
+<span class="nc" id="L612">			unaryOp = Operator.MINUS;</span>
+<span class="nc" id="L613">			pre = false;</span>
+<span class="nc" id="L614">			break;</span>
+		default:
+<span class="nc" id="L616">			throw new ABCRuntimeException(&quot;Unreachable: unexpected operator: &quot;</span>
+<span class="nc" id="L617">					+ op);</span>
+		}
+
+<span class="nc" id="L620">		ExpressionNode arg = opNode.getArgument(0);</span>
+<span class="nc" id="L621">		ExprTriple result = lhsTranslate(arg);</span>
+<span class="nc" id="L622">		ExpressionNode newArg = result.getNode();</span>
+<span class="nc" id="L623">		StatementNode assignment = nodeFactory</span>
+<span class="nc" id="L624">				.newExpressionStatementNode(nodeFactory.newOperatorNode(</span>
+<span class="nc" id="L625">						source,</span>
+<span class="nc" id="L626">						Operator.ASSIGN,</span>
+<span class="nc" id="L627">						newArg.copy(),</span>
+<span class="nc" id="L628">						nodeFactory.newOperatorNode(source, unaryOp,</span>
+<span class="nc" id="L629">								newArg.copy(), newOneNode(source))));</span>
+
+<span class="nc bnc" id="L631" title="All 2 branches missed.">		if (pre)</span>
+<span class="nc" id="L632">			result.addBefore(assignment);</span>
+		else
+<span class="nc" id="L634">			result.addAfter(assignment);</span>
+<span class="nc bnc" id="L635" title="All 2 branches missed.">		if (isVoid) {</span>
+			// must make sure to not erase any exception-side-effects.
+			// this is guaranteed here because the lhs already occurs
+			// in the assignment, which is being kept in any case.
+			// exception-side-effects only need to happen ONCE
+<span class="nc" id="L640">			result.setNode(null);</span>
+		}
+<span class="nc" id="L642">		return result;</span>
+	}
+
+	/**
+	 * Translates an assignment expression to an equivalent triple.
+	 * 
+	 * &lt;p&gt;
+	 * Note from C11 6.15.16: &quot;The side effect of updating the stored value of
+	 * the left operand is sequenced after the value computations of the left
+	 * and right operands. The evaluations of the operands are unsequenced.&quot;
+	 * &lt;/p&gt;
+	 *
+	 * Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * lhs=rhs:
+	 * Let lhstranslate(lhs)=[b1|e1|], emptyAfter(translate(rhs))=[b2|e2|].
+	 * translate(lhs=rhs) = [b1,b2,e1=e2|e1|]
+	 * &lt;/pre&gt;
+	 * 
+	 * @param assign
+	 *            an assignment node (operator node for which the operator is
+	 *            {@link Operator.ASSIGN}
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return an equivalent triple in normal form; expression field will be
+	 *         &lt;code&gt;null&lt;/code&gt; iff &lt;code&gt;isVoid&lt;/code&gt;
+	 */
+	private ExprTriple translateAssign(OperatorNode assign, boolean isVoid) {
+<span class="nc bnc" id="L671" title="All 4 branches missed.">		assert assign.getOperator() == Operator.ASSIGN;</span>
+
+<span class="nc" id="L673">		ExpressionNode lhs = assign.getArgument(0);</span>
+<span class="nc" id="L674">		ExpressionNode rhs = assign.getArgument(1);</span>
+<span class="nc" id="L675">		ExprTriple leftTriple = lhsTranslate(lhs);</span>
+<span class="nc" id="L676">		ExprTriple rightTriple = translate(rhs, false);</span>
+
+<span class="nc" id="L678">		emptyAfter(rightTriple);</span>
+
+<span class="nc" id="L680">		ExpressionNode newLhs = leftTriple.getNode();</span>
+<span class="nc" id="L681">		ExpressionNode newRhs = rightTriple.getNode();</span>
+
+<span class="nc" id="L683">		assign.setArgument(0, newLhs);</span>
+<span class="nc" id="L684">		assign.setArgument(1, newRhs);</span>
+
+<span class="nc bnc" id="L686" title="All 2 branches missed.">		ExprTriple result = new ExprTriple(isVoid ? null : newLhs.copy());</span>
+
+<span class="nc" id="L688">		result.addAllBefore(leftTriple.getBefore());</span>
+<span class="nc" id="L689">		result.addAllBefore(rightTriple.getBefore());</span>
+<span class="nc" id="L690">		assign.remove();</span>
+<span class="nc" id="L691">		result.addBefore(nodeFactory.newExpressionStatementNode(assign));</span>
+<span class="nc" id="L692">		return result;</span>
+	}
+
+	/**
+	 * Translates a pointer dereference expression &lt;code&gt;*e&lt;/code&gt; to an
+	 * equivalent triple. Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * Pointer dereference *(expr):
+	 * Let purify(translate(expr))=[b|e|].
+	 * if !isVoid
+	 * translate(*(expr))=[b|*e|];
+	 * else
+	 * translate(*(expr))=[b,*e||];
+	 * &lt;/pre&gt;
+	 * 
+	 * @param dereference
+	 *            a pointer dereference expression
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return an equivalent triple in normal form; expression field will be
+	 *         &lt;code&gt;null&lt;/code&gt; iff &lt;code&gt;isVoid&lt;/code&gt;
+	 */
+	private ExprTriple translateDereference(OperatorNode dereference,
+			boolean isVoid) {
+<span class="nc" id="L717">		Operator operator = dereference.getOperator();</span>
+<span class="nc" id="L718">		ExprTriple result = translate(dereference.getArgument(0), false);</span>
+
+<span class="nc bnc" id="L720" title="All 4 branches missed.">		assert operator == Operator.DEREFERENCE;</span>
+<span class="nc" id="L721">		makesef(result);</span>
+<span class="nc" id="L722">		dereference.setArgument(0, result.getNode());</span>
+<span class="nc bnc" id="L723" title="All 2 branches missed.">		if (isVoid) {</span>
+			// in this case we need to keep the dereference
+			// because it might have an exception side-effect (illegal
+			// dereference)
+<span class="nc" id="L727">			dereference.remove();</span>
+<span class="nc" id="L728">			result.addBefore(nodeFactory</span>
+<span class="nc" id="L729">					.newExpressionStatementNode(dereference));</span>
+<span class="nc" id="L730">			result.setNode(null);</span>
+<span class="nc" id="L731">		} else {</span>
+<span class="nc" id="L732">			result.setNode(dereference);</span>
+		}
+<span class="nc" id="L734">		return result;</span>
+	}
+
+	// /**
+	// * Does this kind of expression possibly generate an exception. This is
+	// * referring to the expression itself, not the children. In other words,
+	// if
+	// * all children are exception-less, is it possible the evaluation of this
+	// * expression could throw an exception?
+	// *
+	// * @param expression
+	// * any expression node, non-&lt;code&gt;null&lt;/code&gt;
+	// * @return &lt;code&gt;true&lt;/code&gt; iff this kind of expression can lead to an
+	// * exception
+	// */
+	// private boolean hasException(ExpressionNode expression) {
+	// ExpressionKind kind = expression.expressionKind();
+	//
+	// switch (kind) {
+	// case ARROW:
+	// case CAST:
+	// case FUNCTION_CALL:
+	// case GENERIC_SELECTION:
+	// case SPAWN:
+	// return true;
+	// case OPERATOR:
+	// return hasException(((OperatorNode) expression).getOperator());
+	// default:
+	// return false;
+	// }
+	// }
+
+	/**
+	 * Translates most binary operator expressions to an equivalent triple. This
+	 * is the default behavior used for a binary operator. Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * expr1+expr2:
+	 * Let makesef(translate(expr1))=[b1|e1|a1],
+	 * makesef(translate(expr2))=[b2|e2|a2].
+	 * translate(expr1+expr2)=[b1,b2|e1+e2|a1,a2].
+	 * Replace + with any side-effect-free binary operator.
+	 * &lt;/pre&gt;
+	 * 
+	 * @param opNode
+	 *            a binary operator expression
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return an equivalent triple
+	 */
+	private ExprTriple translateGenericBinaryOperator(OperatorNode opNode,
+			boolean isVoid) {
+<span class="nc" id="L786">		ExprTriple leftTriple = translate(opNode.getArgument(0), false);</span>
+<span class="nc" id="L787">		ExprTriple rightTriple = translate(opNode.getArgument(1), false);</span>
+
+<span class="nc" id="L789">		makesef(leftTriple);</span>
+<span class="nc" id="L790">		makesef(rightTriple);</span>
+<span class="nc" id="L791">		opNode.setArgument(0, leftTriple.getNode());</span>
+<span class="nc" id="L792">		opNode.setArgument(1, rightTriple.getNode());</span>
+<span class="nc bnc" id="L793" title="All 2 branches missed.">		if (isVoid) {</span>
+			// because the evaluation of the expression may lead to
+			// undefined behaviors, we cannot entirely eliminate it,
+			// but we do not need to store the result
+<span class="nc" id="L797">			opNode.remove();</span>
+<span class="nc" id="L798">			leftTriple</span>
+<span class="nc" id="L799">					.addBefore(nodeFactory.newExpressionStatementNode(opNode));</span>
+<span class="nc" id="L800">			leftTriple.setNode(null);</span>
+<span class="nc" id="L801">		} else {</span>
+<span class="nc" id="L802">			leftTriple.setNode(opNode);</span>
+		}
+<span class="nc" id="L804">		leftTriple.addAllBefore(rightTriple.getBefore());</span>
+<span class="nc" id="L805">		leftTriple.addAllAfter(rightTriple.getAfter());</span>
+<span class="nc" id="L806">		return leftTriple;</span>
+	}
+
+	/**
+	 * Translates most unary expressions to equivalent triple. Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * -expr:
+	 * Let makesef(translate(expr))=[b1|e1|a1].
+	 * TODO update it with isVoid
+	 * translate(-expr)=[b1|-e1|a1].
+	 * Replace - with any side-effect-free unary operator.
+	 * &lt;/pre&gt;
+	 * 
+	 * @param opNode
+	 *            a unary operator node
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return equivalent triple
+	 */
+	private ExprTriple translateGenericUnaryOperator(OperatorNode opNode,
+			boolean isVoid) {
+<span class="nc" id="L828">		ExprTriple result = translate(opNode.getArgument(0), false);</span>
+
+<span class="nc" id="L830">		makesef(result);</span>
+<span class="nc" id="L831">		opNode.setArgument(0, result.getNode());</span>
+<span class="nc bnc" id="L832" title="All 2 branches missed.">		if (isVoid) {</span>
+			// because the evaluation of the expression may lead to
+			// undefined behaviors, we cannot entirely eliminate it,
+			// but we do not need to store the result
+<span class="nc" id="L836">			opNode.remove();</span>
+<span class="nc" id="L837">			result.addBefore(nodeFactory.newExpressionStatementNode(opNode));</span>
+<span class="nc" id="L838">			result.setNode(null);</span>
+<span class="nc" id="L839">		} else {</span>
+<span class="nc" id="L840">			result.setNode(opNode);</span>
+		}
+<span class="nc" id="L842">		return result;</span>
+	}
+
+	/**
+	 * Translates a function call node to an equivalent triple.
+	 * 
+	 * &lt;p&gt;
+	 * Note from C11 6.5.2.2: &quot;There is a sequence point after the evaluations
+	 * of the function designator and the actual arguments but before the actual
+	 * call. Every evaluation in the calling function (including other function
+	 * calls) that is not otherwise specifically sequenced before or after the
+	 * execution of the body of the called function is indeterminately sequenced
+	 * with respect to the execution of the called function.&quot;
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * As stated above, all side-effects must complete before the function call
+	 * occurs. Hence all side-effects will take place in the &quot;before&quot; component
+	 * of the returned triple, and the &quot;after&quot; component will be empty.
+	 * &lt;/p&gt;
+	 * 
+	 * Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * func(arg1, arg2, ...):
+	 * Let purify(func)=[b0|f|].
+	 * Let purify(arg1)=[b1|e1|], ...
+	 * translate(func(arg1, ...)) = [b1,b2,...|f(e1,e2,...)|].
+	 * &lt;/pre&gt;
+	 * 
+	 * @param callNode
+	 *            a function call node
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return an equivalent triple with empty after
+	 */
+	private ExprTriple translateFunctionCall(FunctionCallNode callNode,
+			boolean isVoid) {
+<span class="nc" id="L880">		ExprTriple functionTriple = translate(callNode.getFunction(), false);</span>
+<span class="nc" id="L881">		int numContextArgs = callNode.getNumberOfContextArguments();</span>
+<span class="nc" id="L882">		int numArgs = callNode.getNumberOfArguments();</span>
+<span class="nc" id="L883">		ExprTriple result = new ExprTriple(callNode);</span>
+
+		// you need the result of the function expression (even if isVoid)...
+<span class="nc" id="L886">		purify(functionTriple);</span>
+<span class="nc" id="L887">		callNode.setFunction(functionTriple.getNode());</span>
+<span class="nc" id="L888">		result.addAllBefore(functionTriple.getBefore());</span>
+<span class="nc bnc" id="L889" title="All 2 branches missed.">		for (int i = 0; i &lt; numContextArgs; i++) {</span>
+<span class="nc" id="L890">			ExprTriple triple = translate(callNode.getContextArgument(i), false);</span>
+
+<span class="nc" id="L892">			purify(triple);</span>
+<span class="nc" id="L893">			result.addAllBefore(triple.getBefore());</span>
+<span class="nc" id="L894">			callNode.setContextArgument(i, triple.getNode());</span>
+		}
+<span class="nc bnc" id="L896" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L897">			ExprTriple triple = translate(callNode.getArgument(i), false);</span>
+
+<span class="nc" id="L899">			purify(triple);</span>
+<span class="nc" id="L900">			result.addAllBefore(triple.getBefore());</span>
+<span class="nc" id="L901">			callNode.setArgument(i, triple.getNode());</span>
+		}
+<span class="nc bnc" id="L903" title="All 2 branches missed.">		if (isVoid) {</span>
+			// shift the call to the begin clause without a temporary variable:
+<span class="nc" id="L905">			shift(result, true);</span>
+		}
+<span class="nc" id="L907">		return result;</span>
+	}
+
+	private ExprTriple translateContractVerify(ContractVerifyNode conVeri,
+			boolean isVoid) {
+<span class="nc" id="L912">		ExprTriple functionTriple = translate(conVeri.getFunction(), false);</span>
+<span class="nc" id="L913">		int numContextArgs = conVeri.getNumberOfContextArguments();</span>
+<span class="nc" id="L914">		int numArgs = conVeri.getNumberOfArguments();</span>
+<span class="nc" id="L915">		ExprTriple result = new ExprTriple(conVeri);</span>
+
+		// you need the result of the function expression (even if isVoid)...
+<span class="nc" id="L918">		purify(functionTriple);</span>
+<span class="nc" id="L919">		conVeri.setFunction(functionTriple.getNode());</span>
+<span class="nc" id="L920">		result.addAllBefore(functionTriple.getBefore());</span>
+<span class="nc bnc" id="L921" title="All 2 branches missed.">		for (int i = 0; i &lt; numContextArgs; i++) {</span>
+<span class="nc" id="L922">			ExprTriple triple = translate(conVeri.getContextArgument(i), false);</span>
+
+<span class="nc" id="L924">			purify(triple);</span>
+<span class="nc" id="L925">			result.addAllBefore(triple.getBefore());</span>
+<span class="nc" id="L926">			conVeri.setContextArgument(i, triple.getNode());</span>
+		}
+<span class="nc bnc" id="L928" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L929">			ExprTriple triple = translate(conVeri.getArgument(i), false);</span>
+
+<span class="nc" id="L931">			purify(triple);</span>
+<span class="nc" id="L932">			result.addAllBefore(triple.getBefore());</span>
+<span class="nc" id="L933">			conVeri.setArgument(i, triple.getNode());</span>
+		}
+<span class="nc" id="L935">		result.addAfter(nodeFactory.newExpressionStatementNode(conVeri));</span>
+<span class="nc" id="L936">		return result;</span>
+	}
+
+	/**
+	 * Translates a spawn expression. A spawn expression simply wraps a function
+	 * call expression, so the specification is exactly the same as that of
+	 * {@link #translateFunctionCall(FunctionCallNode)}.
+	 * 
+	 * @param spawn
+	 *            a spawn node
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return an equivalent triple
+	 */
+	private ExprTriple translateSpawn(SpawnNode spawn, boolean isVoid) {
+<span class="nc" id="L951">		ExprTriple result = translate(spawn.getCall(), false);</span>
+
+<span class="nc" id="L953">		spawn.setCall((FunctionCallNode) result.getNode());</span>
+<span class="nc" id="L954">		result.setNode(spawn);</span>
+<span class="nc bnc" id="L955" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L956">			shift(result, true);</span>
+		}
+<span class="nc" id="L958">		return result;</span>
+	}
+
+	/**
+	 * Translates an expression using one of the following operators:
+	 * {@link Operator#PLUSEQ}, {@link Operator#MINUSEQ},
+	 * {@link Operator#BITANDEQ}, {@link Operator#BITOREQ},
+	 * {@link Operator#BITXOREQ}, {@link Operator#DIVEQ}, {@link Operator#MODEQ}
+	 * , {@link Operator#SHIFTLEFTEQ}, {@link Operator#SHIFTRIGHTEQ},
+	 * {@link Operator#TIMESEQ}.
+	 * 
+	 * @param opNode
+	 *            an operator node using one of the generalized assignment
+	 *            operators (but not the standard assignment operator)
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return an equivalent triple
+	 */
+	private ExprTriple translateGeneralAssignment(OperatorNode opNode,
+			boolean isVoid) {
+<span class="nc" id="L978">		Operator assignmentOp = opNode.getOperator();</span>
+		Operator binaryOp;
+
+<span class="nc bnc" id="L981" title="All 11 branches missed.">		switch (assignmentOp) {</span>
+		case PLUSEQ:
+<span class="nc" id="L983">			binaryOp = Operator.PLUS;</span>
+<span class="nc" id="L984">			break;</span>
+		case MINUSEQ:
+<span class="nc" id="L986">			binaryOp = Operator.MINUS;</span>
+<span class="nc" id="L987">			break;</span>
+		case BITANDEQ:
+<span class="nc" id="L989">			binaryOp = Operator.BITAND;</span>
+<span class="nc" id="L990">			break;</span>
+		case BITOREQ:
+<span class="nc" id="L992">			binaryOp = Operator.BITOR;</span>
+<span class="nc" id="L993">			break;</span>
+		case BITXOREQ:
+<span class="nc" id="L995">			binaryOp = Operator.BITXOR;</span>
+<span class="nc" id="L996">			break;</span>
+		case DIVEQ:
+<span class="nc" id="L998">			binaryOp = Operator.DIV;</span>
+<span class="nc" id="L999">			break;</span>
+		case MODEQ:
+<span class="nc" id="L1001">			binaryOp = Operator.MOD;</span>
+<span class="nc" id="L1002">			break;</span>
+		case SHIFTLEFTEQ:
+<span class="nc" id="L1004">			binaryOp = Operator.SHIFTLEFT;</span>
+<span class="nc" id="L1005">			break;</span>
+		case SHIFTRIGHTEQ:
+<span class="nc" id="L1007">			binaryOp = Operator.SHIFTRIGHT;</span>
+<span class="nc" id="L1008">			break;</span>
+		case TIMESEQ:
+<span class="nc" id="L1010">			binaryOp = Operator.TIMES;</span>
+<span class="nc" id="L1011">			break;</span>
+		default:
+<span class="nc" id="L1013">			throw new ABCRuntimeException(&quot;Unexpected assignment operator: &quot;</span>
+<span class="nc" id="L1014">					+ assignmentOp);</span>
+		}
+
+<span class="nc" id="L1017">		ExpressionNode lhs = opNode.getArgument(0);</span>
+<span class="nc" id="L1018">		ExpressionNode rhs = opNode.getArgument(1);</span>
+<span class="nc" id="L1019">		ExprTriple result = lhsTranslate(lhs);</span>
+<span class="nc" id="L1020">		ExprTriple rightTriple = translate(rhs, false);</span>
+
+<span class="nc" id="L1022">		purify(rightTriple);</span>
+
+<span class="nc" id="L1024">		ExpressionNode newLhs = result.getNode();</span>
+<span class="nc" id="L1025">		ExpressionNode newRhs = rightTriple.getNode();</span>
+<span class="nc" id="L1026">		Source source = opNode.getSource();</span>
+<span class="nc" id="L1027">		StatementNode assignment = nodeFactory</span>
+<span class="nc" id="L1028">				.newExpressionStatementNode(nodeFactory.newOperatorNode(</span>
+<span class="nc" id="L1029">						source,</span>
+<span class="nc" id="L1030">						Operator.ASSIGN,</span>
+<span class="nc" id="L1031">						newLhs.copy(),</span>
+<span class="nc" id="L1032">						nodeFactory.newOperatorNode(source, binaryOp,</span>
+<span class="nc" id="L1033">								newLhs.copy(), newRhs)));</span>
+
+<span class="nc" id="L1035">		result.addAllBefore(rightTriple.getBefore());</span>
+<span class="nc" id="L1036">		result.addBefore(assignment);</span>
+<span class="nc bnc" id="L1037" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L1038">			result.setNode(null);</span>
+		}
+<span class="nc" id="L1040">		return result;</span>
+	}
+
+	/**
+	 * Translates a comma expression into side-effect-free triple form. There is
+	 * a sequence point at the comma. So all side effects from the first
+	 * argument must complete before the second argument is evaluated. Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * expr1,expr2:
+	 * let translate(expr1)   = [b1|e1|a1].
+	 * let translate(expr2)   = [b2|e2|a2].
+	 * translate(expr1,expr2) = [b1,e1^,a1,b2|e2|a2].
+	 * Here e1^ means: omit this if e1 is s.e.f., else make it the expression
+	 * statement e1;.
+	 * &lt;/pre&gt;
+	 * 
+	 * @param expression
+	 *            a comma expression
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return result of converting expression to side-effect-free triple
+	 */
+	private ExprTriple translateComma(OperatorNode expression, boolean isVoid) {
+		// the result of the left arg is not needed:
+<span class="nc" id="L1065">		ExprTriple leftTriple = translate(expression.getArgument(0), true);</span>
+		// the result of the right arg might be needed:
+<span class="nc" id="L1067">		ExprTriple rightTriple = translate(expression.getArgument(1), isVoid);</span>
+<span class="nc" id="L1068">		ExprTriple result = new ExprTriple(rightTriple.getNode());</span>
+
+<span class="nc" id="L1070">		result.addAllBefore(leftTriple.getBefore());</span>
+<span class="nc" id="L1071">		result.addAllBefore(leftTriple.getAfter());</span>
+<span class="nc" id="L1072">		result.addAllBefore(rightTriple.getBefore());</span>
+<span class="nc" id="L1073">		result.addAllAfter(rightTriple.getAfter());</span>
+<span class="nc" id="L1074">		return result;</span>
+	}
+
+	/**
+	 * Translates a conditional expression &lt;code&gt;x?y:z&lt;/code&gt; to a triple. There
+	 * is a sequence point at the &lt;code&gt;?&lt;/code&gt;.
+	 * 
+	 * @param conditional
+	 *            the conditional expression
+	 * @param isVoid
+	 *            is the value of this expression not needed?
+	 * @return result of translation
+	 */
+	private ExprTriple translateConditional(OperatorNode conditional,
+			boolean isVoid) {
+<span class="nc" id="L1089">		Source source = conditional.getSource();</span>
+<span class="nc" id="L1090">		Operator operator = conditional.getOperator();</span>
+		// the result of the test is needed:
+<span class="nc" id="L1092">		ExprTriple condTriple = translate(conditional.getArgument(0), false);</span>
+		// the results of the true/false clauses may or may not be needed:
+<span class="nc" id="L1094">		ExprTriple triple1 = translate(conditional.getArgument(1), isVoid);</span>
+<span class="nc" id="L1095">		ExprTriple triple2 = translate(conditional.getArgument(2), isVoid);</span>
+		ExprTriple result;
+
+<span class="nc bnc" id="L1098" title="All 4 branches missed.">		assert operator == Operator.CONDITIONAL;</span>
+<span class="nc" id="L1099">		purify(condTriple);</span>
+
+<span class="nc bnc" id="L1101" title="All 2 branches missed.">		if (!isVoid) {</span>
+<span class="nc" id="L1102">			makesef(triple1);</span>
+<span class="nc" id="L1103">			makesef(triple2);</span>
+		}
+
+<span class="nc" id="L1106">		List&lt;BlockItemNode&gt; b0 = condTriple.getBefore();</span>
+<span class="nc" id="L1107">		ExpressionNode e0 = condTriple.getNode();</span>
+<span class="nc" id="L1108">		List&lt;BlockItemNode&gt; b1 = triple1.getBefore(), b2 = triple2.getBefore();</span>
+<span class="nc" id="L1109">		List&lt;BlockItemNode&gt; a1 = triple1.getAfter(), a2 = triple2.getAfter();</span>
+<span class="nc" id="L1110">		ExpressionNode e1 = triple1.getNode(), e2 = triple2.getNode();</span>
+
+<span class="nc bnc" id="L1112" title="All 8 branches missed.">		if (b1.isEmpty() &amp;&amp; b2.isEmpty() &amp;&amp; a1.isEmpty() &amp;&amp; a2.isEmpty()) {</span>
+<span class="nc bnc" id="L1113" title="All 2 branches missed.">			if (isVoid) {</span>
+<span class="nc bnc" id="L1114" title="All 6 branches missed.">				assert e1 == null &amp;&amp; e2 == null;</span>
+<span class="nc" id="L1115">				result = new ExprTriple(null);</span>
+<span class="nc" id="L1116">			} else {</span>
+<span class="nc" id="L1117">				conditional.setChild(0, e0);</span>
+<span class="nc" id="L1118">				conditional.setChild(1, e1);</span>
+<span class="nc" id="L1119">				conditional.setChild(2, e2);</span>
+<span class="nc" id="L1120">				result = new ExprTriple(conditional);</span>
+			}
+<span class="nc" id="L1122">			result.addAllBefore(b0);</span>
+<span class="nc bnc" id="L1123" title="All 2 branches missed.">		} else if (isVoid) {</span>
+<span class="nc" id="L1124">			result = new ExprTriple(null);</span>
+<span class="nc" id="L1125">			result.addAllBefore(b0);</span>
+<span class="nc" id="L1126">			b1.addAll(a1);</span>
+<span class="nc" id="L1127">			b2.addAll(a2);</span>
+<span class="nc" id="L1128">			result.addBefore(nodeFactory.newIfNode(source, e0,</span>
+<span class="nc" id="L1129">					nodeFactory.newCompoundStatementNode(source, b1),</span>
+<span class="nc" id="L1130">					nodeFactory.newCompoundStatementNode(source, b2)));</span>
+<span class="nc" id="L1131">		} else {</span>
+<span class="nc" id="L1132">			String tmpId = tempVariablePrefix + (tempVariableCounter++);</span>
+<span class="nc" id="L1133">			VariableDeclarationNode decl = nodeFactory</span>
+<span class="nc" id="L1134">					.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L1135">							nodeFactory.newIdentifierNode(source, tmpId),</span>
+<span class="nc" id="L1136">							typeNode(source, conditional.getType()));</span>
+<span class="nc" id="L1137">			ExpressionNode tmpNode = nodeFactory.newIdentifierExpressionNode(</span>
+<span class="nc" id="L1138">					source, nodeFactory.newIdentifierNode(source, tmpId));</span>
+			StatementNode ifNode;
+
+			{
+				CompoundStatementNode stmt1, stmt2;
+
+				{
+<span class="nc" id="L1145">					List&lt;BlockItemNode&gt; stmtlist = new LinkedList&lt;&gt;(b1);</span>
+
+<span class="nc" id="L1147">					stmtlist.add(nodeFactory</span>
+<span class="nc" id="L1148">							.newExpressionStatementNode(nodeFactory</span>
+<span class="nc" id="L1149">									.newOperatorNode(source, Operator.ASSIGN,</span>
+<span class="nc" id="L1150">											tmpNode.copy(), e1)));</span>
+<span class="nc" id="L1151">					stmtlist.addAll(a1);</span>
+<span class="nc" id="L1152">					stmt1 = nodeFactory.newCompoundStatementNode(source,</span>
+<span class="nc" id="L1153">							stmtlist);</span>
+				}
+				{
+<span class="nc" id="L1156">					List&lt;BlockItemNode&gt; stmtlist = new LinkedList&lt;&gt;(b2);</span>
+
+<span class="nc" id="L1158">					stmtlist.add(nodeFactory</span>
+<span class="nc" id="L1159">							.newExpressionStatementNode(nodeFactory</span>
+<span class="nc" id="L1160">									.newOperatorNode(source, Operator.ASSIGN,</span>
+<span class="nc" id="L1161">											tmpNode.copy(), e2)));</span>
+<span class="nc" id="L1162">					stmtlist.addAll(a2);</span>
+<span class="nc" id="L1163">					stmt2 = nodeFactory.newCompoundStatementNode(source,</span>
+<span class="nc" id="L1164">							stmtlist);</span>
+				}
+<span class="nc" id="L1166">				ifNode = nodeFactory.newIfNode(source, e0, stmt1, stmt2);</span>
+			}
+<span class="nc" id="L1168">			result = new ExprTriple(tmpNode);</span>
+<span class="nc" id="L1169">			result.addAllBefore(b0);</span>
+<span class="nc" id="L1170">			result.addBefore(decl);</span>
+<span class="nc" id="L1171">			result.addBefore(ifNode);</span>
+		}
+<span class="nc" id="L1173">		return result;</span>
+	}
+
+	/**
+	 * Translates any operator expression to an equivalent triple. Delegates to
+	 * helper methods as needed.
+	 * 
+	 * @param expression
+	 *            any operator expression
+	 * @return an equivalent triple
+	 */
+	private ExprTriple translateOperatorExpression(OperatorNode expression,
+			boolean isVoid) {
+		ExprTriple result;
+
+<span class="nc bnc" id="L1188" title="All 9 branches missed.">		switch (expression.getOperator()) {</span>
+		case ASSIGN:
+<span class="nc" id="L1190">			result = translateAssign(expression, isVoid);</span>
+<span class="nc" id="L1191">			break;</span>
+		case DEREFERENCE:
+<span class="nc" id="L1193">			result = translateDereference(expression, isVoid);</span>
+<span class="nc" id="L1194">			break;</span>
+		case ADDRESSOF:
+		case NOT:
+		case UNARYMINUS:
+		case UNARYPLUS:
+		case BIG_O:
+		case BITCOMPLEMENT:
+<span class="nc" id="L1201">			result = translateGenericUnaryOperator(expression, isVoid);</span>
+<span class="nc" id="L1202">			break;</span>
+		case PREINCREMENT:
+		case PREDECREMENT:
+		case POSTINCREMENT:
+		case POSTDECREMENT:
+<span class="nc" id="L1207">			result = translateIncrementOrDecrement(expression, isVoid);</span>
+<span class="nc" id="L1208">			break;</span>
+		case HASH:
+		case BITAND:
+		case BITOR:
+		case BITXOR:
+		case PLUS:
+		case MINUS:
+		case DIV:
+		case TIMES:
+		case SUBSCRIPT:
+		case LAND:
+		case LOR:
+		case EQUALS:
+		case NEQ:
+		case LT:
+		case GT:
+		case LTE:
+		case GTE:
+		case IMPLIES:
+		case MOD:
+		case SHIFTLEFT:
+		case SHIFTRIGHT:
+<span class="nc" id="L1230">			result = translateGenericBinaryOperator(expression, isVoid);</span>
+<span class="nc" id="L1231">			break;</span>
+		case BITANDEQ:
+		case BITOREQ:
+		case BITXOREQ:
+		case PLUSEQ:
+		case MINUSEQ:
+		case TIMESEQ:
+		case DIVEQ:
+		case MODEQ:
+		case SHIFTLEFTEQ:
+		case SHIFTRIGHTEQ:
+<span class="nc" id="L1242">			result = translateGeneralAssignment(expression, isVoid);</span>
+<span class="nc" id="L1243">			break;</span>
+		case COMMA:
+<span class="nc" id="L1245">			result = translateComma(expression, isVoid);</span>
+<span class="nc" id="L1246">			break;</span>
+		case CONDITIONAL:
+<span class="nc" id="L1248">			result = translateConditional(expression, isVoid);</span>
+<span class="nc" id="L1249">			break;</span>
+		default:
+<span class="nc" id="L1251">			throw new ABCRuntimeException(&quot;Unexpected operator: &quot;</span>
+<span class="nc" id="L1252">					+ expression.getOperator() + &quot;: &quot; + expression, expression</span>
+<span class="nc" id="L1253">					.getSource().getSummary(false));</span>
+		}
+<span class="nc" id="L1255">		return result;</span>
+	}
+
+	/**
+	 * Translates a &lt;code&gt;sizeof&lt;/code&gt; expression to an equivalent triple.
+	 * 
+	 * @param expression
+	 *            any {@link SizeofNode}
+	 * @return equivalent triple
+	 */
+	private ExprTriple translateSizeof(SizeofNode expression, boolean isVoid) {
+<span class="nc" id="L1266">		SizeableNode arg = expression.getArgument();</span>
+		ExprTriple triple;
+
+<span class="nc bnc" id="L1269" title="All 2 branches missed.">		if (arg instanceof ExpressionNode) {</span>
+<span class="nc" id="L1270">			triple = translate((ExpressionNode) arg, false);</span>
+<span class="nc" id="L1271">			makesef(triple);</span>
+<span class="nc bnc" id="L1272" title="All 2 branches missed.">			if (isVoid) {</span>
+<span class="nc" id="L1273">				triple.addBefore(nodeFactory.newExpressionStatementNode(triple</span>
+<span class="nc" id="L1274">						.getNode()));</span>
+<span class="nc" id="L1275">				triple.setNode(null);</span>
+<span class="nc" id="L1276">			} else {</span>
+<span class="nc" id="L1277">				expression.setArgument(triple.getNode());</span>
+<span class="nc" id="L1278">				triple.setNode(expression);</span>
+			}
+<span class="nc bnc" id="L1280" title="All 2 branches missed.">		} else if (arg instanceof TypeNode) {</span>
+<span class="nc" id="L1281">			SETriple typeTriple = translateGenericNode(arg);</span>
+
+<span class="nc" id="L1283">			expression.setArgument((TypeNode) typeTriple.getNode());</span>
+<span class="nc" id="L1284">			triple = new ExprTriple(typeTriple.getBefore(), expression,</span>
+<span class="nc" id="L1285">					new LinkedList&lt;BlockItemNode&gt;());</span>
+<span class="nc" id="L1286">		} else</span>
+<span class="nc" id="L1287">			throw new ABCRuntimeException(&quot;Unexpected kind of SizeableNode: &quot;</span>
+<span class="nc" id="L1288">					+ arg);</span>
+<span class="nc" id="L1289">		return triple;</span>
+	}
+
+	/**
+	 * Translates a &lt;code&gt;$scopeof&lt;/code&gt; expression into an equivalent triple.
+	 * 
+	 * @param expression
+	 *            an instance of {@link ScopeOfNode}
+	 * @return equivalent triple
+	 */
+	private ExprTriple translateScopeOf(ScopeOfNode expression, boolean isVoid) {
+<span class="nc" id="L1300">		ExprTriple result = translate(expression.expression(), false);</span>
+
+<span class="nc" id="L1302">		makesef(result);</span>
+<span class="nc" id="L1303">		expression.setExpression(result.getNode());</span>
+<span class="nc" id="L1304">		result.setNode(expression);</span>
+<span class="nc bnc" id="L1305" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L1306">			shift(result, true);</span>
+		}
+<span class="nc" id="L1308">		return result;</span>
+	}
+
+	/**
+	 * A remote reference can occur only in contract, which should not have
+	 * side-effects.
+	 * 
+	 * @param expression
+	 * @return
+	 */
+	private ExprTriple translateRemoteReference(RemoteExpressionNode expression) {
+<span class="nc" id="L1319">		return new ExprTriple(expression);</span>
+	}
+
+	/**
+	 * Translates a regular range expression into an equivalent triple.
+	 * Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * (e1 .. e2 # e3):
+	 * let translate(expr1)   = [b1|e1|a1].
+	 * let translate(expr2)   = [b2|e2|a2].
+	 * let translate(expr3)   = [b3|e3|a3].
+	 * 
+	 * translate(expr1 .. expr2 # expr3) = [b1,b2,b3|(e1, e2, e3)|a1,a2,a3].
+	 * &lt;/pre&gt;
+	 * 
+	 * @param expression
+	 * @param isVoid
+	 *            true if the expression is void, i.e., its value is never used
+	 * @return
+	 */
+	private ExprTriple translateRegularRange(RegularRangeNode expression,
+			boolean isVoid) {
+<span class="nc" id="L1342">		ExpressionNode step = expression.getStep();</span>
+<span class="nc" id="L1343">		ExprTriple lowTriple = translate(expression.getLow(), false), hiTriple = translate(</span>
+<span class="nc" id="L1344">				expression.getHigh(), false);</span>
+
+<span class="nc" id="L1346">		makesef(lowTriple);</span>
+<span class="nc" id="L1347">		makesef(hiTriple);</span>
+<span class="nc" id="L1348">		expression.setLow(lowTriple.getNode());</span>
+<span class="nc" id="L1349">		expression.setHigh(hiTriple.getNode());</span>
+
+<span class="nc" id="L1351">		ExprTriple result = new ExprTriple(expression);</span>
+
+<span class="nc" id="L1353">		result.addAllBefore(lowTriple.getBefore());</span>
+<span class="nc" id="L1354">		result.addAllBefore(hiTriple.getBefore());</span>
+<span class="nc" id="L1355">		result.addAllAfter(lowTriple.getAfter());</span>
+<span class="nc" id="L1356">		result.addAllAfter(hiTriple.getAfter());</span>
+<span class="nc bnc" id="L1357" title="All 2 branches missed.">		if (step != null) {</span>
+<span class="nc" id="L1358">			ExprTriple stepTriple = translate(expression.getStep(), false);</span>
+
+<span class="nc" id="L1360">			makesef(stepTriple);</span>
+<span class="nc" id="L1361">			expression.setStep(stepTriple.getNode());</span>
+<span class="nc" id="L1362">			result.addAllBefore(stepTriple.getBefore());</span>
+<span class="nc" id="L1363">			result.addAllAfter(stepTriple.getAfter());</span>
+		}
+<span class="nc bnc" id="L1365" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L1366">			shift(result, true);</span>
+		}
+<span class="nc" id="L1368">		return result;</span>
+	}
+
+	/**
+	 * A quantified expression shouldn't have side-effects.
+	 * 
+	 * @param expression
+	 * @param isVoid
+	 * @return
+	 */
+	private ExprTriple translateQuantifiedExpression(
+			QuantifiedExpressionNode expression, boolean isVoid) {
+		// should never have side-effects: check it in Analyzer
+<span class="nc bnc" id="L1381" title="All 4 branches missed.">		assert (expression.isSideEffectFree(false));</span>
+<span class="nc" id="L1382">		return new ExprTriple(expression);</span>
+	}
+
+	/**
+	 * Not implemented yet.
+	 * 
+	 * @param expression
+	 * @return
+	 */
+	private ExprTriple translateGenericSelection(GenericSelectionNode expression) {
+<span class="nc" id="L1392">		throw new ABCUnsupportedException(</span>
+<span class="nc" id="L1393">				&quot;generic selections not yet implemented: &quot; + expression</span>
+<span class="nc" id="L1394">						+ &quot; in side-effect remover&quot;);</span>
+	}
+
+	/**
+	 * Translates a dots expression into an equivalent triple.
+	 * 
+	 * Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * expr.f:
+	 * Let translate(expr)=[b,a|e|],
+	 * translate(expr.f) = [b,a|e.f|]
+	 * &lt;/pre&gt;
+	 * 
+	 * @param expression
+	 * @param isVoid
+	 * @return
+	 */
+	private ExprTriple translateDot(DotNode expression, boolean isVoid) {
+<span class="nc" id="L1413">		ExprTriple result = translate(expression.getStructure(), false);</span>
+
+<span class="nc" id="L1415">		makesef(result);</span>
+<span class="nc" id="L1416">		expression.setStructure(result.getNode());</span>
+<span class="nc" id="L1417">		result.setNode(expression);</span>
+<span class="nc bnc" id="L1418" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L1419">			shift(result, true);</span>
+		}
+<span class="nc" id="L1421">		return result;</span>
+	}
+
+	/**
+	 * Translates an initializer node. By definition, an initializer cannot be a
+	 * void expression since it occurs within an assignment expression.
+	 * 
+	 * @param node
+	 *            an initializer node
+	 * @param emptyAfter
+	 *            must the resulting triple have an empty after clause?
+	 * @return result of translation
+	 */
+	private SETriple translateInitializer(InitializerNode node,
+			boolean emptyAfter) {
+<span class="nc bnc" id="L1436" title="All 2 branches missed.">		if (node instanceof ExpressionNode) {</span>
+<span class="nc" id="L1437">			ExprTriple triple = translate((ExpressionNode) node, false);</span>
+
+<span class="nc" id="L1439">			emptyAfter(triple);</span>
+<span class="nc" id="L1440">			return triple;</span>
+<span class="nc bnc" id="L1441" title="All 2 branches missed.">		} else if (node instanceof CompoundInitializerNode) {</span>
+<span class="nc" id="L1442">			return translateCompoundInitializer((CompoundInitializerNode) node,</span>
+<span class="nc" id="L1443">					emptyAfter);</span>
+		} else
+<span class="nc" id="L1445">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L1446">					&quot;Unexpected kind of initializer node: &quot; + node);</span>
+	}
+
+	/**
+	 * Translates a compound initializer. There are no sequence points.
+	 * 
+	 * @param node
+	 *            a compound initializer node, possibly containing side-effects
+	 * @param emptyAfter
+	 *            should the triple returned have an empty after clause?
+	 * @return triple corresponding to given node
+	 */
+	private SETriple translateCompoundInitializer(CompoundInitializerNode node,
+			boolean emptyAfter) {
+<span class="nc" id="L1460">		SETriple result = new SETriple(node);</span>
+
+<span class="nc bnc" id="L1462" title="All 2 branches missed.">		for (PairNode&lt;DesignationNode, InitializerNode&gt; pair : node) {</span>
+<span class="nc" id="L1463">			DesignationNode designationNode = pair.getLeft();</span>
+
+<span class="nc bnc" id="L1465" title="All 2 branches missed.">			if (designationNode != null)</span>
+<span class="nc bnc" id="L1466" title="All 2 branches missed.">				for (DesignatorNode designator : designationNode) {</span>
+<span class="nc bnc" id="L1467" title="All 2 branches missed.">					if (designator instanceof FieldDesignatorNode) {</span>
+						// no side effects possible
+<span class="nc bnc" id="L1469" title="All 2 branches missed.">					} else if (designator instanceof ArrayDesignatorNode) {</span>
+<span class="nc" id="L1470">						ExpressionNode indexNode = ((ArrayDesignatorNode) designator)</span>
+<span class="nc" id="L1471">								.getIndex();</span>
+<span class="nc" id="L1472">						ExprTriple triple = translate(indexNode, false);</span>
+
+<span class="nc bnc" id="L1474" title="All 2 branches missed.">						if (emptyAfter) {</span>
+<span class="nc" id="L1475">							purify(triple);</span>
+<span class="nc" id="L1476">							result.addAllBefore(triple.getBefore());</span>
+<span class="nc" id="L1477">						} else {</span>
+<span class="nc" id="L1478">							makesef(triple);</span>
+<span class="nc" id="L1479">							result.addAllBefore(triple.getBefore());</span>
+<span class="nc" id="L1480">							result.addAllAfter(triple.getAfter());</span>
+						}
+<span class="nc" id="L1482">						((ArrayDesignatorNode) designator).setIndex(triple</span>
+<span class="nc" id="L1483">								.getNode());</span>
+<span class="nc" id="L1484">					} else {</span>
+<span class="nc" id="L1485">						throw new ABCRuntimeException(</span>
+<span class="nc" id="L1486">								&quot;Unexpected kind of designator node: &quot;</span>
+<span class="nc" id="L1487">										+ designator);</span>
+					}
+				}
+
+<span class="nc" id="L1491">			SETriple initTriple = translateInitializer(pair.getRight(),</span>
+<span class="nc" id="L1492">					emptyAfter);</span>
+
+<span class="nc" id="L1494">			result.addAllBefore(initTriple.getBefore());</span>
+<span class="nc" id="L1495">			result.addAllAfter(initTriple.getAfter());</span>
+<span class="nc" id="L1496">			pair.setRight((InitializerNode) initTriple.getNode());</span>
+		}
+<span class="nc" id="L1498">		return result;</span>
+	}
+
+	/**
+	 * Translates a compound literal. There are no sequence points.
+	 * 
+	 * @param expression
+	 *            a compound literal expression
+	 * @return result of translation
+	 */
+	private ExprTriple translateCompoundLiteral(CompoundLiteralNode expression,
+			boolean isVoid) {
+<span class="nc" id="L1510">		CompoundInitializerNode ciNode = expression.getInitializerList();</span>
+<span class="nc" id="L1511">		SETriple triple = translateCompoundInitializer(ciNode, false);</span>
+<span class="nc" id="L1512">		ExprTriple result = new ExprTriple(expression);</span>
+
+<span class="nc" id="L1514">		expression.setInitializerList((CompoundInitializerNode) triple</span>
+<span class="nc" id="L1515">				.getNode());</span>
+<span class="nc" id="L1516">		result.setBefore(triple.getBefore());</span>
+<span class="nc" id="L1517">		result.setAfter(triple.getAfter());</span>
+<span class="nc bnc" id="L1518" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L1519">			shift(result, true);</span>
+		}
+<span class="nc" id="L1521">		return result;</span>
+	}
+
+	// private ExprTriple translateCollective(CollectiveExpressionNode
+	// expression) {
+	// ExprTriple result = new ExprTriple(expression);
+	// ExprTriple e0 = translate(expression.getProcessesGroupExpression(),
+	// false);
+	// // ExprTriple e1 = translate(expression.getLengthExpression());
+	// ExprTriple e2 = translate(expression.getBody(), false);
+	//
+	// makesef(e0);
+	// // makesef(e1);
+	// makesef(e2);
+	// expression.setProcessesGroupExpression(e0.getNode());
+	// // expression.setLengthExpression(e1.getNode());
+	// expression.setBody(e2.getNode());
+	// result.addAllBefore(e0.getBefore());
+	// // result.addAllBefore(e1.getBefore());
+	// result.addAllBefore(e2.getBefore());
+	// result.addAllAfter(e0.getAfter());
+	// // result.addAllAfter(e1.getAfter());
+	// result.addAllAfter(e2.getAfter());
+	// return result;
+	// }
+
+	/**
+	 * Translates a cast expression. Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * (T)expr:
+	 * Let translate(expr)=[b,a|e|],
+	 * translate((T)expr) = [b,a,(T)e||] if isVoid, otherwise [b,a|(T)e|].
+	 * &lt;/pre&gt;
+	 * 
+	 * @param expression
+	 * @param isVoid
+	 * @return
+	 */
+	private ExprTriple translateCast(CastNode expression, boolean isVoid) {
+<span class="nc" id="L1561">		ExpressionNode arg = expression.getArgument();</span>
+
+<span class="nc bnc" id="L1563" title="All 4 branches missed.">		if (isVoid &amp;&amp; expression.getType().kind() == TypeKind.VOID) {</span>
+<span class="nc" id="L1564">			return translate(arg, true);</span>
+		}
+
+<span class="nc" id="L1567">		ExprTriple triple = translate(arg, false);</span>
+<span class="nc" id="L1568">		ExpressionNode newArg = triple.getNode();</span>
+
+		// if arg started off as a function call, will newArg
+		// still be a function call? Yes! See translateFunctionCall.
+
+		// mallocs need to keep their casts, i.e., no
+		// tmp=malloc | (int*)tmp | ...
+
+<span class="nc bnc" id="L1576" title="All 2 branches missed.">		if (isMallocCall(newArg)) {</span>
+<span class="nc" id="L1577">			expression.setArgument(newArg);</span>
+<span class="nc" id="L1578">		} else {</span>
+<span class="nc" id="L1579">			makesef(triple);</span>
+<span class="nc" id="L1580">			expression.setArgument(triple.getNode());</span>
+		}
+<span class="nc" id="L1582">		triple.setNode(expression);</span>
+<span class="nc bnc" id="L1583" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L1584">			shift(triple, true);</span>
+		}
+<span class="nc" id="L1586">		return triple;</span>
+	}
+
+	/**
+	 * 
+	 * Translates an arrow expression. Strategy:
+	 * 
+	 * &lt;pre&gt;
+	 * expr-&gt;f:
+	 * Let translate(expr)=[b,a|e|],
+	 * translate(expr-&gt;f) = [b,a,e-&gt;f||] if isVoid, otherwise [b,a|e-&gt;f|].
+	 * &lt;/pre&gt;
+	 * 
+	 * @param expression
+	 * @param isVoid
+	 * @return
+	 */
+	private ExprTriple translateArrow(ArrowNode expression, boolean isVoid) {
+<span class="nc" id="L1604">		ExprTriple result = translate(expression.getStructurePointer(), false);</span>
+
+<span class="nc" id="L1606">		makesef(result);</span>
+<span class="nc" id="L1607">		expression.setStructurePointer(result.getNode());</span>
+<span class="nc" id="L1608">		result.setNode(expression);</span>
+<span class="nc bnc" id="L1609" title="All 2 branches missed.">		if (isVoid) {</span>
+<span class="nc" id="L1610">			shift(result, true);</span>
+		}
+<span class="nc" id="L1612">		return result;</span>
+	}
+
+	/**
+	 * Determines if a value is a legal value of its type in any implementation.
+	 * If such a value is used as a void expression, it can be ignored.
+	 * 
+	 * @param value
+	 *            a value
+	 * @return best estimate as to whether this value is strictly conforming; if
+	 *         this method returns true, the value is strictly conforming for
+	 *         its type; otherwise nothing is guaranteed (value may or may not
+	 *         be strictly conforming)
+	 */
+	@SuppressWarnings(&quot;unused&quot;)
+	private boolean isStrictlyConformingValue(Value value) {
+		// TODO: make more precise
+<span class="nc" id="L1629">		Configuration config = this.getConfiguration();</span>
+
+<span class="nc bnc" id="L1631" title="All 2 branches missed.">		if (value instanceof IntegerValue) {</span>
+<span class="nc" id="L1632">			IntegerType type = ((IntegerValue) value).getType();</span>
+<span class="nc" id="L1633">			BigInteger val = ((IntegerValue) value).getIntegerValue();</span>
+
+			// eventually, do this right...based on type. use case stmt.
+<span class="nc bnc" id="L1636" title="All 2 branches missed.">			if (config.inRangeSignedInt(val))</span>
+<span class="nc" id="L1637">				return true;</span>
+<span class="nc" id="L1638">			return false;</span>
+		}
+<span class="nc bnc" id="L1640" title="All 2 branches missed.">		if (value instanceof StringValue) {</span>
+<span class="nc" id="L1641">			return true;</span>
+		}
+<span class="nc bnc" id="L1643" title="All 2 branches missed.">		if (value instanceof CharacterValue) {</span>
+<span class="nc" id="L1644">			return true;</span>
+		}
+<span class="nc" id="L1646">		return false;</span>
+	}
+
+	/**
+	 * For a compound statement expression:
+	 * 
+	 * &lt;pre&gt;
+	 * ({s1; s2; ... sn; expr;})
+	 * &lt;/pre&gt;
+	 * 
+	 * translates it into:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;if &lt;code&gt;isVoid&lt;/code&gt;
+	 * 
+	 * &lt;pre&gt;
+	 * before({s1; s2; ... sn; expr;})
+	 * NULL
+	 * after({s1; s2; ... sn; expr;})
+	 * &lt;/pre&gt;
+	 * 
+	 * &lt;/li&gt;
+	 * &lt;li&gt;else
+	 * 
+	 * &lt;pre&gt;
+	 * before({s1; s2; ... sn; expr;})
+	 * side-effect-free(expr)
+	 * after({s1; s2; ... sn; expr;})
+	 * &lt;/pre&gt;
+	 * 
+	 * &lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @param expression
+	 * @param isVoid
+	 * @return
+	 */
+	private ExprTriple translateStatementExpression(
+			StatementExpressionNode expression, boolean isVoid) {
+<span class="nc" id="L1684">		CompoundStatementNode statement = expression.getCompoundStatement(), newCompound = (CompoundStatementNode) this</span>
+<span class="nc" id="L1685">				.translateCompound(statement).get(0);</span>
+<span class="nc" id="L1686">		List&lt;BlockItemNode&gt; newBlockItems = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L1687">		ExpressionNode lastExpression = expression.getExpression();</span>
+<span class="nc" id="L1688">		ExprTriple exprTriple = this.translate(lastExpression, isVoid);</span>
+<span class="nc" id="L1689">		VariableDeclarationNode decl = null;</span>
+<span class="nc" id="L1690">		ExpressionNode newExpression = null;</span>
+
+<span class="nc" id="L1692">		purify(exprTriple);</span>
+<span class="nc bnc" id="L1693" title="All 2 branches missed.">		if (!isVoid) {</span>
+<span class="nc" id="L1694">			makesef(exprTriple);</span>
+		}
+<span class="nc" id="L1696">		newBlockItems.addAll(exprTriple.getBefore());</span>
+		// removed the last item of the compound statement, which is handled
+		// separately by lastExpression
+<span class="nc" id="L1699">		newCompound.removeChild(newCompound.numChildren() - 1);</span>
+<span class="nc" id="L1700">		newCompound = this.normalizeCompoundStatement(newCompound);</span>
+<span class="nc bnc" id="L1701" title="All 2 branches missed.">		if (!isVoid) {</span>
+<span class="nc" id="L1702">			Source source = lastExpression.getSource();</span>
+<span class="nc" id="L1703">			String tmpId = tempVariablePrefix + (tempVariableCounter++);</span>
+<span class="nc" id="L1704">			ExpressionNode tmpNode = nodeFactory.newIdentifierExpressionNode(</span>
+<span class="nc" id="L1705">					source, nodeFactory.newIdentifierNode(source, tmpId));</span>
+
+<span class="nc" id="L1707">			decl = nodeFactory.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L1708">					nodeFactory.newIdentifierNode(source, tmpId),</span>
+<span class="nc" id="L1709">					typeNode(source, lastExpression.getType()));</span>
+<span class="nc" id="L1710">			newCompound.addSequenceChild(nodeFactory</span>
+<span class="nc" id="L1711">					.newExpressionStatementNode(nodeFactory.newOperatorNode(</span>
+<span class="nc" id="L1712">							source, Operator.ASSIGN, tmpNode,</span>
+<span class="nc" id="L1713">							exprTriple.getNode())));</span>
+<span class="nc" id="L1714">			newExpression = tmpNode.copy();</span>
+		}
+<span class="nc" id="L1716">		newBlockItems.add(newCompound);</span>
+<span class="nc" id="L1717">		newCompound = nodeFactory.newCompoundStatementNode(</span>
+<span class="nc" id="L1718">				statement.getSource(), newBlockItems);</span>
+<span class="nc" id="L1719">		newBlockItems = new LinkedList&lt;&gt;();</span>
+<span class="nc bnc" id="L1720" title="All 2 branches missed.">		if (!isVoid)</span>
+<span class="nc" id="L1721">			newBlockItems.add(decl);</span>
+<span class="nc" id="L1722">		newBlockItems.add(newCompound);</span>
+<span class="nc" id="L1723">		return new ExprTriple(newBlockItems, newExpression,</span>
+<span class="nc" id="L1724">				new LinkedList&lt;BlockItemNode&gt;());</span>
+	}
+
+	/**
+	 * Translates an expression into an equivalent triple in normal form. The
+	 * resulting triple will have the same side-effects and
+	 * exception-side-effects as the original expression.
+	 * 
+	 * @param expression
+	 *            an expression node
+	 * @param isVoid
+	 *            is the result of evaluating the expression not needed (only
+	 *            its side-effects)? If true, the expression node in the
+	 *            resulting triple will be &lt;code&gt;null&lt;/code&gt;, but the
+	 *            begin/after clauses may contain expression statements
+	 *            corresponding to exception side-effects in the expression.
+	 * @return a side-effect-free triple equivalent to the original expression
+	 * 
+	 * @throws SyntaxException
+	 *             if a syntax error is discovered in the process
+	 */
+	private ExprTriple translate(ExpressionNode expression, boolean isVoid) {
+<span class="nc" id="L1746">		ExpressionKind kind = expression.expressionKind();</span>
+
+<span class="nc bnc" id="L1748" title="All 18 branches missed.">		switch (kind) {</span>
+		case CONSTANT: {
+<span class="nc bnc" id="L1750" title="All 2 branches missed.">			if (isVoid) {</span>
+<span class="nc" id="L1751">				Value value = ((ConstantNode) expression).getConstantValue();</span>
+
+<span class="nc bnc" id="L1753" title="All 2 branches missed.">				if (this.isStrictlyConformingValue(value))</span>
+<span class="nc" id="L1754">					return new ExprTriple(null);</span>
+
+<span class="nc" id="L1756">				ExprTriple result = new ExprTriple(expression);</span>
+
+<span class="nc" id="L1758">				shift(result, true);</span>
+<span class="nc" id="L1759">				return result;</span>
+			} else {
+<span class="nc" id="L1761">				return new ExprTriple(expression);</span>
+			}
+		}
+		case ALIGNOF:
+		case DERIVATIVE_EXPRESSION:
+		case IDENTIFIER_EXPRESSION:
+		case RESULT: {
+<span class="nc" id="L1768">			ExprTriple result = new ExprTriple(expression);</span>
+
+<span class="nc bnc" id="L1770" title="All 2 branches missed.">			if (isVoid)</span>
+<span class="nc" id="L1771">				shift(result, true);</span>
+<span class="nc" id="L1772">			return result;</span>
+		}
+		case ARROW:
+<span class="nc" id="L1775">			return translateArrow((ArrowNode) expression, isVoid);</span>
+		case CAST:
+<span class="nc" id="L1777">			return translateCast((CastNode) expression, isVoid);</span>
+		case COMPOUND_LITERAL:
+<span class="nc" id="L1779">			return translateCompoundLiteral((CompoundLiteralNode) expression,</span>
+<span class="nc" id="L1780">					isVoid);</span>
+		case DOT:
+<span class="nc" id="L1782">			return translateDot((DotNode) expression, isVoid);</span>
+		case FUNCTION_CALL:
+<span class="nc" id="L1784">			return translateFunctionCall((FunctionCallNode) expression, isVoid);</span>
+		case CONTRACT_VERIFY:
+<span class="nc" id="L1786">			return translateContractVerify((ContractVerifyNode) expression,</span>
+<span class="nc" id="L1787">					isVoid);</span>
+		case GENERIC_SELECTION:
+<span class="nc" id="L1789">			return translateGenericSelection((GenericSelectionNode) expression);</span>
+		case OPERATOR:
+<span class="nc" id="L1791">			return translateOperatorExpression((OperatorNode) expression,</span>
+<span class="nc" id="L1792">					isVoid);</span>
+		case QUANTIFIED_EXPRESSION:
+<span class="nc" id="L1794">			return translateQuantifiedExpression(</span>
+<span class="nc" id="L1795">					(QuantifiedExpressionNode) expression, isVoid);</span>
+		case REGULAR_RANGE:
+<span class="nc" id="L1797">			return translateRegularRange((RegularRangeNode) expression, isVoid);</span>
+		case REMOTE_REFERENCE:
+<span class="nc" id="L1799">			return translateRemoteReference((RemoteExpressionNode) expression);</span>
+		case SCOPEOF:
+<span class="nc" id="L1801">			return translateScopeOf((ScopeOfNode) expression, isVoid);</span>
+		case SIZEOF:
+<span class="nc" id="L1803">			return translateSizeof((SizeofNode) expression, isVoid);</span>
+		case SPAWN:
+<span class="nc" id="L1805">			return translateSpawn((SpawnNode) expression, isVoid);</span>
+		case STATEMENT_EXPRESSION:
+<span class="nc" id="L1807">			return translateStatementExpression(</span>
+<span class="nc" id="L1808">					(StatementExpressionNode) expression, isVoid);</span>
+		default:
+<span class="nc" id="L1810">			throw new ABCUnsupportedException(&quot;removing side-effects for &quot;</span>
+<span class="nc" id="L1811">					+ kind + &quot; expression&quot;);</span>
+		}
+	}
+
+	// helper functions
+	/**
+	 * &lt;p&gt;
+	 * Translates any AST node into a pure side-effect-free triple. Pure means
+	 * the after clause will be empty and all expressions occurring within the
+	 * resulting node will be side-effect-free. The kind of node returned in the
+	 * triple will be the same kind given: e.g., if node is an instance of
+	 * {@link DeclarationNode}, then the node component of the triple returned
+	 * will also be an instance of {@link DeclarationNode}.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Specifically, what this method does: it explores the tree rooted at the
+	 * given node in DFS order. Whenever it encounters an expression (so an
+	 * expression that is not a sub-expression of another expression) it
+	 * translates and purifies that expression. The before side-effects from the
+	 * expression are appended to the before clause for the final result. The
+	 * (sef) node component of the result replaces the original expression.
+	 * &lt;/p&gt;
+	 * 
+	 * @param node
+	 *            any ASTNode
+	 * @return a pure side-effect-free triple resulting from the translation of
+	 *         the node
+	 */
+	private SETriple translateGenericNode(ASTNode node) {
+<span class="nc bnc" id="L1841" title="All 2 branches missed.">		if (node instanceof ExpressionNode) {</span>
+<span class="nc" id="L1842">			ExprTriple result = translate((ExpressionNode) node, false);</span>
+
+<span class="nc" id="L1844">			purify(result);</span>
+<span class="nc" id="L1845">			return result;</span>
+		} else {
+<span class="nc" id="L1847">			int numChildren = node.numChildren();</span>
+<span class="nc" id="L1848">			SETriple result = new SETriple(node);</span>
+
+<span class="nc bnc" id="L1850" title="All 2 branches missed.">			for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L1851">				ASTNode child = node.child(i);</span>
+
+<span class="nc bnc" id="L1853" title="All 2 branches missed.">				if (child == null)</span>
+<span class="nc" id="L1854">					continue;</span>
+
+<span class="nc" id="L1856">				SETriple childTriple = translateGenericNode(child);</span>
+
+<span class="nc" id="L1858">				result.addAllBefore(childTriple.getBefore());</span>
+<span class="nc" id="L1859">				childTriple.getNode().remove();</span>
+<span class="nc" id="L1860">				node.setChild(i, childTriple.getNode());</span>
+			}
+<span class="nc" id="L1862">			return result;</span>
+		}
+	}
+
+	// Declarations...
+
+	/**
+	 * Transforms an ordinary declaration into a list of statements whose
+	 * execution are equivalent to it.
+	 * 
+	 * @param ordinaryDecl
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateOrdinaryDeclaration(
+			OrdinaryDeclarationNode ordinaryDecl) {
+<span class="nc" id="L1877">		OrdinaryDeclarationKind kind = ordinaryDecl.ordinaryDeclarationKind();</span>
+
+<span class="nc bnc" id="L1879" title="All 4 branches missed.">		switch (kind) {</span>
+		case VARIABLE_DECLARATION:
+<span class="nc" id="L1881">			return this</span>
+<span class="nc" id="L1882">					.translateVariableDeclaration((VariableDeclarationNode) ordinaryDecl);</span>
+		case FUNCTION_DEFINITION:
+<span class="nc" id="L1884">			this.normalizeFunctionDefinition((FunctionDefinitionNode) ordinaryDecl);</span>
+		case FUNCTION_DECLARATION:
+		case ABSTRACT_FUNCTION_DEFINITION:
+<span class="nc" id="L1887">			return Arrays.asList((BlockItemNode) ordinaryDecl);</span>
+		default:
+<span class="nc" id="L1889">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L1890">					&quot;normalization of ordinary declaration of &quot; + kind</span>
+<span class="nc" id="L1891">							+ &quot; kind in side-effect remover&quot;);</span>
+		}
+	}
+
+	/**
+	 * Returns a triple in which the after clause is empty and the node is the
+	 * variable declaration node, because we want the side-effects to complete
+	 * before the initialization takes place.
+	 * 
+	 * @param decl
+	 *            a variable declaration
+	 * @return equivalent triple with empty after
+	 */
+	private List&lt;BlockItemNode&gt; translateVariableDeclaration(
+			VariableDeclarationNode decl) {
+<span class="nc" id="L1906">		TypeNode typeNode = decl.getTypeNode();</span>
+<span class="nc" id="L1907">		InitializerNode initNode = decl.getInitializer();</span>
+<span class="nc" id="L1908">		SETriple typeTriple = translateGenericNode(typeNode);</span>
+<span class="nc" id="L1909">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L1911">		result.addAll(typeTriple.getBefore());</span>
+<span class="nc" id="L1912">		decl.setTypeNode((TypeNode) typeTriple.getNode());</span>
+<span class="nc bnc" id="L1913" title="All 2 branches missed.">		if (initNode != null) {</span>
+			SETriple initTriple;
+
+<span class="nc bnc" id="L1916" title="All 2 branches missed.">			if (initNode instanceof ExpressionNode) {</span>
+<span class="nc" id="L1917">				initTriple = translate((ExpressionNode) initNode, false);</span>
+<span class="nc" id="L1918">				emptyAfter((ExprTriple) initTriple);</span>
+<span class="nc" id="L1919">			} else {</span>
+<span class="nc" id="L1920">				initTriple = translateCompoundInitializer(</span>
+<span class="nc" id="L1921">						(CompoundInitializerNode) initNode, true);</span>
+				// true, since need side-effects to complete before
+				// initialization happens
+			}
+<span class="nc" id="L1925">			result.addAll(initTriple.getBefore());</span>
+<span class="nc" id="L1926">			decl.setInitializer((InitializerNode) initTriple.getNode());</span>
+		}
+<span class="nc" id="L1928">		result.add(decl);</span>
+<span class="nc" id="L1929">		return result;</span>
+	}
+
+	/**
+	 * Places a function definition into normal form.
+	 * 
+	 * @param function
+	 *            a function definition node
+	 */
+	private void normalizeFunctionDefinition(FunctionDefinitionNode function) {
+<span class="nc" id="L1939">		function.setBody(transformCompound(function.getBody()));</span>
+<span class="nc" id="L1940">	}</span>
+
+	// statements
+
+	/**
+	 * Given an expression which is going to be used essentially as a statement,
+	 * i.e., only for its side-effects (for example, in an expression statement,
+	 * or a for loop initializer or incrementer), returns an equivalent list of
+	 * block items in normal form.
+	 * 
+	 * @param expr
+	 *            a non-&lt;code&gt;null&lt;/code&gt; expression
+	 * @return list of block items in normal form the execution of which is
+	 *         equivalent to the evaluation of the expression
+	 */
+	private List&lt;BlockItemNode&gt; translateExpressionAsStatement(
+			ExpressionNode expr) {
+<span class="nc bnc" id="L1957" title="All 2 branches missed.">		if (expr == null)</span>
+<span class="nc" id="L1958">			return new LinkedList&lt;BlockItemNode&gt;();</span>
+
+<span class="nc" id="L1960">		ExprTriple triple = translate(expr, true);</span>
+<span class="nc" id="L1961">		List&lt;BlockItemNode&gt; result = triple.getBefore();</span>
+
+<span class="nc" id="L1963">		result.addAll(triple.getAfter());</span>
+<span class="nc" id="L1964">		return result;</span>
+	}
+
+	/**
+	 * Transforms an expression statement into a sequence of block items
+	 * equivalent to the original expression but in normal form.
+	 * 
+	 * @param exprStmt
+	 *            a non-&lt;code&gt;null&lt;/code&gt; expression statement node
+	 * @return list of block items in normal form equivalent to original
+	 */
+	private List&lt;BlockItemNode&gt; translateExpressionStatement(
+			ExpressionStatementNode exprStmt) {
+<span class="nc" id="L1977">		return translateExpressionAsStatement(exprStmt.getExpression());</span>
+	}
+
+	/**
+	 * If the given statement is already a compound statement (instance of
+	 * {@link CompoundStatementNode}), the given statement is removed from its
+	 * parent and is returned immediately; otherwise, a new
+	 * {@link CompoundStatementNode} is created with a single child which is the
+	 * given statement.
+	 * 
+	 * Post-condition: the parent of the result statement node is null, i.e.,
+	 * result.parent()==null.
+	 * 
+	 * @param stmt
+	 *            any non-null statement
+	 * @return a compound statement equivalent to the given one with parent
+	 *         being null
+	 */
+	private CompoundStatementNode makeCompound(StatementNode stmt) {
+<span class="nc bnc" id="L1996" title="All 2 branches missed.">		if (stmt instanceof CompoundStatementNode) {</span>
+<span class="nc" id="L1997">			stmt.remove();</span>
+<span class="nc" id="L1998">			return (CompoundStatementNode) stmt;</span>
+		} else {
+<span class="nc" id="L2000">			stmt.remove();</span>
+<span class="nc" id="L2001">			return nodeFactory.newCompoundStatementNode(stmt.getSource(),</span>
+<span class="nc" id="L2002">					Arrays.asList((BlockItemNode) stmt));</span>
+		}
+	}
+
+	/**
+	 * Places a loop statement body into normal form.
+	 * 
+	 * @param loop
+	 *            a non-&lt;code&gt;null&lt;/code&gt; loop node
+	 */
+	private void normalizeLoopBody(LoopNode loop) {
+<span class="nc" id="L2013">		StatementNode body = loop.getBody();</span>
+<span class="nc" id="L2014">		List&lt;BlockItemNode&gt; bodyList = translateStatement(body);</span>
+
+<span class="nc" id="L2016">		removeNodes(bodyList);</span>
+<span class="nc bnc" id="L2017" title="All 2 branches missed.">		if (bodyList.size() == 1)</span>
+<span class="nc" id="L2018">			loop.setBody((StatementNode) bodyList.get(0));</span>
+		else
+<span class="nc" id="L2020">			loop.setBody(nodeFactory.newCompoundStatementNode(body.getSource(),</span>
+<span class="nc" id="L2021">					bodyList));</span>
+<span class="nc" id="L2022">	}</span>
+
+	/**
+	 * Normalizes the initializer node of for loop by placing it in normal form
+	 * and moving before the for loop if necessary. This may modify the for
+	 * loop.
+	 * 
+	 * @param forLoop
+	 *            a for loop node
+	 * @return the sequence of statements to insert before the for loop
+	 *         (possibly empty)
+	 */
+	private List&lt;BlockItemNode&gt; normalizeForLoopInitializer(ForLoopNode forLoop) {
+<span class="nc" id="L2035">		ForLoopInitializerNode init = forLoop.getInitializer();</span>
+
+<span class="nc bnc" id="L2037" title="All 2 branches missed.">		if (init == null)</span>
+<span class="nc" id="L2038">			return new LinkedList&lt;BlockItemNode&gt;();</span>
+<span class="nc bnc" id="L2039" title="All 2 branches missed.">		if (init instanceof ExpressionNode) {</span>
+<span class="nc" id="L2040">			List&lt;BlockItemNode&gt; initItems = translateExpressionAsStatement((ExpressionNode) init);</span>
+
+			// if initItems consists of one expression statement, keep it in for
+<span class="nc bnc" id="L2043" title="All 2 branches missed.">			if (initItems.size() == 1) {</span>
+<span class="nc" id="L2044">				BlockItemNode item = initItems.get(0);</span>
+
+<span class="nc bnc" id="L2046" title="All 2 branches missed.">				if (item instanceof ExpressionStatementNode) {</span>
+<span class="nc" id="L2047">					ExpressionNode expr = ((ExpressionStatementNode) item)</span>
+<span class="nc" id="L2048">							.getExpression();</span>
+
+<span class="nc" id="L2050">					expr.remove();</span>
+<span class="nc" id="L2051">					forLoop.setInitializer(expr);</span>
+<span class="nc" id="L2052">					return new LinkedList&lt;BlockItemNode&gt;();</span>
+				}
+			}
+<span class="nc" id="L2055">			forLoop.setInitializer(null);</span>
+<span class="nc" id="L2056">			return initItems;</span>
+<span class="nc bnc" id="L2057" title="All 2 branches missed.">		} else if (init instanceof DeclarationListNode) {</span>
+			// make all declarations normal. if there are any side
+			// effects, move them to an outer scope?
+<span class="nc" id="L2060">			DeclarationListNode declList = (DeclarationListNode) init;</span>
+<span class="nc" id="L2061">			int numDecls = declList.numChildren();</span>
+<span class="nc" id="L2062">			List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L2064">			declList.remove();</span>
+<span class="nc bnc" id="L2065" title="All 2 branches missed.">			for (int i = 0; i &lt; numDecls; i++) {</span>
+<span class="nc" id="L2066">				VariableDeclarationNode decl = declList.getSequenceChild(i);</span>
+
+<span class="nc" id="L2068">				result.addAll(translateVariableDeclaration(decl));</span>
+			}
+<span class="nc" id="L2070">			return result;</span>
+		} else
+<span class="nc" id="L2072">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L2073">					&quot;Unexpected kind of for loop initializer: &quot; + init);</span>
+	}
+
+	/**
+	 * Transforms a for-loop to an equivalent form in which the incrementer
+	 * expression has been normalized. May involve modifications to the loop
+	 * body as well as to the incrementer.
+	 * 
+	 * @param forLoop
+	 *            a non-&lt;code&gt;null&lt;/code&gt; for-loop node
+	 */
+	private void normalizeForLoopIncrementer(ForLoopNode forLoop) {
+		// incrementer: if normal statement, leave alone, otherwise:
+		// for (...; ...; ;) { ... incrementer }
+<span class="nc" id="L2087">		ExpressionNode incrementer = forLoop.getIncrementer();</span>
+<span class="nc" id="L2088">		List&lt;BlockItemNode&gt; incItems = translateExpressionAsStatement(incrementer);</span>
+
+<span class="nc bnc" id="L2090" title="All 2 branches missed.">		if (incItems.size() == 1</span>
+<span class="nc bnc" id="L2091" title="All 2 branches missed.">				&amp;&amp; incItems.get(0) instanceof ExpressionStatementNode) {</span>
+			// nothing to do
+<span class="nc" id="L2093">			ExpressionNode newIncrementer = ((ExpressionStatementNode) incItems</span>
+<span class="nc" id="L2094">					.get(0)).getExpression();</span>
+
+<span class="nc" id="L2096">			newIncrementer.remove();</span>
+<span class="nc" id="L2097">			forLoop.setIncrementer(newIncrementer);</span>
+<span class="nc" id="L2098">		} else {</span>
+<span class="nc" id="L2099">			CompoundStatementNode body = makeCompound(forLoop.getBody());</span>
+
+<span class="nc" id="L2101">			forLoop.setBody(body);</span>
+<span class="nc" id="L2102">			body.insertChildren(body.numChildren(), incItems);</span>
+<span class="nc" id="L2103">			forLoop.setIncrementer(null);</span>
+		}
+<span class="nc" id="L2105">	}</span>
+
+	/**
+	 * removes all direct null children node of a given compound statement.
+	 * 
+	 * Post-condition: all child nodes of the compound statement node are
+	 * non-null.
+	 * 
+	 * @param compound
+	 * @return
+	 */
+	private CompoundStatementNode normalizeCompoundStatement(
+			CompoundStatementNode compound) {
+<span class="nc" id="L2118">		LinkedList&lt;BlockItemNode&gt; items = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L2119">		boolean hasNull = false;</span>
+
+<span class="nc bnc" id="L2121" title="All 2 branches missed.">		for (BlockItemNode child : compound) {</span>
+<span class="nc bnc" id="L2122" title="All 2 branches missed.">			if (child == null)</span>
+<span class="nc" id="L2123">				hasNull = true;</span>
+			else
+<span class="nc" id="L2125">				items.add(child);</span>
+		}
+<span class="nc bnc" id="L2127" title="All 2 branches missed.">		if (hasNull) {</span>
+<span class="nc bnc" id="L2128" title="All 2 branches missed.">			for (BlockItemNode child : items)</span>
+<span class="nc" id="L2129">				child.remove();</span>
+<span class="nc" id="L2130">			return this.nodeFactory.newCompoundStatementNode(</span>
+<span class="nc" id="L2131">					compound.getSource(), items);</span>
+		} else
+<span class="nc" id="L2133">			return compound;</span>
+	}
+
+	/**
+	 * Transforms a loop node to an equivalent form in which the loop condition
+	 * expression has been placed in normal form. This may involve modifications
+	 * to the loop body.
+	 * 
+	 * @param loop
+	 *            a non-&lt;code&gt;null&lt;/code&gt; loop node
+	 */
+	private void normalizeLoopCondition(LoopNode loop) {
+		// cond: purify. if before is non-trivial then transform to
+		// while (1) { befores; if (!expr) break; body}
+<span class="nc" id="L2147">		ExpressionNode cond = loop.getCondition();</span>
+
+<span class="nc bnc" id="L2149" title="All 2 branches missed.">		if (cond == null)</span>
+<span class="nc" id="L2150">			return;</span>
+
+<span class="nc" id="L2152">		ExprTriple condTriple = translate(cond, false);</span>
+
+<span class="nc" id="L2154">		purify(condTriple);</span>
+
+<span class="nc" id="L2156">		List&lt;BlockItemNode&gt; condItems = condTriple.getBefore();</span>
+
+<span class="nc bnc" id="L2158" title="All 2 branches missed.">		if (!condItems.isEmpty()) {</span>
+<span class="nc" id="L2159">			Source condSource = cond.getSource();</span>
+<span class="nc" id="L2160">			CompoundStatementNode body = makeCompound(loop.getBody());</span>
+
+<span class="nc" id="L2162">			loop.setBody(body);</span>
+<span class="nc" id="L2163">			condItems.add(nodeFactory.newIfNode(condSource, nodeFactory</span>
+<span class="nc" id="L2164">					.newOperatorNode(condSource, Operator.NOT,</span>
+<span class="nc" id="L2165">							condTriple.getNode()), nodeFactory</span>
+<span class="nc" id="L2166">					.newBreakNode(condSource)));</span>
+<span class="nc" id="L2167">			body.insertChildren(0, condItems);</span>
+<span class="nc" id="L2168">			loop.setCondition(newOneNode(condSource));</span>
+<span class="nc" id="L2169">		} else</span>
+<span class="nc" id="L2170">			loop.setCondition(condTriple.getNode());</span>
+<span class="nc" id="L2171">	}</span>
+
+	/**
+	 * Produces a list of block items in normal form that is equivalent to the
+	 * given for-loop node. The loop node may be modified.
+	 * 
+	 * @param loop
+	 *            a non-&lt;code&gt;null&lt;/code&gt; for loop node
+	 * @return list of block items in normal form equivalent to original loop
+	 *         node
+	 */
+	private List&lt;BlockItemNode&gt; translateForLoop(ForLoopNode forLoop) {
+<span class="nc" id="L2183">		normalizeLoopBody(forLoop);</span>
+
+<span class="nc" id="L2185">		List&lt;BlockItemNode&gt; newItems = normalizeForLoopInitializer(forLoop);</span>
+<span class="nc" id="L2186">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L2188">		newItems.add(forLoop);</span>
+<span class="nc" id="L2189">		normalizeLoopCondition(forLoop);</span>
+<span class="nc" id="L2190">		normalizeForLoopIncrementer(forLoop);</span>
+<span class="nc bnc" id="L2191" title="All 2 branches missed.">		if (newItems.size() &gt; 1) {</span>
+<span class="nc" id="L2192">			removeNodes(newItems);</span>
+<span class="nc" id="L2193">			result.add(makeOneBlockItem(forLoop.getSource(), newItems));</span>
+<span class="nc" id="L2194">		} else</span>
+<span class="nc" id="L2195">			result = newItems;</span>
+<span class="nc" id="L2196">		return result;</span>
+	}
+
+	/**
+	 * Produces a list of block items in normal form that is equivalent to the
+	 * given while-loop node. The loop node may be modified.
+	 * 
+	 * Give the following while statement,
+	 * 
+	 * &lt;pre&gt;
+	 * while(e){
+	 * 	S;
+	 * }
+	 * &lt;/pre&gt;
+	 * 
+	 * Let &lt;code&gt;S_be&lt;/code&gt;, &lt;code&gt;S_af&lt;/code&gt;, &lt;code&gt;x&lt;/code&gt; be the
+	 * side-effect-free triple of &lt;code&gt;e&lt;/code&gt;, and &lt;code&gt;e'&lt;/code&gt; is the
+	 * side-effect-free translation of &lt;code&gt;e&lt;/code&gt;. This function return the
+	 * following result:
+	 * 
+	 * &lt;pre&gt;
+	 * while(1){
+	 *  var x;
+	 * 	S_be;
+	 * 	x=e';
+	 * 	S_af;
+	 * 	if(!x)
+	 * 	  break;
+	 * 	S;
+	 * }
+	 * &lt;/pre&gt;
+	 * 
+	 * @param loop
+	 *            a non-&lt;code&gt;null&lt;/code&gt; while loop node
+	 * @return list of block items in normal form equivalent to original loop
+	 *         node
+	 */
+	private List&lt;BlockItemNode&gt; translateWhileLoop(LoopNode whileLoop) {
+<span class="nc" id="L2234">		normalizeLoopBody(whileLoop);</span>
+<span class="nc" id="L2235">		normalizeLoopCondition(whileLoop);</span>
+
+<span class="nc" id="L2237">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L2239">		result.add(whileLoop);</span>
+<span class="nc" id="L2240">		return result;</span>
+	}
+
+	/**
+	 * Produces a list of block items in normal form that is equivalent to the
+	 * given do-while-loop node. The loop node may be modified.
+	 * 
+	 * Give the following do-while statement,
+	 * 
+	 * &lt;pre&gt;
+	 * do{
+	 * 	S;
+	 * }while(e);
+	 * &lt;/pre&gt;
+	 * 
+	 * Let &lt;code&gt;S_be&lt;/code&gt;, &lt;code&gt;S_af&lt;/code&gt;, &lt;code&gt;x&lt;/code&gt; be the
+	 * side-effect-free triple of &lt;code&gt;e&lt;/code&gt;, and &lt;code&gt;e'&lt;/code&gt; is the
+	 * side-effect-free translation of &lt;code&gt;e&lt;/code&gt;. This function return the
+	 * following result:
+	 * 
+	 * &lt;pre&gt;
+	 * var x;
+	 * do{
+	 * 	S;
+	 * 	S_be;
+	 * 	x=e';
+	 * 	S_af;
+	 * }while(x);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param loop
+	 *            a non-&lt;code&gt;null&lt;/code&gt; do loop node
+	 * @return list of block items in normal form equivalent to original loop
+	 *         node
+	 */
+	private List&lt;BlockItemNode&gt; translateDoLoop(LoopNode doLoop) {
+<span class="nc" id="L2276">		normalizeLoopBody(doLoop);</span>
+
+		// do {... befores} while (e);
+<span class="nc" id="L2279">		ExprTriple condTriple = translate(doLoop.getCondition(), false);</span>
+
+<span class="nc" id="L2281">		purify(condTriple);</span>
+<span class="nc" id="L2282">		doLoop.setCondition(condTriple.getNode());</span>
+
+<span class="nc" id="L2284">		List&lt;BlockItemNode&gt; condItems = condTriple.getBefore();</span>
+<span class="nc" id="L2285">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L2287" title="All 2 branches missed.">		if (!condItems.isEmpty()) {</span>
+<span class="nc" id="L2288">			CompoundStatementNode body = makeCompound(doLoop.getBody());</span>
+<span class="nc" id="L2289">			List&lt;BlockItemNode&gt; newCondItems = new LinkedList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L2291" title="All 2 branches missed.">			for (BlockItemNode item : condItems) {</span>
+<span class="nc bnc" id="L2292" title="All 2 branches missed.">				if (item instanceof VariableDeclarationNode) {</span>
+<span class="nc" id="L2293">					VariableDeclarationNode variable = (VariableDeclarationNode) item;</span>
+<span class="nc" id="L2294">					StatementNode assign = initializer2Assignment(variable);</span>
+
+<span class="nc" id="L2296">					result.add(pureDeclaration(variable));</span>
+<span class="nc bnc" id="L2297" title="All 2 branches missed.">					if (assign != null)</span>
+<span class="nc" id="L2298">						newCondItems.add(assign);</span>
+<span class="nc" id="L2299">				} else</span>
+<span class="nc" id="L2300">					newCondItems.add(item);</span>
+			}
+
+<span class="nc" id="L2303">			body.insertChildren(body.numChildren(), newCondItems);</span>
+<span class="nc" id="L2304">			doLoop.setBody(body);</span>
+			// doLoop.setCondition(condTriple.getNode());
+		}
+<span class="nc" id="L2307">		result.add(doLoop);</span>
+<span class="nc bnc" id="L2308" title="All 2 branches missed.">		if (result.size() &gt; 1) {</span>
+<span class="nc" id="L2309">			removeNodes(result);</span>
+<span class="nc" id="L2310">			StatementNode compound = nodeFactory.newCompoundStatementNode(</span>
+<span class="nc" id="L2311">					doLoop.getSource(), result);</span>
+
+<span class="nc" id="L2313">			result.clear();</span>
+<span class="nc" id="L2314">			result.add(compound);</span>
+		}
+<span class="nc" id="L2316">		return result;</span>
+	}
+
+	/**
+	 * Creates an assignment statement node equivalent to the initializer of a
+	 * variable declaration. If the variable declaration has no initializer,
+	 * returns true.
+	 * 
+	 * @param variable
+	 * @return
+	 */
+	private StatementNode initializer2Assignment(
+			VariableDeclarationNode variable) {
+<span class="nc" id="L2329">		InitializerNode initializer = variable.getInitializer();</span>
+
+<span class="nc bnc" id="L2331" title="All 2 branches missed.">		if (initializer == null)</span>
+<span class="nc" id="L2332">			return null;</span>
+<span class="nc bnc" id="L2333" title="All 4 branches missed.">		assert initializer instanceof ExpressionNode;</span>
+
+<span class="nc" id="L2335">		ExpressionNode rhs = ((ExpressionNode) initializer).copy();</span>
+<span class="nc" id="L2336">		ExpressionNode lhs = nodeFactory.newIdentifierExpressionNode(</span>
+<span class="nc" id="L2337">				variable.getSource(), variable.getIdentifier().copy());</span>
+<span class="nc" id="L2338">		ExpressionNode assign = nodeFactory.newOperatorNode(</span>
+<span class="nc" id="L2339">				variable.getSource(), Operator.ASSIGN, Arrays.asList(lhs, rhs));</span>
+
+<span class="nc" id="L2341">		return nodeFactory.newExpressionStatementNode(assign);</span>
+	}
+
+	/**
+	 * Returns a variable declaration without initializer for a given variable
+	 * declaration. If the variable declaration has no initializer, returns the
+	 * variable declaration immediately.
+	 * 
+	 * @param variable
+	 * @return
+	 */
+	private VariableDeclarationNode pureDeclaration(
+			VariableDeclarationNode variable) {
+<span class="nc bnc" id="L2354" title="All 2 branches missed.">		if (variable.getInitializer() == null)</span>
+<span class="nc" id="L2355">			return variable;</span>
+<span class="nc" id="L2356">		return this.nodeFactory.newVariableDeclarationNode(</span>
+<span class="nc" id="L2357">				variable.getSource(), variable.getIdentifier().copy(), variable</span>
+<span class="nc" id="L2358">						.getTypeNode().copy());</span>
+	}
+
+	/**
+	 * Produces a list of block items in normal form that is equivalent to the
+	 * given loop node. The loop node may be modified.
+	 * 
+	 * @param loop
+	 *            a non-&lt;code&gt;null&lt;/code&gt; loop node
+	 * @return list of block items in normal form equivalent to original loop
+	 *         node
+	 */
+	private List&lt;BlockItemNode&gt; translateLoop(LoopNode loop) {
+<span class="nc bnc" id="L2371" title="All 4 branches missed.">		switch (loop.getKind()) {</span>
+		case DO_WHILE:
+<span class="nc" id="L2373">			return translateDoLoop(loop);</span>
+		case FOR:
+<span class="nc" id="L2375">			return translateForLoop((ForLoopNode) loop);</span>
+		case WHILE:
+<span class="nc" id="L2377">			return translateWhileLoop(loop);</span>
+		default:
+<span class="nc" id="L2379">			throw new ABCRuntimeException(&quot;Unknown kind of loop: &quot;</span>
+<span class="nc" id="L2380">					+ loop.getKind());</span>
+		}
+	}
+
+	/**
+	 * Transforms an atomic statement into a sequence of block items equivalent
+	 * to the original statement but in normal form.
+	 * 
+	 * @param statement
+	 * @return list of block items in normal form equivalent to original
+	 */
+	private List&lt;BlockItemNode&gt; translateAtomic(AtomicNode statement) {
+<span class="nc" id="L2392">		StatementNode body = statement.getBody();</span>
+<span class="nc" id="L2393">		List&lt;BlockItemNode&gt; bodyItems = translateStatement(body);</span>
+<span class="nc" id="L2394">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L2396">		result.add(statement);</span>
+<span class="nc" id="L2397">		removeNodes(bodyItems);</span>
+<span class="nc bnc" id="L2398" title="All 2 branches missed.">		if (bodyItems.size() == 1) {</span>
+<span class="nc" id="L2399">			BlockItemNode item = bodyItems.get(0);</span>
+
+<span class="nc bnc" id="L2401" title="All 2 branches missed.">			if (item instanceof StatementNode) {</span>
+<span class="nc" id="L2402">				statement.setBody((StatementNode) item);</span>
+<span class="nc" id="L2403">				return result;</span>
+			}
+		}
+<span class="nc" id="L2406">		statement.setBody(nodeFactory.newCompoundStatementNode(</span>
+<span class="nc" id="L2407">				body.getSource(), bodyItems));</span>
+<span class="nc" id="L2408">		return result;</span>
+	}
+
+	/**
+	 * Returns a list of block items equivalent to the list of block items in a
+	 * given compound statement, but all in normal form. May modify any node in
+	 * the compound statement.
+	 * 
+	 * @param compound
+	 *            a non-&lt;code&gt;null&lt;/code&gt; compound statement node
+	 * @return list of block items equivalent to the sequence of items in the
+	 *         original compound statement
+	 */
+	private List&lt;BlockItemNode&gt; translateCompound(CompoundStatementNode compound) {
+<span class="nc" id="L2422">		List&lt;BlockItemNode&gt; blockItems = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L2423">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L2425" title="All 2 branches missed.">		for (BlockItemNode item : compound) {</span>
+<span class="nc" id="L2426">			List&lt;BlockItemNode&gt; tmp = translateBlockItem(item);</span>
+
+<span class="nc" id="L2428">			blockItems.addAll(tmp);</span>
+		}
+<span class="nc" id="L2430">		removeNodes(blockItems);</span>
+<span class="nc" id="L2431">		result.add(makeOneBlockItem(compound.getSource(), blockItems));</span>
+<span class="nc bnc" id="L2432" title="All 2 branches missed.">		if (result.size() == 1) {</span>
+<span class="nc" id="L2433">			BlockItemNode node = result.get(0);</span>
+
+<span class="nc bnc" id="L2435" title="All 2 branches missed.">			if (!(node instanceof CompoundStatementNode))</span>
+<span class="nc" id="L2436">				result = Arrays</span>
+<span class="nc" id="L2437">						.asList((BlockItemNode) this.nodeFactory</span>
+<span class="nc" id="L2438">								.newCompoundStatementNode(compound.getSource(),</span>
+<span class="nc" id="L2439">										result));</span>
+		}
+<span class="nc" id="L2441">		return result;</span>
+	}
+
+	/**
+	 * Transforms a compound statement into an equivalent compound statement in
+	 * which all the items are in normal form.
+	 * 
+	 * @param compound
+	 *            a non-&lt;code&gt;null&lt;/code&gt; compound statement node
+	 * @return a compound statement node equivalent to original but in which all
+	 *         items are in normal form
+	 */
+	private CompoundStatementNode transformCompound(
+			CompoundStatementNode compound) {
+<span class="nc" id="L2455">		List&lt;BlockItemNode&gt; blockItems = translateCompound(compound);</span>
+
+<span class="nc" id="L2457">		removeNodes(blockItems);</span>
+<span class="nc bnc" id="L2458" title="All 2 branches missed.">		if (blockItems.size() == 1) {</span>
+<span class="nc" id="L2459">			BlockItemNode item = blockItems.get(0);</span>
+
+<span class="nc bnc" id="L2461" title="All 2 branches missed.">			if (item instanceof CompoundStatementNode)</span>
+<span class="nc" id="L2462">				return (CompoundStatementNode) item;</span>
+		}
+<span class="nc" id="L2464">		return nodeFactory.newCompoundStatementNode(compound.getSource(),</span>
+<span class="nc" id="L2465">				blockItems);</span>
+	}
+
+	/**
+	 * Given a statement, computes a list of block items whose execution is
+	 * equivalent to the execution of the statement, but which are all in normal
+	 * form. May result in the modification of the statement.
+	 * 
+	 * @param statement
+	 *            a non-&lt;code&gt;null&lt;/code&gt; statement node
+	 * @return list of block items in normal form equivalent to given statement
+	 */
+	private List&lt;BlockItemNode&gt; translateStatement(StatementNode statement) {
+<span class="nc bnc" id="L2478" title="All 15 branches missed.">		switch (statement.statementKind()) {</span>
+		case ATOMIC:
+<span class="nc" id="L2480">			return translateAtomic((AtomicNode) statement);</span>
+		case CHOOSE:
+<span class="nc" id="L2482">			return translateChoose((ChooseStatementNode) statement);</span>
+		case CIVL_FOR:
+<span class="nc" id="L2484">			return translateCivlFor((CivlForNode) statement);</span>
+		case COMPOUND:
+<span class="nc" id="L2486">			return translateCompound((CompoundStatementNode) statement);</span>
+		case EXPRESSION:
+<span class="nc" id="L2488">			return translateExpressionStatement((ExpressionStatementNode) statement);</span>
+		case IF:
+<span class="nc" id="L2490">			return translateIf((IfNode) statement);</span>
+		case JUMP:
+<span class="nc" id="L2492">			return translateJump((JumpNode) statement);</span>
+		case LABELED:
+<span class="nc" id="L2494">			return translateLabeledStatement((LabeledStatementNode) statement);</span>
+		case LOOP:
+<span class="nc" id="L2496">			return translateLoop((LoopNode) statement);</span>
+			// code review stops here on 04/06/2016
+		case NULL:
+<span class="nc" id="L2499">			return Arrays.asList((BlockItemNode) statement);</span>
+		case OMP:
+<span class="nc" id="L2501">			return translateOmpExecutable((OmpExecutableNode) statement);</span>
+		case PRAGMA:
+<span class="nc" id="L2503">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L2504">					&quot;removing side-effects for pragmas&quot;);</span>
+		case SWITCH:
+<span class="nc" id="L2506">			return translateSwitch((SwitchNode) statement);</span>
+		case WHEN:
+<span class="nc" id="L2508">			return translateWhen((WhenNode) statement);</span>
+		default:
+<span class="nc" id="L2510">			throw new ABCUnsupportedException(&quot;removing side-effects for &quot;</span>
+<span class="nc" id="L2511">					+ statement.statementKind() + &quot; statement&quot;);</span>
+
+		}
+	}
+
+	/**
+	 * Transforms a jump statement into list of statements whose execution are
+	 * equivalent to the jump statement.
+	 * 
+	 * &lt;p&gt;
+	 * If the jump statement is NOT a return statement with an expression, then
+	 * the jump node is returned immediately.
+	 * &lt;/p&gt;
+	 * 
+	 * @param compound
+	 *            a non-&lt;code&gt;null&lt;/code&gt; compound statement node
+	 * @return a compound statement node equivalent to original but in which all
+	 *         items are in normal form
+	 */
+	private List&lt;BlockItemNode&gt; translateJump(JumpNode jump) {
+<span class="nc" id="L2531">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L2533" title="All 2 branches missed.">		if (jump instanceof ReturnNode) {</span>
+<span class="nc" id="L2534">			ReturnNode returnNode = (ReturnNode) jump;</span>
+<span class="nc" id="L2535">			ExpressionNode expression = returnNode.getExpression();</span>
+
+<span class="nc bnc" id="L2537" title="All 2 branches missed.">			if (expression != null) {</span>
+<span class="nc" id="L2538">				int exprIndex = expression.childIndex();</span>
+<span class="nc" id="L2539">				ExprTriple exprTriple = translate(expression, false);</span>
+
+<span class="nc" id="L2541">				purify(exprTriple);</span>
+<span class="nc" id="L2542">				result.addAll(exprTriple.getBefore());</span>
+<span class="nc" id="L2543">				returnNode.setChild(exprIndex, exprTriple.getNode());</span>
+<span class="nc" id="L2544">				result.add(returnNode);</span>
+<span class="nc" id="L2545">				return result;</span>
+			}
+		}
+<span class="nc" id="L2548">		result.add(jump);</span>
+<span class="nc" id="L2549">		return result;</span>
+	}
+
+	/**
+	 * Transforms a guarded statement into list of statements whose execution
+	 * are equivalent to it. Note: the guard is not allowed to contain side
+	 * effects and if so, an error should have been reported by the standard
+	 * analyzer.
+	 * 
+	 * @param when
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateWhen(WhenNode when) {
+<span class="nc" id="L2562">		StatementNode body = when.getBody();</span>
+<span class="nc" id="L2563">		List&lt;BlockItemNode&gt; bodyItems = this.translateStatement(body);</span>
+<span class="nc" id="L2564">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L2565">		int bodyIndex = body.childIndex();</span>
+
+<span class="nc bnc" id="L2567" title="All 4 branches missed.">		assert when.getGuard().isSideEffectFree(false);</span>
+<span class="nc" id="L2568">		this.removeNodes(bodyItems);</span>
+<span class="nc" id="L2569">		when.setChild(bodyIndex,</span>
+<span class="nc" id="L2570">				this.makeOneBlockItem(body.getSource(), bodyItems));</span>
+<span class="nc" id="L2571">		result.add(when);</span>
+<span class="nc" id="L2572">		return result;</span>
+	}
+
+	/**
+	 * Transforms a switch statement into list of statements whose execution are
+	 * equivalent to it.
+	 * 
+	 * @param switchNode
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateSwitch(SwitchNode switchNode) {
+<span class="nc" id="L2583">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L2584">		ExpressionNode condition = switchNode.getCondition();</span>
+<span class="nc" id="L2585">		int condIndex = condition.childIndex();</span>
+<span class="nc" id="L2586">		ExprTriple condTriple = this.translate(condition, false);</span>
+<span class="nc" id="L2587">		StatementNode body = switchNode.getBody();</span>
+<span class="nc" id="L2588">		int bodyIndex = body.childIndex();</span>
+<span class="nc" id="L2589">		List&lt;BlockItemNode&gt; bodyItems = this.translateStatement(body);</span>
+
+<span class="nc" id="L2591">		purify(condTriple);</span>
+<span class="nc" id="L2592">		result.addAll(condTriple.getBefore());</span>
+<span class="nc" id="L2593">		switchNode.setChild(condIndex, condTriple.getNode());</span>
+<span class="nc" id="L2594">		removeNodes(bodyItems);</span>
+<span class="nc" id="L2595">		switchNode.setChild(bodyIndex,</span>
+<span class="nc" id="L2596">				this.makeOneBlockItem(body.getSource(), bodyItems));</span>
+<span class="nc" id="L2597">		result.add(switchNode);</span>
+<span class="nc" id="L2598">		return result;</span>
+	}
+
+	/**
+	 * Transforms an OpenMP executable statement into list of statements whose
+	 * execution are equivalent to it.
+	 * 
+	 * @param ompExec
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateOmpExecutable(OmpExecutableNode ompExec) {
+<span class="nc" id="L2609">		StatementNode body = ompExec.statementNode();</span>
+<span class="nc" id="L2610">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+<span class="nc bnc" id="L2611" title="All 2 branches missed.">		if (body != null) {</span>
+<span class="nc" id="L2612">			int bodyIndex = body.childIndex();</span>
+<span class="nc" id="L2613">			List&lt;BlockItemNode&gt; bodyItems = translateStatement(body);</span>
+
+<span class="nc" id="L2615">			removeNodes(bodyItems);</span>
+<span class="nc" id="L2616">			ompExec.setChild(bodyIndex,</span>
+<span class="nc" id="L2617">					makeOneBlockItem(body.getSource(), bodyItems));</span>
+		}
+<span class="nc" id="L2619">		result.add(ompExec);</span>
+<span class="nc" id="L2620">		return result;</span>
+	}
+
+	/**
+	 * Transforms a labeled statement into list of statements whose execution
+	 * are equivalent to it.
+	 * 
+	 * @param labeled
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateLabeledStatement(
+			LabeledStatementNode labeled) {
+<span class="nc" id="L2632">		StatementNode body = labeled.getStatement();</span>
+<span class="nc" id="L2633">		int bodyIndex = body.childIndex();</span>
+<span class="nc" id="L2634">		List&lt;BlockItemNode&gt; bodyNormals = translateStatement(body);</span>
+<span class="nc" id="L2635">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L2637">		removeNodes(bodyNormals);</span>
+<span class="nc" id="L2638">		labeled.setChild(bodyIndex,</span>
+<span class="nc" id="L2639">				makeOneBlockItem(body.getSource(), bodyNormals));</span>
+<span class="nc" id="L2640">		result.add(labeled);</span>
+<span class="nc" id="L2641">		return result;</span>
+	}
+
+	/**
+	 * Transforms a if (or if-else) statement into list of statements whose
+	 * execution are equivalent to it.
+	 * 
+	 * @param ifNode
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateIf(IfNode ifNode) {
+<span class="nc" id="L2652">		ExpressionNode condition = ifNode.getCondition();</span>
+<span class="nc" id="L2653">		StatementNode trueBranch = ifNode.getTrueBranch();</span>
+<span class="nc" id="L2654">		StatementNode falseBranch = ifNode.getFalseBranch();</span>
+<span class="nc" id="L2655">		int condIndex = condition.childIndex(), trueIndex = trueBranch</span>
+<span class="nc" id="L2656">				.childIndex();</span>
+<span class="nc" id="L2657">		ExprTriple condTriple = translate(condition, false);</span>
+<span class="nc" id="L2658">		List&lt;BlockItemNode&gt; trueNormalItems = translateStatement(trueBranch);</span>
+<span class="nc" id="L2659">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L2661">		purify(condTriple);</span>
+<span class="nc" id="L2662">		result.addAll(condTriple.getBefore());</span>
+<span class="nc" id="L2663">		ifNode.setChild(condIndex, condTriple.getNode());</span>
+<span class="nc" id="L2664">		removeNodes(trueNormalItems);</span>
+<span class="nc" id="L2665">		ifNode.setChild(trueIndex,</span>
+<span class="nc" id="L2666">				makeOneBlockItem(trueBranch.getSource(), trueNormalItems));</span>
+<span class="nc bnc" id="L2667" title="All 2 branches missed.">		if (falseBranch != null) {</span>
+<span class="nc" id="L2668">			int falseIndex = falseBranch.childIndex();</span>
+<span class="nc" id="L2669">			List&lt;BlockItemNode&gt; falseNormalItems = translateStatement(falseBranch);</span>
+
+<span class="nc" id="L2671">			removeNodes(falseNormalItems);</span>
+<span class="nc" id="L2672">			ifNode.setChild(falseIndex,</span>
+<span class="nc" id="L2673">					makeOneBlockItem(falseBranch.getSource(), falseNormalItems));</span>
+		}
+<span class="nc" id="L2675">		result.add(ifNode);</span>
+<span class="nc" id="L2676">		return result;</span>
+	}
+
+	/**
+	 * Creates one single block item node from a list of block item nodes. If
+	 * the given list contains exactly one block item, then that block item is
+	 * returned; otherwise, a compound statement node created using the list is
+	 * returned.
+	 * 
+	 * @param source
+	 * @param nodes
+	 * @return
+	 */
+	private BlockItemNode makeOneBlockItem(Source source,
+			List&lt;BlockItemNode&gt; nodes) {
+<span class="nc bnc" id="L2691" title="All 2 branches missed.">		if (nodes.size() == 1)</span>
+<span class="nc" id="L2692">			return nodes.get(0);</span>
+		else
+<span class="nc" id="L2694">			return nodeFactory.newCompoundStatementNode(source, nodes);</span>
+	}
+
+	/**
+	 * Transforms a civl for statement into list of statements whose execution
+	 * are equivalent to it.
+	 * 
+	 * TODO: is the domain expression allowed to have side-effects?
+	 * 
+	 * FIXME: the invariant shouldn't have side effects, make the expression
+	 * analyzer report an error
+	 * 
+	 * @param civlFor
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateCivlFor(CivlForNode civlFor) {
+<span class="nc" id="L2710">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L2711">		ExpressionNode domain = civlFor.getDomain();</span>
+<span class="nc" id="L2712">		ExpressionNode invariant = civlFor.getInvariant();</span>
+<span class="nc" id="L2713">		StatementNode body = civlFor.getBody();</span>
+<span class="nc" id="L2714">		int domIndex = domain.childIndex(), bodyIndex = body.childIndex();</span>
+<span class="nc" id="L2715">		ExprTriple domTriple = translate(domain, false);</span>
+<span class="nc" id="L2716">		List&lt;BlockItemNode&gt; normalBodyItems = translateStatement(body);</span>
+
+<span class="nc" id="L2718">		purify(domTriple);</span>
+<span class="nc" id="L2719">		result.addAll(domTriple.getBefore());</span>
+<span class="nc" id="L2720">		civlFor.setChild(domIndex, domTriple.getNode());</span>
+<span class="nc bnc" id="L2721" title="All 2 branches missed.">		if (invariant != null) {</span>
+<span class="nc" id="L2722">			int invIndex = invariant.childIndex();</span>
+<span class="nc" id="L2723">			ExprTriple invTriple = translate(invariant, false);</span>
+
+<span class="nc" id="L2725">			purify(invTriple);</span>
+<span class="nc" id="L2726">			result.addAll(invTriple.getBefore());</span>
+<span class="nc" id="L2727">			civlFor.setChild(invIndex, invTriple.getNode());</span>
+		}
+<span class="nc" id="L2729">		removeNodes(normalBodyItems);</span>
+<span class="nc bnc" id="L2730" title="All 2 branches missed.">		if (normalBodyItems.size() == 1)</span>
+<span class="nc" id="L2731">			civlFor.setChild(bodyIndex, normalBodyItems.get(0));</span>
+		else
+<span class="nc" id="L2733">			civlFor.setChild(bodyIndex, nodeFactory.newCompoundStatementNode(</span>
+<span class="nc" id="L2734">					body.getSource(), normalBodyItems));</span>
+<span class="nc" id="L2735">		result.add(civlFor);</span>
+<span class="nc" id="L2736">		return result;</span>
+	}
+
+	/**
+	 * Removes a collection of nodes from their parents.
+	 * 
+	 * @param nodes
+	 */
+	private void removeNodes(Collection&lt;? extends ASTNode&gt; nodes) {
+<span class="nc bnc" id="L2745" title="All 2 branches missed.">		for (ASTNode node : nodes)</span>
+<span class="nc" id="L2746">			node.remove();</span>
+<span class="nc" id="L2747">	}</span>
+
+	/**
+	 * Transforms a civl choose statement into list of statements whose
+	 * execution are equivalent to it.
+	 * 
+	 * @param choose
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateChoose(ChooseStatementNode choose) {
+<span class="nc" id="L2757">		int numChildren = choose.numChildren();</span>
+<span class="nc" id="L2758">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L2760">		result.add(choose);</span>
+<span class="nc bnc" id="L2761" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L2762">			StatementNode child = choose.getSequenceChild(i);</span>
+<span class="nc" id="L2763">			List&lt;BlockItemNode&gt; normalItems = translateStatement(child);</span>
+
+<span class="nc" id="L2765">			removeNodes(normalItems);</span>
+<span class="nc" id="L2766">			choose.setChild(i,</span>
+<span class="nc" id="L2767">					this.makeOneBlockItem(child.getSource(), normalItems));</span>
+		}
+<span class="nc" id="L2769">		return result;</span>
+	}
+
+	/**
+	 * TODO simplify me using translateGeneric? Returns a list of block items in
+	 * normal form that is equivalent to the given enumeration type declaration.
+	 * 
+	 * @param enumeration
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateEnumeration(
+			EnumerationTypeNode enumeration) {
+<span class="nc" id="L2781">		SequenceNode&lt;EnumeratorDeclarationNode&gt; enumerators = enumeration</span>
+<span class="nc" id="L2782">				.enumerators();</span>
+<span class="nc" id="L2783">		int numEnumerators = enumerators.numChildren();</span>
+<span class="nc" id="L2784">		List&lt;BlockItemNode&gt; result = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L2786" title="All 2 branches missed.">		for (int i = 0; i &lt; numEnumerators; i++) {</span>
+<span class="nc" id="L2787">			EnumeratorDeclarationNode enumerator = enumerators</span>
+<span class="nc" id="L2788">					.getSequenceChild(i);</span>
+<span class="nc" id="L2789">			ExpressionNode value = enumerator.getValue();</span>
+
+<span class="nc bnc" id="L2791" title="All 2 branches missed.">			if (value != null) {</span>
+<span class="nc" id="L2792">				ExprTriple expr = this.translate(value, false);</span>
+
+<span class="nc" id="L2794">				result.addAll(expr.getBefore());</span>
+<span class="nc" id="L2795">				enumerator.setValue(expr.getNode());</span>
+			}
+		}
+<span class="nc" id="L2798">		result.add(enumeration);</span>
+<span class="nc" id="L2799">		return result;</span>
+	}
+
+	/**
+	 * Returns a list of block items in normal form that is equivalent to the
+	 * given struct or union type declaration.
+	 * 
+	 * @param structOrUnion
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateStructOrUnion(
+			StructureOrUnionTypeNode structOrUnion) {
+<span class="nc" id="L2811">		SequenceNode&lt;FieldDeclarationNode&gt; fieldDecls = structOrUnion</span>
+<span class="nc" id="L2812">				.getStructDeclList();</span>
+<span class="nc" id="L2813">		List&lt;BlockItemNode&gt; result = new LinkedList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L2815" title="All 2 branches missed.">		if (fieldDecls != null) {</span>
+<span class="nc" id="L2816">			int numFields = fieldDecls.numChildren();</span>
+
+<span class="nc bnc" id="L2818" title="All 2 branches missed.">			for (int i = 0; i &lt; numFields; i++) {</span>
+<span class="nc" id="L2819">				FieldDeclarationNode fieldDecl = fieldDecls.getSequenceChild(i);</span>
+<span class="nc" id="L2820">				SETriple seTriple = this.translateGenericNode(fieldDecl);</span>
+
+<span class="nc" id="L2822">				result.addAll(seTriple.getBefore());</span>
+<span class="nc" id="L2823">				seTriple.getNode().remove();</span>
+<span class="nc" id="L2824">				fieldDecls.setChild(i, seTriple.getNode());</span>
+			}
+		}
+<span class="nc" id="L2827">		result.add(structOrUnion);</span>
+<span class="nc" id="L2828">		return result;</span>
+	}
+
+	/**
+	 * Returns a list of block items in normal form that is equivalent to the
+	 * given typedef declaration.
+	 * 
+	 * @param structOrUnion
+	 * @return
+	 */
+	private List&lt;BlockItemNode&gt; translateTypedef(TypedefDeclarationNode typedef) {
+<span class="nc" id="L2839">		SETriple seTriple = this.translateGenericNode(typedef);</span>
+<span class="nc" id="L2840">		List&lt;BlockItemNode&gt; result = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L2842">		result.addAll(seTriple.getBefore());</span>
+<span class="nc" id="L2843">		result.add((BlockItemNode) seTriple.getNode());</span>
+<span class="nc" id="L2844">		return result;</span>
+	}
+
+	/**
+	 * Returns a list of block items in normal form that is equivalent to the
+	 * given block item. May modify the given block item.
+	 * 
+	 * @param item
+	 *            a non-&lt;code&gt;null&lt;/code&gt; block item
+	 * @return list of block items all in normal form and equivalent to original
+	 *         item
+	 */
+	private List&lt;BlockItemNode&gt; translateBlockItem(BlockItemNode item) {
+<span class="nc" id="L2857">		BlockItemKind kind = item.blockItemKind();</span>
+
+<span class="nc bnc" id="L2859" title="All 8 branches missed.">		switch (kind) {</span>
+		case ENUMERATION:
+<span class="nc" id="L2861">			return translateEnumeration((EnumerationTypeNode) item);</span>
+		case ORDINARY_DECLARATION:
+<span class="nc" id="L2863">			return translateOrdinaryDeclaration((OrdinaryDeclarationNode) item);</span>
+		case PRAGMA:
+<span class="nc" id="L2865">			return Arrays.asList((BlockItemNode) item);</span>
+		case STATEMENT:
+<span class="nc" id="L2867">			return translateStatement((StatementNode) item);</span>
+		case STATIC_ASSERTION:
+<span class="nc" id="L2869">			throw new ABCUnsupportedException(</span>
+<span class="nc" id="L2870">					&quot;normalization of static assertions in side-effect remover&quot;);</span>
+		case STRUCT_OR_UNION:
+<span class="nc" id="L2872">			return translateStructOrUnion((StructureOrUnionTypeNode) item);</span>
+		case TYPEDEF:
+<span class="nc" id="L2874">			return translateTypedef((TypedefDeclarationNode) item);</span>
+		default:
+<span class="nc" id="L2876">			throw new ABCUnsupportedException(&quot;normalization of block item of &quot;</span>
+<span class="nc" id="L2877">					+ kind + &quot; kind in side-effect remover&quot;);</span>
+		}
+	}
+
+	// special handling: short circuit expressions ...
+	/**
+	 * transforms short circuit expressions recursively.
+	 * 
+	 * @param node
+	 * @throws SyntaxException
+	 */
+	private void transformShortCircuitWork(ASTNode node) throws SyntaxException {
+<span class="nc bnc" id="L2889" title="All 2 branches missed.">		if ((node instanceof StatementNode)</span>
+<span class="nc bnc" id="L2890" title="All 2 branches missed.">				&amp;&amp; !(node instanceof CompoundStatementNode)) {</span>
+<span class="nc" id="L2891">			List&lt;BlockItemNode&gt; items = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L2893" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc bnc" id="L2894" title="All 2 branches missed.">				if (child == null)</span>
+<span class="nc" id="L2895">					continue;</span>
+<span class="nc bnc" id="L2896" title="All 2 branches missed.">				if (child instanceof ExpressionNode) {</span>
+<span class="nc" id="L2897">					List&lt;BlockItemNode&gt; childItems = this</span>
+<span class="nc" id="L2898">							.transformShortCircuitExpression((ExpressionNode) child);</span>
+
+<span class="nc" id="L2900">					items.addAll(childItems);</span>
+<span class="nc bnc" id="L2901" title="All 2 branches missed.">				} else if (child instanceof StatementNode) {</span>
+<span class="nc" id="L2902">					transformShortCircuitWork(child);</span>
+				}
+			}
+<span class="nc bnc" id="L2905" title="All 2 branches missed.">			if (items.size() &gt; 0) {</span>
+<span class="nc" id="L2906">				ASTNode parent = node.parent();</span>
+<span class="nc" id="L2907">				int statementIndex = node.childIndex();</span>
+
+<span class="nc" id="L2909">				node.remove();</span>
+<span class="nc" id="L2910">				items.add((StatementNode) node);</span>
+
+<span class="nc" id="L2912">				StatementNode compound = this.nodeFactory</span>
+<span class="nc" id="L2913">						.newCompoundStatementNode(node.getSource(), items);</span>
+<span class="nc" id="L2914">				parent.setChild(statementIndex, compound);</span>
+			}
+<span class="nc" id="L2916">		} else {</span>
+<span class="nc bnc" id="L2917" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc bnc" id="L2918" title="All 2 branches missed.">				if (child != null)</span>
+<span class="nc" id="L2919">					this.transformShortCircuitWork(child);</span>
+			}
+		}
+<span class="nc" id="L2922">	}</span>
+
+	/**
+	 * checks if the given expression node is the condition of a loop node
+	 * 
+	 * @param expression
+	 * @return
+	 */
+	private boolean isConditionOfLoop(ExpressionNode expression) {
+<span class="nc" id="L2931">		ASTNode parent = expression.parent();</span>
+
+<span class="nc bnc" id="L2933" title="All 2 branches missed.">		if (parent instanceof LoopNode) {</span>
+			// return expression.equals(((LoopNode)parent).getCondition());
+<span class="nc bnc" id="L2935" title="All 2 branches missed.">			return expression.childIndex() == 0;</span>
+		}
+<span class="nc" id="L2937">		return false;</span>
+	}
+
+	/**
+	 * Transforms short circuit expressions with side-effects in the right
+	 * operand recursively.
+	 * 
+	 * A short circuit expression is an operator expression of logical and/or.
+	 * 
+	 * If the expression doesn't contain any short circuit sub-expression, then
+	 * this is a no-op.
+	 * 
+	 * @param expression
+	 *            the expression to be transform
+	 * @return a sorted list of block item nodes which is an equivalent
+	 *         representation of the expression; if no transformation is
+	 *         applied, then an empty list is returned.
+	 * @throws SyntaxException
+	 */
+	private List&lt;BlockItemNode&gt; transformShortCircuitExpression(
+			ExpressionNode expression) throws SyntaxException {
+<span class="nc bnc" id="L2958" title="All 2 branches missed.">		if (expression instanceof QuantifiedExpressionNode)</span>
+<span class="nc" id="L2959">			return new ArrayList&lt;&gt;(0);</span>
+
+<span class="nc" id="L2961">		List&lt;BlockItemNode&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L2962">		StatementNode ifElse = null;</span>
+<span class="nc" id="L2963">		VariableDeclarationNode tmpVar = null;</span>
+<span class="nc" id="L2964">		boolean isLoopCond = this.isConditionOfLoop(expression);</span>
+<span class="nc" id="L2965">		ASTNode parent = expression.parent();</span>
+
+<span class="nc bnc" id="L2967" title="All 2 branches missed.">		for (ASTNode child : expression.children()) {</span>
+<span class="nc bnc" id="L2968" title="All 2 branches missed.">			if (child == null)</span>
+<span class="nc" id="L2969">				continue;</span>
+<span class="nc bnc" id="L2970" title="All 2 branches missed.">			if (child instanceof ExpressionNode) {</span>
+<span class="nc" id="L2971">				List&lt;BlockItemNode&gt; subResult = transformShortCircuitExpression((ExpressionNode) child);</span>
+
+<span class="nc" id="L2973">				result.addAll(subResult);</span>
+			}
+		}
+<span class="nc bnc" id="L2976" title="All 2 branches missed.">		if (expression instanceof OperatorNode) {</span>
+<span class="nc" id="L2977">			OperatorNode operator = (OperatorNode) expression;</span>
+<span class="nc" id="L2978">			Operator op = operator.getOperator();</span>
+
+<span class="nc bnc" id="L2980" title="All 4 branches missed.">			if (op == Operator.LAND || op == Operator.LOR) {</span>
+<span class="nc" id="L2981">				ExpressionNode rhs = operator.getArgument(1);</span>
+<span class="nc bnc" id="L2982" title="All 2 branches missed.">				boolean isAnd = op == Operator.LAND;</span>
+<span class="nc" id="L2983">				ExpressionNode lhs = operator.getArgument(0);</span>
+
+<span class="nc bnc" id="L2985" title="All 2 branches missed.">				if (!rhs.isSideEffectFree(false)) {</span>
+<span class="nc" id="L2986">					Source source = expression.getSource();</span>
+<span class="nc" id="L2987">					Source rhsSource = rhs.getSource();</span>
+<span class="nc" id="L2988">					Source lhsSource = lhs.getSource();</span>
+<span class="nc" id="L2989">					Type rhsType = rhs.getConvertedType();</span>
+
+<span class="nc" id="L2991">					tmpVar = newTempVariable(rhsSource, rhsType);</span>
+
+<span class="nc" id="L2993">					IdentifierExpressionNode tmpId = this.nodeFactory</span>
+<span class="nc" id="L2994">							.newIdentifierExpressionNode(rhsSource,</span>
+<span class="nc" id="L2995">									this.nodeFactory.newIdentifierNode(</span>
+<span class="nc" id="L2996">											rhsSource, tmpVar.getName()));</span>
+					ExpressionNode condition;
+					ExpressionNode trueAssign, falseAssign;
+
+<span class="nc" id="L3000">					lhs.remove();</span>
+<span class="nc bnc" id="L3001" title="All 2 branches missed.">					if (isAnd)</span>
+<span class="nc" id="L3002">						condition = this.nodeFactory.newOperatorNode(lhsSource,</span>
+<span class="nc" id="L3003">								Operator.NOT, lhs);</span>
+					else
+<span class="nc" id="L3005">						condition = lhs;</span>
+<span class="nc" id="L3006">					trueAssign = this.nodeFactory.newOperatorNode(lhsSource,</span>
+<span class="nc" id="L3007">							Operator.ASSIGN, Arrays.asList(tmpId.copy(),</span>
+<span class="nc" id="L3008">									nodeFactory.newIntegerConstantNode(</span>
+<span class="nc bnc" id="L3009" title="All 2 branches missed.">											lhsSource, isAnd ? &quot;0&quot; : &quot;1&quot;)));</span>
+<span class="nc" id="L3010">					rhs.remove();</span>
+<span class="nc" id="L3011">					falseAssign = this.nodeFactory.newOperatorNode(rhsSource,</span>
+<span class="nc" id="L3012">							Operator.ASSIGN, Arrays.asList(tmpId.copy(), rhs));</span>
+<span class="nc" id="L3013">					ifElse = nodeFactory.newIfNode(source, condition,</span>
+<span class="nc" id="L3014">							this.nodeFactory</span>
+<span class="nc" id="L3015">									.newExpressionStatementNode(trueAssign),</span>
+<span class="nc" id="L3016">							this.nodeFactory</span>
+<span class="nc" id="L3017">									.newExpressionStatementNode(falseAssign));</span>
+<span class="nc" id="L3018">					operator.parent().setChild(operator.childIndex(), tmpId);</span>
+				}
+			}
+		}
+
+<span class="nc bnc" id="L3023" title="All 6 branches missed.">		if ((result.size() &gt; 0 || ifElse != null) &amp;&amp; isLoopCond) {</span>
+<span class="nc" id="L3024">			Source condSource = expression.getSource();</span>
+<span class="nc" id="L3025">			LoopNode loop = (LoopNode) parent;</span>
+<span class="nc" id="L3026">			CompoundStatementNode body = makeCompound(loop.getBody());</span>
+<span class="nc" id="L3027">			ExpressionNode newCond = loop.getCondition();</span>
+<span class="nc" id="L3028">			List&lt;BlockItemNode&gt; newItems = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L3030">			loop.setBody(body);</span>
+<span class="nc bnc" id="L3031" title="All 2 branches missed.">			if (loop.getKind() == LoopKind.DO_WHILE) {</span>
+<span class="nc" id="L3032">				int loopIndex = loop.childIndex();</span>
+<span class="nc" id="L3033">				ASTNode loopParent = loop.parent();</span>
+<span class="nc" id="L3034">				VariableDeclarationNode condVar = this.newTempVariable(</span>
+<span class="nc" id="L3035">						condSource, expression.getConvertedType());</span>
+
+<span class="nc" id="L3037">				newItems.add(condVar);</span>
+<span class="nc bnc" id="L3038" title="All 2 branches missed.">				if (tmpVar != null)</span>
+<span class="nc" id="L3039">					newItems.add(0, tmpVar);</span>
+<span class="nc bnc" id="L3040" title="All 2 branches missed.">				if (ifElse != null)</span>
+<span class="nc" id="L3041">					result.add(ifElse);</span>
+				// insert new variable
+<span class="nc" id="L3043">				expression.remove();</span>
+<span class="nc" id="L3044">				result.add(this.nodeFactory</span>
+<span class="nc" id="L3045">						.newExpressionStatementNode(this.nodeFactory</span>
+<span class="nc" id="L3046">								.newOperatorNode(condSource, Operator.ASSIGN,</span>
+<span class="nc" id="L3047">										Arrays.asList(nodeFactory</span>
+<span class="nc" id="L3048">												.newIdentifierExpressionNode(</span>
+<span class="nc" id="L3049">														condSource,</span>
+<span class="nc" id="L3050">														condVar.getIdentifier()</span>
+<span class="nc" id="L3051">																.copy()),</span>
+<span class="nc" id="L3052">												expression))));</span>
+<span class="nc" id="L3053">				body.insertChildren(body.numChildren(), result);</span>
+<span class="nc" id="L3054">				loop.setCondition(nodeFactory.newIdentifierExpressionNode(</span>
+<span class="nc" id="L3055">						condSource, condVar.getIdentifier().copy()));</span>
+<span class="nc" id="L3056">				newItems.add(loop);</span>
+<span class="nc" id="L3057">				loop.remove();</span>
+<span class="nc" id="L3058">				loopParent.setChild(loopIndex, nodeFactory</span>
+<span class="nc" id="L3059">						.newCompoundStatementNode(loop.getSource(), newItems));</span>
+<span class="nc" id="L3060">			} else {</span>
+<span class="nc bnc" id="L3061" title="All 2 branches missed.">				if (tmpVar != null)</span>
+<span class="nc" id="L3062">					result.add(tmpVar);</span>
+<span class="nc bnc" id="L3063" title="All 2 branches missed.">				if (ifElse != null)</span>
+<span class="nc" id="L3064">					result.add(ifElse);</span>
+<span class="nc" id="L3065">				newCond.remove();</span>
+<span class="nc" id="L3066">				result.add(nodeFactory.newIfNode(condSource, nodeFactory</span>
+<span class="nc" id="L3067">						.newOperatorNode(condSource, Operator.NOT, newCond),</span>
+<span class="nc" id="L3068">						nodeFactory.newBreakNode(condSource)));</span>
+<span class="nc" id="L3069">				body.insertChildren(0, result);</span>
+<span class="nc" id="L3070">				loop.setCondition(newOneNode(condSource));</span>
+			}
+<span class="nc" id="L3072">			result.clear();</span>
+<span class="nc" id="L3073">		} else {</span>
+<span class="nc bnc" id="L3074" title="All 2 branches missed.">			if (tmpVar != null)</span>
+<span class="nc" id="L3075">				result.add(tmpVar);</span>
+<span class="nc bnc" id="L3076" title="All 2 branches missed.">			if (ifElse != null)</span>
+<span class="nc" id="L3077">				result.add(ifElse);</span>
+		}
+<span class="nc" id="L3079">		return result;</span>
+	}
+
+	/**
+	 * creates a new temporary variable with unique name.
+	 * 
+	 * @param source
+	 * @param type
+	 * @return
+	 */
+	private VariableDeclarationNode newTempVariable(Source source, Type type) {
+<span class="nc" id="L3090">		String tmpId = tempVariablePrefix + (tempVariableCounter++);</span>
+
+<span class="nc" id="L3092">		return nodeFactory.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L3093">				nodeFactory.newIdentifierNode(source, tmpId),</span>
+<span class="nc" id="L3094">				typeNode(source, type));</span>
+	}
+
+	/* Public Methods */
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Transforms this AST by removing all side effects so the entire AST is in
+	 * normal form. The result is an equivalent AST. This method is destructive:
+	 * it may modify the given AST.
+	 */
+	@Override
+	public AST transform(AST ast) throws SyntaxException {
+<span class="nc" id="L3108">		SequenceNode&lt;BlockItemNode&gt; rootNode = ast.getRootNode();</span>
+		AST newAST;
+<span class="nc" id="L3110">		List&lt;BlockItemNode&gt; newBlockItems = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L3112" title="All 4 branches missed.">		assert this.astFactory == ast.getASTFactory();</span>
+<span class="nc bnc" id="L3113" title="All 4 branches missed.">		assert this.nodeFactory == astFactory.getNodeFactory();</span>
+<span class="nc" id="L3114">		ast.release();</span>
+<span class="nc" id="L3115">		transformShortCircuitWork(rootNode);</span>
+		// rootNode.prettyPrint(System.out);
+<span class="nc bnc" id="L3117" title="All 2 branches missed.">		for (int i = 0; i &lt; rootNode.numChildren(); i++) {</span>
+<span class="nc" id="L3118">			BlockItemNode node = rootNode.getSequenceChild(i);</span>
+<span class="nc" id="L3119">			List&lt;BlockItemNode&gt; normalNodes = this.translateBlockItem(node);</span>
+
+<span class="nc" id="L3121">			removeNodes(normalNodes);</span>
+<span class="nc" id="L3122">			newBlockItems.addAll(normalNodes);</span>
+		}
+<span class="nc" id="L3124">		rootNode = nodeFactory.newTranslationUnitNode(rootNode.getSource(),</span>
+<span class="nc" id="L3125">				newBlockItems);</span>
+<span class="nc" id="L3126">		newAST = astFactory.newAST(rootNode, ast.getSourceFiles(),</span>
+<span class="nc" id="L3127">				ast.isWholeProgram());</span>
+		// newAST.prettyPrint(System.out, true);
+<span class="nc" id="L3129">		return newAST;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

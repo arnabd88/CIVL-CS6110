@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" output="bin-test/dev" path="test/dev"/>
+	<classpathentry kind="src" output="bin-test/big" path="test/big"/>
+	<classpathentry kind="src" output="bin-test/regress" path="test/regress"/>
+	<classpathentry kind="src" path="bench"/>
+	<classpathentry kind="src" path="text/include"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SARL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GMC"/>
+	<classpathentry kind="var" path="VSL/lib/antlr-runtime-3.4.jar"/>
+	<classpathentry kind="var" path="VSL/lib/antlr-4.4-complete.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ABC"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

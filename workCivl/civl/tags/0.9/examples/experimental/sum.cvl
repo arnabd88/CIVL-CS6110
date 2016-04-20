@@ -1,0 +1,83 @@
+/**
+* This is an example from the paper "Formal Semantics of Heterogeneous CUDA-C: 
+* A Modular Approach with Applications" by Chris Hathhorn et al. 
+*/
+
+#include <stdio.h>
+#include <civlc.h>
+
+#define N 18
+#define NBLOCKS 2
+#define NTHREADS (N/NBLOCKS)
+
+void gpu(int nb, int nt, int *in, int *out){
+  void gpuBlock(int bid){
+    int shared[];
+    int num_in_barrier =0;
+    int barrier_size = 0;
+    int in_barrier[nt];
+    
+    #include "cuda.cvh"
+    
+    void gpuThread(int tid){
+      int i;
+      int bdim = NTHREADS;
+      
+      shared[tid] = in[bid * bdim + tid];
+      
+      __syncthreads(in_barrier, tid);
+      if(tid < bdim/2) {
+        shared[tid] += shared[bdim/2 + tid];
+      }
+      __syncthreads(in_barrier, tid);
+      if(tid == 0) {
+        for (i = 1; i != (bdim/2) + (bdim%2); ++i) {
+          shared[0] += shared[i];
+        }
+        out[bid] = shared[0];
+      }
+    }
+    
+    $proc threads[nt];
+    __sync_init(in_barrier, nt);
+    for(int i = 0; i < nt; i++) {
+      threads[i] = $spawn gpuThread(i);
+    }
+    for(int i = 0; i < nt; i++) {
+      $wait threads[i];
+    }
+  }
+  
+  $proc blocks[nb];
+  for(int i = 0; i < nb; i++) {
+     blocks[i] = $spawn gpuBlock(i);
+  }
+  for(int i = 0; i < nb; i++) {
+     $wait blocks[i];
+  }
+}
+
+int main(void) {
+  int i, *dev_out, host[N];
+  $heap h;
+  
+  printf("INPUT: ");
+  for(i = 0; i != N; ++i) {
+    host[i] = (21*i + 29) % 100;
+    printf(" %d ", host[i]);
+  }
+  printf("\n");
+  
+  //dev_in = (int *) $malloc(&h, N * sizeof(int));
+  dev_out = (int *) $malloc(&h, NBLOCKS * sizeof(int));
+  //memcpy(dev_in, &host[0], N * sizeof(int));
+  
+  gpu(NBLOCKS, NTHREADS, host, dev_out);
+  gpu(1, NBLOCKS, dev_out, dev_out);
+  //memcpy(&host[0], dev_out, sizeof(int));
+  //cudaDeviceSynchronize();
+  printf("OUTPUT: %u\n", *dev_out);
+  //$free(&h, dev_in);
+  $free(&h, dev_out);
+  return 0;
+}

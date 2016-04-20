@@ -1,0 +1,40 @@
+#include<civlc.h>
+
+$proc global;
+$comm comm;
+_Bool _start0 = $false;
+_Bool _start1 = $false;
+
+void mpi_proc0(int rank){
+	void thread(tid){
+		$message out;
+		
+		$when (initialized);
+		out = $message_pack(rank, (rank+1)%NPROCS, TAG, &x, sizeof(double));
+		$comm_enqueue(&MPI_COMM_WORLD, out);
+	}
+	
+	$when(_start0);
+	_
+	$proc thread = $spawn thread(0);
+	global = thread;
+	_start1 = $true;
+	$comm_add(&comm, thread, rank);
+}
+
+void mpi_proc1(int rank){
+	$when(_start1);
+	$comm_add(&comm, global, rank);
+}
+
+void main(){
+	$proc procs[2];
+	
+	procs[0] = $spawn mpi_proc0(0);
+	procs[1] = $spawn mpi_proc1(1);
+	
+	comm = $comm_create(2, procs);
+	
+	$wait procs[0];
+	$wait procs[1];
+}

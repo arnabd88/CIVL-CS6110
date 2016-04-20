@@ -1,0 +1,43 @@
+/* This header file contains the core definitions of the CIVL-C language,
+ * including standard types and function prototypes.
+ */
+
+#ifndef __CIVLC_CIVL__
+#define __CIVLC_CIVL__
+
+#include <civlc.cvh>
+//#include <domain.cvh>
+
+/* Completes the declaration of this type in civlc.cvh */
+struct $int_iter {
+  int size;
+  int content[];
+  int index; //initialized as 0
+};
+
+/*void $elaborate(int x) {
+  if(!$is_concrete_int(x))
+    for(int i=0; i<x; i++);
+}*/
+
+/*
+void $elaborate_rectangular_domain($domain domain){
+  if(!$is_rectangular_domain(domain))
+   return;
+  for(int i=0; i<$dimension_of(domain); i++){
+    $range range=$range_of_rectangular_domain(domain, i);
+    
+    if(!($is_regular_range(range)))
+      continue;
+
+    int high=$high_of_regular_range(range);
+    int low=$low_of_regular_range(range);
+
+    if(!$is_concrete_int(high))
+      $elaborate(high);
+    if(!$is_concrete_int(low))
+      $elaborate(low);
+  }
+}*/
+
+#endif

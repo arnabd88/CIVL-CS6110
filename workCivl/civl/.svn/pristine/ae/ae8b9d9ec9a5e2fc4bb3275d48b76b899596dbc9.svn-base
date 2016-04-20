@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<civlc.cvh>
+#include<bundle.cvh>
+
+typedef enum INIT {zero, one} Init;
+typedef union{
+int a;
+float b;
+} MyUnion;
+
+$domain    dom0;
+$domain(2) dom2;
+$bundle    bun;
+Init       enumVar;
+int *      ptr;
+MyUnion    myunion;
+int main() {
+  int a;
+
+  $elaborate_domain(dom0);
+  $elaborate_domain(dom2);
+  a = enumVar;
+  a = myunion.a;
+  ptr = &a;
+  $bundle_unpack(bun, &a);
+  return 0;
+}

@@ -1,0 +1,16 @@
+/* General driver to test different versions of CG algorithm 
+ * 
+ */
+
+#include <civlc.cvh>
+#include <stdio.h>
+
+void solveEnsembleA(const char * , const char * , const char * , double , double , int , int , int );
+
+int main() {
+  int ensemblecount =1, ensemblepolicy=0, wantindependentensemble=0;
+  double tolerance = .0000001, scalingfactor = 1e-10;
+  char *filename = NULL, *rhsfilename = NULL, *directionfilename = NULL, *ensemblekind ="b";
+  
+  solveEnsembleA(filename, rhsfilename, directionfilename, scalingfactor, tolerance, ensemblecount, ensemblepolicy, wantindependentensemble);
+}

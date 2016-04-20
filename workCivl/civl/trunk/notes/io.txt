@@ -1,0 +1,458 @@
+Implementation of stdio.
+
+
+/* Array of strings: result of printing to stdout */
+$output char CIVL_stdout[][];
+
+/* Abstract functions will be declared in LibstdioExecutor.java:
+ * char[] intToString(int x, char format[])
+ * char[] floatToString(float x, char format[])
+ * char[] doubleToString(double x, char format[])
+ * etc.
+ */
+ 
+
+/* system function printf will be defined as follows:
+ * evaluate arguments.
+ * parse the format string to find all the % codes.
+ * check they match up with the number and types of additional args.
+ * for each code, extract the code into a separate concrete array
+ * of char.
+ * For an abstract function call for each of the above format-string-
+ * value pairs.  Note that %s codes do not require abstract function
+ * since corresponding value will already have type string (char[]).
+ * Construct an array of SymbolicExpression as follows:
+ * sequence of concrete strings interleaved with abstract ones
+ * as above.
+ * Append these to CIVL_stdout.
+ */
+ 
+ 
+ Input:
+ 
+ strcmp(s1,s2): to determine if two strings are equal.
+ Need to assume this is true in many cases?
+ Need strcmp to return abstract function if the strings
+ are not concrete.
+ 
+ fscanf(file, format, buf):
+ 
+ $input
+ 
+
+
+=================================== I/O Model =========================================
+
+Representation of file contents:
+
+A file is either a text file or a binary file.
+
+Text files: the contents of a  text file is a sequence of strings, i.e., a ragged array
+of char.
+
+char[][] tf; /* ragged */
+
+Each element tf[i] is a "word".
+A word is a string, i.e., an array of char.
+
+Furthermore, a word is either a white-space word (ws) or a 
+non-white-space word (x).  A white-space word consists of only
+white-space characters (newline, space, tab, return).
+A non-white-space word consists of only
+non-white-space characters.  The elements of tf alternate between
+white-space words and non-white-space words
+
+tf may start with either a white-space word (ws) or a non-white-space
+word (x).   It may end with either a ws or an x.  Or, it may be empty.
+Examples:
+
+tf = {ws, x, ws, x, ..., ws, x, ws}
+tf = {x, ws, x, ..., ws, x, ws}
+tf = {ws, x, ws, x, ..., ws, x}
+tf = {x, ws, x, ..., ws, x}
+tf = {x}
+tf = {ws}
+tf = {}
+
+The following abstract functions may be used to create words:
+
+(However, I'm not sure how to represent an abstract function
+that returns a String, which is an array, since a function
+cannot return an array in C or CIVL-C.    However you can do this
+in the model layer.)
+
+String intToString(int n, String format);
+String realToString(real x, String format);
+
+A position in the file is represented by an ordered pair (int, int).
+It is an index into the ragged array.
+
+Scanning: scanning reads the array and converts to either string, int, or real.
+The following abstract functions are used to convert:
+
+int stringToInt(String s, String format);
+real stringToRead(String s, String format);
+
+These satisfy:
+
+stringToInt(intToString(n,f),f) = n
+intToString(stringToInt(s,f),f) = s
+
+stringToReal(realToString(x,f),f) not necessarily equal to x (approx.)
+realToString(stringToReal(s,f),f) depends on precision of real type
+
+Note strings do not require any conversion, except that a null termination
+character is added when scanned. (Is it included when printing?)
+
+Printing adds elements to the array.
+
+Binary files: work in progress.
+
+State: each process has a process-global variable filesystem, which is a vector
+of files.
+
+File System:
+
+A file has a name, as well as contents.  The name is a string.  
+A process global variable in each process is used to represent the file
+system on that process.   This is a vector of files.
+
+The function to open a file specifies the name.   There are two possibilities:
+a file of that name already exists in the filesystem variable, or it doesn't.
+This may not be determinable.  For example, a program that takes two commandline
+inputs x and y could then proceed to open x, and then open y.   What results from
+this depends on whether x equals y (as strings).  
+
+Question: is it legal to open a file twice, i.e, have two streams associated
+to the same file?  (Why not?)
+
+FOR NOW: if we cannot determine whether two filenames are equal or not:
+assume they are not, and print a warning that we are adding this assumption.
+
+LATER:  Force user to add assumption that x does not equal y?  This requires
+string operations (equals, strcmp). 
+
+#pragma TASS assume argc >= 3 && strcmp(argv[1],argv[2]) != 0
+
+User might even put this in his code as an assertion.  (Should we have a way
+to indicate an assertion should be assumed to hold?
+
+#pragma TASS assume holds
+assert argc >= 3 && strcmp(argv[1],argv[2]) != 0
+
+In any case, if a file of that name does not exist in file system variable, it
+is added.   Otherwise, the exisitng one is used.
+
+If the open command specifies write mode, the file contents are put
+in an initial empty state.
+
+If the open command specifies read mode and the file has just been added, the file
+contents are initialized with a symbolic constant of the approrpriate type.
+The length of the contents array is a symbolic constant of integer type, the ragged
+array is constructed as usual for ragged arrays.
+
+If the open command specifies read mode and the file alread existed, the file
+contents are left unchanged.
+
+Closing: closing a file does not remove it from the file system variable.
+(Only deleting the file can do that.)   It simply sets a flag in the stream
+associated with the file.  If the file was written to since being opened, 
+it also causes the file to be copied to the output variable which is an array
+of files.  If the file is already there in the output variable, it is overwritten.
+
+Multi-process programs: for now, model will be as follows: each process has
+its own filesystem, so no communication is possible across procs.
+
+Single program verification mode: no output variable is used.
+Output to stdout/stderr: simply ignored.  
+Input from stdin: only one process can do it, otherwise error.
+
+Comparison mode: a single output array of output files is used.  At process
+termination, output files from a process will be copied to this array.
+They will be inserted in alphabetical (or some other canonical) order.
+It is OK to have output files from different procs, as long as they have
+different names.  For example, this will allow comparison of two programs,
+one sequential
+and one parallel, where the sequential one writes file OUT and the 7th
+process (say) of the parallel one writes file OUT.
+Exception: output to stdout/stderr could be ignored (commandline option).
+If not ignored, only process can write to each (but they can be two
+different procs), i.e., they are treated like all other output files.
+-ignorestdout=BOOLEAN (default: false).  -ignorestderr.
+
+Also, any output statement can be preceded by #pragma TASS ignore and it
+will be ignored.
+
+
+TODO: add IO error to types of execution errors.
+
+What about format errors from scanning?  ignore for now---add assumptions later.
+
+Note: make sure all streams are closed at termination.  Else throw I/O error.
+
+
+=================================== Types =============================================
+
+
+The following represents a file, as well as the state of the file.
+
+A file has a filename, which is a String.
+Note: the maximum length of a filename is FILENAME_MAX, a constant defined
+in C99 Standard.
+
+An output file is one which has been written to at least once in the
+execution of the program, unless the user has explicitly said to ignore
+such writes (using the TASS ignore pragma).
+An input file is one which has been read at least once before writing
+to it.
+
+Every file is either in binary or text form.
+
+Every file has either byte or wide orientation.  This is a C thing.
+It has to do with whether a character is represented by one byte, or
+more than one byte.    See the C99 Standard.  (Is this just for text
+files?)
+
+
+typedef struct STDIO_File {
+	char filename[];    /* the name of the file (including path) */
+	boolean isOutput;   /* is this an output file? */
+	boolean isInput;    /* is this an input file? */
+	boolean isBinary;   /* can be binary or text */
+	boolean isWide;     /* wide orientation */
+	char[][] contents;  /* file contents: ragged array */
+} STDIO_File;
+
+
+The following represents a stream, which is the data structure
+used by the user program to access a file.  A stream has a reference
+to a file, and some additional information.
+
+The stream is either open or closed.
+
+The stream has a reference to a certain position in the file.
+This is represented as an integer.  
+
+The stream has a certain mode, coded as "r" (read), "w" (write),
+and so on.  Internally, integer constants are used to represent
+the modes.
+
+typedef struct STDIO_Stream {
+	STDIO_File *file; /* file to which this stream refers */
+	boolean isOpen;   /* is this stream open? */
+	int position1;    /* current word in file */
+	int position2;    /* character index in word */
+	int mode;         /* Stream mode: r/w/a */
+} FILE;
+
+#define size_t int (integer)
+
+#define fpos_t int (integer)
+
+Notes: According to C99,
+there is also an "orientation" associated to a stream: either "byte"
+or "wide".   The orientation of the stream is determined by the first I/O function
+that is applied to the stream after opening it. Here we are only dealing with
+byte streams.   There are corresponding wide versions of all the functions
+for wide streams.   We have put this characteristic in the file itself.
+
+=================================== Constants =========================================
+
+Note: these can be put in stdio.h
+
+These are for internal use only.   They are used instead of the strings "r",
+"w", etc.:
+
+#define STDIO_MODE_READ   1
+#define STDIO_MODE_WRITE  2
+#define STDIO_MODE_APPEND 3
+
+#define stdin (FILE*)0
+#define stdout (FILE*)1
+#define stderr (FILE*)2
+
+#define EOF -1
+
+
+
+===================================== Variables =======================================
+
+File objects (instances of STDIO_File) are instanitated at runtime.
+A file is instantiated when one is opened for reading or writing. 
+
+Output variable:
+Vector<STDIO_File> STDIO_outputFiles;
+
+The files that had something written to them.   When an output file is closed,
+it is copied from the heap to this vector.   This vector could be sorted to
+get a canonical order.
+
+Process global variable:
+Vector<STDIO_File> STDIO_filesystem
+
+This represents the state of all files in the file system on this process.
+It is initially empty.   When a file is opened (whether for reading or writing)
+a file object is instantiated (if one with that filename does not already exist)
+on the heap, and a reference to it is added to this vector.
+This vector could be sorted to get a canonical order.
+
+
+================================== Abstract Functions =================================
+
+
+
+=================================== System Functions ==================================
+
+
+
+FILE *fopen(const char * restrict filename, const char * restrict mode);
+See 7.19.5.3.
+  modes:
+    r: open text file for reading
+    w: truncate if already exists, open text file for writing
+    a: open text file for writing at end (append)
+    rb: open binary file for reading.
+    wb:
+    ab:
+  all of above with "+" added.
+  returns NULL if problem
+Examples:
+  FILE *f = fopen(argv[0], "r");
+  
+int fclose(FILE *stream);
+  all data is flushed automatically at close.
+  returns 0 if successful, EOF if problem.
+
+int fprintf(FILE * restrict stream,	const char * restrict format, ...);
+  some of the format codes:
+%d: integer
+%f: floating-point
+%s: string, don't print the null terminating character
+  many different variations are possible
+  returns the number of characters transmitted
+  returns negative number if error
+Examples:
+  fprintf(stdout, "blah %d blah %d %f \n", a[i], n, x);
+equivalent to:
+  fprintf(stdout, "blah ");
+  fprintf(stdout, "%d", a[i]);
+  fprintf(stdout, " blah ");
+  fprintf(stdout, "%d", n);
+  fprintf(stdout, " ");
+  fprintf(stdout, "%f", x);
+  fprintf(stdout, " \n");
+translated as:
+  
+int fscanf(FILE * restrict stream, const char * restrict format, ...);
+
+Notes:
+  the extra arguments are pointers to things of the appropriate type.  They point
+    to where the result of the scans should go
+  the format string is a sequence of directives.   each directive is either
+    an ordinary non-white-space character, a sequence of white-space characters,
+    or a conversion specification
+  each directive matches some sequence of characters in the file
+  white space directive: reads until first non-white space character
+    is encountered
+  regular non-white-space characters have to be matched exactly, 
+    in which case they are scanned and ignored.  
+  initial white-space characters are scanned and ignored
+  the longest character sequence matching the code is read--hence reading one
+    more character will cause non-match (or be EOF)
+  %s: matches sequence of non-white-space characters.  The null tern character
+    is automatically added to the result
+  %d: matches sequence of chars which define an int
+  %f: matches sequence of chars which define a floating-point number.  Needs to have
+      one of a few legal formats, such as 456.23  (note: need decimal point),
+      or exponent....see strtod, 7.20.1.3
+      
+Returns:
+  number of items assigned.  this can be less than number of conversion
+    specifications due to matching errors
+  EOF, if input error occurs: encoding error or unavailability of input characters
+
+Reading files.
+
+#pragma TASS system
+FILE* STDIO_openRead(char *filename, boolean isBinary, boolean isWide);
+
+#pragma TASS system
+FILE* STDIO_openWrite(char *filename, boolean isBinary, boolean isWide);
+
+/* Closing the file also causes output to be copied to output variable STDIO_outputFiles */
+#pragma TASS system
+void close(FILE *file);
+
+Use:
+
+int STDIO_scanInt(FILE *stream, int *x) {
+	*x = STDIO_SCAN_INT(*(stream->file), stream->position);
+	stream->position += sizeof(int);
+	return 1; // number of items scanned successfully
+}
+	
+int STDIO_scanReal(FILE *stream, float *x) {
+	return 0;
+	
+}
+
+int STDIO_scanString(FILE *stream, char *string) {
+	return 0;
+	
+}
+
+/* The following takes the file and current position and returns the
+ * new value for contents after writing the int x to the file. */
+#pragma TASS abstract int STDIO_PRINT_INT(FILE file, int position, int x);
+
+void STDIO_printInt(FILE *stream, int x) {
+	stream->file->contents = STDIO_PRINT_INT(stream->file, stream->position, x);
+	stream->position += sizeof(int);
+}
+
+
+void STDIO_printReal(FILE *file, float x) {
+}
+
+void STDIO_printString(FILE *file, char *string) {
+}
+
+
+----
+
+Transformations:
+
+AST:
+
+add type STDIO_File: requires ragged array type in AST classes
+replace definition of type FILE with new definition; all references to the old type
+ now point to new type.  Should not be necessary because the type itself will
+ be changed.
+modify functions?
+
+Model:
+
+add abstract functions
+for any process that uses stdio functions:
+  add process global variable STDIO_filesystem
+add output variable STDIO_outputFiles
+
+Executor:
+  implement all functions as system functions
+  
+initialization?
+  each library should have opportunity to initialize state: check!
+  each library should have function called at termination: check!
+  create entries in file system for stdin, stdout, stderr.
+  but these are constants must be created in initial states
+  the last two are output files?
+  add to STDIO_filesystem: stdin, stdout, stderr files
+  open streams on them: process global variables?
+  replace references to (FILE*)0 to pointers to those streams. could be done
+  dynamically.
+  the name "stdout" is different from a user file named "stdout".  Do not
+  confuse these two.  add bit isSystem?
+  for printf, etc., VARIABLE ARGUMENTs
+  at termination, close the three system streams.
+
+

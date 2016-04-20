@@ -1,0 +1,24 @@
+/* Commandline execution:
+ *		civl verify exit.cvl
+ * */
+#include<civlc.cvh>
+
+void f() {
+  for (int i = 0; i < 10; i++) {
+    if (i == 8) {
+      $exit();
+    }
+    $assert(i < 9);
+  }
+}
+
+void main() {
+  $proc procs[4];
+  
+  for (int i = 0; i < 4; i++) {
+    procs[i] = $spawn f();
+  }
+  for (int i = 0; i < 4; i++) {
+    $wait(procs[i]);
+  }
+}

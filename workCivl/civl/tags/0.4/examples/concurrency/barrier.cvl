@@ -1,0 +1,48 @@
+/* Basic shared-variable flag barrier.   Run as follows:
+ *      civl verify -inputB=4 barrier.cvl
+ */
+#include <civlc.h>
+
+$input int B; // upper bound on number of threads
+$input int N; // number of threads
+$assume 1<=N && N<=B;
+$proc threads[N]; // the threads
+int lock = 0; // 0=available
+int in_barrier[N]; // am I inside the barrier?
+int num_in_barrier = 0; // how many are inside barrier?
+int counter = 0; // shared variable used to test barrier
+
+void init() {
+  for (int i=0; i<N; i++) in_barrier[i] = 0;
+}
+
+void barrier(int tid) {
+  $when (lock==0) lock = 1; // obtains the lock
+  in_barrier[tid] = 1; // I am in the barrier
+  num_in_barrier++; // increment number in barrier
+  if (num_in_barrier == N) { // I am last to enter
+    for (int i=0; i<N; i++) in_barrier[i] = 0; // release all
+    num_in_barrier = 0; // now none are in barrier
+  }
+  lock = 0; // release the lock
+  $when (in_barrier[tid] == 0); // wait till I am released
+}
+
+void run(int tid) {
+  while ($true) {
+    $assert counter == 0;
+    barrier(tid);
+    counter++;
+    barrier(tid);
+    $assert counter == N;
+    barrier(tid);
+    counter--;
+    barrier(tid);
+  }
+}
+
+void main() {
+  init();
+  for (int i=0; i<N; i++) threads[i] = $spawn run(i);
+  for (int i=0; i<N; i++) $wait threads[i];
+}

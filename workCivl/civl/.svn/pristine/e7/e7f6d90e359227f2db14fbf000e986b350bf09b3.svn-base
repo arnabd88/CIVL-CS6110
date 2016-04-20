@@ -1,0 +1,20 @@
+/* This example is to test the condition that the argument of the domain for $parfor   
+ * is not concrete.
+*/
+
+#include <civlc.cvh>
+#include <stdio.h>
+$input int n;
+$assume (n>1);
+
+void main(){
+  $range r1 = 1 .. n;
+  $domain(1) dom = ($domain){r1};
+  int sum = 0;
+  
+  $parfor(int i: dom){
+    printf("This is proc %s, my i: %d\n", $self, i);
+    sum += 1;
+    printf("sum is %d", sum);
+  }
+}

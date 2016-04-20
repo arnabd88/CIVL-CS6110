@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonIfNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.statement</a> &gt; <span class="el_source">CommonIfNode.java</span></div><h1>CommonIfNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.statement;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.IfNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonIfNode extends CommonStatementNode implements IfNode {
+
+	public CommonIfNode(Source source, ExpressionNode condition,
+			StatementNode trueBranch) {
+<span class="nc" id="L14">		super(source, condition, trueBranch);</span>
+<span class="nc" id="L15">	}</span>
+
+	public CommonIfNode(Source source, ExpressionNode condition,
+			StatementNode trueBranch, StatementNode falseBranch) {
+<span class="nc" id="L19">		super(source, condition, trueBranch, falseBranch);</span>
+<span class="nc" id="L20">	}</span>
+
+	@Override
+	public ExpressionNode getCondition() {
+<span class="nc" id="L24">		return (ExpressionNode) child(0);</span>
+	}
+
+	@Override
+	public StatementNode getTrueBranch() {
+<span class="nc" id="L29">		return (StatementNode) child(1);</span>
+	}
+
+	@Override
+	public StatementNode getFalseBranch() {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">		if (numChildren() &lt; 3)</span>
+<span class="nc" id="L35">			return null;</span>
+		else
+<span class="nc" id="L37">			return (StatementNode) child(2);</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L42">		out.print(&quot;IfStatement&quot;);</span>
+<span class="nc" id="L43">	}</span>
+
+	@Override
+	public IfNode copy() {
+<span class="nc" id="L47">		StatementNode falseBranch = getFalseBranch();</span>
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (falseBranch == null)</span>
+<span class="nc" id="L50">			return new CommonIfNode(getSource(), duplicate(getCondition()),</span>
+<span class="nc" id="L51">					duplicate(getTrueBranch()));</span>
+		else
+<span class="nc" id="L53">			return new CommonIfNode(getSource(), duplicate(getCondition()),</span>
+<span class="nc" id="L54">					duplicate(getTrueBranch()), duplicate(falseBranch));</span>
+	}
+
+	@Override
+	public StatementKind statementKind() {
+<span class="nc" id="L59">		return StatementKind.IF;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

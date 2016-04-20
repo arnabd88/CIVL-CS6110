@@ -1,0 +1,18 @@
+#ifndef __CIVL_SVCOMP__
+#define __CIVL_SVCOMP__
+#include <civlc.cvh>
+
+void __VERIFIER_error(){
+  $assert($false);
+}
+void __VERIFIER_assume(int expression) { 
+  if (!expression) 
+  { 
+    LOOP: 
+      goto LOOP; 
+  }
+}
+
+
+#endif
+

@@ -1,0 +1,10 @@
+#include <civlc.h>
+
+int main()
+{
+  int t, j;
+  for (t=j=0; t<5; t++){
+    j+=t;
+  }
+  return 0;
+}

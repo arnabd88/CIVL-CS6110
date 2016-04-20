@@ -1,0 +1,169 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker}}
+
+
+Does the main work translating a single A\+B\+C Program to a model.  
+
+
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a978803b0ed06a1add665e51102690658}{Model\+Builder\+Worker} (G\+M\+C\+Section config, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} factory, Program \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a7e3f8abb32b52ac4db3230cd4c54d9dd}{program}, String name, boolean debugging, Print\+Stream debug\+Out)
+\begin{DoxyCompactList}\small\item\em Constructs new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker}{Model\+Builder\+Worker}. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a8d10ed66bf044c99f29b946331c4a3f4}{build\+Model} ()  throws Command\+Line\+Exception 
+\begin{DoxyCompactList}\small\item\em Build the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model from the A\+S\+T. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_ac0ed6bb7342d22aa42db5af7e20d8c02}{factory} ()
+\item 
+G\+M\+C\+Section \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a53e01502840bcf1d46678c5bbb228a81}{get\+Configuration} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a7afbfa4a4c52ece02356fd677daaa00f}{get\+Model} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_ae1b03d4c98fe03db72773bcecc5d08f3}{}void {\bfseries initialization} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} system)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_ae1b03d4c98fe03db72773bcecc5d08f3}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a389636256ca2a7c2ab41c83df0f1d4aa}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a389636256ca2a7c2ab41c83df0f1d4aa}{translate\+Undefined\+Functions} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a389636256ca2a7c2ab41c83df0f1d4aa}
+
+\begin{DoxyCompactList}\small\item\em Translate the function definition node of unprocessed functions, which are obtained by translating function declaration node, function call node, and so on. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a4f2ad498ff7904aa6fce93ba6ca78409}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a4f2ad498ff7904aa6fce93ba6ca78409}{complete\+Bundle\+Type} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a4f2ad498ff7904aa6fce93ba6ca78409}
+
+\begin{DoxyCompactList}\small\item\em Complete the bundle type. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a152801a1e56aefe0d11bd890831e25dd}{complete\+Model} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} system)
+\begin{DoxyCompactList}\small\item\em Complete the model by updating its fields according to the information obtained by the translation. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_ae6f1fd7f353adf0182ee72a59e8cb4f3}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_ae6f1fd7f353adf0182ee72a59e8cb4f3}{static\+Analysis} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_ae6f1fd7f353adf0182ee72a59e8cb4f3}
+
+\begin{DoxyCompactList}\small\item\em Perform static analysis, including\+: dereferences, purely local statements, etc. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a7e3f8abb32b52ac4db3230cd4c54d9dd}{}Program \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a7e3f8abb32b52ac4db3230cd4c54d9dd}{program}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a7e3f8abb32b52ac4db3230cd4c54d9dd}
+
+\begin{DoxyCompactList}\small\item\em The A\+B\+C A\+S\+T being translated by this model builder worker. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Does the main work translating a single A\+B\+C Program to a model. 
+
+\begin{DoxyAuthor}{Author}
+Stephen F. Siegel (siegel) 
+
+Manchun Zheng (zmanchun) 
+
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a978803b0ed06a1add665e51102690658}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}!Model\+Builder\+Worker@{Model\+Builder\+Worker}}
+\index{Model\+Builder\+Worker@{Model\+Builder\+Worker}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}}
+\subsubsection[{Model\+Builder\+Worker}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker.\+Model\+Builder\+Worker (
+\begin{DoxyParamCaption}
+\item[{G\+M\+C\+Section}]{config, }
+\item[{{\bf Model\+Factory}}]{factory, }
+\item[{Program}]{program, }
+\item[{String}]{name, }
+\item[{boolean}]{debugging, }
+\item[{Print\+Stream}]{debug\+Out}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a978803b0ed06a1add665e51102690658}
+
+
+Constructs new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker}{Model\+Builder\+Worker}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & the G\+M\+C configuration \\
+\hline
+{\em factory} & the model factory \\
+\hline
+{\em program} & the program \\
+\hline
+{\em name} & name of the model, i.\+e. the file name without .cvl extension \\
+\hline
+{\em debug\+Out} & \\
+\hline
+{\em debugging} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a8d10ed66bf044c99f29b946331c4a3f4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}!build\+Model@{build\+Model}}
+\index{build\+Model@{build\+Model}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}}
+\subsubsection[{build\+Model}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker.\+build\+Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throws Command\+Line\+Exception\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a8d10ed66bf044c99f29b946331c4a3f4}
+
+
+Build the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model from the A\+S\+T. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Command\+Line\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a152801a1e56aefe0d11bd890831e25dd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}!complete\+Model@{complete\+Model}}
+\index{complete\+Model@{complete\+Model}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}}
+\subsubsection[{complete\+Model}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker.\+complete\+Model (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Function}}]{system}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a152801a1e56aefe0d11bd890831e25dd}
+
+
+Complete the model by updating its fields according to the information obtained by the translation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em system} & The system function of the model, i.\+e. \+\_\+\+C\+I\+V\+L\+\_\+\+S\+Y\+S\+T\+E\+M function. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_ac0ed6bb7342d22aa42db5af7e20d8c02}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}!factory@{factory}}
+\index{factory@{factory}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}}
+\subsubsection[{factory}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\+Factory} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker.\+factory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_ac0ed6bb7342d22aa42db5af7e20d8c02}
+\begin{DoxyReturn}{Returns}
+The model factory used by this model builder. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a53e01502840bcf1d46678c5bbb228a81}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}!get\+Configuration@{get\+Configuration}}
+\index{get\+Configuration@{get\+Configuration}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}}
+\subsubsection[{get\+Configuration}]{\setlength{\rightskip}{0pt plus 5cm}G\+M\+C\+Section edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker.\+get\+Configuration (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a53e01502840bcf1d46678c5bbb228a81}
+\begin{DoxyReturn}{Returns}
+the configuration 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a7afbfa4a4c52ece02356fd677daaa00f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}!get\+Model@{get\+Model}}
+\index{get\+Model@{get\+Model}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Model\+Builder\+Worker}}
+\subsubsection[{get\+Model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Model\+Builder\+Worker.\+get\+Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1ModelBuilderWorker_a7afbfa4a4c52ece02356fd677daaa00f}
+\begin{DoxyReturn}{Returns}
+the model 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/Model\+Builder\+Worker.\+java\end{DoxyCompactItemize}

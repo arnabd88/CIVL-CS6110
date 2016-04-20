@@ -1,0 +1,4 @@
+/* It is OK to #define a macro twice if the two definitions are identical */
+#define X Hello, world
+#define X Hello, world
+X

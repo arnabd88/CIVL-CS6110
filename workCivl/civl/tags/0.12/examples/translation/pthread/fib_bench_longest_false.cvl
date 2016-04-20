@@ -1,0 +1,59 @@
+/*****************************************************************************
+* SOURCE: This is a translation of a Pthread program from 
+* the Pthread benchmarks of SV-COMP 2014.
+* https://svn.sosy-lab.org/software/sv-benchmarks/tags/svcomp14/
+* FILE: fib_bench_longest_false.cvl
+* DESCRIPTION: 
+*   Simple program of threads interacting which causes an error when
+*   their total reaches a certain value. The fix simply involves changing the output
+*   for which an error will be caused; specifically, here error is caused when i or j
+*   >=46368, the fix has i or j > 46368.
+* Command line execution:
+* civl verify -inputNUM=11 fib_bench_longest_false.cvl
+******************************************************************************/
+#include "pthread.h"
+#include <civlc.h>
+
+int i=1, j=1;
+
+$input int NUM;
+
+void *t1(void* arg)
+{
+    int k = 0;
+    
+    for (k = 0; k < NUM; k++)
+    {
+        printf("%d",i);
+        i+=j;
+    }
+    _pthread_exit(NULL, false); //Different parameters
+}
+
+void *t2(void* arg)
+{
+    int k = 0;
+    
+    for (k = 0; k < NUM; k++)
+	{
+        j+=i;
+    }	
+    	
+    _pthread_exit(NULL, false); //Different parameters
+}
+
+int main(int argc, char **argv)
+{
+    pthread_t id1, id2;
+    
+    pthread_create(&id1, NULL, t1, NULL);
+    pthread_create(&id2, NULL, t2, NULL);
+    
+    pthread_join(id1, NULL);  //Added pthread_join, probably error in competition code
+    pthread_join(id2, NULL);
+    
+    if (i >= 46368 || j >= 46368) {
+    	$assert($false);
+    }
+    return 0;
+}

@@ -1,0 +1,17 @@
+#include <civlc.cvh>
+#include <stdio.h>
+
+$input int num1;
+$input int num2;
+$assume(0 < num1 && num1 < 255);
+$assume(0 < num2 && num2 < 255);
+
+void main(){
+  char * pc = (char*)$malloc($root, sizeof(char) * 2);
+
+  pc[0] = num1;
+  pc[1] = num2;
+  //test symbolic int to char
+  $assert((pc[0] == pc[1]));
+  $free(pc);
+}

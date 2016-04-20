@@ -1,0 +1,159 @@
+#ifdef __CIVL_MPI__
+#else
+#define __CIVL_MPI__
+
+#include <concurrency.cvh>
+#include <bundle.cvh>
+#include <mpi.h>
+#include <civlmpi.cvh>
+#include <string.h>
+
+/* Completed definition for mpi-common.h */
+struct MPI_Request{
+  int id;
+};
+
+struct MPI_Comm {
+  $comm p2p; // point-to-point communication
+  $comm col; // collective communication
+  $barrier barrier;
+  __MPI_Sys_status__ status;
+};
+
+/********************************** State *****************************************/
+/* The number of times the MPI_Wtime function has been called */
+int CMPI_time_count = 0;
+
+/************************** MPI LIB Implementations *******************************/
+double MPI_Wtime() {
+  double result = CMPI_time(CMPI_time_count);
+  
+  CMPI_time_count++;
+  return result;
+}
+
+int MPI_Comm_size(MPI_Comm comm, int *size) {
+  $assert comm.status == __INIT :
+  "MPI_Comm_size() cannot be invoked without MPI_Init() being called before.\n";
+  *size = $comm_size(comm.p2p);
+  return 0;
+}
+
+int MPI_Comm_rank(MPI_Comm comm, int *rank) {
+  $assert comm.status == __INIT :
+  "MPI_Comm_rank() cannot be invoked without MPI_Init() being called before.\n";
+  *rank = $comm_place(comm.p2p);
+  return 0;
+}
+
+int MPI_Send(void *buf, int count, MPI_Datatype datatype, int dest,
+	     int tag, MPI_Comm comm) {
+  $assert comm.status == __INIT :
+  "MPI_Send() cannot be invoked without MPI_Init() being called before.\n";
+  return CMPI_Send(buf, count, datatype, dest, tag, comm.p2p);
+}
+
+int MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source,
+	     int tag, MPI_Comm comm, MPI_Status *status) {
+  $assert comm.status == __INIT :
+	  "MPI_Recv() cannot be invoked without "
+	  "MPI_Init() being called before.\n";
+  return CMPI_Recv(buf, count, datatype, source, tag, comm.p2p, status);
+}
+
+int MPI_Get_count(MPI_Status *status, MPI_Datatype datatype, int *count) {
+  *count = status->size/sizeofDatatype(datatype);
+  return 0;
+}
+
+int MPI_Sendrecv(void *sendbuf, int sendcount, MPI_Datatype sendtype,
+		 int dest, int sendtag,
+		 void *recvbuf, int recvcount, MPI_Datatype recvtype,
+		 int source, int recvtag,
+		 MPI_Comm comm, MPI_Status *status) {
+  $assert comm.status == __INIT :
+	  "MPI_Sendrecv() cannot be invoked "
+	  "without MPI_Init() being called before.\n";
+  // not correct for checking potential deadlock...rewrite:
+  MPI_Send(sendbuf, sendcount, sendtype, dest, sendtag, comm);
+  MPI_Recv(recvbuf, recvcount, recvtype, source, recvtag, comm, status);
+  return 0;
+}
+
+/* Broadcasts a message from root to everyone else.
+ * Need to use a differnt comm.
+ */
+int MPI_Bcast(void *buf, int count, MPI_Datatype datatype, int root,
+	      MPI_Comm comm) {
+  $assert comm.status == __INIT :
+	  "MPI_Bcast() cannot be invoked without MPI_Init() "
+	  "being called before.\n";
+  if ($comm_place(comm.col) == root) {
+    int nprocs = $comm_size(comm.col);
+
+    for (int i=0; i<nprocs; i++)
+      if (i != root)
+	CMPI_Send(buf, count, datatype, i, BCAST_TAG, comm.col);
+  } else {
+    CMPI_Recv(buf, count, datatype, root, BCAST_TAG, comm.col,
+	      MPI_STATUS_IGNORE);
+  }
+  return 0;
+}
+
+/* Reduces values on all processes to a single value */
+int MPI_Reduce(void* sendbuf, void* recvbuf, int count,
+	       MPI_Datatype datatype, MPI_Op op, int root,
+	       MPI_Comm comm) {
+  int rank;
+
+  $assert comm.status == __INIT :
+	  "MPI_Reduce() cannot be invoked without "
+	  "MPI_Init() being called before.\n";
+  rank = $comm_place(comm.col);
+  if (rank != root)
+    CMPI_Send(sendbuf, count, datatype, root, REDUCE_TAG, comm.col);
+  else {
+    int nprocs = $comm_size(comm.col);
+    int size;
+
+    for (int i = 0; i<nprocs; i++) {
+      if(i == root) continue;
+      else{
+	$message in = $comm_dequeue(comm.col, i, REDUCE_TAG);
+	size = count * sizeofDatatype(datatype);
+
+	/* the third argument "count" indicates the number of cells needs doing the
+	   operation. */
+	$bundle_unpack_apply(in.data, sendbuf, count, op);
+	$assert in.size <= size :
+	"Message of size %d exceeds the specified size %d.", in.size, size;
+      }
+    }
+    size = count * sizeofDatatype(datatype);
+    memcpy(recvbuf, sendbuf, size);
+  }
+  return 0;
+}
+
+/* Combines values from all processes and distributes the result back to all processes */
+/* default root is 0 */
+int MPI_Allreduce(void* sendbuf, void* recvbuf, int count,
+		  MPI_Datatype datatype,
+		  MPI_Op op, MPI_Comm comm) {
+  int root = 0;
+  MPI_Status status;
+  
+  $assert comm.status == __INIT :
+	  "MPI_Allreduce() cannot be invoked without "
+	  "MPI_Init() being called before.\n";
+  MPI_Reduce(sendbuf, recvbuf, count, datatype, op, root, comm);
+  MPI_Bcast(recvbuf, count, datatype, root, comm);
+  return 0;
+}
+
+int MPI_Barrier(MPI_Comm comm){
+  $assert comm.status == __INIT : "MPI_Allreduce() cannot be invoked without MPI_Init() being called before.\n";
+  $barrier_call(comm.barrier);
+}
+#endif

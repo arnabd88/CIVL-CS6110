@@ -1,0 +1,194 @@
+<!--
+    build.xml : Ant build file for CIVL
+    Author: Stephen F. Siegel, University of Delaware
+    Last modified:
+    
+    The following can be defined on command line with -Dprop=val:
+    revision.  This is for the use of our SVN commit hook, which 
+    runs the test suite and performs other tasks every time a commit
+    is made.  The SVN revision number is just used here to insert
+    into reports.
+-->
+
+<project name="CIVL" basedir="." default="jar" xmlns:jacoco="antlib:org.jacoco.ant">
+
+	<!-- Directories -->
+
+	<condition property="properties.file" value="build.properties" else="build_default.properties">
+		<available file="build.properties" />
+	</condition>
+	<property file="${properties.file}" />
+	<property file="build.properties" />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="bin.dir" value="${basedir}/bin" />
+	<property name="javadoc.dir" value="${basedir}/doc/javadoc" />
+	<property name="jar-name" value="civl.jar" />
+	<property name="jar-path" value="${basedir}/${jar-name}" />
+	<property name="main-class" value="edu.udel.cis.vsl.civl.CIVL" />
+
+	<!-- Junit and JaCoCo Coverage  -->
+
+	<property name="test.src.dir" location="${basedir}/test" />
+	<property name="test.bin.dir" location="${basedir}/bin-test" />
+	<property name="junit.dir" location="${basedir}/junit" />
+	<property name="junit.data.dir" location="${junit.dir}/data" />
+	<property name="junit.reports.dir" location="${junit.dir}/reports" />
+	<property name="coverage.dir" location="${basedir}/coverage" />
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath path="${jacoco.jar}" />
+	</taskdef>
+
+	<!-- Benchmark  -->
+
+	<property name="bench.src.dir" location="${basedir}/bench" />
+
+	<!-- Source compilation and JAR construction -->
+
+	<path id="src.compile.classpath">
+		<pathelement location="${src.dir}" />
+		<pathelement location="${sarl.jar}" />
+		<pathelement location="${gmc.jar}" />
+		<pathelement location="${abc.jar}" />
+	</path>
+
+	<target name="compile" description="Compile all java source files.">
+		<mkdir dir="${bin.dir}" />
+		<javac debug="true" srcdir="${src.dir}" destdir="${bin.dir}" includes="edu/udel/cis/vsl/civl/**" classpathref="src.compile.classpath" encoding="UTF-8" includeantruntime="false">
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile" description="Jar up all class files.">
+		<jar destfile="${jar-path}">
+			<fileset dir="${bin.dir}" />
+			<zipfileset includes="**/*.class" src="${abc.jar}" />
+			<zipfileset includes="**/*.h" src="${abc.jar}" />
+			<zipfileset includes="**/*.cvh" src="${abc.jar}" />
+			<zipfileset includes="**/*.class" src="${gmc.jar}" />
+			<zipfileset includes="**/*.class" src="${sarl.jar}" />
+			<fileset dir="${basedir}/images" />
+			<fileset dir="${basedir}/text/include" />
+			<fileset dir="${basedir}/lib" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Plain JUnit tests -->
+
+	<path id="test.compile.classpath">
+		<pathelement location="${test.src.dir}" />
+		<pathelement location="${bin.dir}" />
+		<pathelement location="${junit.jar}" />
+		<pathelement location="${hamcrest.jar}" />
+		<pathelement location="${sarl.jar}" />
+		<pathelement location="${gmc.jar}" />
+		<pathelement location="${abc.jar}" />
+	</path>
+
+	<path id="test.execute.classpath">
+		<pathelement location="${test.bin.dir}" />
+		<pathelement location="${bin.dir}" />
+		<pathelement location="${junit.jar}" />
+		<pathelement location="${hamcrest.jar}" />
+		<pathelement location="${sarl.jar}" />
+		<pathelement location="${gmc.jar}" />
+		<pathelement location="${abc.jar}" />
+		<pathelement location="${basedir}/text/include" />
+	</path>
+
+	<target name="test-init">
+		<delete dir="${junit.dir}" quiet="true" />
+		<delete dir="${test.bin.dir}" quiet="true" />
+		<mkdir dir="${junit.dir}" />
+		<mkdir dir="${junit.data.dir}" />
+		<mkdir dir="${junit.reports.dir}" />
+		<mkdir dir="${test.bin.dir}" />
+	</target>
+
+	<target name="test-compile" depends="compile,test-init">
+		<javac destdir="${test.bin.dir}" debug="true" failonerror="false" classpathref="test.compile.classpath" encoding="UTF-8" includeantruntime="true">
+			<src path="${test.src.dir}" />
+		</javac>
+	</target>
+
+	<target name="test-run" depends="test-compile">
+		<jacoco:coverage>
+			<junit fork="true" forkmode="once" timeout="300000">
+				<jvmarg value="-ea" />
+				<classpath refid="test.execute.classpath" />
+				<formatter type="brief" usefile="false" />
+				<formatter type="xml" />
+				<batchtest todir="${junit.data.dir}">
+					<fileset dir="${test.bin.dir}" includes="**/*Test.class" />
+				</batchtest>
+			</junit>
+		</jacoco:coverage>
+		<junitreport todir="${junit.data.dir}">
+			<fileset dir="${junit.data.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${junit.reports.dir}">
+				<param name="TITLE" expression="JUnit Report for CIVL ${revision}" />
+			</report>
+		</junitreport>
+	</target>
+
+	<target name="test" depends="test-run">
+		<jacoco:report>
+			<executiondata>
+				<file file="jacoco.exec" />
+			</executiondata>
+			<structure name="Test Coverage Report for CIVL ${revision}">
+				<classfiles>
+					<fileset dir="${bin.dir}" />
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${src.dir}" />
+				</sourcefiles>
+			</structure>
+			<html destdir="coverage" />
+		</jacoco:report>
+	</target>
+
+	<!-- Benchmark Tasks -->
+
+	<target name="bench-compile" depends="jar" description="Compile benchmark java source files.">
+		<mkdir dir="${bin.dir}" />
+		<javac debug="true" srcdir="${bench.src.dir}" destdir="${bin.dir}" includes="edu/udel/cis/vsl/civl/**/*Benchmark.java" classpathref="src.compile.classpath" encoding="UTF-8" includeantruntime="false">
+		</javac>
+	</target>
+
+	<!-- Javadoc Tasks -->
+
+	<target name="javadoc">
+		<delete dir="${javadoc.dir}" quiet="true" />
+		<mkdir dir="${javadoc.dir}" />
+		<javadoc destdir="${javadoc.dir}" Overview="src/overview.html" author="false" version="true" use="true" windowtitle="API for CIVL ${revision}" access="public" classpathref="test.execute.classpath" failonerror="false">
+			<packageset dir="${src.dir}" defaultexcludes="yes">
+				<include name="**/IF" />
+				<include name="**/IF/**" />
+				<include name="edu/udel/cis/vsl/civl" />
+			</packageset>
+		</javadoc>
+	</target>
+
+	<!-- Clean -->
+
+	<target name="clean" description="Delete all generated files.">
+		<delete dir="${bin.dir}" />
+		<delete dir="${test.bin.dir}" />
+		<delete dir="${junit.dir}" />
+		<delete dir="${javadoc.dir}" />
+		<delete dir="${coverage.dir}" />
+		<delete file="${jar-path}" />
+		<delete file="${basedir}/jacoco.exec" />
+		<delete file="${manifest-file}" />
+	</target>
+
+	<!-- Do everything -->
+
+	<target name="all" depends="jar,test,javadoc,bench-compile" />
+
+</project>

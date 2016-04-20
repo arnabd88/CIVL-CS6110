@@ -1,0 +1,65 @@
+#include <civlc.cvh>
+
+$abstract int random(int x, int y);
+
+typedef struct point{
+  int x;
+  int y;
+} point_t;
+
+int times2(int k, int t){
+  return 2*k*t;
+}
+
+void f(){
+  $atomic{
+  int x=0;
+
+  x++;
+  }
+}
+
+point_t reverse(point_t old){
+  point_t new;
+
+  new.x=old.y;
+  new.y=old.x;
+  return new;
+}
+
+void main(){
+  int a=2;
+  int *b=&a;
+  void (*g)(void)=&f;
+  $proc p=$spawn g();
+  int c[2][2];
+  $domain(2) dom=($domain(2)){1 .. 4#2, 1 .. 4#2};
+  point_t pt;
+  double db;
+
+  a=a>0?times2(3, a*5):times2(a, a+6);
+  db=(double)a;
+  pt.x=1;
+  pt.y=pt.x+5;
+  pt.x=reverse(pt).x;
+  $wait(p);
+  p=$spawn g();
+  $wait(p);
+  a=random(a, a+2);
+  a=times2(a*a, a);
+  a=$next_time_count();
+  *b=$next_time_count();
+  a=-(a+*b*6);
+  $for(int i, j: dom)
+    c[(i-1)/2][(j-1)/2] = i*10 + j;
+  $assert($forall {int i | i >= 0 && i < 2} c[i][i] >= 0);
+  $assert($exists {int i | i >= 0 && i < 2} c[i][i] >= 0);
+  dom=($domain(2)){0 .. 1, 0 .. 1};
+  $parfor(int i, j: dom)
+    times2(i, j);
+  *b=*(&c[0][0]+1);
+  b=(int*)$malloc($root, sizeof(int)*2);
+  b[0]=c[0][0];
+  b[1]=c[1][1];
+  $free(b);
+}

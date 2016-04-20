@@ -1,0 +1,80 @@
+
+#define N 4
+$input float x[N];
+$input float epsilon;
+
+typedef struct Interval {
+  float left;
+  float right;
+} Interval;
+
+Interval emptyInterval;
+
+Interval makeInterval(float left, float right) {
+  Interval result;
+
+  if (left <= right) {
+    result.left = left;
+    result.right = right;
+  } else {
+    result.left = 0;
+    result.right = -1;
+  }
+  return result;
+}
+
+int empty(Interval a) {
+  return a.left > a.right;
+}
+
+int subset(Interval a, Interval b) {
+  return a.left >= b.left && a.right <= b.right;
+}
+
+Interval round(Interval a) {
+  if (empty(a))
+    return a;
+  else {
+    float left, right;
+  
+    if (a.left>=0) {
+      left = (1-epsilon)*a.left;
+      right = (1+epsilon)*a.right;
+    } else {
+      left = (1+epsilon)*a.left;
+      if (a.right>=0)
+        right = (1+epsilon)*a.right;
+      else
+        right = (1-epsilon)*a.right;
+    }
+    return makeInterval(left, right);
+  }
+}
+
+Interval plus(Interval a, Interval b) {
+  if (empty(a))
+    return a;
+  if (empty(b))
+    return b;
+  else
+    return makeInterval(a.left + b.left, a.right + b.right);
+}
+
+Interval fplus(Interval a, Interval b) {
+  return round(plus(a,b));
+}
+
+void main() {
+  Interval a[N];
+  Interval r1, r2;
+
+  emptyInterval = makeInterval(0,-1);
+  $assume epsilon>0 && epsilon<0.1;
+  for (int i=0; i<N; i++) {
+    a[i].left = x[i];
+    a[i].right = x[i];
+  }
+  r1 = fplus(fplus(fplus(a[0],a[1]),a[2]),a[3]);
+  r2 = fplus(fplus(a[0],a[1]), fplus(a[2],a[3]));
+  $assert subset(r2, r1);
+}

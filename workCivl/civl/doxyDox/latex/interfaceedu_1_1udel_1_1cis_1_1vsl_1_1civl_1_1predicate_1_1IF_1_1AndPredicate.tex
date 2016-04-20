@@ -1,0 +1,89 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+And\+Predicate Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+And\+Predicate@{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+And\+Predicate}}
+
+
+This represents a predicate in C\+N\+F, containing a number of predicates, called clauses, i.\+e., p1 \& p2 \& ...  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+And\+Predicate\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=269pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+And\+Predicate\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_aa4edbacc439482ff68e80520952e3fa3}{}void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_aa4edbacc439482ff68e80520952e3fa3}{add\+Clause} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1CIVLStatePredicate}{C\+I\+V\+L\+State\+Predicate} predicate)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_aa4edbacc439482ff68e80520952e3fa3}
+
+\begin{DoxyCompactList}\small\item\em Add a predicate as one clause of this And predicate. \end{DoxyCompactList}\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1CIVLStatePredicate}{C\+I\+V\+L\+State\+Predicate} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_a64e05b8917b8d735aaf47a13d37357a6}{clauses} ()
+\begin{DoxyCompactList}\small\item\em Returns all predicates contained by this And predicate. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1CIVLStatePredicate}{C\+I\+V\+L\+State\+Predicate} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_ad92067c90a11371ce37dda5f96a0534a}{get\+Unreported\+Violated\+Predicate} ()
+\begin{DoxyCompactList}\small\item\em Returns that predicate that has a violation that not yet been reported. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This represents a predicate in C\+N\+F, containing a number of predicates, called clauses, i.\+e., p1 \& p2 \& ... 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_a64e05b8917b8d735aaf47a13d37357a6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+And\+Predicate@{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+And\+Predicate}!clauses@{clauses}}
+\index{clauses@{clauses}!edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+And\+Predicate@{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+And\+Predicate}}
+\subsubsection[{clauses}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf C\+I\+V\+L\+State\+Predicate}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+And\+Predicate.\+clauses (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_a64e05b8917b8d735aaf47a13d37357a6}
+
+
+Returns all predicates contained by this And predicate. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonAndPredicate_a1026db7b2a971331b41a0d5e1287c7d6}{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+And\+Predicate}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_ad92067c90a11371ce37dda5f96a0534a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+And\+Predicate@{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+And\+Predicate}!get\+Unreported\+Violated\+Predicate@{get\+Unreported\+Violated\+Predicate}}
+\index{get\+Unreported\+Violated\+Predicate@{get\+Unreported\+Violated\+Predicate}!edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+And\+Predicate@{edu\+::udel\+::cis\+::vsl\+::civl\+::predicate\+::\+I\+F\+::\+And\+Predicate}}
+\subsubsection[{get\+Unreported\+Violated\+Predicate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+State\+Predicate} edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+And\+Predicate.\+get\+Unreported\+Violated\+Predicate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1AndPredicate_ad92067c90a11371ce37dda5f96a0534a}
+
+
+Returns that predicate that has a violation that not yet been reported. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1common_1_1CommonAndPredicate_a2f2ba1e03f85fe86734d972d2320c13d}{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+common.\+Common\+And\+Predicate}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/predicate/\+I\+F/And\+Predicate.\+java\end{DoxyCompactItemize}

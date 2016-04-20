@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonOmpForNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.omp</a> &gt; <span class="el_source">CommonOmpForNode.java</span></div><h1>CommonOmpForNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.omp;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+/**
+ * This implements the OpenMP loop construct. The loop construct specifies that
+ * the iterations of one or more associated loops will be executed in parallel
+ * by threads in the team in the context of their implicit tasks. The iterations
+ * are distributed across threads that already exist in the team executing the
+ * parallel region to which the loop region binds.&lt;br&gt;
+ * The syntax of the loop construct is as follows:&lt;br&gt;
+ * &lt;code&gt;
+ * #pragma omp for [clause[[,] clause] ... ] new-line &lt;br&gt;
+ * for-loops&lt;br&gt;
+ * &lt;/code&gt; where clause is one of the following:&lt;br&gt;
+ * &lt;code&gt;private(list)&lt;br&gt;
+ * firstprivate(list) &lt;br&gt;
+ * lastprivate(list) &lt;br&gt;
+ * reduction(reduction-identifier: list) &lt;br&gt;
+ * schedule(kind[, chunk_size]) &lt;br&gt;
+ * collapse(n)&lt;br&gt;
+ * ordered&lt;br&gt;
+ * nowait&lt;br&gt;&lt;/code&gt;
+ * 
+ * @author Manchun Zheng
+ * 
+ */
+public class CommonOmpForNode extends CommonOmpWorkshareNode implements
+		OmpForNode {
+
+	/**
+	 * The schedule specified by the optional schedule clause
+	 * &lt;code&gt;schedule(kind[, chunk_size])&lt;/code&gt;. The schedule can be one of the
+	 * following:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;STATIC (default)&lt;/li&gt;
+	 * &lt;li&gt;DYNAMIC&lt;/li&gt;
+	 * &lt;li&gt;GUIDED&lt;/li&gt;
+	 * &lt;li&gt;AUTO&lt;/li&gt;
+	 * &lt;li&gt;RUNTIME&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 */
+	private OmpScheduleKind schedule;
+
+	/**
+	 * The number of loops of this node, specified by the optional clause
+	 * &lt;code&gt;collapse(n)&lt;/code&gt;. If &lt;code&gt;collapse(n)&lt;/code&gt; is absent, collapse
+	 * is 1 by default.
+	 */
+	private int collapse;
+
+	/**
+	 * True if the clause &lt;code&gt;ordered&lt;/code&gt; is present, otherwise, false
+	 * (default).
+	 */
+	private boolean ordered;
+
+	/**
+	 * Creates a new instance of CommonOmpForNode. The children are:
+	 * 
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Children 0-7: same as {@link CommonOmpStatementNode};&lt;/li&gt;
+	 * &lt;li&gt;Child 8: ExpressionNode, the expression of chunk_size in
+	 * &lt;code&gt;schedule()&lt;/code&gt; ;&lt;/li&gt;
+	 * &lt;li&gt;Child 9: SequenceNode&amp;lt;FunctionCallNode&amp;gt;, the list of assertions
+	 * to be checked befor entering the for loop;&lt;/li&gt;
+	 * &lt;li&gt;Child 10: FunctionCallNode, the loop invariant;&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * All children are set to null except the statement node.
+	 * 
+	 * @param source
+	 *            The source code element of the OpenMP for node.
+	 * @param statement
+	 *            The statement node of the OpenMP for node to be created.
+	 */
+	public CommonOmpForNode(Source source, StatementNode statement) {
+<span class="nc" id="L87">		super(source, OmpWorksharingNodeKind.FOR, statement);</span>
+<span class="nc" id="L88">		collapse = 1;</span>
+<span class="nc" id="L89">		schedule = OmpScheduleKind.NONE;</span>
+<span class="nc" id="L90">		ordered = false;</span>
+<span class="nc" id="L91">		this.addChild(null);// child 8</span>
+<span class="nc" id="L92">		this.addChild(null);// child 9</span>
+<span class="nc" id="L93">		this.addChild(null);// child 10</span>
+<span class="nc" id="L94">	}</span>
+
+	@Override
+	public OmpScheduleKind schedule() {
+<span class="nc" id="L98">		return this.schedule;</span>
+	}
+
+	@Override
+	public int collapse() {
+<span class="nc" id="L103">		return this.collapse;</span>
+	}
+
+	@Override
+	public boolean ordered() {
+<span class="nc" id="L108">		return this.ordered;</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public SequenceNode&lt;FunctionCallNode&gt; assertions() {
+<span class="nc" id="L114">		return (SequenceNode&lt;FunctionCallNode&gt;) this.child(9);</span>
+	}
+
+	@Override
+	public FunctionCallNode invariant() {
+<span class="nc" id="L119">		return (FunctionCallNode) this.child(10);</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L124">		out.print(&quot;OmpFor&quot;);</span>
+<span class="nc" id="L125">	}</span>
+
+	@Override
+	public ExpressionNode chunkSize() {
+<span class="nc" id="L129">		return (ExpressionNode) this.child(8);</span>
+	}
+
+	@Override
+	public void setSchedule(OmpScheduleKind ompScheduleKind) {
+<span class="nc" id="L134">		this.schedule = ompScheduleKind;</span>
+<span class="nc" id="L135">	}</span>
+
+	@Override
+	public void setCollapse(int value) {
+<span class="nc" id="L139">		this.collapse = value;</span>
+<span class="nc" id="L140">	}</span>
+
+	@Override
+	public void setOrdered(boolean value) {
+<span class="nc" id="L144">		this.ordered = value;</span>
+<span class="nc" id="L145">	}</span>
+
+	@Override
+	public void setChunsize(ExpressionNode chunkSize) {
+<span class="nc" id="L149">		this.setChild(8, chunkSize);</span>
+<span class="nc" id="L150">	}</span>
+
+	@Override
+	protected void printExtras(String prefix, PrintStream out) {
+		String scheduleText;
+<span class="nc" id="L155">		ExpressionNode chunkSize = (ExpressionNode) this.child(8);</span>
+
+<span class="nc bnc" id="L157" title="All 6 branches missed.">		switch (schedule) {</span>
+		case STATIC:
+<span class="nc" id="L159">			scheduleText = &quot;static&quot;;</span>
+<span class="nc" id="L160">			break;</span>
+		case DYNAMIC:
+<span class="nc" id="L162">			scheduleText = &quot;dynamic&quot;;</span>
+<span class="nc" id="L163">			break;</span>
+		case GUIDED:
+<span class="nc" id="L165">			scheduleText = &quot;guided&quot;;</span>
+<span class="nc" id="L166">			break;</span>
+		case AUTO:
+<span class="nc" id="L168">			scheduleText = &quot;auto&quot;;</span>
+<span class="nc" id="L169">			break;</span>
+		case RUNTIME:
+<span class="nc" id="L171">			scheduleText = &quot;runtime&quot;;</span>
+<span class="nc" id="L172">			break;</span>
+		default:// NONE
+<span class="nc" id="L174">			scheduleText = null;</span>
+		}
+<span class="nc bnc" id="L176" title="All 4 branches missed.">		if (chunkSize != null &amp;&amp; scheduleText != null) {</span>
+<span class="nc" id="L177">			out.println();</span>
+<span class="nc" id="L178">			out.print(prefix + &quot;schedule(&quot;);</span>
+<span class="nc" id="L179">			out.print(scheduleText);</span>
+<span class="nc" id="L180">			out.print(&quot;,&quot;);</span>
+<span class="nc" id="L181">			out.print(chunkSize.toString());</span>
+<span class="nc" id="L182">			out.print(&quot;)&quot;);</span>
+		}
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (collapse &gt; 1) {</span>
+<span class="nc" id="L185">			out.println();</span>
+<span class="nc" id="L186">			out.print(prefix + &quot;collapse(&quot;);</span>
+<span class="nc" id="L187">			out.print(this.collapse);</span>
+<span class="nc" id="L188">			out.print(&quot;)&quot;);</span>
+		}
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (this.ordered) {</span>
+<span class="nc" id="L191">			out.println();</span>
+<span class="nc" id="L192">			out.print(&quot;ordered&quot;);</span>
+		}
+<span class="nc" id="L194">		super.printExtras(prefix, out);</span>
+<span class="nc" id="L195">	}</span>
+
+	@Override
+	public void setAssertions(SequenceNode&lt;FunctionCallNode&gt; assertions) {
+<span class="nc" id="L199">		this.setChild(9, assertions);</span>
+<span class="nc" id="L200">	}</span>
+
+	@Override
+	public void setInvariant(FunctionCallNode invariant) {
+<span class="nc" id="L204">		this.setChild(9, invariant);</span>
+<span class="nc" id="L205">	}</span>
+
+	@Override
+	public OmpForNode copy() {
+<span class="nc" id="L209">		OmpForNode newForNode = new CommonOmpForNode(this.getSource(), null);</span>
+<span class="nc" id="L210">		int numChildren = this.numChildren();</span>
+
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L213">			ASTNode child = this.child(i);</span>
+
+<span class="nc bnc" id="L215" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc" id="L216">				newForNode.setChild(i, child.copy());</span>
+			}
+		}
+<span class="nc" id="L219">		newForNode.setCollapse(this.collapse);</span>
+<span class="nc" id="L220">		newForNode.setOrdered(this.ordered);</span>
+<span class="nc" id="L221">		newForNode.setSchedule(this.schedule);</span>
+<span class="nc" id="L222">		return newForNode;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		if (that instanceof OmpForNode) {</span>
+<span class="nc" id="L228">			OmpForNode thatFor = (OmpForNode) that;</span>
+
+<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (this.collapse == thatFor.collapse()</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">					&amp;&amp; this.ordered == thatFor.ordered()</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">					&amp;&amp; this.schedule == thatFor.schedule())</span>
+<span class="nc" id="L233">				return null;</span>
+			else
+<span class="nc" id="L235">				return new DifferenceObject(this, that, DiffKind.OTHER,</span>
+<span class="nc" id="L236">						&quot;different collapse/ordered/schedule clauses&quot;);</span>
+		}
+<span class="nc" id="L238">		return new DifferenceObject(this, that);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

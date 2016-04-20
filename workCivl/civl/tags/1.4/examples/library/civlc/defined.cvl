@@ -1,0 +1,9 @@
+#include<civlc.cvh>
+
+int main(){
+  int a, b, c = 0;
+
+  $assert(!$defined(&a));
+  $assert(!$defined(&b));
+  $assert($defined(&c));
+}

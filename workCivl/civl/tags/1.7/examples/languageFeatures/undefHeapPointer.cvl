@@ -1,0 +1,14 @@
+#include<civlc.cvh>
+#include<stdlib.h>
+
+typedef struct node_t {
+  struct node_t *next;
+} node_t;
+
+void main() {
+  node_t *n = (node_t *)malloc(sizeof(node_t));
+  int x;
+  
+  if (n->next == NULL) // exception: reading undefined variable
+    x==1;
+}

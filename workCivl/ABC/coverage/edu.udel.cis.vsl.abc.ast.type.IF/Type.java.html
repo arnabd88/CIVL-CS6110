@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Type.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.IF</a> &gt; <span class="el_source">Type.java</span></div><h1>Type.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.type.IF;</span>
+
+import java.io.PrintStream;
+
+/**
+ * &lt;p&gt;
+ * An instance of Type represents a C type. A type is a conceptual entity, not a
+ * syntactic element. This class is the root of the type hierarchy for all types
+ * used to represent C types.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * There may also be additional types that are not part of C, but are part of
+ * some extension to C (such as CIVL-C).
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Summary of type hierarchy:
+ * &lt;/p&gt;
+ * 
+ * {@link Type}
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link FunctionType}
+ * &lt;li&gt;{@link ObjectType}
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link UnqualifiedObjectType}
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link ArithmeticType}&lt;/li&gt;
+ * &lt;li&gt;{@link ArrayType}&lt;/li&gt;
+ * &lt;li&gt;{@link AtomicType}&lt;/li&gt;
+ * &lt;li&gt;{@link StandardBasicType}&lt;/li&gt;
+ * &lt;li&gt;etc.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/li&gt;
+ * &lt;li&gt;{@link QualifiedObjectType}
+ * &lt;ul&gt;
+ * &lt;li&gt;uses one or more of &lt;code&gt;const&lt;/code&gt;, &lt;code&gt;volatile&lt;/code&gt;,
+ * &lt;code&gt;restrict&lt;/code&gt;, etc.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/ul&gt;
+ * 
+ * &lt;p&gt;
+ * Note: {@link AtomicType} and {@link QualifiedObjectType} constructors take an
+ * {@link UnqualifiedObjectType}.
+ * &lt;/p&gt;
+ * 
+ * 
+ * &lt;p&gt;
+ * Equivalence relations: there are 3 equivalence relations on the set of types.
+ * From strongest to weakest, they are: equality, equivalence, and
+ * compatibility. If T1 equals (according to the equals method) T2, then T1 is
+ * also equivalent to T2. If T1 is equivalent to T2 then T1 is compatible with
+ * T2.
+ * &lt;p&gt;
+ * 
+ * &lt;p&gt;
+ * The differences mainly involve tagged entities (structs, unions, enums). In
+ * C, it is possible for two structs (for example) to have the same tag, fields,
+ * and field types, but still represent two distinct types. This happens if they
+ * are declared in two different scopes. Hence it is necessary to specify some
+ * other &quot;hidden&quot; component of a struct type to determine when two are equal. We
+ * call this the &quot;key&quot;: this is any Object, whose &quot;equals&quot; method is used to
+ * determine when two tagged types are equal. For any key, there can be at most
+ * one struct type using that key. Hence two structs are equal if and only if
+ * their keys are equal. Since there can be only one struct object with that
+ * key, it follows that they are ==. This invariant is enforced by the type
+ * factory.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Two structs which are not equal may still be &quot;equivalent&quot;. This means they
+ * have equal tags (equal as strings), and, they are either both complete or
+ * both incomplete. If they are complete, they must have equivalent fields with
+ * the same names and in the same order.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Two structs which are not equal may nevertheless be &quot;compatible&quot;. An
+ * incomplete struct with tag T is compatible with any struct with tag T. An
+ * incomplete array type is compatible with a complete array type which has a
+ * compatible element type.
+ * &lt;/p&gt;
+ * 
+ * @author siegel
+ * 
+ */
+public interface Type {
+
+	/**
+	 * The different kinds of types.
+	 */
+<span class="fc" id="L94">	public static enum TypeKind {</span>
+<span class="fc" id="L95">		/**</span>
+		 * An array type; an instance of {@link ArrayType}
+		 */
+<span class="fc" id="L98">		ARRAY,</span>
+<span class="fc" id="L99">		/**</span>
+		 * An atomic type; an instance of {@link AtomicType}
+		 */
+<span class="fc" id="L102">		ATOMIC,</span>
+<span class="fc" id="L103">		/**</span>
+		 * A &quot;standard basic type&quot;; an instance of {@link StandardBasicType}
+		 */
+<span class="fc" id="L106">		BASIC,</span>
+<span class="fc" id="L107">		/**</span>
+		 * The CIVL-C domain type, &lt;code&gt;$domain&lt;/code&gt; or
+		 * &lt;code&gt;$domain(n)&lt;/code&gt;.
+		 */
+<span class="fc" id="L111">		DOMAIN,</span>
+<span class="fc" id="L112">		/**</span>
+		 * An enumeration type; an instance of {@link EnumerationType}
+		 */
+<span class="fc" id="L115">		ENUMERATION,</span>
+<span class="fc" id="L116">		/**</span>
+		 * A function type; an instance of {@link FunctionType}
+		 */
+<span class="fc" id="L119">		FUNCTION,</span>
+<span class="fc" id="L120">		/**</span>
+		 * The CIVL-C heap type, represented by &lt;code&gt;$heap&lt;/code&gt;
+		 */
+<span class="fc" id="L123">		HEAP,</span>
+<span class="fc" id="L124">		/**</span>
+		 * The CIVL-C memory type, represented by &lt;code&gt;$memory&lt;/code&gt;
+		 */
+<span class="fc" id="L127">		MEMORY,</span>
+<span class="fc" id="L128">		/**</span>
+		 * An integer type which is not a standard basic type. The C Standard
+		 * allows a C implementation to provide additional integer types beyond
+		 * those specified in the Standard.
+		 */
+<span class="fc" id="L133">		OTHER_INTEGER,</span>
+<span class="fc" id="L134">		/**</span>
+		 * A pointer type; an instance of {@link PointerType}
+		 */
+<span class="fc" id="L137">		POINTER,</span>
+<span class="fc" id="L138">		/**</span>
+		 * The CIVL-C process type, represented by &lt;code&gt;$proc&lt;/code&gt;
+		 */
+<span class="fc" id="L141">		PROCESS,</span>
+<span class="fc" id="L142">		/**</span>
+		 * A qualified object type; an instance of {@link QualifiedObjectType}
+		 */
+<span class="fc" id="L145">		QUALIFIED,</span>
+<span class="fc" id="L146">		/**</span>
+		 * The CIVL-C range type, denoted &lt;code&gt;$range&lt;/code&gt;
+		 */
+<span class="fc" id="L149">		RANGE,</span>
+<span class="fc" id="L150">		/**</span>
+		 * The CIVL-C scope type, represented by &lt;code&gt;$scope&lt;/code&gt;
+		 */
+<span class="fc" id="L153">		SCOPE,</span>
+<span class="fc" id="L154">		/**</span>
+		 * A structure or union type; an instance of
+		 * {@link StructureOrUnionType}
+		 */
+<span class="fc" id="L158">		STRUCTURE_OR_UNION,</span>
+<span class="fc" id="L159">		/**</span>
+		 * The &lt;code&gt;void&lt;/code&gt; type, used to represent no type in places where
+		 * a type is syntactically required.
+		 */
+<span class="fc" id="L163">		VOID</span>
+	};
+
+	/**
+	 * &lt;p&gt;
+	 * Is this type &quot;compatible&quot; with the given type? See C11 Sec. 6.2.7 for the
+	 * definition of &quot;compatible&quot;.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Special handling for tags that begin with &quot;$anon&quot;--all of these are
+	 * treated as identical. These are the names given to anonymous entities by
+	 * ABC for convenience.
+	 * &lt;/p&gt;
+	 * 
+	 * @param type
+	 *            the type to compare with this one for compatibility
+	 * @return true iff the two types are compatible
+	 */
+	boolean compatibleWith(Type type);
+
+	/**
+	 * &lt;p&gt;
+	 * Is this type &quot;equivalent to&quot; the given type. Two equivalent types should
+	 * be interchangeable in any situation. Note that an incomplete struct type
+	 * (for example) will never be equivalent to a complete struct type, though
+	 * they may be compatible.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * Special handling for tags that begin with &quot;$anon&quot;--all of these are
+	 * treated as identical. These are the names given to anonymous entities by
+	 * ABC for convenience.
+	 * &lt;/p&gt;
+	 * 
+	 * @param type
+	 *            any type
+	 * @return true iff the two types are equivalent.
+	 */
+	boolean equivalentTo(Type type);
+
+	/**
+	 * The types created by the type factories are given unique id numbers. This
+	 * method returns the id number of this type.
+	 * 
+	 * @return the id number of this type
+	 */
+	int getId();
+
+	/**
+	 * C11 6.2.4(21):
+	 * 
+	 * &quot;Arithmetic types and pointer types are collectively called scalar types.&quot;
+	 * 
+	 * @return true iff type is scalar
+	 */
+	boolean isScalar();
+
+	/**
+	 * Is this type a &quot;VM&quot; type (variable modified type)? This is defined in the
+	 * C11 Standard Sec. 6.7.6:
+	 * 
+	 * &lt;blockquote&gt; If, in the nested sequence of declarators in a full
+	 * declarator, there is a declarator specifying a variable length array
+	 * type, the type specified by the full declarator is said to be variably
+	 * modified. Furthermore, any type derived by declarator type derivation
+	 * from a variably modified type is itself variably modified. &lt;/blockquote&gt;
+	 * 
+	 * The definition of &quot;variable length array type&quot; is given in Sec. 6.7.6.2:
+	 * 
+	 * &lt;blockquote&gt; If the size is not present, the array type is an incomplete
+	 * type. If the size is * instead of being an expression, the array type is
+	 * a variable length array type of unspecified size, which can only be used
+	 * in declarations or type names with function prototype scope;143) such
+	 * arrays are nonetheless complete types. If the size is an integer constant
+	 * expression and the element type has a known constant size, the array type
+	 * is not a variable length array type; otherwise, the array type is a
+	 * variable length array type. (Variable length arrays are a conditional
+	 * feature that implementations need not support; see 6.10.8.3.)
+	 * &lt;/blockquote&gt;
+	 * 
+	 * @return true iff this type is a VM type
+	 */
+	boolean isVariablyModified();
+
+	/**
+	 * The kind of type this is. See definition of the enumerated type
+	 * {@link TypeKind}. These kinds partition the set of all types.
+	 * 
+	 * @return the kind of this type
+	 */
+	TypeKind kind();
+
+	/**
+	 * Prints the type in a tree-formatted style. The prefix string is prepended
+	 * to each line of output other than the first. Output for structure or
+	 * union types may leave out the fields by setting abbrv to true.
+	 * 
+	 * @param prefix
+	 *            string to preprend to lines after first
+	 * @param out
+	 *            PrintStream to which output should be sent
+	 * @param abbrv
+	 *            if true, abbreviate representations of structure or union
+	 *            types by leaving out their fields
+	 */
+	void print(String prefix, PrintStream out, boolean abbrv);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

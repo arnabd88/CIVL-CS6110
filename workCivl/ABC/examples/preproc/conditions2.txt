@@ -1,0 +1,10 @@
+# if defined X
+do
+              this
+                  #elif 1==0
+do that
+  #  elif defined(Y)
+give up
+#else
+done
+# endif

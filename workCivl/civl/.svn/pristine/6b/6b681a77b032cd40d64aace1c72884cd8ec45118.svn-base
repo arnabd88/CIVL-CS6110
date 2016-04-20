@@ -1,0 +1,11 @@
+#Include <civlc.cvh>
+#include <stdio.h>
+
+$input int num;
+
+void main(){
+  char c;
+  int b = 256;
+
+  c = (char)b;
+}

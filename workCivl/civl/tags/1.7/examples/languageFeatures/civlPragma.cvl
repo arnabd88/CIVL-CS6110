@@ -1,0 +1,17 @@
+#include <civlc.cvh>
+
+#pragma CIVL $input int NB;
+$input int N;
+#pragma CIVL $assume(0<N && N<NB);
+
+void main(){
+  int sum = 0;
+  int i = 0;
+  
+  for(i = 0; i <= N; i++){
+    sum += i;
+  }
+  #pragma CIVL $assert(N<NB);
+  #pragma CIVL $assert(i<=NB);
+  #pragma CIVL $assert(sum == N*(N+1)/2);
+}

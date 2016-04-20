@@ -1,0 +1,21 @@
+#include <civlc.cvh>
+#include <memory.cvh>
+
+int X=0;
+
+void p(int*x)
+{
+  *x=10;
+}
+
+void q(int *x){
+  *x = 20;
+}
+
+
+void main(){
+  $proc px=$spawn p(&X), py=$spawn q(&X);
+  $wait(px);
+  $wait(py);
+  $assert(X==20);
+}

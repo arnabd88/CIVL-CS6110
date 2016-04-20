@@ -1,0 +1,395 @@
+#include <civlc.cvh>
+/* This header file contains useful helper functions for manipulating
+ * the CIVL versions of various Cuda objects.
+ */
+
+#include <string.h>
+#include <stdlib.h>
+#include <concurrency.cvh>
+#include <civl-cuda.cvh>
+
+
+/* type used to represent an instance of a Cuda kernel
+ */
+struct $cuda_kernel_instance {
+  $proc process;        // the actual process executing this kernel
+  $cuda_kernel_status status; // the kernel status
+};
+
+/* a type that wraps a kernel instance for insertion into a list
+ */
+struct $cuda_kernel_instance_node {
+  $cuda_kernel_instance_t *instance;
+  $cuda_kernel_instance_node_t  *next;
+};
+
+/* $cuda_kernel_instance_node_t interface
+ */
+$cuda_kernel_instance_t *$cuda_get_instance($cuda_kernel_instance_node_t *node) {
+  return node->instance;
+}
+
+/* a type used to represent a Cuda stream
+ */
+struct _CUstream {
+    $cuda_kernel_instance_node_t *mostRecent;  // the most recently enqueued instance
+    _Bool usable;                     // indicates whether or not this stream
+                                      // has been marked for deletion
+};
+
+/* _CUstream interface
+ */
+$cuda_kernel_instance_node_t *$cuda_get_most_recent(cudaStream_t s) {
+  return s->mostRecent;
+}
+
+_Bool $cuda_is_usable(cudaStream_t s) {
+  return s->usable;
+}
+
+void $cuda_set_usable(cudaStream_t s, _Bool b) {
+  s->usable = b;
+}
+
+/* a type that wraps a stream for insertion into a list
+ */
+struct $cuda_stream_node {
+  cudaStream_t stream;
+  $cuda_stream_node_t *next;
+};
+
+/* $cuda_stream_node_t encapsulation functions
+ */
+void $cuda_set_stream($cuda_stream_node_t* node, cudaStream_t stream) {
+  node->stream = stream;
+}
+
+void $cuda_set_next($cuda_stream_node_t* node, $cuda_stream_node_t* next) {
+  node->next = next;
+}
+
+/* a type used to represent a Cuda event
+ */
+struct _CUevent {
+  $cuda_kernel_instance_t **instances;
+  int numInstances;
+};
+
+/* _CUevent encapsulation functions
+ */
+$cuda_kernel_instance_t **$cuda_get_instances(cudaEvent_t e) {
+  return e->instances;
+}
+
+void $cuda_set_instances(cudaEvent_t e, $cuda_kernel_instance_t** instances, int numInstances) {
+  e->instances = instances;
+  e->numInstances = numInstances;
+}
+
+int $cuda_get_num_instances(cudaEvent_t e) {
+  return e->numInstances;
+}
+
+/* a type representing the state of a Cuda device
+ */
+struct $cuda_context {
+  $cuda_stream_node_t *headNode;
+  cudaStream_t nullStream;
+  int numStreams;
+};
+
+/* $cuda_context_t encapsulation functions
+ */
+int $cuda_get_num_streams($cuda_context_t *_context) {
+  return _context->numStreams;
+}
+
+$cuda_stream_node_t *$cuda_get_head_node($cuda_context_t *_context) {
+  return _context->headNode;
+}
+
+cudaStream_t $cuda_get_null_stream($cuda_context_t *_context) {
+  return _context->nullStream;
+}
+
+void $cuda_add_new_stream($cuda_context_t *_context, $cuda_stream_node_t *newNode) {
+  _context->headNode = newNode;
+  _context->numStreams++;
+}
+
+/* Computes the one dimensional index of a grid cell at a given location
+ * in a three dimensional grid of a given size
+ */
+int $cuda_index (dim3 size, uint3 location) {
+  return location.x + size.x * (location.y + size.y * location.z);
+}
+
+/* Lifts a single integer x into a three dimensional vector representing
+ * a one dimensional grid of length x
+ */
+dim3 $cuda_to_dim3(int x) {
+  dim3 d = { x, 1, 1 };
+
+  return d;
+}
+
+/* Given a three dimensional vector representing a grid of size dim,
+ * create and destroy a process, in parallel, for each cell in the grid. 
+ * The location of the cell is passed to the spawning function.
+ */
+void $cuda_run_procs(dim3 dim, void spawningFunction(uint3)) {
+  $range rx = 0 .. dim.x - 1;
+  $range ry = 0 .. dim.y - 1;
+  $range rz = 0 .. dim.z - 1;
+  $domain(3) dom = ($domain){rx, ry, rz};
+  $parfor(int x,y,z : dom){
+    uint3 id = { x, y, z };
+    spawningFunction(id);
+  }
+}
+
+// ------------------------------------------------
+
+/* $wait on a given process is it is non-null
+ */
+void $cuda_try_wait($proc p) {
+  if (p != $proc_null) 
+    $wait(p);
+}
+
+/* The current state of the GPU
+ */
+$cuda_context_t $cuda_current_context = { 
+  .headNode = NULL, 
+  .nullStream = NULL,
+  .numStreams = 0
+};
+
+/* malloc and initialize a new $cuda_kernel_instance_t
+ */
+$cuda_kernel_instance_t *$cuda_kernel_instance_create() {
+  //printf("mallocing kernel instance\n");
+  $cuda_kernel_instance_t *i = ($cuda_kernel_instance_t*)malloc(sizeof($cuda_kernel_instance_t));
+
+  i->process = $proc_null;
+  i->status = $cuda_kernel_status_waiting;
+  return i;
+}
+
+/* cleanup and free a given $cuda_kernel_instance_t
+ */
+void $cuda_kernel_instance_destroy($cuda_kernel_instance_t *i) {
+  $cuda_try_wait(i->process);
+  //printf("freeing kernel instance\n");
+  $free(i); 
+}
+
+/* malloc and initialize a new $cuda_kernel_instance_node_t
+ */
+$cuda_kernel_instance_node_t *$cuda_kernel_instance_node_create() {
+  //printf("mallocing kernel instance node\n");
+  $cuda_kernel_instance_node_t *node = ($cuda_kernel_instance_node_t*)malloc(sizeof($cuda_kernel_instance_node_t));
+
+  node->instance = NULL;
+  node->next = NULL;
+  return node;
+}
+
+/* cleanup and free a given $cuda_kernel_instance_node_t
+ */
+void $cuda_kernel_instance_node_destroy($cuda_kernel_instance_node_t *node) {
+  $cuda_kernel_instance_destroy(node->instance);
+  //printf("freeing kernel instance node\n");
+  $free(node); 
+}
+
+/* malloc and initialize a new stream
+ */
+cudaStream_t $cuda_stream_create() {
+  cudaStream_t s;
+
+  //printf("mallocing cuda stream\n");
+  s = (cudaStream_t)malloc(sizeof(_CUstream));
+  s->mostRecent = $cuda_kernel_instance_node_create();
+  s->mostRecent->instance = $cuda_kernel_instance_create();
+  s->mostRecent->instance->status = $cuda_kernel_status_finished;
+  s->usable = $true;
+  return s;
+}
+
+/* block until the most recently enqueued process on the given stream
+ * has terminated (meaning all kernels in that stream have completed)
+ */
+void $cuda_stream_wait(cudaStream_t s) {
+  $cuda_kernel_instance_t *mostRecentInstance = s->mostRecent->instance;
+
+  $when (mostRecentInstance->status == $cuda_kernel_status_finished) ;
+}
+
+/* block until no more streams have kernels executing
+ */
+void $cuda_stream_wait_all() {
+  $cuda_stream_node_t *curNode = $cuda_current_context.headNode;
+
+  while (curNode != NULL) {
+      $cuda_stream_wait(curNode->stream);
+      curNode = curNode->next;
+  }
+}
+
+/* cleanup and free a given stream
+ */
+void $cuda_stream_destroy(cudaStream_t s) {
+  $cuda_kernel_instance_node_t *curNode = s->mostRecent;
+  $cuda_kernel_instance_node_t *nextNode;
+
+  while (curNode != NULL) {
+    nextNode = curNode->next;
+    $cuda_kernel_instance_node_destroy(curNode);
+    curNode = nextNode;
+  }
+  //printf("freeing cuda stream\n");
+  $free(s);
+}
+
+/* malloc and initialize a new $cuda_stream_node_t
+ */
+$cuda_stream_node_t *$cuda_stream_node_create() {
+  //printf("mallocing cuda stream node\n");
+  $cuda_stream_node_t *node = ($cuda_stream_node_t*)malloc(sizeof($cuda_stream_node_t));
+
+  node->stream = NULL;
+  node->next = NULL;
+  return node;
+}
+
+/* cleanup and free a given $cuda_stream_node_t
+ */
+void $cuda_stream_node_destroy($cuda_stream_node_t *node) {
+  $assert((!node->stream->usable));
+  $cuda_stream_destroy(node->stream);
+  //printf("freeing cuda stream node\n");
+  $free(node);
+}
+
+/* destroy all stream nodes contained in the context
+ */
+void $cuda_stream_node_destroy_all() {
+  $cuda_stream_node_t *curNode = $cuda_current_context.headNode;
+  $cuda_stream_node_t *nextNode;
+
+  while (curNode != NULL) {
+    nextNode = curNode->next;
+    $cuda_stream_node_destroy(curNode);
+    curNode = nextNode;
+  }
+  $cuda_current_context.headNode = NULL;
+}
+
+/* malloc and initialize a new event
+ */
+cudaEvent_t $cuda_event_create() {
+  //printf("mallocing event\n");
+  cudaEvent_t e = (cudaEvent_t)malloc(sizeof(_CUevent));
+
+  e->numInstances = 0;
+  e->instances = NULL;
+  return e;
+}
+
+/* block until all $cuda_kernel_instance_ts contained in this event have
+ * completed
+ */
+void $cuda_event_wait(cudaEvent_t e) {
+  for (int i = 0; i < e->numInstances; i++) {
+    $when (e->instances[i]->status == $cuda_kernel_status_finished) ;
+  }
+}
+
+/* cleanup and free a given event
+ */
+void $cuda_event_destroy(cudaEvent_t e) {
+  if (e->instances != NULL) { 
+    //printf("freeing instance list a\n");
+    $free(e->instances);
+  }
+  //printf("freeing event\n");
+  $free(e);
+}
+
+/* initialize the cuda context. must be called before any cuda functions.
+ */
+void $cuda_init() {
+  $cuda_current_context.nullStream = $cuda_stream_create();
+}
+
+/* cleanup the cuda context. must be called after all cuda functions.
+ */
+void $cuda_finalize() {
+  $cuda_stream_wait_all();
+  $cuda_stream_wait($cuda_current_context.nullStream);
+  $cuda_stream_node_destroy_all();
+  $cuda_stream_destroy($cuda_current_context.nullStream);
+}
+
+/* returns an array of pointers to the most recently enqueued kernel
+ * of each stream.
+ */
+$cuda_kernel_instance_t **$cuda_all_most_recent_kernels() {
+  int n = $cuda_current_context.numStreams + 1;
+  $cuda_stream_node_t *curNode = $cuda_current_context.headNode;
+  //printf("mallocing instance list a\n");
+  $cuda_kernel_instance_t **insts = ($cuda_kernel_instance_t**)malloc(n * sizeof($cuda_kernel_instance_t*)) ;
+
+  insts[0] = $cuda_current_context.nullStream->mostRecent->instance;
+  for (int i = 1; i < n; i++, curNode = curNode->next) {
+    insts[i] = curNode->stream->mostRecent->instance;
+  }
+  return insts;
+}
+
+/* create a kernel instance for the given function k, and enqueue it
+ * onto the given stream.
+ */
+void $cuda_enqueue_kernel(cudaStream_t stream, void (*k)($cuda_kernel_instance_t*, cudaEvent_t)) {
+  cudaStream_t s;
+  cudaEvent_t e = $cuda_event_create();
+  $cuda_kernel_instance_node_t *newNode = $cuda_kernel_instance_node_create();
+
+  if (stream == NULL) {
+    e->numInstances = $cuda_current_context.numStreams + 1;
+    e->instances = $cuda_all_most_recent_kernels();
+    s = $cuda_current_context.nullStream;
+  } else {
+    e->numInstances = 2;
+    //printf("mallocing instance list b\n");
+    e->instances = ($cuda_kernel_instance_t**)malloc(2 * sizeof($cuda_kernel_instance_t*)) ;
+    e->instances[0] = stream->mostRecent->instance;
+    e->instances[1] = $cuda_current_context.nullStream->mostRecent->instance;
+    s = stream;
+  }
+  $assert((s->usable));
+  newNode->instance = $cuda_kernel_instance_create();
+  newNode->next = s->mostRecent;
+  s->mostRecent = newNode;
+  s->mostRecent->instance->process = $spawn k(s->mostRecent->instance, e);
+}
+
+/* called by kernel processes. wait on the given event, then update
+ * the status of the calling kernel to indicate it has finished waiting
+ */
+void $cuda_wait_in_queue ($cuda_kernel_instance_t *this, cudaEvent_t e) {
+  $cuda_event_wait(e);
+  $cuda_event_destroy(e);
+  this->status = $cuda_kernel_status_running;
+}
+
+/* called by kernel processes. update the status of the calling kernel
+ * to indicate that it has completed execution
+ */
+void $cuda_kernel_finish($cuda_kernel_instance_t *k) {
+  k->status = $cuda_kernel_status_finished;
+}
+
+#endif
+

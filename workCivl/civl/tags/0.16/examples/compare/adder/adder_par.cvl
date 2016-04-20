@@ -1,0 +1,99 @@
+/*****************************************
+ * SOURCE: adder_par.c by vsl@udel
+ *         The source program is included in FEVS
+ *         vsl.cis.udel.edu/fevs
+ * FILE: adder_par.cvl
+ * DESCRIPTION: This a manually translated 
+ *   CIVL program which is based on "adder_par.c"
+ *   This program sums all elements of an array
+ *   up.
+ *
+ * AUTHOR: Ziqing Luo
+ * COMMANS: civl verify adder_par.cvl 
+ *          -inputNPROCSB=5 -inputNB=10
+ *          or
+ *          make civl
+ *****************************************/
+
+#include<civlc.cvh>
+#include<stdio.h>
+#include<mpi.h>
+#include<civlmpi.cvh>
+#include<assert.h>
+
+$input int NPROCS;
+$input int NPROCSB;
+$input int N; 
+$input int NB;
+$input double a[N];
+$output double SUM;
+$assume 0 < N && N < NB;
+$assume 0 < NPROCS && NPROCS <= NPROCSB;
+$assume NPROCS <= N;
+
+CMPI_Gcomm __MPI_COMM_WORLD;
+
+void MPI_Process(int place){
+  double sum;
+  double localSum = 0.0;
+  int PID;
+  int nprocs; 
+  MPI_Comm MPI_COMM_WORLD;
+  __MPI_Sys_status__ _my_status = __UNINIT;
+
+  $assert _my_status == __UNINIT;
+  double computeGlobalSum() {
+    double result = localSum;
+    double buffer;
+    int i;
+    MPI_Status status;
+
+    for (i=1; i<nprocs; i++) {
+      MPI_Recv(&buffer, 1, MPI_DOUBLE, i, 0, MPI_COMM_WORLD, &status);
+      result += buffer;
+    }
+    return result;
+  }
+    
+  int _main() {
+    
+    int first;
+    int afterLast; 
+    int i;
+
+    MPI_COMM_WORLD = CMPI_Comm_create($here, __MPI_COMM_WORLD, place);
+    __MPI_Init();
+    MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
+    MPI_Comm_rank(MPI_COMM_WORLD, &PID);
+    first = N * PID / nprocs;
+    afterLast = N * (PID + 1) / nprocs;
+
+    for (i=first; i<afterLast; i++) localSum += a[i];
+    if (PID == 0) {
+      sum = computeGlobalSum(); 
+      SUM = sum;
+      printf("%lf\n", sum);
+    } else {
+      MPI_Send(&localSum, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+    }
+    __MPI_Finalize();
+    CMPI_Comm_destroy(MPI_COMM_WORLD);
+    return 0;
+  }
+
+  _main();
+}
+
+void main(){
+  for(int i = 0; i<NPROCS; i++);
+  for(int i = 0; i<N; i++);
+
+  $proc procs[NPROCS];
+
+  __MPI_COMM_WORLD = CMPI_Gcomm_create($root, NPROCS);
+  for(int i = 0; i<NPROCS; i++)
+    procs[i] = $spawn MPI_Process(i);
+  for(int i = 0; i<NPROCS; i++)
+    $wait(procs[i]);
+  CMPI_Gcomm_destroy(__MPI_COMM_WORLD);
+}

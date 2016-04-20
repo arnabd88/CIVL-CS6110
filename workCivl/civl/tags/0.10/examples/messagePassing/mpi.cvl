@@ -1,0 +1,170 @@
+
+typedef struct CMPI_Gcomm {
+  $gcomm p2p; // point-to-point communication
+  $gcomm col; // collective communication
+} CMPI_Gcomm;
+
+CMPI_Gcomm CMPI_Gcomm_create($scope scope, int size) {
+  CMPI_Gcomm result;
+
+  result.p2p = $gcomm_create(scope, size);
+  result.col = $gcomm_create(scope, size);
+  return result;
+}
+
+void CMPI_Gcomm_destroy(CMPI_Gcomm gc) {
+  $gcomm_destroy(gc.p2p);
+  $gcomm_destroy(gc.col);
+}
+
+typedef struct MPI_Comm {
+  $comm p2p; // point-to-point communication
+  $comm col; // collective communication
+} MPI_Comm;
+
+MPI_Comm MPI_Comm_create($scope scope, CMPI_Gcomm gc, int rank) {
+  MPI_Comm result;
+  
+  result.p2p = $comm_create(scope, gc.p2p, rank);
+  result.col = $comm_create(scope, gc.col, rank);
+  return result;
+}
+
+void MPI_Comm_destroy(MPI_Comm comm) {
+  $comm_destroy(comm.p2p);
+  $comm_destroy(comm.col);
+}
+
+typedef enum {
+  MPI_INT,
+  MPI_FLOAT,
+  MPI_DOUBLE,
+  MPI_CHAR
+} MPI_Datatype;
+
+#define BCAST_TAG 999
+
+#define MPI_PROC_NULL -3
+
+typedef struct {
+  int MPI_SOURCE;
+  int MPI_TAG;
+  int MPI_ERROR;
+  int size;
+} MPI_Status;
+
+#define MPI_STATUS_IGNORE NULL
+
+#define MPI_STATUSES_IGNORE NULL
+
+int sizeofDatatype(MPI_Datatype datatype) {
+  switch (datatype) {
+  case MPI_INT:
+    return sizeof(int);
+  case MPI_FLOAT:
+    return sizeof(float);
+  case MPI_DOUBLE:
+    return sizeof(double);
+  case MPI_CHAR:
+    return sizeof(char);
+  default:
+    $assert(0, "Unreachable");
+  }
+}
+
+int MPI_Init() {
+  return 0;
+}
+
+int MPI_Finalize() {
+  return 0;
+}
+
+int MPI_Comm_size(MPI_Comm comm, int *size) {
+  *size = $comm_size(comm.p2p);
+  return 0;
+}
+
+int MPI_Comm_rank(MPI_Comm comm, int *rank) {
+  *rank = $comm_place(comm.p2p);
+  return 0;
+}
+
+
+int CMPI_Send(void *buf, int count, MPI_Datatype datatype, int dest,
+	      int tag, $comm comm) {
+  if (dest >= 0) {
+    int size = count*sizeofDatatype(datatype);
+    int place = $comm_place(comm);
+    $message out = $message_pack(place, dest, tag, buf, size);
+
+    $comm_enqueue(comm, out);
+  }
+  return 0;
+}
+
+int MPI_Send(void *buf, int count, MPI_Datatype datatype, int dest,
+	     int tag, MPI_Comm comm) {
+  return CMPI_Send(buf, count, datatype, dest, tag, comm.p2p);
+}
+
+
+int CMPI_Recv(void *buf, int count, MPI_Datatype datatype, int source,
+	      int tag, $comm comm, MPI_Status *status) {
+  if (source >= 0) {
+    $message in = $comm_dequeue(comm, source, tag);
+    int size = count*sizeofDatatype(datatype);
+
+    $message_unpack(in, buf, size);
+    if (status != MPI_STATUS_IGNORE) {
+      status->size = $message_size(in);
+      status->MPI_SOURCE = $message_source(in);
+      status->MPI_TAG = $message_tag(in);
+      status->MPI_ERROR = 0;
+    }
+  }
+  return 0;
+}
+
+int MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source,
+	     int tag, MPI_Comm comm, MPI_Status *status) {
+  return CMPI_Recv(buf, count, datatype, source, tag, comm.p2p, status);
+}
+
+int MPI_Get_count(MPI_Status *status, MPI_Datatype datatype, int *count) {
+  *count = status->size/sizeofDatatype(datatype);
+  return 0;
+}
+
+int MPI_Sendrecv(void *sendbuf, int sendcount, MPI_Datatype sendtype,
+		 int dest, int sendtag,
+		 void *recvbuf, int recvcount, MPI_Datatype recvtype,
+		 int source, int recvtag,
+		 MPI_Comm comm, MPI_Status *status) {
+  MPI_Send(sendbuf, sendcount, sendtype, dest, sendtag, comm);
+  MPI_Recv(recvbuf, recvcount, recvtype, source, recvtag, comm, status);
+  return 0;
+}
+
+/* Broadcasts a message from root to everyone else.
+ * Need to use a differnt comm.
+ */
+int MPI_Bcast(void *buf, int count, MPI_Datatype datatype, int root,
+	      MPI_Comm comm) {
+  int place = $comm_place(comm.col);
+
+#ifdef DEBUG
+  printf("MPI_Bcast: place=%d, count=%d, root=%d\n", place, count, root);
+#endif
+  if (place == root) {
+    int nprocs = $comm_size(comm.col);
+
+    for (int i=0; i<nprocs; i++)
+      if (i != root)
+	CMPI_Send(buf, count, datatype, i, BCAST_TAG, comm.col);
+  } else {
+    CMPI_Recv(buf, count, datatype, root, BCAST_TAG, comm.col,
+	     MPI_STATUS_IGNORE);
+  }
+  return 0;
+}

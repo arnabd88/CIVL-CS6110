@@ -1,0 +1,25 @@
+/* assoc.cvl: adds the elements of an array in two different
+ * orders, and checks the results agree.  This relies on the
+ * use of real arithmetic, as opposed to floating-point
+ * arithmetic. 
+ *
+ * Should be run at commandline specifying an upper bound on
+ * the length of the array.  Example:
+ *      civl verify -inputB=100 assoc.cvl
+ */
+#include <civlc.cvh>
+$input int B = 10;
+$input int n;
+$assume(0<=n && n<B);
+$input double a[n];
+
+void main() {
+  double s0 = 0.0;
+  double s1 = 0.0;
+
+  for (int i = 0; i < n; i++) {
+    s0 += a[i];
+    s1 += a[n-1-i];
+  }
+  $assert((s0 == s1));
+}

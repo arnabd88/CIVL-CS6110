@@ -1,0 +1,25 @@
+#include <pointer.cvh>
+#include <stdlib.h>
+
+typedef struct INT_DOUBLE {
+  int head;
+  double tail;
+}INT_DOUBLE;
+
+int main() {
+  INT_DOUBLE * array, * single;
+
+  array = (INT_DOUBLE*)malloc(2 * sizeof(INT_DOUBLE));
+  array[0].head = 1;
+  array[0].tail = 2.3;
+  array[1].head = 1;
+  array[1].tail = 2.3;
+  $assert_equals(&array[0], &array[1], "Two pointers to two objects have same values are not equal");
+  single = &array[1];
+  $assert_equals(&array[0], single, "Two pointers to two objects have same values are not equal");
+  single = &array[0];	    
+  $assert_equals(&array[0], single, "Two pointers to the same object are not equal");
+  $assert_equals(array, &array[0], "At least one pointers are not pointing to the first element of the array");
+  free(array);		    
+  return 0;
+}

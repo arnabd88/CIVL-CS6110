@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Timer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.util.IF</a> &gt; <span class="el_source">Timer.java</span></div><h1>Timer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.util.IF;
+
+import java.io.PrintStream;
+
+/**
+ * An object used to print how long it takes to do things.
+ * 
+ * @author siegel
+ *
+ */
+public class Timer {
+
+	/**
+	 * The last marked absolute time, in milliseconds. This is initialized to
+	 * the current time when this object is instantiated, and is reset to the
+	 * current time whenever method {@link #markTime} is called.
+	 */
+	private long time;
+
+	/**
+	 * The stream to which the output should be printed, or null if the output
+	 * should not be printed.
+	 */
+	private PrintStream out;
+
+	/**
+	 * Constructs a new &quot;do-nothing&quot; timer. Nothing is printed, nothing is
+	 * timed. Here for convenience only, so that users can say &quot;markTime()&quot;
+	 * whenever they want.
+	 */
+<span class="nc" id="L31">	public Timer() {</span>
+<span class="nc" id="L32">		out = null;</span>
+<span class="nc" id="L33">	}</span>
+
+	/**
+	 * Constructs new timer which will print output to the given stream.
+	 * 
+	 * @param out
+	 *            stream to which output should be printed
+	 */
+<span class="nc" id="L41">	public Timer(PrintStream out) {</span>
+<span class="nc" id="L42">		this.out = out;</span>
+<span class="nc" id="L43">		time = System.currentTimeMillis();</span>
+<span class="nc" id="L44">	}</span>
+
+	/**
+	 * Prints a message which includes the amount of time (in seconds, rounded
+	 * to thousandths), since the last call to {@link markTime()}, or since
+	 * instantiation if this is the first such call.
+	 * 
+	 * @param message
+	 *            this message is inserted into the actual message that is
+	 *            printed. This message should be a simple verbal phrase, such
+	 *            as &quot;compile program&quot;, or &quot;preprocess source code&quot;.
+	 */
+	public void markTime(String message) {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (out != null) {</span>
+<span class="nc" id="L58">			long newTime = System.currentTimeMillis();</span>
+<span class="nc" id="L59">			double elapsedSeconds = (newTime - time) / 1000.0;</span>
+
+<span class="nc" id="L61">			time = newTime;</span>
+<span class="nc" id="L62">			out.printf(&quot;%10.3fs: time to %s\n&quot;, elapsedSeconds, message);</span>
+<span class="nc" id="L63">			out.flush();</span>
+		}
+<span class="nc" id="L65">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

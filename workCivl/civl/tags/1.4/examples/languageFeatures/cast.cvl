@@ -1,0 +1,18 @@
+/* Commandline execution:
+ *		civl verify cast.cvl
+ * */
+#include<civlc.cvh>
+#include<assert.h>
+
+void main() {
+  int i = 0;
+  float j = (float) i;
+  int a = 0;
+  _Bool bo = (_Bool)a;
+  
+  assert(!bo);
+  a = -1;
+  bo = (_Bool)a;
+  assert(bo);
+  $assert((j == 0.0));
+}

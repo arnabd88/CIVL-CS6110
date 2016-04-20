@@ -1,0 +1,21 @@
+Session name....... driver
+Directory.......... CIVLREP
+Date............... Mon Dec 07 15:48:34 EST 2015
+numErrors.......... 1
+numDistinctErrors.. 1
+search truncated... true
+
+Violation 0[length=7, file=CIVLREP/driver_0.trace]:
+CIVL execution violation in p0(id=0) (kind: LIBRARY, certainty: PROVEABLE)
+at cg.c:95.4-75 "int ret = mm_read_symmetric_sparse(filename ... )":
+unable to load the library evaluator for the library mmio for the function mm_read_symmetric_sparse
+
+Context:
+true
+
+Call stacks:
+process p0 (id=0):
+  solveEnsembleA at cg.c:95.14-38 "mm_read_symmetric_sparse" called from
+  _CIVL_system at driver.cvl:15.2-16 "solveEnsembleA"
+
+

@@ -1,0 +1,4 @@
+root=/VSL_depend
+hamcrest.jar=${root}/lib/hamcrest-core-1.3.jar
+jacoco.jar=${root}/src/jacoco/lib/jacocoant.jar
+junit.jar=${root}/lib/junit-4.11.jar

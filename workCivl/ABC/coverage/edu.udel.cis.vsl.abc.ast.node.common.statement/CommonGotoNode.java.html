@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonGotoNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.statement</a> &gt; <span class="el_source">CommonGotoNode.java</span></div><h1>CommonGotoNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.statement;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.GotoNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonGotoNode extends CommonJumpNode implements GotoNode {
+
+	public CommonGotoNode(Source source, IdentifierNode label) {
+<span class="nc" id="L10">		super(source, JumpKind.GOTO);</span>
+<span class="nc" id="L11">		addChild(label);</span>
+<span class="nc" id="L12">	}</span>
+
+	@Override
+	public IdentifierNode getLabel() {
+<span class="nc" id="L16">		return (IdentifierNode) child(0);</span>
+	}
+
+	@Override
+	public GotoNode copy() {
+<span class="nc" id="L21">		return new CommonGotoNode(getSource(), duplicate(getLabel()));</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L26">		return NodeKind.STATEMENT;</span>
+	}
+
+	@Override
+	public StatementKind statementKind(){
+<span class="nc" id="L31">		return StatementKind.JUMP;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

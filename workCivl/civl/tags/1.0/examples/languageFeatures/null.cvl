@@ -1,0 +1,11 @@
+/* Commandline execution:
+ *		civl verify null.cvl
+ */
+#include<string.h>
+#include<assert.h>
+
+void main() {
+  int *p = 0;
+  
+  assert(p == NULL);
+}

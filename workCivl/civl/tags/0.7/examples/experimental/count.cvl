@@ -1,0 +1,11 @@
+#include<civlc.h>
+
+$input int n;
+$output int s = 0;
+
+void main() {
+  $assume n>0;
+  for (int i=0; i<n; i++) $invariant (i<=n) {
+    s += i;
+  }
+}

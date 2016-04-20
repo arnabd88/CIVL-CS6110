@@ -1,0 +1,14 @@
+#include<civlc.h>
+
+int f(); // syntax error, should be f(void).
+
+void main(){
+  int x = 0;
+  
+  x = f();
+  $assert(x == 10);
+}
+
+int f(){
+  return 10;
+}

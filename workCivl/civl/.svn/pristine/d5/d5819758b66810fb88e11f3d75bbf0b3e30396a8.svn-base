@@ -1,0 +1,39 @@
+#include <civlc.h>
+
+int n = 5;
+// Each chopstick will be on the table (0) or in a hand (1).
+int chopsticks[n];
+
+void dine(int id) {
+  int left = id;
+  int right = (id + 1) % n;
+  while (0==0) {
+    if (id % 2 == 0) {
+      $when (chopsticks[left] == 0) {chopsticks[left] = 1;}
+      $when (chopsticks[right] == 0) {chopsticks[right] = 1;}
+      chopsticks[right] = 0;
+      chopsticks[left] = 0;
+    } else {
+      $when (chopsticks[right] == 0) {chopsticks[right] = 1;}
+      $when (chopsticks[left] == 0) {chopsticks[left] = 1;}
+      chopsticks[right] = 0;
+      chopsticks[left] = 0;
+    }
+  }
+}
+
+void init() {
+  // Put all chopsticks on the table.
+  for (int i = 0; i < n; i++) {
+    chopsticks[i] = 0;
+  }
+}
+
+void main() {
+  $proc philosophers[n];
+  
+  init();
+  for (int i = 0; i < n; i++) {
+    philosophers[i] = $spawn dine(i);
+  }
+}

@@ -1,0 +1,33 @@
+/* This header file contains the data types and function prototypes for bundle.
+ */
+
+#ifndef __BUNDLE__
+#define __BUNDLE__
+
+/* includes civlc.cvh because this library references $operation */
+#include<civlc.cvh>
+
+/* *********************** Types *********************** */
+
+/* A system type for bundling any slice of memory into
+ * a single value. */
+typedef struct $bundle $bundle;
+
+/* *********************** Functions *********************** */
+
+/* Returns the size of the given bundle b. */
+$pure $system int $bundle_size($bundle b);
+
+/* Creates a bundle from the memory region specified by
+ * ptr and size, copying the data into the new bundle */
+$system $bundle $bundle_pack(void *ptr, int size);
+
+/* Copies the data out of the bundle into the region specified */
+$system void $bundle_unpack($bundle bundle, void *ptr);
+
+/* Unpacks the bundle and applies the specified operation on the content of the bundle.
+ * For every binary operation defined in &operation, the content of the bundle will be used as the left operand 
+ * and buf will be used as the right operand. The result of the operation is stored in buf once is it is done. */
+$system void $bundle_unpack_apply($bundle data, void *buf, int size, $operation op);
+
+#endif

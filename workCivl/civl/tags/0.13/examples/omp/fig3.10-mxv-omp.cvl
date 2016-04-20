@@ -1,0 +1,77 @@
+/* fig3.10-mxv-omp.cvl: CIVL model of fig3.10-mxv-omp.c
+ * Translated by Stephen Siegel.
+ */
+#include <civlc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define THREAD_MAX 4
+/* Does thread t own iteration i in loop with n iterations? */
+#define CIVL_owns(t, n, i) ((i)%(n)==(t))
+
+void mxv(int m, int n, double * restrict a,
+         double * restrict b, double * restrict c);
+
+void perror(char *s) {
+  printf("%s\n", s);
+  exit(1);
+}
+
+int main(int argc, char *argv[])
+{
+   double *a,*b,*c;
+   int i, j, m, n;
+
+   printf("Please give m and n: ");
+   scanf("%d %d",&m,&n);
+   printf("\n");
+
+   if ( (a=(double *)malloc(m*sizeof(double))) == NULL )
+     perror("memory allocation for a");
+   if ( (b=(double *)malloc(m*n*sizeof(double))) == NULL )
+     perror("memory allocation for b");
+   if ( (c=(double *)malloc(n*sizeof(double))) == NULL )
+     perror("memory allocation for c");
+
+   printf("Initializing matrix B and vector c\n");
+   for (j=0; j<n; j++)
+     c[j] = 2.0;
+   for (i=0; i<m; i++)
+     for (j=0; j<n; j++)
+       b[i*n+j] = i;
+   
+   printf("Executing mxv function for m = %d n = %d\n",m,n);
+   (void) mxv(m, n, a, b, c);
+   
+   free(a);free(b);free(c);
+   return(0);
+}
+
+void mxv(int m, int n, double * restrict a, double * restrict b,
+         double * restrict c)
+{
+
+   // #pragma omp parallel for default(none)
+   //   shared(m,n,a,b,c) private(i,j)
+  {
+    int _nthreads = 1+$choose_int(THREAD_MAX);
+    $proc _threads[_nthreads];
+    void loop(int _tid) {
+      int i, j;
+      
+      for (i=0; i<m; i++) {
+	if (CIVL_owns(_tid, _nthreads, i)) {
+	  a[i] = 0.0;
+	  for (j=0; j<n; j++)
+	    a[i] += b[i*n+j]*c[j];
+	}
+      }
+    }
+
+    printf("nthreads = %d\n", _nthreads); // for debugging
+    for (int tid=0; tid<_nthreads; tid++)
+      _threads[tid] = $spawn loop(tid);
+    for (int tid=0; tid<_nthreads; tid++)
+      $wait(_threads[tid]);
+  } /* End of omp for loop */
+
+}

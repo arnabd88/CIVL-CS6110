@@ -1,0 +1,47 @@
+\hypertarget{structcode}{}\section{code Struct Reference}
+\label{structcode}\index{code@{code}}
+
+
+Gray codes.  
+
+
+
+
+{\ttfamily \#include $<$graycode.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcode_a562c6afe7eb9a667028f7014c7406ce1}{}int $\ast$ \hyperlink{structcode_a562c6afe7eb9a667028f7014c7406ce1}{ord}\label{structcode_a562c6afe7eb9a667028f7014c7406ce1}
+
+\begin{DoxyCompactList}\small\item\em array of of Gray code entries \end{DoxyCompactList}\item 
+\hypertarget{structcode_a9a3e7cee03a2df54d329c362323d4c50}{}int $\ast$ \hyperlink{structcode_a9a3e7cee03a2df54d329c362323d4c50}{inc}\label{structcode_a9a3e7cee03a2df54d329c362323d4c50}
+
+\begin{DoxyCompactList}\small\item\em increment \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Gray codes. 
+
+\hyperlink{structA}{A} codestruct represents one entry in the code book, i.\+e. it represents a Gray code of a given length.
+
+For example the Gray code table of length $2^3$ is\+:
+
+\begin{DoxyVerb}-------------------
+|  i  | ord | inc |
+-------------------
+|  0  |  0  |  0  | 
+|  1  |  4  |  1  |
+|  2  |  6  |  0  |
+|  3  |  2  |  2  |
+|  4  |  3  |  0  |
+|  5  |  7  |  1  |
+|  6  |  5  |  0  |
+|  7  |  1  |  2  |
+-------------------
+ * \end{DoxyVerb}
+ 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/\hyperlink{graycode_8h}{graycode.\+h}\end{DoxyCompactItemize}

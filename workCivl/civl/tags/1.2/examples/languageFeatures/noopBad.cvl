@@ -1,0 +1,11 @@
+#include <civlc.cvh>
+
+$input int n;
+
+int main(){
+  int a[10];
+
+  a[0] = 1;
+  //a[10];//array index out of bound
+  a[0]/n; // division by zero
+}

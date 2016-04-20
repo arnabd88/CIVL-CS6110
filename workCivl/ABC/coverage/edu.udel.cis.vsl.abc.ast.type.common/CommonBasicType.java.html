@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonBasicType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonBasicType.java</span></div><h1>CommonBasicType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+
+public class CommonBasicType extends CommonObjectType implements
+		StandardBasicType {
+
+<span class="fc" id="L12">	private static int classCode = CommonBasicType.class.hashCode();</span>
+
+	private BasicTypeKind basicTypeKind;
+
+	public CommonBasicType(BasicTypeKind basicTypeKind) {
+<span class="fc" id="L17">		super(TypeKind.BASIC);</span>
+<span class="fc" id="L18">		this.basicTypeKind = basicTypeKind;</span>
+<span class="fc" id="L19">	}</span>
+
+	@Override
+	public BasicTypeKind getBasicTypeKind() {
+<span class="nc" id="L23">		return basicTypeKind;</span>
+	}
+
+	@Override
+	public boolean isComplete() {
+<span class="nc" id="L28">		return true;</span>
+	}
+
+	@Override
+	public boolean isVariablyModified() {
+<span class="nc" id="L33">		return false;</span>
+	}
+
+	public boolean isSigned() {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		switch (basicTypeKind) {</span>
+		case SIGNED_CHAR:
+		case SHORT:
+		case INT:
+		case LONG:
+		case LONG_LONG:
+<span class="nc" id="L43">			return true;</span>
+		default:
+<span class="nc" id="L45">			return false;</span>
+		}
+	}
+
+	public boolean isUnsigned() {
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		switch (basicTypeKind) {</span>
+		case BOOL:
+		case UNSIGNED_CHAR:
+		case UNSIGNED_SHORT:
+		case UNSIGNED:
+		case UNSIGNED_LONG:
+		case UNSIGNED_LONG_LONG:
+<span class="nc" id="L57">			return true;</span>
+		default:
+<span class="nc" id="L59">			return false;</span>
+		}
+	}
+
+	@Override
+	public boolean isInteger() {
+<span class="nc bnc" id="L65" title="All 4 branches missed.">		return isSigned() || isUnsigned()</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">				|| basicTypeKind == BasicTypeKind.CHAR;</span>
+	}
+
+	@Override
+	public boolean isFloating() {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		switch (basicTypeKind) {</span>
+		case FLOAT:
+		case DOUBLE:
+		case LONG_DOUBLE:
+		case FLOAT_COMPLEX:
+		case DOUBLE_COMPLEX:
+		case LONG_DOUBLE_COMPLEX:
+<span class="nc" id="L78">			return true;</span>
+		default:
+<span class="nc" id="L80">			return false;</span>
+		}
+	}
+
+	@Override
+	public boolean isEnumeration() {
+<span class="nc" id="L86">		return false;</span>
+	}
+
+	@Override
+	public boolean inRealDomain() {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		switch (basicTypeKind) {</span>
+		case FLOAT_COMPLEX:
+		case DOUBLE_COMPLEX:
+		case LONG_DOUBLE_COMPLEX:
+<span class="nc" id="L95">			return false;</span>
+		default:
+<span class="nc" id="L97">			return true;</span>
+		}
+	}
+
+	@Override
+	public boolean inComplexDomain() {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		return !inRealDomain();</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L108">		return classCode + basicTypeKind.hashCode();</span>
+	}
+
+	@Override
+	public boolean equals(Object object) {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (this == object)</span>
+<span class="nc" id="L114">			return true;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (object instanceof CommonBasicType) {</span>
+<span class="nc" id="L116">			CommonBasicType that = (CommonBasicType) object;</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			return that.basicTypeKind == this.basicTypeKind;</span>
+		}
+<span class="nc" id="L120">		return false;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc bnc" id="L125" title="All 20 branches missed.">		switch (basicTypeKind) {</span>
+		case BOOL:
+<span class="nc" id="L127">			return &quot;_Bool&quot;;</span>
+		case CHAR:
+<span class="nc" id="L129">			return &quot;char&quot;;</span>
+		case DOUBLE:
+<span class="nc" id="L131">			return &quot;double&quot;;</span>
+		case DOUBLE_COMPLEX:
+<span class="nc" id="L133">			return &quot;double _Complex&quot;;</span>
+		case FLOAT:
+<span class="nc" id="L135">			return &quot;float&quot;;</span>
+		case FLOAT_COMPLEX:
+<span class="nc" id="L137">			return &quot;float _Complex&quot;;</span>
+		case INT:
+<span class="nc" id="L139">			return &quot;int&quot;;</span>
+		case LONG:
+<span class="nc" id="L141">			return &quot;long&quot;;</span>
+		case LONG_DOUBLE:
+<span class="nc" id="L143">			return &quot;long double&quot;;</span>
+		case LONG_DOUBLE_COMPLEX:
+<span class="nc" id="L145">			return &quot;long double _Complex&quot;;</span>
+		case LONG_LONG:
+<span class="nc" id="L147">			return &quot;long long&quot;;</span>
+		case REAL:
+<span class="nc" id="L149">			return &quot;$real&quot;;</span>
+		case SHORT:
+<span class="nc" id="L151">			return &quot;short&quot;;</span>
+		case SIGNED_CHAR:
+<span class="nc" id="L153">			return &quot;signed char&quot;;</span>
+		case UNSIGNED:
+<span class="nc" id="L155">			return &quot;unsigned&quot;;</span>
+		case UNSIGNED_CHAR:
+<span class="nc" id="L157">			return &quot;unsigned char&quot;;</span>
+		case UNSIGNED_LONG:
+<span class="nc" id="L159">			return &quot;unsigned long&quot;;</span>
+		case UNSIGNED_LONG_LONG:
+<span class="nc" id="L161">			return &quot;unsigned long long&quot;;</span>
+		case UNSIGNED_SHORT:
+<span class="nc" id="L163">			return &quot;unsignd short&quot;;</span>
+		default:
+<span class="nc" id="L165">			throw new RuntimeException(&quot;Unreachable&quot;);</span>
+		}
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean abbrv) {
+<span class="nc" id="L171">		out.print(this);</span>
+<span class="nc" id="L172">	}</span>
+
+	@Override
+	public boolean isScalar() {
+<span class="nc" id="L176">		return true;</span>
+	}
+
+	@Override
+	protected boolean similar(Type other, boolean equivalent,
+			Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc" id="L182">		return equals(other);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

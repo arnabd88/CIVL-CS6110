@@ -1,0 +1,25 @@
+#include <civlc.cvh>
+#include <concurrency.cvh>
+
+
+$input int N;
+int** A;
+$assume(3<N && N<5);
+
+int main(){
+    $gbarrier gb = $gbarrier_create($here, N);
+    $barrier bs[N];
+    $scope sc=$here;
+
+    A=(int**)$malloc($root, sizeof(int*)*N);
+    for(int i =0; i<N; i++)
+      A[i]=(int*)$malloc(sc, sizeof(int)*N);
+    for(int i=N-1; i>=0; i--)
+      $free(A[i]);
+    $free(A);
+    for(int i=0; i<N;i++)
+      bs[i] = $barrier_create(sc, gb, i);
+    $gbarrier_destroy(gb);
+    for(int i=N-1; i>=0; i--)
+       $barrier_destroy(bs[i]);
+}

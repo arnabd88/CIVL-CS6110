@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AcslContractAnalyzerWorker.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">AcslContractAnalyzerWorker.java</span></div><h1>AcslContractAnalyzerWorker.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ConversionFactory;
+<span class="nc" id="L7">import edu.udel.cis.vsl.abc.ast.entity.IF.BehaviorEntity;</span>
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.AssignsOrReadsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.AssumesNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.BehaviorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CallEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CompletenessNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CompositeEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode.ContractKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsEventNode.DependsEventNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.EnsuresNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.GuardsNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPICollectiveBlockNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MemoryEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.RequiresNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+public class AcslContractAnalyzerWorker {
+	/**
+	 * The entity analyzer controlling this declaration analyzer.
+	 */
+	private EntityAnalyzer entityAnalyzer;
+
+<span class="nc" id="L38">	private Map&lt;String, BehaviorEntity&gt; definedBehaviors = new HashMap&lt;&gt;();</span>
+
+	private ConversionFactory conversionFactory;
+
+	private ExpressionAnalyzer expressionAnalyzer;
+
+<span class="nc" id="L44">	AcslContractAnalyzerWorker(EntityAnalyzer entityAnalyzer,</span>
+			ConversionFactory conversionFactory) {
+<span class="nc" id="L46">		this.entityAnalyzer = entityAnalyzer;</span>
+<span class="nc" id="L47">		this.conversionFactory = conversionFactory;</span>
+<span class="nc" id="L48">		this.expressionAnalyzer = this.entityAnalyzer.expressionAnalyzer;</span>
+<span class="nc" id="L49">	}</span>
+
+	/**
+	 * Do entity analysis on a whole contract block of a function.
+	 * 
+	 * @param contract
+	 * @param result
+	 * @throws SyntaxException
+	 */
+	void processContractNodes(SequenceNode&lt;ContractNode&gt; contract,
+			Function result) throws SyntaxException {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (ContractNode contractClause : contract) {</span>
+<span class="nc" id="L61">			processContractNode(contractClause);</span>
+<span class="nc" id="L62">			result.addContract(contractClause);</span>
+		}
+<span class="nc" id="L64">	}</span>
+
+	// TODO: MPIContractExpression type checking!
+	/**
+	 * Recursively process entity analysis for a {@link ContractNode}.
+	 * 
+	 * @param contractClause
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private void processContractNode(ContractNode contractClause)
+			throws SyntaxException {
+<span class="nc" id="L76">		ContractKind contractKind = contractClause.contractKind();</span>
+
+<span class="nc bnc" id="L78" title="All 11 branches missed.">		switch (contractKind) {</span>
+		case ASSIGNS_READS: {
+<span class="nc" id="L80">			AssignsOrReadsNode assignsOrReads = (AssignsOrReadsNode) contractClause;</span>
+			// ExpressionNode condition = assignsOrReads.getCondition();
+<span class="nc" id="L82">			SequenceNode&lt;ExpressionNode&gt; expressionList = assignsOrReads</span>
+<span class="nc" id="L83">					.getMemoryList();</span>
+<span class="nc" id="L84">			int numExpressions = expressionList.numChildren();</span>
+
+			// if (condition != null)
+			// entityAnalyzer.expressionAnalyzer
+			// .processExpression(condition);
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			for (int i = 0; i &lt; numExpressions; i++) {</span>
+<span class="nc" id="L90">				ExpressionNode expression = expressionList.getSequenceChild(i);</span>
+
+<span class="nc" id="L92">				expressionAnalyzer.processExpression(expression);</span>
+<span class="nc" id="L93">				expression.addConversion(this.conversionFactory</span>
+<span class="nc" id="L94">						.memoryConversion(expression.getConvertedType()));</span>
+			}
+<span class="nc" id="L96">			break;</span>
+		}
+		case DEPENDS: {
+<span class="nc" id="L99">			DependsNode depends = (DependsNode) contractClause;</span>
+			// ExpressionNode condition = depends.getCondition();
+<span class="nc" id="L101">			SequenceNode&lt;DependsEventNode&gt; eventList = depends.getEventList();</span>
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			for (DependsEventNode event : eventList) {</span>
+<span class="nc" id="L104">				processDependsEvent(event);</span>
+			}
+<span class="nc" id="L106">			break;</span>
+			// int numEvents = eventList.numChildren();
+			//
+			// if (condition != null)
+			// entityAnalyzer.expressionAnalyzer
+			// .processExpression(condition);
+			// for (int i = 0; i &lt; numEvents; i++) {
+			// ExpressionNode event = eventList.getSequenceChild(i);
+			//
+			// entityAnalyzer.expressionAnalyzer
+			// .processExpression(event);
+			// }
+		}
+		case GUARDS: {
+<span class="nc" id="L120">			ExpressionNode expression = ((GuardsNode) contractClause)</span>
+<span class="nc" id="L121">					.getExpression();</span>
+
+<span class="nc" id="L123">			expressionAnalyzer.processExpression(expression);</span>
+<span class="nc" id="L124">			break;</span>
+		}
+		/* *********************************************************** */
+		/* ** Contracts stored in functions without categorization: ** */
+		case ASSUMES: {
+<span class="nc" id="L129">			AssumesNode assumesNode = (AssumesNode) contractClause;</span>
+<span class="nc" id="L130">			ExpressionNode expression = assumesNode.getPredicate();</span>
+
+<span class="nc" id="L132">			expressionAnalyzer.processExpression(expression);</span>
+<span class="nc" id="L133">			break;</span>
+		}
+		case BEHAVIOR: {
+<span class="nc" id="L136">			BehaviorNode behavior = (BehaviorNode) contractClause;</span>
+<span class="nc" id="L137">			String name = behavior.getName().name();</span>
+<span class="nc" id="L138">			SequenceNode&lt;ContractNode&gt; body = behavior.getBody();</span>
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (definedBehaviors.containsKey(name))</span>
+<span class="nc" id="L141">				throw this.error(&quot;re-definition of behavior named as &quot;</span>
+<span class="nc" id="L142">						+ name</span>
+<span class="nc" id="L143">						+ &quot;: the previous definition was at &quot;</span>
+<span class="nc" id="L144">						+ definedBehaviors.get(name).getBehavior().getSource()</span>
+<span class="nc" id="L145">								.getSummary(false), contractClause);</span>
+			else
+<span class="nc" id="L147">				this.definedBehaviors.put(name, entityAnalyzer.entityFactory</span>
+<span class="nc" id="L148">						.newBehavior(name, behavior));</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			for (ContractNode subClause : body) {</span>
+<span class="nc" id="L150">				processContractNode(subClause);</span>
+			}
+<span class="nc" id="L152">			break;</span>
+		}
+		case COMPLETENESS: {
+<span class="nc" id="L155">			CompletenessNode completeNode = (CompletenessNode) contractClause;</span>
+<span class="nc" id="L156">			SequenceNode&lt;IdentifierNode&gt; idList = completeNode.getIDList();</span>
+
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (idList != null) {</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">				for (IdentifierNode id : idList) {</span>
+<span class="nc" id="L160">					BehaviorEntity behavior = this.definedBehaviors.get(id</span>
+<span class="nc" id="L161">							.name());</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">					if (behavior == null)</span>
+<span class="nc" id="L164">						throw this.error(&quot;undefined behavior &quot; + id.name(), id);</span>
+<span class="nc" id="L165">					id.setEntity(behavior);</span>
+				}
+			}
+<span class="nc" id="L168">			break;</span>
+		}
+		case REQUIRES: {
+<span class="nc" id="L171">			ExpressionNode expression = ((RequiresNode) contractClause)</span>
+<span class="nc" id="L172">					.getExpression();</span>
+
+<span class="nc" id="L174">			expressionAnalyzer.processExpression(expression);</span>
+<span class="nc" id="L175">			break;</span>
+		}
+		case ENSURES: {
+<span class="nc" id="L178">			ExpressionNode expression = ((EnsuresNode) contractClause)</span>
+<span class="nc" id="L179">					.getExpression();</span>
+
+<span class="nc" id="L181">			expressionAnalyzer.processExpression(expression);</span>
+<span class="nc" id="L182">			break;</span>
+		}
+		case PURE: {
+<span class="nc" id="L185">			break;</span>
+		}
+		case MPI_COLLECTIVE: {
+<span class="nc" id="L188">			MPICollectiveBlockNode collective_block = (MPICollectiveBlockNode) contractClause;</span>
+
+<span class="nc" id="L190">			expressionAnalyzer.processExpression(collective_block.getMPIComm());</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">			for (ContractNode colClause : collective_block.getBody())</span>
+<span class="nc" id="L192">				processContractNode(colClause);</span>
+<span class="nc" id="L193">			break;</span>
+		}
+		default:
+<span class="nc" id="L196">			throw error(&quot;Unknown kind of contract clause&quot;, contractClause);</span>
+		}
+<span class="nc" id="L198">	}</span>
+
+	private void processDependsEvent(DependsEventNode event)
+			throws SyntaxException {
+<span class="nc" id="L202">		DependsEventNodeKind kind = event.getEventKind();</span>
+
+<span class="nc bnc" id="L204" title="All 5 branches missed.">		switch (kind) {</span>
+		case MEMORY: {
+<span class="nc" id="L206">			MemoryEventNode rwEvent = (MemoryEventNode) event;</span>
+<span class="nc" id="L207">			SequenceNode&lt;ExpressionNode&gt; memoryList = rwEvent.getMemoryList();</span>
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			for (ExpressionNode memory : memoryList) {</span>
+<span class="nc" id="L210">				this.expressionAnalyzer.processExpression(memory);</span>
+<span class="nc" id="L211">				memory.addConversion(this.conversionFactory</span>
+<span class="nc" id="L212">						.memoryConversion(memory.getConvertedType()));</span>
+			}
+<span class="nc" id="L214">			break;</span>
+		}
+		case ANYACT:
+		case NOACT:
+<span class="nc" id="L218">			break;</span>
+		case CALL: {
+<span class="nc" id="L220">			CallEventNode call = (CallEventNode) event;</span>
+<span class="nc" id="L221">			SequenceNode&lt;ExpressionNode&gt; arguments = call.arguments();</span>
+
+<span class="nc" id="L223">			this.expressionAnalyzer.processIdentifierExpression(</span>
+<span class="nc" id="L224">					call.getFunction(), true, true);</span>
+			
+<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (arguments != null) {</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">				for (ExpressionNode arg : arguments) {</span>
+<span class="nc" id="L228">					this.expressionAnalyzer.processExpression(arg);</span>
+				}
+			}
+<span class="nc" id="L231">			break;</span>
+		}
+		case COMPOSITE: {
+<span class="nc" id="L234">			CompositeEventNode composite = (CompositeEventNode) event;</span>
+
+<span class="nc" id="L236">			this.processDependsEvent(composite.getLeft());</span>
+<span class="nc" id="L237">			this.processDependsEvent(composite.getRight());</span>
+<span class="nc" id="L238">			break;</span>
+		}
+		default:
+<span class="nc" id="L241">			throw error(&quot;Unknown kind of depends event&quot;, event);</span>
+		}
+
+<span class="nc" id="L244">	}</span>
+
+	private SyntaxException error(String message, ASTNode node) {
+<span class="nc" id="L247">		return entityAnalyzer.error(message, node);</span>
+	}
+
+	@SuppressWarnings(&quot;unused&quot;)
+	private SyntaxException error(UnsourcedException e, ASTNode node) {
+<span class="nc" id="L252">		return entityAnalyzer.error(e, node);</span>
+	}
+
+	void processLoopContractNodes(SequenceNode&lt;ContractNode&gt; loopContracts) {
+		// TODO Auto-generated method stub
+
+<span class="nc" id="L258">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

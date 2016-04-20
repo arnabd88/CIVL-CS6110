@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="1" failures="0" hostname="arnabd-VirtualBox" name="edu.udel.cis.vsl.abc.PruneTest" skipped="0" tests="1" time="0.0" timestamp="2016-04-11T08:08:01">
+  <properties>
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="hamcrest.jar" value="/opt/vsl/lib/hamcrest-core.jar" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="c.real.src.dir" value="/home/arnabd/workspace/ABC/src/edu/udel/cis/vsl/abc/front/c" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="os.name" value="Linux" />
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rhino.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/classes" />
+    <property name="jar-name" value="abc.jar" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.home" value="/home/arnabd/Downloads/apache-ant-1.9.6" />
+    <property name="java.runtime.version" value="1.7.0_95-b00" />
+    <property name="antlr.runtime.jar" value="/opt/vsl/lib/antlr-runtime.jar" />
+    <property name="user.name" value="root" />
+    <property name="user.language" value="en" />
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64" />
+    <property name="ant.file.ABC" value="/home/arnabd/workspace/ABC/build.xml" />
+    <property name="ant.project.default-target" value="jar" />
+    <property name="ant.project.name" value="ABC" />
+    <property name="java.version" value="1.7.0_95" />
+    <property name="user.timezone" value="" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="test.src.dir" value="/home/arnabd/workspace/ABC/test" />
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/endorsed" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="file.separator" value="/" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="51.0" />
+    <property name="fortran.real.src.dir" value="/home/arnabd/workspace/ABC/src/edu/udel/cis/vsl/abc/front/fortran" />
+    <property name="sarl.jar" value="/Users/root/Documents/workspace/SARL/sarl.jar" />
+    <property name="user.country" value="US" />
+    <property name="java.home" value="/usr/lib/jvm/java-7-openjdk-amd64/jre" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="main-class" value="edu.udel.cis.vsl.abc.main.ABC" />
+    <property name="ant.file" value="/home/arnabd/workspace/ABC/build.xml" />
+    <property name="os.version" value="4.2.0-34-generic" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="24.95-b01" />
+    <property name="ant.library.dir" value="/home/arnabd/Downloads/apache-ant-1.9.6/lib" />
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit" />
+    <property name="_jacoco.agentFile" value="/tmp/jacocoagent1980688640710775578.jar" />
+    <property name="workspace" value="/Users/root/Documents/workspace" />
+    <property name="coverage.dir" value="/home/arnabd/workspace/ABC/coverage" />
+    <property name="user.home" value="/root" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="junit.dir" value="/home/arnabd/workspace/ABC/junit" />
+    <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib" />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="ant.file.type.ABC" value="file" />
+    <property name="bin.dir" value="/home/arnabd/workspace/ABC/bin" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner testsfile=/home/arnabd/workspace/ABC/junittestcases5292733808743889936.properties skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/arnabd/workspace/ABC/junit/data/IGNORETHIS.xml crashfile=/home/arnabd/workspace/ABC/junitvmwatcher4962466538139713800.properties propsfile=/home/arnabd/workspace/ABC/junit2934686656436823446.properties" />
+    <property name="java.class.path" value="/home/arnabd/workspace/ABC/bin-test:/home/arnabd/workspace/ABC/bin:/opt/vsl/lib/antlr-complete.jar:/opt/vsl/lib/junit.jar:/home/arnabd/workspace/ABC/src:/opt/vsl/lib/hamcrest-core.jar:/home/arnabd/Downloads/apache-ant-1.9.6/lib/ant-launcher.jar:/home/arnabd/Downloads/apache-ant-1.9.6/lib/ant.jar:/home/arnabd/Downloads/apache-ant-1.9.6/lib/ant-junit.jar:/home/arnabd/Downloads/apache-ant-1.9.6/lib/ant-junit4.jar:/tmp/jacocoagent1980688640710775578.jar" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.9.6 compiled on June 29 2015" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.type" value="file" />
+    <property name="java.vm.specification.version" value="1.7" />
+    <property name="junit.jar" value="/opt/vsl/lib/junit.jar" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="junit.reports.dir" value="/home/arnabd/workspace/ABC/junit/reports" />
+    <property name="java.io.tmpdir" value="/tmp" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="properties.file" value="build_default.properties" />
+    <property name="os.arch" value="amd64" />
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment" />
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/ext:/usr/java/packages/lib/ext" />
+    <property name="user.dir" value="/home/arnabd/workspace/ABC" />
+    <property name="line.separator" value="&#xa;" />
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM" />
+    <property name="test.bin.dir" value="/home/arnabd/workspace/ABC/bin-test" />
+    <property name="junit.data.dir" value="/home/arnabd/workspace/ABC/junit/data" />
+    <property name="basedir" value="/home/arnabd/workspace/ABC" />
+    <property name="root" value="/opt/vsl" />
+    <property name="ant.java.version" value="1.7" />
+    <property name="ant.core.lib" value="/home/arnabd/Downloads/apache-ant-1.9.6/lib/ant.jar" />
+    <property name="c.grammar.dir" value="/home/arnabd/workspace/ABC/grammar/c" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="AcslLexerBeforeAcslParser" value="true" />
+    <property name="fortran.grammar.dir" value="/home/arnabd/workspace/ABC/grammar/fortran" />
+    <property name="antlr.jar" value="/opt/vsl/lib/antlr-complete.jar" />
+    <property name="jacoco.jar" value="/opt/vsl/src/jacoco/lib/jacocoant.jar" />
+    <property name="java.specification.version" value="1.7" />
+    <property name="src.dir" value="/home/arnabd/workspace/ABC/src" />
+    <property name="ant.project.invoked-targets" value="test" />
+    <property name="javadoc.dir" value="/home/arnabd/workspace/ABC/doc/javadoc" />
+    <property name="jar-path" value="/home/arnabd/workspace/ABC/abc.jar" />
+  </properties>
+  <error message="Unresolved compilation problems: &#xa;&#x9;The import edu.udel.cis.vsl.abc.front.c.preproc.PreprocessorParser cannot be resolved&#xa;&#x9;PreprocessorParser cannot be resolved to a variable&#xa;&#x9;PreprocessorParser cannot be resolved to a variable&#xa;&#x9;PreprocessorParser cannot be resolved to a variable&#xa;" type="java.lang.Error">java.lang.Error: Unresolved compilation problems: 
+	The import edu.udel.cis.vsl.abc.front.c.preproc.PreprocessorParser cannot be resolved
+	PreprocessorParser cannot be resolved to a variable
+	PreprocessorParser cannot be resolved to a variable
+	PreprocessorParser cannot be resolved to a variable
+
+	at edu.udel.cis.vsl.abc.main.FrontEnd.&lt;init&gt;(FrontEnd.java:47)
+	at edu.udel.cis.vsl.abc.PruneTest.&lt;clinit&gt;(PruneTest.java:41)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:195)
+</error>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

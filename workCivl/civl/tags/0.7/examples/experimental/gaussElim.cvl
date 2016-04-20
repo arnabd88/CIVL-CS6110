@@ -1,0 +1,122 @@
+/* Commandline execution:
+ *		civl verify -inputN_BOUND=3 -inputM_BOUND=3 gaussElim.cvl
+ * */
+#include<civlc.h>
+
+$input int N_BOUND; // bound on the number of rows
+$input int M_BOUND; // bound on the number of columns
+$input int N;  // number of rows
+$input int M;  // number of columns
+$assume N>0 && N<N_BOUND;
+$assume M>0 && M<M_BOUND;
+$input double inputMatrix[N*M];
+$output double outputMatrix[N*M];
+
+// Perform Guass-Jordon elimination on the matrix.  Upon return, the
+// matrix will be in reduced row echelon form.
+void gaussElim(double* matrix) {
+  int top = 0;           // index of current top row
+  int col = 0;           // index of current left column
+  int pivotRow = 0;      // index of row containing the pivot
+  double pivot = 0.0;    // the value of the pivot
+  int i = 0;             // loop variable over rows of matrix
+  int j = 0;             // loop variable over columns of matrix
+  double tmp = 0.0;      // temporary double variable
+
+  col = 0;
+  for (top=0; top<N && col< M; top++) {
+    /* At this point we know that the submatarix consisting of the
+     * first top rows of A is in reduced row-echelon form.  We will
+     * now consider the submatrix B consisting of the remaining rows.
+     * We know, additionally, that the first col columns of B are all
+     * zero.
+     */
+	
+    /* Step 1: Locate the leftmost column of B that does not consist
+     * entirely of zeros, if one exists.  The top nonzero entry of
+     * this column is the pivot. */
+
+    pivot = 0.0;
+    for (; col < M; col++) {
+      for (pivotRow = top; pivotRow < N; pivotRow++) {
+	pivot = matrix[pivotRow*M + col];
+	if (pivot) break;
+      }
+      if (pivot) break;
+    }
+
+    if (col >= M) {
+      break;
+    }
+
+    /* At this point we are guaranteed that pivot = A[pivotRow,col] is
+     * nonzero.  We also know that all the columns of B to the left of
+     * col consist entirely of zeros. */
+
+	    
+    /* Step 2: Interchange the top row with the pivot row, if
+     * necessary, so that the entry at the top of the column found in
+     * Step 1 is nonzero. */
+
+    if (pivotRow != top) {
+      for (j = 0; j < M; j++) {
+	tmp = matrix[top*M + j];
+	matrix[top*M + j] = matrix[pivotRow*M + j];
+	matrix[pivotRow*M + j] = tmp;
+      }
+    }
+
+    /* At this point we are guaranteed that A[top,col] = pivot is
+     * nonzero. Also, we know that (i>=top and j<col) implies
+     * A[i,j] = 0. */
+
+    /* Step 3: Divide the top row by pivot in order to introduce a
+     * leading 1. */
+
+    for (j = col; j < M; j++) {
+      matrix[top*M + j] /= pivot;
+    }
+
+    /* At this point we are guaranteed that A[top,col] is 1.0,
+     * assuming that floating point arithmetic guarantees that a/a
+     * equals 1.0 for any nonzero double a. */
+
+    /* Step 4: Add suitable multiples of the top row to all other rows
+     * so that all entries above and below the leading 1 become
+     * zero. */
+    
+    for (i = 0; i < N; i++) {
+      if (i != top){
+	tmp = matrix[i*M + col];
+	for (j = col; j < M; j++) {
+	  matrix[i*M + j] -= matrix[top*M + j]*tmp;
+	}
+      }
+    }
+    col++;
+  }
+
+}
+
+// Check that the output matrix is indeed in reduced row echelon form.
+void checkOutput() {
+
+}
+
+void main() {
+  $heap h;
+  double* matrix;
+  
+  // Need to concretize N & M to help verification.
+  for (int i = 0; i < N; i++);
+  for (int i = 0; i < M; i++);
+  matrix = (double *) $malloc(&h, N*M*sizeof(double));
+  for (int i = 0; i < N*M; i++) {
+    matrix[i] = inputMatrix[i];
+  }
+  gaussElim(matrix);
+  for (int i = 0; i < N*M; i++) {
+    outputMatrix[i] = matrix[i];
+  }
+  checkOutput();
+}

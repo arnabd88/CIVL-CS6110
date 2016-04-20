@@ -1,0 +1,6 @@
+#define f(X)
+#define g(X) Here is f(X)
+g(1)
+
+#define h(X) f(X) is here.
+h(1)

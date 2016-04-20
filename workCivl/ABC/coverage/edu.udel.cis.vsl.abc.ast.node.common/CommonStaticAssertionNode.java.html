@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonStaticAssertionNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common</a> &gt; <span class="el_source">CommonStaticAssertionNode.java</span></div><h1>CommonStaticAssertionNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.StaticAssertionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StringLiteralNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonStaticAssertionNode extends CommonASTNode implements
+		StaticAssertionNode {
+
+	public CommonStaticAssertionNode(Source source, ExpressionNode expression,
+			StringLiteralNode message) {
+<span class="nc" id="L15">		super(source, expression, message);</span>
+<span class="nc" id="L16">	}</span>
+
+	@Override
+	public ExpressionNode getExpression() {
+<span class="nc" id="L20">		return (ExpressionNode) child(0);</span>
+	}
+
+	@Override
+	public StringLiteralNode getMessage() {
+<span class="nc" id="L25">		return (StringLiteralNode) child(1);</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L30">		out.print(&quot;StaticAssertion&quot;);</span>
+<span class="nc" id="L31">	}</span>
+
+	@Override
+	public StaticAssertionNode copy() {
+<span class="nc" id="L35">		ExpressionNode expression = getExpression();</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">		ExpressionNode expressionCopy = expression == null ? null : expression</span>
+<span class="nc" id="L37">				.copy();</span>
+<span class="nc" id="L38">		StringLiteralNode message = getMessage();</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">		StringLiteralNode messageCopy = message == null ? null : message.copy();</span>
+
+<span class="nc" id="L41">		return new CommonStaticAssertionNode(getSource(), expressionCopy,</span>
+<span class="nc" id="L42">				messageCopy);</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L47">		return NodeKind.STATIC_ASSERTION;</span>
+	}
+
+	@Override
+	public BlockItemKind blockItemKind() {
+		// TODO Auto-generated method stub
+<span class="nc" id="L53">		return BlockItemKind.STATIC_ASSERTION;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

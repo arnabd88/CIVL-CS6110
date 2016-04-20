@@ -1,0 +1,88 @@
+/* Testing for bundle pack and unpack which invloves a flexible way of 
+   reading and writing arrays. This example may still not cover all possible 
+   cases. Anyone can add more send and receive pairs for different cases.
+ */
+#include <civlc.cvh>
+#include <bundle.cvh>
+
+$input int N;
+$input int inputs1[3][N];
+$input int inputs2[N][3];
+$assume(N > 4);
+
+$scope root = $here;
+
+void main(){
+  int integerObj_send = 1;
+  int integerObj_recv;
+  int * p; 
+  int ** pp;
+  int * buf;
+  int a3d[3][4][5];
+  int a4d[2][2][2][2];
+  $bundle bun;
+  int counter = 0;
+  int intSize = sizeof(int);
+
+  //Initialization of message data
+  p = (int *)$malloc(root, sizeof(int) * 4);
+  pp = (int **)$malloc(root, sizeof(int *) * 4);
+  for(int i=0; i<4; i++){
+    p[i] = i;
+    pp[i] = (int *)$malloc(root, sizeof(int) * 2);
+    for(int j=0; j<2; j++)
+      pp[i][j] = i * 4 + j;
+  }
+  //p -> p[4]; pp -> pp[4][2];
+  for(int i=0; i<3; i++)
+    for(int j=0; j<4; j++)
+      for(int k=0; k<5; k++)
+	a3d[i][j][k] = counter++;
+  buf = (int *)$malloc(root, sizeof(int) * 8);
+  
+  // send integer object "1"
+  bun = $bundle_pack(&integerObj_send, intSize);
+  $bundle_unpack(bun, &integerObj_recv);
+  $assert(integerObj_recv == integerObj_send, "first assertion");
+
+  // send p[0], p[1] and p[2] with values "0" ,"1" and "2"
+  bun = $bundle_pack(p, 3 * intSize);
+  $bundle_unpack(bun, buf);
+  $assert((buf[0] == 0 && buf[1] == 1 && buf[2] == 2), "second assertion"); 
+
+  // send pp[1][0], pp[1][1] with values "4" and "5"
+  bun = $bundle_pack(pp[1], 2 * intSize);
+  $bundle_unpack(bun, buf);
+  $assert((buf[0] == 4 && buf[1] == 5), "third assertion");
+
+  // send "23...30"
+  bun = $bundle_pack(&a3d[1][0][3], 8 * intSize);
+  $bundle_unpack(bun, &a4d[0][1][1]);
+  for(int i=0; i<8; i++)
+    $assert(*(&a4d[0][1][1][0] + i) == (23 + i), "forth assertion");
+
+  // send "23...30" again
+  bun = $bundle_pack(&a3d[1][0][3], 8 * intSize);
+  // pointer type is different from the previous one
+  $bundle_unpack(bun, a4d[0][1][1]);
+  for(int i=0; i<8; i++)
+    $assert(*(&a4d[0][1][1][0] + i) == (23 + i), "fifth assertion");
+
+  // send inputs2[1][1] and inputs2[1][2]
+  bun = $bundle_pack(&inputs2[1][1], 2 * intSize);  
+  $bundle_unpack(bun, (buf+1));
+  for(int i=0; i<2; i++)
+    $assert(*(buf + 1 + i) == inputs2[1][i+1], "sixth assertion");
+  
+  // send inputs1[0][0]...inputs1[0][3]
+  bun = $bundle_pack(inputs1[0], 4 * intSize);  
+  $bundle_unpack(bun, (buf+1));
+  for(int i=0; i<4; i++)
+    $assert(*(buf + 1 + i) == inputs1[0][i], "seventh assertion");
+  
+  $free(p);
+  for(int i=0; i<4; i++)
+    $free(pp[i]);
+  $free(pp);
+  $free(buf);
+}

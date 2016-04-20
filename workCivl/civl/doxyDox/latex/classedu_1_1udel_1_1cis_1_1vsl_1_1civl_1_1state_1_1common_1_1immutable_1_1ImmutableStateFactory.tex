@@ -1,0 +1,1502 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory}}
+
+
+An implementation of State\+Factory based on the Immutable Pattern.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aebaa92f449641b63f067f72b1e64a358}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aebaa92f449641b63f067f72b1e64a358}{Immutable\+State\+Factory} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7ec312e23cd9fd266b00fa9ef6bd0bab}{model\+Factory}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Factory, G\+M\+C\+Configuration gmc\+Config, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aebaa92f449641b63f067f72b1e64a358}
+
+\begin{DoxyCompactList}\small\item\em Factory to create all state objects. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a1b0ab2bb34419888f0a80b1a6c9ac756}{add\+Process} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} function, Symbolic\+Expression\mbox{[}$\,$\mbox{]} arguments, int caller\+Pid)
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a9a90cec9f8322c9b8abc34cd366f2b9e}{add\+Process} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} function, int function\+Parent\+Dyscope, Symbolic\+Expression\mbox{[}$\,$\mbox{]} arguments, int caller\+Pid)
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a62c70f6ea5fb68aaf09cb09087b006b1}{canonic} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4e0a1ff9fd037a1afdd7e9c6dce4a18b}{collect\+Processes}, boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac08af796a3dfdb6f0cce6c0c1afb8c68}{collect\+Scopes}, boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a66fc6a266b28ded9287b0ec6d2621a94}{collect\+Heaps}, Set$<$ \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CIVLHeapException_1_1HeapErrorKind}{Heap\+Error\+Kind} $>$ to\+Be\+Ignored)  throws C\+I\+V\+L\+Heap\+Exception 
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a66fc6a266b28ded9287b0ec6d2621a94}{collect\+Heaps} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Set$<$ \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CIVLHeapException_1_1HeapErrorKind}{Heap\+Error\+Kind} $>$ to\+Be\+Ignored)  throws C\+I\+V\+L\+Heap\+Exception 
+\begin{DoxyCompactList}\small\item\em Performs a garbage collection and canonicalization of heaps. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac08af796a3dfdb6f0cce6c0c1afb8c68}{collect\+Scopes} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Set$<$ \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CIVLHeapException_1_1HeapErrorKind}{Heap\+Error\+Kind} $>$ to\+Be\+Ignored)  throws C\+I\+V\+L\+Heap\+Exception 
+\begin{DoxyCompactList}\small\item\em Performs a garbage collection and canonicalization of dynamic scopes. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a912ed0ca7a4414f2edc2be8e36faefde}{get\+Atomic\+Lock} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid)
+\begin{DoxyCompactList}\small\item\em Declares that the process with the given P\+I\+D now owns the atomic lock. \end{DoxyCompactList}\item 
+long \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a0a89d58bd62a499947f0afac037379dd}{get\+Num\+State\+Instances} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of objects of type State that have been instantiated since this J\+V\+M started. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_acd0074abb7544acdde596a2fab96e669}{get\+Num\+States\+Saved} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of states stored by this state factory. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6a8e3b14776e73ce1d08b175e3012cbd}{initial\+State} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} model)  throws C\+I\+V\+L\+Heap\+Exception 
+\begin{DoxyCompactList}\small\item\em Returns the canonic, initial state for a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} Model. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_af29c3918cae07c8e2689445dde49d065}{is\+Descendant\+Of} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int ancestor, int descendant)
+\begin{DoxyCompactList}\small\item\em Checks if one dyscope is strictly the descendant of the other (not equal to). \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a5fd6c8dfda79abc673ed958993b8cff2}{locked\+By\+Atomic} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Checks if any process at the state is holding the atomic lock, i.\+e, the process is executing some atomic blocks. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ad7bebd102aa4e515f7a532cb50751c46}{lowest\+Common\+Ancestor} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int one, int another)
+\begin{DoxyCompactList}\small\item\em Computes the lowest common ancestor of two given dyscopes. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a3f70888fd06f2a1c4a72393cc2345531}{pop\+Call\+Stack} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid)
+\begin{DoxyCompactList}\small\item\em Pops an entry off the call stack for a process. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aef485d98a0babfec8acc14a129cc4611}{process\+In\+Atomic} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Returns the P\+I\+D of the process that holds the atomic lock at a certain state. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a0ff6fe5b054069da0b20967e254b5ae4}{push\+Call\+Stack} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} function, Symbolic\+Expression\mbox{[}$\,$\mbox{]} arguments)
+\begin{DoxyCompactList}\small\item\em Pushes a new entry onto the call stack for a process. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a8fc946088739b623a3ccc49ed2544b11}{push\+Call\+Stack} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} function, int function\+Parent\+Dyscope, Symbolic\+Expression\mbox{[}$\,$\mbox{]} arguments)
+\begin{DoxyCompactList}\small\item\em Pushes a new entry onto the call stack for a process. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4e0a1ff9fd037a1afdd7e9c6dce4a18b}{collect\+Processes} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Performs a garbage collection and canonicalization of the process states. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a5318c37923f7a29e4ea586e4ed241f25}{terminate\+Process} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid)
+\begin{DoxyCompactList}\small\item\em Sets the process state for the designated process to be the process state with the empty stack. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a1c324a5c8166701c1e6037005598f87b}{remove\+Process} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid)
+\begin{DoxyCompactList}\small\item\em Removes a process from the state. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aaba1752dba05b39dc8fa982e1ee682d8}{release\+Atomic\+Lock} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Releases the atomic lock, by updating the atomic lock variable with the undefined process value. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a02d59626c894538bab15a0e459c7b1ae}{set\+Location} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} location, boolean access\+Changed)
+\begin{DoxyCompactList}\small\item\em Procedure\+: \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aa3955ff83bd8eca124041041d8d4fd52}{set\+Process\+State} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State} p)
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ae708ff73f1b3327a5deb0b9b5016cd78}{set\+Variable} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int vid, int scope\+Id, Symbolic\+Expression value)
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a33ef600c8d89d0edb2ae51def702697b}{set\+Variable} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} variable, int pid, Symbolic\+Expression value)
+\begin{DoxyCompactList}\small\item\em Updates the value assigned to a variable in the state. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6ad75dbebbe769245d9850b493ef1ce8}{simplify} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Simplifies all variable values in the state, using the path condition as the simplification context. \end{DoxyCompactList}\item 
+Symbolic\+Universe \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a545a89e6de9775ca52721c9c794da12b}{symbolic\+Universe} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic universe used by this factory to manipulate symbolic expressions. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, Symbolic\+Expression $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a521481b4006af34010ce856f4f539a39}{malloc} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int dyscope\+Id, int malloc\+Id, Symbolic\+Expression heap\+Object)
+\begin{DoxyCompactList}\small\item\em Allocates an object, of the given value, for the given malloc I\+D in the heap of the given dyscope. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, Symbolic\+Expression $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a336133449bfe76264c72cc15bb3e0bc3}{malloc} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, int dyscope\+Id, int malloc\+Id, Symbolic\+Type element\+Type, Numeric\+Expression element\+Count)
+\begin{DoxyCompactList}\small\item\em Allocates an object for the given malloc I\+D in the heap of the given dyscope. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_adbb5cfa400e857cedde973811105fed9}{deallocate} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Symbolic\+Expression heap\+Object\+Pointer, int dyscope\+Id, int malloc\+Id, int index)
+\begin{DoxyCompactList}\small\item\em Deallocates a heap object from the heap of a given dyscope. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6eca6e2fe2e004ad7b74dd4ffa49846e}{set\+Location} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} location)
+\begin{DoxyCompactList}\small\item\em Sets the location of a process. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac56c28e8f145bfc53856b8be3eca9a01}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} {\bfseries mem\+Unit\+Factory} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac56c28e8f145bfc53856b8be3eca9a01}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a61437ae4ca0fb099c9f79ddceaa5d07c}{increment\+Num\+Symbolic\+Constants} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Increase the number of symbolic constants by one. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a10e26f9469590145532c69c4ce08fcb1}{num\+Symbolic\+Constants} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Returns the number of symbolic constants appearing in the given state. \end{DoxyCompactList}\item 
+Map$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable}, Symbolic\+Expression $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aa4bd3853959303e304debbc2ae22f5a4}{input\+Variable\+Value\+Map} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Returns the map of variable and value of input variables at the given state. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a948646856ef1cd713a740aecc22d34c0}{commit\+Updated\+Channels\+To\+Entries} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int queue\+Id, Symbolic\+Expression\mbox{[}$\,$\mbox{]} new\+Buffers)
+\begin{DoxyCompactList}\small\item\em Update all entries in a collective queue with a group of message buffers. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a450c5462e9b7f8eaad36a3d4bbd744d0}{merge\+Monostates} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry}{Immutable\+Collective\+Snapshots\+Entry} entry)
+\begin{DoxyCompactList}\small\item\em Merges a set of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}{Immutable\+Mono\+State} to a F\+A\+K\+E global \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} which should only be used to evaluation. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ae7514e9e3d808ecf1b7f5b375cf5cf8f}{add\+To\+Collective\+Snapshots\+Entry} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} state, int pid, int place, int queue\+I\+D, int entry\+Pos, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} assertion)
+\begin{DoxyCompactList}\small\item\em Take a snapshot on current state then store the snapshot with the collective assertion into an collective\+Snapshots\+Entry. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4462151d1c85d4d4a878d88d6cc96350}{create\+Collective\+Snapshots\+Enrty} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} state, int pid, int num\+Processes, int place, int queue\+I\+D, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} assertion, Symbolic\+Expression channels, Contract\+Kind kind, List$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable}, Symbolic\+Expression $>$$>$ pick\+Up\+Station)
+\begin{DoxyCompactList}\small\item\em The process with \char`\"{}pid\char`\"{} creates a fresh new \hyperlink{}{Collective\+Snapshots\+Entry}, then saves its own snapshot in the new entry. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a54d1895551e52122c30a1eb645f7f690}{dequeue\+Collective\+Snapshots\+Entry} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int queue\+I\+D)
+\begin{DoxyCompactList}\small\item\em Dequeues an \hyperlink{}{Collective\+Snapshots\+Entry} from the specific snapshots queue, returns a new state. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry}{Immutable\+Collective\+Snapshots\+Entry} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ab66323bef446672f1b4de94f0ca09122}{peek\+Collective\+Snapshots\+Entry} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int queue\+I\+D)
+\begin{DoxyCompactList}\small\item\em Copy the top \hyperlink{}{Collective\+Snapshots\+Entry} from the specific snapshots queue, returns the copied snapshots entry. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableCollectiveSnapshotsEntry}{Immutable\+Collective\+Snapshots\+Entry}\mbox{[}$\,$\mbox{]} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a2ab7303606615d76222aff56ce7125ef}{get\+Snapshots\+Queue} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int queue\+I\+D)
+\begin{DoxyCompactList}\small\item\em Returns the corresponding snapshot queue by giving the identifier of an M\+P\+I communicator (The identifier is a component of the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} M\+P\+I library implementation). \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6beeeb4eaf17158d4a87e6ff16f2a0f2}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} {\bfseries copy\+Snapshots\+Queues} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} from\+State, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} to\+State)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6beeeb4eaf17158d4a87e6ff16f2a0f2}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7539884a484167b2e4c1b658fbcdb44c}{}int {\bfseries num\+Symbolic\+Inputs} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7539884a484167b2e4c1b658fbcdb44c}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6fd1ae7f315d534836864cc76a4fce0f}{increment\+Num\+Symbolic\+Inputs} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Increase the number of symbolic constants by one. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a025b6b9e6b52f0f5a7f47a946e35e02d}{enter\+Atomic} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid)
+\begin{DoxyCompactList}\small\item\em Process pid enters a new atomic section. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac3151f31996c6239ac71a2714ea54724}{leave\+Atomic} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid)
+\begin{DoxyCompactList}\small\item\em Process pid leaves an atomic section. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aab7051f4b53cc88f543f90a95805b9a8}{create\+New\+Process} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Adds a new initial process state to the given state. \end{DoxyCompactList}\item 
+Symbolic\+Expression\mbox{[}$\,$\mbox{]} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7f6ae867cb1e6c559f9deeeccfdc77d2}{initial\+Values} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} lexical\+Scope)
+\begin{DoxyCompactList}\small\item\em Creates the initial value of a given lexical scope. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a680a2342922a0e5db447a9f0fd5857f3}{push\+Call\+Stack2} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} function, int function\+Parent\+Dyscope, Symbolic\+Expression\mbox{[}$\,$\mbox{]} arguments, int caller\+Pid)
+\begin{DoxyCompactList}\small\item\em General method for pushing a frame onto a call stack, whether or not the call stack is for a new process (and therefore empty). \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStackEntry}{Immutable\+Stack\+Entry} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a3756be1f64eb8b339587e93fe4370781}{stack\+Entry} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} location, int dyscope\+Id)
+\begin{DoxyCompactList}\small\item\em Create a new call stack entry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7ec312e23cd9fd266b00fa9ef6bd0bab}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7ec312e23cd9fd266b00fa9ef6bd0bab}{model\+Factory}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7ec312e23cd9fd266b00fa9ef6bd0bab}
+
+\begin{DoxyCompactList}\small\item\em The model factory. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4563fce2eb486daf3420b7793167aa8a}{}Symbolic\+Expression {\bfseries undefined\+Process\+Value}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4563fce2eb486daf3420b7793167aa8a}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ad67d4da200ebd4e41724ff0d35681897}{}Symbolic\+Universe \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ad67d4da200ebd4e41724ff0d35681897}{universe}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ad67d4da200ebd4e41724ff0d35681897}
+
+\begin{DoxyCompactList}\small\item\em The symbolic universe, provided by S\+A\+R\+L. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a3e6237d293d5511c71eec8e25bac53ed}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} {\bfseries symbolic\+Util}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a3e6237d293d5511c71eec8e25bac53ed}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_abc4d794bb46aebe402fc0ae86a758145}{}Set$<$ \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CIVLHeapException_1_1HeapErrorKind}{Heap\+Error\+Kind} $>$ {\bfseries empty\+Heap\+Error\+Set} = new Hash\+Set$<$$>$(0)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_abc4d794bb46aebe402fc0ae86a758145}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a93bb101beff17f74873a8ad73d6197b6}{}G\+M\+C\+Configuration {\bfseries gmc\+Config}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a93bb101beff17f74873a8ad73d6197b6}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An implementation of State\+Factory based on the Immutable Pattern. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+
+Timothy J. Mc\+Clory (tmcclory) 
+
+Stephen F. Siegel (siegel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a1b0ab2bb34419888f0a80b1a6c9ac756}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!add\+Process@{add\+Process}}
+\index{add\+Process@{add\+Process}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{add\+Process}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+add\+Process (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf C\+I\+V\+L\+Function}}]{function, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{arguments, }
+\item[{int}]{caller\+Pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a1b0ab2bb34419888f0a80b1a6c9ac756}
+Adds a new process. The new process is created and one entry is pushed onto its call stack. That entry will have a dynamic scope whose parent is determined by the calling process (the process that is executing the spawn command to create this new process) and the given function. The parent dynamic scope is computed by starting with the current dynamic scope of the caller, and working up the parent chain, stopping at the first dynamic scope whose static scope matches the containing scope of the function. If no such dynamic scope is found in the chain, an Illegal\+Argument\+Exception is thrown. Hence the calling process must have a non-\/empty call stack. 
+
+The P\+I\+D of the new process will be \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a1fb9bc3c57e059c2885a73ba4d08b441}{State\#num\+Procs()}, where state is the pre-\/state (the given state), not the new state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state. \\
+\hline
+{\em function} & The function in which the new process starts. \\
+\hline
+{\em arguments} & The arguments to this function call. \\
+\hline
+{\em caller\+Pid} & the P\+I\+D of the process that is creating the new process \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the old state modified by adding a process whose location is the start location of the function and with a new dynamic scope corresponding to the outermost lexical scope of the function. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a2c05d9800df5a48cfd13da18caf24364}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a9a90cec9f8322c9b8abc34cd366f2b9e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!add\+Process@{add\+Process}}
+\index{add\+Process@{add\+Process}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{add\+Process}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+add\+Process (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf C\+I\+V\+L\+Function}}]{function, }
+\item[{int}]{function\+Parent\+Dyscope, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{arguments, }
+\item[{int}]{caller\+Pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a9a90cec9f8322c9b8abc34cd366f2b9e}
+Adds a new process. The new process is created and one entry is pushed onto its call stack. That entry will have a dynamic scope whose parent is determined by the calling process (the process that is executing the spawn command to create this new process) and the given function. The parent dynamic scope is computed by starting with the current dynamic scope of the caller, and working up the parent chain, stopping at the first dynamic scope whose static scope matches the containing scope of the function. If no such dynamic scope is found in the chain, an Illegal\+Argument\+Exception is thrown. Hence the calling process must have a non-\/empty call stack. 
+
+The P\+I\+D of the new process will be \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a1fb9bc3c57e059c2885a73ba4d08b441}{State\#num\+Procs()}, where state is the pre-\/state (the given state), not the new state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state. \\
+\hline
+{\em function} & The function in which the new process starts. \\
+\hline
+{\em function\+Parent\+Dyscope} & The dyscope I\+D of the parent of the new function \\
+\hline
+{\em arguments} & The arguments to this function call. \\
+\hline
+{\em caller\+Pid} & the P\+I\+D of the process that is creating the new process \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the old state modified by adding a process whose location is the start location of the function and with a new dynamic scope corresponding to the outermost lexical scope of the function. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_af2a497fca3857a16cda6ddda36d2eb49}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ae7514e9e3d808ecf1b7f5b375cf5cf8f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!add\+To\+Collective\+Snapshots\+Entry@{add\+To\+Collective\+Snapshots\+Entry}}
+\index{add\+To\+Collective\+Snapshots\+Entry@{add\+To\+Collective\+Snapshots\+Entry}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{add\+To\+Collective\+Snapshots\+Entry}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+add\+To\+Collective\+Snapshots\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf Immutable\+State}}]{state, }
+\item[{int}]{pid, }
+\item[{int}]{place, }
+\item[{int}]{queue\+I\+D, }
+\item[{int}]{entry\+Pos, }
+\item[{{\bf Expression}}]{assertion}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ae7514e9e3d808ecf1b7f5b375cf5cf8f}
+
+
+Take a snapshot on current state then store the snapshot with the collective assertion into an collective\+Snapshots\+Entry. 
+
+If the global state has a queue, then either create a new entry then enqueue, or modify a existing entry, otherwise create both a queue and a entry. Return the new or modified entry.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em place} & The place of the process in the collective entry \\
+\hline
+{\em queue\+I\+D} & The I\+D identifies a collective entry \\
+\hline
+{\em entry\+Pos} & The position of the entry in the collective queue \\
+\hline
+{\em assertion} & The expression of a assertion asserted by the process \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a7948dbf498b93bb9e67a757450dfc421}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a62c70f6ea5fb68aaf09cb09087b006b1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!canonic@{canonic}}
+\index{canonic@{canonic}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{canonic}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+canonic (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{boolean}]{collect\+Processes, }
+\item[{boolean}]{collect\+Scopes, }
+\item[{boolean}]{collect\+Heaps, }
+\item[{Set$<$ {\bf Heap\+Error\+Kind} $>$}]{to\+Be\+Ignored}
+\end{DoxyParamCaption}
+) throws {\bf C\+I\+V\+L\+Heap\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a62c70f6ea5fb68aaf09cb09087b006b1}
+In this implementation of canonic\+: process states are collected, heaps are collected, dynamic scopes are collected, the flyweight representative is taken, simplify is called if that option is selected, then the flyweight representative is taken again. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em C\+I\+V\+L\+State\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a99001c497b2ff46cd098525744a7d0c1}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a66fc6a266b28ded9287b0ec6d2621a94}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!collect\+Heaps@{collect\+Heaps}}
+\index{collect\+Heaps@{collect\+Heaps}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{collect\+Heaps}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+collect\+Heaps (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{Set$<$ {\bf Heap\+Error\+Kind} $>$}]{to\+Be\+Ignored}
+\end{DoxyParamCaption}
+) throws {\bf C\+I\+V\+L\+Heap\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a66fc6a266b28ded9287b0ec6d2621a94}
+
+
+Performs a garbage collection and canonicalization of heaps. 
+
+Computes the set of reachable heap objects, and removes all unreachable heap objects. Renumbers heap objects in a canonic way. Updates all pointers in the state accordingly. This operation should be completely invisible to the user.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & a state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the state after canonicalizing heaps, which may be this state or a new one 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a78a17339ebd0be7dacaf1f06e78626d7}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4e0a1ff9fd037a1afdd7e9c6dce4a18b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!collect\+Processes@{collect\+Processes}}
+\index{collect\+Processes@{collect\+Processes}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{collect\+Processes}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+collect\+Processes (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4e0a1ff9fd037a1afdd7e9c6dce4a18b}
+
+
+Performs a garbage collection and canonicalization of the process states. 
+
+Removes any process state that is null. Renumbers the P\+I\+Ds so that there are no gaps (and start from 0).
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & any non-\/null \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the state with processes collected 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a57003566f5dd8c4905a7e630d90ad5ef}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac08af796a3dfdb6f0cce6c0c1afb8c68}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!collect\+Scopes@{collect\+Scopes}}
+\index{collect\+Scopes@{collect\+Scopes}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{collect\+Scopes}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+collect\+Scopes (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{Set$<$ {\bf Heap\+Error\+Kind} $>$}]{to\+Be\+Ignored}
+\end{DoxyParamCaption}
+) throws {\bf C\+I\+V\+L\+Heap\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac08af796a3dfdb6f0cce6c0c1afb8c68}
+
+
+Performs a garbage collection and canonicalization of dynamic scopes. 
+
+Compute the set of reachable dynamic scopes, and removes any which are unreachable. Renumbers the dynamic scopes in a canonic way. Updates all scope references in the state. This operation should be completely invisible to the user.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & a state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the state after canonicalizing scopes, which may be this state or a new one 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a4ffda85305907c945cc3ffb2d3339eeb}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a948646856ef1cd713a740aecc22d34c0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!commit\+Updated\+Channels\+To\+Entries@{commit\+Updated\+Channels\+To\+Entries}}
+\index{commit\+Updated\+Channels\+To\+Entries@{commit\+Updated\+Channels\+To\+Entries}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{commit\+Updated\+Channels\+To\+Entries}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+commit\+Updated\+Channels\+To\+Entries (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{queue\+Id, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{new\+Channels}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a948646856ef1cd713a740aecc22d34c0}
+
+
+Update all entries in a collective queue with a group of message buffers. 
+
+Note\+: The entry in position i will be updated with the message buffers in new\+Buffers\mbox{[}i\mbox{]}. The 0 position in collective queue is the head of the queue. The reason of using an array of message buffers to update the collective queue is to prevent the queue in state be changed for other purposes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em queue\+Id} & The I\+D of the collective queue \\
+\hline
+{\em new\+Channels} & The array of new message buffers. see \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry_a41f3b2e873b8f0e650cab149bbe4f129}{Collective\+Snapshots\+Entry\#get\+Msg\+Buffers()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_abb62af481c4c0f8bbc5091b16f1d9d75}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4462151d1c85d4d4a878d88d6cc96350}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!create\+Collective\+Snapshots\+Enrty@{create\+Collective\+Snapshots\+Enrty}}
+\index{create\+Collective\+Snapshots\+Enrty@{create\+Collective\+Snapshots\+Enrty}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{create\+Collective\+Snapshots\+Enrty}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+create\+Collective\+Snapshots\+Enrty (
+\begin{DoxyParamCaption}
+\item[{{\bf Immutable\+State}}]{state, }
+\item[{int}]{pid, }
+\item[{int}]{num\+Processes, }
+\item[{int}]{place, }
+\item[{int}]{queue\+I\+D, }
+\item[{{\bf Expression}}]{assertion, }
+\item[{Symbolic\+Expression}]{channels, }
+\item[{Contract\+Kind}]{kind, }
+\item[{List$<$ {\bf Pair}$<$ {\bf Variable}, Symbolic\+Expression $>$$>$}]{pick\+Up\+Station}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4462151d1c85d4d4a878d88d6cc96350}
+
+
+The process with \char`\"{}pid\char`\"{} creates a fresh new \hyperlink{}{Collective\+Snapshots\+Entry}, then saves its own snapshot in the new entry. 
+
+This function returns the new state with a new entry in one of its snapshots queues.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em num\+Processes} & The number of processes participating this collective entry \\
+\hline
+{\em place} & The place of the process in the collective entry \\
+\hline
+{\em queue\+I\+D} & The I\+D identifies a collective queue \\
+\hline
+{\em assertion} & The expression of the assertion asserted by the processes \\
+\hline
+{\em channels} & Message buffer snapshot \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_aaa4576f13147144139eb71f61c506c7b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aab7051f4b53cc88f543f90a95805b9a8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!create\+New\+Process@{create\+New\+Process}}
+\index{create\+New\+Process@{create\+New\+Process}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{create\+New\+Process}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+create\+New\+Process (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aab7051f4b53cc88f543f90a95805b9a8}
+
+
+Adds a new initial process state to the given state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new instance of state with only the process states changed. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_adbb5cfa400e857cedde973811105fed9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!deallocate@{deallocate}}
+\index{deallocate@{deallocate}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{deallocate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+deallocate (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{Symbolic\+Expression}]{heap\+Object\+Pointer, }
+\item[{int}]{dyscope\+Id, }
+\item[{int}]{malloc\+Id, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_adbb5cfa400e857cedde973811105fed9}
+
+
+Deallocates a heap object from the heap of a given dyscope. 
+
+It marks the heap object as I\+N\+V\+A\+L\+I\+D instead of removing it, updates any pointer to that removed object to be an U\+N\+D\+E\+F\+I\+N\+E\+D pointer, which is defined by the symbolic utility. The removal of the heap object happens later when the heap gets collected during state canonicalization.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a521481b4006af34010ce856f4f539a39}{malloc}
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The pre-\/state. \\
+\hline
+{\em heap\+Object\+Pointer} & The pointer which points to the heap object to be removed. \\
+\hline
+{\em dyscope\+Id} & The I\+D of the dyscope where the pointer points to. \\
+\hline
+{\em malloc\+Id} & The malloc I\+D of the heap object to be removed, i.\+e., the index of the heap field in the heap. \\
+\hline
+{\em index} & The index of the heap object in the heap field. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state after the heap object is removed from the heap, and corresponding pointers updated. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_ae67ff5361d7dda8a7b1ca1b3a7d6ad48}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a54d1895551e52122c30a1eb645f7f690}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!dequeue\+Collective\+Snapshots\+Entry@{dequeue\+Collective\+Snapshots\+Entry}}
+\index{dequeue\+Collective\+Snapshots\+Entry@{dequeue\+Collective\+Snapshots\+Entry}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{dequeue\+Collective\+Snapshots\+Entry}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+dequeue\+Collective\+Snapshots\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{queue\+I\+D}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a54d1895551e52122c30a1eb645f7f690}
+
+
+Dequeues an \hyperlink{}{Collective\+Snapshots\+Entry} from the specific snapshots queue, returns a new state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em queue\+I\+D} & The I\+D identifies a collective queue \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a79263e51d0e37343b1211adb8f1f19f1}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a025b6b9e6b52f0f5a7f47a946e35e02d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!enter\+Atomic@{enter\+Atomic}}
+\index{enter\+Atomic@{enter\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{enter\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+enter\+Atomic (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a025b6b9e6b52f0f5a7f47a946e35e02d}
+
+
+Process pid enters a new atomic section. 
+
+~\newline
+ Precondition\+: no other processes hold the atomic lock~\newline
+ If the process already holds the atomic lock, then its atomic count is incremented; ~\newline
+ if the process doesn\textquotesingle{}t hold the atomic lock, then the atomic lock is obtained and its atomic count is set to be 1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new state after process pid enters a new atomic section 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a20c86533f0d632ee5258f90c464d596e}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a912ed0ca7a4414f2edc2be8e36faefde}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!get\+Atomic\+Lock@{get\+Atomic\+Lock}}
+\index{get\+Atomic\+Lock@{get\+Atomic\+Lock}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{get\+Atomic\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+get\+Atomic\+Lock (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a912ed0ca7a4414f2edc2be8e36faefde}
+
+
+Declares that the process with the given P\+I\+D now owns the atomic lock. 
+
+Precondition\+: no process is holding the atomic lock in the given state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & any non-\/null \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} state \\
+\hline
+{\em pid} & The P\+I\+D of the process that is going to take the atomic lock \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a state equivalent to given one except that process P\+I\+D now owns the atomic lock 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_aeba2dd3ec097f8086d633109f66419df}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a0a89d58bd62a499947f0afac037379dd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!get\+Num\+State\+Instances@{get\+Num\+State\+Instances}}
+\index{get\+Num\+State\+Instances@{get\+Num\+State\+Instances}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{get\+Num\+State\+Instances}]{\setlength{\rightskip}{0pt plus 5cm}long edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+get\+Num\+State\+Instances (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a0a89d58bd62a499947f0afac037379dd}
+
+
+Returns the number of objects of type State that have been instantiated since this J\+V\+M started. 
+
+\begin{DoxyReturn}{Returns}
+the number of states instantiated 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a2e8deab13e632331d44f30808e245bd3}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_acd0074abb7544acdde596a2fab96e669}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!get\+Num\+States\+Saved@{get\+Num\+States\+Saved}}
+\index{get\+Num\+States\+Saved@{get\+Num\+States\+Saved}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{get\+Num\+States\+Saved}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+get\+Num\+States\+Saved (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_acd0074abb7544acdde596a2fab96e669}
+
+
+Returns the number of states stored by this state factory. 
+
+\begin{DoxyReturn}{Returns}
+the number of states stored 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a5442b4d2a0f993e07a9bd403ebdcd917}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a2ab7303606615d76222aff56ce7125ef}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!get\+Snapshots\+Queue@{get\+Snapshots\+Queue}}
+\index{get\+Snapshots\+Queue@{get\+Snapshots\+Queue}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{get\+Snapshots\+Queue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+Collective\+Snapshots\+Entry} \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+get\+Snapshots\+Queue (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{queue\+I\+D}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a2ab7303606615d76222aff56ce7125ef}
+
+
+Returns the corresponding snapshot queue by giving the identifier of an M\+P\+I communicator (The identifier is a component of the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} M\+P\+I library implementation). 
+
+If there is no such a snapshot queue for the M\+P\+I communicator, returns an empty array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier of a M\+P\+I communicator \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a03ae05bbe6479f7111e129a649cfed4b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a61437ae4ca0fb099c9f79ddceaa5d07c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!increment\+Num\+Symbolic\+Constants@{increment\+Num\+Symbolic\+Constants}}
+\index{increment\+Num\+Symbolic\+Constants@{increment\+Num\+Symbolic\+Constants}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{increment\+Num\+Symbolic\+Constants}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+increment\+Num\+Symbolic\+Constants (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a61437ae4ca0fb099c9f79ddceaa5d07c}
+
+
+Increase the number of symbolic constants by one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the state whole number of symbolic constants is to be increased. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new state 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a38d4a9ddfedabc175ca4f3339e429ab7}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6fd1ae7f315d534836864cc76a4fce0f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!increment\+Num\+Symbolic\+Inputs@{increment\+Num\+Symbolic\+Inputs}}
+\index{increment\+Num\+Symbolic\+Inputs@{increment\+Num\+Symbolic\+Inputs}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{increment\+Num\+Symbolic\+Inputs}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+increment\+Num\+Symbolic\+Inputs (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6fd1ae7f315d534836864cc76a4fce0f}
+
+
+Increase the number of symbolic constants by one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the state whole number of symbolic constants is to be increased. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new state 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_afb5218196825ebba4a22fb05335a008c}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6a8e3b14776e73ce1d08b175e3012cbd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!initial\+State@{initial\+State}}
+\index{initial\+State@{initial\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{initial\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+initial\+State (
+\begin{DoxyParamCaption}
+\item[{{\bf Model}}]{model}
+\end{DoxyParamCaption}
+) throws {\bf C\+I\+V\+L\+Heap\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6a8e3b14776e73ce1d08b175e3012cbd}
+
+
+Returns the canonic, initial state for a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} Model. 
+
+\begin{DoxyReturn}{Returns}
+the initial state 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_abcd886f831cb9db1dac78c3aee029751}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7f6ae867cb1e6c559f9deeeccfdc77d2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!initial\+Values@{initial\+Values}}
+\index{initial\+Values@{initial\+Values}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{initial\+Values}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+initial\+Values (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{lexical\+Scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a7f6ae867cb1e6c559f9deeeccfdc77d2}
+
+
+Creates the initial value of a given lexical scope. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lexical\+Scope} & The lexical scope whose variables are to be initialized. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An array of initial values of variables of the given lexical scope. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aa4bd3853959303e304debbc2ae22f5a4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!input\+Variable\+Value\+Map@{input\+Variable\+Value\+Map}}
+\index{input\+Variable\+Value\+Map@{input\+Variable\+Value\+Map}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{input\+Variable\+Value\+Map}]{\setlength{\rightskip}{0pt plus 5cm}Map$<${\bf Variable}, Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+input\+Variable\+Value\+Map (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aa4bd3853959303e304debbc2ae22f5a4}
+
+
+Returns the map of variable and value of input variables at the given state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a8f666801e5c6522fcdc81b508cf1e10d}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_af29c3918cae07c8e2689445dde49d065}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!is\+Descendant\+Of@{is\+Descendant\+Of}}
+\index{is\+Descendant\+Of@{is\+Descendant\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{is\+Descendant\+Of}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+is\+Descendant\+Of (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{ancestor, }
+\item[{int}]{descendant}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_af29c3918cae07c8e2689445dde49d065}
+
+
+Checks if one dyscope is strictly the descendant of the other (not equal to). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state. \\
+\hline
+{\em ancestor} & The I\+D of the ancestor dyscope. \\
+\hline
+{\em descendant} & The I\+D of the descendant dyscope. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff ancestor dyscope is really an ancestor of the descendant dyscope and they must not be equal to each other. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_ab2ba56b706c95a3afbe32c54504c5b16}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac3151f31996c6239ac71a2714ea54724}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!leave\+Atomic@{leave\+Atomic}}
+\index{leave\+Atomic@{leave\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{leave\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+leave\+Atomic (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ac3151f31996c6239ac71a2714ea54724}
+
+
+Process pid leaves an atomic section. 
+
+~\newline
+ Precondition\+: in the given state, the process pid holds the atomic lock and its atomic count is greater than zero.~\newline
+ The atomic count is decremented by 1 after this method;~\newline
+ if the resultant atomic count is 0, then the atomic lock is released as well.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new state after process pid leaves an atomic section 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_ace7452c8c5a59d8862e3fc189577cf8b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a5fd6c8dfda79abc673ed958993b8cff2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!locked\+By\+Atomic@{locked\+By\+Atomic}}
+\index{locked\+By\+Atomic@{locked\+By\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{locked\+By\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+locked\+By\+Atomic (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a5fd6c8dfda79abc673ed958993b8cff2}
+
+
+Checks if any process at the state is holding the atomic lock, i.\+e, the process is executing some atomic blocks. 
+
+This information is maintained as a global variable of {\ttfamily \$proc} type in the root scope in the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model (always with index 0), and it gets automatically updated when process id\textquotesingle{}s are renumbered. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the value of the variable atomic lock is not undefined. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a8960b6b6ec0ad03227bf46ee17b19ed1}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ad7bebd102aa4e515f7a532cb50751c46}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!lowest\+Common\+Ancestor@{lowest\+Common\+Ancestor}}
+\index{lowest\+Common\+Ancestor@{lowest\+Common\+Ancestor}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{lowest\+Common\+Ancestor}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+lowest\+Common\+Ancestor (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{one, }
+\item[{int}]{another}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ad7bebd102aa4e515f7a532cb50751c46}
+
+
+Computes the lowest common ancestor of two given dyscopes. 
+
+The returned value is always a dyscope I\+D.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state. \\
+\hline
+{\em one} & One dyscope. \\
+\hline
+{\em another} & Another dynamic scope. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The dyscope I\+D of the lowest common ancestor of the two given dyscopes. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a7bb8f08bb0e64d60c886d2cd482e9c80}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a521481b4006af34010ce856f4f539a39}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!malloc@{malloc}}
+\index{malloc@{malloc}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{malloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<${\bf State}, Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+malloc (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{dyscope\+I\+D, }
+\item[{int}]{malloc\+I\+D, }
+\item[{Symbolic\+Expression}]{heap\+Object}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a521481b4006af34010ce856f4f539a39}
+
+
+Allocates an object, of the given value, for the given malloc I\+D in the heap of the given dyscope. 
+
+For handle objects that are allocated by system functions instead of malloc statement, they all have a corresponding fake malloc I\+D assigned by the model builder.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The pre-\/state. \\
+\hline
+{\em dyscope\+I\+D} & The dyscope I\+D. \\
+\hline
+{\em malloc\+I\+D} & The I\+D the malloc statement. \\
+\hline
+{\em heap\+Object} & The value of the new heap object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new state after the new heap object 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a2d470ef099fa677050a049e6ffb0090f}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a336133449bfe76264c72cc15bb3e0bc3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!malloc@{malloc}}
+\index{malloc@{malloc}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{malloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<${\bf State}, Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+malloc (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{int}]{dyscope\+I\+D, }
+\item[{int}]{malloc\+I\+D, }
+\item[{Symbolic\+Type}]{element\+Type, }
+\item[{Numeric\+Expression}]{element\+Count}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a336133449bfe76264c72cc15bb3e0bc3}
+
+
+Allocates an object for the given malloc I\+D in the heap of the given dyscope. 
+
+For handle objects that are allocated by system functions instead of malloc statement, they all have a corresponding fake malloc I\+D assigned by the model builder. Since no value of the heap object is provided, the method will create a symbolic constant representing the heap object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The pre-\/state. \\
+\hline
+{\em pid} & The P\+I\+D of the process that triggers this execution. \\
+\hline
+{\em dyscope\+I\+D} & The dyscope I\+D. \\
+\hline
+{\em malloc\+I\+D} & The I\+D the malloc statement. \\
+\hline
+{\em element\+Type} & The symbolic type of the element to be contained in the new heap object. \\
+\hline
+{\em element\+Count} & The number of elements contained by the new heap object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new state after the new heap object is added. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_ae7914fbfe856e913a2f9ad694ed01b9b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a450c5462e9b7f8eaad36a3d4bbd744d0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!merge\+Monostates@{merge\+Monostates}}
+\index{merge\+Monostates@{merge\+Monostates}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{merge\+Monostates}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+merge\+Monostates (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf Immutable\+Collective\+Snapshots\+Entry}}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a450c5462e9b7f8eaad36a3d4bbd744d0}
+
+
+Merges a set of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}{Immutable\+Mono\+State} to a F\+A\+K\+E global \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} which should only be used to evaluation. 
+
+\+: For any two mono\+States in the array, they should be owned by different processes. \+: true.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mono\+States} & The array of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}{Immutable\+Mono\+State} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a71c4b5efdb8a18f3e9d6e724c0045d4f}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a10e26f9469590145532c69c4ce08fcb1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!num\+Symbolic\+Constants@{num\+Symbolic\+Constants}}
+\index{num\+Symbolic\+Constants@{num\+Symbolic\+Constants}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{num\+Symbolic\+Constants}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+num\+Symbolic\+Constants (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a10e26f9469590145532c69c4ce08fcb1}
+
+
+Returns the number of symbolic constants appearing in the given state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the given state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the number of symbolic constants appearing in the given state. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_aa25cbfaca9b0e6a1d7aa7e15dc50ec87}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ab66323bef446672f1b4de94f0ca09122}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!peek\+Collective\+Snapshots\+Entry@{peek\+Collective\+Snapshots\+Entry}}
+\index{peek\+Collective\+Snapshots\+Entry@{peek\+Collective\+Snapshots\+Entry}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{peek\+Collective\+Snapshots\+Entry}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+Collective\+Snapshots\+Entry} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+peek\+Collective\+Snapshots\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{queue\+I\+D}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ab66323bef446672f1b4de94f0ca09122}
+
+
+Copy the top \hyperlink{}{Collective\+Snapshots\+Entry} from the specific snapshots queue, returns the copied snapshots entry. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em queue\+I\+D} & The I\+D identifies a collective queue \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a319b79f1cb6f0ca0608b5bccf4a0151c}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a3f70888fd06f2a1c4a72393cc2345531}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!pop\+Call\+Stack@{pop\+Call\+Stack}}
+\index{pop\+Call\+Stack@{pop\+Call\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{pop\+Call\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+pop\+Call\+Stack (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a3f70888fd06f2a1c4a72393cc2345531}
+
+
+Pops an entry off the call stack for a process. 
+
+Does not modify or remove and dynamic scopes (even if they become unreachable). Does not nullify or remove the process state (even if the call stack becomes empty).
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state. \\
+\hline
+{\em pid} & The P\+I\+D of the process returning from a call. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the same as the old state but with the call stack for the given process popped. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_ab11e79aef8f8b8b80e830cbf48f03c1e}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aef485d98a0babfec8acc14a129cc4611}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!process\+In\+Atomic@{process\+In\+Atomic}}
+\index{process\+In\+Atomic@{process\+In\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{process\+In\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+process\+In\+Atomic (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aef485d98a0babfec8acc14a129cc4611}
+
+
+Returns the P\+I\+D of the process that holds the atomic lock at a certain state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1 iff there is no process holding the atomic lock, otherwise return the process that holds the atomic lock 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_abd00efcbcd99ef258a98712c1a5519fd}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a0ff6fe5b054069da0b20967e254b5ae4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!push\+Call\+Stack@{push\+Call\+Stack}}
+\index{push\+Call\+Stack@{push\+Call\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{push\+Call\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+push\+Call\+Stack (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf C\+I\+V\+L\+Function}}]{function, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{arguments}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a0ff6fe5b054069da0b20967e254b5ae4}
+
+
+Pushes a new entry onto the call stack for a process. 
+
+Used when a process calls a function. The process should already exist and have a non-\/empty call stack.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state \\
+\hline
+{\em pid} & The P\+I\+D of the process making the call \\
+\hline
+{\em function} & The function being called \\
+\hline
+{\em arguments} & The (actual) arguments to the function being called \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the same as the old state with the given process having a new entry on its call stack. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a3c7ba7469eca87e1359b63656f6de1fb}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a8fc946088739b623a3ccc49ed2544b11}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!push\+Call\+Stack@{push\+Call\+Stack}}
+\index{push\+Call\+Stack@{push\+Call\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{push\+Call\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+push\+Call\+Stack (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf C\+I\+V\+L\+Function}}]{function, }
+\item[{int}]{function\+Parent\+Dyscope, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{arguments}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a8fc946088739b623a3ccc49ed2544b11}
+
+
+Pushes a new entry onto the call stack for a process. 
+
+Used when a process calls a function. The process should already exist and have a non-\/empty call stack.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state \\
+\hline
+{\em pid} & The P\+I\+D of the process making the call \\
+\hline
+{\em function} & The function being called \\
+\hline
+{\em function\+Parent\+Dyscope} & The dyscope I\+D of the parent of the new function \\
+\hline
+{\em arguments} & The (actual) arguments to the function being called \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the same as the old state with the given process having a new entry on its call stack. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a8eae26822f75dc67b3a588a725af7430}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a680a2342922a0e5db447a9f0fd5857f3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!push\+Call\+Stack2@{push\+Call\+Stack2}}
+\index{push\+Call\+Stack2@{push\+Call\+Stack2}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{push\+Call\+Stack2}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+push\+Call\+Stack2 (
+\begin{DoxyParamCaption}
+\item[{{\bf Immutable\+State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf C\+I\+V\+L\+Function}}]{function, }
+\item[{int}]{function\+Parent\+Dyscope, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{arguments, }
+\item[{int}]{caller\+Pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a680a2342922a0e5db447a9f0fd5857f3}
+
+
+General method for pushing a frame onto a call stack, whether or not the call stack is for a new process (and therefore empty). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the initial state \\
+\hline
+{\em pid} & the P\+I\+D of the process whose stack is to be modified; this stack may be empty \\
+\hline
+{\em function} & the called function that will be pushed onto the stack \\
+\hline
+{\em function\+Parent\+Dyscope} & The dyscope I\+D of the parent of the new function \\
+\hline
+{\em arguments} & the arguments to the function \\
+\hline
+{\em caller\+Pid} & the P\+I\+D of the process that is creating the new frame. For an ordinary function call, this will be the same as pid. For a \char`\"{}spawn\char`\"{} command, caller\+Pid will be different from pid and process pid will be new and have an empty stack. Exception\+: if caller\+Pid is -\/1 then the new dynamic scope will have no parent; this is used for pushing the original system function, which has no caller \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+new stack with new frame on call stack of process pid 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aaba1752dba05b39dc8fa982e1ee682d8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!release\+Atomic\+Lock@{release\+Atomic\+Lock}}
+\index{release\+Atomic\+Lock@{release\+Atomic\+Lock}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{release\+Atomic\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+release\+Atomic\+Lock (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aaba1752dba05b39dc8fa982e1ee682d8}
+
+
+Releases the atomic lock, by updating the atomic lock variable with the undefined process value. 
+
+If atomic lock of the given state is already released, this is a no op.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & any non-\/null \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a state equivalent to given one except that no state owns the atomic lock 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a1a81054b9e512c38bcf873ce54c36896}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a1c324a5c8166701c1e6037005598f87b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!remove\+Process@{remove\+Process}}
+\index{remove\+Process@{remove\+Process}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{remove\+Process}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+remove\+Process (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a1c324a5c8166701c1e6037005598f87b}
+
+
+Removes a process from the state. 
+
+The process state associated to that process is set to null. No other part of the state is affected. To really get rid of the process state you need to call \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a4e0a1ff9fd037a1afdd7e9c6dce4a18b}{collect\+Processes}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state \\
+\hline
+{\em pid} & The P\+I\+D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the same as the old state with the process state set to null 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a5f969c52d703e39c812dfde91ad68d75}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a02d59626c894538bab15a0e459c7b1ae}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!set\+Location@{set\+Location}}
+\index{set\+Location@{set\+Location}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{set\+Location}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+set\+Location (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Location}}]{location, }
+\item[{boolean}]{access\+Changed}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a02d59626c894538bab15a0e459c7b1ae}
+
+
+Procedure\+: 
+
+
+\begin{DoxyEnumerate}
+\item get the current dynamic scope ds0 of the process. Let ss0 be the static scope associated to ds0. 
+\item Let ss1 be the static scope of the new location to move to. 
+\item Compute the join (youngest common ancestor) of ss0 and ss1. Also save the sequence of static scopes from join to ss1. 
+\item Iterate U\+P over dynamic scopes from ds0 up (using parent field) to the first dynamic scope whose static scope is join. 
+\item Iterate D\+O\+W\+N from join to ss1, creating N\+E\+W dynamic scopes along the way. 
+\item Set the frame pointer to the new dynamic scope corresponding to ss1, and set the location to the given location. 
+\item Remove all unreachable scopes. 
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+{\em location} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a3d545b10a549db49479268ea772245b1}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6eca6e2fe2e004ad7b74dd4ffa49846e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!set\+Location@{set\+Location}}
+\index{set\+Location@{set\+Location}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{set\+Location}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+set\+Location (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Location}}]{location}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6eca6e2fe2e004ad7b74dd4ffa49846e}
+
+
+Sets the location of a process. 
+
+This changes the top stack frame for the process so that it points to the new location. The given process must have a non-\/empty stack (although the location component of that frame is not used, so it is O\+K if it is null). There is no change of the access of variables from the current location to the target location.
+
+This may involve adding and removing scopes, if the scope of the new location differs from the original scope.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state. \\
+\hline
+{\em pid} & The P\+I\+D of the process making the move. \\
+\hline
+{\em location} & The target location. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the same as the old state with the given process at a new location, and scopes added and removed as necessary 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_ad68188e38333826e7f585b5ceb858a08}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aa3955ff83bd8eca124041041d8d4fd52}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!set\+Process\+State@{set\+Process\+State}}
+\index{set\+Process\+State@{set\+Process\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{set\+Process\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+set\+Process\+State (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf Process\+State}}]{process\+State}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_aa3955ff83bd8eca124041041d8d4fd52}
+Updates the state by replacing the process state with the given one where the P\+I\+D of the old process state is the same as the given process state. 
+
+Precondition\+: the P\+I\+D of the given process state should be in \mbox{[}0, num\+Procs-\/1\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \hyperlink{structA}{A} non-\/null \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} state \\
+\hline
+{\em process\+State} & The process state to assign to P\+I\+D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new state after updating the process with the specified P\+I\+D 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a2f48636d5dba0d57c3e7cf63e9980b9d}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ae708ff73f1b3327a5deb0b9b5016cd78}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!set\+Variable@{set\+Variable}}
+\index{set\+Variable@{set\+Variable}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{set\+Variable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+set\+Variable (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{vid, }
+\item[{int}]{scope\+Id, }
+\item[{Symbolic\+Expression}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_ae708ff73f1b3327a5deb0b9b5016cd78}
+Updates the value assigned to a variable in the state. Specifically, returns a state which is equivalent to the given one, except that the value assigned to the specified variable is replaced by the given value. 
+
+In this version of the method, the variable is specified by its dynamic scope I\+D and variable I\+D. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state \\
+\hline
+{\em vid} & variable I\+D number \\
+\hline
+{\em scope\+I\+D} & The I\+D of the dynamic scope containing the variable. This version of the method is useful when setting the target of a pointer. For a variable in the current lexical scope, use the version of the method without this argument \\
+\hline
+{\em value} & The new value to assign to the variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the old state modified by updating the value of the variable 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a33ef600c8d89d0edb2ae51def702697b}{set\+Variable(\+State, Variable, int, Symbolic\+Expression)} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_ab1877edd7985bfa3bb4171fed7671472}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a33ef600c8d89d0edb2ae51def702697b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!set\+Variable@{set\+Variable}}
+\index{set\+Variable@{set\+Variable}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{set\+Variable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+set\+Variable (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf Variable}}]{variable, }
+\item[{int}]{pid, }
+\item[{Symbolic\+Expression}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a33ef600c8d89d0edb2ae51def702697b}
+
+
+Updates the value assigned to a variable in the state. 
+
+Specifically, returns a state which is equivalent to the given one, except that the value assigned to the specified variable is replaced by the given value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The old state \\
+\hline
+{\em variable} & The variable to update \\
+\hline
+{\em pid} & The P\+I\+D of the process containing the variable \\
+\hline
+{\em value} & The new value to be assigned to the variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new state that is the old state modified by updating the value of the variable 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_ae266fa51d2dea90e7e5d3ca8b45dd22b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6ad75dbebbe769245d9850b493ef1ce8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!simplify@{simplify}}
+\index{simplify@{simplify}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{simplify}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+simplify (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a6ad75dbebbe769245d9850b493ef1ce8}
+
+
+Simplifies all variable values in the state, using the path condition as the simplification context. 
+
+\hyperlink{structA}{A} symbolic constant which is determined to have a concrete value (based on the path condition), may be entirely removed from the state by replacing every occurrence of that symbol with the concrete value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & Any State \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The simplified state 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_adbeb8d17faccb408984c62646ad3491d}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a3756be1f64eb8b339587e93fe4370781}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!stack\+Entry@{stack\+Entry}}
+\index{stack\+Entry@{stack\+Entry}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{stack\+Entry}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+Stack\+Entry} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+stack\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf Location}}]{location, }
+\item[{int}]{dyscope\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a3756be1f64eb8b339587e93fe4370781}
+
+
+Create a new call stack entry. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em location} & The location to go to after returning from this call. \\
+\hline
+{\em dyscope\+Id} & The dynamic scope the process is in before the call. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a545a89e6de9775ca52721c9c794da12b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!symbolic\+Universe@{symbolic\+Universe}}
+\index{symbolic\+Universe@{symbolic\+Universe}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{symbolic\+Universe}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Universe edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+symbolic\+Universe (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a545a89e6de9775ca52721c9c794da12b}
+
+
+Returns the symbolic universe used by this factory to manipulate symbolic expressions. 
+
+\begin{DoxyReturn}{Returns}
+the symbolic universe 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_a5ca93a5b12557dcb6337cf3cf41862ec}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a5318c37923f7a29e4ea586e4ed241f25}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}!terminate\+Process@{terminate\+Process}}
+\index{terminate\+Process@{terminate\+Process}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+State\+Factory}}
+\subsubsection[{terminate\+Process}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+State\+Factory.\+terminate\+Process (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableStateFactory_a5318c37923f7a29e4ea586e4ed241f25}
+
+
+Sets the process state for the designated process to be the process state with the empty stack. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & the old state \\
+\hline
+{\em pid} & the P\+I\+D of the process to terminate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+state that is identical to old except that the process state for process P\+I\+D has been set to the process state with the empty stack 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory_aefff2ccf75944f8eea5c77d95aeb3b5f}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State\+Factory}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/state/common/immutable/Immutable\+State\+Factory.\+java\end{DoxyCompactItemize}

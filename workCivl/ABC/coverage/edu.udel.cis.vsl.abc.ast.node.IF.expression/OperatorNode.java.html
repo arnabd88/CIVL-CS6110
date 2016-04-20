@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OperatorNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.expression</a> &gt; <span class="el_source">OperatorNode.java</span></div><h1>OperatorNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.expression;</span>
+
+/**
+ * &lt;p&gt;
+ * A node that represents an expression built using an operator.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * The most common type of expression is an expression that involves an operator
+ * and some number of operands. The operands are the children of this AST node.
+ * &lt;/p&gt;
+ * 
+ * @author siegel
+ * 
+ */
+public interface OperatorNode extends ExpressionNode {
+
+	/**
+	 * An enumerated type for all the different operators that can occur in an
+	 * {@link OperatorNode}. Some operators are not included here because they
+	 * have their own class. In particular, any operator that results in a
+	 * left-hand-side expression has its own class.
+	 * 
+	 * @author siegel
+	 * 
+	 */
+<span class="nc" id="L27">	public enum Operator {</span>
+<span class="nc" id="L28">		/**</span>
+		 * The unary address-of operator &lt;code&gt;&amp;&lt;/code&gt;, as in &lt;code&gt;&amp;e&lt;/code&gt;,
+		 * which returns a pointer to the object specified by its argument
+		 * &lt;code&gt;e&lt;/code&gt;.
+		 */
+<span class="nc" id="L33">		ADDRESSOF,</span>
+<span class="nc" id="L34">		/**</span>
+		 * The standard binary assignment operator &lt;code&gt;=&lt;/code&gt;, as in
+		 * &lt;code&gt;lhs=rhs&lt;/code&gt;.
+		 */
+<span class="nc" id="L38">		ASSIGN,</span>
+<span class="nc" id="L39">		/**</span>
+		 * The CIVL-C &quot;big-O&quot; operator &lt;code&gt;$O&lt;/code&gt;, as in
+		 * &lt;code&gt;$O(h*h)&lt;/code&gt;, which is used to specify the asymptotic
+		 * complexity of an expression as a parameter approaches zero.
+		 */
+<span class="nc" id="L44">		BIG_O,</span>
+<span class="nc" id="L45">		/**</span>
+		 * The bitwise and binary operator &lt;code&gt;&amp;&lt;/code&gt;, as in
+		 * &lt;code&gt;e&amp;f&lt;/code&gt;, which performs the bit-wise and operation on the
+		 * corresponding bits of the two integer values.
+		 */
+<span class="nc" id="L50">		BITAND,</span>
+<span class="nc" id="L51">		/**</span>
+		 * The bit-wise and assignment operator &lt;code&gt;&amp;=&lt;/code&gt;, as in
+		 * &lt;code&gt;lhs&amp;=rhs&lt;/code&gt;, which performs the bit-wise and operation on
+		 * the two arguments and stores the result in the &lt;code&gt;lhs&lt;/code&gt;.
+		 */
+<span class="nc" id="L56">		BITANDEQ,</span>
+<span class="nc" id="L57">		/**</span>
+		 * The bit-wise complement operator &lt;code&gt;~&lt;/code&gt;, as in
+		 * &lt;code&gt;~e&lt;/code&gt;, which negates each bit in an integer value.
+		 */
+<span class="nc" id="L61">		BITCOMPLEMENT,</span>
+<span class="nc" id="L62">		/**</span>
+		 * The bit-wise inclusive or operator &lt;code&gt;|&lt;/code&gt;, as in
+		 * &lt;code&gt;e|f&lt;/code&gt;, which performs the logical or operation on the
+		 * corresponding bits of two integer values.
+		 */
+<span class="nc" id="L67">		BITOR,</span>
+<span class="nc" id="L68">		/**</span>
+		 * The bit-wise inclusive or assignment operator &lt;code&gt;|=&lt;/code&gt;, as in
+		 * &lt;code&gt;lhs|=rhs&lt;/code&gt;, which performs bit-wise or on the two
+		 * arguments and stores the result in the &lt;code&gt;lhs&lt;/code&gt;.
+		 */
+<span class="nc" id="L73">		BITOREQ,</span>
+<span class="nc" id="L74">		/**</span>
+		 * The bit-wise exclusive or operator &lt;code&gt;^&lt;/code&gt;, as in
+		 * &lt;code&gt;e^f&lt;/code&gt;, which performs the exclusive-or operation on the
+		 * respective bits of two integer values.
+		 */
+<span class="nc" id="L79">		BITXOR,</span>
+<span class="nc" id="L80">		/**</span>
+		 * The bit-wise exclusive or assignment operator &lt;code&gt;^=&lt;/code&gt;, which
+		 * performs the bit-wise exclusive or operation on the two arguments and
+		 * stores the result in the left-hand-side argument.
+		 */
+<span class="nc" id="L85">		BITXOREQ,</span>
+<span class="nc" id="L86">		/**</span>
+		 * The comma operator &lt;code&gt;,&lt;/code&gt;, as in &lt;code&gt;e,f&lt;/code&gt; which
+		 * evaluates &lt;code&gt;e&lt;/code&gt; and then &lt;code&gt;f&lt;/code&gt;, and returns the
+		 * result of evaluating &lt;code&gt;f&lt;/code&gt;. Useful only if &lt;code&gt;e&lt;/code&gt;
+		 * has side-effects.
+		 */
+<span class="nc" id="L92">		COMMA,</span>
+<span class="nc" id="L93">		/**</span>
+		 * The ternary if-then-else operator &lt;code&gt;?&lt;/code&gt;, as in
+		 * &lt;code&gt;e1 ? e2 : e3&lt;/code&gt;. Evaluates &lt;code&gt;e1&lt;/code&gt; and converts to
+		 * boolean; if result is &lt;code&gt;true&lt;/code&gt;, evaluates and returns
+		 * &lt;code&gt;e2&lt;/code&gt;, else evaluates and returns &lt;code&gt;e2&lt;/code&gt;.
+		 */
+<span class="nc" id="L99">		CONDITIONAL,</span>
+<span class="nc" id="L100">		/**</span>
+		 * The pointer dereference unary operator &lt;code&gt;*&lt;/code&gt;, as in
+		 * &lt;code&gt;*e&lt;/code&gt;, which returns the value stored in the memory
+		 * location pointed to by &lt;code&gt;e&lt;/code&gt;.
+		 */
+<span class="nc" id="L105">		DEREFERENCE,</span>
+<span class="nc" id="L106">		/**</span>
+		 * The numeric division operator &lt;code&gt;/&lt;/code&gt;, as in &lt;code&gt;e/f&lt;/code&gt;,
+		 * used for integer or floating-point division.
+		 */
+<span class="nc" id="L110">		DIV,</span>
+<span class="nc" id="L111">		/**</span>
+		 * The numeric division assignment operator &lt;code&gt;/=&lt;/code&gt;, as in
+		 * &lt;code&gt;lhs/=rhs&lt;/code&gt;, which evaluates &lt;code&gt;lhs/rhs&lt;/code&gt; and
+		 * stores the result in &lt;code&gt;lhs&lt;/code&gt;.
+		 */
+<span class="nc" id="L116">		DIVEQ,</span>
+<span class="nc" id="L117">		/**</span>
+		 * The equality operator &lt;code&gt;==&lt;/code&gt;, as in &lt;code&gt;e==f&lt;/code&gt;, which
+		 * returns the integer 1 if the two arguments are equal, else returns
+		 * the integer 0. The arguments must have scalar type.
+		 */
+<span class="nc" id="L122">		EQUALS,</span>
+<span class="nc" id="L123">		/**</span>
+		 * The greater-than relational operator, as in &lt;code&gt;e&gt;f&lt;/code&gt;, which
+		 * returns the integer 1 if &lt;code&gt;e&lt;/code&gt; is greater than
+		 * &lt;code&gt;f&lt;/code&gt;, else returns 0.
+		 */
+<span class="nc" id="L128">		GT,</span>
+<span class="nc" id="L129">		/**</span>
+		 * The greater-than-or-equal-to relational operator, as in
+		 * &lt;code&gt;e&gt;=f&lt;/code&gt;, which returns the integer 1 if &lt;code&gt;e&lt;/code&gt; is
+		 * greater than or equal to &lt;code&gt;f&lt;/code&gt;, else returns 0.
+		 */
+<span class="nc" id="L134">		GTE,</span>
+<span class="nc" id="L135">		/**</span>
+		 * The CIVL-C &quot;remote&quot; operator &lt;code&gt;#&lt;/code&gt;, as in
+		 * &lt;code&gt;expr0 # expr&lt;/code&gt;.
+		 */
+<span class="nc" id="L139">		HASH,</span>
+<span class="nc" id="L140">		/**</span>
+		 * The CIVL-C logical implication operator &lt;code&gt;=&gt;&lt;/code&gt;, as in
+		 * &lt;code&gt;e=&gt;f&lt;/code&gt; which is equivalent to &lt;code&gt;(!e)||f&lt;/code&gt;.
+		 */
+<span class="nc" id="L144">		IMPLIES,</span>
+<span class="nc" id="L145">		/**</span>
+		 * The logical and operator &lt;code&gt;&amp;&amp;&lt;/code&gt;, as in &lt;code&gt;e&amp;&amp;f&lt;/code&gt;,
+		 * which returns the integer 1 if &lt;code&gt;e&lt;/code&gt; and &lt;code&gt;f&lt;/code&gt; are
+		 * both true (not 0), else returns 1. This is a short-circuit operator,
+		 * so if &lt;code&gt;e&lt;/code&gt; is false, &lt;code&gt;f&lt;/code&gt; is not evaluated.
+		 */
+<span class="nc" id="L151">		LAND,</span>
+<span class="nc" id="L152">		/**</span>
+		 * The logical or operator &lt;code&gt;||&lt;/code&gt;, as in &lt;code&gt;e||f&lt;/code&gt;,
+		 * which returns the integer 1 if &lt;code&gt;e&lt;/code&gt; or &lt;code&gt;f&lt;/code&gt; is
+		 * true (not 0), else returns 1. This is a short-circuit operator, so if
+		 * &lt;code&gt;e&lt;/code&gt; is true, &lt;code&gt;f&lt;/code&gt; is not evaluated.
+		 */
+<span class="nc" id="L158">		LOR,</span>
+<span class="nc" id="L159">		/**</span>
+		 * The less-than relational operator, as in &lt;code&gt;e&amp;lt;f&lt;/code&gt;, which
+		 * returns the integer 1 if &lt;code&gt;e&lt;/code&gt; is less than &lt;code&gt;f&lt;/code&gt;,
+		 * else returns 0.
+		 */
+<span class="nc" id="L164">		LT,</span>
+<span class="nc" id="L165">		/**</span>
+		 * The less-than-or-equal-to relational operator, as in
+		 * &lt;code&gt;e &lt;= f&lt;/code&gt;, which returns the integer 1 if &lt;code&gt;e&lt;/code&gt; is
+		 * less than or equal to &lt;code&gt;f&lt;/code&gt;, else returns 0.
+		 */
+<span class="nc" id="L170">		LTE,</span>
+<span class="nc" id="L171">		/**</span>
+		 * The binary subtraction operator &lt;code&gt;-&lt;/code&gt;, as in
+		 * &lt;code&gt;e-f&lt;/code&gt;. If both operands are numeric, returns the numeric
+		 * difference. Also used in the case where &lt;code&gt;e&lt;/code&gt; has pointer
+		 * type and &lt;code&gt;f&lt;/code&gt; is an integer (in which case the result is a
+		 * pointer of the same type as &lt;code&gt;e&lt;/code&gt;), and in the case where
+		 * &lt;code&gt;e&lt;/code&gt; and &lt;code&gt;f&lt;/code&gt; are both pointers of the same type,
+		 * in which case the result is an integer.
+		 */
+<span class="nc" id="L180">		MINUS,</span>
+<span class="nc" id="L181">		/**</span>
+		 * The subtraction assignment operator &lt;code&gt;-=&lt;/code&gt;, as in
+		 * &lt;code&gt;e-=f&lt;/code&gt;, which performs subtraction &lt;code&gt;e-f&lt;/code&gt; and
+		 * stores the result in &lt;code&gt;e&lt;/code&gt;.
+		 */
+<span class="nc" id="L186">		MINUSEQ,</span>
+<span class="nc" id="L187">		/**</span>
+		 * The integer modulus operator &lt;code&gt;%&lt;/code&gt;, as in &lt;code&gt;e%f&lt;/code&gt;.
+		 */
+<span class="nc" id="L190">		MOD,</span>
+<span class="nc" id="L191">		/**</span>
+		 * The integer modulus assignment operator &lt;code&gt;%=&lt;/code&gt;, which stores
+		 * the result of &lt;code&gt;e%f&lt;/code&gt; in &lt;code&gt;e&lt;/code&gt;.
+		 */
+<span class="nc" id="L195">		MODEQ, // %= integer modulus assignment</span>
+		/**
+		 * The not-equals operator &lt;code&gt;!=&lt;/code&gt;, as in &lt;code&gt;e!=f&lt;/code&gt;,
+		 * which returns the integer 1 if the two arguments are not equal, else
+		 * returns the integer 0. The arguments must have scalar type.
+		 */
+<span class="nc" id="L201">		NEQ,</span>
+<span class="nc" id="L202">		/**</span>
+		 * The logical not operator &lt;code&gt;!&lt;/code&gt;, as in &lt;code&gt;!e&lt;/code&gt; which
+		 * returns the integer 1 if &lt;code&gt;e&lt;/code&gt; is zero, else returns 0.
+		 */
+<span class="nc" id="L206">		NOT,</span>
+<span class="nc" id="L207">		/**</span>
+		 * The binary addition operator &lt;code&gt;+&lt;/code&gt;, as in &lt;code&gt;e+f&lt;/code&gt;.
+		 * If both arguments are numeric, the result is the numeric sum; if one
+		 * argument is a pointer and the other an integer, the result is a
+		 * pointer of the same type as the pointer operand.
+		 */
+<span class="nc" id="L213">		PLUS,</span>
+<span class="nc" id="L214">		/**</span>
+		 * The addition assignment operator &lt;code&gt;+=&lt;/code&gt; as in
+		 * &lt;code&gt;lhs+=rhs&lt;/code&gt;. Stores the result of &lt;code&gt;lhs+rhs&lt;/code&gt; in
+		 * &lt;code&gt;lhs&lt;/code&gt;.
+		 */
+<span class="nc" id="L219">		PLUSEQ,</span>
+<span class="nc" id="L220">		/**</span>
+		 * The post-decrement operator &lt;code&gt;--&lt;/code&gt;, as in &lt;code&gt;e--&lt;/code&gt;,
+		 * which subtracts one from e, storing the result in e, and returns the
+		 * original value of e.
+		 */
+<span class="nc" id="L225">		POSTDECREMENT,</span>
+<span class="nc" id="L226">		/**</span>
+		 * The post-increment operator &lt;code&gt;++&lt;/code&gt;, as in &lt;code&gt;e++&lt;/code&gt;,
+		 * which adds one to e, storing the result in e, and returns the
+		 * original value of e.
+		 */
+<span class="nc" id="L231">		POSTINCREMENT,</span>
+<span class="nc" id="L232">		/**</span>
+		 * The pre-decrement operator &lt;code&gt;--&lt;/code&gt;, as in &lt;code&gt;--e&lt;/code&gt;,
+		 * which subtracts one from e, storing the result in e, and returns the
+		 * decremented result.
+		 */
+<span class="nc" id="L237">		PREDECREMENT,</span>
+<span class="nc" id="L238">		/**</span>
+		 * The pre-increment operator &lt;code&gt;++&lt;/code&gt;, as in &lt;code&gt;++e&lt;/code&gt;,
+		 * which adds one to e, storing the result in e, and returns the
+		 * incremented result.
+		 */
+<span class="nc" id="L243">		PREINCREMENT,</span>
+<span class="nc" id="L244">		/**</span>
+		 * The shift-left operator &lt;code&gt; &lt;&lt; &lt;/code&gt;, as in &lt;code&gt;e &lt;&lt; f&lt;/code&gt;,
+		 * which returns the integer obtained by shifting the bits comprising
+		 * integer &lt;code&gt;e&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; units to the left.
+		 */
+<span class="nc" id="L249">		SHIFTLEFT,</span>
+<span class="nc" id="L250">		/**</span>
+		 * The shift left assignment operator &lt;code&gt; &lt;&lt;= &lt;/code&gt;, as in
+		 * &lt;code&gt;e &lt;&lt;= f&lt;/code&gt;, which stores in &lt;code&gt;e&lt;/code&gt; the result of
+		 * &lt;code&gt;e &lt;&lt; f&lt;/code&gt;.
+		 */
+<span class="nc" id="L255">		SHIFTLEFTEQ,</span>
+<span class="nc" id="L256">		/**</span>
+		 * The shift-right operator &lt;code&gt; &gt;&gt; &lt;/code&gt;, as in &lt;code&gt;e &gt;&gt; f&lt;/code&gt;
+		 * , which returns the integer obtained by shifting the bits comprising
+		 * integer &lt;code&gt;e&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; units to the right.
+		 */
+<span class="nc" id="L261">		SHIFTRIGHT,</span>
+<span class="nc" id="L262">		/**</span>
+		 * The shift right assignment operator &lt;code&gt; &gt;&gt;= &lt;/code&gt;, as in
+		 * &lt;code&gt;e &gt;&gt;= f&lt;/code&gt;, which stores in &lt;code&gt;e&lt;/code&gt; the result of
+		 * &lt;code&gt;e &gt;&gt; f&lt;/code&gt;.
+		 */
+<span class="nc" id="L267">		SHIFTRIGHTEQ,</span>
+<span class="nc" id="L268">		/**</span>
+		 * The array subscript operator &lt;code&gt;[]&lt;/code&gt;, as in &lt;code&gt;a[i]&lt;/code&gt;
+		 * , which returns the element in position &lt;code&gt;i&lt;/code&gt; of array
+		 * &lt;code&gt;a&lt;/code&gt;.
+		 */
+<span class="nc" id="L273">		SUBSCRIPT,</span>
+<span class="nc" id="L274">		/**</span>
+		 * The multiplication operator &lt;code&gt;*&lt;/code&gt;, as in &lt;code&gt;e*f&lt;/code&gt;.
+		 */
+<span class="nc" id="L277">		TIMES,</span>
+<span class="nc" id="L278">		/**</span>
+		 * The multiplication assignment operator &lt;code&gt;*=&lt;/code&gt;, as in
+		 * &lt;code&gt;e*=f&lt;/code&gt;, which stores in &lt;code&gt;e&lt;/code&gt; the result of
+		 * &lt;code&gt;e*f&lt;/code&gt;.
+		 */
+<span class="nc" id="L283">		TIMESEQ,</span>
+<span class="nc" id="L284">		/**</span>
+		 * The unary minus operator &lt;code&gt;-&lt;/code&gt;, as in &lt;code&gt;-e&lt;/code&gt;, which
+		 * return the numeric negation of the number &lt;code&gt;e&lt;/code&gt;.
+		 */
+<span class="nc" id="L288">		UNARYMINUS,</span>
+<span class="nc" id="L289">		/**</span>
+		 * The unary plus operator &lt;code&gt;+&lt;/code&gt;, as in &lt;code&gt;+e&lt;/code&gt;, which
+		 * returns &lt;code&gt;e&lt;/code&gt;.
+		 */
+<span class="nc" id="L293">		UNARYPLUS,</span>
+<span class="nc" id="L294">		/**</span>
+		 * ACSL Valid operator
+		 */
+<span class="nc" id="L297">		VALID</span>
+	};
+
+	/**
+	 * Returns the operator of this expression.
+	 * 
+	 * @return the operator
+	 */
+	Operator getOperator();
+
+	/**
+	 * Sets the operator of this expression.
+	 * 
+	 * @param operator
+	 *            the operator
+	 */
+	void setOperator(Operator operator);
+
+	/**
+	 * Returns the number of arguments (operands) in this operator expression.
+	 * 
+	 * @return the number of arguments
+	 */
+	int getNumberOfArguments();
+
+	/**
+	 * Returns the index-th argument, indexed from 0.
+	 * 
+	 * @return the index-th argument (operand) of this expression
+	 */
+	ExpressionNode getArgument(int index);
+
+	/**
+	 * Sets the index-th argument of this expression to be the given expression
+	 * 
+	 * @param index
+	 *            nonnegative integer in appropriate range for the operator
+	 * @param value
+	 *            expression to be made the operand in that index
+	 */
+	void setArgument(int index, ExpressionNode value);
+
+	@Override
+	OperatorNode copy();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

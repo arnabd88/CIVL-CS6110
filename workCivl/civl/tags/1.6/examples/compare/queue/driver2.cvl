@@ -1,0 +1,31 @@
+/* General driver to test concurrent queues: Two-Lock queue and 
+ * Non-Blocking queue from Michael and Scott
+ */
+
+#include <civlc.cvh>
+#include <stdio.h>
+#include <assert.h>
+#include "queue.h"
+
+$input int N=3;
+queue_t queue;
+int array[N];
+void thread(int val) {enqueue(&queue, val);dequeue(&queue, &array[val-1]);}
+  
+int main() {      //Test the concurrency
+  
+  initialize(&queue);
+  
+  $parfor(int i: 1 .. N)
+    thread(i);
+
+  for(int j=0; j < N; j++)
+    printf("array[%d] = %d\t",j, array[j]);
+  printf("\n");
+
+  assert((array[0]==1&&array[1]==2&&array[2]==3)||(array[0]==1&&array[1]==3&&array[2]==2)|| 
+	 (array[0]==2&&array[1]==3&&array[2]==1)||(array[0]==2&&array[1]==1&&array[2]==3)|| 
+	 (array[0]==3&&array[1]==1&&array[2]==2)||(array[0]==3&&array[1]==2&&array[2]==1)); 
+
+  freequeue(queue);
+}

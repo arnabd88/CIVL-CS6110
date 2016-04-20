@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonASTNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common</a> &gt; <span class="el_source">CommonASTNode.java</span></div><h1>CommonASTNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTException;
+import edu.udel.cis.vsl.abc.ast.IF.ASTs;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.AttributeKey;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodePredicate;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public abstract class CommonASTNode implements ASTNode {
+
+<span class="nc" id="L28">	private static long instanceCount = 0;</span>
+
+	private long instanceId;
+
+<span class="nc" id="L32">	private int id = -1;</span>
+
+<span class="nc" id="L34">	private AST owner = null;</span>
+
+	private ASTNode parent;
+
+<span class="nc" id="L38">	private int childIndex = -1;</span>
+
+	private ArrayList&lt;ASTNode&gt; children;
+
+	private Source source;
+
+<span class="nc" id="L44">	private ArrayList&lt;Object&gt; attributes = null;</span>
+
+	private Scope scope;
+
+	private void checkModifiable() {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (owner != null)</span>
+<span class="nc" id="L50">			throw new ASTException(</span>
+<span class="nc" id="L51">					&quot;Cannot modify node until released from AST:\n&quot; + this);</span>
+<span class="nc" id="L52">	}</span>
+
+	protected static &lt;T extends ASTNode&gt; T duplicate(T node) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (node == null)</span>
+<span class="nc" id="L56">			return null;</span>
+		else {
+			@SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L59">			T copy = (T) node.copy();</span>
+
+<span class="nc" id="L61">			return copy;</span>
+		}
+	}
+
+	protected static &lt;T extends ASTNode&gt; List&lt;T&gt; duplicate(List&lt;T&gt; list) {
+<span class="nc" id="L66">		LinkedList&lt;T&gt; newList = new LinkedList&lt;T&gt;();</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (T node : list)</span>
+<span class="nc" id="L69">			newList.add(duplicate(node));</span>
+<span class="nc" id="L70">		return newList;</span>
+	}
+
+<span class="nc" id="L73">	public CommonASTNode(Source source,</span>
+			Iterator&lt;? extends ASTNode&gt; childIterator) {
+<span class="nc" id="L75">		int childCount = 0;</span>
+
+<span class="nc" id="L77">		instanceId = instanceCount++;</span>
+<span class="nc" id="L78">		this.source = source;</span>
+<span class="nc" id="L79">		children = new ArrayList&lt;ASTNode&gt;();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		while (childIterator.hasNext()) {</span>
+<span class="nc" id="L81">			CommonASTNode child = (CommonASTNode) childIterator.next();</span>
+
+<span class="nc" id="L83">			children.add(child);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				if (child.parent() != null)</span>
+<span class="nc" id="L86">					throw new ASTException(&quot;Cannot make\n&quot; + child</span>
+<span class="nc" id="L87">							+ &quot;\na child of node\n&quot; + this</span>
+<span class="nc" id="L88">							+ &quot;\nbecause it is already a child of\n&quot;</span>
+<span class="nc" id="L89">							+ child.parent());</span>
+<span class="nc" id="L90">				child.parent = this;</span>
+<span class="nc" id="L91">				child.childIndex = childCount;</span>
+			}
+<span class="nc" id="L93">			childCount++;</span>
+		}
+<span class="nc" id="L95">	}</span>
+
+	public CommonASTNode(Source source,
+			Iterable&lt;? extends ASTNode&gt; childCollection) {
+<span class="nc" id="L99">		this(source, childCollection.iterator());</span>
+<span class="nc" id="L100">	}</span>
+
+	public CommonASTNode(Source source, ASTNode[] childArray) {
+<span class="nc" id="L103">		this(source, Arrays.asList(childArray).iterator());</span>
+<span class="nc" id="L104">	}</span>
+
+<span class="nc" id="L106">	public CommonASTNode(Source source) {</span>
+<span class="nc" id="L107">		this.source = source;</span>
+<span class="nc" id="L108">		children = new ArrayList&lt;ASTNode&gt;();</span>
+<span class="nc" id="L109">	}</span>
+
+	public CommonASTNode(Source source, ASTNode child) {
+<span class="nc" id="L112">		this(source, new ASTNode[] { child });</span>
+<span class="nc" id="L113">	}</span>
+
+	public CommonASTNode(Source source, ASTNode child0, ASTNode child1) {
+<span class="nc" id="L116">		this(source, new ASTNode[] { child0, child1 });</span>
+<span class="nc" id="L117">	}</span>
+
+	public CommonASTNode(Source source, ASTNode child0, ASTNode child1,
+			ASTNode child2) {
+<span class="nc" id="L121">		this(source, new ASTNode[] { child0, child1, child2 });</span>
+<span class="nc" id="L122">	}</span>
+
+	public CommonASTNode(Source source, ASTNode child0, ASTNode child1,
+			ASTNode child2, ASTNode child3) {
+<span class="nc" id="L126">		this(source, new ASTNode[] { child0, child1, child2, child3 });</span>
+<span class="nc" id="L127">	}</span>
+
+	@Override
+	public int id() {
+<span class="nc" id="L131">		return id;</span>
+	}
+
+	@Override
+	public void setId(int id) {
+<span class="nc" id="L136">		this.id = id;</span>
+<span class="nc" id="L137">	}</span>
+
+	@Override
+	public void setOwner(AST owner) {
+<span class="nc" id="L141">		this.owner = owner;</span>
+<span class="nc" id="L142">	}</span>
+
+	@Override
+	public AST getOwner() {
+<span class="nc" id="L146">		return owner;</span>
+	}
+
+	@Override
+	public ASTNode parent() {
+<span class="nc" id="L151">		return parent;</span>
+	}
+
+	@Override
+	public int childIndex() {
+<span class="nc" id="L156">		return childIndex;</span>
+	}
+
+	@Override
+	public int numChildren() {
+<span class="nc" id="L161">		return children.size();</span>
+	}
+
+	@Override
+	public ASTNode child(int index) throws NoSuchElementException {
+<span class="nc" id="L166">		return children.get(index);</span>
+	}
+
+	@Override
+	public Iterable&lt;ASTNode&gt; children() {
+<span class="nc" id="L171">		return children;</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean includeSource) {
+<span class="nc" id="L176">		out.print(prefix);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (childIndex &gt;= 0)</span>
+<span class="nc" id="L178">			out.print(childIndex);</span>
+<span class="nc" id="L179">		out.print(&quot;[&quot; + id + &quot;]: &quot;);</span>
+<span class="nc" id="L180">		printBody(out);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (scope != null) {</span>
+<span class="nc" id="L182">			out.print(&quot; (scope &quot; + scope.getId() + &quot;)&quot;);</span>
+<span class="nc" id="L183">		} else {</span>
+<span class="nc" id="L184">			out.print(&quot; (scope UNKNOWN)&quot;);</span>
+		}
+<span class="nc bnc" id="L186" title="All 4 branches missed.">		if (includeSource &amp;&amp; source != null) {</span>
+<span class="nc" id="L187">			out.println();</span>
+<span class="nc" id="L188">			out.print(prefix + &quot;| source: &quot; + source.getSummary(false));</span>
+		}
+<span class="nc" id="L190">		printExtras(prefix + &quot;| &quot;, out);</span>
+<span class="nc" id="L191">	}</span>
+
+	protected abstract void printBody(PrintStream out);
+
+	protected void printExtras(String prefix, PrintStream out) {
+
+<span class="nc" id="L197">	}</span>
+
+	@Override
+	public Object getAttribute(AttributeKey key) {
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (attributes == null)</span>
+<span class="nc" id="L202">			return null;</span>
+		else {
+<span class="nc" id="L204">			int id = ((CommonAttributeKey) key).getId();</span>
+
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (id &gt;= attributes.size())</span>
+<span class="nc" id="L207">				return null;</span>
+<span class="nc" id="L208">			return attributes.get(id);</span>
+		}
+	}
+
+	@Override
+	public void setAttribute(AttributeKey key, Object value) {
+<span class="nc" id="L214">		int id = ((CommonAttributeKey) key).getId();</span>
+<span class="nc" id="L215">		Class&lt;? extends Object&gt; attributeClass = key.getAttributeClass();</span>
+		int size;
+
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (!(attributeClass.isInstance(value)))</span>
+<span class="nc" id="L219">			throw new IllegalArgumentException(&quot;Attribute &quot;</span>
+<span class="nc" id="L220">					+ ((CommonAttributeKey) key).getAttributeName()</span>
+<span class="nc" id="L221">					+ &quot; has type  &quot; + attributeClass + &quot; but given &quot; + value</span>
+<span class="nc" id="L222">					+ &quot; of type &quot; + value.getClass());</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (attributes == null)</span>
+<span class="nc" id="L224">			attributes = new ArrayList&lt;Object&gt;();</span>
+<span class="nc" id="L225">		size = attributes.size();</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		while (id &gt;= size) {</span>
+<span class="nc" id="L227">			attributes.add(null);</span>
+<span class="nc" id="L228">			size++;</span>
+		}
+<span class="nc" id="L230">		attributes.set(id, value);</span>
+<span class="nc" id="L231">	}</span>
+
+	@Override
+	public Source getSource() {
+<span class="nc" id="L235">		return source;</span>
+	}
+
+	protected int addChild(ASTNode child) {
+<span class="nc" id="L239">		int index = numChildren();</span>
+
+<span class="nc" id="L241">		checkModifiable();</span>
+<span class="nc" id="L242">		children.add(child);</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (child != null) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">			if (child.parent() != null)</span>
+<span class="nc" id="L245">				throw new ASTException(&quot;Cannot make\n&quot; + child</span>
+<span class="nc" id="L246">						+ &quot;\na child of node\n&quot; + this</span>
+<span class="nc" id="L247">						+ &quot;\nbecause it is already a child of\n&quot;</span>
+<span class="nc" id="L248">						+ child.parent());</span>
+<span class="nc" id="L249">			((CommonASTNode) child).parent = this;</span>
+<span class="nc" id="L250">			((CommonASTNode) child).childIndex = index;</span>
+		}
+<span class="nc" id="L252">		return index;</span>
+	}
+
+	@Override
+	public ASTNode setChild(int index, ASTNode child) {
+<span class="nc" id="L257">		int numChildren = children.size();</span>
+		ASTNode oldChild;
+
+<span class="nc" id="L260">		checkModifiable();</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (index &lt; 0)</span>
+<span class="nc" id="L262">			throw new ASTException(&quot;Negative index &quot; + index</span>
+<span class="nc" id="L263">					+ &quot; used in setChild on &quot; + this);</span>
+<span class="nc bnc" id="L264" title="All 4 branches missed.">		if (child != null &amp;&amp; child.parent() != null)</span>
+<span class="nc" id="L265">			throw new ASTException(&quot;Cannot make\n&quot; + child</span>
+<span class="nc" id="L266">					+ &quot;\na child of node\n&quot; + this</span>
+<span class="nc" id="L267">					+ &quot;\nbecause it is already a child of\n&quot; + child.parent());</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">		while (index &gt;= numChildren) {</span>
+<span class="nc" id="L269">			children.add(null);</span>
+<span class="nc" id="L270">			numChildren++;</span>
+		}
+<span class="nc" id="L272">		oldChild = children.get(index);</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		if (oldChild != null) {</span>
+<span class="nc" id="L274">			((CommonASTNode) oldChild).parent = null;</span>
+<span class="nc" id="L275">			((CommonASTNode) oldChild).childIndex = -1;</span>
+		}
+<span class="nc" id="L277">		children.set(index, child);</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">		if (child != null) {</span>
+<span class="nc" id="L279">			((CommonASTNode) child).parent = this;</span>
+<span class="nc" id="L280">			((CommonASTNode) child).childIndex = index;</span>
+		}
+<span class="nc" id="L282">		return oldChild;</span>
+	}
+
+	/**
+	 * Insert a sequence of nodes into the child list of this node.
+	 * 
+	 * @param index
+	 *            an integer in [0,numChildren]
+	 * @param list
+	 *            a non-null list of free nodes, any of which may be null
+	 */
+	protected void insertChildrenAt(int index, List&lt;? extends ASTNode&gt; list) {
+<span class="nc" id="L294">		int oldSize = children.size();</span>
+<span class="nc" id="L295">		int listSize = list.size();</span>
+<span class="nc" id="L296">		int newSize = oldSize + listSize;</span>
+
+<span class="nc" id="L298">		checkModifiable();</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">		if (index &lt; 0)</span>
+<span class="nc" id="L300">			throw new ASTException(&quot;Negative index &quot; + index</span>
+<span class="nc" id="L301">					+ &quot; used in insertChildren on &quot; + this);</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">		if (index &gt; oldSize)</span>
+<span class="nc" id="L303">			throw new ASTException(&quot;Index &quot; + index + &quot; exceeds size &quot;</span>
+<span class="nc" id="L304">					+ oldSize + &quot; in insertChildren on &quot; + this);</span>
+<span class="nc" id="L305">		children.addAll(index, list);</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">		for (int i = index; i &lt; index + listSize; i++) {</span>
+<span class="nc" id="L307">			ASTNode child = children.get(i);</span>
+
+<span class="nc bnc" id="L309" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">				if (child.parent() != null)</span>
+<span class="nc" id="L311">					throw new ASTException(&quot;Cannot make\n&quot; + child</span>
+<span class="nc" id="L312">							+ &quot;\na child of node\n&quot; + this</span>
+<span class="nc" id="L313">							+ &quot;\nbecause it is already a child of\n&quot;</span>
+<span class="nc" id="L314">							+ child.parent());</span>
+<span class="nc" id="L315">				((CommonASTNode) child).parent = this;</span>
+<span class="nc" id="L316">				((CommonASTNode) child).childIndex = i;</span>
+			}
+		}
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		for (int i = index + listSize; i &lt; newSize; i++) {</span>
+<span class="nc" id="L320">			ASTNode child = children.get(i);</span>
+
+<span class="nc bnc" id="L322" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc" id="L323">				((CommonASTNode) child).childIndex = i;</span>
+			}
+		}
+<span class="nc" id="L326">	}</span>
+
+	@Override
+	public ASTNode removeChild(int index) {
+<span class="nc" id="L330">		int numChildren = children.size();</span>
+		ASTNode oldChild;
+
+<span class="nc" id="L333">		checkModifiable();</span>
+<span class="nc bnc" id="L334" title="All 4 branches missed.">		if (index &lt; 0 || index &gt;= numChildren)</span>
+<span class="nc" id="L335">			throw new ASTException(&quot;Index &quot; + index + &quot; out of range [0,&quot;</span>
+<span class="nc" id="L336">					+ (numChildren - 1) + &quot;]:&quot; + this);</span>
+<span class="nc" id="L337">		oldChild = children.get(index);</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">		if (oldChild != null) {</span>
+<span class="nc" id="L339">			((CommonASTNode) oldChild).parent = null;</span>
+<span class="nc" id="L340">			((CommonASTNode) oldChild).childIndex = -1;</span>
+		}
+<span class="nc" id="L342">		children.set(index, null);</span>
+<span class="nc" id="L343">		return oldChild;</span>
+	}
+
+	@Override
+	public void remove() {
+<span class="nc bnc" id="L348" title="All 2 branches missed.">		if (parent != null) {</span>
+<span class="nc" id="L349">			parent.removeChild(childIndex);</span>
+		}
+<span class="nc" id="L351">	}</span>
+
+	/**
+	 * Default implementation, for non-sequence nodes. Must be overridden for
+	 * sequence nodes.
+	 */
+	@Override
+	public void keepOnly(NodePredicate keep) {
+<span class="nc" id="L359">		int numChildren = numChildren();</span>
+
+<span class="nc" id="L361">		checkModifiable();</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L363">			ASTNode child = child(i);</span>
+
+<span class="nc bnc" id="L365" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">				if (keep.holds(child)) {</span>
+					// // add the file name to the file name map
+					// TokenUtils.addFileName(TokenUtils.getShortFilename(this
+					// .getSource().getFirstToken(), false));
+<span class="nc" id="L370">					child.keepOnly(keep);</span>
+<span class="nc" id="L371">				} else</span>
+<span class="nc" id="L372">					removeChild(i);</span>
+			}
+		}
+<span class="nc" id="L375">	}</span>
+
+	/**
+	 * Removes children and shifts down to remove the gaps; also applies
+	 * keepOnly to children not removed. This method is meant to be applied to
+	 * sequence nodes.
+	 * 
+	 * @param keep
+	 *            a node predicate telling which nodes to keep
+	 */
+	protected void keepOnlyAndShift(NodePredicate keep) {
+<span class="nc" id="L386">		int numChildren = numChildren();</span>
+<span class="nc" id="L387">		int count = 0; // number of children to keep</span>
+
+<span class="nc" id="L389">		checkModifiable();</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L391">			ASTNode child = child(i);</span>
+
+<span class="nc bnc" id="L393" title="All 2 branches missed.">			if (child != null) {</span>
+<span class="nc bnc" id="L394" title="All 2 branches missed.">				if (keep.holds(child)) {</span>
+<span class="nc" id="L395">					child.keepOnly(keep);</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">					if (count &lt; i) {</span>
+<span class="nc" id="L397">						children.set(count, child);</span>
+<span class="nc" id="L398">						((CommonASTNode) child).childIndex = count;</span>
+					}
+<span class="nc" id="L400">					count++;</span>
+<span class="nc" id="L401">				} else</span>
+<span class="nc" id="L402">					removeChild(i);</span>
+			}
+		}
+<span class="nc" id="L405">		children.subList(count, numChildren).clear();</span>
+<span class="nc" id="L406">	}</span>
+
+	@Override
+	public void setScope(Scope scope) {
+<span class="nc" id="L410">		this.scope = scope;</span>
+<span class="nc" id="L411">	}</span>
+
+	@Override
+	public Scope getScope() {
+<span class="nc" id="L415">		return scope;</span>
+	}
+
+	@Override
+	public boolean equiv(ASTNode that) {
+<span class="nc bnc" id="L420" title="All 2 branches missed.">		return diff(that) == null;</span>
+	}
+
+	@Override
+	public DifferenceObject diff(ASTNode that) {
+		DifferenceObject diff;
+
+<span class="nc bnc" id="L427" title="All 2 branches missed.">		if (that == null)</span>
+<span class="nc" id="L428">			return new DifferenceObject(this, false);</span>
+<span class="nc" id="L429">		diff = diffWork(that);</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">		if (diff != null)</span>
+<span class="nc" id="L431">			return diff;</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">		if (this.numChildren() != that.numChildren())</span>
+<span class="nc" id="L433">			return new DifferenceObject(this, that, DiffKind.NUM_CHILDREN);</span>
+<span class="nc bnc" id="L434" title="All 2 branches missed.">		for (int i = 0; i &lt; this.numChildren(); i++) {</span>
+<span class="nc" id="L435">			ASTNode thisChild = this.child(i), thatChild = that.child(i);</span>
+
+<span class="nc bnc" id="L437" title="All 2 branches missed.">			if (thisChild != null) {</span>
+<span class="nc" id="L438">				diff = thisChild.diff(thatChild);</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">				if (diff != null)</span>
+<span class="nc" id="L440">					return diff;</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">			} else if (thatChild != null)</span>
+<span class="nc" id="L442">				return new DifferenceObject(that, true);</span>
+		}
+<span class="nc" id="L444">		return null;</span>
+	}
+
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L448" title="All 2 branches missed.">		if (this.nodeKind() == that.nodeKind())</span>
+<span class="nc" id="L449">			return null;</span>
+<span class="nc" id="L450">		return new DifferenceObject(this, that);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L455">		return &quot;Node[&quot; + id + &quot;, &quot; + instanceId + &quot;, &quot;</span>
+<span class="nc" id="L456">				+ source.getSummary(false) + &quot;]&quot;;</span>
+	}
+
+	@Override
+	public ASTNode nextDFS() {
+		// look for a child...
+<span class="nc bnc" id="L462" title="All 2 branches missed.">		for (ASTNode child : children) {</span>
+<span class="nc bnc" id="L463" title="All 2 branches missed.">			if (child != null)</span>
+<span class="nc" id="L464">				return child;</span>
+		}
+		// if no child, backtrack...
+		{
+<span class="nc" id="L468">			ASTNode node = this;</span>
+
+<span class="nc" id="L470">			while (true) {</span>
+<span class="nc" id="L471">				int index = node.childIndex();</span>
+
+<span class="nc" id="L473">				node = node.parent();</span>
+<span class="nc bnc" id="L474" title="All 2 branches missed.">				if (node == null)</span>
+<span class="nc" id="L475">					return null;</span>
+				else {
+<span class="nc" id="L477">					int numChildren = node.numChildren();</span>
+
+<span class="nc bnc" id="L479" title="All 2 branches missed.">					for (int i = index + 1; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L480">						ASTNode child = node.child(i);</span>
+
+<span class="nc bnc" id="L482" title="All 2 branches missed.">						if (child != null)</span>
+<span class="nc" id="L483">							return child;</span>
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void prettyPrint(PrintStream out) {
+<span class="nc" id="L492">		ASTs.prettyPrint(this, out);</span>
+<span class="nc" id="L493">	}</span>
+
+	@Override
+	public StringBuffer prettyRepresentation() {
+		// TODO there has to be a better way to do this that does
+		// not involve File I/O
+<span class="nc" id="L499">		StringBuffer result = new StringBuffer();</span>
+
+		try {
+<span class="nc" id="L502">			File temp = File.createTempFile(&quot;tmp&quot; + System.currentTimeMillis(),</span>
+<span class="nc" id="L503">					&quot;.data&quot;);</span>
+<span class="nc" id="L504">			PrintStream tmpOut = new PrintStream(temp);</span>
+			FileReader fileReader;
+			BufferedReader bufferReader;
+			String line;
+<span class="nc" id="L508">			boolean first = true;</span>
+
+<span class="nc" id="L510">			ASTs.prettyPrint(this, tmpOut);</span>
+<span class="nc" id="L511">			fileReader = new FileReader(temp);</span>
+<span class="nc" id="L512">			bufferReader = new BufferedReader(fileReader);</span>
+<span class="nc" id="L513">			line = bufferReader.readLine();</span>
+<span class="nc bnc" id="L514" title="All 2 branches missed.">			while (line != null) {</span>
+<span class="nc bnc" id="L515" title="All 2 branches missed.">				if (first)</span>
+<span class="nc" id="L516">					first = false;</span>
+				else
+<span class="nc" id="L518">					result.append(&quot;\n&quot;);</span>
+<span class="nc" id="L519">				result.append(line);</span>
+<span class="nc" id="L520">				line = bufferReader.readLine();</span>
+			}
+<span class="nc" id="L522">			bufferReader.close();</span>
+<span class="nc" id="L523">			fileReader.close();</span>
+<span class="nc" id="L524">			tmpOut.close();</span>
+<span class="nc" id="L525">			temp.delete();</span>
+<span class="nc" id="L526">		} catch (IOException e) {</span>
+<span class="nc" id="L527">			result.append(this.toString());</span>
+		}
+<span class="nc" id="L529">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

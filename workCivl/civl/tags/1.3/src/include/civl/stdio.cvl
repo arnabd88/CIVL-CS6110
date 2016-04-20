@@ -1,0 +1,181 @@
+/* stdio.cvl: a stateless I/O library similar to the C standard library stdio.
+ * The functions defined here are similar to those in stdio, but take an extra
+ * argument of type $filesystem.   This is a handle type.   A filesystem object
+ * encapsulates the state of the entire file system: all files and their contents.
+ *
+ */
+ #ifndef __STDIO_CVL__
+ #define __STDIO_CVL__
+ 
+ #include <civlc.cvh>
+ #include <stdio.h>
+
+/* ******************************* Types ******************************* */
+
+/* There are 16 modes, and they must appear in this order to be
+ * consistent with the system function Java code. */
+typedef enum CIVL_File_mode {
+  CIVL_FILE_MODE_R,    // open text file for reading
+  CIVL_FILE_MODE_W,    // truncate to zero length or create text file for writing
+  CIVL_FILE_MODE_WX,   // create text file for writing
+  CIVL_FILE_MODE_A,    // append; open or create text file for writing at end-of-file
+  CIVL_FILE_MODE_RB,   // open binary file for reading
+  CIVL_FILE_MODE_WB,   // truncate to zero length or create binary file for writing
+  CIVL_FILE_MODE_WBX,  // create binary file for writing
+  CIVL_FILE_MODE_AB,   // append; open or create binary file for writing at end-of-file
+  CIVL_FILE_MODE_RP,   // open text file for update (reading and writing)
+  CIVL_FILE_MODE_WP,   // truncate to zero length or create text file for update
+  CIVL_FILE_MODE_WPX,  // create text file for update
+  CIVL_FILE_MODE_AP,   // append; open or create text file for update, writing at end-of-file
+  CIVL_FILE_MODE_RPB,  // open binary file for update (reading and writing)
+  CIVL_FILE_MODE_WPB,  // truncate to zero length or create binary file for update
+  CIVL_FILE_MODE_WPBX, // create binary file for update
+  CIVL_FILE_MODE_APB   // append; open or create binary file for update, writing at end-of-file
+} CIVL_File_mode;
+
+/* Needed from stdarg.h: what is it for? */
+struct _ABC_va_list {
+  int x;
+};
+
+typedef unsigned long int size_t;
+
+/* Represents an actual file: something with a name and contents.
+ * The name is a string (array of char).  The contents is an
+ * array of strings: each entry is a "chunk" of the file; the
+ * file may be viewed as a concatenation of those chunks.
+ *
+ * A "point" in the file is represented by an ordered pair
+ * of integers (chunkIndex, characterIndex).
+ *
+ * The flags all have int type instead of boolean because
+ * CVC3 does not support tuples with boolean components.
+ * Zero is used for false, one for true.
+ * A file is an output file if it is ever written to.
+ * A file is an input file if it is ever read before being written to.
+ * A file can be both an input and an output file.
+ * A file is either a binary or text file.  The kind is determined
+ * by how the file is opened.
+ * A file is either an ordinary character file or a wide character
+ * file.  The orientation is determined by the first access to the
+ * file.
+ */
+typedef struct $file {
+  char name[];        /* name of file */
+  char contents[][];  /* list of strings which form file contents */
+  int isOutput;       /* is this an output file? */
+  int isInput;        /* is this an input file? */
+  int isBinary;       /* is this a binary file (not text)? */
+  int isWide;         /* does this file have wide orientation? */
+  int length;
+} $file;
+
+/* A file system: a set of files.    The files in the array can be
+ * sorted in some canonical way.  $filesystem is a handle type. */
+typedef struct CIVL_filesystem {
+  $scope scope;
+  $file files[];
+} * $filesystem; 
+ 
+
+/* Implements the C notion of a FILE, which is really a reference
+ * into a particular point of an actual file.  Even if you are just
+ * reading the file, this FILE object changes since it contains a reference
+ * to the point of file you just read.  
+ */
+struct FILE {
+  $file *file;    // the actual file to which this refers 
+  $filesystem fs; // file system to which this FILE is associated
+  int pos1;       // the chunk index (first index) in the contents
+  int pos2;       // the character index (second index) in the contents
+  CIVL_File_mode mode;  // stream mode
+  int isOpen;     // is this FILE open (0 or 1)?
+};
+
+/* Functions */
+
+/* Converts a mode string to the enumerated type CIVL_File_mode.
+ * An exception is thrown if the mode string is not one of those
+ * specified in the C11 Standard. */
+CIVL_File_mode CIVL_File_stringToMode(char * modeString);//mode not string-literal
+
+/* Creates a new empty file system, returning a handle to it. */
+$filesystem $filesystem_create($scope scope);
+
+/* Deallocates any data associated to the file system, and makes
+ * the handle undefined */
+void $filesystem_destroy($filesystem fs);
+
+/* Opens a file f, creates a new FILE F pointing into f, and returns
+ * a pointer to F.  Will create f if f does not already exist or
+ * if mode is write.
+ *
+ * F is allocated in the heap specified by the file system.
+ * It will be freed by a close operation on F, or when the
+ * scope is exited.
+ *
+ * See C11 Sec. 7.21.5.3.   The modes currently supported
+ * are: 
+ *   "r":  open text file for reading; fails if file does
+ *         not exist //if fails return NULL
+ *   "w":  truncate to 0 length if file exists and
+ *         open for writing, or create new empty text file
+ *         for writing if file does not yet exist
+ *   "wx": create text file for writing with exclusive access;
+ *         fails if file exists,
+ *   "a":  open or create text file in append mode; all writes
+ *         will append to end of file regardless of calls
+ *         to fseek
+ *   "r+": open/create text file for reading and writing
+ *         access to file must follow rules specified
+ *         in Standard par. 7
+ *
+ */
+FILE * $fopen($filesystem fs, const char * restrict filename,
+              CIVL_File_mode mode);
+
+// same as C. make system function
+// int fclose(FILE *stream);
+
+// same as C.  make system function
+// int fflush(FILE *stream);
+
+// same as C.  make system function
+// int fprintf(FILE * restrict stream, const char * restrict format, ...);
+
+// same as C.  make system function
+// int fscanf(FILE * restrict stream, const char * restrict format, ...);
+
+// int printf(const char * restrict format, ...) will be
+// transformed to fprintf(stdou, ...).
+
+// int scanf(const char * restrict format, ...)
+// will be transformed to fscanf(stdin, ...).
+
+/* This assumes there is some output variable of type
+ * array-of-$file, and copies the output files into that
+ * output array.  The parameter output should be a pointer
+ * to element 0 of that array.
+ */
+void $filesystem_copy_output($filesystem fs, $file * output);
+
+$filesystem CIVL_filesystem = $filesystem_create($here);
+
+/* The files which were modified or created are written here
+ * at the end of the program.   They constitute outputs of
+ * the program.  The files will be sorted in some canonical
+ * way.
+ */
+$output $file CIVL_output_filesystem[];
+
+extern FILE * stdout = $fopen(CIVL_filesystem, "CIVL_stdout", CIVL_FILE_MODE_WX);
+
+extern FILE * stderr = $fopen(CIVL_filesystem, "CIVL_stderr", CIVL_FILE_MODE_WX);
+
+extern FILE * stdin = $fopen(CIVL_filesystem, "CIVL_stdin", CIVL_FILE_MODE_R);
+
+void _fflush(void){
+  return;
+}
+
+#endif

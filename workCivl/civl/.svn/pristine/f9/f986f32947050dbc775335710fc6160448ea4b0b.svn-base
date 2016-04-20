@@ -1,0 +1,34 @@
+/* Commandline execution:
+ * 		civl verify locksBad10.cvl
+ * */
+#include<civlc.h>
+
+int x;
+int y;
+
+void f(int n) {
+  for (int i=0; i<n; i++) {
+    $when (x==0) x=1;
+    $when (y==0) y=1;
+    y=0;
+    x=0;
+  }
+}
+
+void g(int m) {
+  for (int i=0; i<m; i++) {
+    $when (y==0) y=1;
+    $when (x==0) x=1;
+    x=0;
+    y=0;
+  }
+}
+
+void main() {
+  x = 0;
+  y = 0;
+  $proc p = $spawn f(10);
+  $proc q = $spawn g(10);
+  $wait(p);
+  $wait(q);
+}

@@ -1,0 +1,151 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+util.\+I\+F.\+Transmuter Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+util.\+I\+F.\+Transmuter@{edu.\+udel.\+cis.\+vsl.\+civl.\+util.\+I\+F.\+Transmuter}}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int\mbox{[}$\,$\mbox{]} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_a84f4f05cb4a9e2cbe0a4bdbabb3d79c5}{inverse} (int\mbox{[}$\,$\mbox{]} map, int m)
+\begin{DoxyCompactList}\small\item\em Given a bijection from a subset S of \{0,...,n-\/1\} to \{0,...,m-\/1\}, returns the inverse of that bijection. \end{DoxyCompactList}\item 
+static int\mbox{[}$\,$\mbox{]} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_a3578ec8f4a52a21876b96224b3cc1994}{inverse} (int\mbox{[}$\,$\mbox{]} map)
+\begin{DoxyCompactList}\small\item\em Given a bijection from a subset S of \{0,...,n-\/1\} to \{0,...,m-\/1\}, returns the inverse of that bijection. \end{DoxyCompactList}\item 
+static$<$ T $>$ Array\+List$<$ T $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_adb319a1d57b76ae1bcb2a618a5851b36}{transmute} (int\mbox{[}$\,$\mbox{]} map, Array\+List$<$ T $>$ a)
+\begin{DoxyCompactList}\small\item\em Returns a new array list obtained from given one by reordering elements according to a specified map. \end{DoxyCompactList}\item 
+static$<$ T $>$ void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_ab72f5bd48bc75d63d3ea508870e50ce3}{transmute\+In\+Place} (int\mbox{[}$\,$\mbox{]} map, int\mbox{[}$\,$\mbox{]} inverse\+Map, Array\+List$<$ T $>$ a)
+\begin{DoxyCompactList}\small\item\em Permutes in-\/place the elements of an array list. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_a44b4270d2a097ae575074ef53b744ccb}{}static void {\bfseries transmute\+In\+Place\+Multiple} (int\mbox{[}$\,$\mbox{]} map, int\mbox{[}$\,$\mbox{]} inverse\+Map, Array\+List$<$ Object $>$\mbox{[}$\,$\mbox{]} a)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_a44b4270d2a097ae575074ef53b744ccb}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_a84f4f05cb4a9e2cbe0a4bdbabb3d79c5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter@{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter}!inverse@{inverse}}
+\index{inverse@{inverse}!edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter@{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter}}
+\subsubsection[{inverse}]{\setlength{\rightskip}{0pt plus 5cm}static int \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+util.\+I\+F.\+Transmuter.\+inverse (
+\begin{DoxyParamCaption}
+\item[{int\mbox{[}$\,$\mbox{]}}]{map, }
+\item[{int}]{m}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_a84f4f05cb4a9e2cbe0a4bdbabb3d79c5}
+
+
+Given a bijection from a subset S of \{0,...,n-\/1\} to \{0,...,m-\/1\}, returns the inverse of that bijection. 
+
+The given map must have length n and for each i (0$<$=i$<$n), either map\mbox{[}i\mbox{]}=-\/1, indicating i is not in S, or map\mbox{[}i\mbox{]} is in \{0,...,m-\/1\}.
+
+The result will be an array of length m satisfying
+
+result\mbox{[}map\mbox{[}i\mbox{]}\mbox{]}==i, for all i in S.
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & array of ints of length n specifying bijection from a subset of 0..n-\/1 to 0..m-\/1. \\
+\hline
+{\em m} & cardinality of S \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+inverse of map 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_a3578ec8f4a52a21876b96224b3cc1994}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter@{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter}!inverse@{inverse}}
+\index{inverse@{inverse}!edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter@{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter}}
+\subsubsection[{inverse}]{\setlength{\rightskip}{0pt plus 5cm}static int \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+util.\+I\+F.\+Transmuter.\+inverse (
+\begin{DoxyParamCaption}
+\item[{int\mbox{[}$\,$\mbox{]}}]{map}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_a3578ec8f4a52a21876b96224b3cc1994}
+
+
+Given a bijection from a subset S of \{0,...,n-\/1\} to \{0,...,m-\/1\}, returns the inverse of that bijection. 
+
+This method will determine m by scanning map and counting the number of elements that are nonnegative.
+
+The given map must have length n and for each i (0$<$=i$<$n), either map\mbox{[}i\mbox{]}=-\/1, indicating i is not in S, or map\mbox{[}i\mbox{]} is in \{0,...,m-\/1\}.
+
+The result will be an array of length m satisfying
+
+result\mbox{[}map\mbox{[}i\mbox{]}\mbox{]}==i, for all i in S.
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & array of ints of length n specifying bijection from a subset of 0..n-\/1 to 0..m-\/1. \\
+\hline
+{\em m} & cardinality of S \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+inverse of map 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_adb319a1d57b76ae1bcb2a618a5851b36}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter@{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter}!transmute@{transmute}}
+\index{transmute@{transmute}!edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter@{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter}}
+\subsubsection[{transmute}]{\setlength{\rightskip}{0pt plus 5cm}static $<$T$>$ Array\+List$<$T$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+util.\+I\+F.\+Transmuter.\+transmute (
+\begin{DoxyParamCaption}
+\item[{int\mbox{[}$\,$\mbox{]}}]{map, }
+\item[{Array\+List$<$ T $>$}]{a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_adb319a1d57b76ae1bcb2a618a5851b36}
+
+
+Returns a new array list obtained from given one by reordering elements according to a specified map. 
+
+Let n be the size of a. The map specifies (1) a subset S of \{0,1,...,n-\/1\} and (2) a bijection from S to \{0,1,...,m-\/1\}, where m is the cardinality of S. The elements of a at positions not in S will not be copied to the new array list b. The other elements will be copied and reordered. Specifically, for each i in S, we will have
+
+b\mbox{[}map\mbox{[}i\mbox{]}\mbox{]} == a\mbox{[}i\mbox{]}
+
+where b is the array list returned by this method. Furthermore, b.\+size()==m.
+
+The map is an array of ints of length n. For 0$<$=i$<$n, map\mbox{[}i\mbox{]} is either -\/1 (indicating i is not in S, i.\+e., the element a\mbox{[}i\mbox{]} is to be discarded) or a nonnegative integer giving the new index of the element.
+
+Neither map nor a is modified by this method.
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & array of ints of length n giving bijection from a subset of \{0,...,n-\/1\} to \{0,...,m-\/1\} \\
+\hline
+{\em a} & array list of length n \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array list of length m satisfying b\mbox{[}map\mbox{[}i\mbox{]}\mbox{]} == a\mbox{[}i\mbox{]} 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_ab72f5bd48bc75d63d3ea508870e50ce3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter@{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter}!transmute\+In\+Place@{transmute\+In\+Place}}
+\index{transmute\+In\+Place@{transmute\+In\+Place}!edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter@{edu\+::udel\+::cis\+::vsl\+::civl\+::util\+::\+I\+F\+::\+Transmuter}}
+\subsubsection[{transmute\+In\+Place}]{\setlength{\rightskip}{0pt plus 5cm}static $<$T$>$ void edu.\+udel.\+cis.\+vsl.\+civl.\+util.\+I\+F.\+Transmuter.\+transmute\+In\+Place (
+\begin{DoxyParamCaption}
+\item[{int\mbox{[}$\,$\mbox{]}}]{map, }
+\item[{int\mbox{[}$\,$\mbox{]}}]{inverse\+Map, }
+\item[{Array\+List$<$ T $>$}]{a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Transmuter_ab72f5bd48bc75d63d3ea508870e50ce3}
+
+
+Permutes in-\/place the elements of an array list. 
+
+Let n be the size of a. The map specifies (1) a subset S of \{0,1,...,n-\/1\} and (2) a bijection from S to \{0,1,...,m-\/1\}, where m is the cardinality of S. The elements of a at positions not in S are to be discarded. The other elements are to be reordered. Specifically, for each i in S, we will have
+
+a\textquotesingle{}\mbox{[}map\mbox{[}i\mbox{]}\mbox{]} == a\mbox{[}i\mbox{]}
+
+where a\textquotesingle{} is the array list after this method completes. Furthermore, a\textquotesingle{}.size()==m.
+
+The map is an array of ints of length n. For 0$<$=i$<$n, map\mbox{[}i\mbox{]} is either -\/1 (indicating i is not in S, i.\+e., the element a\mbox{[}i\mbox{]} is to be discarded) or a nonnegative integer giving the new index of the element.
+
+The inverse\+Map is the inverse of map and is completely determined by map. It specifies a function from \{0,1,...,m-\/1\} to S. Its length is m and it satisfies
+
+inverse\+Map\mbox{[}map\mbox{[}i\mbox{]}\mbox{]}==i for i in S
+
+map\mbox{[}inverse\+Map\mbox{[}j\mbox{]}\mbox{]}==j for j in \{0,1,...,m-\/1\}.
+
+The method may modify inverse\+Map.
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & array of length n specifying bijection from subset of 0..n-\/1 to 0..m-\/1. \\
+\hline
+{\em inverse\+Map} & inverse of map \\
+\hline
+{\em a} & an array list of length n to be transmuted \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/util/\+I\+F/Transmuter.\+java\end{DoxyCompactItemize}

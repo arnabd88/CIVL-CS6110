@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Front.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.IF</a> &gt; <span class="el_source">Front.java</span></div><h1>Front.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.IF;
+
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.front.c.astgen.CASTBuilder;
+import edu.udel.cis.vsl.abc.front.c.parse.CParser;
+import edu.udel.cis.vsl.abc.front.c.preproc.CPreprocessor;
+import edu.udel.cis.vsl.abc.front.fortran.astgen.FortranASTBuilder;
+import edu.udel.cis.vsl.abc.front.fortran.parse.FortranParser;
+import edu.udel.cis.vsl.abc.front.fortran.preproc.FortranPreprocessor;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+/**
+ * Entry point of the front module.
+ * 
+ * A factory class for producing new instances of {@link Preprocessor},
+ * {@link Parser} and {@link ASTBuilder} for using those classes in some common
+ * scenarios.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc" id="L25">public class Front {</span>
+
+	/**
+	 * Returns a new Preprocessor using the default include paths. A runtime
+	 * exception will be thrown if the language is not yet supported.
+	 * 
+	 * @param language
+	 *            the language of the preprocessor
+	 * @param config
+	 *            the configuration of the translation task (e.g., is svcomp
+	 *            enabled?)
+	 * @return a new Preprocessor
+	 */
+	public static Preprocessor newPreprocessor(Language language,
+			Configuration config, TokenFactory tokenFactory) {
+<span class="nc bnc" id="L40" title="All 3 branches missed.">		switch (language) {</span>
+		case C:
+		case CIVL_C:
+<span class="nc" id="L43">			return new CPreprocessor(config);</span>
+		case FORTRAN77:
+<span class="nc" id="L45">			return new FortranPreprocessor(config, tokenFactory);</span>
+		default:
+<span class="nc" id="L47">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L48">					&quot;ABC doesn't support preprocessing programs in &quot; + language</span>
+<span class="nc" id="L49">							+ &quot;.&quot;);</span>
+		}
+	}
+
+	/**
+	 * Creates a new instance of a {@link Parser} for the given language. This
+	 * method throws a runtime exception if the given language is not supported
+	 * yet.
+	 * 
+	 * @return the new {@link Parser}
+	 */
+	public static Parser newParser(Language language) {
+<span class="nc bnc" id="L61" title="All 3 branches missed.">		switch (language) {</span>
+		case C:
+		case CIVL_C:
+<span class="nc" id="L64">			return new CParser();</span>
+		case FORTRAN77:
+<span class="nc" id="L66">			return new FortranParser();</span>
+		default:
+<span class="nc" id="L68">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L69">					&quot;ABC doesn't support parsing programs in &quot; + language + &quot;.&quot;);</span>
+		}
+	}
+
+	/**
+	 * Creates an AST builder for the given language. A runtime exception is
+	 * thrown if the language is not yet supported.
+	 * 
+	 * @param language
+	 * @param configuration
+	 * @param astFactory
+	 * @return
+	 */
+	public static ASTBuilder newASTBuilder(Language language,
+			Configuration configuration, ASTFactory astFactory) {
+<span class="nc bnc" id="L84" title="All 3 branches missed.">		switch (language) {</span>
+		case C:
+		case CIVL_C:
+<span class="nc" id="L87">			return new CASTBuilder(configuration, astFactory);</span>
+		case FORTRAN77:
+<span class="nc" id="L89">			return new FortranASTBuilder(configuration, astFactory);</span>
+		default:
+<span class="nc" id="L91">			throw new ABCRuntimeException(</span>
+<span class="nc" id="L92">					&quot;ABC doesn't support generating AST for programs written in &quot;</span>
+<span class="nc" id="L93">							+ language + &quot;.&quot;);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

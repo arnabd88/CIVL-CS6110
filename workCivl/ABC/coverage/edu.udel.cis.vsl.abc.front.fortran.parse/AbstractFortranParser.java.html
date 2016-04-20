@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AbstractFortranParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.fortran.parse</a> &gt; <span class="el_source">AbstractFortranParser.java</span></div><h1>AbstractFortranParser.java</h1><pre class="source lang-java linenums">// $ANTLR 3.2 Sep 23, 2009 12:02:23 FortranParser.g 2009-10-15 15:39:31
+
+/**
+ * Copyright (c) 2005, 2006 Los Alamos National Security, LLC.  This
+ * material was produced under U.S. Government contract DE-
+ * AC52-06NA25396 for Los Alamos National Laboratory (LANL), which is
+ * operated by the Los Alamos National Security, LLC (LANS) for the
+ * U.S. Department of Energy. The U.S. Government has rights to use,
+ * reproduce, and distribute this software. NEITHER THE GOVERNMENT NOR
+ * LANS MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+ * LIABILITY FOR THE USE OF THIS SOFTWARE. If software is modified to
+ * produce derivative works, such modified software should be clearly
+ * marked, so as not to confuse it with the version available from
+ * LANL.
+ *  
+ * Additionally, this program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
+ 
+ /**
+ *
+ * @author Craig E Rasmussen, Christopher D. Rickett, Bryan Rasmussen
+ */
+ 
+package edu.udel.cis.vsl.abc.front.fortran.parse;
+
+import java.util.HashMap;
+
+import org.antlr.runtime.Parser;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.RecognizerSharedState;
+import org.antlr.runtime.Token;
+import org.antlr.runtime.TokenStream;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+<span class="nc" id="L38">import edu.udel.cis.vsl.abc.front.fortran.preproc.FortranLexer;</span>
+
+public abstract class AbstractFortranParser extends Parser implements IFortranParser {
+
+   /* Provide action objects to implement the AST.  These are singleton objects. */
+   protected static IFortranParserAction action = null;
+   protected static IFortranParserAction nullAction = new FortranParserActionNull(null, null, null);
+
+   protected AbstractFortranParser delegate = null;
+   
+   protected String filename;
+   protected String pathname;
+
+   // TODO - does this state have to be shared?   
+   protected boolean has_error_occurred = false;
+   
+   @SuppressWarnings(&quot;unchecked&quot;)
+protected AbstractFortranParser(TokenStream input, RecognizerSharedState state)
+   {
+      super(input, state);
+
+      // TODO - see if the size has to increase with new F2008 rules
+      state.ruleMemo = new HashMap[489+1];
+   }
+	
+<span class="nc" id="L63">   public void initialize(AbstractFortranParser delegate, IFortranParserAction action,</span>
+                          String filename, String path)
+   {
+      this.delegate = delegate;
+      this.filename = filename;
+      this.pathname = path;
+
+//      if (FortranParser.action != null) FortranParser.action = action;
+      AbstractFortranParser.action = action;
+   }
+   
+<span class="nc" id="L74">   public boolean hasErrorOccurred() { return delegate.has_error_occurred; }</span>
+
+   @SuppressWarnings(&quot;static-access&quot;)
+<span class="nc" id="L77">public void reportError(RecognitionException re) {</span>
+      super.reportError(re);
+
+      // Change action class to FortranParserActionNull so that actions are no
+      // longer called.  This will allow error handling to be done by ANTLR
+      // only.
+      //
+      this.action = nullAction;
+
+      delegate.has_error_occurred = true;
+   }
+     
+<span class="nc" id="L89">   public IFortranParserAction getAction() {</span>
+      return action;
+   }
+   
+<span class="nc" id="L93">   public void main_program() throws RecognitionException {</span>
+       delegate.main_program();      
+    }
+     
+   /* TODO - implement, needed by FortranParserAction */
+<span class="nc" id="L98">   public Token getRightIToken() {</span>
+	   return null;
+   }
+
+   /* TODO - implement, may be needed by FortranParserAction */
+<span class="nc" id="L103">   public Token getRhsIToken(int i) {</span>
+      return null;
+   }
+ 	
+   /**
+    * Check for include and end of file.  T_INCLUDE is not in the grammar
+    * so this method must be called after every statement (and initially
+    * at the beginning of program unit file).
+    */
+   public void checkForInclude() {
+	   
+      // consume bare T_EOS
+<span class="nc" id="L115">      while (input.LA(1) == FortranLexer.T_EOS) {</span>
+    	  input.consume();
+      }
+         
+      if (input.LA(1) == FortranLexer.T_INCLUDE) {
+         String files[];
+         input.consume();  // consume T_INCLUDE
+
+         // get include filename from token stream
+         files = input.LT(1).getText().split(&quot;:&quot;);
+         action.inclusion(files[1], filename);
+         action.start_of_file(files[0], files[1]);
+         input.consume();  // consume T_INCLUDE_NAME
+
+         // check for empty include file (no statements)
+         if (input.LA(1) == FortranLexer.T_EOF) {
+            Token tk = input.LT(1);
+            input.consume();
+
+            files = tk.getText().split(&quot;:&quot;);
+            action.end_of_file(files[0], files[1]);
+         }
+
+         // include acts like a statement so need to see if another include follows
+         checkForInclude();
+      }
+
+      else if (input.LA(1) == FortranLexer.T_EOF) {
+         Token tk = input.LT(1);
+         String[] files = tk.getText().split(&quot;:&quot;);
+         input.consume();
+         action.end_of_file(files[0], files[1]);
+         // unwind T_EOFs for include files containing includes
+         checkForInclude();
+      }
+
+// This is caught by derived class so don't do it here (Craig 2011.5.16)
+//      else if (input.LA(1) == FortranLexer.EOF) {
+//         Token tk = input.LT(1);
+//         input.consume();
+//         action.end_of_file(tk.getText());
+//      }
+   }	
+   
+<span class="nc" id="L159">   public AST getAST(){</span>
+	   return action.getAST();
+   }
+
+} // end FortranParser
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

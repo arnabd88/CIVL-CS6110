@@ -1,0 +1,16 @@
+/* This header file contains the function prototypes for 
+ * scope operations.
+ */
+
+#ifndef __SCOPE__
+#define __SCOPE__
+
+/* includes civlc.cvh because this library references $scope */
+#include <civlc.cvh>
+
+/* ******************************* Functions ******************************* */
+
+/* Returns the parent scope of the given scope */
+$system $scope $scope_parent($scope s);
+
+#endif

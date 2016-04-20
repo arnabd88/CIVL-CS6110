@@ -1,0 +1,325 @@
+
+The CIVL-C code will not have an explicit "Root" procedure.  Instead,
+a Root procedure will be implicitly wrapped around the enitre code.
+The global input variables will become the inputs to the Root
+procedure.  A "main" procedure must be delcared that takes
+no parameters but can have any return type.   The body of the
+main procedure becomes the body of the Root procedure.   The return
+type of the main procedure becomes the return type of the body.
+The main procedure disappears.
+
+------------------------------------------------------------------------
+
+Summary of new keywords:
+
+  $proc : the process type
+  $self : the process invoking the statement (constant of type $proc)
+  $input : type qualifier declaring variable to be a program input
+  $output : type qualifier declaring variable to be a program output
+  $spawn : create a new process running procedure
+  $wait : wait for a process to terminate
+  $assert : check something holds
+  $true : boolean value true, used in assertions
+  $false: boolean value false, used in assertions
+  $assume : assume something holds
+  $when : guarded statement
+  $choose : nondeterministic choice statement
+  $invariant : declare a loop invariant
+  $requires : procedure precondition
+  $ensures : procedure postcondition
+  $result : refers to result returned by procedure in contracts
+  @ : refer to variable in other process, e.g., p@x
+  $collective : a collective expression
+
+Other syntactic changes:
+
+  - procedure definitions may occur in any scope
+
+------------------------------------------------------------------------
+
+Detailed description:
+
+
+$proc : this is a primitive object type and functions like any other
+primitive C type (e.g., int).  An object of this type refers
+to process.  It can be thought of as a process ID, but it is not
+an integer and cannot be cast to one.  Certain expressions take
+an argument of $proc type and some return something of $proc type.
+
+------------------------------------------------------------------------
+
+$self: this is a constant of type $proc.  It can be used wherever
+an argument of type $proc is called for.  It refers to the process
+that is evaluating the expression containing "$self".
+
+------------------------------------------------------------------------
+
+$input : A variable in the global scope only may be declared with this
+type modifier indicating it is an "input" variable, as in
+
+$input int n;
+
+As explained above, the variable becomes a parameter to the Root
+procedure.  This is used when comparing two programs for functional
+equivalence.  The two programs are functionally equivalent if,
+whenever they are given the same inputs (i.e., corresponding $input
+variables are initialized with the same values) they will produce the
+same outputs (i.e., corresponding $output variables will end up with
+the same values at termination).
+
+------------------------------------------------------------------------
+
+$output : A variable in the global scope may be declared with
+this type modifier to declare it to be an output variable.
+
+------------------------------------------------------------------------
+
+$spawn : this is an expression with side-effects.  It spawns a new
+process and returns a reference to the new process, i.e., an object of
+type $proc.  The syntax is the same as a procedure invocation with the
+keyword "$spawn" inserted in front:
+
+$spawn f(expr1, ..., exprn)
+
+Typically the returned value is assigned to a variable, e.g.,
+
+$proc p = $spawn f(i);
+
+If the invoked function f returns a value, that value is simply
+ignored.
+
+------------------------------------------------------------------------
+
+$wait: this is a statement that takes an argument of type $proc
+and blocks until the referenced process terminates:
+
+$wait expr;
+
+------------------------------------------------------------------------
+$assert: This is an assertion statement.  It takes as its sole
+argument an expression of boolean type.   The expressions have a 
+richer syntax than C expressions.  During verification, the
+assertion is checked.  If it does not hold, a violation is reported.
+
+$assert expr;
+
+Boolean values $true and $false may be used in assertions
+and assumptions.
+
+------------------------------------------------------------------------
+
+$assume: This is an assume statement. Its syntax is the same as that
+of $assert.  During verification, the assumed expression is assumed to
+hold.  If this leads to a contradiction on some execution, that
+execution is simply ignored.  It never reports a violation, it only
+restricts the set of possible executions that will be explored by the
+verification.
+
+$assume expr;
+
+------------------------------------------------------------------------
+
+$when (expr) stmt;
+
+A guarded command.
+
+All statements have a guard, either implicit or explicit.  For most
+statements, the guard is "true".  The $when statement allows one to
+attach an explicit guard to a statement.
+
+ When expr is true, the statement is enabled, otherwise it is
+disabled.  A disabled statement is "blocked"---it will not be
+scheduled for execution.  When it is enabled, it may execute by moving
+control to the stmt and executing the first atomic action in the stmt.
+
+If stmt itself has a guard, the guard of the $when statement is
+effectively the conjunction of the expr and the guard of the stmt.
+
+The evaluation of expr and the first atomic action of stmt effectively
+occur as a single atomic action.  There is no guarantee that execution
+of stmt will continue atomically if it contains more than one atomic
+action, i.e., other processes may be scheduled.
+
+Examples:
+
+$when (s>0) s--;
+
+This will block until s is positive then decrement s.  The execution
+of s-- is guaranteed to take place in an environment in which s is
+positive.
+
+$when (s>0) {s--; t++}
+
+The execution of s-- must happen when s>0, but between s-- and t++,
+other processes may execute.
+
+$when (s>0) $when (t>0) x=y*t;
+
+This blocks until both x and t are positive then executes
+the assignment in that state.  It is equivalent to
+
+$when (s>0 && t>0) x=y*t;
+
+------------------------------------------------------------------------
+
+A $choose statement has the form
+
+$choose {
+  stmt1;
+  stmt2;
+  ...
+  default: stmt
+}
+
+The "default" clause is optional.
+
+The guards of the statements are evaluated and among those that are
+true, one is chosen nondeterministically and executed.  If none are
+true and the default clause is present, it is chosen.  The default
+clause will only be selected if all guards are false.  If no default
+clause is present and all guards are false, the statement blocks.
+Hence the implicit guard of the $choose statement without a default
+clause is the disjunction of the guards of its sub-statements.
+The implicit guard of the $choose statement with a default clause
+is "true".
+
+
+Example: this shows how to encode "low-level" CIVL:
+
+l1: $choose {
+  $when (x>0) {x--; goto l2;}
+  $when (x==0) {y=1; goto l3;}
+  default: {z=1; goto l4;}
+}
+l2: $choose {
+  ...
+}
+l3: $choose {
+  ...
+}
+
+------------------------------------------------------------------------
+
+$invariant: indicates a loop invariant.  Each C loop construct has an
+optional invariant clause as follows:
+
+while (expr) $invariant (expr) stmt
+
+for (e1; e2; e3) $invariant (expr) stmt
+
+do stmt while (expr) $invariant (expr) ;
+
+The invariant is a claim that if if the expr holds upon entering 
+the loop and the loop condition holds, then it will hold
+after completion of execution of the loop body.
+
+The invariant is used by certain verification techniques.
+
+------------------------------------------------------------------------
+
+Procedure contracts: $requires and $ensures.  There are optional
+elements that may occur in a procedure declaration or definition:
+
+T f(...)
+  $requires expr;
+  $ensures expr;
+;
+
+or
+
+T f(...)
+  $requires expr ;
+  $ensures expr ;
+  {
+    ...
+  }
+
+The value $result may be used in post-conditions to refer
+to the result returned by a procedure.
+
+------------------------------------------------------------------------
+
+expr@x: remote expressions refer to a variable in another process,
+e.g., procs[i]@x.  This special kind of expression is used in
+collective expressions, which are used to formulate collective
+assertions and invariants.
+
+The expr must have $proc type.  The variable x must be a statically 
+visible variable in the context in which it is occurs.  When
+this expression is evaluated, the evaluation context will be shifted
+to the process referred to by the expr.
+
+------------------------------------------------------------------------
+
+$collective(proc_expr, int_expr) expr 
+
+This is a collective expression over a set of processes.  The
+proc_expr is a pointer to the first element of an array of $proc.  The
+int_expr gives the length of that array, i.e., the number of
+processes.  expr is a boolean-valued expression; it may use remote
+expressions to refer to variables in the processes specified in the
+array.
+  
+example:
+
+$proc procs[N];
+...
+$assert $collective(procs, N) i==procs[(pid+1)%N]@i ;
+
+------------------------------------------------------------------------
+add to grammar?
+
+types: $heap
+
+Library functions:
+
+void* $malloc($heap *h, int size);
+void memcpy(void *p, void *q, size_t size);
+void $free($heap *h, void *p)
+
+Q: Need primitive to give heap into which a pointer points?
+
+Example:
+$heap h;
+double *p=$malloc(&h, n*sizeof(double));
+double *q=$malloc(&h, n*sizeof(double));
+memcpy(p, q, n*sizeof(double));
+$free(&h, p);
+$free(&h, q);
+
+---
+
+typedef struct _CIVL_Message {
+  struct _CIVL_Message *next; // next message in this queue
+  struct _CIVL_Message *prev; // previous message in this queue
+  int tag; // message tag
+  int size; // number of elements
+  void *data; // pointer to first element
+} CIVL_Message;
+
+typedef struct _CIVL_Comm {
+  $heap heap;
+  int numProcs; // number of procs in this communicator
+  $proc *procs; // array of length numProcs
+  CIVL_Message * buf_front[][]; // oldest element of each msg queue
+  CIVL_Message * buf_back[][]; // newest element of each msg queue
+} CIVL_Comm;
+
+--
+
+Pointer TODO list:
+  add structure types.  Need to allow cycles, so can create
+    an incomplete structure type, then create a pointer to it,
+    the complete it later.
+  add pointer types.
+  add & and * expressions for pointers, and . expression for tuples.
+    Allow left-hand side expressions *e and e.f.
+  pointer values:
+    symbolic expression type: Tuple<int,int,array<int>>:
+    dynamic scope id, variable id, navigation sequence
+    Add methods to create and interpret
+    such expressions (in Evaluator?). 
+    pointer equality: just equality of symbolic expressions
+  add evaluation clauses for & and *.
+  modify assignment statement and executor to include *e=f; e.i=f;
+  add pointer arithmetic (+ and -).

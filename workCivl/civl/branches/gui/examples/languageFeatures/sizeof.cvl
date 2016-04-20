@@ -1,0 +1,15 @@
+/* Commandline execution:
+ *		civl verify sizeof.cvl
+ * */
+#include <civlc.cvh>
+
+void main() {
+  int n = 5;
+  int a[n];
+  double b[2*n];
+  
+  $assert((sizeof(int) > 0));
+  $assert((sizeof(a) == sizeof(int) * n));
+  $assert((sizeof(int[n]) == sizeof(int) * n));
+  $assert((sizeof(b) / sizeof(double) == 2*n));
+}

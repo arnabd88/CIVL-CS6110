@@ -1,0 +1,46 @@
+/* Commandline execution:
+ * 		civl verify -inputB=5 adderBad.cvl
+ * or (if you want to find the minimal counterexample)
+ * 		civl verify -inputB=5 adderBad.cvl -min
+ * */
+#include <civlc.h>
+
+$input int B; // upper bound on array length
+$input int N; // length of array
+$assume 0<=N && N<=B;
+$input double a[N];
+
+double adderSeq(double *p, int n) {
+  double s = 0.0;
+  
+  for (int i = 0; i < n; i++) {
+    s += p[i]; 
+  }
+  return s;
+}
+
+double adderPar(double *p, int n) {
+  double s = 0.0; // sum shared by workers
+  $proc workers[n]; // one worker for each element!
+
+  void worker(int i) {
+    double t;
+
+    t = s;
+    t += p[i];
+    s = t;
+  }
+  
+  for (int j = 0; j < n; j++)
+    workers[j] = $spawn worker(j);
+  for (int j = 0; j < n; j++)
+    $wait workers[j];
+  return s;
+}
+
+void main() {
+  double seq = adderSeq(&a[0], N);
+  double par = adderPar(&a[0], N);
+
+  $assert(seq == par);
+}

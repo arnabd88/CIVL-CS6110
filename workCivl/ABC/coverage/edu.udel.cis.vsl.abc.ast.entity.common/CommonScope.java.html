@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonScope.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.entity.common</a> &gt; <span class="el_source">CommonScope.java</span></div><h1>CommonScope.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.entity.common;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity.EntityKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Label;
+import edu.udel.cis.vsl.abc.ast.entity.IF.OrdinaryEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope;
+import edu.udel.cis.vsl.abc.ast.entity.IF.TaggedEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Variable;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+public class CommonScope implements Scope {
+
+	private ScopeKind scopeKind;
+
+	/**
+	 * The root node of this scope in the AST. Used only for printing as a way
+	 * to identify the scope easily.
+	 */
+	private ASTNode root;
+
+<span class="nc" id="L32">	private int id = -1;</span>
+
+	private AST translationUnit;
+
+	private CommonScope parentScope;
+
+<span class="nc" id="L38">	private ArrayList&lt;Scope&gt; children = new ArrayList&lt;Scope&gt;();</span>
+
+	/**
+	 * Contains an entry for each ordinary entity declared in this scope that is
+	 * NOT anonymous (i.e., has a non-null name).
+	 */
+<span class="nc" id="L44">	private Map&lt;String, OrdinaryEntity&gt; ordinaryEntityMap = new LinkedHashMap&lt;String, OrdinaryEntity&gt;();</span>
+
+	/**
+	 * Contains an entry for each ordinary entity declared in this scope
+	 * (including the anonymous ones).
+	 */
+<span class="nc" id="L50">	private ArrayList&lt;OrdinaryEntity&gt; ordinaryEntityList = new ArrayList&lt;OrdinaryEntity&gt;();</span>
+
+<span class="nc" id="L52">	private ArrayList&lt;Variable&gt; variableList = new ArrayList&lt;Variable&gt;();</span>
+
+<span class="nc" id="L54">	private ArrayList&lt;Function&gt; functionList = new ArrayList&lt;Function&gt;();</span>
+
+	/**
+	 * Contains an entry for each tagged entity declared in this scope that is
+	 * NOT anonymous (i.e., has a non-null tag).
+	 */
+<span class="nc" id="L60">	private Map&lt;String, TaggedEntity&gt; taggedEntityMap = new LinkedHashMap&lt;String, TaggedEntity&gt;();;</span>
+
+	/**
+	 * Contains an entry for each tagged entity declared in this scope
+	 * (including the anonymous ones).
+	 */
+<span class="nc" id="L66">	private ArrayList&lt;TaggedEntity&gt; taggedEntityList = new ArrayList&lt;TaggedEntity&gt;();</span>
+
+<span class="nc" id="L68">	private Map&lt;String, Label&gt; labelMap = new LinkedHashMap&lt;String, Label&gt;();</span>
+
+<span class="nc" id="L70">	private ArrayList&lt;Label&gt; labelList = new ArrayList&lt;Label&gt;();</span>
+
+	private int scopeDepth;
+
+<span class="nc" id="L74">	public CommonScope(ScopeKind kind, CommonScope parent, ASTNode root) {</span>
+<span class="nc" id="L75">		this.scopeKind = kind;</span>
+<span class="nc" id="L76">		this.parentScope = parent;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (parent != null) {</span>
+<span class="nc" id="L78">			parent.addChild(this);</span>
+<span class="nc" id="L79">			scopeDepth = parent.scopeDepth + 1;</span>
+<span class="nc" id="L80">		} else {</span>
+<span class="nc" id="L81">			scopeDepth = 0;</span>
+		}
+<span class="nc" id="L83">		this.root = root;</span>
+<span class="nc" id="L84">	}</span>
+
+	@Override
+	public ScopeKind getScopeKind() {
+<span class="nc" id="L88">		return scopeKind;</span>
+	}
+
+	@Override
+	public AST getAST() {
+<span class="nc" id="L93">		return translationUnit;</span>
+	}
+
+	@Override
+	public CommonScope getParentScope() {
+<span class="nc" id="L98">		return parentScope;</span>
+	}
+
+	@Override
+	public int getNumChildrenScopes() {
+<span class="nc" id="L103">		return children.size();</span>
+	}
+
+	@Override
+	public Scope getChildScope(int scopeId) {
+<span class="nc" id="L108">		return children.get(scopeId);</span>
+	}
+
+	@Override
+	public Iterator&lt;Scope&gt; getChildrenScopes() {
+<span class="nc" id="L113">		return children.iterator();</span>
+	}
+
+	void addChild(Scope child) {
+<span class="nc" id="L117">		children.add(child);</span>
+<span class="nc" id="L118">	}</span>
+
+	@Override
+	public int getScopeDepth() {
+<span class="nc" id="L122">		return scopeDepth;</span>
+	}
+
+	@Override
+	public int add(OrdinaryEntity entity) throws UnsourcedException {
+<span class="nc" id="L127">		EntityKind kind = entity.getEntityKind();</span>
+<span class="nc" id="L128">		String name = entity.getName(); // may be null</span>
+<span class="nc" id="L129">		int result = ordinaryEntityList.size();</span>
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (name != null) {</span>
+<span class="nc" id="L132">			Entity oldEntity = ordinaryEntityMap.get(name);</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			if (oldEntity != null)</span>
+<span class="nc" id="L135">				throw new UnsourcedException(</span>
+<span class="nc" id="L136">						&quot;Entity with same name already exists &quot;</span>
+<span class="nc" id="L137">								+ &quot;in this scope: &quot; + oldEntity);</span>
+<span class="nc" id="L138">			ordinaryEntityMap.put(name, entity);</span>
+		}
+<span class="nc" id="L140">		ordinaryEntityList.add(entity);</span>
+<span class="nc bnc" id="L141" title="All 3 branches missed.">		switch (kind) {</span>
+		case VARIABLE:
+<span class="nc" id="L143">			variableList.add((Variable) entity);</span>
+<span class="nc" id="L144">			break;</span>
+		case FUNCTION:
+<span class="nc" id="L146">			functionList.add((Function) entity);</span>
+			break;
+		default:
+		}
+<span class="nc" id="L150">		return result;</span>
+	}
+
+	@Override
+	public OrdinaryEntity getOrdinaryEntity(boolean isType, String name) {
+<span class="nc" id="L155">		OrdinaryEntity entity = ordinaryEntityMap.get(name);</span>
+
+<span class="nc bnc" id="L157" title="All 4 branches missed.">		if (entity != null &amp;&amp; isType</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">				&amp;&amp; entity.getEntityKind() != EntityKind.TYPEDEF)</span>
+<span class="nc" id="L159">			return null;</span>
+<span class="nc" id="L160">		return entity;</span>
+	}
+
+	@Override
+	public OrdinaryEntity getLexicalOrdinaryEntity(boolean isType, String name) {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		for (Scope scope = this; scope != null; scope = scope.getParentScope()) {</span>
+<span class="nc" id="L166">			OrdinaryEntity result = scope.getOrdinaryEntity(isType, name);</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			if (result != null)</span>
+<span class="nc" id="L169">				return result;</span>
+		}
+<span class="nc" id="L171">		return null;</span>
+	}
+
+	@Override
+	public int getNumVariables() {
+<span class="nc" id="L176">		return variableList.size();</span>
+	}
+
+	@Override
+	public Variable getVariable(int variableId) {
+<span class="nc" id="L181">		return variableList.get(variableId);</span>
+	}
+
+	@Override
+	public Iterable&lt;Variable&gt; getVariables() {
+<span class="nc" id="L186">		return variableList;</span>
+	}
+
+	@Override
+	public int getNumFunctions() {
+<span class="nc" id="L191">		return functionList.size();</span>
+	}
+
+	@Override
+	public Function getFunction(int functionId) {
+<span class="nc" id="L196">		return functionList.get(functionId);</span>
+	}
+
+	@Override
+	public Iterable&lt;Function&gt; getFunctions() {
+<span class="nc" id="L201">		return functionList;</span>
+	}
+
+	@Override
+	public int add(TaggedEntity entity) throws SyntaxException {
+<span class="nc" id="L206">		String name = entity.getName();</span>
+<span class="nc" id="L207">		int result = taggedEntityList.size();</span>
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (name != null) {</span>
+<span class="nc" id="L210">			TaggedEntity oldEntity = taggedEntityMap.get(name);</span>
+
+<span class="nc bnc" id="L212" title="All 2 branches missed.">			if (oldEntity != null)</span>
+<span class="nc" id="L213">				throw new SyntaxException(&quot;Tagged entity with name &quot; + name</span>
+<span class="nc" id="L214">						+ &quot; already exists &quot; + &quot;in this scope: &quot;</span>
+<span class="nc" id="L215">						+ oldEntity.getDeclaration(0).getSource(), entity</span>
+<span class="nc" id="L216">						.getDeclaration(0).getSource());</span>
+<span class="nc" id="L217">			taggedEntityMap.put(name, entity);</span>
+		}
+<span class="nc" id="L219">		taggedEntityList.add(entity);</span>
+<span class="nc" id="L220">		return result;</span>
+	}
+
+	@Override
+	public TaggedEntity getTaggedEntity(String tag) {
+<span class="nc" id="L225">		return taggedEntityMap.get(tag);</span>
+	}
+
+	@Override
+	public TaggedEntity getLexicalTaggedEntity(String tag) {
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		for (Scope scope = this; scope != null; scope = scope.getParentScope()) {</span>
+<span class="nc" id="L231">			TaggedEntity result = scope.getTaggedEntity(tag);</span>
+
+<span class="nc bnc" id="L233" title="All 2 branches missed.">			if (result != null)</span>
+<span class="nc" id="L234">				return result;</span>
+		}
+<span class="nc" id="L236">		return null;</span>
+	}
+
+	// Labels...
+
+	@Override
+	public int add(Label label) throws UnsourcedException {
+<span class="nc" id="L243">		String name = label.getName();</span>
+<span class="nc" id="L244">		Entity oldEntity = labelMap.get(name);</span>
+<span class="nc" id="L245">		int result = labelList.size();</span>
+
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		if (oldEntity != null)</span>
+<span class="nc" id="L248">			throw new UnsourcedException(&quot;Label with same name already exists &quot;</span>
+<span class="nc" id="L249">					+ &quot;in this scope: &quot; + oldEntity);</span>
+<span class="nc" id="L250">		labelList.add(label);</span>
+<span class="nc" id="L251">		labelMap.put(name, label);</span>
+<span class="nc" id="L252">		return result;</span>
+	}
+
+	@Override
+	public boolean contains(Label label) {
+<span class="nc bnc" id="L257" title="All 2 branches missed.">		return getLabel(label.getName()) != null;</span>
+	}
+
+	@Override
+	public Label getLabel(String name) {
+<span class="nc" id="L262">		return labelMap.get(name);</span>
+	}
+
+	@Override
+	public Label getLexicalLabel(String name) {
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		for (Scope scope = this; scope != null; scope = scope.getParentScope()) {</span>
+<span class="nc" id="L268">			Label result = scope.getLabel(name);</span>
+
+<span class="nc bnc" id="L270" title="All 2 branches missed.">			if (result != null)</span>
+<span class="nc" id="L271">				return result;</span>
+		}
+<span class="nc" id="L273">		return null;</span>
+	}
+
+	@Override
+	public Iterator&lt;Label&gt; getLabels() {
+<span class="nc" id="L278">		return labelList.iterator();</span>
+	}
+
+	@Override
+	public int getNumLabels() {
+<span class="nc" id="L283">		return labelList.size();</span>
+	}
+
+	@Override
+	public Label getLabel(int labelId) {
+<span class="nc" id="L288">		return labelList.get(labelId);</span>
+	}
+
+	@Override
+	public int getId() {
+<span class="nc" id="L293">		return id;</span>
+	}
+
+	@Override
+	public void setId(int id) {
+<span class="nc" id="L298">		this.id = id;</span>
+<span class="nc" id="L299">	}</span>
+
+	public String toStringLong() {
+<span class="nc" id="L302">		String result = &quot;Scope[id=&quot; + id + &quot;, &quot; + scopeKind;</span>
+
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		if (parentScope != null)</span>
+<span class="nc" id="L305">			result += &quot;, parent=&quot; + parentScope.id;</span>
+<span class="nc" id="L306">		result += &quot;, root=&quot; + root.id() + &quot;]&quot;;</span>
+
+<span class="nc" id="L308">		return result;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L313">		return toStringLong();</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out) {
+<span class="nc" id="L318">		out.println(prefix + toString());</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		if (!ordinaryEntityList.isEmpty()) {</span>
+<span class="nc" id="L320">			out.println(prefix + &quot;| ordinary entities&quot;);</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">			for (OrdinaryEntity entity : ordinaryEntityList) {</span>
+<span class="nc" id="L322">				out.println(prefix + &quot;| | &quot; + entity);</span>
+			}
+		}
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		if (!taggedEntityList.isEmpty()) {</span>
+<span class="nc" id="L326">			out.println(prefix + &quot;| tagged entities&quot;);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">			for (TaggedEntity entity : taggedEntityList) {</span>
+<span class="nc" id="L328">				out.println(prefix + &quot;| | &quot; + entity);</span>
+			}
+		}
+<span class="nc bnc" id="L331" title="All 2 branches missed.">		if (!labelList.isEmpty()) {</span>
+<span class="nc" id="L332">			out.println(prefix + &quot;| labels&quot;);</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">			for (Label label : labelList) {</span>
+<span class="nc" id="L334">				out.println(prefix + &quot;| | &quot; + label);</span>
+			}
+		}
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (!children.isEmpty()) {</span>
+<span class="nc" id="L338">			out.println(prefix + &quot;| children scopes&quot;);</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">			for (Scope child : children) {</span>
+<span class="nc" id="L340">				child.print(prefix + &quot;| | &quot;, out);</span>
+			}
+		}
+<span class="nc" id="L343">		out.flush();</span>
+<span class="nc" id="L344">	}</span>
+
+	@Override
+	public boolean isDescendantOf(Scope that) {
+<span class="nc bnc" id="L348" title="All 2 branches missed.">		for (Scope scope = this; scope != null; scope = scope.getParentScope())</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">			if (scope == that)</span>
+<span class="nc" id="L350">				return true;</span>
+<span class="nc" id="L351">		return false;</span>
+	}
+
+	@Override
+	public void print(PrintStream out) {
+<span class="nc" id="L356">		print(&quot;&quot;, out);</span>
+<span class="nc" id="L357">	}</span>
+
+	@Override
+	public Iterable&lt;OrdinaryEntity&gt; getOrdinaryEntities() {
+<span class="nc" id="L361">		return ordinaryEntityList;</span>
+	}
+
+	@Override
+	public Iterable&lt;TaggedEntity&gt; getTaggedEntities() {
+<span class="nc" id="L366">		return taggedEntityList;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

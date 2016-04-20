@@ -1,0 +1,34 @@
+/* Commandline execution:
+ * 		civl verify derivative.cvl
+ */
+#include <civlc.cvh>
+
+$input double h;
+$input int num_elements;
+$input double initial[num_elements];
+$output double final[num_elements];
+double working[num_elements];
+
+void differentiate(double h, int n, double y[], double result[]){
+	int i;
+
+	for(i = 1; i < n-1; i++)
+	{
+		result[i] = (y[i+1]-y[i-1])/(2*h);
+	}
+	result[0] = (y[1]-y[0])/h; 
+	result[n-1] = (y[n-1] - y[n-2])/h;				
+}
+
+void main() {
+	int i;
+
+    $assume(h > 0);
+    $assume(num_elements > 2 && num_elements <= 5);
+	differentiate(h, num_elements, initial, working);
+	for(i=0; i < num_elements; i++) {
+		final[i] = working[i];
+	}
+}
+
+

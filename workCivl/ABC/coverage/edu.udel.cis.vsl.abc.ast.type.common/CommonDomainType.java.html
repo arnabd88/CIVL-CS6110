@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonDomainType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonDomainType.java</span></div><h1>CommonDomainType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.DomainType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+
+<span class="nc bnc" id="L9" title="All 2 branches missed.">public class CommonDomainType extends CommonObjectType implements DomainType {</span>
+
+<span class="nc" id="L11">	private final static int classCode = CommonDomainType.class.hashCode();</span>
+
+<span class="nc" id="L13">	int dimension = -1;</span>
+
+	public CommonDomainType() {
+<span class="nc" id="L16">		super(TypeKind.DOMAIN);</span>
+<span class="nc" id="L17">	}</span>
+
+	public CommonDomainType(int dimension) {
+<span class="nc" id="L20">		super(TypeKind.DOMAIN);</span>
+<span class="nc bnc" id="L21" title="All 4 branches missed.">		assert dimension &gt;= 1;</span>
+<span class="nc" id="L22">		this.dimension = dimension;</span>
+
+<span class="nc" id="L24">	}</span>
+
+	@Override
+	public boolean compatibleWith(Type type) {
+<span class="nc bnc" id="L28" title="All 2 branches missed.">		if (type instanceof DomainType) {</span>
+<span class="nc" id="L29">			DomainType that = (DomainType) type;</span>
+
+<span class="nc bnc" id="L31" title="All 4 branches missed.">			if (this.hasDimension() &amp;&amp; that.hasDimension())</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">				return this.getDimension() == that.getDimension();</span>
+<span class="nc" id="L33">			return true;</span>
+		}
+<span class="nc" id="L35">		return false;</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean abbrv) {
+<span class="nc" id="L40">		out.print(&quot;$domain&quot;);</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		if (hasDimension())</span>
+<span class="nc" id="L42">			out.print(&quot;(&quot; + dimension + &quot;)&quot;);</span>
+<span class="nc" id="L43">	}</span>
+
+	@Override
+	public boolean isScalar() {
+<span class="nc" id="L47">		return false;</span>
+	}
+
+	@Override
+	public boolean hasDimension() {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		return dimension &gt; 0;</span>
+	}
+
+	@Override
+	public int getDimension() {
+<span class="nc" id="L57">		return dimension;</span>
+	}
+
+	@Override
+	public boolean isVariablyModified() {
+<span class="nc" id="L62">		return false;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L67">		int result = classCode;</span>
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (dimension &gt; 0)</span>
+<span class="nc" id="L70">			result += 97 * dimension;</span>
+<span class="nc" id="L71">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (obj instanceof CommonDomainType) {</span>
+<span class="nc" id="L77">			CommonDomainType that = (CommonDomainType) obj;</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			return dimension == that.dimension;</span>
+		}
+<span class="nc" id="L81">		return false;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L86">		String result = &quot;$domain&quot;;</span>
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (hasDimension())</span>
+<span class="nc" id="L89">			result += &quot;(&quot; + dimension + &quot;)&quot;;</span>
+<span class="nc" id="L90">		return result;</span>
+	}
+
+	@Override
+	public boolean isComplete() {
+<span class="nc" id="L95">		return true;</span>
+	}
+
+	@Override
+	protected boolean similar(Type other, boolean equivalent,
+			Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (equivalent)</span>
+<span class="nc" id="L102">			return equals(other);</span>
+		else
+<span class="nc" id="L104">			return compatibleWith(other);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

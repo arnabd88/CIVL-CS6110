@@ -1,0 +1,3 @@
+struct S {
+  double y;
+};

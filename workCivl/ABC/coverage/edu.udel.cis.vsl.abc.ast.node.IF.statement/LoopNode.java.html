@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LoopNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.statement</a> &gt; <span class="el_source">LoopNode.java</span></div><h1>LoopNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.statement;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+
+/**
+ * Root of type hierarchy for every kind of loop statement. Every such statement
+ * has at least a condition specifying when to stay in the loop, and a body.
+ * 
+ * @author siegel
+ * 
+ */
+public interface LoopNode extends StatementNode {
+
+<span class="nc" id="L16">	public static enum LoopKind {</span>
+<span class="nc" id="L17">		WHILE, DO_WHILE, FOR</span>
+	};
+
+	/**
+	 * The condition which controls when to stay in or exit the loop. For WHILE
+	 * and FOR loops, evaluated before entering body; for DO_WHILE, evaluated
+	 * after each execution of body.
+	 * 
+	 * @return the loop condition
+	 */
+	ExpressionNode getCondition();
+
+	/**
+	 * Sets the loop condition for this loop node.
+	 * 
+	 * @param condition
+	 *            the loop condition
+	 */
+	void setCondition(ExpressionNode condition);
+
+	/**
+	 * The loop body.
+	 * 
+	 * @return the loop body
+	 */
+	StatementNode getBody();
+
+	/**
+	 * Sets the loop body.
+	 * 
+	 * @param body
+	 *            the body
+	 */
+	void setBody(StatementNode body);
+
+	/**
+	 * What kind of loop is this?
+	 * 
+	 * @return the loop kind
+	 */
+	LoopKind getKind();
+
+	SequenceNode&lt;ContractNode&gt; loopContracts();
+
+	@Override
+	LoopNode copy();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

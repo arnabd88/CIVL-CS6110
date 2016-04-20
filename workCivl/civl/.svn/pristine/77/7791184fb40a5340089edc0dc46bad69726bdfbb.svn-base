@@ -1,0 +1,10 @@
+#include <civlc.h>
+
+void foo(){
+  $assert($false);
+}
+
+void main(){
+$proc p = $spawn foo();
+}
+

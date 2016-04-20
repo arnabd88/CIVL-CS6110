@@ -1,0 +1,1713 @@
+% LaTeX source for CIVL Reference Manual.
+%
+\documentclass[11pt, oneside, letterpaper]{book}
+\usepackage[letterpaper,textheight=9in,left=1in,%
+  textwidth=6.5in,bottom=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{bbold}
+\usepackage{url}
+\usepackage[lined,vlined,linesnumbered,noresetcount]{algorithm2e}
+
+\include{preambular}
+
+\title{{\huge\bf CIVL}\\\mbox{The Concurrency Intermediate Verification
+  Language}\\Reference Manual\\ v0.5}
+\author{%
+  Matthew B.\ Dwyer \and
+  Ganesh Gopalakrishnan \and
+  Zvonimir Rakamaric \and
+  Stephen F.\ Siegel \and
+  Manchun Zheng \and
+  Timothy K.\ Zirkel
+}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Quick Start}
+
+\begin{enumerate}
+\item Download and unpack the appropriate pre-compiled library of CIVL
+  dependencies from \url{http://vsl.cis.udel.edu/tools/vsl_depend/}.
+  There are versions for Darwin (OS X), 32-bit linux, and 64-bit
+  linux.
+\item Move the resulting directory \texttt{vsl} to \texttt{/opt/vsl}.
+\item Download and unpack the latest stable release of CIVL from 
+  \url{http://vsl.cis.udel.edu/civl}.  Again there are versions
+  for Darwin, 32-bit linux, and 64-bit linux.
+\item The resulting directory should be named
+  \texttt{CIVL-\textit{tag}} for some string \textit{tag} which
+  identifies the version of CIVL you downloaded.  Move this directory
+  into \texttt{/opt}.
+\item You should now have an executable script
+  \texttt{/opt/CIVL-\textit{tag}/bin/civl}.  Move this script into
+  your path, or create a symlink from somewhere in your path to it, or
+  add the directory \texttt{/opt/CIVL-\textit{tag}/bin} to your path.
+\end{enumerate}
+
+From the command line, you should now be able to type \texttt{civl
+  help} and see a help message describing the command line syntax.
+
+Copy the file
+\texttt{CIVL-\textit{tag}/examples/concurrency/locksBad.cvl} to your
+working directory.  Look at the program: it is a simple 2-process
+program with two shared variables used as locks.  The 2 processes try
+to obtain the locks in opposite order, leading to a deadlock.
+
+Type
+\begin{verbatim}
+civl verify locksBad.cvl
+\end{verbatim}
+You should see some output culminating in a message 
+\begin{verbatim}
+The program MAY NOT be correct.  See CIVLREP/locksBad_log.txt
+\end{verbatim}
+
+Type
+\begin{verbatim}
+civl replay locksBad.cvl
+\end{verbatim}
+You should see a step-by-step account of how the program arrived
+at the deadlock.
+
+\textbf{Note.}  You can install \texttt{CIVL-\textit{tag}} and
+\texttt{vsl} in any directory you want, not just in \texttt{/opt}.
+You just need to edit the script file \texttt{civl} appropriately,
+replacing the default paths with the new paths.
+
+\part{Language}
+
+\chapter{Overview of CIVL-C}
+
+% write a grammar.  Leave out type qualifiers, etc.  Keep pointers.
+% Keep simple types?  Why not keep all the standard types.
+% How about "symbolic types"?  Make all the casts explicit.
+% Look at CIL?
+
+% Describe as subset of C, but leave out:... and add...
+
+% add Set<proc> and use it.
+
+\section{CIVL-C concepts and primitives}
+
+CIVL-C is a programming language.  It is an extension of a subset of
+the C11 dialect of C.  It does not include the standard C library.
+
+A CIVL-C program should begin with the line
+\begin{verbatim}
+#include <civlc.h>
+\end{verbatim}
+which includes the main CIVL-C header file, which declares all the
+types and other CIVL primitives.  Almost all of the CIVL-C primitives
+which are not already in C begin with the symbol \texttt{\$} to easily
+distinguish them from any reserved work or identifier in a C program.  
+
+A CIVL-C program encodes a CIVL model for a particular CIVL
+context. The types are essentially the C types with the additional
+process reference type (denoted \cproc).  The expressions are C
+expressions with some additional expressions defined below.
+
+In CIVL-C, functions can be defined in any scope, not just in file
+scope.  The lexical scope structure and placement of function
+definitions determine the static scope tree $\Sigma$ and the function
+prototype system.  A function's defining scope is, as you would
+expect, the scope in which its definition occurs.
+
+The CIVL-C code will not have an explicit ``root'' procedure.
+Instead, a root procedure will be implicitly wrapped around the entire
+code.  The global input variables will become the inputs to the root
+procedure.  A ``\texttt{main}'' procedure must be delcared that takes
+no parameters but can have any return type.  The body of \texttt{main}
+becomes the body of the root procedure.  The return type of
+\texttt{main} becomes the return type of the root procedure.  The
+\texttt{main} procedure itself disappears in translation.
+
+The reason for this protocol is that an arbitrary (sequential) C program
+is a legal (and reasonable) CIVL-C program.  The global variables in the
+C program simply become variables declared in the root scope.
+
+The additional language elements are shown in Figure \ref{fig:cc}.
+
+\begin{figure}[t]
+  \begin{tabular}{ll}
+    \cassert & check something holds \\
+    \cassume & assume something holds \\
+    \catom & defines statements to be executed as one transition\\
+    \catomic & defines statements to be executed without interleaving other processes\\
+    \cchoose & nondeterministic choice statement \\
+    \cchooseint & nondeterministic choice of integer  \\
+    \ccollective & a collective expression\\
+    \censures & procedure postcondition \\
+    \cfalse & boolean value false, used in assertions \\
+    \cheap & the heap type \\
+    \cinput & type qualifier declaring variable to be a program input \\
+    \cinvariant & declare a loop invariant \\
+    \cmalloc & malloc function with additional heap arguments \\
+    \coutput & type qualifier declaring variable to be a program output \\
+    \cproc & the process type \\
+    \crequires & procedure precondition \\
+    \cresult & refers to result returned by procedure in contracts \\
+    \cscope & the scope type, used to give a name to a scope \\
+    \cself & the evaluating process (constant of type \cproc) \\
+    \cspawn & create a new process running procedure \\   
+    \ctrue & boolean value true, used in assertions \\
+    \cwait & wait for a process to terminate \\
+    \cwhen & guarded statement \\
+    \cat & refer to variable in other process, e.g., \texttt{p@x} \\
+    \texttt{*<...>} & scope-qualified pointer type
+  \end{tabular}
+  \caption{CIVL-C primitives.  Some of these are part of the grammar of the language;
+    others are defined in the header file \texttt{civlc.h}.}
+  \label{fig:cc}
+\end{figure}
+
+
+
+\section{Detailed descriptions of primitives}
+
+\subsection{\cproc} This is a primitive object type and functions like
+any other primitive C type (e.g., \texttt{int}).  An object of this
+type refers to a process.  It can be thought of as a process ID, but
+it is not an integer and cannot be cast to one.  Certain expressions
+take an argument of \cproc{} type and some return something of
+\cproc{} type.
+
+\subsection{\cassert} This is an assertion statement.  It takes as its
+sole argument an expression of boolean type.  The expressions have a
+richer syntax than C expressions.  During verification, the assertion
+is checked.  If it does not hold, a violation is reported.
+\begin{verbatim}
+  $assert expr;
+\end{verbatim}
+Boolean values \ctrue{} and \cfalse{} may be used in assertions
+and assumptions.
+
+
+\subsection{\cassume} This is an assume statement. Its syntax is the
+same as that of \cassert.  During verification, the assumed expression
+is assumed to hold.  If this leads to a contradiction on some
+execution, that execution is simply ignored.  It never reports a
+violation, it only restricts the set of possible executions that will
+be explored by the verification algorithm.
+\begin{verbatim}
+  $assume expr;
+\end{verbatim}
+
+\subsection{\catom} This defines a number of statements to be executed as one transition.  An \catom~block has the following form.
+\begin{verbatim}
+  $atom {
+    stmt1;
+    stmt2;
+    ...
+  }
+\end{verbatim}
+
+The statements inside an \catom~block are to be executed as one transition. It is required that the execution of the statements in an \catom~block is deterministic, non-blocking and finite. If one of the requirement is found to be violated, an error or a warning will be reported. For example, an error will be reported  when executing the code below, because the \cwait~statement is blocked.
+
+\begin{verbatim}  
+$atom{
+    for(int i = 0; i < 5; i++) p[i] = $spawn foo(i);
+    for(int i = 0; i < 5; i++) $wait p[i];
+}
+\end{verbatim}
+
+
+\subsection{\catomic} This defines a number of statements that will only allow the process to interleave with others when necessary. An \catomic~block has the following form.
+
+\begin{verbatim}
+  $atomic {
+    stmt1;
+    stmt2;
+    ...
+  }
+\end{verbatim}
+
+A process executing an \catomic~block will try to execute statements contained in the \catomic~block without interleaving with other processes, unless the process is blocked. For example, the following loop will be executed without interleaving with other processes.
+
+\begin{verbatim}
+$atomic{
+    for(int i = 0; i < 5; i++) p[i] = $spawn foo(i);
+}
+\end{verbatim}
+
+When no transition can be enabled, the execution of the \catomic~block will be interrupted. And other processes are allowed to execute, until the process gets enabled again to continue executing its \catomic~block. For example, in the following lines of code, after executing the first loop, the \catomic~block is blocked, because it has to wait for other processes' termination.
+ 
+\begin{verbatim}  
+$atomic{
+    for(int i = 0; i < 5; i++) p[i] = $spawn foo(i);
+    for(int i = 0; i < 5; i++) $wait p[i];
+}
+\end{verbatim}
+
+\subsection{\cchoose}  A \cchoose{} statement has the form
+\begin{verbatim}
+  $choose {
+    stmt1;
+    stmt2;
+    ...
+    default: stmt
+  }
+\end{verbatim}
+The \texttt{default} clause is optional.
+
+The guards of the statements are evaluated and among those that are
+\emph{true}, one is chosen nondeterministically and executed.  If none
+are \emph{true} and the \texttt{default} clause is present, it is
+chosen.  The \texttt{default} clause will only be selected if all
+guards are \emph{false}.  If no \texttt{default} clause is present and
+all guards are \emph{false}, the statement blocks.  Hence the implicit
+guard of the \cchoose{} statement without a \texttt{default} clause is
+the disjunction of the guards of its sub-statements.  The implicit
+guard of the \cchoose{} statement with a default clause is
+\emph{true}.
+
+Example: this shows how to encode a ``low-level'' CIVL guarded
+transition system:
+
+\begin{verbatim}
+  l1: $choose {
+    $when (x>0) {x--; goto l2;}
+    $when (x==0) {y=1; goto l3;}
+    default: {z=1; goto l4;}
+  }
+  l2: $choose {
+    ...
+  }
+  l3: $choose {
+    ...
+  }
+\end{verbatim}
+
+\subsection{\cchooseint} This is a function with the following prototype:
+\begin{verbatim}
+  int $choose_int(int n);
+\end{verbatim}
+It takes as input a positive integer \texttt{n} and non-deterministicaly returns 
+an integer in the range $[0,\texttt{n}-1]$.  
+
+\subsection{\cinput} A variable in the root scope only may be declared
+with this type modifier indicating it is an ``input'' variable, as in
+\begin{verbatim}
+  $input int n;
+\end{verbatim}
+As explained above, the variable becomes a parameter to the root
+procedure.  This is used when comparing two programs for functional
+equivalence.  The two programs are functionally equivalent if,
+whenever they are given the same inputs (i.e., corresponding \cinput{}
+variables are initialized with the same values) they will produce the
+same outputs (i.e., corresponding \coutput{} variables will end up
+with the same values at termination).  Input variables can also be
+assigned a concrete value on the command line.
+
+\subsection{\cinvariant} This indicates a loop invariant.  Each C loop
+construct has an optional invariant clause as follows:
+\begin{verbatim}
+  while (expr) $invariant (expr) stmt
+  for (e1; e2; e3) $invariant (expr) stmt
+  do stmt while (expr) $invariant (expr) ;
+\end{verbatim}
+The invariant encodes the claim that if \texttt{expr} holds upon
+entering the loop and the loop condition holds, then it will hold
+after completion of execution of the loop body.  The invariant is used
+by certain verification techniques.
+
+\emph{Status:} parsed, but nothing is currently done with this
+information.
+
+\subsection{\coutput} A variable in the root scope may be declared
+with this type modifier to declare it to be an output variable.
+
+\subsection{\cself} This is a constant of type \cproc.  It can be used
+wherever an argument of type \cproc{} is called for.  It refers to the
+process that is evaluating the expression containing ``\cself''.
+
+\subsection{\cspawn} This is an expression with side-effects.  It
+spawns a new process and returns a reference to the new process, i.e.,
+an object of type \cproc.  The syntax is the same as a procedure
+invocation with the keyword ``\cspawn'' inserted in front:
+\begin{verbatim}
+  $spawn f(expr1, ..., exprn)
+\end{verbatim}
+Typically the returned value is assigned to a variable, e.g.,
+\begin{verbatim}
+  $proc p = $spawn f(i);
+\end{verbatim}
+If the invoked function \texttt{f} returns a value, that value is
+simply ignored.
+
+\subsection{\cwait} This is a statement that takes an argument of type
+\cproc{} and blocks until the referenced process terminates:
+\begin{verbatim}
+  $wait expr;
+\end{verbatim}
+
+\subsection{\cwhen} This represents a guarded command:
+\begin{verbatim}
+  $when (expr) stmt;
+\end{verbatim}
+All statements have a guard, either implicit or explicit.  For most
+statements, the guard is \ctrue.  The \cwhen{} statement allows one to
+attach an explicit guard to a statement.
+
+When \texttt{expr} is \emph{true}, the statement is enabled, otherwise
+it is disabled.  A disabled statement is \emph{blocked}---it will not
+be scheduled for execution.  When it is enabled, it may execute by
+moving control to the \texttt{stmt} and executing the first atomic
+action in the \texttt{stmt}.
+
+If \texttt{stmt} itself has a non-trivial guard, the guard of the
+\cwhen{} statement is effectively the conjunction of the \texttt{expr}
+and the guard of \texttt{stmt}.
+
+The evaluation of \texttt{expr} and the first atomic action of
+\texttt{stmt} effectively occur as a single atomic action.  There is
+no guarantee that execution of \texttt{stmt} will continue atomically
+if it contains more than one atomic action, i.e., other processes may
+be scheduled.
+
+Examples:
+\begin{verbatim}
+  $when (s>0) s--;
+\end{verbatim}
+This will block until \texttt{s} is positive and then decrement
+\texttt{s}.  The execution of \texttt{s--} is guaranteed to take place
+in an environment in which \texttt{s} is positive.
+
+\begin{verbatim}
+  $when (s>0) {s--; t++}
+\end{verbatim}
+The execution of \texttt{s--} must happen when \texttt{s>0}, but
+between \texttt{s--} and \texttt{t++}, other processes may execute.
+
+\begin{verbatim}
+  $when (s>0) $when (t>0) x=y*t;
+\end{verbatim}
+This blocks until both \texttt{x} and \texttt{t} are positive then
+executes the assignment in that state.  It is equivalent to
+\begin{verbatim}
+  $when (s>0 && t>0) x=y*t;
+\end{verbatim}
+
+\subsection{Procedure contracts}
+The \crequires{} and \censures{} primitives are used to encode
+procedure contracts.  There are optional
+elements that may occur in a procedure declaration or definition,
+as follows.  For a function prototype:
+\begin{verbatim}
+  T f(...)
+    $requires expr;
+    $ensures expr;
+  ;
+\end{verbatim}
+For a function definition:
+\begin{verbatim}
+  T f(...)
+    $requires expr;
+    $ensures expr;
+  {
+    ...
+  }
+\end{verbatim}
+The value \cresult{} may be used in post-conditions to refer
+to the result returned by a procedure.
+
+\emph{Status}: parsed, but nothing is currently done with this
+information.
+
+\subsection{Remote expressions}.  These have the form \verb!expr@x!
+and refer to a variable in another process, e.g., \verb!procs[i]@x!.
+This special kind of expression is used in collective expressions,
+which are used to formulate collective assertions and invariants.
+
+The expression \verb!expr! must have \cproc{} type.  The variable
+\texttt{x} must be a statically visible variable in the context in
+which it is occurs.  When this expression is evaluated, the evaluation
+context will be shifted to the process referred to by \texttt{expr}.
+
+\emph{Status}: not implemented.
+
+\subsection{Collective expressions}.  These have the form
+\begin{verbatim}
+  $collective(proc_expr, int_expr) expr 
+\end{verbatim}
+This is a collective expression over a set of processes.  The
+expression \texttt{proc{\U}expr} yields a pointer to the first element
+of an array of \cproc.  The expression \texttt{int{\U}expr} gives the
+length of that array, i.e., the number of processes.  Expression
+\texttt{expr} is a boolean-valued expression; it may use remote
+expressions to refer to variables in the processes specified in the
+array.  Example:
+\begin{verbatim}
+  $proc procs[N];
+  ...
+  $assert $collective(procs, N) i==procs[(pid+1)%N]@i ;
+\end{verbatim}
+
+\emph{Status}: not implemented.
+
+\chapter{Pointers and heaps}
+
+CIVL-C supports pointers, using the same operators with the same
+meanings as C (\texttt{\&}, \texttt{*}, pointer arithmetic).
+As mentioned above, there is also a heap type \cheap{}, which can
+be used to declare multiple heaps in a CIVL-C program.  The
+interaction between pointers, heaps, and scopes is an important
+aspect of CIVL-C.
+
+\section{Pointer types}
+
+Given any object type $T$ and a static scope $s$ in a CIVL-C program,
+there is a type \emph{pointer-to-$T$-in-$s$}.  The type is used to
+represent a pointer to a memory location of type $T$ in scope $s$ or a
+descendant of $s$ (i.e., some scope contained in $s$).
+
+If scope $s_1$ is a descendant of $s_2$ (i.e., $s_1$ is lexically
+contained in $s_2$), the type \emph{pointer-to-$T$-in-$s_1$} is a
+subtype of \emph{pointer-to-$T$-in-$s_2$}.  This means that any
+expression of the first type can be used wherever an object of the
+second type is expected.  In particular, any expression $e$ of the
+subtype can be assigned to a left-hand-side expression of the
+supertype without explicit casts; also $e$ can be used as an argument
+to a function for which the corresponding parameter has the supertype.
+
+The syntax for denoting this type adheres to the usual C syntax for
+denoting the type \emph{pointer-to-$T$} with the addition of a scope
+parameter within angular brackets immediately following the \texttt{*}
+token.  For example, to declare a variable \texttt{p} of type
+\emph{pointer-to-$T$-in-$s$}, one writes
+\begin{verbatim}
+     int *<s> p;
+\end{verbatim}
+If the scope modifier \texttt{<...>} is absent, the scope is taken to
+be the root scope $s_0$.  The object has type
+\emph{pointer-to-$T$-in-$s_0$}, which is abreviated as
+\emph{pointer-to-$T$}.  In this way, stanard C programs can be
+interpreted as CIVL-C programs.
+
+\section{Address-of operator}
+
+The address-of operator \texttt{\&} returns a pointer of the
+appropriate subtype using the innermost scope in which its left-hand-side
+argument is declared.  For example
+
+\begin{verbatim}
+  {
+    $scope s1;
+    int x;
+    double a[N];
+    int *<s1> p = &x;
+    double *<s1> q = &a[2];
+  }
+\end{verbatim}
+is correct (in particular, it is type-correct) because \texttt{\&x}
+has type \emph{pointer-to-\texttt{int}-in-\texttt{s1}}, since
+\texttt{s1} is the scope in which \texttt{x} is declared.
+
+\section{Pointer addition and subtractions}
+
+If \texttt{e} is an expression of type \emph{pointer-to-$T$-in-$s$}
+and \texttt{i} is an expression of integer type then \texttt{e+i} also
+has type \emph{pointer-to-$T$-in-$s$}.  In other words, pointer
+addition cannot leave the scope of the original pointer.  This
+reflects the fact that every object is contained in one scope, and
+pointer addition cannot leave the object.
+
+
+Pointer subtraction is defined on two pointers of the same type, where
+``same'' includes the scope.  That is checked statically.  As in C, it
+is only defined if the two pointers point to the same object.  In
+CIVL-C, a runtime error will be thrown if they do not point to the
+same object.
+
+\section{Semantics of scopes and pointer types}
+
+A variable of type \cscope{} is treated like any other variable.
+It becomes part of the state when the scope in which it is declared
+is instantiated to form a dynamic scope.  The variable is 
+initialized  at that time and its value cannot change.
+
+Each time a dynamic scope is instantiated, it is assigned a unique ID
+number.  The exactly value of the ID number is not relevant, it just
+has to be distince from any other scope ID number that currently
+exists in the state.  This is the value that is assigned to the scope
+variable.  Therefore, if a static scope contains a scope variable, and
+that scope is instantiated twice to form two distinct dynamic scopes,
+the values assigned to the two variables will be distinct.
+
+A pointer value is an ordered pair $\langle \delta,r \rangle$, where
+$\delta$ is a dynamic scope ID and $r$ is a reference to a memory
+location in the static scope associated to $\delta$.  (We will define
+the exact form of a reference later.)
+
+When a dynamic scope is instantiated, each new variable created is
+assigned a \emph{dynamic type}.  This is a refinement of the static
+type associated to the static variable.   Every dynamic type
+is an instance of exactly one static type.  The dynamic
+type of the newly instantiated variable is an instance of the
+static type of the static variable.
+
+The dynamic pointer types have the form
+\emph{pointer-to-$t$-in-$\delta$}, where $t$ is a dynamic type and
+$\delta$ is a dynamic scope ID.  For a program to be dynamically type
+safe, such a variable should hold only values of the form $\langle
+\delta, r\rangle$.  In particular, the variable should never be
+assigned a value where the dynamic scope component is a different
+instance of the static scope $s$ associated to $\delta$.
+
+\section{Pointer casts}
+
+If scope $s_1$ is contained in scope $s_2$, an expression of type
+\emph{pointer-to-$T$-in-$s_1$} can always be cast to
+\emph{pointer-to-$T$-in-$s_2$},
+ because the first is a subtype of the second.  (As described above,
+the cast is unnecessary.)  
+
+The cast in the other direction is also allowed, but the dynamic type
+safety of that cast will only be checked at runtime.  In particular, a
+runtime error will result if the cast attempts to cast the pointer
+value to a dynamic scope which does not contain (is an ancestor of)
+the dynamic scope component of the pointer value.
+
+A type \emph{pointer-to-$T_1$-in-$s$} can be cast to a type
+\emph{pointer-to-$T_2$-in-$s$} according to the usual rules of C.  In
+other words, usual casting rules apply as long as you don't change the
+scope.
+
+
+
+\section{Heaps}
+
+The standard CIVL-C library defines a type \cheap{} for explicit
+modeling of a heap.  The default value of \cheap{} type is an empty
+heap, so you only need to declare a variable to have type \cheap{}
+in order to create a new heap:
+\begin{verbatim}
+  $heap h; /* a new empty heap */
+\end{verbatim}
+
+The following functions are also defined:
+\begin{verbatim}
+void* $malloc($heap *h, int size);
+void memcpy(void *p, void *q, size_t size);
+void free(void *p)
+\end{verbatim}
+The first function is like C's \texttt{malloc}, except that you
+specify the heap in which the allocation takes place by passing a
+pointer to the heap as the first argument.  This modifies the
+specified heap and returns a pointer to the new object.  The function
+can only occur in a context in which the type of the object is
+specified, as in:
+\begin{verbatim}
+  $heap h;
+  int n = 10;
+  double *p = (double*)$malloc(&h, n*sizeof(double));
+\end{verbatim}
+The second and third functions are exactly the same as in C. Note that
+\texttt{free} modifies the heap which was used to allocate \texttt{p}.
+
+Another pointer example:
+\begin{small}
+\begin{verbatim}
+{ $heap h;
+  { $scope s1;
+    double x;
+    { $scope s2;
+      double y;
+      double *<s1> p;
+      /* p can only point to something in s1 or descendant,
+       * for example, s2 */
+      p = &x; // fine
+      p = &y; // fine
+      p = (double*)$malloc(&h,10*sizeof(double)); // static type error
+    }
+  }
+}
+\end{verbatim}
+\end{small}
+
+\emph{Status}: Pointer type, \texttt{\&}, \texttt{*}, pointer addition
+all implemented.  Type \cheap{}, \texttt{malloc}, \texttt{free}
+implemented.  Scope-qualified pointers: parsed, type-checked, but
+information not currently used.
+
+\section{Scope-Parameterized Functions}
+
+Coming soon.  (Parsed, type checked, not currently used otherwise.)
+
+\section{Scope-Parameterized Type Definitions}
+
+Coming soon. (Ditto.)
+
+% \chapter{Some Translation Examples}
+
+% \section{Structured parallelism}
+% Structured \verb!parbegin!/\verb!parend! statements look like this:
+% \begin{verbatim}
+% $parbegin
+%   S1; S2; S2
+% $parend
+% \end{verbatim}
+% (See Dijkstra, Cooperating Sequential Processes.)  The meaning is: run
+% the three statements in parallel, and block at the end until all have
+% completed.
+
+% This can be represented in CIVL-C as follows:
+
+% \begin{verbatim}
+% {
+%   void f_1() {S1}
+%   void f_2() {S2}
+%   void f_3() {S3}
+%   $proc tmp1 = $fork f_1(), tmp2=$fork f_2(), tmp3=$fork f_3();
+%   $join(tmp1); $join(tmp2); $join(tmp3);
+% }
+% \end{verbatim}
+
+% \subsection{Parallel for loops}
+% The standard parallel ``for'' loop looks like
+% \begin{verbatim}
+%   $parfor(T i = e; cond; inc) S
+% \end{verbatim}
+% It indicates each iteration should be run concurrently, blocking
+% at end until all complete.  In CIVL-C:
+
+% \begin{verbatim}
+% {
+%   void f(T i) {S}
+%   T i = e;
+%   int c = 0;
+%   Vector<$proc> list;
+
+%   while (cond) {
+%     list.add($fork f());
+%     c++;
+%     inc;
+%   }
+%   for (int j=0; j<c; j++) $join(list.get(j));
+% }
+% \end{verbatim}
+
+% (This is assuming we have some sort of Vector datatype.  Need to think
+% about that.)
+
+% \subsection{Message Passing}
+
+% There will be a bunch of standard libraries that can be included
+% into CIVL-C.  One of these will be the message-passing library.
+% It will define a bunch of primitives that we will fill in shortly.
+% Among them will be basic send and receive functions.
+
+% The message-passing library can be defined entirely in CIVL-C.
+% (See Figure \ref{fig:mp1}.)
+
+% \begin{figure}
+% \begin{verbatim}
+% typedef struct _CIVL_Message {
+%   struct _CIVL_Message *next; // next message in this queue
+%   struct _CIVL_Message *prev; // previous message in this queue
+%   int tag; // message tag
+%   int size; // size of buffer
+%   void *data; // pointer to first element
+% } *CIVL_Message;
+
+% typedef struct _CIVL_Comm {
+%   $heap heap;
+%   int numProcs; // number of procs in this communicator
+%   $proc *procs; // array of length numProcs
+%   CIVL_Message buf_front[][]; // oldest element of each queue
+%   CIVL_Message buf_back[][]; // newest element of each queue
+% } *CIVL_Comm;
+% \end{verbatim}
+%   \caption{CIVL Message Passing library: basic definitions}
+%   \label{fig:mp1}
+% \end{figure}
+
+% Message passing functions may be defined with prototypes such as:
+% \begin{verbatim}
+%   CIVL_Comm CIVL_Comm_create($proc procs[], int numProcs);
+%   void CIVL_send(int src, void *buf, int size, int dest,
+%                  int tag, CIVL_Comm comm);
+%   void CIVL_recv(int dest, void *buf, int size, int src,
+%                  int tag, CIVL_Comm comm);
+% \end{verbatim}
+
+% The arguments for \texttt{send} are:
+% \begin{enumerate}
+% \item rank of process issuing the send
+% \item address of buffer containing data to be sent
+% \item size of message
+% \item an integer tag
+% \item rank of destination process
+% \item communicator
+% \end{enumerate}
+
+% The arguments for \texttt{recv} are:
+% \begin{enumerate}
+% \item rank of process issuing the receive
+% \item address of receive buffer
+% \item size of receive buffer (must be large enough to hold any incoming message)
+% \item rank of source process or \code{CIVL{\U}ANY{\U}SOURCE}
+% \item tag or \code{CIVL{\U}ANY{\U}TAG}
+% \item communicator
+% \end{enumerate}
+
+% Notice one difference from MPI: we have to specify the process to
+% which the send or receive is associated in the first argument. This is
+% because we need to be more general than MPI. In MPI, that process is
+% always the MPI process invoking the send or receive. In CIVL, you
+% might want to have threads within processes (for example) and
+% associate the message to the MPI process, even though the thread is
+% actually invoking the send. Or you might want to associate it to
+% something else in some other language/library/API.
+
+% How they are implemented: \texttt{CIVL{\U}Comm{\U}create}
+% mallocs a new object of type \texttt{struct {\U}CIVL{\U}Comm} and returns
+% a pointer to it.
+
+
+\part{Semantics}
+
+\chapter{CIVL Model Syntax}
+
+\section{Notation and terminology}
+\label{sec:notation}
+
+Let $\B=\{\true,\false\}$ (the set of boolean values).  Let
+$\N=\{0,1,2,\ldots\}$ (the set of natural numbers).
+
+Given a node $u$ in a tree, we let $\ancestors(u)$ denote the set of
+all ancestors of $u$, including $u$.  We let $\descendants(u)$ denote
+the set of all descendants of $u$, including $u$.
+
+For any set $S$, let $S^*$ denote the set of all finite sequences of
+elements of $S$.  The length of a sequence $\xi\in S^*$ is denoted
+$\len(\xi)$.  
+
+% This is a lie:
+% The elements of the sequence are indexed from $0$ to
+% $\len(\xi)-1$.
+
+\section{Definition of Context}
+\label{sec:context}
+
+\begin{definition}
+  A \emph{CIVL type system} is a tuple comprising the following
+  components:
+  \begin{enumerate}
+  \item a set $\Type$ (the set of \emph{types}),
+  \item a type $\bool\in\Type$ (the \emph{boolean type}),
+  \item a type $\proc\in\Type$ (the \emph{process-reference type}),
+  \item a set $\Var$ (the set of all \emph{typed variables}),
+  \item a function $\vtype\colon \Var\ra\Type$ (which gives the
+    type of each variable),
+  \item a set $\Val$ (the set of all \emph{values}),
+  \item a function which assigns to each $t\in\Type$ a subset
+    $\Val_t\subseteq\Val$ (the set of values of type $t$)
+    and which satisfies $\Val_{\bool}=\B$ and $\Val_{\proc}=\N$,
+  \item a function which assigns to each $t\in\Type$ a value
+    $\default_t\in\Val_t$.
+  \end{enumerate}
+\end{definition}
+
+The default value will be used to give an initial value to any
+variable.  It could represent something like ``an undefined value of
+type $t$'' or a reasonable initial value ($0$ for integers, etc.),
+depending on the language one is modeling.
+
+\begin{definition}
+  Given a CIVL type system, a \emph{valuation} in that system is a
+  function $\eta\colon\Var\ra\Val$ with the property that for any
+  $v\in\Var$, $\eta(v)\in\Val_{\vtype(v)}$.
+\end{definition}
+
+Given a CIVL type system, we let $\Eval$ denote the set of all
+valuations in that system.
+
+\begin{definition}
+  Given a CIVL type system, A \emph{CIVL expression system} for that
+  type system is a tuple comprising the following components:
+  \begin{enumerate}
+  \item a set $\Expr$ (the set of all \emph{typed expressions} over
+    $\Var$),
+  \item a function $\etype\colon\Expr\ra\Type$ (giving the type
+    of each expression),
+  \item a function
+    $\eval\colon\Expr\times\Eval\ra\Val$ (the \emph{evaluation
+      function}), satisyfing
+    \begin{itemize}
+    \item for any $e\in\Expr$ and $\eta\in\Eval$,
+      $\eval(e,\eta)\in\Val_{\etype(e)}$,
+    \end{itemize}
+  \item a function which associates to any $V\subseteq\Var$, a
+    subset $\Expr(V)\subseteq\Expr$ (the set of
+    \emph{expressions which involve only variables in $V$}) satisfying
+    the following:
+    \begin{itemize}
+    \item for any $V\subseteq\Var$ and $\eta,\eta'\in\Eval$, if
+      $\eta(v)=\eta'(v)$ for all $v\in V$, then for any $e\in\Expr(V)$,
+      $\eval(e,\eta)=\eval(e,\eta')$
+    \end{itemize}
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  A \emph{CIVL context} is a CIVL type system together with
+  a CIVL expression system for that type system.
+\end{definition}
+
+\begin{figure}
+  \notationtable
+  \caption{Table of Notation Used to Define CIVL Model Syntax}
+  \label{fig:notation}
+\end{figure}
+
+\section{Lexical scopes}
+\label{sec:scopes}
+
+\begin{definition}
+  Given a CIVL context $\mathcal{C}$, a \emph{lexical scope system}
+  over $\mathcal{C}$ is a tuple $(\Sigma,\rootscope,\sparent,\vars)$
+  consisting of
+  \begin{enumerate}
+  \item a set $\Sigma$ (the set of \emph{static scopes}),
+  \item a scope $\rootscope\in\Sigma$ (the  \emph{root scope}),
+  \item a function
+    $\sparent\colon\Sigma\setminus\{\rootscope\}\rightarrow
+    \Sigma$ such that 
+    \[\{(\sparent(\sigma),\sigma)\mid \sigma\in\Sigma\setminus\{\rootscope\}\}\]
+    gives $\Sigma$ the structure of a rooted tree with root $\rootscope$,
+  \item a function $\vars\colon\Sigma\rightarrow 2^{\Var}$ 
+    (specifying the variables \emph{declared} in each scope) satisfying
+    \begin{itemize}
+    \item $\sigma\neq\tau\implies \vars(\sigma)\cap \vars(\tau)=\emptyset$.
+    \end{itemize}
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  Given a CIVL context and scope $\sigma\in\Sigma$,
+  the set of \emph{visible variables} in $\sigma$
+  is $\bigcup_{\sigma'\in\ancestors(\sigma)}\vars(\sigma')$.
+\end{definition}
+
+One way this notion will be used: expressions used in a scope $\sigma$
+can only involve variables visible in $\sigma$.
+
+\section{Functions}
+\label{sec:functions}
+
+Fix a CIVL context $\mathcal{C}$ and lexical scope system
+\[\Lambda=(\Sigma,\rootscope,\sparent,\vars)\] over $\mathcal{C}$.
+
+We introduce a new type symbol $\void$, as in C, to use as the return
+type for a function that does not return a value.  Let
+$\Type'=\Type\cup\{\void\}$.
+
+\begin{definition}
+  A \emph{function prototype} for $\Lambda$ is a tuple
+  $(\sigma, t, \xi)$  consisting of
+  \begin{enumerate}
+  \item a scope $\sigma\in\Sigma\setminus\{\rootscope\}$
+    (the \emph{function scope}),
+  \item a type $t\in\Type'$ (the \emph{return type}),
+  \item a finite sequence $\xi=v_1v_2\cdots v_n\in\vars(\sigma)^*$
+    consisting of variables declared in the function scope
+    (the \emph{formal parameters}).
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  A \emph{CIVL function prototype system} consists of
+  \begin{enumerate}
+  \item a set $\Func$ (the \emph{function symbols}),
+  \item a function which assigns to each $f\in\Func$ a 
+    function prototype, denoted
+    \[
+    (\fscope(f), \returntype(f), \params(f)),
+    \]
+    and satisfying
+    \begin{itemize}
+    \item for any $\sigma\in\Sigma$, there is at most
+      one $f\in\Func$ such that $\sigma=\fscope(f)$, and
+    \end{itemize}
+  \item a \emph{root function} $f_0$ with $\fscope(f_0)=\rootscope$
+    and which is the only function with root scope.
+  \end{enumerate}
+\end{definition}
+
+
+\begin{definition}
+  Given a CIVL function prototype system, and function symbol
+  $f\in\Func\setminus\{f_0\}$, the \emph{declaration scope} of $f$ is
+  the scope $\sigma=\sparent(\fscope(f))$.  We also write \emph{$f$ is
+    declared in $\sigma$.}
+\end{definition}
+
+Note the root function $f_0$ has no declaration scope.
+
+Just as every scope has a set of visible variables, there is also
+a set of visible functions:
+\begin{definition} 
+  The functions \emph{visible at scope $\sigma$} are
+  those declared in $\sigma$ or an ancestor of $\sigma$.
+\end{definition}
+We will see that the variables and functions visible at $\sigma$ are
+the only variables and functions that can be referred to by statements
+and expressions used within $\sigma$.
+
+Note that only certain scopes are function scopes.  There can be
+additional scopes (intuitively corresponding to block scopes in a
+source program).  Every scope, however, must ``belong to'' exactly one
+function.  The precise definition is as follows:
+\begin{definition}
+  \label{def:func}
+  Given a CIVL function prototype system, define
+  \[
+  \func \colon \Sigma \ra \Func 
+  \]
+  by
+  \[
+  \func(\sigma)=
+  \begin{cases}
+    f & \text{if $\sigma=\fscope(f)$ for some $f\in\Func$}\\
+    \func(\sparent(\sigma)) & \text{otherwise.}
+  \end{cases}
+  \]
+  We say \emph{$\sigma$ belongs to $f$}  when $\func(\sigma)=f$.
+\end{definition}
+Note that the recursion in Definition \ref{def:func} must stop as the
+root scope belongs to the root function and the scopes form a tree.
+
+
+\section{Statements}
+
+Fix a CIVL function prototype system.  A \emph{CIVL statement} is
+defined to be a tuple of one of the forms described below.
+In each case, we give any restritions on the components of the tuple
+and a brief intuition on the statement's semantics.  The precise
+semantics will be described in \S\ref{sec:semantics}.
+
+\begin{enumerate}
+\item $\langle\code{parassign},V_1,V_2,\psi\rangle$
+  \begin{itemize}
+  \item $V_1,V_2\subseteq\Var$
+  \item $\psi\colon V_2\ra\Expr(V_1)$ satisfying
+    $\etype(\psi(v))=\vtype(v)$ for all $v\in V_2$
+  \item \emph{meaning}: parallel assignment, i.e., the assignment of new
+    values to any or all of the variables in $V_2$. For each variable
+    in $V_2$ an expression is given which will be evaluated in the old
+    state to compute the new value for that variable.  $V_1$ contains
+    all the variables that may be used in those expressions.  Hence
+    $V_1$ is the ``read set'' and $V_2$ is the ``write set'' for the
+    parallel assignment.
+  \end{itemize}
+\item $\langle\code{assign},v,e\rangle$
+  \begin{itemize}
+  \item $v\in\Var$, $e\in\Expr$, $\etype(e)=\vtype(v)$
+  \item \emph{meaning}: simple assignment: evaluate an expression $e$ and
+    assign result to variable $v$.  It is a special case of
+    \code{parassign} but is provided for convenience.
+  \end{itemize}
+\item $\langle\code{call},y,f,e_1,\ldots,e_n\rangle$
+  \begin{itemize}
+  \item $y\in\Var$, $f\in\Func$, $e_1,\ldots,e_n\in\Expr$
+  \item $n=\numparams(f)$
+  \item $\etype(e_i)=\vtype(v_i)$, where $\params(f)=v_1\cdots v_n$
+  \item $\returntype(f)=\vtype(y)$
+  \item \emph{meaning}: evaluate expressions $e_1,\ldots,e_n$; push
+    frame on call stack and move control to guarded transition system
+    (see \S\ref{sec:gts}) for function $f$; when $f$ returns, pop
+    stack and store returned result in $y$
+  \end{itemize}
+\item $\langle\code{call},f,e_1,\ldots,e_n\rangle$
+  \begin{itemize}
+  \item $f\in\Func$, $e_1,\ldots,e_n\in\Expr$
+  \item $n=\numparams(f)$
+  \item $\etype(e_i)=\vtype(v_i)$, where $\params(f)=v_1\cdots v_n$
+  \item \emph{meaning}: like above, but return type may be \code{void}
+    or returned value could just be ignored
+  \end{itemize}
+\item $\langle\code{fork},p,f,e_1,\ldots,e_n\rangle$
+  \begin{itemize}
+  \item $p\in\Var$, $f\in\Func$, $e_1,\ldots,e_n\in\Expr$
+  \item $n=\numparams(f)$
+  \item $\etype(e_i)=\vtype(v_i)$, where $\params(f)=v_1\cdots v_n$
+  \item $\returntype(f)=\void$
+  \item $\vtype(p)=\proc$
+  \item \emph{meaning}: evaluate expressions $e_1,\ldots,e_n$;
+    create new process and invoke function $f$ in it;
+    return, immediately, a reference to the new process and store
+    that reference in $p$
+  \end{itemize}
+\item $\langle\code{join},e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$
+  \item $\etype(e)=\proc$
+  \item \emph{meaning}: evaluate $e$ and wait for the referenced process to terminate
+  \end{itemize}
+\item $\langle\code{return},e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$
+  \item \emph{meaning}: evaluate $e$, pop the call stack and return
+    control, along with the value, to caller
+  \end{itemize}
+\item $\langle\code{return}\rangle$
+  \begin{itemize}
+  \item \emph{meaning}: pop the call stack and return control to caller;
+    only to be used in functions returning \code{void}
+  \end{itemize}
+\item $\langle\code{write},e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$
+  \item \emph{meaning}: evaluate $e$ and send result to output
+  \end{itemize}
+\item $\langle\code{noop}\rangle$
+  \begin{itemize}
+  \item \emph{meaning}: does nothing
+  \end{itemize}
+\item $\langle\code{assert}, e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$, $\vtype(e)=\bool$
+  \item \emph{meaning}: evaluate $e$; if result is false, stop
+    execution and report error
+  \end{itemize}
+\item  $\langle\code{assume}, e\rangle$
+  \begin{itemize}
+  \item $e\in\Expr$, $\vtype(e)=\bool$
+  \item \emph{meaning}: assume $e$ holds (i.e., if $e$ does not hold,
+    the execution sequence is not a real execution)
+  \end{itemize}
+\end{enumerate}
+
+\section{Remarks}
+
+The system described is sufficiently general to model pointers. There
+can be (one or more) pointer types and corresponding values.  The
+parallel assignment statement can be used to model statements like
+C's \texttt{*p=e;}.  In the worst case (if no information is known
+about where \texttt{p} could point), one can let $V_2=\Var$.
+Similarly, expressions that involve \texttt{*p} as a right-hand
+side subexpression can always take $V_1=\Var$.
+
+Heaps can also be modeled.  A heap type may be defined and a variable
+of that type declared.  Expressions to modify and read from the heap
+can be defined, as can pointers into the heap.
+
+
+\section{Transition system representation of functions}
+\label{sec:gts}
+
+\begin{definition}
+  Given a CIVL function prototype system and $f\in\Func$,
+  a \emph{guarded transition system} for $f$ 
+  is a tuple $(\Loc,\lscope,\start, T)$, where
+  \begin{itemize}
+  \item $\Loc$ is a set (the set of \emph{locations}),
+  \item $\lscope\colon\Loc\ra\Sigma$ is a function which associates
+    to each $l\in\Loc$ a scope $\lscope(l)\in\Sigma$ belonging to $f$,
+  \item $\start\in\Loc$ (the \emph{start location}),
+  \item $T$ is a set of \emph{guarded transitions}, each of which has
+    the form $\langle l,g,s,l'\rangle$, where
+    \begin{itemize}
+    \item $l,l'\in\Loc$ (the \emph{source} and \emph{target}
+      locations)
+    \item $g\in\Expr(V)$, where $V$ is the set of variables visible at
+      $\lscope(l)$, and $\etype(g)=\bool$ ($g$ is called the
+      \emph{guard}),
+    \item $s$ is a statment all of whose constituent variables,
+      expressions, and function symbols are visible at $\lscope(l)$.
+    \end{itemize}
+  \end{itemize}
+  Furthermore, if the guarded transition system contains a statement
+  of the form $\langle\code{return}\rangle$ then
+  $\returntype(f)=\void$.  If it contains a statement of the form
+  $\langle\code{return},e\rangle$ then $\etype(e)=\returntype(f)$.
+\end{definition}
+
+\begin{definition}
+  Given a CIVL prototype system, a \emph{CIVL model} $M$ for that
+  system assigns, to each $f\in\Func$, a guarded transition system
+  \[(\Loc_f,\lscope_f, \start_f,T_f)\] for $f$.  Moreover, if $f\neq f'$
+  then
+  $\Loc_f\cap\Loc_{f'}=\emptyset$.
+\end{definition}
+
+\begin{definition}
+  Given a CIVL model $M$, let $\Loc=\bigcup_{f\in\Func}\Loc_f$.
+\end{definition}
+
+\chapter{CIVL Model Semantics}
+\label{sec:semantics}
+
+\section{State}
+\label{sec:state}
+
+Fix a CIVL model $M$.  Recall that a valuation is a type-respecting
+function from $\Var$ to $\Val$.  Given a subset $V\subseteq\Var$ of
+variables, we define a \emph{valuation on $V$} to be a type-respecting
+function from $V$ to $\Val$.  Let $\Eval(V)$ denote the set of all
+valuations on $V$.  Note that $\Eval(\Var)=\Eval$.
+
+\begin{definition}
+  \label{def:state}
+  A \emph{state} of a CIVL model $M$ is a tuple 
+  \[
+  s=(\Delta, \droot, \dparent, \static, \deval, P, \stack),
+  \]
+  where
+  \begin{enumerate}
+  \item $\Delta$ is a finite set (the set of \emph{dynamic scopes} in
+    $s$),
+  \item $\droot\in\Delta$ (the \emph{root dynamic scope}),
+  \item $\dparent\colon \Delta\setminus\{\droot\}\ra\Delta$
+    is a function such that the set 
+    \[
+    \{(\dparent(\delta),\delta)\mid \delta\in
+    \Delta\setminus\{\droot\}\}
+    \]
+    gives $\Delta$ the structure of a rooted tree with root $\droot$,
+    \item $\static\colon\Delta\ra\Sigma$,
+  \item $\static(\droot)=\rootscope$ and $\droot$ is the only
+    $\delta\in\Delta$ satisfying $\static(\delta)=\rootscope$,
+  \item $\static(\dparent(\delta))=\sparent(\static(\delta))$ for any
+    $\delta\in\Delta$,
+  \item $\deval$ is a function that assigns to each $\delta\in\Delta$
+    a valuation $\deval(\delta)\in\Eval(\vars(\static(\delta)))$,
+  \item $P$ (the set of \emph{process IDs} in $s$) 
+    is a finite subset of $\Val_{\proc}$, and
+  \item $\stack\colon P\ra \Frame^*$, where
+    \[
+    \Frame=\{(\delta,l)\in\Delta\times\Loc\mid\lscope(l)=\static(\delta)\}.
+    \]
+  \end{enumerate}
+  Let $\State$ denote the set of all states of $M$.
+\end{definition}
+
+% say entrance and exit from scopes does not have to be "structured".
+
+Remarks:
+\begin{enumerate}
+\item We will also refer to dynamic scopes as \emph{dyscopes}.
+\item The elements of $\Delta$ contain no intrinsic information.
+  Instead, all of the information concerning dyscopes is encoded
+  in the functions that take elements of $\Delta$ as arguments.  Hence
+  we might just as well call the elements of $\Delta$ ``dynamic scope
+  IDs'' (just as we call the elements of $P$ ``process IDs'').  One
+  could use natural numbers for the dyscopes, just as one does
+  for processes.
+\item The reason for using some form of ID for dyscopes and
+  processes, rather than just incorporating the data in the
+  appropriate part of the state, is that both kinds of objects may be
+  shared.  There can be several components of the state that refer to
+  the same dyscope $d$: e.g., $d$ could have several children,
+  each of which has a parent reference to $d$, as well as a reference
+  from a frame.  A process can be referred to by any number of
+  variables of type $\proc$.
+\item If $\sigma=\static(\delta)$, we say that \emph{$\delta$ is an
+    instance of $\sigma$} or \emph{$\sigma$ is the static scope
+    associated to $\delta$}.  In general, a static scope can have any
+  number (including 0) of dynamic instances. The exception is the root
+  scope $\rootscope$, which must have exactly one instance ($\droot$).
+\item A valuation $\deval(\delta)$ assigns a value to each variable in
+  the static scope associated to $\delta$.  The function $\deval$
+  thereby encodes the value of all variables ``in scope'' in state
+  $s$.
+\item The sequence $\stack(p)$ encodes the state of the call stack of
+  process $p$.  The elements of the sequence are called
+  \emph{activation frames}.  The first frame in the sequence, i.e.,
+  the frame in position $0$, is the bottom of the stack; the last
+  frame is the top of the stack.
+\item  Each frame refers to a dyscope $\delta$ and a
+  location in the static scope associated to $\delta$.
+\end{enumerate}
+
+
+\begin{definition}
+  A dyscope $\delta\in\Delta$ is a \emph{function node}
+  if $\static(\delta)$ is the function scope of some function.
+\end{definition}
+
+\begin{definition}
+  Given any $\delta\in\Delta$, $\fnode(\delta)\in\Delta$ is defined as
+  follows: if $\delta$ is a function node, then
+  $\fnode(\delta)=\delta$, else
+  $\fnode(\delta)=\fnode(\dparent(\delta))$.  We call $\fnode(\delta)$
+  the \emph{function node associated to $\delta$}.
+\end{definition}
+
+The relation $\{(\delta,\delta')\mid \fnode(\delta)=\fnode(\delta')\}$
+is an equivalence relation $\sim$ on $\Delta$.  Let
+$\bar{\Delta}=\Delta/\sim$ and write $[\delta]$ for the equivalence
+class containing $\delta$.
+
+The set of activation frames in a state $s$ may be identified with the 
+set
+\[
+AF(s)=\bigcup_{p\in P}\{p\}\times\{0,\ldots,\len(\stack(p))-1\}
+\]
+Namely, $(p,i)$ corresponds to the $i^{\text{th}}$ entry in the call
+stack $\stack(p)$ (where the elements of the stacks are indexed from
+$0$).
+
+Define $\Psi\colon AF(s)\ra \bar{\Delta}$ as follows: given $(p,i)$,
+let $(\delta,l)$ be the corresponding frame; set $\Psi(p,i)=[\delta]$.
+
+% \begin{definition}
+%   A state $s$ is \emph{well-formed} if all of the following hold:
+%   \begin{enumerate}
+%   \item for any $\delta\in\Delta$, at most one child of $\delta$ is not
+%     a function node,
+%   \item the function $\Psi$ is a one-to-one correspondence,
+%   \item any $\delta$ occurring in the top frame of a call stack
+%     is a leaf node.
+%   \end{enumerate}
+% \end{definition}
+
+
+\section{Jump protocol}
+\label{sec:jump}
+
+% can only jump if \delta is a leaf node.
+% also no other frame can point to a dyscope between \delta
+% and the dyscope corresponding to the function scope
+
+% in any state, a "region" of the dyscope tree can have at
+% most one (exactly one?) stack frame pointing into it.
+
+% a region in a chain of nodes starting from a dyanmic scope corresonding
+% to a function scopes and leading down until you reach another
+% function scope.
+
+% whenever you have more than one child in the dynamic tree, all but
+% 0 or 1 children must be a function scope
+
+% every dyscope is owned by at most one frame
+
+% can a frame point only to a leaf node?  No, but all of its children
+% must be function nodes
+
+% to find out which frame owns which dyscopes:
+
+% approach 1: start from a frame.  frame owns the node it points to.
+% move up parents until you hit a function scope and stop.
+% that is that frame's region.  No other frame can point into its
+% region.  Proof: true in initial state, invariant under
+% call and fork.
+
+% invariant: every leaf node in the dyscope tree is pointed
+% to by the top frame of the call stack of some process
+
+% Define a \emph{well-formed state}:
+
+% every dyscope node has at most one child which is not a function node
+
+% 1-1 correspondence between leaf nodes and top frames of stacks.
+
+% Define regions in the dyscope tree.   (each region contains one
+% function node)
+
+\newcommand{\lub}{\sigma_{\textsf{lub}}}
+
+\begin{figure}[t]
+  \begin{algorithm}[H]
+    \Procedure{$\textsf{\textup{jump}}(s\colon\State, p\colon\Val_{\proc},
+      l'\colon\Loc)\colon\State$}{%
+      let $(\Delta, \droot, \dparent, \static, \deval, P, \stack)=s$\;
+      let $\delta$ be the dyscope of the last frame on $\stack(p)$\;
+      let $\sigma=\static(\delta)$\;
+      let $\sigma'=\lscope(l')$\;
+      let $\lub$ be the least upper bound of $\sigma$ and
+      $\sigma'$ in the tree $\Sigma$\;
+      let $m$ be the minimum integer such that
+      $\sparent^m(\sigma)=\lub$\;
+      let $\delta_{\textsf{lub}}=\dparent^m(\delta)$\;
+      let $n$ be the minimum integer such that
+      $\sparent^{n}(\sigma')=\lub$\;
+      let $\delta_0,\ldots,\delta_{n-1}$ be $n$ distinct objects not in $\Delta$\;
+      let
+      \( \displaystyle
+      \Delta'=\Delta
+      \cup     \{ \delta_0,\ldots,\delta_{n-1} \}
+      %\setminus \{ \dparent^j(\delta)\mid 0\leq j<m\}
+      \)\;
+      define $\dparent'\colon\Delta'\setminus\{\droot\}\ra\Delta'$ by
+      \(
+      \dparent'(\delta')=
+      \begin{cases}
+        \dparent(\delta') & \text{if $\delta'\in\Delta$}\\
+        \delta_{i+1} & \text{if $\delta'=\delta_{i}$ for some $0\leq i<n-1$}\\
+        \delta_{\textsf{lub}} & \text{if $n\geq 1$ and $\delta'=\delta_{n-1}$}
+      \end{cases}
+      \)\;
+      define $\static'\colon\Delta'\ra\Sigma$ by
+      \(
+      \static'(\delta')=
+      \begin{cases}
+        \static(\delta') & \text{if $\delta'\in\Delta$}\\
+        \sparent^i(\sigma') & \text{if $\delta'=\delta_i$ for some $0\leq i<n$}
+      \end{cases}
+      \)\;
+      for $\delta'\in\Delta'$ and $v\in\vars(\static(\delta'))$,
+      let
+      \(
+      \deval'(\delta')(v) =
+      \begin{cases}
+        \deval(\delta')(v) & \text{if $\delta'\in\Delta$}\\
+        \default_t & \text{otherwise}
+      \end{cases}
+      \)\;
+      define $\stack'$ to be the same as $\stack$ except that
+      the last frame on $\stack'(p)$ is replaced with
+      $(\delta_0,l')$ if $n\geq 1$, or with $(\delta_{\textsf{lub}},l')$
+      if $n=0$\;
+      let $s'(\Delta',\droot,\dparent',\static',\deval',P,\stack')$\;
+      return the result of removing all unreachable dyscopes from $s'$\;
+    }
+  \end{algorithm}
+  \caption{Jump protocol: how the state changes when control moves
+    to a new location within a function.  The procedure may only
+    be called if $\func(\sigma)=\func(\sigma')$, i.e., the jump
+    is contained within one function.}
+  \label{fig:jump}
+\end{figure}
+  
+When control moves from one location to another within a function's
+transition system, dyscopes may be added, because you can jump out of
+scope nests and into new scope nests. The motivating idea is that you
+have to move up the dyscope tree every time you move past a right
+curly brace (i.e., leave a scope) and then push on a new scope for
+each left curly brace you move past. So there is a sequence of upward
+moves followed by a sequence of pushes to get to the new
+location. (And either or both sequences could be empty.)  At the end,
+if any dyscopes become unreachable, they are removed from the state.
+
+Note however, that we do not assume that scopes are associated to
+locations in a nice lexical pattern (or any pattern at all). The
+protocol described here works for any arbitrary assignment of scopes
+to locations.
+
+The precise protocol is described in Figure \ref{fig:jump}.  The
+algorithm shown there takes as input a well-formed state, a process
+ID, and a location $l'$ for the function that $p$ is currently in.
+Say the current dyscope for $p$ is $\delta$, and $l'$ is in
+static scope $\sigma'$. Let $\sigma=\static(\delta)$.  Hence the
+current static scope is $\sigma$ and the new static scope will be $\sigma'$.
+
+First, you have to find the \emph{least upper bound} $\lub$ of
+$\sigma$ and $\sigma'$ in the static scope tree. (Hence $\lub$ is a
+common anecestor of $\sigma$ and $\sigma'$, and if $\sigma''$ is any
+common ancestor of $\sigma$ and $\sigma'$ then $\sigma''$ is an
+ancestor or equal to $\lub$.)  Note that the least upper bound must
+exist since the function scope is a common ancestor of $\sigma$ and
+$\sigma'$.  There is a chain of static scopes from $\sigma$ up to
+$\lub$ and a corresponding chain
+$\delta,\dparent(\delta),\ldots,\dparent^m(\delta)$ in the dynamic
+scope tree.  Let $\delta_{\textsf{lub}}=\dparent^m(\delta)$.  This
+will become the least upper bound of $\delta$ and the new dynamic
+scope corresponding to $\sigma'$ that will be added to the state.
+
+Next you add new dyscopes corresponding to the chain of static
+scopes leading from $\lub$ down to $\sigma'$.  The variables in the
+new scopes are assigned the default values for their respective types.
+The $\dparent$, $\static$, and $\deval$ maps are adjusted
+accordingly.  Finally, the stack is modified by replacing the last
+activation frame with a frame referring to the (possibly) new dynamic
+scope and new location $l'$.
+
+This protocol is executed every time control moves from one location
+to another.
+
+Note that in CIVL all jumps stay within a function.  There is no
+way to jump from one function to another (without returning).
+
+A small variation is the protocol for moving to the start location of
+a function when the function is first pushed on the stack. Since the
+start location is not necessarily in the function scope (it may be a
+proper descendant of that scope), you have to execute the second half
+of the protocol to push a sequence of scopes from the function scope
+to the scope of the start location.
+
+\section{Initial State}
+
+The \emph{initial state} for $M$ is obtained by creating one process
+(let $P=\{0\}$) and having it call the root function $f_0$. 
+Hence start with the state $s$ in which $P=\{0\}$, $\ldots$.
+The initial state is $\textsf{jump}(s,0,\start_{f_0})$.
+
+\section{Transitions}
+
+The transitions follow the usual ``interleaving'' semantics. Given a
+state $\sigma$, one defines the set of enabled transitions in $\sigma$
+as follows. Let $p\in P$. Look at the last frame $(d,l)$ of
+$\stack(p)$ (i.e., the top of the call stack), assuming the stack is
+nonempty. Look at all guarded transitions emanating from $l$. For each
+such transition, evaluate the guard using the valuation formed by
+taking the union of the valuations of all ancestors of $d$ (including
+$d$). In other words, follow the standard ``lexical scoping'' protocol
+to determine the value of any variable that could occur at this point.
+Those transitions whose guard evaluates to $\emph{true}$ are enabled.
+
+For each enabled transition, a new state is generated by executing
+the transition's statement.  For the most part, the semantics are obvious,
+but there are a few details that are a bit subtle.
+
+\section{Calls and Spawns}
+
+Both calls and forks of a function $f$ entail the creation of a new
+frame. First, a new dyscope $d$ corresponding to $\fscope(f)$ is
+created. To find out where to stick that new scope in the dynamic
+scope tree, proceed as follows: begin in the dyscope for the
+process invoking the fork or call and start moving up its parent
+sequence until you reach the first dyscope $d'$ whose associated
+static scope is the defining scope of $f$. (You must reach such a
+scope, or else $f$ would not be visible, and the model would have a
+syntax error!) Insert $d$ right under $d'$, i.e.,
+$\dparent(d)=d'$. This preserves the required correspondence between
+static scopes and dyscopes. Now you move to the start location,
+using the jump protocol, which may involve the creation of additional
+dyscopes under $d$. The new frame references the last dynamic
+scope you created, and the location is the start location of $f$.
+Variables are given their initial values in all the newly created
+dyscopes (however that is done).
+
+All of that is the same whether the statement is a fork or call. The
+only difference is what happens next: for a call, the new frame is
+pushed onto the calling process' call stack. For a fork, a new process
+is ``created'', i.e., you pick a natural number not in $P$ and
+add it to $P$, and push the frame onto the new stack.   To be totally
+deterministic, you could pick the least natural number not in $P$.
+
+\section{Garbage collection}
+
+In a state $s$, a dyscope is unreachable if there is no path
+from a frame in a call stack to that dyscope (following the
+$\dparent$ edges).  You can remove all unreachable dyscopes.
+
+If a process has terminated (has empty stack) and \emph{there are no
+references to that process} in the state, you can just remove the process
+from the state.
+
+In any state, you can renumber the processes (and update the
+references accordingly) however you want, to get rid of gaps, put them
+in a canonic order, etc.
+
+
+\part{Tools}
+
+\chapter{Overiew of CIVL Tools}
+
+Current tools allow one to \emph{run} a CIVL program using random
+choice to resolve nondeterministic choices; \emph{verify} a program
+using model checking to explore all states of the program;
+\emph{replay} a trace if an error is found.
+
+The properties checked are assertion violations, division by zero,
+illegal pointer accesses, etc.
+
+The available tools and options are summarized by the \texttt{civl
+  help} command:
+
+\begin{verbatim}
+Usage: civl <command> <options> filename ...
+Commands:
+  verify : verify program filename
+  run : run program filename
+  help : print this message
+  replay : replay trace for program filename
+  parse : show result of preprocessing and parsing filename
+  preprocess : show result of preprocessing filename
+Options:
+  -debug or -debug=BOOLEAN (default: false)
+    debug mode: print very detailed information
+  -echo or -echo=BOOLEAN (default: false)
+    print the command line
+  -errorBound=INTEGER (default: 1)
+    stop after finding this many errors
+  -guided or -guided=BOOLEAN
+    user guided simulation; applies only to run, ignored
+    for all other commands
+  -id=INTEGER (default: 0)
+    ID number of trace to replay
+  -inputKEY=VALUE
+    initialize input variable KEY to VALUE
+  -maxdepth=INTEGER (default: 2147483647)
+    bound on search depth
+  -min or -min=BOOLEAN (default: false)
+    search for minimal counterexample
+  -por=STRING (default: std)
+    partial order reduction (por) choices:
+    std (standard por) or scp (scoped por)
+  -random or -random=BOOLEAN
+    select enabled transitions randomly; default for run,
+    ignored for all other commands
+  -saveStates or -saveStates=BOOLEAN (default: true)
+    save states during depth-first search
+  -seed=STRING
+    set the random seed; applies only to run
+  -showModel or -showModel=BOOLEAN (default: false)
+    print the model
+  -showProverQueries or -showProverQueries=BOOLEAN (default: false)
+    print theorem prover queries only
+  -showQueries or -showQueries=BOOLEAN (default: false)
+    print all queries
+  -showSavedStates or -showSavedStates=BOOLEAN (default: false)
+    print saved states only
+  -showStates or -showStates=BOOLEAN (default: false)
+    print all states
+  -showTransitions or -showTransitions=BOOLEAN (default: false)
+    print transitions
+  -simplify or -simplify=BOOLEAN (default: true)
+    simplify states?
+  -solve or -solve=BOOLEAN (default: false)
+    try to solve for concrete counterexample
+  -states=STRING (default: immutable)
+    state implementation: immutable, transient, persistent
+  -sysIncludePath=STRING
+    set the system include path
+  -trace=STRING
+    filename of trace to replay
+  -userIncludePath=STRING
+    set the user include path
+  -verbose or -verbose=BOOLEAN (default: false)
+    verbose mode
+\end{verbatim}
+
+
+\chapter{Transitions}
+In CIVL, a transition stands for the execution of a number of statements of a certain process from one state, and the execution of each statement is considered as one step. A transition has the following form in the output, where sid and sid' are the identifiers for the source and the target states, pid is the identifier of the process that this transition belongs to, and step 0,1 ... are the steps contained in the transitions.
+
+\begin{verbatim}
+State sid, proc pid: 
+  step 0;
+  step 1;
+  ...
+--> State sid'
+\end{verbatim}
+
+A step of a transition has the following form in the CIVL output, where src and dst is the source and destination location of the statement executed in the step, file is the file that contains the source code of the statement, location and text are the location and summary of text of the statement in the source file.
+
+\begin{verbatim}
+  src->dst: statement at file:location "text";
+\end{verbatim}
+
+For example, the following is a transition from state 0 to state 1, containing 6 steps. File names are renamed with short names and the mapping of short names and the original files is presented in output as well.
+
+\begin{verbatim}
+File name list:
+f0	: atomicBlockedResume.cvl
+
+State 0, proc 0: 
+  0->1: x = 1 at f0:3.0-9 "int x = 1";
+  1->2: y = 0 at f0:4.0-9 "int y = 0";
+  2->3: z = 0 at f0:5.0-9 "int z = 0";
+  3->6: sum = 0 at f0:6.0-11 "int sum = 0";
+  6->8: $spawn foo(1) at f0:22.4-17 "$spawn foo(1)";
+  8->10: $spawn foo(2) at f0:23.4-17 "$spawn foo(2)";
+--> State 1
+\end{verbatim}
+
+To make use of this feature, one needs to specify the option ``-showTransitions'' when running CIVL.
+
+
+
+% \subsection{Example 1}
+
+% Here is a simple example based on a tricky MPI+Pthreads example given
+% to us once by Rajeev Thakur at Argonne. It has nondeterministic
+% behavior which can lead to a deadlock for certain interleavings, even
+% though it does not use wildcards (\code{ANY{\U}SOURCE}). Very subtle
+% bug. I can show you MPI-Spin finding the bug if you are interested. I
+% don't actually have the original code, but could probably dig it up.
+
+% \begin{verbatim}
+% #include <mp.civl>  /* includes basic message-passing library */
+
+% void System() {
+%  proc procs[2];
+
+%  void MPI_Process(int pid) {
+%    proc threads[2];
+
+%    void Thread(int tid) {
+%      int x=0, y=0;
+
+%      for (int j=0; j<2; j++) {
+%        if (pid == 1) {
+%          for (int i=0; i<3; i++) send(procs[pid], &x, 1, procs[1-pid], 0);
+%          for (int i=0; i<3; i++) recv(procs[pid], &y, 1, procs[1-pid], 0);
+%        } else { /* pid==0 */
+%          for (int i=0; i<3; i++) recv(procs[pid], &y, 1, procs[1-pid], 0);
+%          for (int i=0; i<3; i++) send(procs[pid], &x, 1, procs[1-pid], 0);
+%        }
+%      }
+%    }
+
+%    for (int i=0; i<2; i++) threads[i] = fork Thread(i);
+%    for (int i=0; i<2; i++) join threads[i];
+%  }
+
+%  for (int i=0; i<2; i++) procs[i] = fork MPI_Process(i);
+%  for (int i=0; i<2; i++) join procs[i];
+% }
+% \end{verbatim}
+
+\appendix
+
+
+\end{document}
+
+
+OpenMP loop?
+\begin{verbatim}
+T1 x1; ... // private
+U1 y1; ... // shared
+#pragma omp parallel private(x1,...)
+  S(x1,...,y1,...);
+
+=>
+
+T1 x1; ...
+U1 y1; ...
+{ 
+  void _tmp(int _tid) {
+    T1 _x1; ...
+    S(_x1,...,y1,...);
+  }
+  int numThreads = $choose_int(THREAD_MAX);
+  $proc _threads[numThreads];
+  int i;
+
+  for (i=0; i<numThreads; i++)
+    _threads[i] = $spawn _tmp(i);
+  for (i=0; i<numThreads; i++)
+    $wait _threads[i];
+}
+
+--
+
+#pragma parallel
+{ ...
+  int i; ...
+  #pragma for
+  for (i=...) S(i)
+}
+
+=>
+
+{ 
+  void _tmp1(int _tid) {
+    int i; ...
+    {
+      void _tmp2(int _i) { S(_i) }
+      int j;
+      for (j=...) {
+        int w = $choose_int(numThreads);
+      }
+    }
+  }
+    
+
+\end{verbatim}

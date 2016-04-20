@@ -1,0 +1,28 @@
+#include<civlc.cvh>
+#include<stdio.h>
+
+$input int N=3;
+
+int i=1,j=1;
+void proc0(){
+  for(int k=0; k<N; k++)
+    i+=j;
+}
+
+void proc1(){
+  for(int k=0; k<N; k++)
+    j+=i;
+}
+
+int main(){
+  $proc p0, p1;
+
+  $atomic{
+    p0=$spawn proc0();
+    p1=$spawn proc1();
+  }
+  $wait(p0);
+  $wait(p1);
+  printf("i=%d, j=%d\n", i, j);
+}
+

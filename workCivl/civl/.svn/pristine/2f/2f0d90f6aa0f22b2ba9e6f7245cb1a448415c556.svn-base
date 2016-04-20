@@ -1,0 +1,74 @@
+
+                   How to release a new version of CIVL
+
+1. Working with your local copy of trunk, make sure all tests pass.
+
+2. Edit the fields named "version" and "date" in interface
+edu.udel.cis.vsl.civl.config.CIVLConstants to use the new version and today's date.
+Also, edit README to change the version number and the changes of 
+the new version. Updates CIVL manual accordingly (there is also version number and
+date referenced in the manual, and they need to be consistent with the release).
+
+3. Commit your trunk or make sure there are no uncommitted
+modifications.
+
+4. Create the tag: to create version 0.2, for example:
+
+svn copy svn://vsl.cis.udel.edu/civl/trunk svn://vsl.cis.udel.edu/civl/tags/0.2
+ 
+5. On vsl.cis.udel.edu, sudo -iu svn (file a ticket if you can't do this), 
+and edit /home/svn/repositories/civl/hooks/post-commit by changing the second 
+argument of the build_and_test.sh command to refer to the new version of 
+the release (e.g., 0.14).
+
+6. The autotest script will create the release at the next CIVL commit
+(to any part of CIVL). If you don't want to wait, you can trigger it
+manually by executing from vsl, in ~/scripts/autotest:
+
+ ./build_and_test.sh CIVL $version civl $rev
+
+where $version is the new version number for release and $rev is 
+whatever the revision number was for the release, e.g.,
+ ./build_and_test.sh CIVL 0.13 civl 1580
+
+You can also type “./build_and_test.sh help” for the usage of the script.
+
+7. If there are any problems, you can continue to modify the branch.
+For example, to incorporate changes from the trunk, update or check
+out a fresh local copy of the whole project, change into the branch
+directory, and type svn merge svn://vsl.cis.udel.edu/civl/trunk See
+the Subversion Book for details on merging changes. Then commit these
+changes as usual. After each commit, autotest should run automatically
+and produce the new release. Here is an example:
+
+First, check out the tagged branch somewhere:
+  svn co svn://vsl.cis.udel.edu/civl/tags/0.4
+Second, go to the directory you download:
+  cd 0.4
+Third, merge changes from the trunk:
+  svn merge svn://vsl.cis.udel.edu/civl/trunk
+Forth, commit:
+  svn ci -m"Merged updated README from trunk."
+
+8. Test the release: download it from the web page, move the
+executable file "civl" somewhere in your path (e.g., /tools/bin)
+and execute it on an example, e.g., "civl verify examples/barrier.cvl".
+
+9. Update Trac milestones: go to https://vsl.cis.udel.edu/trac/civl/,
+log in, click on Roadmap, click on the milestone name (v0.2, for
+example), and edit it to indicate completed. You can also indicate
+that open tickets for that milestone be pushed to the next milestone.
+Update other milestones (for example, pushing the dates forward) as
+desired.
+
+10. Update default milestone/version: go to https://vsl.cis.udel.edu/trac/civl/,
+log in, click on Admin, click on Milestones, choose a new milestone as the default,
+click Apply changes. Ditto for setting the default version.
+
+11. Send an email to civl-dev and civl-users announcing the new release.
+
+12. Append "+" to the fields named "version" in edu.udel.cis.vsl.civl.config.CIVLConstants.
+For example, the current version is 1.2, then it becomes 1.2+, which stands for
+unstable release between 1.2 andd 1.3.
+
+   

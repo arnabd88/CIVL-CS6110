@@ -1,0 +1,20 @@
+#include<civlc.cvh>
+
+int x=0;
+int *p = &x;
+
+void f() {
+  int y=0;
+  {
+    int *q = p;
+    y = y + 1;
+    *q = 15;
+  }
+}
+
+void main() {
+  $proc fp = $spawn f();
+  
+  $assert(*p==0);
+  $wait(fp);
+}

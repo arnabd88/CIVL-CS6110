@@ -1,0 +1,7 @@
+#include<civlc.h>
+$input int N;
+$output int sum;
+
+void main() {
+  sum = N*(N+1)/2;
+}

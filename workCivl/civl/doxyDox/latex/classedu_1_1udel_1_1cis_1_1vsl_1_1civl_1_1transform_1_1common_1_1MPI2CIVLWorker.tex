@@ -1,0 +1,171 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+M\+P\+I2\+C\+I\+V\+L\+Worker Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+M\+P\+I2\+C\+I\+V\+L\+Worker@{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+M\+P\+I2\+C\+I\+V\+L\+Worker}}
+
+
+M\+P\+I2\+C\+I\+V\+L\+Transformer transforms an A\+S\+T of an M\+P\+I program into an A\+S\+T of an equivalent C\+I\+V\+L-\/\+C program.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+M\+P\+I2\+C\+I\+V\+L\+Worker\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+M\+P\+I2\+C\+I\+V\+L\+Worker\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker_a1f8ba4f07a7b813d7717121ea9222afb}{M\+P\+I2\+C\+I\+V\+L\+Worker} (A\+S\+T\+Factory \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a44812bb476e4511fb6ca29a808427186}{ast\+Factory})
+\begin{DoxyCompactList}\small\item\em Creates a new instance of M\+P\+I\+Transformer. \end{DoxyCompactList}\item 
+A\+S\+T \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker_a12822bbf9e1075ba98ff31cfed918b63}{transform} (A\+S\+T ast)  throws Syntax\+Exception 
+\begin{DoxyCompactList}\small\item\em Transform an A\+S\+T of a pure M\+P\+I program in C into an equivalent A\+S\+T of C\+I\+V\+L-\/\+C program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+M\+P\+I2\+C\+I\+V\+L\+Transformer transforms an A\+S\+T of an M\+P\+I program into an A\+S\+T of an equivalent C\+I\+V\+L-\/\+C program. 
+
+See  \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker_a12822bbf9e1075ba98ff31cfed918b63}{transform(\+A\+S\+T)}\}. T\+O\+D\+O\+: copy output files only for the mpi process with rank 0.
+
+The M\+P\+I transformer tries to move the main function and file scope stuffs of the original M\+P\+I program into the scope of the function M\+P\+I\+\_\+\+Process(). Most unstateful functions remain in the file scope, which are usually functions of included headers. The Pthread library implementation contains a global variable for the thread pool, which however, if in a M\+P\+I+\+Pthread program, should go to the scope of the M\+P\+I process, instead of the file scope. And ditto for pthread\+\_\+create, pthread\+\_\+exit, pthread\+\_\+is\+\_\+terminated function, because they access the thread pool.
+
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} currently uses this order for transformers\+: general, I\+O, Open\+M\+P, Pthread, C\+U\+D\+A, M\+P\+I.
+
+At this point, the order matters. Because if M\+P\+I transformer goes first, Pthread transformer is not be able to insert the thread pool variable in the right place. Since M\+P\+I is modifying the program structure more than other transformers (moving the original file scope stuffs to a function), it is easier to make it always the last transformer to apply.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker_a1f8ba4f07a7b813d7717121ea9222afb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+M\+P\+I2\+C\+I\+V\+L\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+M\+P\+I2\+C\+I\+V\+L\+Worker}!M\+P\+I2\+C\+I\+V\+L\+Worker@{M\+P\+I2\+C\+I\+V\+L\+Worker}}
+\index{M\+P\+I2\+C\+I\+V\+L\+Worker@{M\+P\+I2\+C\+I\+V\+L\+Worker}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+M\+P\+I2\+C\+I\+V\+L\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+M\+P\+I2\+C\+I\+V\+L\+Worker}}
+\subsubsection[{M\+P\+I2\+C\+I\+V\+L\+Worker}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+M\+P\+I2\+C\+I\+V\+L\+Worker.\+M\+P\+I2\+C\+I\+V\+L\+Worker (
+\begin{DoxyParamCaption}
+\item[{A\+S\+T\+Factory}]{ast\+Factory}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker_a1f8ba4f07a7b813d7717121ea9222afb}
+
+
+Creates a new instance of M\+P\+I\+Transformer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ast\+Factory} & The A\+S\+T\+Factory that will be used to create new nodes. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker_a12822bbf9e1075ba98ff31cfed918b63}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+M\+P\+I2\+C\+I\+V\+L\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+M\+P\+I2\+C\+I\+V\+L\+Worker}!transform@{transform}}
+\index{transform@{transform}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+M\+P\+I2\+C\+I\+V\+L\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+M\+P\+I2\+C\+I\+V\+L\+Worker}}
+\subsubsection[{transform}]{\setlength{\rightskip}{0pt plus 5cm}A\+S\+T edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+M\+P\+I2\+C\+I\+V\+L\+Worker.\+transform (
+\begin{DoxyParamCaption}
+\item[{A\+S\+T}]{ast}
+\end{DoxyParamCaption}
+) throws Syntax\+Exception\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1MPI2CIVLWorker_a12822bbf9e1075ba98ff31cfed918b63}
+
+
+Transform an A\+S\+T of a pure M\+P\+I program in C into an equivalent A\+S\+T of C\+I\+V\+L-\/\+C program. 
+
+~\newline
+ Given an M\+P\+I program\+:~\newline
+
+
+
+\begin{DoxyPre}
+#include <mpi.h>
+...
+#include <stdio.h>
+int a, b, ...;
+... function()\{
+  ...
+\}
+...
+int main()\{
+  ....
+\}
+\end{DoxyPre}
+
+
+It is translated to the following program\+:~\newline
+
+
+
+\begin{DoxyPre}
+#include <mpi.h> // all included files are moved above to the new file scope.
+...
+#include <stdio.h>
+$input int argc;//optional, only necessary when the original main function has arguments.
+$input char** argv;//optional, only necessary when the original main function has arguments.
+$input int NPROCS;
+$gcomm GCOMM\_WORLD = $gcomm\_create($here, NPROCS);\end{DoxyPre}
+
+
+
+\begin{DoxyPre}void MPI\_Process(int \_rank)\{
+  ...
+\}
+void main()\{
+  $proc procs[NPROCS];
+  for(int i = 0; i < NPROCS; i++)
+    procs[i] = $spawn MPI\_Process(i);
+  for(int i = 0; i < NPROCS; i++)
+    $wait(procs[i]);
+  $gcomm\_destroy(GCOMM\_WORLD);
+\}
+\end{DoxyPre}
+
+
+Whereas M\+P\+I\+\_\+\+Process() is a wrapper of the original M\+P\+I program with some special handling\+:~\newline
+
+
+
+\begin{DoxyPre}
+void MPI\_Process()\{
+  $comm MPI\_COMM\_WORLD = $comm\_create(...);
+  //SLIGHTLY-MODIFIED ORIGINAL PROGRAM;
+  int a, b, ...;
+  ... function()\{...\}
+  ...
+  ... \_\_main()\{...\} // renamed main() to \_\_main()
+  ....
+  //ORIGINAL PROGRAM ENDS HERE;
+  \_\_main();
+  $comm\_destroy(MPI\_COMM\_WORLD);
+\}
+\end{DoxyPre}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em ast} & The A\+S\+T of the original M\+P\+I program in C. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An A\+S\+T of C\+I\+V\+L-\/\+C program equivalent to the original M\+P\+I program. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Syntax\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/transform/common/M\+P\+I2\+C\+I\+V\+L\+Worker.\+java\end{DoxyCompactItemize}

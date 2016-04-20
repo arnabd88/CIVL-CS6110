@@ -1,0 +1,215 @@
+
+//verify examples/translation/openclversion2.15/multiple.cvl
+
+#include "cl.cvl"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <civlc.h>
+#include "multiplekernel.cvl"
+
+int numArgs = 2;
+int numKernels = 4;
+/*
+  args * argument	- Takes in the struct, which is changed for every program using a different kernel
+  int mallocflag[numArgs] - A flag for each element in the param array. If the mallocflag is set to 1, it means that it will be freed by clReleaseKernel
+*/
+typedef struct
+{
+  void * param[numArgs];
+  int mallocflag[numArgs];
+}args;
+/*
+  clCreateKernel in this iteration turns each flag to 0 to start off with, otherwise it gets a symbolic expression
+*/
+cl_kernel clCreateKernel(args * argument, char * function)
+{
+  cl_kernel kernel;
+  kernel.arguments = argument;
+  kernel.method = function;
+  
+  for(int j = 0; j < numArgs; j++)
+  {
+    ((args*)kernel.arguments)->mallocflag[j] = 0;
+  }
+  
+  return kernel;
+}
+/*
+  Checks the flag to make sure that it was a local variable that must be freed every step of the way
+*/
+void clReleaseKernel(cl_kernel kernel)
+{
+  for (int i = 0; i < numArgs; i++)
+  {
+    //printf("I am argument %d with value %d\n", i, ((args*)kernel.arguments)->mallocflag[i]);
+    if (((args*)kernel.arguments)->mallocflag[i] == 1)
+    {
+      //printf("and I pass the flag check\n");
+      free(((args*)kernel.arguments)->param[i]);
+    }
+  }
+}
+/*
+  workfunc assigns local and global ids, before calling the kernel. 
+  Note: The function should be identical in all transformations except the calling of the kernel, which means that it cannot be in openCLshared.cvl
+  size_t local		- The size of the workgroups, used to calculate blocks
+  size_t global		- The total amount of work to be done
+  cl_kernel param	- Holds the data for local_id, global_id, and the workgroup
+  Use the print statement to get a better idea of what it means to split workgroups, local_ids, and global_ids
+*/
+void workfunc(size_t local, size_t global, cl_kernel param)
+{
+  $proc procs[local];
+  char * reduceChar = "add";
+  char * reduceCharTwo = "sub";
+  for(int i = local * param.workgroup; i < local * param.workgroup + local; i++)
+  {
+    int n = *(int*)(((args*)param.arguments)->param[0]);
+    param.local_id = i % local;
+    param.global_id = i;
+    //printf("My workgroup id is %d, my global id is %d, my local id is %d\n", param.workgroup, param.global_id, param.local_id);
+    //printf("workfunc var is %s,\n", reduceChar);
+    //printf(" kernel method name is %s\n", param.method);
+    if(strcmp(param.method, reduceChar) == 0)
+    {
+      procs[param.local_id] = $spawn add(param.workgroup, param.global_id, param.local_id, n, ((args*)param.arguments)->param[1]);
+    }
+    
+    if(strcmp(param.method, reduceCharTwo) == 0)
+    {
+      procs[param.local_id] = $spawn sub(param.workgroup, param.global_id, param.local_id, n, ((args*)param.arguments)->param[1]);
+    }
+    
+  }
+  for(int j = 0; j < local; j++)
+  {
+    $wait(procs[j]);
+  }
+}
+
+/*
+  Splits up and spawns processes based on global and local, using block
+  cl_kernel kernel			- Holds all the arguments for the kernel, as well as local_id, global_id, and the workgroup
+  size_t global				- The total amount of work to be done
+  size_t local				- Number to split into workgroups by
+*/
+int clEnqueueNDRangeKernel(cl_kernel kernel, size_t global, size_t local)
+{
+
+  $assert(global % local == 0);
+  int numworkgroups = global/local;
+  cl_kernel param[numworkgroups];
+  $proc procs[numworkgroups];
+  //consider $parfor
+  
+  /*
+  $domain(1) dom = {0 .. numworkgroups - 1};
+  
+  $for(int i: dom)
+  {
+    param[i] = kernel;
+    param[i].workgroup = i;
+  }
+  $parfor(int i: dom)
+  {
+    workfunc(local, global, param[i]);
+  }
+  */
+  
+  for(int i = 0; i < global/local; i++)
+  {
+    param[i] = kernel;
+    param[i].workgroup = i;
+    procs[i] = $spawn workfunc(local, global, param[i]);
+  }
+       
+  //this part here is the new clFinish(commands);
+  for(int i = 0; i < global/local; i++)
+  {
+    $wait(procs[i]);
+  }
+  
+  return CL_SUCCESS;
+  
+}
+
+int main(int argc, char** argv)
+{
+  int global = 1;
+  int local = 1;
+
+  args arguments[numKernels];
+  //arguments = (args*)malloc(sizeof(args) * numKernels);
+  //Must have enough arguments for each kernel
+  //try not on the heap
+
+  int one = 1;
+  int counter = 0;
+  //don't need to put on the heap
+
+  //cl_kernel *kernels = (cl_kernel*)malloc(numKernels * sizeof(cl_kernel));
+  cl_kernel kernels[numKernels];
+  
+  //printf("%d, %d\n", star, *one);
+  
+  char * in = (char*)malloc(sizeof(char)*3);
+  strcpy(in, "add");
+  
+  char * out = (char*)malloc(sizeof(char)*3);
+  strcpy(out, "sub");
+  
+  //For loop to create multiple kernels, the programmer must put the loop himself
+  for (int i = 0; i < numKernels; i++)
+  {
+    if((i % 2) == 0)
+    {
+      kernels[i] = clCreateKernel(arguments+i, in);
+
+    }
+    
+    else
+    {
+      kernels[i] = clCreateKernel(arguments+i, out);
+    }
+
+  }
+  //For each kernel, put in the variables
+  for (int j = 0; j < numKernels; j++)
+  {
+
+    ((args*)kernels[j].arguments)->param[0] = (int*)malloc(sizeof(int));
+    ((args*)kernels[j].arguments)->mallocflag[0] = 1;
+    memcpy(((args*)kernels[j].arguments)->param[0], &one, sizeof(int));
+    
+    //param[0] is a __local variable, so it gets the flag put to 1 
+    
+    //printf("I am kernel of index %d, with a value of %d\n", j, ((args*)kernels[j].arguments)->param[0]);
+    
+    ((args*)kernels[j].arguments)->param[1] = &counter;
+    //This is a __global variable, so it does not get the flag changed in this iteration.
+    //TODO: determine if global variables were freed by clReleaseKernel or the programmer.
+  }
+  
+  //printf("assigned properly\n");
+  
+  for (int i = 0; i < numKernels; i++)
+  {
+    clEnqueueNDRangeKernel(kernels[i], global, local);
+  }
+  int ans = *((int*)((args*)kernels[0].arguments)->param[1]);
+  //memcpy(ans, &((args*)kernels[0].arguments)->param[1], sizeof(int));
+  printf("There are %d kernels, and the final value is %d\n", numKernels, ans);
+  
+  for (int k = 0; k < numKernels; k++)
+  {
+    clReleaseKernel(kernels[k]);
+  }
+  
+  free(in);
+  free(out);
+  
+  return 0;
+}
+
+

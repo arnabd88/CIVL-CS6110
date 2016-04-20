@@ -1,0 +1,81 @@
+
+Part I: Introduction
+
+Chpater: What CIVL is all about: purpose, verification, CIVL-C, tools,
+  organization of this document
+Chapter: Installation and Quick Start
+Chpater: Some examples
+
+Part II: Language
+
+Chapter:  Language overview
+  Key concepts: static scope tree, nested functions, dynamic scope tree
+  Examples!
+  C, Syntax, #include<civlc.h> $ sign, nested functions, 
+  processes, spawning, waiting, types, ...
+
+Chapter: Structure of program
+  preprocessor directives
+  function prototypes and definitions
+  lexical scopes and the lexical scope tree
+  naming scopes ($scope)
+  translation of source to model
+  root function, root scope and the  main function
+  formal parameters to main, return value
+
+Chapter: Sequential elements
+  Section: types:
+           inherited from C: integer and real, boolean, arrays pointer
+           bundles
+           sequences int a[<i>]  (coming)
+  Section: expressions (currently missing: bitwise,...)
+  Section: statements inherited from C : for, while, {...}
+           goto, labeled statements, switch, case, default,
+           break, continue, ...
+  Section: Nondeterminism:
+           $choose/$when
+           $choose_int
+
+Chapter: Concurrency
+  section: Process creation and magagement: $proc type, $spawn, $wait, $self
+     return value of spawned function (must be function returning void?)
+  section: dynamic scope tree, revisited, and the state of a CIVL program
+  section: Atomicity: $atom, $atomic, guards and $when
+  section: Message Passing
+
+Chapter: Specification
+  section: overview, and pointer to concurrency section for more
+           specification primitivies
+  section: input/output signature: $input, $output
+  section: assertions and assumptions: $assert, $assume, $invariant
+  section: assertion language: $forall, $exists, => (implies)
+           (in addition to &&, ||, !)
+  section: procedure contracts, $ensures, $requires (coming)
+  section: Concurrency specification: remote expressions, collective expressions
+
+Chapter: Pointers and Heaps
+  $malloc, $free, memcpy
+  scope-parameterized pointers
+
+Chapter: Libraries
+  The following can be included to provide additional primitives:
+     (in addition to civlc.h):
+  stdbool.h
+  stdio.h
+  stdlib.h
+  assert.h
+
+
+Part III: Semantics
+  The formal description of semantics
+
+
+Part IV: Tools
+  Chapter: Tool introduction
+    section: symbolic execution (background)
+    section: tool overview, command line civl, civl help
+  Chapter: running a CIVL-C program
+  Chapter: model checking, options
+  Chapter: replaying counter-examples
+  Chapter: MPI programs
+

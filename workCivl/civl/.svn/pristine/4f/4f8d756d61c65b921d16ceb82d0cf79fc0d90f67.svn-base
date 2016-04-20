@@ -1,0 +1,8 @@
+#include<civlc.h>
+
+void main() {
+  int *p;
+  
+  p = 0;
+  $assert p == NULL;
+}

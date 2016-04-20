@@ -1,0 +1,4 @@
+#define X 1 2
+#define Y X
+#define Z Y
+Z

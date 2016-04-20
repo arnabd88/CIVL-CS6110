@@ -1,0 +1,69 @@
+\hypertarget{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF}{}\section{Package edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F}
+\label{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F}}
+
+
+Module {\bfseries model} defines a static model, i.\+e., the control flow graph, representation of a C\+I\+V\+L-\/\+C program.  
+
+
+\subsection*{Packages}
+\begin{DoxyCompactItemize}
+\item 
+package \hyperlink{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression}{expression}
+\begin{DoxyCompactList}\small\item\em Submodule {\bfseries model.\+expression} defines expression in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. \end{DoxyCompactList}\item 
+package \hyperlink{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location}{location}
+\begin{DoxyCompactList}\small\item\em Submodule {\bfseries model.\+location} defines a location in the control flow graph of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. \end{DoxyCompactList}\item 
+package \hyperlink{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement}{statement}
+\begin{DoxyCompactList}\small\item\em Submodule {\bfseries model.\+statement} defines a statement of a C\+I\+V\+L-\/\+C program. \end{DoxyCompactList}\item 
+package \hyperlink{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type}{type}
+\begin{DoxyCompactList}\small\item\em Submodule {\bfseries model.\+type} defines types in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. \end{DoxyCompactList}\item 
+package \hyperlink{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable}{variable}
+\begin{DoxyCompactList}\small\item\em Submodule {\bfseries model.\+variable} defines variables in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1AbstractFunction}{Abstract\+Function}
+\begin{DoxyCompactList}\small\item\em An abstract function is an uninterpreted mathematical function. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1AccuracyAssumptionBuilder}{Accuracy\+Assumption\+Builder}
+\begin{DoxyCompactList}\small\item\em An accuracy assumption builder provides logic for determining additional assumptions that should be added after an assumption involving an abstract function call. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLException}{C\+I\+V\+L\+Exception}
+\begin{DoxyCompactList}\small\item\em Root of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} exception hierarchy, representing any kind of event where something goes wrong in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} function. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLInternalException}{C\+I\+V\+L\+Internal\+Exception}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} internal exception represents an error that is \char`\"{}not supposed to happen.\char`\"{} It can be used like an assertion, whenever you feel that something should always be true. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} object represents a range of text in a source file. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSyntaxException}{C\+I\+V\+L\+Syntax\+Exception}
+\begin{DoxyCompactList}\small\item\em An exception thrown when there is syntax error in the program being verified, e.\+g., calling \$choose\+\_\+int with more than one arguments, executing \$wait in \$atom block, etc. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory}{C\+I\+V\+L\+Type\+Factory}
+\begin{DoxyCompactList}\small\item\em The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type factory provides the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} primitive types, like {\ttfamily \$bool}, {\ttfamily int}, {\ttfamily float}, {\ttfamily \$scope} , etc. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLUnimplementedFeatureException}{C\+I\+V\+L\+Unimplemented\+Feature\+Exception}
+\begin{DoxyCompactList}\small\item\em An exception thrown when there is not necessarily anything wrong with the program begin verified, but some \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} feature has not yet been implemented. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{Fragment}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} fragment is a sequence of statements. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier}
+\begin{DoxyCompactList}\small\item\em An identifier. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} model of a program. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelBuilder}{Model\+Builder}
+\begin{DoxyCompactList}\small\item\em Class to provide translation from an A\+S\+T to a model. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelConfiguration}{Model\+Configuration}
+\begin{DoxyCompactList}\small\item\em This file contains the constants used by the model builder/translator, which reflects the translation strategy of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory}
+\begin{DoxyCompactList}\small\item\em The factory to create all model components. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Models}{Models}
+\begin{DoxyCompactList}\small\item\em This is the entry point of the module {\bfseries model}. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} scope. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Sourceable}{Sourceable}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1SystemFunction}{System\+Function}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} system function is a function that is implemented in a library executor, not in source code. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module {\bfseries model} defines a static model, i.\+e., the control flow graph, representation of a C\+I\+V\+L-\/\+C program. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}

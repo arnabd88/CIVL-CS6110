@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ProverExample.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.main</a> &gt; <span class="el_source">ProverExample.java</span></div><h1>ProverExample.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.main;
+
+import edu.udel.cis.vsl.sarl.IF.Reasoner;
+import edu.udel.cis.vsl.sarl.IF.SymbolicUniverse;
+import edu.udel.cis.vsl.sarl.IF.ValidityResult;
+import edu.udel.cis.vsl.sarl.IF.ValidityResult.ResultType;
+import edu.udel.cis.vsl.sarl.IF.expr.BooleanExpression;
+import edu.udel.cis.vsl.sarl.IF.expr.NumericExpression;
+import edu.udel.cis.vsl.sarl.IF.expr.NumericSymbolicConstant;
+import edu.udel.cis.vsl.sarl.IF.type.SymbolicType;
+
+/**
+ * This example shows how to tell if two numeric expressions are equivalent.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc bnc" id="L18" title="All 2 branches missed.">public class ProverExample {</span>
+
+	/**
+	 * Create new ProverExample that will use the given symbolic universe. Note
+	 * there is a symbolic universe in the {@link Activator}.
+	 * 
+	 * 
+	 * @param universe
+	 */
+<span class="nc" id="L27">	public ProverExample(SymbolicUniverse universe) {</span>
+		// the context is the underlying assumption that will be used
+		// when reasoning about validity. It is usually the &quot;path condition&quot;....
+<span class="nc" id="L30">		BooleanExpression context = universe.trueExpression();</span>
+		// a reasoner for the specified context is used to check validity,
+		// satisfiability, and to simplify expressions...
+<span class="nc" id="L33">		Reasoner reasoner = universe.reasoner(context);</span>
+<span class="nc" id="L34">		SymbolicType integerType = universe.integerType();</span>
+		// a NumericSymbolicConstant is both a SymbolicConstant and a
+		// NumericExpression;
+		// a NumericExpression is a SymbolicExpression which has integer or real
+		// type...
+<span class="nc" id="L39">		NumericSymbolicConstant x1 = (NumericSymbolicConstant) universe</span>
+<span class="nc" id="L40">				.symbolicConstant(universe.stringObject(&quot;X1&quot;), integerType);</span>
+<span class="nc" id="L41">		NumericSymbolicConstant x2 = (NumericSymbolicConstant) universe</span>
+<span class="nc" id="L42">				.symbolicConstant(universe.stringObject(&quot;X2&quot;), integerType);</span>
+		// methods add, subtract, etc. require two NumericExpressions...
+<span class="nc" id="L44">		NumericExpression e1 = universe.add(x1, x2);</span>
+<span class="nc" id="L45">		NumericExpression e2 = universe.subtract(x1, x2);</span>
+<span class="nc" id="L46">		BooleanExpression equiv = universe.equals(e1, e2);</span>
+<span class="nc" id="L47">		ValidityResult result = reasoner.valid(equiv);</span>
+<span class="nc" id="L48">		ResultType resultType = result.getResultType();</span>
+
+		// alternatively, you can use method reasoner.isValid()
+		// if you just care about true/false (maybe maps to false)
+
+<span class="nc bnc" id="L53" title="All 4 branches missed.">		switch (resultType) {</span>
+		case MAYBE:
+<span class="nc" id="L55">			System.out.println(&quot;Not sure&quot;);</span>
+<span class="nc" id="L56">			break;</span>
+		case NO:
+<span class="nc" id="L58">			System.out.println(&quot;Not equivalent&quot;);</span>
+<span class="nc" id="L59">			break;</span>
+		case YES:
+<span class="nc" id="L61">			System.out.println(&quot;Equivalent&quot;);</span>
+<span class="nc" id="L62">			break;</span>
+		default:
+			// unreachable
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			assert false;</span>
+		}
+
+<span class="nc" id="L68">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

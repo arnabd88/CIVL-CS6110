@@ -1,0 +1,16 @@
+/* */
+#include <civlc.cvh>
+
+int foo() {
+  int *p = (int *) $malloc($here, 5*sizeof(int));
+}
+
+void main() {
+  int *p2;
+  int *q;
+  int a[5];
+  p2 = a+6;
+  
+  foo();
+  
+}   

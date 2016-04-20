@@ -1,0 +1,81 @@
+/******************************************************************************
+* FILE: omp_reduction.c
+* DESCRIPTION:
+*   OpenMP Example - Combined Parallel Loop Reduction - C/C++ Version
+*   This example demonstrates a sum reduction within a combined parallel loop
+*   construct.  Notice that default data element scoping is assumed - there
+*   are no clauses specifying shared or private variables.  OpenMP will 
+*   automatically make loop index variables private within team threads, and
+*   global variables shared.
+* AUTHOR: Blaise Barney  5/99
+* LAST REVISED: 04/06/05
+******************************************************************************/
+/**
+* This program computes the dot product of two vectors.
+* Online source:
+* https://computing.llnl.gov/tutorials/openMP/samples/C/omp_reduction.c
+**/
+/*  
+ * civl verify -inputNTHREADS=2 -inputN=8 dotProduct.cvl
+ *  */
+#include <civlc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "omp.cvh"
+$input int NTHREADS;
+$input int N;
+
+int main (int argc, char *argv[]) {
+  /* implicitly initializing the number of threads */
+  omp_set_num_threads(NTHREADS);
+	
+  int   i;
+  double a[N], b[N], sum; 
+
+  /* Some initializations */
+  for (i=0; i < N; i++)
+    a[i] = b[i] = i * 1.0;
+  sum = 0.0;
+  
+  /* The procedure of each thread for the for loop */
+  void __for_0(int __tid, int __start, int __end, int __extra){
+    double __sum = sum;	
+
+    for(int __i = __start; __i < __end; __i++) {
+  	  __sum = __sum + (a[__i] * b[__i]);
+    }
+    if(__extra > 0) {
+      __sum = __sum + (a[__extra] * b[__extra]);
+    }
+    __barrier(__tid);
+    sum += __sum;
+  }
+  
+  /* Helper variales introduced for the parallel for loop */
+  $proc __for_0_procs[OMP_NUM_THREADS];
+
+  __barrier_init();  
+  /* Create processes to conduct the parallel for loop  */
+  for(i = 0; i < OMP_NUM_THREADS; i++) {
+    int __start = __for_start(i, N);
+    int __end = __for_end(i, N);
+    int __extra = __for_extra(i, N);
+	
+    __for_0_procs[i] = $spawn __for_0(i, __start, __end, __extra);
+  }
+  
+  /** The orginal OpenMP parallel for loop
+  #pragma omp parallel for reduction(+:sum)
+    for (i=0; i < n; i++){
+      sum = sum + (a[i] * b[i]);
+      printf("loop %d\n", i);
+    }
+  **/
+
+  /* Join parallel for processes  */
+  for(i = 0; i < OMP_NUM_THREADS; i++) {
+	  $wait(__for_0_procs[i]);
+  }
+  /* Print result  */
+  printf("   Sum = %f\n",sum);
+}

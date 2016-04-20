@@ -1,0 +1,40 @@
+\form#0:$a_i$
+\form#1:$3k$
+\form#2:$i$
+\form#3:$a_{i,i} ... a_{i+k-1,i+k-1},$
+\form#4:$a_{i+k,i} ... a_{i+3k-1,i+k-1}$
+\form#5:$2^k$
+\form#6:$i + 3k$
+\form#7:$m$
+\form#8:$j$
+\form#9:$a_{j,i} ... a_{j,i+k-1}$
+\form#10:$ i + k$
+\form#11:$0 ... i-1$
+\form#12:$i + 3k ... m$
+\form#13:$k$
+\form#14:$B_i$
+\form#15:$x$
+\form#16:$T_x$
+\form#17:$a_{j,(i-1)k+1}, a_{j,(i-1)k+2} , ... , a_{j,(i-1)k+k}.$
+\form#18:$a_{j,(i-1)k+1}, ... , a_{j,ik}$
+\form#19:$h = 1,2, ... , c$
+\form#20:$C_{jh} = C_{jh} + T_{xh}$
+\form#21:$2^3$
+\form#22:$2^l$
+\form#23:$0.75 log_2(n)$
+\form#24:$n$
+\form#25:$min(a,b)$
+\form#26:$b$
+\form#27:$\mathbb{F}_2$
+\form#28:\[ Y_m^m(x) = Y_0^0 \ \sqrt{ \prod_{k=1}^{m} \frac{2k+1}{2k} } \ \ (-1)^m \ (1-x^2)^{m/2} \]
+\form#29:$ Y_0^0 = 1 $
+\form#30:$ Y_0^0 = 1/\sqrt{4\pi} $
+\form#31:$ (-1)^m $
+\form#32:$ \sqrt{2m+1} $
+\form#33:\[ a_l^m = \frac{2l-1}{\sqrt{(l+m)(l-m)}} \]
+\form#34:\[ b_l^m = -\sqrt{\frac{(l-1+m)(l-1-m)}{(l+m)(l-m)}} \]
+\form#35:\[ a_l^m = \sqrt{\frac{(2l+1)(2l-1)}{(l+m)(l-m)}} \]
+\form#36:\[ b_l^m = -\sqrt{\frac{2l+1}{2l-3}\,\frac{(l-1+m)(l-1-m)}{(l+m)(l-m)}} \]
+\form#37:$ P_0 = 1 $
+\form#38:$ P_1 = x $
+\form#39:\[ l P_l = (2l-1) x P_{l-1} - (l-1) P_{l-2} \]

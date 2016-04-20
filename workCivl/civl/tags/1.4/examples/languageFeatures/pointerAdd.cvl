@@ -1,0 +1,56 @@
+#include <civlc.cvh>
+#include <stdio.h>
+
+$input double a1d[10];
+$input double a2d[10][10];
+$input double a3d[10][10][10];
+$input double a4d[5][10][15][20];
+void main(){
+  double * p1d;
+  double ** p2d;
+  double *** p3d;
+
+
+  p1d = (double *)$malloc($root, sizeof(double) * 10);
+  p2d = (double **)$malloc($root, sizeof(double *) * 10);
+  p3d = (double ***)$malloc($root, sizeof(double **) * 10);
+  for(int i=0; i<10; i++){
+    p1d[i] = i;
+    p2d[i] = (double *)$malloc($root, sizeof(double) * 10);
+    p3d[i] = (double **)$malloc($root, sizeof(double *) * 10);
+    for(int j=0; j<10; j++){
+      p2d[i][j] = i * 10 + j;
+      p3d[i][j] = (double *)$malloc($root, sizeof(double) * 10);
+      for(int k=0; k<10; k++){
+	p3d[i][j][k] = i * 100 + j * 10 + k;
+      }
+    }
+  }
+
+  /* access array */
+  $assert((*(a1d+5) == a1d[5]));
+  $assert((*(*(a2d + 5) + 5) == a2d[5][5]));
+  $assert((**(a2d + 5) == a2d[5][0]));
+  $assert((*(a2d[0] + 9) == a2d[0][9]));
+  $assert((*(&a2d[0][0] + 9) == a2d[0][9]));
+  $assert((*(&a3d[1][2][3] - 40) == a3d[0][8][3]));
+  $assert((*(&a3d[1][2][3] + 145) == a3d[2][6][8]));
+  $assert((*(&a4d[1][2][3][4] + 145) == a4d[1][2][10][9]));
+
+  /* access malloced pointer */
+  $assert((*(p1d + 5) == p1d[5]));
+  $assert((*(*(p2d + 5) + 5) == p2d[5][5]));
+  $assert((*(*(p2d + 9)) == p2d[9][0]));
+  $assert((*(&p3d[0][0][0] + 8) == p3d[0][0][8]));
+
+  $free(p1d);
+  for(int i = 0; i<10; i++){
+    $free(p2d[i]);
+    for(int j = 0; j<10; j++){
+      $free(p3d[i][j]);
+    }
+    $free(p3d[i]);
+  }
+  $free(p2d);  
+  $free(p3d);
+}

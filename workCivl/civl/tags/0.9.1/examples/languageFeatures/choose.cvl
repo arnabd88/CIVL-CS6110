@@ -1,0 +1,19 @@
+/* Commandline execution:
+ *		civl verify choose.cvl
+ * */
+#include<civlc.h>
+
+int n = 2;
+float x;
+
+void main() {
+l1:
+  $choose {
+    $when (n>2) { x=2; goto l2; }
+    $when (n>1) { x=1; goto l2; }
+    default: {x=0; goto l2; }
+  }
+l2: ;
+#assert x == 1;
+}
+

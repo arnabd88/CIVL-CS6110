@@ -1,0 +1,298 @@
+
+Notes on side-effect-remover.
+
+Definitions.
+
+An expression is side-effect-free if it does not contain a function
+call (except to an $abstract or $pure system function),
+does not contain a comma expression,
+and does not contain any subexpression which can modify the state
+(such as an assignment).   Note that a side-effect-free expression may
+still contain error-side-effects, e.g. "a[i]" or "*p".
+
+A expression e is normal if e
+is either side-effect free, or is a function call or spawn in which
+all arguments are side-effect-free.
+
+A declaration (id, type, initializer) is normal if all expressions
+occurring in type are side-effect-free and initializer is normal.
+
+A statement S is normal if:
+
+ - if S is an expression statement for expression e: e is normal, or e
+ has the form lhs=rhs where rhs is normal and lhs is a left hand side
+ expression which is side-effect-free
+
+ - for (e1;e2;e3) stmt:
+   if e1 is an expression then the expression statement
+   wrapping e1 is a normal statement;
+   if e1 is a declaration list then every declaration in the list is normal;
+   e2 is a side-effect-free expression;
+   the expression statement wrapping e3 is a normal statement;
+   stmt is normal;
+ 
+ For all other statements S, S is normal if all 
+ sub-expressions of S are side-effect-free and
+ all sub-expressions of S are normal.
+ 
+ 
+--
+
+A SETriple is an ordered triple [b|e|a] where b and a are some sequences
+of normal statements and declarations,
+and e is either a normal expression or a normal declaration.
+
+An ExprTriple is an SETriple in which e is a (normal) expression.
+
+There is a sense in which two triples are equivalent.  Basically think
+of starting in some arbitrary state s, then executing the statements in b,
+then evaluating e and shorting the result in V, then, then executing the
+statements in a.  Call the resulting state s'.  Hence the result of executing
+a triple from s in a pair (V,s').  If for any s, the result of executing t
+equals the result of executing t' then t and t' are equivalent.  (Modulo
+the temporary variables which you can ignore after execution completes.)
+
+--
+
+The following operations take an ExprTriple t=[b|e|a] and return an
+equivalent ExprTriple.
+
+shift([b|e|a]) = [b,tmp:T=e,a|tmp|].
+// introduces new temporary variable tmp to hold result
+// of evaluating e.  Note that in the resulting triple,
+// the expression is sef (since it is just a variable),
+// and the after clause is empty.
+
+makesef(t) = t           if sef(e)
+makesef(t) = shift(t)    otherwise.
+// does the shift if e is not sef.
+// guarantees that in the result, expression will be sef.
+
+emptyafter(t) = t          if empty(a)
+emptyafter(t) = shift(t)   otherwise
+// does shift if a is not empty.  Always guarantees that
+// the resulting after clause will be empty
+
+purify(t) = t          if empty(a) and sef(e)
+purify(t) = shift(t)   otherwise
+// does the shift if a is not empty or e is not sef.
+// guarantees expression part of result is s.e.f. and a is empty.
+
+--
+
+Define 
+
+  translate:      Expr -> ExprTriple 
+  lhstranslate: LHSExpr-> SETriple
+  
+Expr is all expressions (not just sef).
+LHSExpr is all left-hand-side expressions.
+
+The result of lhstranslate actually always has from [b|e|] where
+e is an LHS expression and is side-effect-free, e.g.,
+x or a[i][j].v.
+
+--
+
+Definition of lhstranslate by cases:
+
+Variable x:
+lhstranslate(x) = translate(x) = [|x|].
+
+Index expression lhs[expr]:
+Let lhstranslate(lhs) = [b1|e1|].
+Let purify(translate(expr)) = [b2|e2|].
+lhstranslate(lhs[expr]) = [b1,b2|e1[e2]|].
+
+Pointer dereferences *(expr):
+Let purify(translate(expr))=[b|e|].
+translate(*(expr))=[b|*e|].
+
+Field: expr.n:
+Let lhstranslate(expr)=[b|e|].
+translate(expr.n) = [b|e.n|].
+
+--
+
+Definition of translate by cases:
+
+lhs++:
+Let lhstranslate(lhs)=[b|e|].
+translate(lhs++)=[b|e|e=e+1].
+Example: translate(i++)=[ |i|i=i+1]
+
+
+++lhs:
+Let lhstranslate(lhs)=[b|e|].
+translate(++lhs)=[b,e=e+1|e|]
+Example: translate(++i)=[i=i+1|i| ]
+
+
+lhs=rhs:
+Let lhstranslate(lhs)=[b1|e1|], emptyAfter(translate(rhs))=[b2|e2|].
+translate(lhs=rhs) = [b1,b2,e1=e2|e1|]
+
+*expr:
+Let makesef(translate(expr))=[b|e|a].
+translate(*expr)=[b|*e|a].
+
+expr1+expr2:
+Let makesef(translate(expr1))=[b1|e1|a1],
+makesef(translate(expr2))=[b2|e2|a2].
+translate(expr1+expr2)=[b1,b2|e1+e2|a1,a2].
+Replace + with any side-effect-free binary operator. Subscription too?
+
+-expr:
+Let makesef(translate(expr))=[b1|e1|a1].
+translate(-expr)=[b1|-e1|a1].
+Replace - with any side-effect-free unary operator.
+
+func(arg1, arg2, ...):
+Let purify(func)=[b0|f|].
+Let purify(arg1)=[b1|e1|], ...
+translate(func(arg1, ...)) = [b1,b2,...|f(e1,e2,...)|].
+
+lhs+=rhs:
+evaluations are unsequences but the assignment happens after
+they complete.
+Let lhstranslate(lhs)=[b1|e1|].
+Let purify(translate(rhs))=[b2|e2|].
+translate(lhs+=rhs) = [b1,b2,e1=e1+e2|e1|].
+
+expr1,expr2:
+sequence point at ,
+let translate(expr1)   = [b1|e1|a1].
+let translate(expr2)   = [b2|e2|a2].
+translate(expr1,expr2) = [b1,e1^,a1,b2|e2|a2].
+Here e1^ means: omit this if e1 is s.e.f., else make it the expression
+statement e1;.
+
+c ? expr1 : expr2:
+sequence point at ?
+purify(translate(c))   = [b0|e0|]
+sef(translate(expr1))  = [b1|e1|a1]
+sef(translate(expr2))  = [b2|e2|a2]
+
+translate(c?expr1:expr2) :
+
+if b1, a1, b2, a2 are all empty:
+   [b0 | e0?e1:e2 | ]
+otherwise:
+   [ b0, decl tmp,
+     if (e0) { b1; tmp=e1; a1 } else { b2; tmp=e2; a2 }
+   | tmp
+   |
+   ]
+
+
+
+-------------------------
+
+Statements
+The result of translating a statement is a list of block item nodes.
+
+expr;
+let translate(expr)=[b|e|a].
+trans(expr;) = b; e^; a;
+
+while (expr) stmt
+let purify(translate(expr))=[b|e|]
+if b is empty, while (e) {translate(stmt)}
+note: if translate(stmt) has length 1, the {} are unnecessary
+
+else:
+while (true) {
+  b;
+  if (!e) break;
+  translate(stmt)
+}
+
+for (e1; e2; e3) stmt
+
+e1: either expression or declarationListNode. 
+for expression: let makesef(translate(e1))=[b1|x1|a1].
+Let c1=b1,a1.  (Forget x1).  If c1 has length 1, replace
+e1 with c1.   Otherwise, insert the statements of c1 just before
+the beginning of the for loop and replace e1 with a no-op.
+
+fo declarationListNode:
+  i1: t1
+  i2: t2
+  etc.
+
+
+emptyAfterput in normal form
+with empty after: [
+
+e2: let emptyAfter(translate(e2)) = [b2|x2|].  Tricky, needs to
+be evaluate at top of loop.  If b is nonempty:
+for (e1; ; e3) {
+  b2
+  if (!x2) break;
+  stmt
+}
+
+e3: translate(e3)=[b3|x3|a3]
+let c3 = b3,a3.  If c3 has length 1 and is an assignment (not decl), keep
+it in the for. Else:
+
+translate(i++)=[|i|i=i+1]
+b1;
+for (x1; ; x3) {
+  b2;
+  if (!x2) break;
+  stmt;
+  b3;
+  a3;
+}
+
+What is normal form for a declaration node?
+same as assignment
+
+put in normal form
+e1: either decl of multiple variables with initializer or expression
+int i=0; // fine
+int i=0, j=0; // fine
+int i=n++; // -> {int tmp=n; n=n+1| int i=tmp | }
+int i=n++, j=n++ // -> 
+
+
+do stmt while (expr);
+let purify(translate(expr)) = [b|e|]
+do {
+  translate(stmt);
+  b;
+} while (e)
+leave out {...} is b empty and translate(stmt) has length 1.
+
+
+return expr;
+let emptyafter(translate(expr))=[b|e|].
+tran(return expr;) = b; return e;
+
+switch (expr) {...}
+purify(translate(expr))[b|e|]
+b; switch (e) {...}
+
+choose {S1; ...}
+choose {
+  {translate(S1)}....
+
+}
+
+atomic {S}
+atomic {translate(S)}
+
+when (expr) stmt
+purify(translate(expr))
+Example when f(i) stmt;
+y=f(i);
+when y stmt;
+probably should disallow
+treat system functions different?
+
+if (cond) s1 else s2
+let purify(cond)=[b|e|]
+trans(if (cond) s1 else s2) =
+  b; if (e) trans(s1) else trans(s2)
+  

@@ -1,0 +1,239 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition}}
+
+
+\hyperlink{structA}{A} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} transition involves a single atomic statement in one process.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a8fdd9eab98cbd5069668417ea09b906b}{Common\+Transition} (Boolean\+Expression path\+Condition, int pid, int process\+Identifier, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement, boolean symplify\+State, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_1_1AtomicLockAction}{Atomic\+Lock\+Action} atomic\+Lock\+Action)
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a0d5aecb0be20d63219c9d5e7d8c6b90c}{}{\bfseries Common\+Transition} (Boolean\+Expression path\+Condition, int pid, int process\+Identifier, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_1_1AtomicLockAction}{Atomic\+Lock\+Action} atomic\+Lock\+Action)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a0d5aecb0be20d63219c9d5e7d8c6b90c}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a10d56cd725f845bcbe4439654ae266e5}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a10d56cd725f845bcbe4439654ae266e5}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a95e86ed38736cd64a13df961594f0ff9}{}boolean {\bfseries equals} (Object object)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a95e86ed38736cd64a13df961594f0ff9}
+
+\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_af453ed61097a4033a692d0356ca17d5c}{pid} ()
+\begin{DoxyCompactList}\small\item\em The P\+I\+D of the process that this transition belongs to. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a4fe8647966399674f07d21f97c9f333c}{statement} ()
+\begin{DoxyCompactList}\small\item\em The statement that this transition is to execute, which should be atomic, deterministic, and enabled in the context of the path condition. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_acc6b0ad6ebf33af88df194deaf5e2830}{process\+Identifier} ()
+\begin{DoxyCompactList}\small\item\em The identifier of the process that this transition belongs to. \end{DoxyCompactList}\item 
+Boolean\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a7d3c59c72d641a9e85c8b6001eaa4383}{path\+Condition} ()
+\begin{DoxyCompactList}\small\item\em The path condition of the new state after this transition is executed. \end{DoxyCompactList}\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_1_1AtomicLockAction}{Atomic\+Lock\+Action} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a1e45372281183d46f2577f91debad491}{atomic\+Lock\+Action} ()
+\begin{DoxyCompactList}\small\item\em The atomic lock action associates with this transition. \end{DoxyCompactList}\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_1_1TransitionKind}{Transition\+Kind} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_ae3af0e33ad3e419cc5b5de3417f3cdf1}{transition\+Kind} ()
+\begin{DoxyCompactList}\small\item\em returns the kind of this transition. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_ae89be4c7716949d608ff0ceabc48e17a}{simpify\+State} ()
+\begin{DoxyCompactList}\small\item\em Shall the state be simplified after the transition is done? \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_ab20e236bdb3ea0949c0547ecfc2b3c8f}{}boolean {\bfseries simplify\+State}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_ab20e236bdb3ea0949c0547ecfc2b3c8f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} transition involves a single atomic statement in one process. 
+
+It is to be contrasted with a synchronous transition, which involves two statements executing together in two different processes. It also contains an atomic lock action, which denotes that whether the process is going to grab/release the atomic lock.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a8fdd9eab98cbd5069668417ea09b906b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}!Common\+Transition@{Common\+Transition}}
+\index{Common\+Transition@{Common\+Transition}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}}
+\subsubsection[{Common\+Transition}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition.\+Common\+Transition (
+\begin{DoxyParamCaption}
+\item[{Boolean\+Expression}]{path\+Condition, }
+\item[{int}]{pid, }
+\item[{int}]{process\+Identifier, }
+\item[{{\bf Statement}}]{statement, }
+\item[{boolean}]{symplify\+State, }
+\item[{{\bf Atomic\+Lock\+Action}}]{atomic\+Lock\+Action}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a8fdd9eab98cbd5069668417ea09b906b}
+Creates a new instance of a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} transition. 
+
+Precondition\+: the statement is enabled in the context of the given path condition. There exists a state in the state space such that the process P\+I\+D with the given identifier has the given atomic, deterministic statement enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path\+Condition} & The path condition of the new state after the transition being executed. \\
+\hline
+{\em pid} & The P\+I\+D of the process that the transition belongs to. \\
+\hline
+{\em process\+Identifier} & The identifier of the process that the transition belongs to. \\
+\hline
+{\em statement} & The statement of the transition. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a1e45372281183d46f2577f91debad491}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}!atomic\+Lock\+Action@{atomic\+Lock\+Action}}
+\index{atomic\+Lock\+Action@{atomic\+Lock\+Action}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}}
+\subsubsection[{atomic\+Lock\+Action}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Atomic\+Lock\+Action} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition.\+atomic\+Lock\+Action (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a1e45372281183d46f2577f91debad491}
+
+
+The atomic lock action associates with this transition. 
+
+See \hyperlink{}{Atomic\+Lock\+Action} for more details.
+
+\begin{DoxyReturn}{Returns}
+the atomic lock action associates with this transition. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_a85c59d782c690d33935abbaf829be5f6}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a7d3c59c72d641a9e85c8b6001eaa4383}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}!path\+Condition@{path\+Condition}}
+\index{path\+Condition@{path\+Condition}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}}
+\subsubsection[{path\+Condition}]{\setlength{\rightskip}{0pt plus 5cm}Boolean\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition.\+path\+Condition (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a7d3c59c72d641a9e85c8b6001eaa4383}
+
+
+The path condition of the new state after this transition is executed. 
+
+\begin{DoxyReturn}{Returns}
+The path condition of the new state after this transition is executed. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_a4e52172516c10888b8ce4d90d31715ba}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_af453ed61097a4033a692d0356ca17d5c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}!pid@{pid}}
+\index{pid@{pid}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}}
+\subsubsection[{pid}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition.\+pid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_af453ed61097a4033a692d0356ca17d5c}
+
+
+The P\+I\+D of the process that this transition belongs to. 
+
+\begin{DoxyReturn}{Returns}
+The P\+I\+D of the process that this transition belongs to. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_a720b704472232764e1dca5a2ac042dc7}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_acc6b0ad6ebf33af88df194deaf5e2830}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}!process\+Identifier@{process\+Identifier}}
+\index{process\+Identifier@{process\+Identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}}
+\subsubsection[{process\+Identifier}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition.\+process\+Identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_acc6b0ad6ebf33af88df194deaf5e2830}
+
+
+The identifier of the process that this transition belongs to. 
+
+\begin{DoxyReturn}{Returns}
+The identifier of the process that this transition belongs to. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_a219a4aa7d636130ce4b2b27fbf99b7fe}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_ae89be4c7716949d608ff0ceabc48e17a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}!simpify\+State@{simpify\+State}}
+\index{simpify\+State@{simpify\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}}
+\subsubsection[{simpify\+State}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition.\+simpify\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_ae89be4c7716949d608ff0ceabc48e17a}
+
+
+Shall the state be simplified after the transition is done? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_a3ff9ddb09dd5df0f25cd51718e9f76e6}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a4fe8647966399674f07d21f97c9f333c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}!statement@{statement}}
+\index{statement@{statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}}
+\subsubsection[{statement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition.\+statement (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_a4fe8647966399674f07d21f97c9f333c}
+
+
+The statement that this transition is to execute, which should be atomic, deterministic, and enabled in the context of the path condition. 
+
+\begin{DoxyReturn}{Returns}
+The statement that this transition is to execute 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_a0c5a7cc9b576c244fdde9931cd02c4af}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_ae3af0e33ad3e419cc5b5de3417f3cdf1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}!transition\+Kind@{transition\+Kind}}
+\index{transition\+Kind@{transition\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Transition}}
+\subsubsection[{transition\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Transition\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Transition.\+transition\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonTransition_ae3af0e33ad3e419cc5b5de3417f3cdf1}
+
+
+returns the kind of this transition. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_aa3c721117faea46d6f49e6cc9c1ebf47}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Transition}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/common/Common\+Transition.\+java\end{DoxyCompactItemize}

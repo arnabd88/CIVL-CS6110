@@ -1,0 +1,13 @@
+#include<civlc.h>
+
+$input int N;
+
+void main(){
+  int a[];
+  int b = 4;
+  int length;
+  
+  $seq_init(&a, N, &b);
+  length = $seq_length(&a);
+  $assert(length == N);
+}

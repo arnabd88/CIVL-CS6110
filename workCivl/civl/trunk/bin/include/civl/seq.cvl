@@ -1,0 +1,7 @@
+#include <seq.cvh>
+
+void $seq_append(void *array, void *values, int count){
+  int length = $seq_length(array);
+  
+  $seq_insert(array, length, values, count);
+}

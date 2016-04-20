@@ -1,0 +1,16 @@
+#include <civlc.cvh>
+#include <stdio.h>
+
+void main(){
+  $range r1 = 1 .. 2;
+  $range r2 = 1 .. 2#1;
+  $range r3 = 1 .. 2#1;
+  $domain(3) dom = ($domain){r1, r2, r3};
+  int sum = 0;
+  
+  $parfor(int i,j,k : dom){
+    printf("This is proc %s, my i,j,k: %d, %d, %d\n", $self, i, j, k);
+    sum += i * j * k;
+  }
+  $assert(sum == 27);
+}

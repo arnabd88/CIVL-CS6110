@@ -1,0 +1,80 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Evaluator\+Loader Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Evaluator\+Loader@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Evaluator\+Loader}}
+
+
+The library evaluator loader provides the mechanism for loading the library evaluator of a certain library.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Evaluator\+Loader\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluator}{Library\+Evaluator} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader_a8f44b595a82b95ef30d174fb725a1f7a}{get\+Library\+Evaluator} (String name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} primary\+Evaluator, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Facotry, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} symbolic\+Analyzer)  throws Library\+Loader\+Exception
+\begin{DoxyCompactList}\small\item\em Obtains the library evaluator of the given name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The library evaluator loader provides the mechanism for loading the library evaluator of a certain library. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader_a8f44b595a82b95ef30d174fb725a1f7a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Evaluator\+Loader@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Evaluator\+Loader}!get\+Library\+Evaluator@{get\+Library\+Evaluator}}
+\index{get\+Library\+Evaluator@{get\+Library\+Evaluator}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Evaluator\+Loader@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Evaluator\+Loader}}
+\subsubsection[{get\+Library\+Evaluator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Library\+Evaluator} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Evaluator\+Loader.\+get\+Library\+Evaluator (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{{\bf Evaluator}}]{primary\+Evaluator, }
+\item[{{\bf Model\+Factory}}]{model\+Facotry, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer}
+\end{DoxyParamCaption}
+) throws {\bf Library\+Loader\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader_a8f44b595a82b95ef30d174fb725a1f7a}
+
+
+Obtains the library evaluator of the given name. 
+
+Given the same name, it will always return the same instance of the library evaluator of that name.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the library whose evaluator is to be obtained. \\
+\hline
+{\em primary\+Evaluator} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} evaluator of the system. \\
+\hline
+{\em model\+Facotry} & The model factory of the system. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility for manipulations of symbolic expressions. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The library evaluator of the given name. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryLoaderException}{Library\+Loader\+Exception}} & If the library evaluator of the given name cannot be found. \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonLibraryEvaluatorLoader_ab5462fb8a6d49df3bea4ff07fc1a6f86}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Library\+Evaluator\+Loader}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/\+I\+F/Library\+Evaluator\+Loader.\+java\end{DoxyCompactItemize}

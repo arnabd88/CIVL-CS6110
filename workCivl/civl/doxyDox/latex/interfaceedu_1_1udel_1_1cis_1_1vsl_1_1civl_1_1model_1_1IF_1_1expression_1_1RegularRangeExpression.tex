@@ -1,0 +1,114 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Regular\+Range\+Expression Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Regular\+Range\+Expression@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Regular\+Range\+Expression}}
+
+
+Represents a C\+I\+V\+L-\/\+C regular range expression, which has the form {\ttfamily lo . } 
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Regular\+Range\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Regular\+Range\+Expression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_ac4b7e10bc1c5d031178094fb927ed77d}{get\+Low} ()
+\begin{DoxyCompactList}\small\item\em Returns the lower bound argument {\ttfamily lo}. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_ab5997c91acffec742be119e0d3c19b71}{get\+High} ()
+\begin{DoxyCompactList}\small\item\em Returns the upper bound argument {\ttfamily hi}. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_a6dfffed1acc621fdc978c0e351ac4180}{get\+Step} ()
+\begin{DoxyCompactList}\small\item\em Returns the step argument {\ttfamily step} if it is present, else returns {\ttfamily null} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a C\+I\+V\+L-\/\+C regular range expression, which has the form {\ttfamily lo . }
+
+. hi or {\ttfamily lo .. hi \# step}.
+
+The {\ttfamily step} argument is optional. If absent, it is the same as using {\ttfamily 1}. 
+
+If {\ttfamily step} is positive, it represents the sequence of integers {\ttfamily lo}, {\ttfamily lo+step}, {\ttfamily lo+2$\ast$step}, ..., which is truncated so that all entries are less than or equal to {\ttfamily hi}. 
+
+If {\ttfamily step} is negative, it represents the sequence {\ttfamily hi}, {\ttfamily hi}+{\ttfamily step}, {\ttfamily hi}+2$\ast$ {\ttfamily step}, ..., which is truncated so that all entries are greater than or equal to {\ttfamily lo}. 
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_ab5997c91acffec742be119e0d3c19b71}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression}!get\+High@{get\+High}}
+\index{get\+High@{get\+High}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression}}
+\subsubsection[{get\+High}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Regular\+Range\+Expression.\+get\+High (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_ab5997c91acffec742be119e0d3c19b71}
+
+
+Returns the upper bound argument {\ttfamily hi}. 
+
+\begin{DoxyReturn}{Returns}
+the lower bound 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonRegularRangeExpression_a436a78b4783fb5331a7baa097c03db5d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Regular\+Range\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_ac4b7e10bc1c5d031178094fb927ed77d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression}!get\+Low@{get\+Low}}
+\index{get\+Low@{get\+Low}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression}}
+\subsubsection[{get\+Low}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Regular\+Range\+Expression.\+get\+Low (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_ac4b7e10bc1c5d031178094fb927ed77d}
+
+
+Returns the lower bound argument {\ttfamily lo}. 
+
+\begin{DoxyReturn}{Returns}
+the lower bound 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonRegularRangeExpression_ac63a9369150d44c9a18ee8f739da5957}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Regular\+Range\+Expression}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_a6dfffed1acc621fdc978c0e351ac4180}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression}!get\+Step@{get\+Step}}
+\index{get\+Step@{get\+Step}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::expression\+::\+Regular\+Range\+Expression}}
+\subsubsection[{get\+Step}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+expression.\+Regular\+Range\+Expression.\+get\+Step (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1RegularRangeExpression_a6dfffed1acc621fdc978c0e351ac4180}
+
+
+Returns the step argument {\ttfamily step} if it is present, else returns {\ttfamily null} 
+
+\begin{DoxyReturn}{Returns}
+the step argument or {\ttfamily null} 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1expression_1_1CommonRegularRangeExpression_a3acd72d42f98076e58ca3d730e5bf980}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+expression.\+Common\+Regular\+Range\+Expression}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/expression/Regular\+Range\+Expression.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,113 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer@{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer}}
+
+
+This represents a code analyzer for analyzing source code for a certain property.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_adadb1d504a23f54dff34214692116184}{analyze} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} statement, Symbolic\+Expression\mbox{[}$\,$\mbox{]} argument\+Values)
+\begin{DoxyCompactList}\small\item\em Analyzes a call statement. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_a28ee3910b374f9c74207d1b3238e11e1}{static\+Analysis} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)
+\begin{DoxyCompactList}\small\item\em Static analysis of the given statement. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_a0b87629a9e6c5703ef5f03fac75a1ad8}{print\+Analysis} (Print\+Stream out)
+\begin{DoxyCompactList}\small\item\em Print the results the analyzer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This represents a code analyzer for analyzing source code for a certain property. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_adadb1d504a23f54dff34214692116184}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer}!analyze@{analyze}}
+\index{analyze@{analyze}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer}}
+\subsubsection[{analyze}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer.\+analyze (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Call\+Or\+Spawn\+Statement}}]{statement, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{argument\+Values}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_adadb1d504a23f54dff34214692116184}
+
+
+Analyzes a call statement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pid} & \\
+\hline
+{\em statement} & \\
+\hline
+{\em argument\+Values} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_a149a736d2a07556f6086a5891269410e}{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1CommonCodeAnalyzer_a84fbdf6daa83190f96b03b3b234c5e67}{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Common\+Code\+Analyzer}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_a0b87629a9e6c5703ef5f03fac75a1ad8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer}!print\+Analysis@{print\+Analysis}}
+\index{print\+Analysis@{print\+Analysis}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer}}
+\subsubsection[{print\+Analysis}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer.\+print\+Analysis (
+\begin{DoxyParamCaption}
+\item[{Print\+Stream}]{out}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_a0b87629a9e6c5703ef5f03fac75a1ad8}
+
+
+Print the results the analyzer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_ad1858fef1ac0948b1eaf4a7d3873450b}{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_a28ee3910b374f9c74207d1b3238e11e1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer}!static\+Analysis@{static\+Analysis}}
+\index{static\+Analysis@{static\+Analysis}!edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::analysis\+::\+I\+F\+::\+Code\+Analyzer}}
+\subsubsection[{static\+Analysis}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+I\+F.\+Code\+Analyzer.\+static\+Analysis (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1IF_1_1CodeAnalyzer_a28ee3910b374f9c74207d1b3238e11e1}
+
+
+Static analysis of the given statement. 
+
+Basically, it answers the question is the analyzer applicable for the given statement?
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1analysis_1_1common_1_1AbsCallAnalyzer_a3cc0e3f03de95e9b88f0cd03213bc03d}{edu.\+udel.\+cis.\+vsl.\+civl.\+analysis.\+common.\+Abs\+Call\+Analyzer}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/analysis/\+I\+F/Code\+Analyzer.\+java\end{DoxyCompactItemize}

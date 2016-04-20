@@ -1,0 +1,63 @@
+/* This file completes the definitions of types and some functions
+ * for concurrency, which are declared in concurrency.cvh.
+ */
+ 
+#ifndef __CIVLC_CONCURRENCY__
+#define __CIVLC_CONCURRENCY__
+
+#include<concurrency.cvh>
+#include<seq.cvh>
+
+/* *********************** Types *********************** */
+
+/* A data type representing a global barrier which must be operated by local
+ * barriers.  Completes the declaration of this type in civlc-common.h.
+ */
+struct $gbarrier {
+  int nprocs;
+  $proc proc_map[]; // initialized as all $proc_null.
+  _Bool in_barrier[]; // initialized as all false.
+  int num_in_barrier; // initialized as 0.
+};
+
+/* A data type representing a global barrier which used for 
+ * operating global barriers. The local barrier type has 
+ * a handle of a global barrier.
+ * Completes the declaration of this type in civlc-common.h.
+ */
+struct $barrier {
+  int place;
+  $gbarrier gbarrier; // initialized as 0.
+};
+
+/******************* Collective Arrive Checking Records *******************/
+/* Record entry */
+struct $collect_record {
+  $bundle entries;
+  _Bool marks[];  //an array stores marks for processes
+  int numMarked;  //number of processes already marked this record
+};
+
+/* Global records queue */
+struct $gcollect_checker {
+  int length;
+  $collect_record records[];
+};
+
+/* Local handle of the global records queue */
+struct $collect_checker {
+  $gcollect_checker checker;
+};
+
+/* *********************** Functions *********************** */
+
+$system void $barrier_enter($barrier barrier);
+
+$system void $barrier_exit($barrier barrier);
+
+void $barrier_call($barrier barrier) {
+  $barrier_enter(barrier);
+  $barrier_exit(barrier);
+}
+
+#endif

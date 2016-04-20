@@ -1,0 +1,16 @@
+#include <civlc.cvh>
+
+//#include <civlc.h>
+
+$input int N;
+$assume((N>0 && N<=6));
+$input double a[N];
+
+int main() {
+  double max = a[0];
+  for (int i=1; i<N; i++) {
+    if (a[i]>max) max=a[i];
+  }
+  $assert(($forall {int i | 0<=i && i<N} max>=a[i]));
+  $assert(($exists {int i | 0<=i && i<N} max==a[i]));
+}

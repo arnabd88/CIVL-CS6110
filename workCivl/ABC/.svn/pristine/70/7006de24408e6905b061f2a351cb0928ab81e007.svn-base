@@ -1,0 +1,15 @@
+#include <civlc.cvh>
+#include <memory.cvh>
+
+void inc(int n);
+
+void dec(int n);
+
+/*@ depends \anyact;
+  @ assigns a, b;
+  @*/
+void test(int a, int b);
+
+/*@ depends (\write(n)+\read(n))-(\call(inc, n)+\call(dec, n));
+  @*/
+void foo(int n);

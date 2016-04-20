@@ -1,0 +1,44 @@
+#include <civlc.h>
+$input double a[3];
+
+double adderSeq(int n) {
+  double s = 0.0;
+  
+  for (int i = 0; i < n; i++) {
+    s += a[i]; 
+  }
+  return s;
+}
+
+double adderPar(int m) {
+  double s = 0.0;
+  int mutex = 0;
+  $proc workers[m];
+
+  void worker(int i) {
+    double t;
+
+    $when (mutex == 0) mutex = 1;
+    t = s;
+    t += a[i];
+    s = t;
+    mutex = 0;
+  }
+  
+  for (int j = 0; j < m; j++) {
+    workers[j] = $spawn worker(j);
+  }  
+  for (int k = 0; k < m; k++) {
+    $wait workers[k];
+  }
+  return s;
+}
+
+void main() {
+  double seq;
+  double par;
+  
+  seq = adderSeq(3);
+  par = adderPar(3);
+  $assert seq == par;
+}

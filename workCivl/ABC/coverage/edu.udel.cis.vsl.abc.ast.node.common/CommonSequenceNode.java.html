@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonSequenceNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common</a> &gt; <span class="el_source">CommonSequenceNode.java</span></div><h1>CommonSequenceNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common;
+
+import java.io.PrintStream;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodePredicate;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonSequenceNode&lt;T extends ASTNode&gt; extends CommonASTNode
+		implements SequenceNode&lt;T&gt; {
+
+	/**
+	 * A name you would like to use when printing this node. Else &quot;Sequence&quot;
+	 * will be used.
+	 */
+	private String name;
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public CommonSequenceNode(Source source, String name, List&lt;T&gt; childList) {
+<span class="nc" id="L24">		super(source, (List&lt;ASTNode&gt;) childList);</span>
+<span class="nc" id="L25">		this.name = name;</span>
+<span class="nc" id="L26">	}</span>
+
+	@Override
+	public int addSequenceChild(T child) {
+<span class="nc" id="L30">		return addChild(child);</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public T getSequenceChild(int i) {
+<span class="nc" id="L36">		return (T) child(i);</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public T setSequenceChild(int i, T child) {
+<span class="nc" id="L42">		return (T) setChild(i, child);</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public Iterator&lt;T&gt; iterator() {
+<span class="nc" id="L48">		return (Iterator&lt;T&gt;) children().iterator();</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L53">		out.print(name);</span>
+<span class="nc" id="L54">	}</span>
+
+	protected List&lt;T&gt; childListCopy() {
+<span class="nc" id="L57">		List&lt;T&gt; childListCopy = new LinkedList&lt;T&gt;();</span>
+
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (T child : this) {</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (child == null)</span>
+<span class="nc" id="L61">				childListCopy.add(null);</span>
+			else {
+				@SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L64">				T childCopy = (T) child.copy();</span>
+
+<span class="nc" id="L66">				childListCopy.add(childCopy);</span>
+			}
+		}
+<span class="nc" id="L69">		return childListCopy;</span>
+	}
+
+	/**
+	 * Copies the list of children, but keeping only those children for which
+	 * the corresponding flag in array &lt;code&gt;heap&lt;/code&gt; is &lt;code&gt;true&lt;/code&gt;.
+	 * 
+	 * @param keep
+	 *            array of length number of children
+	 * @return deep copy of children list for the children being kept
+	 */
+	protected List&lt;T&gt; childListCopy(boolean[] keep) {
+<span class="nc" id="L81">		List&lt;T&gt; childListCopy = new LinkedList&lt;T&gt;();</span>
+<span class="nc" id="L82">		int count = 0;</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (T child : this) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (keep[count]) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				if (child == null)</span>
+<span class="nc" id="L87">					childListCopy.add(null);</span>
+				else {
+					@SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L90">					T childCopy = (T) child.copy();</span>
+
+<span class="nc" id="L92">					childListCopy.add(childCopy);</span>
+				}
+			}
+<span class="nc" id="L95">			count++;</span>
+		}
+<span class="nc" id="L97">		return childListCopy;</span>
+	}
+
+	@Override
+	public SequenceNode&lt;T&gt; copy() {
+<span class="nc" id="L102">		return new CommonSequenceNode&lt;T&gt;(getSource(), name, childListCopy());</span>
+	}
+
+	@Override
+	public void keepOnly(NodePredicate keep) {
+<span class="nc" id="L107">		keepOnlyAndShift(keep);</span>
+<span class="nc" id="L108">	}</span>
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L112">		return NodeKind.SEQUENCE;</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public T removeChild(int index) {
+<span class="nc" id="L118">		return (T) super.removeChild(index);</span>
+	}
+
+	@Override
+	public void insertChildren(int index, List&lt;T&gt; list) {
+<span class="nc" id="L123">		insertChildrenAt(index, list);</span>
+<span class="nc" id="L124">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

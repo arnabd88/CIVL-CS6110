@@ -1,0 +1,11 @@
+#include<civlc.h>
+int x=0;
+void f() {
+  x=1;
+}
+void main() {
+  $spawn f();
+  $atomic {
+    $assert(x==0); // false
+  }
+}

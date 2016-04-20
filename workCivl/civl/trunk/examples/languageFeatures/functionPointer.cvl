@@ -1,0 +1,59 @@
+/* This program demonstrates the use of function pointer, checking
+ * of the equality of $proc and $scope type expressions, and the
+ * use of system functions $proc_defined/$scope_defined to check if
+ * a $proc/$scope expression is defined.
+ * Command line example:
+ *     civl verify functionPointer.cvl 
+ *     or
+ *     civl verify functionPointer.cvl -enablePrintf=false
+ *     (if you do not like to see the message printed by those printf function calls.)
+ */
+
+#define NPROCS 3
+
+#include <civlc.cvh>
+#include <stdio.h>
+$proc procs[NPROCS];
+$scope scopes[NPROCS];
+
+int min(int a, int b) {
+  if (a < b)
+    return a;
+  else 
+    return b;
+}
+
+int fDouble(int (*f)(int, int), int a, int b) {
+  int result;
+  
+  result = f(a, b);
+  return result * 2;
+}
+
+// f is a function pointer type argument
+$proc proc_create(void (*f)(int), int x){
+  $proc p = $spawn f(x);
+  
+  return p;
+}
+
+void foo(int id) {
+  printf("I'm spawned with id %d.\n", id);
+  $assert(procs[id] == $self);
+  scopes[id] = $here;
+  printf("I own scope with id %d.\n", scopes[id]);
+}
+
+void main(){
+  // min here is a function pointer
+  int k = fDouble(min, 5, 8);
+
+  for(int i = 0; i < NPROCS; i++){
+    procs[i] = proc_create(foo, i);
+  }
+  
+  for(int i = 0; i < NPROCS; i++){
+    $wait(procs[i]);
+    printf("Process %d terminates.\n", i);
+  }
+}

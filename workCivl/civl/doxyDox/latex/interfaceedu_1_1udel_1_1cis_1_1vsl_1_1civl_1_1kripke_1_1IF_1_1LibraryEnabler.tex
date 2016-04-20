@@ -1,0 +1,139 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Library\+Enabler Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Library\+Enabler@{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Library\+Enabler}}
+
+
+\hyperlink{structA}{A} Library \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{Enabler} provides a method to compute the enabled transitions of system function calls at a certain state for a give process.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Library\+Enabler\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Bit\+Set \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler_ae19c97894a80b1965211330453c9d34b}{ample\+Set} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} statement, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitSet}{Memory\+Unit\+Set}\mbox{[}$\,$\mbox{]} reachable\+Ptr\+Writable\+Map, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitSet}{Memory\+Unit\+Set}\mbox{[}$\,$\mbox{]} reachable\+Ptr\+Readonly\+Map, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitSet}{Memory\+Unit\+Set}\mbox{[}$\,$\mbox{]} reachable\+Non\+Ptr\+Writable\+Map, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitSet}{Memory\+Unit\+Set}\mbox{[}$\,$\mbox{]} reachable\+Non\+Ptr\+Readonly\+Map)  throws Unsatisfiable\+Path\+Condition\+Exception
+\item 
+List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler_a7048d9901abda3f7af09cf3827523471}{enabled\+Transitions} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} call, Boolean\+Expression path\+Condition, int pid, int process\+Identifier, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_1_1AtomicLockAction}{Atomic\+Lock\+Action} atomic\+Lock\+Action)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em Computes the enabled transitions of a given function call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} Library \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1Enabler}{Enabler} provides a method to compute the enabled transitions of system function calls at a certain state for a give process. 
+
+It also provides a method to compute the ample set of processes at a given state for a given process. \hyperlink{structA}{A} new library is implemented in the package named as \char`\"{}edu.\+udel.\+cis.\+vsl.\+civl.\+library.\char`\"{} ( \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConstants_a85ce02e0194ff8635c13d3ebf41c63a6}{C\+I\+V\+L\+Constants\#\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+P\+R\+E\+F\+I\+X}) + library name. And the class name of the enabler is\+: \char`\"{}\+Lib\char`\"{} + library name + \char`\"{}\+Enabler\char`\"{}. For example, the stdio library enabler is implemented as the class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1stdio_1_1LibstdioEnabler}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+stdio.\+Libstdio\+Enabler}.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler_ae19c97894a80b1965211330453c9d34b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Library\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Library\+Enabler}!ample\+Set@{ample\+Set}}
+\index{ample\+Set@{ample\+Set}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Library\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Library\+Enabler}}
+\subsubsection[{ample\+Set}]{\setlength{\rightskip}{0pt plus 5cm}Bit\+Set edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Library\+Enabler.\+ample\+Set (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Call\+Or\+Spawn\+Statement}}]{statement, }
+\item[{{\bf Memory\+Unit\+Set}\mbox{[}$\,$\mbox{]}}]{reachable\+Ptr\+Writable\+Map, }
+\item[{{\bf Memory\+Unit\+Set}\mbox{[}$\,$\mbox{]}}]{reachable\+Ptr\+Readonly\+Map, }
+\item[{{\bf Memory\+Unit\+Set}\mbox{[}$\,$\mbox{]}}]{reachable\+Non\+Ptr\+Writable\+Map, }
+\item[{{\bf Memory\+Unit\+Set}\mbox{[}$\,$\mbox{]}}]{reachable\+Non\+Ptr\+Readonly\+Map}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler_ae19c97894a80b1965211330453c9d34b}
+Computes the ample set process I\+Ds from a system function call at a given state for a given process. 
+
+Precondition\+: the call statement is enabled at the given state and it is one of the outgoing statements of process pid. 
+
+Contract\+: nothing dependent on the given statement can occur without one of the transitions of the processes in the returned ample set occurring first. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state. \\
+\hline
+{\em pid} & The I\+D of the process that the system function call belongs to. \\
+\hline
+{\em statement} & The system function call statement. \\
+\hline
+{\em reachable\+Ptr\+Writable\+Map} & \\
+\hline
+{\em reachable\+Ptr\+Readonly\+Map} & \\
+\hline
+{\em reachable\+Non\+Ptr\+Writable\+Map} & \\
+\hline
+{\em reachable\+Non\+Ptr\+Readonly\+Map} & \\
+\hline
+{\em reachable\+Mem\+Units\+Map} & The map of reachable memory units of all active processes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the ample set of process I\+Ds 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEnabler_a7adfa7cc7b1fc30c6c510e0b4c5f79c8}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Enabler}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1civlc_1_1LibcivlcEnabler_ad60216ddf400b81d18e3f6175a082697}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+civlc.\+Libcivlc\+Enabler}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEnabler_aa852877b6bb359a28e14c6a13956c7c1}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Enabler}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler_a7048d9901abda3f7af09cf3827523471}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Library\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Library\+Enabler}!enabled\+Transitions@{enabled\+Transitions}}
+\index{enabled\+Transitions@{enabled\+Transitions}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Library\+Enabler@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::\+I\+F\+::\+Library\+Enabler}}
+\subsubsection[{enabled\+Transitions}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Transition}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Library\+Enabler.\+enabled\+Transitions (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf Call\+Or\+Spawn\+Statement}}]{call, }
+\item[{Boolean\+Expression}]{path\+Condition, }
+\item[{int}]{pid, }
+\item[{int}]{process\+Identifier, }
+\item[{{\bf Atomic\+Lock\+Action}}]{atomic\+Lock\+Action}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1LibraryEnabler_a7048d9901abda3f7af09cf3827523471}
+
+
+Computes the enabled transitions of a given function call. 
+
+This is to support nondeterministic function calls.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state. \\
+\hline
+{\em call} & The function call statement, upon which the set of enabled transitions will be computed. \\
+\hline
+{\em path\+Condition} & The current path condition. \\
+\hline
+{\em pid} & The I\+D of the process that the function call belongs to. \\
+\hline
+{\em process\+Identifier} & \\
+\hline
+{\em atomic\+Lock\+Action} & \\
+\hline
+{\em assign\+Atomic\+Lock} & The assignment statement for the atomic lock variable, should be null except that the process is going to re-\/obtain the atomic lock variable. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The set of enabled transitions. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEnabler_aa02e5580539e71fd45208ae39ed9a9cc}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Enabler}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommEnabler_ad20e493e1e307fde6e554e028486b911}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Enabler}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1civlc_1_1LibcivlcEnabler_a7e233e81b1e86cee395f966e08873891}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+civlc.\+Libcivlc\+Enabler}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1domain_1_1LibdomainEnabler_ab1d4bee1c22452e5de7ee3615202d5dd}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+domain.\+Libdomain\+Enabler}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/kripke/\+I\+F/Library\+Enabler.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,234 @@
+
+subsumption:
+
+if a is a subset of b and a preceded b in dictionary order
+then a is a prefix of b
+
+if a is a subset of b then size(a)<size(b)
+
+
+1 4 6 7 8
+1 4 6 7 8 9
+1 4 6 7 8 10
+1 4 6 7 9
+2 3 4
+2 5 8 10
+4 7 8 : determine if I am subset of any of above?
+
+
+Step 1:
+make concrete arrays instances of HomogeneousExpression<SymbolicExpression>
+
+Re-factor expressions/objects
+
+CURRENT:
+Symbolic Objects:
+current fields: kind, hashCode, hashed, id, order (5)
+current kinds of objects:
+BOOLEAN, CHAR, INT, NUMBER, STRING : make these primitive SymbolicExpressions
+TYPE, TYPE_SEQUENCE
+EXPRESSION_COLLECTION
+EXPRESSION
+
+NEW:
+
+  interface SymbolicObject
+     objectKind(): SymbolicObjectKind 
+     objectCategory(): TYPE, EXPRESSION, SEQUENCE, INT
+  interface SymbolicType extends SymbolicObject
+  interface Sequence<T> extends SymbolicObject
+  interface SymbolicExpression extends SymbolicObject
+  interface IntObject extends SymbolicObject
+  
+  class CommonObject implements SymbolicObject [hashCode, id]
+  class CommonSymbolicType extends CommonObject
+  class CommonSequence<T> extends SymbolicSequence<T>
+  
+    
+fields: hashCode, id (2)
+put hashed in id field: 
+  id=-2: not hashed
+  id=-1: hashed, but not canonic
+  id=0,1,2,... : canonic
+the object kind can be obtained by a method (not in field)
+equals: compare kinds, then go straight to the intrinsicEquals
+compare: can't just order by kind?
+hashCode:
+
+New kinds of objects:
+TYPE : a type, instanceof SymbolicType
+EXPRESSION : something representing a value, instanceof SymbolicExpression
+SEQUENCE : a sequence of objects of some kind, instanceof SequenceObject
+INT : a Java int
+
+interface SymbolicExpression: represents a value
+  type(): SymbolicType
+  kind(): ExpressionKind
+  getArguments(): SymbolicObject[]
+  numArguments(): int
+  argument(int): SymbolicObject
+NOTE: not every symbolic expression is completely determined by the
+operator, type, and arguments.  In particular, these are not:
+  
+The following kinds of expressions have 0 args:
+CHAR:    interface CharObject extends SymbolicExpression: getChar()
+STRING:  interface StringObject extends SymbolicExpression: getString()
+BOOLEAN: interface BooleanObject extends SymbolicExpression: getBoolean()
+NUMBER:  interface NumberObject extends SymbolicExpression: getNumber()
+
+The following kind of SymbolicExpression is completely determined by
+operator, type, and arguments:
+
+interface HomogeneousExpression<T extends SymbolicObject> extends SymbolicExpression
+  getArguments(): T[]
+  arguments(): Iterable<T>
+  argument(int): T
+  
+
+Other SymbolicExpressions have a positive number of arguments
+ADD, MULTIPLY, etc.
+DENSE_ARRAY_WRITE (keep track of NULLs)
+  - make it a special class with its own fields (numNulls)
+APPLY
+
+Tuple types, function types may also have SEQUENCE objects.
+
+----
+
+
+Design:
+
+universe
+  uses: reason, preuniverse
+
+reason
+  uses: simplify, prove, ....
+
+herbrand
+  uses: like ideal?
+  
+ideal
+  uses: simplify, prove, ...
+  ideal.simplify uses preuniverse
+  
+prove
+  uses: IF, cvc3, expr, 
+    preuniverse (to build expressions)
+ 
+simplify
+  uses: IF, type, expr, object,
+    preuniverse (by CommonSimplifier)
+
+preuniverse: everything in universe except reasoning
+  uses: expr, type, collections, object, number, util, IF
+
+expr
+  uses: IF
+        object
+        collections
+        type
+
+type
+  uses: IF (expr array len),
+        object
+
+collections
+  uses: IF
+        object
+
+object: symbolic objects
+  uses: IF
+        collections (SymbolicCollection for comparator): CHANGE!
+
+number: arbitrary-precision integer and real numbers
+  uses: IF (IF.number)
+
+util: utility classes
+  uses: nothing
+
+IF: public interface
+  uses: nothing
+  comprises:
+    IF.SymbolicUniverse
+    IF.Reasoner
+    IF.ValidityResult
+    IF.ModelResult
+    IF.SARLException, IF.SARLInternalException, IF.TheoremProverException
+    IF.expr
+    IF.number
+    IF.object
+    IF.type
+
+--------------------
+
+Design issues:
+
+  - massive duplication between SymbolicUniverse and PreUniverse
+  - cyclic dependency object<-->collections
+  
+--------------------
+
+Heaps:
+
+/** This is the type for head IDs.  Every heap has an unchanging
+ * heap ID.  As objects are added or removed from the heap, the
+ * heap expression itself changes, but the underlying heap ID
+ * is constant.  References to heap objects always include the
+ * heap ID indicating to which heap the reference points.  This
+ * is necessary so that when we canonicalize a heap, we can 
+ * determine which references refer to that heap and therefore
+ * must be updated. */
+SymbolicType heapIdType();
+
+/** This is the type of a heap. */
+SymbolicType heapType();
+
+/** Returns the incomplete reference type, which is a super-type
+ * of all reference types.  Situation is analogous to array types.
+ */
+SymbolicType referenceType();
+
+/** Returns type "reference-to-T", where T is the given type.
+ * This is a complete reference type. */
+SymbolicType completeReferenceType(SymbolicType type);
+
+/** Returns a heap ID which simply wraps the given string object.
+ * Two heapIds with equal names are equal. */
+SymbolicExpression heapId(StringObject name);
+
+/** Returns the empty heap with the given heap ID. */
+SymbolicExpression emptyHeap(SymbolicExpression heapId);
+
+/** Allocates an object on the heap.  Returns a pair: the first
+ * component is the new heap, the second is reference to the new
+ * object in the new heap. */
+Pair<SymbolicExpression,SymbolicExpression> 
+  malloc(SymbolicExpression heap, SymbolicType type);
+  
+/** Given an expression of heap type, returns
+ * the heap ID; given an expression of reference type, returns
+ * the heap ID of the referenced heap. */
+SymbolicExpression heapIdOf(SymbolicExpression expr);
+
+/** Deallocates an object on the heap.  Given a heap and a reference
+ * to an element on the heap, returns the new heap which is obtained
+ * by removing the referenced object from the original. Result
+ * is undefined if heapIdOf(ref) does not equal heapIdOf(heap). 
+ */
+SymbolicExpression free(SymbolicExpression heap, SymbolicExpression ref);
+
+/** Dereferences a reference to the heap.  The given ref must
+ * have a complete reference type, say "reference-to-T".  The type
+ * of the expression returned will then be T.   The heaps ID of
+ * the ref and the heap must be equal. */
+SymbolicExpression dereference(SymbolicExpression heap,
+  SymbolicExpression ref);
+ 
+/** Canonicalize heap.
+ * Given a heap and a collection of expressions, returns a pair.
+ * The first component of the pair is the new heap, the second
+ * element is the collection obtained by updating all references
+ * to objects in the given heap to their new values. */
+Pair<SymbolicExpression, SymbolicCollection<SymbolicExpression>>
+  canonic(SymbolicExpression heap,
+          SymbolicCollection<SymbolicExpression>> expressions);

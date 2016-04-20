@@ -1,0 +1,20 @@
+#include <civlc.cvh>
+#include <bundle.cvh>
+
+$input int N;
+$assume(N > 2);
+$input int a[N];
+
+$scope root = $here;
+
+int main(){
+  int * b;
+  $bundle bun;
+
+  b = (int *)$malloc(root, N * sizeof(int));
+  bun = $bundle_pack(a, sizeof(int) * N);
+  $bundle_unpack(bun, b);
+  $assert(b[0] == a[0]);
+  $free(b);
+  return 0;
+}

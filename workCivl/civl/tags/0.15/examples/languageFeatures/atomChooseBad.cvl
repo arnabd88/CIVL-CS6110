@@ -1,0 +1,19 @@
+/* Commandline execution:
+ *		civl verify atomChooseBad.cvl
+ * */
+int n = 3;
+
+void main(){
+  int x = 3;
+  
+  // non-determinism, an error will be reported
+  // because the execution of an $atom block should be 
+  // finite, deterministic and non-blocking.
+  $atom {
+    $choose {
+      $when (n>2) { x=2;  }
+      $when (n>1) { x=1;  }
+      default: {x=0;  }
+    }
+  }
+}

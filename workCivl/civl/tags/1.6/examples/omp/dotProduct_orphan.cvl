@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <omp.h>
+#include <civl-omp.cvl>
+
+$input int THREAD_MAX;
+$omp_team **parallelDataArr;
+int $omp_numThreads = THREAD_MAX;
+
+$input int CIVL_argc;
+$input char  CIVL_argv[10][];
+$scope $gen_root = $here;
+
+float  a[100];
+float  b[100];
+float sum;
+float dotprod(int _tid)
+{
+  int i;
+  int tid;
+  tid = _tid;
+  $omp_team team = *parallelDataArr[_tid];
+  $omp_shared *sharedArr = team->shared;
+  void* b_local = sharedArr[1]->local;
+
+  
+  {
+    $range r1 = 0 .. 100 - 1 # 1;
+    $domain(1) loop_domain = ($domain){r1};
+    $domain(1) my_iters = ($domain(1))($omp_arrive_loop(team, 0, ($domain)loop_domain, 2));
+    float sum$omp_reduction = 0;
+    $for(int i: my_iters)
+    {
+      float tmpRead0;
+      $omp_read(sharedArr[1], &tmpRead0, &b_local[i]);
+      float tmpRead1;
+      $omp_read(sharedArr[0], &tmpRead1, &sharedArr[0]->local[i]);
+      sum$omp_reduction = sum$omp_reduction + (tmpRead1 * tmpRead0);
+      printf("  tid= %d i=%d\n", tid, i);
+    }
+    $omp_apply_assoc(sharedArr[2], 3, &sum$omp_reduction);
+    $omp_barrier_and_flush(team);
+  }
+}
+int main()
+{
+  int argc = CIVL_argc;
+  char*  _argv[10];
+  char** argv;
+  for(int i = 0; i < 10; i++)
+    _argv[i] = &CIVL_argv[i][0];
+  argv = &_argv[0];
+  int i;
+  for(i = 0; i < 100; i++)
+    a[i] = b[i] = 1.0 * i;
+  sum = 0.0;
+  {
+    int _nthreads = 1 + $choose_int($omp_numThreads);
+    $range thread_range = 0 .. _nthreads - 1;
+    $domain(1) dom = ($domain){thread_range};
+    $omp_gteam gteam = $omp_gteam_create($here, _nthreads);
+    $omp_gshared sum_gshared = $omp_gshared_create(gteam, &sum);
+    $omp_gshared a_gshared = $omp_gshared_create(gteam, &a);
+    $omp_gshared b_gshared = $omp_gshared_create(gteam, &b);
+    parallelDataArr = ($omp_team**)($malloc($gen_root, $omp_numThreads * sizeof($omp_team*)));
+    $parfor(int _tid: dom)
+    {
+      $omp_team team = $omp_team_create($here, gteam, _tid);
+      float sum_local;
+      int sum_status;
+      float  a_local[100];
+      int  a_status[100];
+      float  b_local[100];
+      int  b_status[100];
+      $omp_shared sum_shared = $omp_shared_create(team, sum_gshared, &sum_local, &sum_status);
+      $omp_shared a_shared = $omp_shared_create(team, a_gshared, &a_local, &a_status);
+      $omp_shared b_shared = $omp_shared_create(team, b_gshared, &b_local, &b_status);
+      parallelDataArr[_tid] = &team;
+      dotprod(_tid);
+      $omp_barrier_and_flush(team);
+      $omp_shared_destroy(sum_shared);
+      $omp_shared_destroy(a_shared);
+      $omp_shared_destroy(b_shared);
+      $omp_team_destroy(team);
+    }
+    $omp_gshared_destroy(sum_gshared);
+    $omp_gshared_destroy(a_gshared);
+    $omp_gshared_destroy(b_gshared);
+    $omp_gteam_destroy(gteam);
+  }
+  printf("Sum = %f\n", sum);
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonScopeTypeNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.type</a> &gt; <span class="el_source">CommonScopeTypeNode.java</span></div><h1>CommonScopeTypeNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.type;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+/**
+ * Type node representing the type &quot;$scope&quot;. This is used to give a scope a
+ * name. It is very much like a variable declaration and is treated as such.
+ * 
+ * &quot;$scope s;&quot; is translated as a variable declaration of a variable named &quot;s&quot;,
+ * with type node an instances of this class.
+ * 
+ * @author siegel
+ * 
+ */
+public class CommonScopeTypeNode extends CommonTypeNode {
+
+	public CommonScopeTypeNode(Source source) {
+<span class="nc" id="L21">		super(source, TypeNodeKind.SCOPE);</span>
+<span class="nc" id="L22">	}</span>
+
+	@Override
+	public TypeNode copy() {
+<span class="nc" id="L26">		CommonScopeTypeNode result = new CommonScopeTypeNode(getSource());</span>
+
+<span class="nc" id="L28">		copyData(result);</span>
+<span class="nc" id="L29">		return result;</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L34">		out.print(&quot;$scope&quot;);</span>
+<span class="nc" id="L35">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

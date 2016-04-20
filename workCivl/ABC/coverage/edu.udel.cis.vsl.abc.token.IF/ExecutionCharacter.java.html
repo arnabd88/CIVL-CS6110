@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ExecutionCharacter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.IF</a> &gt; <span class="el_source">ExecutionCharacter.java</span></div><h1>ExecutionCharacter.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.token.IF;</span>
+
+public interface ExecutionCharacter {
+
+<span class="nc" id="L5">	public enum CharacterKind {</span>
+<span class="nc" id="L6">		CHAR, WCHAR, CHAR16, CHAR32</span>
+	};
+
+	CharacterKind getCharacterKind();
+
+	/**
+	 * Returns the Unicode &quot;code point&quot; for the character represented by this
+	 * literal node. Unicode assigns an integer value to each abstract character
+	 * in the range 0 to 10ffff (hex). That integer is called a &quot;code point&quot;.
+	 * Code points 0 through FF agree with ASCII.
+	 */
+	int getCodePoint();
+
+	/**
+	 * Returns the Java char representation of this unicode character. Java uses
+	 * 2 bytes to represent a char. Hence a single Java char cannot represent
+	 * every Unicode code point, but it can represent those in the
+	 * &quot;Basic Multilingual Plan&quot; (&quot;BMP&quot;), i.e., code points 0000-FFFF.
+	 * 
+	 * If this unicode character falls in the BMP range, then this array has
+	 * length 1 and its sole element is the Java character representing the
+	 * unicode character. Otherwise, this array has length 2, and the two Java
+	 * characters together represent the Unicode character, in a way specified
+	 * by the Java language; see the API documentation for class Character.
+	 */
+	char[] getCharacters();
+
+	/**
+	 * A string representation of the character without any surrounding
+	 * quotation marks. Typically one character, but for special characters
+	 * (like newlines, tabs, etc.) this string will be an escape sequence like
+	 * &quot;\n&quot; (without the quotes).
+	 * 
+	 * @return string representation, stripped down
+	 */
+	String rawString();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

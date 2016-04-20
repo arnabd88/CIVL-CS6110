@@ -1,0 +1,170 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement}}
+
+
+This represents the first part of a \$parfor construct, i.\+e., spawning processes according the specified domain.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=277pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a73413feabbb76a8c4c6fea79f209143d}{par\+Proc\+Function} ()
+\begin{DoxyCompactList}\small\item\em returns the function to be executed by the spawned processes, which is equivalent to the body of the \$parfor. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_ae6292a4613e98fb4ca115a5aae72ef40}{domain} ()
+\begin{DoxyCompactList}\small\item\em returns the domain according to which processes will be spawned. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a8bcfe6a11a3da458b362bed9a638296a}{dimension} ()
+\begin{DoxyCompactList}\small\item\em returns the dimension of the domain \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1VariableExpression}{Variable\+Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_ab7af211b7c7ae62d4389732c7b32dd9b}{dom\+Size\+Var} ()
+\begin{DoxyCompactList}\small\item\em returns the variable that represents the size of the domain, i.\+e., how many elements are contained in the domain. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1VariableExpression}{Variable\+Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a2de42596c94569b96326e64da14d494c}{par\+Procs\+Var} ()
+\begin{DoxyCompactList}\small\item\em returns the variable that represents the array of process references of processes spawned by this \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement}{Civl\+Par\+For\+Spawn\+Statement}. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_af77e71022cc5afbd0c7e8de91b627546}{set\+Par\+Proc\+Function} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} function)
+\begin{DoxyCompactList}\small\item\em updates the function which will be executed by spawned processes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This represents the first part of a \$parfor construct, i.\+e., spawning processes according the specified domain. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a8bcfe6a11a3da458b362bed9a638296a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}!dimension@{dimension}}
+\index{dimension@{dimension}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}}
+\subsubsection[{dimension}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement.\+dimension (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a8bcfe6a11a3da458b362bed9a638296a}
+
+
+returns the dimension of the domain 
+
+\begin{DoxyReturn}{Returns}
+the dimension of the domain 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_a0aec25e3929a912fc22d143ab2eca49b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_ae6292a4613e98fb4ca115a5aae72ef40}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}!domain@{domain}}
+\index{domain@{domain}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}}
+\subsubsection[{domain}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement.\+domain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_ae6292a4613e98fb4ca115a5aae72ef40}
+
+
+returns the domain according to which processes will be spawned. 
+
+\begin{DoxyReturn}{Returns}
+the domain according to which processes will be spawned. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_ad7c9f0bf61a89c5835fd73ace9fa3d23}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_ab7af211b7c7ae62d4389732c7b32dd9b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}!dom\+Size\+Var@{dom\+Size\+Var}}
+\index{dom\+Size\+Var@{dom\+Size\+Var}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}}
+\subsubsection[{dom\+Size\+Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable\+Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement.\+dom\+Size\+Var (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_ab7af211b7c7ae62d4389732c7b32dd9b}
+
+
+returns the variable that represents the size of the domain, i.\+e., how many elements are contained in the domain. 
+
+The actual value of this variable is to be updated during the execution of this \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement}{Civl\+Par\+For\+Spawn\+Statement}.
+
+\begin{DoxyReturn}{Returns}
+the variable that represents the size of the domain 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_aa8177418a99d50c72eb34801891e2177}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a73413feabbb76a8c4c6fea79f209143d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}!par\+Proc\+Function@{par\+Proc\+Function}}
+\index{par\+Proc\+Function@{par\+Proc\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}}
+\subsubsection[{par\+Proc\+Function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Function} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement.\+par\+Proc\+Function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a73413feabbb76a8c4c6fea79f209143d}
+
+
+returns the function to be executed by the spawned processes, which is equivalent to the body of the \$parfor. 
+
+\begin{DoxyReturn}{Returns}
+the function to be executed by the spawned processes, which is equivalent to the body of the \$parfor. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_acba82af9d05fa4ac0546dafd89d73982}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a2de42596c94569b96326e64da14d494c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}!par\+Procs\+Var@{par\+Procs\+Var}}
+\index{par\+Procs\+Var@{par\+Procs\+Var}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}}
+\subsubsection[{par\+Procs\+Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable\+Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement.\+par\+Procs\+Var (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_a2de42596c94569b96326e64da14d494c}
+
+
+returns the variable that represents the array of process references of processes spawned by this \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement}{Civl\+Par\+For\+Spawn\+Statement}. 
+
+\begin{DoxyReturn}{Returns}
+the variable that represents the array of references of the spawned processes. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_acc070eebcf4169815fcf4dcc36df8d7a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_af77e71022cc5afbd0c7e8de91b627546}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}!set\+Par\+Proc\+Function@{set\+Par\+Proc\+Function}}
+\index{set\+Par\+Proc\+Function@{set\+Par\+Proc\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Civl\+Par\+For\+Spawn\+Statement}}
+\subsubsection[{set\+Par\+Proc\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Civl\+Par\+For\+Spawn\+Statement.\+set\+Par\+Proc\+Function (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Function}}]{function}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CivlParForSpawnStatement_af77e71022cc5afbd0c7e8de91b627546}
+
+
+updates the function which will be executed by spawned processes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em function} & the function equivalent to the body of the \$parfor \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonCivlParForSpawnStatement_a3246155bdbfe19d639cc32426fd2025d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Civl\+Par\+For\+Spawn\+Statement}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/statement/Civl\+Par\+For\+Spawn\+Statement.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,32 @@
+/* Commandline execution:
+ *		civl verify dynamicStruct.cvl
+ * */
+#include <civlc.h>
+
+void f(int n) {
+  int sum;
+  $proc fp = $proc_null;
+  typedef struct foo {
+    int sum;
+    int bar[n];
+  } foo;
+  
+  foo s;
+  sum = (n * (n - 1)) / 2;
+  if (n > 1) {
+    fp = $spawn f(n-1);
+  }
+  s.sum = 0;
+  for (int i = 0; i < n; i++) {
+    s.bar[i] =  i;
+    s.sum += s.bar[i];
+  }
+  $assert(sum == s.sum);
+  if(fp != $proc_null) $wait(fp);
+}
+
+void main() {
+  $proc fp = $spawn f(3);
+
+  $wait(fp);
+}

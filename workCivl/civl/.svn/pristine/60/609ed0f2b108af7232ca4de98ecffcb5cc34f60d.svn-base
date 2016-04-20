@@ -1,0 +1,19 @@
+int num_in_barrier =0;
+int barrier_size = 0;
+
+void barrier_init(int* in_barrier, int size) {
+  barrier_size = size;
+  for (int i=0; i<size; i++) in_barrier[i] = 0;
+}
+
+void barrier(int* in_barrier, int tid) {
+  $atomic {
+    in_barrier[tid] = 1; // I am in the barrier
+    num_in_barrier++; // increment number in barrier
+    if (num_in_barrier == barrier_size) { // I am last to enter
+      for (int i=0; i<barrier_size; i++) in_barrier[i] = 0; // release all
+      num_in_barrier = 0; // now none are in barrier
+    }
+  }
+  $when (in_barrier[tid] == 0); // wait till I am released
+}

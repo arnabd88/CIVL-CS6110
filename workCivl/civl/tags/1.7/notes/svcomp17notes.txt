@@ -1,0 +1,6 @@
+1. __VERIFIER_nondet_X() functions are modeled using system function $havoc.
+   For scalars, there are upper/lower bounds defined as macros. Check src/include/civl/svcomp.cvl
+   One can change the default bounds by specifying the macro through command line.
+   
+
+

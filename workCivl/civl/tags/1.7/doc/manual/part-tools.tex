@@ -1,0 +1,493 @@
+\part{Tools}
+\label{part:tools}
+
+\chapter{Tool Overview}
+
+\section{Symbolic execution}
+
+The tools currently in the CIVL tool kit all use \emph{symbolic
+  execution}.  This is a technique in which variables are assigned
+symbolic rather than concrete values.  In particular, input variables
+are assigned unique \emph{symbolic constants}, which are symbols such
+as $X$, $Y$, and so on.  Operations produce symbolic expressions in
+those symbols, such as $(X+Y)/2$.
+
+\section{Commands}
+
+Current tools allow one to \emph{run} a CIVL program using random
+choice to resolve nondeterministic choices; \emph{verify} a program
+using model checking to explore all states of the program; and
+\emph{replay} a trace if an error is found.  There are also commands
+to show the results just of preprocessing or parsing a file; as these
+are basically sub-tasks of the other tasks, they are used mainly for
+debugging.
+
+Each tool is launched from the command line by typing ``\texttt{civl}
+\textit{cmd} \ldots'', where \textit{cmd} is one of
+\begin{itemize}
+\item \ct{help} : print usage information
+\item \ct{run}  : run the program using random simulation
+\item \ct{verify} : verify program
+\item \ct{replay} : replay trace for a program
+\item \ct{show} : show result of preprocessing, transforming and parsing a program
+\item \ct{compare}: compare two programs for functional equivalence
+%\item \ct{preprocess} : show result of preprocessing file only.
+\end{itemize}
+The syntax of the command line should be one of the following:
+\begin{itemize}
+\item civl \ct{show$|$run$|$verify$|$replay} [options] filename+
+\item civl \ct{compare$|$replay} [options] \ct{-spec} [options] filename+ \ct{-impl} [options] filename+
+\item civl \ct{config$|$gui}
+\item civl \ct{help} [command]
+\end{itemize}
+The additional arguments and options are described below and are also
+shown by the \ct{help} command.
+
+A number of properties are checked when running or verifying
+a CIVL program.  These include the following:
+\begin{itemize}
+\item absence of deadlocks
+\item absence of assertion violations
+\item absence of division or modulus with denominator $0$
+\item absence of illegal pointer dereferences
+\item absence of out-of-bounds array indexes
+\item absence of invalid casts
+\item every object is defined (i.e., initialized) before
+  it is used.
+\end{itemize}
+
+
+\section{Options}
+
+The following command line options are available:
+
+\newenvironment{optionlist}{\begin{flushleft}}{\end{flushleft}}
+\newcommand{\option}[2]{#1\\[0mm]\makebox[5mm]{}#2\\[3mm]}
+\newcommand{\booloption}[3]{\option{\ct{-#1} or \ct{-#1=}\textit{boolean}
+    (default: \ct{#2})}{#3}}
+\newcommand{\intoption}[3]{\option{\ct{-#1=}\textit{integer}
+    (default: \ct{#2})}{#3}}
+\newcommand{\mapoption}[2]{\option{\ct{-#1}\textit{key}\ct{=}\textit{value}}{#2}}
+\newcommand{\stringoption}[3]{\option{\ct{-#1=}\textit{string}
+    (default: \ct{#2})}{#3}}
+
+\begin{optionlist}
+\stringoption{D}{none}{    macro definitions: \textit{macro} or \textit{macro=object}}
+\booloption{\_CIVL}{true} {define \textit{\_CIVL} macro}
+ \booloption{analyze\_abs}{false}{analyze \textit{abs} (absolute value) calls}
+\booloption{ast}{false}{print the AST of the program}
+\booloption{checkDivisionByZero}{true}{check division-by-zero error}
+\booloption{checkMemoryLeak}{true}{check memory-leak error}
+\booloption{collectHeaps}{true}{collect heaps}
+\booloption{collectOutput}{false}{collect outputs}
+\booloption{collectProcesses}{true}{collect processes}
+\booloption{collectScopes}{true}{collect dyscopes}
+\stringoption{deadlock}{absolute}{deadlock choices: potential, absolute, or none}
+  \booloption{debug}{false}{debug mode: print very detailed information}
+  %\booloption{echo}{false}{print the command line}
+  \booloption{enablePrintf}{true}{enable \texttt{printf} function}
+  \intoption{errorBound}{1}{stop after finding this many errors}
+  \stringoption{errorStateEquiv}{LOC}{controls how error states are judged equivalent; match error location (\ct{LOC}), call stacks (\ct{CALLSTACK}), or full trace (\ct{FULL})}
+  \booloption{guided}{false}{user guided simulation; applies only to
+    run, ignored for all other commands}
+  \intoption{id}{0}{ID number of trace to replay}
+  \mapoption{input}{initialize input variable \textit{key} to
+    \textit{value}}
+  \intoption{maxdepth}{2147483647}{bound on search depth}
+  \booloption{min}{false}{search for minimal counterexample}
+  \booloption{mpiContract}{false}{check contracts for MPI}
+  \stringoption{ompLoopDecomp}{ROUND\_ROBIN}{choices of loop decomposition strategy: ALL, ROUND\_ROBIN, or RANDOM}
+  \booloption{ompNoSimplify}{false}{don't simplify OpenMP pragmas}
+  \booloption{preproc}{false}{show the preprocessing result}
+  \intoption{procBound}{ -1}{bound on number of live processes (no bound if negative)}
+    \booloption{random}{varies}{select enabled transitions randomly;
+    default for \texttt{run}, ignored for all other commands}
+  \booloption{saveStates}{true}{save states during depth-first search}
+  \stringoption{seed}{none}{set the random seed; applies only to run}
+  \booloption{showAmpleSet}{false}{print the ample set of each state}
+  \booloption{showAmpleSetWtStates}{false}{print ample set and state when ample set contains more than one processes}
+  \booloption{showInputs}{false}{show input variables of my program}
+  \booloption{showMemoryUnits}{false}{print the impact/reachable memory units when the state contains more than one processes}
+  \booloption{showModel}{false}{print the model}
+  \booloption{showPathCondition}{false}{show the path condition of each state}
+  \booloption{showProgram}{false}{show the final program after transformations}
+  \booloption{showProverQueries}{false}{print theorem prover queries
+    only}
+  \booloption{showQueries}{false}{print all queries}
+  \booloption{showSavedStates}{false}{print saved states only}
+  \booloption{showStates}{false}{print all states}
+  \booloption{showTransitions}{false}{print transitions}
+  \booloption{showUnreached}{false}{print unreachable code}
+  \booloption{simplify}{true}{simplify states?}
+  \booloption{solve}{false}{try to solve for concrete counterexample}
+  \stringoption{sysIncludePath}{none}{set the system include path}
+  \intoption{timeout}{-1}{time out in seconds, never time out if negative}
+  \stringoption{trace}{none}{filename of trace to replay}
+  \stringoption{userIncludePath}{}{set the user include path}
+  \booloption{verbose}{false}{verbose mode}
+\end{optionlist}
+
+\section{Errors}
+\label{sec:errors}
+
+When a property violation occurs, either in \emph{verification} or
+\emph{run} mode, a brief report is written to the screen.  In
+addition, a report may be \emph{logged} in the directory
+\texttt{CIVLREP}.
+
+The \emph{error bound} parameter determines how many errors can be
+encountered before a search terminates.  By default, the error bound
+is 1, meaning a search will stop as soon as the first error is found.
+The error bound can be set to a higher number on the command line
+using option \emph{errorBound}.
+
+When the error bound is greater than one, the CIVL verifier continues
+searching after the first error is discovered.  It first attempts to
+``recover'' from the error by adding to the path condition a clause
+which guarantees that the error cannot happen.  For example, if the
+error was caused by a possible division by zero, $x/y$, where $y$ is
+an unconstrained real symbolic constant, CIVL will add to the path
+condition the predicate $y\neq 0$, and continue the search.  In some
+cases, CIVL determines that the modified path condition is
+unsatisfiable, in which case the search will back-track in the usual
+symbolic execution way.
+
+In addition to the printed reports, errors are logged.  However, CIVL
+follows a protocol aimed at limiting the number of reports of errors
+which are essentially the same.  This protocol uses an adjustable
+equivalence relation on the set of errors.  Two erroneous states are
+considered equivalent if the errors are of the same \emph{kind}
+(deadlock, division by zero, illegal pointer dereference, etc.) and,
+by default, if every process is at the same location in both states
+(the \ct{LOC} error state equivalence).
+The \emph{errorStateEquiv} option can be used to apply a finer
+equivalence that considers the call stacks in each process in
+addition to the location, \ct{CALLSTACK}, or that considers
+the full trace reaching the error location, \ct{FULL}.
+When an error is encountered, CIVL first checks to see if an earlier equivalent
+errors exists in the log.  If so, the lengths of the traces leading to
+the two error states are compared.  If the new trace is shorter, the
+old log entry is replaced with the new one.  In this way, only the
+shortest representative error trace for each equivalence class of
+errors is recorded in the log.
+
+A log entry actually entails two things: first, a plain text entry
+similar to the one printed to the screen is made in a log file in
+\texttt{CIVLREP}.  The name of this file is usually of the form
+\texttt{\textit{root}{\U}log.txt}, where \textit{root} is the root of
+the original file name, i.e., the substring of the file name that ends
+just before the first `\texttt{.}'.  For example, if the file name is
+\texttt{diningBad.cvl}, the log file will be named
+\texttt{diningBad{\U}log.txt}.  This is a plain text, human-readable
+file which summarizes the results of the verification run.
+
+In addition, each saved trace is stored in a separate file in
+\texttt{CIVLREP}.  The names of these files have the form
+\texttt{\textit{root}{\U}\textit{id}.trace}, where \textit{id} is the
+error ID (reported when the error is printed and logged).  This file
+is not intended to be human-readable.  It contains a compressed
+representation of the trace, including all of the options and
+parameter values and choices made a nondeterministic points.  
+This file is used by CIVL when replaying an error trace.
+
+As mentioned above, the CIVL \texttt{replay} command is used to play
+an earlier-saved error trace.  When more than one trace has been
+saved, the \texttt{-id} command line option can be used to specify
+which one to play. (The default \emph{id} is 0).
+
+\chapter{Interpreting the Output}
+
+\section{Trace steps and transitions}
+
+A trace step is a sequence of transitions performed by a particular process. 
+Trace steps and transitions are printed during if option
+\emph{showTransitions} is selected.  A typical trace step is printed
+as follows:
+
+\begin{verbatim}
+Step 7: State 7, p1:  12->13: left=0 at diningBad.cvl:16.2-15 "int left = id"  13->14: right=(0+1)%2 [right:=1] at diningBad.cvl:17.2-26 "int right = (id  ... n"--> State 8
+\end{verbatim}
+
+This means that the trace step with ID 7 begins executing from the state with
+ID 7, and it is executed by process p1.  The trace step
+is executed in a sequence of transitions which are atomic; 
+in this case it consists of two transitions.
+
+Process p1 begins at location 12; this is a static location in the
+program graph of a function in the CIVL model.  Details about the
+locations can be seen by printing the CIVL model.  In executing the
+first step, control moves from location 12 to location 13.  This first
+transition is an edge in the program graph corresponding to an assignment
+statement.
+
+The remainder of the line describing the transition specifies the part of
+the original source code corresponding to this transition.  The source code
+fragment can be found in file \texttt{diningBad.cvl}.  
+%To save space and avoid
+%constantly repeating long paths, all the source files involved in a
+%program are printed once and assigned keys such as \texttt{f0},
+%\texttt{f1}, etc.  The legend is printed out once at the beginning of
+%the run; in this case it is simply the following:
+%\begin{verbatim}
+%File name list:
+%f0	: dining.cvl
+%\end{verbatim}
+
+The source code fragment begins on character 2 of line 16 of
+\texttt{diningBad.cvl}, and extends to character 15 of that line.  This range is
+inclusive on the left and exclusive on the right, so the total number
+of characters in this range is $15-2=13$.  The source code is 
+printed next inside double quotes.  For longer
+ranges, this excerpt will be abbreviated using an elipsis.
+
+The second transition executes another assignment statement, which results in
+popping the top activation frame from process 0's call stack. The
+function returning is \texttt{init}.  Since the program counter for
+that frame disappears with the execution of this step, there is no
+final value for its new location; this is signified using the
+pseudo-location \texttt{RET}.
+
+In the new top frame, control is at location 7, and an assignment
+statement is executed, moving control to location 8.  With this last
+step, the transition ends at State 74.
+
+Between transitions, processes can be renumbered.  Hence a process
+with PID 0 in one state, may have a different PID in another state.
+The same is true for dynamic scope IDs.  Within a single transition,
+however, these numbers will not change.
+
+\section{States}
+
+States are printed typically when a property is violated, at the
+initial or final points of a trace replay, or if the option
+\emph{showStates}, \emph{showSavedStates}, \emph{verbose}, or
+\emph{debug} is selected.
+
+\begin{figure}
+  \begin{small}
+\begin{verbatim}
+State 7
+| Path condition
+| | 0 <= SIZEOF(dynamicType<146>)+-1
+| Dynamic scopes
+| | dyscope d0 (id=0, parent=d0, static=0)
+| | | reachers = {0}
+| | | variables
+| | | | __atomic_lock_var = process<-1>
+| | | | __heap = NULL
+| | dyscope d1 (id=1, parent=d0, static=4)
+| | | reachers = {0}
+| | | variables
+| | | | __heap = $heap<(A[1][])<H_p0s1v0i0l0[0:=A<(H_p0s1v0i0l0[0].0)[0:=1, 1:=2, 2:=3],2>]>>
+| | | | a = &heapObject<d1,0,0>[0]
+| | | | b = &heapObject<d1,0,0>[0].a[2]
+| Process states
+| | process p0 (id=0)
+| | | atomicCount=0
+| | | call stack
+| | | | Frame[function=_CIVL_system, location=14, f0:25.2-9 "$assert", dyscope=d1]
+\end{verbatim}
+  \end{small}
+  \caption{Complete print-out of a state}
+  \label{fig:state-print}
+\end{figure}
+
+A complete print-out of a state can be seen in Figure
+\ref{fig:state-print}.  The state is presented in hierarchical way.
+At the top-most level of this hierarchy, there are 3 main parts to the
+state:
+\begin{enumerate}
+\item the \emph{path condition}, i.e., the boolean-valued symbolic
+  expression used in symbolic execution to keep track of all
+  conditions on the input symbols which must hold in order for the
+  current path to have been followed;
+\item the \emph{dynamic scopes}, and
+\item the \emph{process states}.
+\end{enumerate}
+
+The dynamic scopes are numbered starting from 0.  This numbering is
+arbitrary and is invisible to the program, i.e., there is no way for
+the program to obtain its dynamic scope ID.  This allows the verifier
+to renumber dynamic scopes at will in order to transform a state into
+an equivalence canonical form.
+
+The print-out of each dynamic scope specifies the ID of the dyscope's
+parent in the dyscope tree.  (The root dyscope shows $-1$ for the
+parent.)  This specifies the complete tree structure of the dyscopes.
+Each dyscope is an instance of some static scope; the representation
+also shows the ID of this static scope.
+
+The next line in the representation of the dyscope shows a set of
+\emph{reachers}.  These are the PIDs of the processes that can
+\emph{reach} this dyscope.  A process can reach a dyscope if there is
+path in the dyscope tree that starts from a dyscope referenced by a
+frame on the process' call stack and follows the parent edges in the
+tree.
+
+The \emph{variables} section of the dyscope representation consists of
+one line for each variable in the static scope corresponding to the
+dyscope.  There are also special hidden variables, such as the heap.
+In each case, the value assigned to the variable is shown.  A value of
+\texttt{NULL} indicates that the variable is currently undefined.  The format for the
+value of a pointer depends on the type of object being referenced, as 
+follows:
+\begin{itemize}
+\item A variable: {\tt \&}\emph{variable} {\tt <}\emph{dyscope name}{\tt >}
+\item An element of an array: {\tt \&}\emph{array} {\tt <}\emph{dyscope name}{\tt >[}\emph{index}{\tt]}
+\item A struct field: {\tt \&}\emph{variable} {\tt <}\emph{dyscope name}{\tt >.}\emph{field}
+\item A heap cell: \emph{variable} {\tt <}\emph{dyscope name}{\tt,} \emph{malloc ID}{\tt,} \emph{malloc call number}{\tt >}
+\end{itemize}
+
+The process states section consists of one sub-section for each
+process currently in the state.  Like the dynamic scopes, the
+processes are numbered in some arbitrary way. For each process, the
+value of the \emph{atomic count} is given.  This is the nesting depth
+of the atomic blocks in which the process is currently located, i.e.,
+the number of times the process has entered an atomic block without
+exiting the block.
+
+The call stack of the process lists the activation frames on the stack
+from top to bottom.  The frame at the top correspond to the function
+currently executing in that process.  The name of the function, the
+value of the program counter (location), and the source code for that
+location, and the dyscope ID for the frame are shown.
+
+\section{Property Violations}
+
+As described in Section \ref{sec:errors}, an error report is printed
+whenever CIVL encounters an error. A typical error report appears as
+follows:
+\begin{small}
+\begin{verbatim}
+Error 0 encountered at depth 21:
+CIVL execution error (kind: DEADLOCK, certainty: PROVEABLE)
+A deadlock is possible:
+  Path condition: true
+  Enabling predicate: false
+ProcessState 0: terminated
+ProcessState 1: at location 25, f0:21.30-42 "forks[right]"
+  Enabling predicate: false
+ProcessState 2: at location 25, f0:21.30-42 "forks[right]"
+  Enabling predicate: false
+at f0:21.30-42 "forks[right]".
+\end{verbatim}
+\end{small}
+
+The report begins with ``Error 0''.  The errors are numbered in the
+order they are discovered in this search; this indicates that this is
+the first (0th) error encountered.  The depth refers to the length of
+the depth-first search stack when the error was encountered.  In this
+case, the depth was 21, meaning that the trace leading to the
+erroneous state is a sequence of 21 states and 20 transitions.
+
+The errors are categorized by \emph{kind}.  The error kinds include
+\emph{deadlock}, indicating that it is possible no transition is
+enabled in the state; \emph{assertion violation}, indicating an
+assertion may fail in the state; \emph{division by zero}; and
+\emph{out of bounds}, indicating an array index may be out of bounds,
+among many more.
+
+In addition to the brief report shown above, most error reports
+also include a complete print-out of the state at which the error
+occurred.  They will also include additional information specific
+to the kind of error.  For example, the deadlock error report shown
+above includes the following information:
+\begin{itemize}
+\item the value of the path condition;
+\item the \emph{enabling predicate}, which is the disjunction of the
+  guards associated to all transitions departing from the current
+  state. This is the predicate that CIVL has found to possibly be
+  unsatisfiable under the context of the path condition; and
+\item for each process, the current location of the process and the
+  enabling predicate for that process, i.e., the disjunction of the
+  guards associated to all transitions departing from the current
+  state in that process (CIVL has found that all of these may be
+  unsatisfiable).
+\end{itemize}
+
+Errors are also categorized as to their \emph{certainty}.  CIVL is
+\emph{conservative}, meaning that if it not sure a property holds in a
+state, it will report it.  This means that it may sometimes raise
+\emph{false alarms}, i.e., report a possible error even when none
+exists. The certainty measures how certain CIVL is that the error is
+real.  The certainty levels, from most to least certain, are as
+follows:
+\begin{enumerate}
+\item \emph{concrete}: this indicates that CIVL has actually found
+  concrete
+  values for all input variables that are guaranteed to drive the
+  execution along the current trace and result in the error;
+\item \emph{proveable}: this indicates that a theorem prover (either
+  the external one or CIVL's built-in prover) has determined that
+  the error is feasible, which includes proving that the path condition
+  is satisfiable; however, it has not necessarily found concrete
+  values for the inputs;
+\item \emph{maybe}: this indicates the prover is not sure whether this
+  is an error; this could be due to the incompleteness of the decision
+  procecure, or it could be a real error;
+\item \emph{none}: probably an internal CIVL error: the theorem prover
+  has not said anything.
+\end{enumerate}
+
+\section{Statistics}
+
+\begin{itemize}
+\item \emph{validCalls}: the number of calls to the CIVL \emph{valid}
+  method, used to determine if a first-order formula is valid under
+  a given first-order context.   Some of these queries are resolved
+  quickly by CIVL; when CIVL cannot resolve the query itself, it
+  calls a separate theorem prover (CVC3)
+\item \emph{proverCalls}: the number of calls to the separate theorem
+  prover's \emph{valid} method
+\item \emph{memory}: the total amount of memory, in bytes, consumed by
+  the Java virtual machine at the end of the search/run.
+\item \emph{time}: the total time, in seconds, used to perform the
+  CIVL operation
+\item \emph{maxProcs}: the maximum process count achieved, over all states 
+  encountered in the search/run
+\item \emph{statesInstantiated}: the number of state objects
+  instantiated during the course of the verification/run
+\item \emph{statesSaved}: the number of states saved in the course
+  of a search
+\item \emph{statesSeen}: the number of states pushed onto the 
+  depth-first search stack in the course of the search; note
+  that ``intermediate states'' created in the process of executing
+  a transition are not pushed onto the stack, only the final
+  state resulting from the transition is pushed
+\item \emph{statesMatched}: the number of times a state encountered
+  in the depth-first search was found to match a saved state seen
+  earlier in the search
+\item \emph{steps}: the total number of primitive steps executed
+  during the verification/run.  A step is the smallest, atomic,
+  unit of execution; each transition is composed of one or more steps.
+  This number is a good measure for the total amount of ``work''
+  carried out by CIVL
+\item \emph{transitions}: the total number of transitions executed
+  during the verification/run.  A transition is a coarser unit
+  of execution; each transition consists of one or more steps 
+  executed from a single process, resulting in a state which is then
+  pushed onto the DFS stack.
+\end{itemize}
+
+\chapter{Emacs mode}
+
+A CIVL-C mode for the \texttt{emacs} text editor is available in
+directory \texttt{emacs} in the CIVL distribution.  This provides
+syntax highlighting and automatic indentation for CIVL-C programs.
+
+To install this mode:
+\begin{enumerate}
+\item Copy file \texttt{civl-syntax.el} to \verb!~/.emacs.d/lisp! or another favorite location
+\item Include that path in your load path in \verb!.emacs!:
+\begin{verbatim}
+(add-to-list 'load-path "~/.emacs.d/lisp")
+\end{verbatim}
+\item Add the following lines to your \verb!~/.emacs! file:
+\begin{verbatim}
+(require 'civl-syntax)
+(civl-syntax)
+\end{verbatim}
+\end{enumerate}
+
+We are grateful to William Killian of the University of Delaware for
+writing this emacs module.

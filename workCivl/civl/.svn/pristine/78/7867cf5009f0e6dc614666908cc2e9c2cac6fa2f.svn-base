@@ -1,0 +1,101 @@
+Dependencies and licenses...
+
+ pcollections : MIT license,
+   http://opensource.org/licenses/mit-license.php
+   need to distribute license with product
+ clj-ds
+   EPL (Eclipse), https://github.com/krukow/clj-ds/blob/master/epl-v10.html,
+   distribute license with code
+ cvc3
+   http://www.cs.nyu.edu/acsys/cvc3/doc/LICENSE.html
+   uses zchaff which has limiting license
+ antlr-runtime
+   BSD license: http://antlr.org/license.html   
+ libgmp: LGPL
+
+
+include licenses in distribution
+
+include version number and civl revision?
+
+CIVL/
+  lib/
+    civl-0.1-r239.jar
+    civl.jar -> civl-0.1-r239.jar
+    etc.
+  LICENSE
+  bin/
+  doc/
+
+Stable releases: each with complete distributions or just jar,
+different OS types
+
+Unstable release: just give the latest, complete distribution and
+just the civl jar.
+
+Process for unstable latest: automate in build script
+  ant should do "release" target: create directory called
+  "release" with whatever you want, copy it over. waste.
+
+worker should perform perl substitutions, bundle everything
+up into one directory called build-r256 (e.g.)
+
+preparing release: create directories, copy jar and dependencies,
+create symlinks, tar, gzip
+
+prepare stable release: goes in tags, leave out revision number
+
+how to tell which version you are in.  Put in repository a file
+called VERSION.  That is it.
+
+Stable: leave off r part.  put in tags directory
+
+
+release_civl
+stable_release_civl
+
+put VERSION file in CIVL main directory.
+manager needs to copy jar file over (civl.jar) and rename it?
+manager needs to know what it is called.
+
+
+civl/
+  test/
+    trunk/
+      latest@
+      r98/
+      r99/
+      release/
+        civl.jar@->
+        CIVL.tgz@->
+        civl-trunk_99.jar
+        CIVL-trunk_99.tgz  (untars to CIVL-trunk-r99/, and inside there is
+civl-trunk-r99.jar and in bin civl, which is a script that references the
+directory /Applications/CIVL-trunk-r99 ... )  This way user can have multiple
+CIVL versions installed at once and set path appropriately.
+    1.0/
+      latest@
+      r100/
+      r101/
+      civl-1.0_101.jar
+      CIVL-1.0_101.tgz
+
+web/
+  r123/
+    junit/
+    coverage/
+    javadoc/
+    release/
+      CIVL-1.0-osx-r279.tgz
+      CIVL-1.0-linux-r279.tgz
+      civl.jar
+
+
+
+give some examples usages.
+
+documentation must be included.
+
+command line options.
+
+

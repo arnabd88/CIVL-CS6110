@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <civlc.cvh>
+
+$input int X;
+$assume(1 <= X && X <= 2);
+
+void proc(int id){
+  printf("hello, I'm process %d\n", id);
+}
+
+int main(void) {
+  $elaborate(X);
+  //printf("%d\n", X);
+  $parfor(int i: 0 .. X-1)
+    proc(i);
+  return 0;
+}

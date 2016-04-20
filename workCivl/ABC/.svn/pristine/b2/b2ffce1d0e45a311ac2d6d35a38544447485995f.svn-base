@@ -1,0 +1,123 @@
+/* This header file contains the core definitions of the CIVL-C language,
+ * including standard types and function prototypes.
+ */
+
+#ifndef __CIVLC__
+#define __CIVLC__
+
+#include<op.h>
+
+// Ignore GNU C extensions, for now...  done elsewhere                                        
+// #define __attribute__(X)
+
+/* *********************  Standard Constants and Types ********************* */
+#define $true 1
+
+#define $false 0
+
+#ifndef NULL
+#define NULL ((void*)0)
+#endif
+
+#ifndef __UNSIGNED_BOUND
+#define __UNSIGNED_BOUND 32
+#endif
+
+typedef unsigned long int size_t;
+
+/* **************************  Basic CIVL-C Types ************************** */ 
+/* The CIVL-C process reference type */ 
+typedef struct $proc $proc;
+
+/* The CIVL-C scope type, used to represent a scope */
+typedef struct $scope $scope;
+
+/* The CIVL-C dynamic type, used to represent a symbolic type */
+typedef struct $dynamic $dynamic;
+
+typedef enum Operation $operation;
+
+
+/* The integer iterator */
+//typedef struct $int_iter * $int_iter;
+
+/* **************************** Misc. Functions **************************** */
+
+/* Wait for another process p to terminate. */
+$system void $wait($proc p);
+
+/* Blocks until all processes referred to by the given 
+   array terminates. */
+$system void $waitall($proc *procs, int numProcs);
+
+/* Terminate the calling process. */
+$system $pure void $exit(void);
+
+/* Nondeterministic choice of integer i, such that 0<=i<n. */
+$system int $choose_int(int n);
+
+/* Returns $true iff p is a defined procecess value (i.e., 
+the value of the process id is greater than 0) */
+//_Bool $proc_defined($proc p);
+
+/* Returns $true iff s is a defined scope value (i.e., 
+the scope s is still valid) */
+//_Bool $scope_defined($scope s);
+
+/*
+ * Returns $true iff the given object has a defined value.
+*/
+//_Bool $defined(void* obj);
+
+$system void $assert(_Bool expr, ...);
+
+$system void $assume(_Bool expr);
+
+/* Elaborate tricks: elaborating a given variable */
+$system $pure void $elaborate(int x);
+
+/* Elaborates the given domain */
+//void $elaborate_domain($domain dom);
+
+/* get a unique non-negative integer number for time count */
+$system int $next_time_count(void);
+
+/* print the path condition of the current state */
+$system $pure void $pathCondition(void);
+
+/* is the given value concrete? */
+$system $pure _Bool $is_concrete_int(int value);
+
+/* **************************** Memory Functions *************************** */
+
+/* The CIVL-C malloc function, which takes a reference to a scope */
+$system void* $malloc($scope s, int size);
+
+/* The CIVL-C de-allocation function, which takes a pointer, just like 
+ * the standard "free" */
+$system void $free(void *p);
+
+/* Assigns arbitrary value to the memory location specified by the given pointer.
+ */
+$system void $havoc(void *ptr);
+
+/* Returns the value of real number power operation with the given base and exponent.
+ */
+$system double $pow(double base, double exp);
+
+/* *************************** Iterator Functions ************************** */
+
+/* Tells whether the integer iterator has any more elements */
+//_Bool $int_iter_hasNext($int_iter iter);
+
+/* Returns the next element in the iterator (and updates the iterator) */
+//int $int_iter_next($int_iter iter);
+
+/* Creates a new iterator for an array of integers, and returns the
+ * handle of the iterator. */
+//$int_iter $int_iter_create($scope scope, int *array, int size);
+
+/* Deletes an $int_iter object from the heap. */
+//void $int_iter_destroy($int_iter iter);
+
+#endif

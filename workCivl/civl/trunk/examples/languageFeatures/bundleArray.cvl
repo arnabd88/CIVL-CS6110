@@ -1,0 +1,19 @@
+/* Commandline execution:
+ *		civl verify bundleArray.cvl
+ * */
+#include<civlc.cvh>
+#include<bundle.cvh>
+
+$input int N;
+$assume((N>=2));
+$input double a[N];
+
+void main() {
+  double b[N];
+  $bundle bun;
+
+  bun = $bundle_pack(&a[0], N*sizeof(double));
+  $bundle_unpack(bun, &b[0]);
+  $assert(a[0]==b[0]);
+  $assert(a[1]==b[1]);
+}

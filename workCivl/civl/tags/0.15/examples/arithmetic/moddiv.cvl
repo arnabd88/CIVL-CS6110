@@ -1,0 +1,13 @@
+#include <civlc.h>
+#include <stdio.h>
+
+$input int A;
+$input int B;
+$input int C;
+$assume A > 0;
+$assume B > 0;
+$assume C > 0;
+
+void main() {
+ printf("result of modulo is %d\n", A % (B * C));
+}

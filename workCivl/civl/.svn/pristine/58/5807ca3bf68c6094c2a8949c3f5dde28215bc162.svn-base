@@ -1,0 +1,56 @@
+/**
+ * This program implements the reader-writer problem.
+ * The program deals with situations in which many threads must 
+ * access the same shared memory at one time, some reading and some writing, 
+ * with the natural constraint that no process may access the share for reading 
+ * or writing while another process is in the act of writing to it. 
+ * (In particular, it is allowed for two or more readers to access the share at the same time.)
+ */
+#include<civlc.cvh>
+
+$input int NREADER = 3;
+$input int NWRITER = 3;
+int writeLock = 0;
+int readLock = 0;
+int writeCount = 0;
+int readCount = 0;
+
+void reader(int rid){
+    while($true){
+        $when(writeLock == 0) readLock = 1;
+        readCount++;
+        // reading
+        $assert((writeCount == 0));
+        readCount--;
+        $atom{
+            if(readCount = 0)
+                readLock = 0;
+        }
+    }
+}
+
+void writer(int wid){
+    while($true){
+        $when(writeLock == 0 && readLock == 0) writeLock = 1;
+        $assert((readCount == 0  && writeCount == 0));
+        writeCount++;
+        // writing
+        $assert((readCount == 0 && writeCount == 1));
+        writeCount--;
+        writeLock = 0;
+    }
+}
+
+void main(){
+    $proc readers[NREADER];
+    $proc writers[NWRITER];
+    
+    for(int i = 0; i < NWRITER; i++){
+        writers[i] = $spawn writer(i);
+    }
+    for(int i = 0; i < NREADER; i++){
+        readers[i] = $spawn reader(i);
+    }
+    $waitall(readers, NREADER);
+    $waitall(writers, NWRITER);
+}

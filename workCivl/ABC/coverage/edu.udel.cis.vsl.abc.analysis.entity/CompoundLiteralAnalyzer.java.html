@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CompoundLiteralAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">CompoundLiteralAnalyzer.java</span></div><h1>CompoundLiteralAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.PairNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.ArrayDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.FieldDesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.LiteralObject;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Field;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.QualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.ValueFactory;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+/**
+ * An instance of this class is used to analyzer compound literals.
+ * 
+ * Initialization, including of compound objects, is specified in C11 6.7.9.
+ * Note in particular the following:
+ * 
+ * &lt;pre&gt;
+ * 2. No initializer shall attempt to provide a value for an object
+ *    not contained within the entity being initialized.
+ * 3. The type of the entity to be initialized shall be an array
+ *    of unknown size or a complete object type that is not a
+ *    variable length array type.
+ * 4. All the expressions in an initializer for an object that has
+ *    static or thread storage duration shall be constant expressions
+ *    or string literals.
+ * 5. If the declaration of an identifier has block scope, and
+ *    the identifier has external or internal linkage, the
+ *    declaration shall have no initializer for the identifier.
+ * 6. If a designator has the form
+ *          [ constant-expression ]
+ * 	  then the current object (defined below) shall have array
+ *    type and the expression shall be an integer constant expression.
+ *    If the array is of unknown size, any nonnegative value is valid.
+ * 7. If a designator has the form
+ *          . identifier
+ *    then the current object (defined below) shall have structure
+ *    or union type and the identifier shall be the name of a
+ *    member of that type.
+ * &lt;/pre&gt;
+ * 
+ * The array extents must be either constants (e.g., [3]) or empty ([]). After
+ * the first non-array type is reached from the root, they must all be
+ * constants. Hence there is a prefix of array types which may or may not be
+ * complete, followed by types which must be complete.
+ */
+public class CompoundLiteralAnalyzer {
+
+	// ***************************** Fields *******************************
+
+	/** The entity analyzer controlling this declaration analyzer. */
+	private EntityAnalyzer entityAnalyzer;
+
+	private NodeFactory nodeFactory;
+
+	private TypeFactory typeFactory;
+
+	private ValueFactory valueFactory;
+
+	private IntegerType intType;
+
+	// ************************** Constructors ****************************
+
+<span class="nc" id="L82">	public CompoundLiteralAnalyzer(EntityAnalyzer entityAnalyzer) {</span>
+<span class="nc" id="L83">		this.entityAnalyzer = entityAnalyzer;</span>
+<span class="nc" id="L84">		this.nodeFactory = entityAnalyzer.nodeFactory;</span>
+<span class="nc" id="L85">		this.typeFactory = entityAnalyzer.typeFactory;</span>
+<span class="nc" id="L86">		this.valueFactory = entityAnalyzer.valueFactory;</span>
+<span class="nc" id="L87">		this.intType = (IntegerType) typeFactory.basicType(BasicTypeKind.INT);</span>
+<span class="nc" id="L88">	}</span>
+
+	// ************************* Exported Methods *************************
+
+	void processCompoundInitializer(CompoundInitializerNode compoundInitNode,
+			ObjectType type) throws SyntaxException {
+<span class="nc" id="L94">		LiteralTypeNode ltNode = makeTypeTree(type);</span>
+<span class="nc" id="L95">		CommonCompoundLiteralObject literalObject = interpret(compoundInitNode,</span>
+<span class="nc" id="L96">				ltNode);</span>
+<span class="nc" id="L97">		ObjectType completeType = extractType(ltNode);</span>
+
+<span class="nc" id="L99">		fill(literalObject);</span>
+<span class="nc" id="L100">		compoundInitNode.setLiteralObject(literalObject);</span>
+<span class="nc" id="L101">		compoundInitNode.setType(completeType);</span>
+<span class="nc" id="L102">	}</span>
+
+	// ************************* Private Methods **************************
+
+	private SyntaxException error(String message, ASTNode node) {
+<span class="nc" id="L107">		return entityAnalyzer.error(message, node);</span>
+	}
+
+	private SyntaxException error(UnsourcedException e, ASTNode node) {
+<span class="nc" id="L111">		return entityAnalyzer.error(e, node);</span>
+	}
+
+	private LiteralTypeNode makeTypeTree(ObjectType type) {
+<span class="nc bnc" id="L115" title="All 4 branches missed.">		switch (type.kind()) {</span>
+		case ARRAY: {
+<span class="nc" id="L117">			LiteralTypeNode child = makeTypeTree(((ArrayType) type)</span>
+<span class="nc" id="L118">					.getElementType());</span>
+<span class="nc" id="L119">			LiteralTypeNode result = new LiteralArrayTypeNode((ArrayType) type,</span>
+<span class="nc" id="L120">					child);</span>
+
+<span class="nc" id="L122">			child.setParent(result);</span>
+<span class="nc" id="L123">			return result;</span>
+		}
+		case STRUCTURE_OR_UNION: {
+<span class="nc" id="L126">			StructureOrUnionType sut = (StructureOrUnionType) type;</span>
+<span class="nc" id="L127">			int numFields = sut.getNumFields();</span>
+<span class="nc" id="L128">			LiteralTypeNode[] children = new LiteralTypeNode[numFields];</span>
+			LiteralTypeNode result;
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			for (int i = 0; i &lt; numFields; i++) {</span>
+<span class="nc" id="L132">				Field field = sut.getField(i);</span>
+<span class="nc" id="L133">				ObjectType fieldType = field.getType();</span>
+<span class="nc" id="L134">				LiteralTypeNode child = makeTypeTree(fieldType);</span>
+
+<span class="nc" id="L136">				children[i] = child;</span>
+			}
+<span class="nc" id="L138">			result = new LiteralStructOrUnionTypeNode(sut, children);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			for (int i = 0; i &lt; numFields; i++)</span>
+<span class="nc" id="L140">				children[i].setParent(result);</span>
+<span class="nc" id="L141">			return result;</span>
+		}
+		case QUALIFIED: {
+<span class="nc" id="L144">			return makeTypeTree(((QualifiedObjectType) type).getBaseType());</span>
+		}
+		default:
+<span class="nc" id="L147">			return new LiteralScalarTypeNode(type);</span>
+		}
+	}
+
+	/**
+	 * Extracts the complete type from the ltNode after it has been refined
+	 * through the construction of the literal object.
+	 * 
+	 * As soon as you hit a non-array type, you can stop, because the fields of
+	 * structs or unions have to be complete, except for the last
+	 * &quot;flexible member&quot;, but that can't be initialized.
+	 * 
+	 * @param ltNode
+	 *            the literal type node, which has been updated after processing
+	 *            the compound literal
+	 * @return the complete Type specified by that node
+	 */
+	private ObjectType extractType(LiteralTypeNode ltNode) {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (ltNode instanceof LiteralArrayTypeNode) {</span>
+<span class="nc" id="L166">			LiteralTypeNode child = ((LiteralArrayTypeNode) ltNode)</span>
+<span class="nc" id="L167">					.getElementNode();</span>
+<span class="nc" id="L168">			ObjectType elementType = extractType(child);</span>
+<span class="nc" id="L169">			int length = ltNode.length();</span>
+
+<span class="nc" id="L171">			return typeFactory.arrayType(elementType,</span>
+<span class="nc" id="L172">					valueFactory.integerValue(intType, length));</span>
+		}
+<span class="nc" id="L174">		return ltNode.getType();</span>
+	}
+
+	/**
+	 * Constructs an abstract Designation from an AST designation node.
+	 * 
+	 * @param desNode
+	 * @param ltNode
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private Designation processDesignation(DesignationNode desNode,
+			LiteralTypeNode ltNode) throws SyntaxException {
+<span class="nc" id="L187">		Designation result = new Designation(ltNode);</span>
+
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		for (DesignatorNode designatorNode : desNode) {</span>
+			int index;
+
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (designatorNode instanceof FieldDesignatorNode) {</span>
+<span class="nc" id="L193">				IdentifierNode fieldId = ((FieldDesignatorNode) designatorNode)</span>
+<span class="nc" id="L194">						.getField();</span>
+<span class="nc" id="L195">				String fieldName = fieldId.name();</span>
+<span class="nc" id="L196">				StructureOrUnionType suType = (StructureOrUnionType) ltNode</span>
+<span class="nc" id="L197">						.getType();</span>
+<span class="nc" id="L198">				Field field = suType.getField(fieldName);</span>
+
+<span class="nc bnc" id="L200" title="All 2 branches missed.">				if (field == null)</span>
+<span class="nc" id="L201">					throw error(&quot;Structure or union type &quot; + suType.getTag()</span>
+<span class="nc" id="L202">							+ &quot; contains no field named &quot; + fieldName, fieldId);</span>
+<span class="nc" id="L203">				fieldId.setEntity(field);</span>
+<span class="nc" id="L204">				index = field.getMemberIndex();</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			} else if (designatorNode instanceof ArrayDesignatorNode) {</span>
+<span class="nc" id="L206">				ExpressionNode indexExpr = ((ArrayDesignatorNode) designatorNode)</span>
+<span class="nc" id="L207">						.getIndex();</span>
+				IntegerValue indexValue;
+
+<span class="nc" id="L210">				entityAnalyzer.expressionAnalyzer.processExpression(indexExpr);</span>
+<span class="nc" id="L211">				indexValue = (IntegerValue) nodeFactory</span>
+<span class="nc" id="L212">						.getConstantValue(indexExpr);</span>
+<span class="nc" id="L213">				index = indexValue.getIntegerValue().intValue();</span>
+<span class="nc" id="L214">			} else</span>
+<span class="nc" id="L215">				throw new ABCRuntimeException(</span>
+<span class="nc" id="L216">						&quot;Unreachable: unknown kind of designator node: &quot;</span>
+<span class="nc" id="L217">								+ designatorNode);</span>
+<span class="nc" id="L218">			result.add(new Navigator(index, designatorNode.getSource()));</span>
+		}
+<span class="nc" id="L220">		return result;</span>
+	}
+
+	private CommonCompoundLiteralObject interpret(
+			CompoundInitializerNode compoundInitNode, LiteralTypeNode ltNode)
+			throws SyntaxException {
+<span class="nc" id="L226">		CommonCompoundLiteralObject result = new CommonCompoundLiteralObject(</span>
+<span class="nc" id="L227">				ltNode, compoundInitNode);</span>
+<span class="nc" id="L228">		Designation position = new Designation(ltNode);</span>
+
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		for (PairNode&lt;DesignationNode, InitializerNode&gt; pair : compoundInitNode) {</span>
+<span class="nc" id="L231">			DesignationNode desNode = pair.getLeft();</span>
+<span class="nc" id="L232">			InitializerNode initNode = pair.getRight();</span>
+			LiteralObject subLiteral;
+			LiteralTypeNode subType;
+
+<span class="nc bnc" id="L236" title="All 2 branches missed.">			if (desNode != null) {</span>
+<span class="nc" id="L237">				position = processDesignation(desNode, ltNode);</span>
+<span class="nc" id="L238">			} else {</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">				if (position.length() == 0)</span>
+<span class="nc" id="L240">					position.add(new Navigator(0, initNode.getSource()));</span>
+				else
+<span class="nc" id="L242">					position.increment(ltNode);</span>
+			}
+<span class="nc bnc" id="L244" title="All 2 branches missed.">			if (initNode instanceof CompoundInitializerNode) {</span>
+<span class="nc" id="L245">				subType = position.getDesignatedType();</span>
+<span class="nc" id="L246">				subLiteral = interpret((CompoundInitializerNode) initNode,</span>
+<span class="nc" id="L247">						subType);</span>
+<span class="nc" id="L248">			} else {</span>
+<span class="nc" id="L249">				ExpressionNode expr = (ExpressionNode) initNode;</span>
+
+<span class="nc" id="L251">				entityAnalyzer.expressionAnalyzer.processExpression(expr);</span>
+<span class="nc" id="L252">				entityAnalyzer.expressionAnalyzer.addStandardConversions(expr);</span>
+<span class="nc" id="L253">				position.descendToType((ObjectType) expr.getType(),</span>
+<span class="nc" id="L254">						initNode.getSource());</span>
+<span class="nc" id="L255">				subType = position.getDesignatedType();</span>
+<span class="nc" id="L256">				entityAnalyzer.expressionAnalyzer.processExpression(expr);</span>
+				// add conversions as necessary to expr:
+				try {
+<span class="nc" id="L259">					entityAnalyzer.expressionAnalyzer.processAssignment(</span>
+<span class="nc" id="L260">							subType.getType(), expr);</span>
+<span class="nc" id="L261">				} catch (UnsourcedException e) {</span>
+<span class="nc" id="L262">					throw error(e, expr);</span>
+				}
+<span class="nc" id="L264">				subLiteral = new CommonScalarLiteralObject(subType, expr);</span>
+			}
+<span class="nc" id="L266">			result.set(position, subLiteral);</span>
+		}
+<span class="nc" id="L268">		return result;</span>
+	}
+
+	/**
+	 * Fills in missing spaces with 0s. Needs to create fake expression nodes
+	 * for the 0s. Creates them with source the entire surrounding compound
+	 * initializer.
+	 * 
+	 * @param object
+	 *            compound literal object that has already been processed
+	 * @throws SyntaxException
+	 */
+	private void fill(CommonCompoundLiteralObject object)
+			throws SyntaxException {
+		// for proper sourcing, need a node for each compound
+		// literal object, or source
+<span class="nc" id="L284">		LiteralTypeNode ltNode = object.getTypeNode();</span>
+<span class="nc" id="L285">		int length = ltNode.length();</span>
+<span class="nc" id="L286">		ASTNode sourceNode = object.getSourceNode();</span>
+<span class="nc" id="L287">		Source source = sourceNode.getSource();</span>
+
+<span class="nc bnc" id="L289" title="All 2 branches missed.">		for (int i = 0; i &lt; length; i++) {</span>
+<span class="nc" id="L290">			LiteralObject member = object.get(i);</span>
+
+<span class="nc bnc" id="L292" title="All 2 branches missed.">			if (member == null) {</span>
+				// what is the type of this member supposed to be?
+<span class="nc" id="L294">				LiteralTypeNode child = ltNode.getChild(i);</span>
+
+<span class="nc bnc" id="L296" title="All 2 branches missed.">				if (child instanceof LiteralScalarTypeNode) {</span>
+<span class="nc" id="L297">					ExpressionNode fakeNode = nodeFactory</span>
+<span class="nc" id="L298">							.newIntegerConstantNode(source, &quot;0&quot;);</span>
+
+					try {
+<span class="nc" id="L301">						entityAnalyzer.expressionAnalyzer.processAssignment(</span>
+<span class="nc" id="L302">								child.getType(), fakeNode);</span>
+<span class="nc" id="L303">					} catch (UnsourcedException e) {</span>
+<span class="nc" id="L304">						throw error(e, sourceNode);</span>
+					}
+<span class="nc" id="L306">					member = new CommonScalarLiteralObject(child, fakeNode);</span>
+<span class="nc" id="L307">				} else {</span>
+<span class="nc" id="L308">					member = new CommonCompoundLiteralObject(child, sourceNode);</span>
+				}
+<span class="nc" id="L310">				object.setElement(i, member);</span>
+			}
+<span class="nc bnc" id="L312" title="All 2 branches missed.">			if (member instanceof CommonCompoundLiteralObject) {</span>
+<span class="nc" id="L313">				fill((CommonCompoundLiteralObject) member);</span>
+			}
+		}
+<span class="nc" id="L316">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

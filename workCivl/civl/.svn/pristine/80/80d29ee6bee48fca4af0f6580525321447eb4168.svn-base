@@ -1,0 +1,54 @@
+/* Compare sequential and parallel sum of array by block partition
+ * Example run:
+ *      civl verify -inputB=6 -inputW=3 blockAdders.cvl
+ */
+#include<civlc.h>
+
+$input int B; // upper bound on array length
+$input int W; // upper bound on number of workers
+
+$input int N; // array length
+$assume N>=1 && N<=B;
+$input int P; // number of workers
+$assume P>=1 && P<=W;
+$input double a[N];
+
+double adder_seq() {
+  double s = 0.0;
+
+  for (int i=0; i<N; i++)
+    s += a[i];
+  return s;
+}
+
+double adder_par() {
+  $proc workers[P]; // the workers
+  int lock = 0; // lock for accessing result
+  double result = 0.0; // shared by all workers
+
+  void run_worker(int id) {
+    int start = (id*N)/P;
+    int stop = ((id+1)*N)/P;
+    double localSum = 0.0;
+
+    for (int i=start; i<stop; i++)
+      localSum += a[i];
+    $when (lock==0) lock = 1;
+    result += localSum;
+    lock = 0;
+  }
+
+  for (int i=0; i<P; i++) ; // hack
+  for (int i=0; i<P; i++)
+    workers[i] = $spawn run_worker(i);
+  for (int i=0; i<P; i++)
+    $wait workers[i];
+  return result;
+}
+
+void main() {
+  double sum_seq = adder_seq();
+  double sum_par = adder_par();  
+
+  $assert sum_seq == sum_par;
+}  

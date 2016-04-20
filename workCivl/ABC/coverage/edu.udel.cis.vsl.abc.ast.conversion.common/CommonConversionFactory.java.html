@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonConversionFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.conversion.common</a> &gt; <span class="el_source">CommonConversionFactory.java</span></div><h1>CommonConversionFactory.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.conversion.common;
+
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ArithmeticConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ArrayConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.CompatiblePointerConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.CompatibleStructureOrUnionConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.Conversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ConversionFactory;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.FunctionConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.Integer2PointerConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.LvalueConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.MemoryConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.NullPointerConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.Pointer2IntegerConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.PointerBoolConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.RegularRangeToDomainConversion;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.VoidPointerConversion;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CastNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.WildcardNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArithmeticType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ArrayType;
+import edu.udel.cis.vsl.abc.ast.type.IF.AtomicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.DomainType;
+import edu.udel.cis.vsl.abc.ast.type.IF.FunctionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.ObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.PointerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.QualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType.UnsignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StructureOrUnionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type.TypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.type.IF.UnqualifiedObjectType;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.token.IF.UnsourcedException;
+
+public class CommonConversionFactory implements ConversionFactory {
+
+	private TypeFactory typeFactory;
+
+<span class="nc" id="L46">	public CommonConversionFactory(TypeFactory typeFactory) {</span>
+<span class="nc" id="L47">		this.typeFactory = typeFactory;</span>
+<span class="nc" id="L48">	}</span>
+
+	private UnsourcedException error(String message) {
+<span class="nc" id="L51">		return new UnsourcedException(message);</span>
+	}
+
+	@Override
+	public TypeFactory getTypeFactory() {
+<span class="nc" id="L56">		return typeFactory;</span>
+	}
+
+	@Override
+	public ArithmeticConversion arithmeticConversion(ArithmeticType oldType,
+			ArithmeticType newType) {
+<span class="nc" id="L62">		return new CommonArithmeticConversion(oldType, newType);</span>
+	}
+
+	@Override
+	public CompatibleStructureOrUnionConversion compatibleStructureOrUnionConversion(
+			StructureOrUnionType type1, StructureOrUnionType type2) {
+<span class="nc" id="L68">		return new CommonCompatibleStructureOrUnionConversion(type1, type2);</span>
+	}
+
+	@Override
+	public CompatiblePointerConversion compatiblePointerConversion(
+			PointerType type1, PointerType type2) {
+<span class="nc" id="L74">		return new CommonCompatiblePointerConversion(type1, type2);</span>
+	}
+
+	@Override
+	public VoidPointerConversion voidPointerConversion(PointerType type1,
+			PointerType type2) {
+<span class="nc" id="L80">		return new CommonVoidPointerConversion(type1, type2);</span>
+	}
+
+	@Override
+	public NullPointerConversion nullPointerConversion(ObjectType type1,
+			PointerType type2) {
+<span class="nc" id="L86">		return new CommonNullPointerConversion(type1, type2);</span>
+	}
+
+	@Override
+	public PointerBoolConversion pointerBoolConversion(PointerType oldType) {
+<span class="nc" id="L91">		return new CommonPointerBoolConversion(oldType,</span>
+<span class="nc" id="L92">				typeFactory.unsignedIntegerType(UnsignedIntKind.BOOL));</span>
+	}
+
+	@Override
+	public LvalueConversion lvalueConversion(ObjectType type) {
+<span class="nc" id="L97">		UnqualifiedObjectType result = lvalueConversionType(type);</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (result.equals(type))</span>
+<span class="nc" id="L100">			return null;</span>
+<span class="nc" id="L101">		return new CommonLvalueConversion(type, result);</span>
+	}
+
+	@Override
+	public UnqualifiedObjectType lvalueConversionType(ObjectType type) {
+<span class="nc" id="L106">		TypeKind kind = type.kind();</span>
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (kind == TypeKind.QUALIFIED)</span>
+<span class="nc" id="L109">			return lvalueConversionType(((QualifiedObjectType) type)</span>
+<span class="nc" id="L110">					.getBaseType());</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (kind == TypeKind.ATOMIC)</span>
+<span class="nc" id="L112">			return lvalueConversionType(((AtomicType) type).getBaseType());</span>
+<span class="nc" id="L113">		return (UnqualifiedObjectType) type;</span>
+	}
+
+	@Override
+	public ArrayConversion arrayConversion(ArrayType type) {
+		// get rid of $input/$output qualifiers on type.getElementType?
+<span class="nc" id="L119">		return new CommonArrayConversion(type, typeFactory.pointerType(type</span>
+<span class="nc" id="L120">				.getElementType()));</span>
+	}
+
+	@Override
+	public FunctionConversion functionConversion(FunctionType type) {
+<span class="nc" id="L125">		return new CommonFunctionConversion(type, typeFactory.pointerType(type));</span>
+	}
+
+	private void checkQualifierConsistency(PointerType type1,
+			PointerType type2, boolean checkBaseCompatibility)
+			throws UnsourcedException {
+<span class="nc" id="L131">		Type base1 = type1.referencedType();</span>
+<span class="nc" id="L132">		Type base2 = type2.referencedType();</span>
+
+		// any qualifier on base1 must also occur in base2...
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (base1 instanceof QualifiedObjectType) {</span>
+<span class="nc" id="L136">			QualifiedObjectType qualified1 = (QualifiedObjectType) base1;</span>
+			QualifiedObjectType qualified2;
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (!(base2 instanceof QualifiedObjectType))</span>
+<span class="nc" id="L140">				throw error(&quot;Referenced type of left-hand of assignment lacks qualifiers of right-hand side&quot;);</span>
+<span class="nc" id="L141">			qualified2 = (QualifiedObjectType) base2;</span>
+<span class="nc bnc" id="L142" title="All 4 branches missed.">			if (qualified1.isConstQualified() &amp;&amp; !qualified2.isConstQualified())</span>
+<span class="nc" id="L143">				throw error(&quot;Type referenced by pointer on left-hand side of assignment&quot;</span>
+						+ &quot; lacks const qualifier occurring on right-hand side&quot;);
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (qualified1.isRestrictQualified()</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">					&amp;&amp; !qualified2.isRestrictQualified())</span>
+<span class="nc" id="L147">				throw error(&quot;Type referenced by pointer on left-hand side of assignment&quot;</span>
+						+ &quot; lacks restrict qualifier occurring on right-hand side&quot;);
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (qualified1.isVolatileQualified()</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">					&amp;&amp; !qualified2.isVolatileQualified())</span>
+<span class="nc" id="L151">				throw error(&quot;Type referenced by pointer on left-hand side of assignment&quot;</span>
+						+ &quot; lacks volatile qualifier occurring on right-hand side&quot;);
+<span class="nc" id="L153">			base1 = qualified1.getBaseType();</span>
+<span class="nc" id="L154">			base2 = qualified2.getBaseType();</span>
+		}
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (base1 instanceof AtomicType) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (!(base2 instanceof AtomicType))</span>
+<span class="nc" id="L158">				throw error(&quot;Type referenced by pointer on left-hand side of assigment &quot;</span>
+						+ &quot;lacks atomic qualifier occurring on right-hand side&quot;);
+<span class="nc" id="L160">			base1 = ((AtomicType) base1).getBaseType();</span>
+<span class="nc" id="L161">			base2 = ((AtomicType) base2).getBaseType();</span>
+		}
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (checkBaseCompatibility) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (base1 instanceof QualifiedObjectType)</span>
+<span class="nc" id="L165">				base1 = ((QualifiedObjectType) base1).getBaseType();</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			if (base2 instanceof QualifiedObjectType)</span>
+<span class="nc" id="L167">				base2 = ((QualifiedObjectType) base2).getBaseType();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			if (!base1.compatibleWith(base2)) {</span>
+<span class="nc" id="L169">				throw error(&quot;Type referenced by pointer on left-hand side of assignment &quot;</span>
+						+ &quot;is incompatible with corresponding type on right-hand side&quot;);
+			}
+		}
+<span class="nc" id="L173">	}</span>
+
+	@Override
+	public boolean isNullPointerConstant(ExpressionNode node) {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (node instanceof CastNode) {</span>
+<span class="nc" id="L178">			CastNode castNode = (CastNode) node;</span>
+<span class="nc" id="L179">			Type castType = castNode.getCastType().getType();</span>
+
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (castType instanceof PointerType</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">					&amp;&amp; ((PointerType) castType).referencedType().kind() == TypeKind.VOID)</span>
+<span class="nc" id="L183">				node = castNode.getArgument();</span>
+			else
+<span class="nc" id="L185">				return false;</span>
+		}
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (node instanceof IntegerConstantNode)</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			return ((IntegerConstantNode) node).getConstantValue()</span>
+<span class="nc" id="L189">					.getIntegerValue().signum() == 0;</span>
+<span class="nc" id="L190">		return false;</span>
+	}
+
+	@Override
+	public boolean isPointerToVoid(PointerType type) {
+<span class="nc" id="L195">		Type base = type.referencedType();</span>
+
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (base instanceof QualifiedObjectType) {</span>
+<span class="nc" id="L198">			base = ((QualifiedObjectType) base).getBaseType();</span>
+		}
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (base instanceof AtomicType) {</span>
+<span class="nc" id="L201">			base = ((AtomicType) base).getBaseType();</span>
+		}
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		return base.kind() == TypeKind.VOID;</span>
+	}
+
+	@Override
+	public boolean isPointerToObject(PointerType type) {
+<span class="nc" id="L208">		return type.referencedType() instanceof ObjectType;</span>
+	}
+
+	@Override
+	public Conversion assignmentConversion(Configuration config,
+			ExpressionNode rhs, Type newType) throws UnsourcedException {
+<span class="nc" id="L214">		Type oldType = rhs.getConvertedType();</span>
+
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (rhs instanceof WildcardNode) {</span>
+			// wildcard node has void type, which means that it can be any type
+<span class="nc" id="L218">			return null;</span>
+		}
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (typeFactory.isArrayOfCharType(oldType)</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">				&amp;&amp; typeFactory.isArrayOfCharType(newType))</span>
+<span class="nc" id="L222">			return null;</span>
+<span class="nc bnc" id="L223" title="All 4 branches missed.">		if (newType.kind() == TypeKind.SCOPE || newType.equals(oldType))</span>
+<span class="nc" id="L224">			return null;</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">		if (oldType instanceof DomainType &amp;&amp; newType instanceof DomainType)</span>
+<span class="nc" id="L226">			return null;</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		if (oldType instanceof ArithmeticType</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">				&amp;&amp; newType instanceof ArithmeticType) {</span>
+<span class="nc" id="L229">			return arithmeticConversion((ArithmeticType) oldType,</span>
+<span class="nc" id="L230">					(ArithmeticType) newType);</span>
+		}
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (oldType instanceof StructureOrUnionType</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">				&amp;&amp; newType instanceof StructureOrUnionType) {</span>
+<span class="nc" id="L234">			StructureOrUnionType type1 = (StructureOrUnionType) oldType;</span>
+<span class="nc" id="L235">			StructureOrUnionType type2 = (StructureOrUnionType) newType;</span>
+
+<span class="nc bnc" id="L237" title="All 2 branches missed.">			if (!type1.compatibleWith(type2))</span>
+<span class="nc" id="L238">				throw error(&quot;Assignment to incompatible structure or union type&quot;);</span>
+<span class="nc" id="L239">			return new CommonCompatibleStructureOrUnionConversion(type1, type2);</span>
+		}
+<span class="nc bnc" id="L241" title="All 4 branches missed.">		if (newType instanceof PointerType &amp;&amp; isNullPointerConstant(rhs))</span>
+<span class="nc" id="L242">			return nullPointerConversion((ObjectType) oldType,</span>
+<span class="nc" id="L243">					(PointerType) newType);</span>
+<span class="nc bnc" id="L244" title="All 4 branches missed.">		if (oldType instanceof PointerType &amp;&amp; newType instanceof PointerType) {</span>
+<span class="nc" id="L245">			PointerType type1 = (PointerType) oldType;</span>
+<span class="nc" id="L246">			PointerType type2 = (PointerType) newType;</span>
+
+<span class="nc bnc" id="L248" title="All 4 branches missed.">			if (isPointerToObject(type1) &amp;&amp; isPointerToVoid(type2)</span>
+<span class="nc bnc" id="L249" title="All 4 branches missed.">					|| isPointerToObject(type2) &amp;&amp; isPointerToVoid(type1)) {</span>
+<span class="nc bnc" id="L250" title="All 4 branches missed.">				if (config == null || !config.svcomp())</span>
+<span class="nc" id="L251">					checkQualifierConsistency(type1, type2, false);</span>
+<span class="nc" id="L252">				return voidPointerConversion(type1, type2);</span>
+			}
+<span class="nc bnc" id="L254" title="All 4 branches missed.">			if (config == null || !config.svcomp())</span>
+<span class="nc" id="L255">				checkQualifierConsistency(type1, type2, true);</span>
+<span class="nc" id="L256">			return new CommonCompatiblePointerConversion(type1, type2);</span>
+		}
+<span class="nc bnc" id="L258" title="All 4 branches missed.">		if (oldType instanceof PointerType &amp;&amp; isBool(newType))</span>
+<span class="nc" id="L259">			return pointerBoolConversion((PointerType) oldType);</span>
+<span class="nc bnc" id="L260" title="All 4 branches missed.">		if (config != null &amp;&amp; config.svcomp()) {</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">			if (oldType instanceof PointerType</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">					&amp;&amp; newType instanceof IntegerType)</span>
+<span class="nc" id="L263">				return this.pointer2IntegerConversion((PointerType) oldType,</span>
+<span class="nc" id="L264">						(IntegerType) newType);</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">			if (oldType instanceof IntegerType</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">					&amp;&amp; newType instanceof PointerType)</span>
+<span class="nc" id="L267">				return this.integer2PointerConversion((IntegerType) oldType,</span>
+<span class="nc" id="L268">						(PointerType) newType);</span>
+		}
+<span class="nc" id="L270">		throw error(&quot;No conversion from type of right hand side to that of left:\n&quot;</span>
+<span class="nc" id="L271">				+ oldType + &quot;\n&quot; + newType);</span>
+	}
+
+	@Override
+	public MemoryConversion memoryConversion(Type type) {
+<span class="nc" id="L276">		return new CommonMemoryConversion(type, typeFactory.memoryType());</span>
+	}
+
+	private boolean isBool(Type type) {
+<span class="nc bnc" id="L280" title="All 2 branches missed.">		return type instanceof StandardBasicType</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">				&amp;&amp; ((StandardBasicType) type).getBasicTypeKind() == BasicTypeKind.BOOL;</span>
+	}
+
+	@Override
+	public RegularRangeToDomainConversion regularRangeToDomainConversion(
+			ObjectType rangeType, DomainType domainType) {
+<span class="nc" id="L287">		return new CommonRegularRangeToDomainConversion(rangeType, domainType);</span>
+	}
+
+	@Override
+	public Pointer2IntegerConversion pointer2IntegerConversion(
+			PointerType oldType, IntegerType newType) {
+<span class="nc" id="L293">		return new CommonPointer2IntegerConversion(oldType, newType);</span>
+	}
+
+	@Override
+	public Integer2PointerConversion integer2PointerConversion(
+			IntegerType oldType, PointerType newType) {
+<span class="nc" id="L299">		return new CommonInteger2PointerConversion(oldType, newType);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

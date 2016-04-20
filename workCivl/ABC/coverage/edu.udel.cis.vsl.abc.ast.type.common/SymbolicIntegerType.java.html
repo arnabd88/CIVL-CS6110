@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SymbolicIntegerType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">SymbolicIntegerType.java</span></div><h1>SymbolicIntegerType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+
+/**
+ * An integer type represented only by a name, signedness, and possibly other
+ * data. Concrete information about most aspects of the type is not necessarily
+ * known, such as its size, conversion rank, and so on. It is used primarily to
+ * represent integer types that are guaranteed to be defined in the Standard,
+ * but for which the definitions are largely up to the implementation. Examples
+ * include size_t, wchar_t, and so on.
+ * 
+ * This is analogous to a &quot;symbolic constant&quot; in symbolic execution.
+ * 
+ * Two instances of this class are considered equal iff they are ==. I.e., any
+ * two distinct instances are considered to represent two different types, even
+ * if they have the same name and signedness.
+ * 
+ * An instance of this class is not compatible with any other type (other than
+ * itself). Note that this may be more strict than what actually happens in a C
+ * implementation. (For example, if size_t is defined by a typedef to be long,
+ * size_t will be compatible with long).
+ * 
+ * @author siegel
+ * 
+ */
+public class SymbolicIntegerType extends CommonIntegerType {
+
+	private String name;
+
+	public SymbolicIntegerType(String name) {
+<span class="nc" id="L32">		super(TypeKind.OTHER_INTEGER);</span>
+<span class="nc" id="L33">		this.name = name;</span>
+<span class="nc" id="L34">	}</span>
+
+	@Override
+	public boolean isEnumeration() {
+<span class="nc" id="L38">		return false;</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean abbrv) {
+<span class="nc" id="L43">		out.print(name);</span>
+<span class="nc" id="L44">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

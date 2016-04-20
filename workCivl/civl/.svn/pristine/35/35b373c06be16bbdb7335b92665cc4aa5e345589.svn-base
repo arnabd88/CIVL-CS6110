@@ -1,0 +1,11 @@
+#include <civlc.h>
+
+// Free pointer from different heap.
+void main() {
+  $heap h, h0;
+  double *p = (double *) $malloc(&h, 5*sizeof(double));
+  
+  p[4]=3.14;
+  $assert(p[4]==3.14);
+  $free(&h0, p);
+}   

@@ -1,0 +1,261 @@
+\hypertarget{ple_8h}{}\section{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/ple.h File Reference}
+\label{ple_8h}\index{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/ple.\+h@{/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/ple.\+h}}
+
+
+P\+L\+E and P\+L\+U\+Q matrix decomposition routines.  
+
+
+{\ttfamily \#include $<$m4ri/mzd.\+h$>$}\\*
+{\ttfamily \#include $<$m4ri/mzp.\+h$>$}\\*
+Include dependency graph for ple.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ple_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{ple_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{ple_8h_ab88684d02ca6e2c3ead43a85c491fa31}{}\#define \hyperlink{ple_8h_ab88684d02ca6e2c3ead43a85c491fa31}{\+\_\+\+\_\+\+M4\+R\+I\+\_\+\+P\+L\+E\+\_\+\+C\+U\+T\+O\+F\+F}~\hyperlink{misc_8h_a74e75242132eaabbc1c512488a135926}{M\+I\+N}(524288, \+\_\+\+\_\+\+M4\+R\+I\+\_\+\+C\+P\+U\+\_\+\+L3\+\_\+\+C\+A\+C\+H\+E $>$$>$ 3)\label{ple_8h_ab88684d02ca6e2c3ead43a85c491fa31}
+
+\begin{DoxyCompactList}\small\item\em Crossover point for P\+L\+U\+Q factorization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{ple_8h_aa23b9b4aa54c457cab401e2cb351cbb6}{mzd\+\_\+pluq} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$Q, const int cutoff)
+\begin{DoxyCompactList}\small\item\em P\+L\+U\+Q matrix decomposition. \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{ple_8h_ab172fa75c76d67a3b113ae3147d76451}{mzd\+\_\+ple} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$Q, const int cutoff)
+\begin{DoxyCompactList}\small\item\em P\+L\+E matrix decomposition. \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{ple_8h_a6f8e917910a8a68f7cb0237dd3d53c09}{\+\_\+mzd\+\_\+pluq} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$Q, const int cutoff)
+\begin{DoxyCompactList}\small\item\em P\+L\+U\+Q matrix decomposition. \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{ple_8h_a2245cf7a6b1bb4bd8ad51dd3839c8ca7}{\+\_\+mzd\+\_\+ple} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$Qt, const int cutoff)
+\begin{DoxyCompactList}\small\item\em P\+L\+E matrix decomposition. \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{ple_8h_a426fa131ddc3150a86f640e361eed7af}{\+\_\+mzd\+\_\+pluq\+\_\+naive} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$Q)
+\begin{DoxyCompactList}\small\item\em P\+L\+U\+Q matrix decomposition (naive base case). \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{ple_8h_a969a9b1581e907eb7a7f5988dcd8a25a}{\+\_\+mzd\+\_\+ple\+\_\+naive} (\hyperlink{structmzd__t}{mzd\+\_\+t} $\ast$\hyperlink{structA}{A}, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$P, \hyperlink{structmzp__t}{mzp\+\_\+t} $\ast$Qt)
+\begin{DoxyCompactList}\small\item\em P\+L\+E matrix decomposition (naive base case). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+P\+L\+E and P\+L\+U\+Q matrix decomposition routines. 
+
+\begin{DoxyAuthor}{Author}
+Clement Pernet \href{mailto:clement.pernet@gmail.com}{\tt clement.\+pernet@gmail.\+com} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{ple_8h_a2245cf7a6b1bb4bd8ad51dd3839c8ca7}{}\index{ple.\+h@{ple.\+h}!\+\_\+mzd\+\_\+ple@{\+\_\+mzd\+\_\+ple}}
+\index{\+\_\+mzd\+\_\+ple@{\+\_\+mzd\+\_\+ple}!ple.\+h@{ple.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+ple}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} \+\_\+mzd\+\_\+ple (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{Qt, }
+\item[{const int}]{cutoff}
+\end{DoxyParamCaption}
+)}\label{ple_8h_a2245cf7a6b1bb4bd8ad51dd3839c8ca7}
+
+
+P\+L\+E matrix decomposition. 
+
+See \hyperlink{ple_8h_ab172fa75c76d67a3b113ae3147d76451}{mzd\+\_\+ple()} for details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Input matrix \\
+\hline
+{\em P} & Output row \hyperlink{structmzp__t}{mzp\+\_\+t} matrix \\
+\hline
+{\em Qt} & Output column \hyperlink{structmzp__t}{mzp\+\_\+t} matrix \\
+\hline
+{\em cutoff} & Minimal dimension for Strassen recursion.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ple_8h_ab172fa75c76d67a3b113ae3147d76451}{mzd\+\_\+ple()}
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+Rank of \hyperlink{structA}{A}. 
+\end{DoxyReturn}
+\hypertarget{ple_8h_a969a9b1581e907eb7a7f5988dcd8a25a}{}\index{ple.\+h@{ple.\+h}!\+\_\+mzd\+\_\+ple\+\_\+naive@{\+\_\+mzd\+\_\+ple\+\_\+naive}}
+\index{\+\_\+mzd\+\_\+ple\+\_\+naive@{\+\_\+mzd\+\_\+ple\+\_\+naive}!ple.\+h@{ple.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+ple\+\_\+naive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} \+\_\+mzd\+\_\+ple\+\_\+naive (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{Qt}
+\end{DoxyParamCaption}
+)}\label{ple_8h_a969a9b1581e907eb7a7f5988dcd8a25a}
+
+
+P\+L\+E matrix decomposition (naive base case). 
+
+See \hyperlink{ple_8h_ab172fa75c76d67a3b113ae3147d76451}{mzd\+\_\+ple()} for details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Input matrix \\
+\hline
+{\em P} & Output row \hyperlink{structmzp__t}{mzp\+\_\+t} matrix \\
+\hline
+{\em Qt} & Output column \hyperlink{structmzp__t}{mzp\+\_\+t} matrix\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ple_8h_ab172fa75c76d67a3b113ae3147d76451}{mzd\+\_\+ple()}
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+Rank of \hyperlink{structA}{A}. 
+\end{DoxyReturn}
+\hypertarget{ple_8h_a6f8e917910a8a68f7cb0237dd3d53c09}{}\index{ple.\+h@{ple.\+h}!\+\_\+mzd\+\_\+pluq@{\+\_\+mzd\+\_\+pluq}}
+\index{\+\_\+mzd\+\_\+pluq@{\+\_\+mzd\+\_\+pluq}!ple.\+h@{ple.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+pluq}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} \+\_\+mzd\+\_\+pluq (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{Q, }
+\item[{const int}]{cutoff}
+\end{DoxyParamCaption}
+)}\label{ple_8h_a6f8e917910a8a68f7cb0237dd3d53c09}
+
+
+P\+L\+U\+Q matrix decomposition. 
+
+See \hyperlink{ple_8h_aa23b9b4aa54c457cab401e2cb351cbb6}{mzd\+\_\+pluq()} for details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Input matrix \\
+\hline
+{\em P} & Output row \hyperlink{structmzp__t}{mzp\+\_\+t} matrix \\
+\hline
+{\em Q} & Output column \hyperlink{structmzp__t}{mzp\+\_\+t} matrix \\
+\hline
+{\em cutoff} & Minimal dimension for Strassen recursion.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ple_8h_aa23b9b4aa54c457cab401e2cb351cbb6}{mzd\+\_\+pluq()}
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+Rank of \hyperlink{structA}{A}. 
+\end{DoxyReturn}
+\hypertarget{ple_8h_a426fa131ddc3150a86f640e361eed7af}{}\index{ple.\+h@{ple.\+h}!\+\_\+mzd\+\_\+pluq\+\_\+naive@{\+\_\+mzd\+\_\+pluq\+\_\+naive}}
+\index{\+\_\+mzd\+\_\+pluq\+\_\+naive@{\+\_\+mzd\+\_\+pluq\+\_\+naive}!ple.\+h@{ple.\+h}}
+\subsubsection[{\+\_\+mzd\+\_\+pluq\+\_\+naive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} \+\_\+mzd\+\_\+pluq\+\_\+naive (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{Q}
+\end{DoxyParamCaption}
+)}\label{ple_8h_a426fa131ddc3150a86f640e361eed7af}
+
+
+P\+L\+U\+Q matrix decomposition (naive base case). 
+
+See \hyperlink{ple_8h_aa23b9b4aa54c457cab401e2cb351cbb6}{mzd\+\_\+pluq()} for details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Input matrix \\
+\hline
+{\em P} & Output row \hyperlink{structmzp__t}{mzp\+\_\+t} matrix \\
+\hline
+{\em Q} & Output column \hyperlink{structmzp__t}{mzp\+\_\+t} matrix\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ple_8h_aa23b9b4aa54c457cab401e2cb351cbb6}{mzd\+\_\+pluq()}
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+Rank of \hyperlink{structA}{A}. 
+\end{DoxyReturn}
+\hypertarget{ple_8h_ab172fa75c76d67a3b113ae3147d76451}{}\index{ple.\+h@{ple.\+h}!mzd\+\_\+ple@{mzd\+\_\+ple}}
+\index{mzd\+\_\+ple@{mzd\+\_\+ple}!ple.\+h@{ple.\+h}}
+\subsubsection[{mzd\+\_\+ple}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} mzd\+\_\+ple (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{Q, }
+\item[{const int}]{cutoff}
+\end{DoxyParamCaption}
+)}\label{ple_8h_ab172fa75c76d67a3b113ae3147d76451}
+
+
+P\+L\+E matrix decomposition. 
+
+Computes the P\+L\+E matrix decomposition using a block recursive algorithm.
+
+Returns (P,L,S,Q) satisfying P\+L\+E = \hyperlink{structA}{A} where P is a permutation matrix of dimension m x m, L is m x r unit lower triangular and S is an r x n matrix which is upper triangular except that its columns are permuted, that is S = U\+Q for U r x n upper triangular and Q is a n x n permutation matrix. The matrix L and S are stored in place over \hyperlink{structA}{A}.
+
+P and Q must be preallocated but they don\textquotesingle{}t have to be identity permutations. If cutoff is zero a value is chosen automatically. It is recommended to set cutoff to zero for most applications.
+
+This is the wrapper function including bounds checks. See \hyperlink{ple_8h_a2245cf7a6b1bb4bd8ad51dd3839c8ca7}{\+\_\+mzd\+\_\+ple()} for implementation details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Input m x n matrix \\
+\hline
+{\em P} & Output row permutation of length m \\
+\hline
+{\em Q} & Output column permutation matrix of length n \\
+\hline
+{\em cutoff} & Minimal dimension for Strassen recursion.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ple_8h_a2245cf7a6b1bb4bd8ad51dd3839c8ca7}{\+\_\+mzd\+\_\+ple()} \hyperlink{ple_8h_a6f8e917910a8a68f7cb0237dd3d53c09}{\+\_\+mzd\+\_\+pluq()} \+\_\+mzd\+\_\+pluq\+\_\+mmpf() \hyperlink{echelonform_8h_a779e61f88a20054fc3ef94d0786f8b20}{mzd\+\_\+echelonize\+\_\+pluq()}
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+Rank of \hyperlink{structA}{A}. 
+\end{DoxyReturn}
+\hypertarget{ple_8h_aa23b9b4aa54c457cab401e2cb351cbb6}{}\index{ple.\+h@{ple.\+h}!mzd\+\_\+pluq@{mzd\+\_\+pluq}}
+\index{mzd\+\_\+pluq@{mzd\+\_\+pluq}!ple.\+h@{ple.\+h}}
+\subsubsection[{mzd\+\_\+pluq}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} mzd\+\_\+pluq (
+\begin{DoxyParamCaption}
+\item[{{\bf mzd\+\_\+t} $\ast$}]{A, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{P, }
+\item[{{\bf mzp\+\_\+t} $\ast$}]{Q, }
+\item[{const int}]{cutoff}
+\end{DoxyParamCaption}
+)}\label{ple_8h_aa23b9b4aa54c457cab401e2cb351cbb6}
+
+
+P\+L\+U\+Q matrix decomposition. 
+
+Returns (P,L,U,Q) satisfying P\+L\+U\+Q = \hyperlink{structA}{A} where P and Q are two permutation matrices, of dimension respectively m x m and n x n, L is m x r unit lower triangular and U is r x n upper triangular.
+
+P and Q must be preallocated but they don\textquotesingle{}t have to be identity permutations. If cutoff is zero a value is chosen automatically. It is recommended to set cutoff to zero for most applications.
+
+The row echelon form (not reduced) can be read from the upper triangular matrix U. See \hyperlink{echelonform_8h_a779e61f88a20054fc3ef94d0786f8b20}{mzd\+\_\+echelonize\+\_\+pluq()} for details.
+
+This is the wrapper function including bounds checks. See \hyperlink{ple_8h_a6f8e917910a8a68f7cb0237dd3d53c09}{\+\_\+mzd\+\_\+pluq()} for implementation details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structA}{A}} & Input m x n matrix \\
+\hline
+{\em P} & Output row permutation of length m \\
+\hline
+{\em Q} & Output column permutation matrix of length n \\
+\hline
+{\em cutoff} & Minimal dimension for Strassen recursion.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ple_8h_a6f8e917910a8a68f7cb0237dd3d53c09}{\+\_\+mzd\+\_\+pluq()} \+\_\+mzd\+\_\+pluq\+\_\+mmpf() \hyperlink{echelonform_8h_a779e61f88a20054fc3ef94d0786f8b20}{mzd\+\_\+echelonize\+\_\+pluq()}
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+Rank of \hyperlink{structA}{A}. 
+\end{DoxyReturn}

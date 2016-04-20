@@ -1,0 +1,11 @@
+  void send(void *buf, int count, int dest, int tag, $comm comm) {
+    $message out = $message_pack(rank, dest, tag, buf, count*sizeof(double));
+    $comm_enqueue(comm, out);
+  }
+
+  void recv(void *buf, int count, int source, int tag, $comm comm) {
+    $message in = $comm_dequeue(comm, source, tag);
+    $message_unpack(in, buf, count*sizeof(double));
+  }
+
+  $when (__start);

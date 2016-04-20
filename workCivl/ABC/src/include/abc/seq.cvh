@@ -1,0 +1,72 @@
+/* This header file contains function prototypes for sequence operations.
+ * In CIVL-C, a sequence of type T is defined as an incomplete array of type T. 
+ */
+
+#ifndef __SEQ__
+#define __SEQ__
+
+/* ******************************* Functions ******************************* */
+
+/* Given a pointer to an object of type "array-of-T", returns the
+ * length of the array. */
+$system int $seq_length(void *array);
+
+/* Given a pointer to an object of type "incomplete-array-of-T",
+ * sets that object to be the array of length count in which every
+ * element has the same value, specified by the given pointer value.
+ *
+ * Parameters:
+ *   array: pointer-to-incomplete-array-of-T
+ *   count: any integer type, must be nonnegative
+ *   values: pointer-to-T
+ */
+$system void $seq_init(void *array, int count, void *value);
+
+/* Given a pointer to an object of type "incomplete-array-of-T",
+ * inserts count elements into the array starting at position
+ * index.   The subsequence elements of the array are shifted up,
+ * and the final length of the array will be its original length
+ * plus count.  The values to be inserted are taken from the
+ * region specified by parameters values.  Must have 
+ * 0<=index<=length, where length is the length of the array in 
+ * the pre-state.  If index=length, this appends the elements
+ * to the end of the array.  If index=0, this inserts the elements
+ * at the beginning of the array.  If count=0, this is a no-op
+ * and values will not be evaluated (hence may be NULL).
+ *
+ * Parameters:
+ *   array: pointer-to-incomplete-array-of-T
+ *   index: any integer type, 0<=index<=length
+ *   values: pointer-to-T
+ *   count: any integer type, count>=0
+ *
+ */
+$system void $seq_insert(void *array, int index, void *values, int count);
+
+/* Removes count elements from the array, starting at position
+ * index. If values is not NULL, the removed elements will be copied
+ * to the memory region beginning with values.
+ * Parameters:
+ *   array: pointer-to-incomplete-array-of-T
+ *   index: any integer type, 0<=index<length
+ *   values: pointer-to-T
+ *   count: any integer type, 0<=count<=length-index
+ */
+$system void $seq_remove(void *array, int index, void *values, int count);
+
+/* Given a pointer to an object of type "incomplete-array-of-T",
+ * appends count elements at the end of the array.   
+ * The final length of the array will be its original length
+ * plus count.  The values to be inserted are taken from the
+ * region specified by parameters values.  If count=0, this is 
+ * a no-op and values will not be evaluated (hence may be NULL).
+ *
+ * Parameters:
+ *   array: pointer-to-incomplete-array-of-T
+ *   values: pointer-to-T
+ *   count: any integer type, count>=0
+ *
+ */
+void $seq_append(void *array, void *values, int count);
+
+#endif

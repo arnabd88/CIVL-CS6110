@@ -1,0 +1,38 @@
+Session name....... boundedBuffer_bad
+Directory.......... CIVLREP
+Date............... Tue Apr 19 17:45:11 MDT 2016
+numErrors.......... 1
+numDistinctErrors.. 1
+search truncated... true
+
+Violation 0[length=24239, file=CIVLREP/boundedBuffer_bad_0.trace]:
+CIVL execution violation in p2(id=2) (kind: ASSERTION_VIOLATION, certainty: PROVEABLE)
+at boundedBuffer_bad.cvl:41.4-26 "$assert(fillCount > 0)":
+
+Assertion: (0<fillCount)
+        -> 0<0
+        -> false
+
+Input:
+  BUFFER_SIZE=100
+  NPRODUCER=5
+  NCONSUMER=5
+Context:
+  true
+Call stacks:
+process p0 (id=0):
+  main at boundedBuffer_bad.cvl:56.19-25 "$spawn"
+process p1 (id=1):
+  consumer at boundedBuffer_bad.cvl:44.4-14 "emptyCount"
+process p2 (id=2):
+  consumer at boundedBuffer_bad.cvl:41.4-11 "$assert"
+process p3 (id=3):
+  consumer at boundedBuffer_bad.cvl:39.9-14 "$true"
+process p4 (id=4):
+  consumer at boundedBuffer_bad.cvl:39.9-14 "$true"
+process p5 (id=5):
+  consumer at boundedBuffer_bad.cvl:39.9-14 "$true"
+process p6 (id=6):
+  producer at boundedBuffer_bad.cvl:28.9-14 "$true"
+
+

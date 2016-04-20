@@ -1,0 +1,107 @@
+\hypertarget{structmzd__t}{}\section{mzd\+\_\+t Struct Reference}
+\label{structmzd__t}\index{mzd\+\_\+t@{mzd\+\_\+t}}
+
+
+Dense matrices over G\+F(2).  
+
+
+
+
+{\ttfamily \#include $<$mzd.\+h$>$}
+
+
+
+Collaboration diagram for mzd\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=152pt]{structmzd__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{structmzd__t_a23d9c4b4c77bddce183fde327256f3ff}{nrows}
+\item 
+\hyperlink{misc_8h_a03971b7935a6bc6fb77e74988850a136}{rci\+\_\+t} \hyperlink{structmzd__t_aff453b90ed1f50baf4454e70c3f1d19e}{ncols}
+\item 
+\hyperlink{misc_8h_ab3e1df9eeef59797b83f1a79851ead7e}{wi\+\_\+t} \hyperlink{structmzd__t_a0e2ffa9253cfa52b2ee3d88a95be00a5}{width}
+\item 
+\hyperlink{misc_8h_ab3e1df9eeef59797b83f1a79851ead7e}{wi\+\_\+t} \hyperlink{structmzd__t_a0ce300dfa1c7802b69c96cf32105f322}{rowstride}
+\begin{DoxyCompactList}\small\item\em Offset in words between rows. \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_ab3e1df9eeef59797b83f1a79851ead7e}{wi\+\_\+t} \hyperlink{structmzd__t_ad4d16d8c1fc19e3b872fa7c87acd7554}{offset\+\_\+vector}
+\begin{DoxyCompactList}\small\item\em Offset in words from start of block to first word. \end{DoxyCompactList}\item 
+\hyperlink{misc_8h_ab3e1df9eeef59797b83f1a79851ead7e}{wi\+\_\+t} \hyperlink{structmzd__t_a1d95aca572cb27799972ceb308ea219f}{row\+\_\+offset}
+\item 
+unsigned char \hyperlink{structmzd__t_a71bc6ea4f80c3afdf430a416074459f0}{flags}
+\begin{DoxyCompactList}\small\item\em Booleans to speed up things. \end{DoxyCompactList}\item 
+\hypertarget{structmzd__t_ab566bfb0b6e19dfc60a2ae644fca70d5}{}unsigned char \hyperlink{structmzd__t_ab566bfb0b6e19dfc60a2ae644fca70d5}{blockrows\+\_\+log}\label{structmzd__t_ab566bfb0b6e19dfc60a2ae644fca70d5}
+
+\begin{DoxyCompactList}\small\item\em blockrows\+\_\+log = log2(blockrows); where blockrows is the number of rows in one block, which is a power of 2. \end{DoxyCompactList}\item 
+\hypertarget{structmzd__t_a5448cb4a028c6f3f8dbbacd37d5437e3}{}unsigned char {\bfseries padding} \mbox{[}62-\/2 $\ast$4-\/4 $\ast$4-\/8-\/2 $\ast$8\mbox{]}\label{structmzd__t_a5448cb4a028c6f3f8dbbacd37d5437e3}
+
+\item 
+\hyperlink{misc_8h_a8829cde3436decd2d2c3d99ed7d649f1}{word} \hyperlink{structmzd__t_ae4810dc31efe46823859366b6027d6b2}{high\+\_\+bitmask}
+\item 
+\hyperlink{structmzd__block__t}{mzd\+\_\+block\+\_\+t} $\ast$ \hyperlink{structmzd__t_aff749916040f8301cd9b00624b7869a4}{blocks}
+\item 
+\hyperlink{misc_8h_a8829cde3436decd2d2c3d99ed7d649f1}{word} $\ast$$\ast$ \hyperlink{structmzd__t_ae809b9c25df0752caabe8233209dd447}{rows}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Dense matrices over G\+F(2). 
+
+The most fundamental data type in this library. 
+
+\subsection{Member Data Documentation}
+\hypertarget{structmzd__t_aff749916040f8301cd9b00624b7869a4}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!blocks@{blocks}}
+\index{blocks@{blocks}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{blocks}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mzd\+\_\+block\+\_\+t}$\ast$ mzd\+\_\+t\+::blocks}\label{structmzd__t_aff749916040f8301cd9b00624b7869a4}
+Pointers to the actual blocks of memory containing the values packed into words. \hypertarget{structmzd__t_a71bc6ea4f80c3afdf430a416074459f0}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!flags@{flags}}
+\index{flags@{flags}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{flags}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char mzd\+\_\+t\+::flags}\label{structmzd__t_a71bc6ea4f80c3afdf430a416074459f0}
+
+
+Booleans to speed up things. 
+
+The bits have the following meaning\+:
+
+1\+: Has non-\/zero excess. 2\+: Is windowed, but has zero offset. 3\+: Is windowed, but has zero excess. 4\+: Is windowed, but owns the blocks allocations. 5\+: Spans more than 1 block. \hypertarget{structmzd__t_ae4810dc31efe46823859366b6027d6b2}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!high\+\_\+bitmask@{high\+\_\+bitmask}}
+\index{high\+\_\+bitmask@{high\+\_\+bitmask}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{high\+\_\+bitmask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf word} mzd\+\_\+t\+::high\+\_\+bitmask}\label{structmzd__t_ae4810dc31efe46823859366b6027d6b2}
+Mask for valid bits in the word with the highest index (width -\/ 1). \hypertarget{structmzd__t_aff453b90ed1f50baf4454e70c3f1d19e}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!ncols@{ncols}}
+\index{ncols@{ncols}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{ncols}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} mzd\+\_\+t\+::ncols}\label{structmzd__t_aff453b90ed1f50baf4454e70c3f1d19e}
+Number of columns. \hypertarget{structmzd__t_a23d9c4b4c77bddce183fde327256f3ff}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!nrows@{nrows}}
+\index{nrows@{nrows}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{nrows}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rci\+\_\+t} mzd\+\_\+t\+::nrows}\label{structmzd__t_a23d9c4b4c77bddce183fde327256f3ff}
+Number of rows. \hypertarget{structmzd__t_ad4d16d8c1fc19e3b872fa7c87acd7554}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!offset\+\_\+vector@{offset\+\_\+vector}}
+\index{offset\+\_\+vector@{offset\+\_\+vector}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{offset\+\_\+vector}]{\setlength{\rightskip}{0pt plus 5cm}{\bf wi\+\_\+t} mzd\+\_\+t\+::offset\+\_\+vector}\label{structmzd__t_ad4d16d8c1fc19e3b872fa7c87acd7554}
+
+
+Offset in words from start of block to first word. 
+
+rows\mbox{[}0\mbox{]} = blocks\mbox{[}0\mbox{]}.begin + offset\+\_\+vector; This, together with rowstride, makes the rows array obsolete. \hypertarget{structmzd__t_a1d95aca572cb27799972ceb308ea219f}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!row\+\_\+offset@{row\+\_\+offset}}
+\index{row\+\_\+offset@{row\+\_\+offset}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{row\+\_\+offset}]{\setlength{\rightskip}{0pt plus 5cm}{\bf wi\+\_\+t} mzd\+\_\+t\+::row\+\_\+offset}\label{structmzd__t_a1d95aca572cb27799972ceb308ea219f}
+Number of rows to the first row counting from the start of the first block. \hypertarget{structmzd__t_ae809b9c25df0752caabe8233209dd447}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!rows@{rows}}
+\index{rows@{rows}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{rows}]{\setlength{\rightskip}{0pt plus 5cm}{\bf word}$\ast$$\ast$ mzd\+\_\+t\+::rows}\label{structmzd__t_ae809b9c25df0752caabe8233209dd447}
+Address of first word in each row, so the first word of row i is is m-\/$>$rows\mbox{[}i\mbox{]} \hypertarget{structmzd__t_a0ce300dfa1c7802b69c96cf32105f322}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!rowstride@{rowstride}}
+\index{rowstride@{rowstride}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{rowstride}]{\setlength{\rightskip}{0pt plus 5cm}{\bf wi\+\_\+t} mzd\+\_\+t\+::rowstride}\label{structmzd__t_a0ce300dfa1c7802b69c96cf32105f322}
+
+
+Offset in words between rows. 
+
+rowstride = (width $<$ mzd\+\_\+paddingwidth $\vert$$\vert$ (width \& 1) == 0) ? width \+: width + 1; where width is the width of the underlying non-\/windowed matrix. \hypertarget{structmzd__t_a0e2ffa9253cfa52b2ee3d88a95be00a5}{}\index{mzd\+\_\+t@{mzd\+\_\+t}!width@{width}}
+\index{width@{width}!mzd\+\_\+t@{mzd\+\_\+t}}
+\subsubsection[{width}]{\setlength{\rightskip}{0pt plus 5cm}{\bf wi\+\_\+t} mzd\+\_\+t\+::width}\label{structmzd__t_a0e2ffa9253cfa52b2ee3d88a95be00a5}
+Number of words with valid bits\+: width = ceil(ncols / m4ri\+\_\+radix) 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/omp/m4ri/m4ri/\hyperlink{mzd_8h}{mzd.\+h}\end{DoxyCompactItemize}

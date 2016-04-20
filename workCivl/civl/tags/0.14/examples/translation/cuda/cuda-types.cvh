@@ -1,0 +1,160 @@
+/* Types in this file that do not begin with an undescore represent
+ * the CIVL version of the type with the same name
+ */
+
+#ifdef __CUDA_TYPES__
+#else
+#define __CUDA_TYPES__
+
+#include <civlc.cvh>
+
+/* used to represent the size of three dimensional grids
+ */
+typedef struct {
+  unsigned int x, y, z;
+} dim3;
+
+/* used to represent a location in a three dimensional grid
+ */
+typedef struct {
+  unsigned int x, y, z;
+} uint3;
+
+/* a flag type used to indicate the type of memory transfer to occur
+ * in a call to cudaMemcpy
+ */
+enum cudaMemcpyKind {
+  cudaMemcpyHostToHost,
+  cudaMemcpyHostToDevice,
+  cudaMemcpyDeviceToHost,
+  cudaMemcpyDeviceToDevice,
+  cudaMemcpyDefault
+};
+
+/* the type returned by all Cuda functions
+ */
+enum cudaError {
+  cudaSuccess,
+  cudaErrorMissingConfiguration,
+  cudaErrorMemoryAllocation,
+  cudaErrorInitializationError,
+  cudaErrorLaunchFailure,
+  cudaErrorPriorLaunchFailure,
+  cudaErrorLaunchTimeout,
+  cudaErrorLaunchOutOfResources,
+  cudaErrorInvalidDeviceFunction,
+  cudaErrorInvalidConfiguration,
+  cudaErrorInvalidDevice,
+  cudaErrorInvalidValue,
+  cudaErrorInvalidPitchValue,
+  cudaErrorInvalidSymbol,
+  cudaErrorMapBufferObjectFailed,
+  cudaErrorUnmapBufferObjectFailed,
+  cudaErrorInvalidHostPointer,
+  cudaErrorInvalidDevicePointer,
+  cudaErrorInvalidTexture,
+  cudaErrorInvalidTextureBinding,
+  cudaErrorInvalidChannelDescriptor,
+  cudaErrorInvalidMemcpyDirection,
+  cudaErrorAddressOfConstant,
+  cudaErrorTextureFetchFailed,
+  cudaErrorTextureNotBound,
+  cudaErrorSynchronizationError,
+  cudaErrorInvalidFilterSetting,
+  cudaErrorInvalidNormSetting,
+  cudaErrorMixedDeviceExecution,
+  cudaErrorCudartUnloading,
+  cudaErrorUnknown,
+  cudaErrorNotYetImplemented,
+  cudaErrorMemoryValueTooLarge,
+  cudaErrorInvalidResourceHandle,
+  cudaErrorNotReady,
+  cudaErrorInsufficientDriver,
+  cudaErrorSetOnActiveProcess,
+  cudaErrorInvalidSurface,
+  cudaErrorNoDevice,
+  cudaErrorECCUncorrectable,
+  cudaErrorSharedObjectSymbolNotFound,
+  cudaErrorSharedObjectInitFailed,
+  cudaErrorUnsupportedLimit,
+  cudaErrorDuplicateVariableName,
+  cudaErrorDuplicateTextureName,
+  cudaErrorDuplicateSurfaceName,
+  cudaErrorDevicesUnavailable,
+  cudaErrorInvalidKernelImage,
+  cudaErrorNoKernelImageForDevice,
+  cudaErrorIncompatibleDriverContext,
+  cudaErrorPeerAccessAlreadyEnabled,
+  cudaErrorPeerAccessNotEnabled,
+  cudaErrorDeviceAlreadyInUse,
+  cudaErrorProfilerDisabled,
+  cudaErrorProfilerNotInitialized,
+  cudaErrorProfilerAlreadyStarted,
+  cudaErrorProfilerAlreadyStopped,
+  cudaErrorAssert,
+  cudaErrorTooManyPeers,
+  cudaErrorHostMemoryAlreadyRegistered,
+  cudaErrorHostMemoryNotRegistered,
+  cudaErrorOperatingSystem,
+  cudaErrorStartupFailure,
+  cudaErrorApiFailureBase
+};
+typedef enum cudaError cudaError_t;
+
+/* flag type used to represent the status of a kernel instance
+ */
+typedef enum {
+    _kernelStatusWaiting,
+    _kernelStatusRunning,
+    _kernelStatusFinished
+} _kernelStatus;
+
+/* type used to represent an instance of a Cuda kernel
+ */
+typedef struct {
+  $proc process;        // the actual process executing this kernel
+  _kernelStatus status; // the kernel status
+} _kernelInstance;
+
+/* a type that wraps a kernel instance for insertion into a list
+ */
+struct _kernelInstanceNode_ {
+  _kernelInstance *instance;
+  struct _kernelInstanceNode_  *next;
+};
+typedef struct _kernelInstanceNode_ _kernelInstanceNode;
+
+/* a type used to represent a Cuda stream
+ */
+typedef struct {
+    _kernelInstanceNode *mostRecent;  // the most recently enqueued instance
+    _Bool usable;                     // indicates whether or not this stream
+                                      // has been marked for deletion
+} _CUstream;
+typedef _CUstream* cudaStream_t;
+
+/* a type that wraps a stream for insertion into a list
+ */
+struct _cudaStreamNode_ {
+  cudaStream_t stream;
+  struct _cudaStreamNode_ *next;
+} ;
+typedef struct _cudaStreamNode_ _cudaStreamNode;
+
+/* a type used to represent a Cuda event
+ */
+typedef struct {
+    _kernelInstance **instances;
+    int numInstances;
+} _CUevent;
+typedef _CUevent* cudaEvent_t;
+
+/* a type representing the state of a Cuda device
+ */
+typedef struct {
+  _cudaStreamNode *headNode;
+  cudaStream_t nullStream;
+  int numStreams;
+} _cudaContext;
+
+#endif

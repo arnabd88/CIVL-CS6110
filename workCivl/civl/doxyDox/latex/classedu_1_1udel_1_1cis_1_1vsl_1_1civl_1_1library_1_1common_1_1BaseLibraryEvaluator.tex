@@ -1,0 +1,326 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator@{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator}}
+
+
+This class provides the common data and operations of library evaluators.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a808efff9c66807713d3dbf78dae60034}{Base\+Library\+Evaluator} (String name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a972ee04104e6fe26bb927ceddb93462d}{evaluator}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ac38a7c7971f70f8c969e55538a17f016}{model\+Factory}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}{symbolic\+Util}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a7a1213c02b2d29a79f550c7090594967}{symbolic\+Analyzer}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a223e603cab7a909db88f49c256b2ce98}{civl\+Config}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} lib\+Evaluator\+Loader)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of library enabler. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a913ede010e3db701ee3d440287317ce0}{evaluate\+Guard} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String function, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}\mbox{[}$\,$\mbox{]} arguments)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Evaluates the guard of a system function. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation}, Symbolic\+Expression $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_ad3c18fce2a6da1a036823e89f7aae1b5}{set\+Data\+From} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} ptr\+Expr, Symbolic\+Expression pointer, Numeric\+Expression count, Symbolic\+Expression data\+Array, boolean check\+Output, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Pre-\/conditions\+: \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluation}{Evaluation} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_aabc7605e7fa536b1e4620849029e4a1e}{get\+Data\+From} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} pointer\+Expr, Symbolic\+Expression pointer, Numeric\+Expression count, boolean check\+Output, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Pre-\/condition\+: \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_acf6ae2d4328db9ce152c57643c34e96a}{array\+Casting} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, Symbolic\+Expression old\+Array, Symbolic\+Complete\+Array\+Type type\+Template, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Cast an array to another array. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a448fe3fe90273acd4b0588e5750060b9}{array\+Flatten} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, Symbolic\+Expression array, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civlsource)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Flatten the given array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a972ee04104e6fe26bb927ceddb93462d}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a972ee04104e6fe26bb927ceddb93462d}{evaluator}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a972ee04104e6fe26bb927ceddb93462d}
+
+\begin{DoxyCompactList}\small\item\em The evaluator for evaluating expressions. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a6bf37559046797083ba02d3ce4720a24}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a6bf37559046797083ba02d3ce4720a24}{state\+Factory}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a6bf37559046797083ba02d3ce4720a24}
+
+\begin{DoxyCompactList}\small\item\em The state factory for state-\/related computation. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a9aeea4051bd1ea9fd6ffd894ed703f0c}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} {\bfseries error\+Logger}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a9aeea4051bd1ea9fd6ffd894ed703f0c}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This class provides the common data and operations of library evaluators. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a808efff9c66807713d3dbf78dae60034}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}!Base\+Library\+Evaluator@{Base\+Library\+Evaluator}}
+\index{Base\+Library\+Evaluator@{Base\+Library\+Evaluator}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}}
+\subsubsection[{Base\+Library\+Evaluator}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator.\+Base\+Library\+Evaluator (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{{\bf Evaluator}}]{evaluator, }
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config, }
+\item[{{\bf Library\+Evaluator\+Loader}}]{lib\+Evaluator\+Loader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a808efff9c66807713d3dbf78dae60034}
+
+
+Creates a new instance of library enabler. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em primary\+Enabler} & The enabler for normal \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} execution. \\
+\hline
+{\em output} & The output stream to be used in the enabler. \\
+\hline
+{\em model\+Factory} & The model factory of the system. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility used in the system. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_acf6ae2d4328db9ce152c57643c34e96a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}!array\+Casting@{array\+Casting}}
+\index{array\+Casting@{array\+Casting}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}}
+\subsubsection[{array\+Casting}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator.\+array\+Casting (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{Symbolic\+Expression}]{old\+Array, }
+\item[{Symbolic\+Complete\+Array\+Type}]{type\+Template, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_acf6ae2d4328db9ce152c57643c34e96a}
+
+
+Cast an array to another array. 
+
+The two arrays before and after casting must be able to hold same number of non-\/array elements.~\newline
+ e.\+g. For arrays {\ttfamily int a\mbox{[}2\mbox{]}\mbox{[}2\mbox{]}; int b\mbox{[}4\mbox{]}; int c\mbox{[}5\mbox{]}}, a and b can be casted into each other but both of them can not be casted to c.
+
+\begin{DoxyAuthor}{Author}
+Ziqing Luo 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em process} & The information of the process \\
+\hline
+{\em old\+Array} & The array before casting \\
+\hline
+{\em target\+Type\+Array} & The array has the type which is the target type of casting \\
+\hline
+{\em source} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of the old\+Array or the pointer to Old\+Array \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+casted array 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a448fe3fe90273acd4b0588e5750060b9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}!array\+Flatten@{array\+Flatten}}
+\index{array\+Flatten@{array\+Flatten}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}}
+\subsubsection[{array\+Flatten}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator.\+array\+Flatten (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{Symbolic\+Expression}]{array, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{civlsource}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a448fe3fe90273acd4b0588e5750060b9}
+
+
+Flatten the given array. 
+
+Here flatten means converting a nested array (which represents multiple dimensional array in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}) to an one dimensional array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em process} & The information of the process \\
+\hline
+{\em array} & The array which is going to be flatten \\
+\hline
+{\em civlsource} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source the array or the pointer to the array \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the flatten array 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a913ede010e3db701ee3d440287317ce0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}!evaluate\+Guard@{evaluate\+Guard}}
+\index{evaluate\+Guard@{evaluate\+Guard}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}}
+\subsubsection[{evaluate\+Guard}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator.\+evaluate\+Guard (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{function, }
+\item[{{\bf Expression}\mbox{[}$\,$\mbox{]}}]{arguments}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_a913ede010e3db701ee3d440287317ce0}
+
+
+Evaluates the guard of a system function. 
+
+This is an extra guard related to the particular system function, and needs to be checked in addition to the \char`\"{}regular\char`\"{} guard in the transition system.
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code information for error report. \\
+\hline
+{\em state} & The state where the evaluation happens. \\
+\hline
+{\em pid} & The P\+I\+D of the process that triggers this evaluation. \\
+\hline
+{\em function} & The name of the function. \\
+\hline
+{\em arguments} & The arguments of the function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of the guard with a possibly new state caused by side effects. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluator_a36d4bbd355cb9544feaaf0979280c70b}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Evaluator}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_aabc7605e7fa536b1e4620849029e4a1e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}!get\+Data\+From@{get\+Data\+From}}
+\index{get\+Data\+From@{get\+Data\+From}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}}
+\subsubsection[{get\+Data\+From}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Evaluation} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator.\+get\+Data\+From (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{{\bf Expression}}]{pointer\+Expr, }
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{Numeric\+Expression}]{count, }
+\item[{boolean}]{check\+Output, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_aabc7605e7fa536b1e4620849029e4a1e}
+
+
+Pre-\/condition\+: 
+
+
+\begin{DoxyEnumerate}
+\item \char`\"{}pointer\char`\"{} is valid 
+\item \char`\"{}count\char`\"{} $>$ 0 
+\end{DoxyEnumerate}post\+\_\+condition\+: 
+\begin{DoxyEnumerate}
+\item Return a sequence of data with length \char`\"{}count\char`\"{} from the pointed object starting from the pointed position 
+\end{DoxyEnumerate}Get a sequence of data starting from a pointer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em process} & The information of the process \\
+\hline
+{\em pointer} & The pointer to the start position of a sequence of data \\
+\hline
+{\em count} & The number of cells in the array of data \\
+\hline
+{\em check\+Output} & Flag for check output variable \\
+\hline
+{\em source} & \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of the statement \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Evaluation contains the sequence of data which is in form of a one dimensional array. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_ad3c18fce2a6da1a036823e89f7aae1b5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}!set\+Data\+From@{set\+Data\+From}}
+\index{set\+Data\+From@{set\+Data\+From}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Evaluator}}
+\subsubsection[{set\+Data\+From}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<${\bf Evaluation}, Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Evaluator.\+set\+Data\+From (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{{\bf Expression}}]{ptr\+Expr, }
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{Numeric\+Expression}]{count, }
+\item[{Symbolic\+Expression}]{data\+Array, }
+\item[{boolean}]{check\+Output, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryEvaluator_ad3c18fce2a6da1a036823e89f7aae1b5}
+
+
+Pre-\/conditions\+: 
+
+
+\begin{DoxyEnumerate}
+\item \char`\"{}pointer\char`\"{} is a valid pointer 
+\item \char`\"{}count\char`\"{} greater than zero 
+\item \char`\"{}data\+Array\char`\"{} is an one dimensional array 
+\item \char`\"{}pointer\char`\"{} must points to a compatible type with the \char`\"{}data\+Array\char`\"{} 
+\end{DoxyEnumerate}post\+\_\+condition\+: 
+\begin{DoxyEnumerate}
+\item Return a sequence of data with length \char`\"{}count\char`\"{} from the pointed object starting from the pointed position 
+\end{DoxyEnumerate}Setting a sequence of data starting from a pointer
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em process} & The information of the process \\
+\hline
+{\em pointer} & The pointer to the start position \\
+\hline
+{\em count} & The number of cells in the array of data \\
+\hline
+{\em data\+Array} & The sequence of data is going to be set \\
+\hline
+{\em check\+Output} & Flag for check output variable \\
+\hline
+{\em source} & \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of the statement \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} pair of evaluation and pointer.\+The data in form of an array which can be assigned to the returned pointer. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/library/common/Base\+Library\+Evaluator.\+java\end{DoxyCompactItemize}

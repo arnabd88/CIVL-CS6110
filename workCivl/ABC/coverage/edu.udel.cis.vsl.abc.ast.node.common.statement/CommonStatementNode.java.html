@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonStatementNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.statement</a> &gt; <span class="el_source">CommonStatementNode.java</span></div><h1>CommonStatementNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.statement;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.common.CommonASTNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public abstract class CommonStatementNode extends CommonASTNode implements
+		StatementNode {
+
+	public CommonStatementNode(Source source) {
+<span class="nc" id="L13">		super(source);</span>
+<span class="nc" id="L14">	}</span>
+
+	public CommonStatementNode(Source source, ASTNode child) {
+<span class="nc" id="L17">		super(source, child);</span>
+<span class="nc" id="L18">	}</span>
+
+	public CommonStatementNode(Source source, ASTNode child0, ASTNode child1) {
+<span class="nc" id="L21">		super(source, child0, child1);</span>
+<span class="nc" id="L22">	}</span>
+
+	public CommonStatementNode(Source source, ASTNode child0, ASTNode child1,
+			ASTNode child2) {
+<span class="nc" id="L26">		super(source, child0, child1, child2);</span>
+<span class="nc" id="L27">	}</span>
+
+	@Override
+	public BlockItemKind blockItemKind() {
+<span class="nc" id="L31">		return BlockItemKind.STATEMENT;</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L36">		return NodeKind.STATEMENT;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		if (that instanceof StatementNode)</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">			if (this.statementKind() == ((StatementNode) that).statementKind())</span>
+<span class="nc" id="L43">				return null;</span>
+<span class="nc" id="L44">		return new DifferenceObject(this, that);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

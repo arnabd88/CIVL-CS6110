@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FloatingType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.IF</a> &gt; <span class="el_source">FloatingType.java</span></div><h1>FloatingType.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.type.IF;</span>
+
+/**
+ * The floating types come in four kinds: &lt;code&gt;float&lt;/code&gt;,
+ * &lt;code&gt;double&lt;/code&gt;, &lt;code&gt;long double&lt;/code&gt;, representing increasing
+ * precision, and &quot;real&quot;, a CIVL-C type denoted &lt;code&gt;$real&lt;/code&gt; representing
+ * the mathematical real numbers. Each also comes in a real and complex variant.
+ * 
+ * @author siegel
+ * 
+ */
+public interface FloatingType extends StandardBasicType {
+
+<span class="nc" id="L14">	public static enum FloatKind {</span>
+<span class="nc" id="L15">		FLOAT, DOUBLE, LONG_DOUBLE, REAL</span>
+	};
+
+	/**
+	 * Is this complex?
+	 * 
+	 * @return true if complex, false if real
+	 * */
+	boolean isComplex();
+
+	/**
+	 * The kind of floating type (float, double, or long double).
+	 * 
+	 * @return the float kind
+	 */
+	FloatKind getFloatKind();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

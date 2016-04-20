@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonFunctionMacro.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.common</a> &gt; <span class="el_source">CommonFunctionMacro.java</span></div><h1>CommonFunctionMacro.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.token.common;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.Tree;
+
+<span class="nc" id="L10">import edu.udel.cis.vsl.abc.front.c.preproc.PreprocessorLexer;</span>
+import edu.udel.cis.vsl.abc.token.IF.FunctionMacro;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+
+public class CommonFunctionMacro extends CommonMacro implements FunctionMacro {
+
+	private int[] replacementFormalIndexes;
+
+	public CommonFunctionMacro(Tree definitionNode, SourceFile file) {
+		super(definitionNode, file);
+		initialize();
+	}
+
+	private void initialize() {
+		int numFormals = getNumFormals();
+		int numReplacementTokens = getNumReplacementTokens();
+		Map&lt;String, Integer&gt; nameMap = new HashMap&lt;String, Integer&gt;(numFormals);
+
+		for (int i = 0; i &lt; numFormals; i++) {
+			nameMap.put(getFormal(i).getText(), i);
+		}
+		replacementFormalIndexes = new int[numReplacementTokens];
+		for (int j = 0; j &lt; numReplacementTokens; j++) {
+			Token token = getReplacementToken(j);
+
+<span class="nc" id="L35">			if (token.getType() == PreprocessorLexer.IDENTIFIER) {</span>
+				String name = token.getText();
+				Integer formalIndex = nameMap.get(name);
+
+				if (formalIndex != null) {
+					replacementFormalIndexes[j] = formalIndex;
+					continue;
+				}
+			}
+			replacementFormalIndexes[j] = -1;
+		}
+	}
+
+	@Override
+<span class="nc" id="L49">	public Tree getBodyNode() {</span>
+		return definitionNode.getChild(2);
+	}
+
+<span class="nc" id="L53">	public int getNumFormals() {</span>
+		return definitionNode.getChild(1).getChildCount();
+	}
+
+<span class="nc" id="L57">	public Token getFormal(int index) {</span>
+		return ((CommonTree) definitionNode.getChild(1).getChild(index))
+				.getToken();
+	}
+
+	/**
+	 * Given i, 0&lt;=i&lt;n, where n is the number of replacement tokens, let t be
+	 * the i-th replacement token. Returns -1 if t is not an identifier equal to
+	 * one of the formal parameter identifiers. Otherwise, returns the index of
+	 * that formal parameter. This is to faciliate substitution of actuals for
+	 * formals.
+	 * 
+	 * @param i
+	 *            integer in [0,numReplacementTokens)
+	 * @return -1 or index of matching formal parameter in [0,numFormals)
+	 */
+<span class="nc" id="L73">	public int getReplacementFormalIndex(int i) {</span>
+		return replacementFormalIndexes[i];
+	}
+
+	@Override
+<span class="nc" id="L78">	public String toString() {</span>
+		String result = &quot;FunctionMacro[&quot; + getName() + &quot;(&quot;;
+		int numFormals = getNumFormals();
+		int numReplacementTokens = getNumReplacementTokens();
+
+		for (int j = 0; j &lt; numFormals; j++) {
+			if (j &gt; 0)
+				result += &quot;,&quot;;
+			result += getFormal(j).getText();
+		}
+		result += &quot;) =&quot;;
+		for (int i = 0; i &lt; numReplacementTokens; i++)
+			result += &quot; &quot; + getReplacementToken(i).getText();
+		result += &quot;]&quot;;
+		return result;
+	}
+
+	@Override
+<span class="nc" id="L96">	public boolean equals(Object object) {</span>
+		if (object instanceof CommonFunctionMacro) {
+			CommonFunctionMacro that = (CommonFunctionMacro) object;
+
+			if (!super.equals(that))
+				return false;
+
+			int numFormals = getNumFormals();
+
+			if (numFormals != that.getNumFormals())
+				return false;
+
+			for (int i = 0; i &lt; numFormals; i++) {
+				Token t1 = getFormal(i);
+				Token t2 = that.getFormal(i);
+
+				if (t1.getType() != t2.getType()
+						|| !t1.getText().equals(t2.getText()))
+					return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

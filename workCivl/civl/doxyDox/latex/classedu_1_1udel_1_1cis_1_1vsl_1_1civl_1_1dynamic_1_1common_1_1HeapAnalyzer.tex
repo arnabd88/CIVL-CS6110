@@ -1,0 +1,34 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1HeapAnalyzer}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Heap\+Analyzer Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1HeapAnalyzer}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Heap\+Analyzer@{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Heap\+Analyzer}}
+
+
+This class implements operations on a heap.  
+
+
+
+
+\subsection{Detailed Description}
+This class implements operations on a heap. 
+
+\hyperlink{structA}{A} heap consists of a fixed number (however, the number may vary from models to models) of heap fields, while a heap field is composed of a dynamic number of heap objects of type array of type T. 
+\begin{DoxyItemize}
+\item each dyscope has a heap by default, as the 0 variable of that dyscope; 
+\item the initial value of a heap is a S\+A\+R\+L N\+U\+L\+L expression (not J\+A\+V\+A\textquotesingle{}s N\+U\+L\+L); 
+\item a heap has the type $<$array-\/of-\/array-\/of-\/\+T1, array-\/of-\/array-\/of-\/\+T2, ...$>$, corresponding to malloc statements and handle objects used in the model; 
+\item a heap field has the type array-\/of-\/array-\/of-\/\+T; 
+\item a heap object has the type array of type T, which is allocated/deallocated by malloc(handle create)/deallocate(handle destroy) methods; 
+\item a heap atomic object has the type T, and is an element of a certain heap object; 
+\item a heap memory unit is a pointer to a heap object, which has type pointer-\/to-\/array-\/of-\/\+T, and has the form {\ttfamily \&di\$heap$<$j,k$>$}, where {\ttfamily i} is the dyscope I\+D of the heap, {\ttfamily j} is the index of the heap field that the heap object belongs to, and {\ttfamily k} is the index of the heap object in the heap field. 
+\item a heap pointer is any pointer pointing to some part of the heap. 
+\end{DoxyItemize}
+
+T\+O\+D\+O\+: malloc pointer This class is part of the symbolic utility, the purpose of which is to factor out the code related to heap.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/dynamic/common/Heap\+Analyzer.\+java\end{DoxyCompactItemize}

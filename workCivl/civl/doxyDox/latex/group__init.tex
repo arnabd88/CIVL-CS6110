@@ -1,0 +1,221 @@
+\hypertarget{group__init}{}\section{Initialization functions.}
+\label{group__init}\index{Initialization functions.@{Initialization functions.}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} (int lmax, int mmax, int mres, enum \hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952}{shtns\+\_\+norm} norm)
+\begin{DoxyCompactList}\small\item\em Defines the sizes of the spectral description. Use for advanced initialization. \end{DoxyCompactList}\item 
+\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} \hyperlink{group__init_ga8a22f101d85754461107eaa19e3bbd81}{shtns\+\_\+create\+\_\+with\+\_\+grid} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} base, int mmax, int nofft)
+\begin{DoxyCompactList}\small\item\em Copy a given config but allow a different (smaller) mmax and the possibility to enable/disable fft (beta). \end{DoxyCompactList}\item 
+void \hyperlink{group__init_ga5915acd98e96ac6dc3b84d15001e3e92}{shtns\+\_\+unset\+\_\+grid} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns)
+\begin{DoxyCompactList}\small\item\em release all resources allocated by a grid. \end{DoxyCompactList}\item 
+void \hyperlink{group__init_ga223895ca67b73ad41666eca76c9bd409}{shtns\+\_\+destroy} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns)
+\begin{DoxyCompactList}\small\item\em release all resources allocated by a given shtns\+\_\+cfg. \end{DoxyCompactList}\item 
+void \hyperlink{group__init_ga65e8f69a3d2e908f67b6fda32ecda4b4}{shtns\+\_\+reset} ()
+\begin{DoxyCompactList}\small\item\em clear all allocated memory (hopefully) and go back to 0 state. \end{DoxyCompactList}\item 
+int \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, enum \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type} flags, double eps, int nl\+\_\+order, int $\ast$nlat, int $\ast$nphi)
+\begin{DoxyCompactList}\small\item\em Precompute everything and choose the optimal nlat and nphi for a given non-\/linear order. \end{DoxyCompactList}\item 
+int \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, enum \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type} flags, double eps, int nlat, int nphi)
+\begin{DoxyCompactList}\small\item\em Precompute everything for a given spatial grid. Use for advanced initialization, after \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create}. \end{DoxyCompactList}\item 
+\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} \hyperlink{group__init_ga8199210424d47f2b0bce9bd7d0f9957d}{shtns\+\_\+init} (enum \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type} flags, int lmax, int mmax, int mres, int nlat, int nphi)
+\begin{DoxyCompactList}\small\item\em Simple initialization of the spherical harmonic transforms of given size. Calls \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} and \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto}. \end{DoxyCompactList}\item 
+int \hyperlink{group__init_ga4cc3eef247a78a1d910794e88f742e3a}{shtns\+\_\+use\+\_\+threads} (int num\+\_\+threads)
+\begin{DoxyCompactList}\small\item\em Enables Open\+M\+P parallel transforms, if available (see compil). \end{DoxyCompactList}\item 
+int \hyperlink{group__init_gaa61a638ab29c0a73eba67e2a00cdf2f0}{shtns\+\_\+gauss\+\_\+wts} (\hyperlink{shtns_8h_ab7bd78e5cbeb4ed18782d018195fde00}{shtns\+\_\+cfg} shtns, double $\ast$wts)
+\begin{DoxyCompactList}\small\item\em fill the given array with Gauss weights. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__init_ga54b088013246e361b3c7387ac17bf9c1}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+create@{shtns\+\_\+create}}
+\index{shtns\+\_\+create@{shtns\+\_\+create}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf shtns\+\_\+cfg} shtns\+\_\+create (
+\begin{DoxyParamCaption}
+\item[{int}]{lmax, }
+\item[{int}]{mmax, }
+\item[{int}]{mres, }
+\item[{enum {\bf shtns\+\_\+norm}}]{norm}
+\end{DoxyParamCaption}
+)}\label{group__init_ga54b088013246e361b3c7387ac17bf9c1}
+
+
+Defines the sizes of the spectral description. Use for advanced initialization. 
+
+This sets the description of spherical harmonic coefficients. It tells S\+H\+Tns how to interpret spherical harmonic coefficient arrays, and it sets usefull arrays. Returns the configuration to be passed to subsequent transform functions, which is basicaly a pointer to a \hyperlink{structshtns__info}{shtns\+\_\+info} struct. 
+\begin{DoxyParams}{Parameters}
+{\em lmax} & \+: maximum S\+H degree that we want to describe. \\
+\hline
+{\em mmax} & \+: number of azimutal wave numbers. \\
+\hline
+{\em mres} & \+: {\ttfamily 2.\+pi/mres} is the azimutal periodicity. {\ttfamily mmax$\ast$mres} is the maximum S\+H order. \\
+\hline
+{\em norm} & \+: define the normalization of the spherical harmonics (\hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952}{shtns\+\_\+norm})
+\begin{DoxyItemize}
+\item optionaly disable Condon-\/\+Shortley phase (ex\+: \hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952ac9612ef0c13117c8ba08d1f8861ee442}{sht\+\_\+schmidt} $\vert$ \hyperlink{shtns_8h_ade5d09d8c3ec871e812e7790a0b01f83}{S\+H\+T\+\_\+\+N\+O\+\_\+\+C\+S\+\_\+\+P\+H\+A\+S\+E})
+\item optionaly use a \textquotesingle{}real\textquotesingle{} normalization (ex\+: \hyperlink{shtns_8h_ae40339bdff1eddb866f48a5342792952a847427b41ce9433cd47af020869fb0e1}{sht\+\_\+fourpi} $\vert$ \hyperlink{shtns_8h_abd75c12787686789ceb3280723d746d9}{S\+H\+T\+\_\+\+R\+E\+A\+L\+\_\+\+N\+O\+R\+M}) 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+Condon-\/\+Shortley phase (-\/1)$^\wedge$m is used by default.
+
+renormalization of m$>$0. \hypertarget{group__init_ga8a22f101d85754461107eaa19e3bbd81}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+create\+\_\+with\+\_\+grid@{shtns\+\_\+create\+\_\+with\+\_\+grid}}
+\index{shtns\+\_\+create\+\_\+with\+\_\+grid@{shtns\+\_\+create\+\_\+with\+\_\+grid}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+create\+\_\+with\+\_\+grid}]{\setlength{\rightskip}{0pt plus 5cm}{\bf shtns\+\_\+cfg} shtns\+\_\+create\+\_\+with\+\_\+grid (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{base, }
+\item[{int}]{mmax, }
+\item[{int}]{nofft}
+\end{DoxyParamCaption}
+)}\label{group__init_ga8a22f101d85754461107eaa19e3bbd81}
+
+
+Copy a given config but allow a different (smaller) mmax and the possibility to enable/disable fft (beta). 
+
+Copy a given config but allow a different (smaller) mmax and the possibility to enable/disable fft. \hypertarget{group__init_ga223895ca67b73ad41666eca76c9bd409}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+destroy@{shtns\+\_\+destroy}}
+\index{shtns\+\_\+destroy@{shtns\+\_\+destroy}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+destroy}]{\setlength{\rightskip}{0pt plus 5cm}void shtns\+\_\+destroy (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns}
+\end{DoxyParamCaption}
+)}\label{group__init_ga223895ca67b73ad41666eca76c9bd409}
+
+
+release all resources allocated by a given shtns\+\_\+cfg. 
+
+free memory of given config, which cannot be used afterwards. \hypertarget{group__init_gaa61a638ab29c0a73eba67e2a00cdf2f0}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+gauss\+\_\+wts@{shtns\+\_\+gauss\+\_\+wts}}
+\index{shtns\+\_\+gauss\+\_\+wts@{shtns\+\_\+gauss\+\_\+wts}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+gauss\+\_\+wts}]{\setlength{\rightskip}{0pt plus 5cm}int shtns\+\_\+gauss\+\_\+wts (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{double $\ast$}]{wts}
+\end{DoxyParamCaption}
+)}\label{group__init_gaa61a638ab29c0a73eba67e2a00cdf2f0}
+
+
+fill the given array with Gauss weights. 
+
+fill the given array with Gauss weights. returns the number of weights written (0 if not a Gauss grid).
+
+returns the number of weights written, which may be zero if the grid is not a Gauss grid. \hypertarget{group__init_ga8199210424d47f2b0bce9bd7d0f9957d}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+init@{shtns\+\_\+init}}
+\index{shtns\+\_\+init@{shtns\+\_\+init}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf shtns\+\_\+cfg} shtns\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{enum {\bf shtns\+\_\+type}}]{flags, }
+\item[{int}]{lmax, }
+\item[{int}]{mmax, }
+\item[{int}]{mres, }
+\item[{int}]{nlat, }
+\item[{int}]{nphi}
+\end{DoxyParamCaption}
+)}\label{group__init_ga8199210424d47f2b0bce9bd7d0f9957d}
+
+
+Simple initialization of the spherical harmonic transforms of given size. Calls \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} and \hyperlink{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{shtns\+\_\+set\+\_\+grid\+\_\+auto}. 
+
+Simple initialization of Spherical Harmonic transforms (backward and forward, vector and scalar, ...) of given size. This function sets all global variables by calling \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} followed by \hyperlink{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{shtns\+\_\+set\+\_\+grid}, with the default normalization and the default polar optimization (see sht\+\_\+config.\+h). Returns the configuration to be passed to subsequent transform functions, which is basicaly a pointer to a \hyperlink{structshtns__info}{shtns\+\_\+info} struct. 
+\begin{DoxyParams}{Parameters}
+{\em lmax} & \+: maximum S\+H degree that we want to describe. \\
+\hline
+{\em mmax} & \+: number of azimutal wave numbers. \\
+\hline
+{\em mres} & \+: {\ttfamily 2.\+pi/mres} is the azimutal periodicity. {\ttfamily mmax$\ast$mres} is the maximum S\+H order. \\
+\hline
+{\em nlat,nphi} & \+: respectively the number of latitudinal and longitudinal grid points. \\
+\hline
+{\em flags} & allows to choose the type of transform (see \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type}) and the spatial data layout (see spat) \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__init_ga65e8f69a3d2e908f67b6fda32ecda4b4}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+reset@{shtns\+\_\+reset}}
+\index{shtns\+\_\+reset@{shtns\+\_\+reset}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+reset}]{\setlength{\rightskip}{0pt plus 5cm}void shtns\+\_\+reset (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{group__init_ga65e8f69a3d2e908f67b6fda32ecda4b4}
+
+
+clear all allocated memory (hopefully) and go back to 0 state. 
+
+destroy all configs, free memory, and go back to initial state. \hypertarget{group__init_ga504eedd43b90d435fc55f7e22e18c44e}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+set\+\_\+grid@{shtns\+\_\+set\+\_\+grid}}
+\index{shtns\+\_\+set\+\_\+grid@{shtns\+\_\+set\+\_\+grid}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+set\+\_\+grid}]{\setlength{\rightskip}{0pt plus 5cm}int shtns\+\_\+set\+\_\+grid (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{enum {\bf shtns\+\_\+type}}]{flags, }
+\item[{double}]{eps, }
+\item[{int}]{nlat, }
+\item[{int}]{nphi}
+\end{DoxyParamCaption}
+)}\label{group__init_ga504eedd43b90d435fc55f7e22e18c44e}
+
+
+Precompute everything for a given spatial grid. Use for advanced initialization, after \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create}. 
+
+Initialization of Spherical Harmonic transforms (backward and forward, vector and scalar, ...) of given size. {\bfseries This function must be called after \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} and before any S\+H transform.} and sets all global variables. returns the required number of doubles to be allocated for a spatial field. 
+\begin{DoxyParams}{Parameters}
+{\em shtns} & is the config created by shtns\+\_\+create for which the grid will be set. \\
+\hline
+{\em flags} & allows to choose the type of transform (see \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type}) and the spatial data layout (see spat) \\
+\hline
+{\em eps} & polar optimization threshold \+: polar values of Legendre Polynomials below that threshold are neglected (for high m), leading to increased performance (a few percents) \\
+\hline
+{\em nlat,nphi} & respectively the number of latitudinal and longitudinal grid points. 0 = no polar optimization; 1.\+e-\/14 = V\+E\+R\+Y safe; 1.\+e-\/10 = safe; 1.\+e-\/6 = aggresive, but still good accuracy. \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+set\+\_\+grid\+\_\+auto@{shtns\+\_\+set\+\_\+grid\+\_\+auto}}
+\index{shtns\+\_\+set\+\_\+grid\+\_\+auto@{shtns\+\_\+set\+\_\+grid\+\_\+auto}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+set\+\_\+grid\+\_\+auto}]{\setlength{\rightskip}{0pt plus 5cm}int shtns\+\_\+set\+\_\+grid\+\_\+auto (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns, }
+\item[{enum {\bf shtns\+\_\+type}}]{flags, }
+\item[{double}]{eps, }
+\item[{int}]{nl\+\_\+order, }
+\item[{int $\ast$}]{nlat, }
+\item[{int $\ast$}]{nphi}
+\end{DoxyParamCaption}
+)}\label{group__init_gaef4a2d2c275443f0d4cf877c2e5feaad}
+
+
+Precompute everything and choose the optimal nlat and nphi for a given non-\/linear order. 
+
+Initialization of Spherical Harmonic transforms (backward and forward, vector and scalar, ...) of given size. {\bfseries This function must be called after \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} and before any S\+H transform.} and sets all global variables and internal data. returns the required number of doubles to be allocated for a spatial field. 
+\begin{DoxyParams}{Parameters}
+{\em shtns} & is the config created by \hyperlink{group__init_ga54b088013246e361b3c7387ac17bf9c1}{shtns\+\_\+create} for which the grid will be set. \\
+\hline
+{\em nlat,nphi} & pointers to the number of latitudinal and longitudinal grid points respectively. If 0, they are set to optimal values. \\
+\hline
+{\em nl\+\_\+order} & defines the maximum S\+H degree to be resolved by analysis \+: lmax\+\_\+analysis = lmax$\ast$nl\+\_\+order. It is used to set an optimal and anti-\/aliasing nlat. If 0, the default S\+H\+T\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+N\+L\+\_\+\+O\+R\+D\+E\+R is used. \\
+\hline
+{\em flags} & allows to choose the type of transform (see \hyperlink{shtns_8h_abdccbb8fbce176dbe189d494c94f0f7b}{shtns\+\_\+type}) and the spatial data layout (see spat) \\
+\hline
+{\em eps} & polar optimization threshold \+: polar values of Legendre Polynomials below that threshold are neglected (for high m), leading to increased performance (a few percents) 0 = no polar optimization; 1.\+e-\/14 = V\+E\+R\+Y safe; 1.\+e-\/10 = safe; 1.\+e-\/6 = aggresive, but still good accuracy. \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__init_ga5915acd98e96ac6dc3b84d15001e3e92}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+unset\+\_\+grid@{shtns\+\_\+unset\+\_\+grid}}
+\index{shtns\+\_\+unset\+\_\+grid@{shtns\+\_\+unset\+\_\+grid}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+unset\+\_\+grid}]{\setlength{\rightskip}{0pt plus 5cm}void shtns\+\_\+unset\+\_\+grid (
+\begin{DoxyParamCaption}
+\item[{{\bf shtns\+\_\+cfg}}]{shtns}
+\end{DoxyParamCaption}
+)}\label{group__init_ga5915acd98e96ac6dc3b84d15001e3e92}
+
+
+release all resources allocated by a grid. 
+
+unset the grid. \hypertarget{group__init_ga4cc3eef247a78a1d910794e88f742e3a}{}\index{Initialization functions.@{Initialization functions.}!shtns\+\_\+use\+\_\+threads@{shtns\+\_\+use\+\_\+threads}}
+\index{shtns\+\_\+use\+\_\+threads@{shtns\+\_\+use\+\_\+threads}!Initialization functions.@{Initialization functions.}}
+\subsubsection[{shtns\+\_\+use\+\_\+threads}]{\setlength{\rightskip}{0pt plus 5cm}int shtns\+\_\+use\+\_\+threads (
+\begin{DoxyParamCaption}
+\item[{int}]{num\+\_\+threads}
+\end{DoxyParamCaption}
+)}\label{group__init_ga4cc3eef247a78a1d910794e88f742e3a}
+
+
+Enables Open\+M\+P parallel transforms, if available (see compil). 
+
+Enables multi-\/thread transform using Open\+M\+P with num\+\_\+threads (if available). Returns number of threads that will be used.
+
+Call before any initialization of shtns to use mutliple threads. Returns the actual number of threads. \begin{DoxyItemize}
+\item If num\+\_\+threads $>$ 0, specifies the maximum number of threads that should be used. \item If num\+\_\+threads $<$= 0, maximum number of threads is automatically set to the number of processors. \item If num\+\_\+threads == 1, openmp will be disabled. \end{DoxyItemize}

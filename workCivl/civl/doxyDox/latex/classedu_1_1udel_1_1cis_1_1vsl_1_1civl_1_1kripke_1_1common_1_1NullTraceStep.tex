@@ -1,0 +1,191 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step@{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step}}
+
+
+This represents a null trace step, during which nothing is executed.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a710be16bbda24e7e0a0bd33e53e7dbc9}{Null\+Trace\+Step} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of a null trace. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a96d384d7f595e1977fc7f594fabca2ad}{get\+Final\+State} ()
+\begin{DoxyCompactList}\small\item\em Returns the final state of this trace step. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a3f9eed97e38c6fe8a4c86ee084e275c2}{add\+Atomic\+Step} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep}{Atomic\+Step} step)
+\begin{DoxyCompactList}\small\item\em Adds an atomic step to the trace step. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a0d5a53cde4e4f398bdc25dc87b52df56}{get\+Num\+Atomic\+Steps} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of atomic steps contained in this trace step. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a232e1d4a2e9891d0615d862ce39da62f}{process\+Identifier} ()
+\begin{DoxyCompactList}\small\item\em Returns the identifier of the process that this trace step belongs to. \end{DoxyCompactList}\item 
+List$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1AtomicStep}{Atomic\+Step} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a71be2412e0c9518207ef75ebaae867d4}{get\+Atomic\+Steps} ()
+\begin{DoxyCompactList}\small\item\em Returns the list of atomic steps of this trace step. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_ae84d3fbd5a21a89778f352300d52b428}{complete} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} final\+State)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This represents a null trace step, during which nothing is executed. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a710be16bbda24e7e0a0bd33e53e7dbc9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}!Null\+Trace\+Step@{Null\+Trace\+Step}}
+\index{Null\+Trace\+Step@{Null\+Trace\+Step}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}}
+\subsubsection[{Null\+Trace\+Step}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step.\+Null\+Trace\+Step (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a710be16bbda24e7e0a0bd33e53e7dbc9}
+
+
+Creates a new instance of a null trace. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state that results in this null trace. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a3f9eed97e38c6fe8a4c86ee084e275c2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}!add\+Atomic\+Step@{add\+Atomic\+Step}}
+\index{add\+Atomic\+Step@{add\+Atomic\+Step}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}}
+\subsubsection[{add\+Atomic\+Step}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step.\+add\+Atomic\+Step (
+\begin{DoxyParamCaption}
+\item[{{\bf Atomic\+Step}}]{step}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a3f9eed97e38c6fe8a4c86ee084e275c2}
+
+
+Adds an atomic step to the trace step. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em step} & The atomic step to be added. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1TraceStep_a73c69e4fbf7a429aa2f0536e42385bf4}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Trace\+Step}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_ae84d3fbd5a21a89778f352300d52b428}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}!complete@{complete}}
+\index{complete@{complete}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}}
+\subsubsection[{complete}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step.\+complete (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{final\+State}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_ae84d3fbd5a21a89778f352300d52b428}
+Completes the trace step with its final state. 
+
+Precondition\+:{\ttfamily  this.\+get\+Final\+State() == null}, otherwise, an exception will be thrown. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em final\+State} & The state to be used as the final state of the trace step. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1TraceStep_a90fabd8d0cae466f4df76b1631ca86d1}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Trace\+Step}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a71be2412e0c9518207ef75ebaae867d4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}!get\+Atomic\+Steps@{get\+Atomic\+Steps}}
+\index{get\+Atomic\+Steps@{get\+Atomic\+Steps}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}}
+\subsubsection[{get\+Atomic\+Steps}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Atomic\+Step}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step.\+get\+Atomic\+Steps (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a71be2412e0c9518207ef75ebaae867d4}
+
+
+Returns the list of atomic steps of this trace step. 
+
+\begin{DoxyReturn}{Returns}
+the list of atomic steps of this trace step. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1TraceStep_a96f1c0d4437ad0386abcca43c49dacb0}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Trace\+Step}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a96d384d7f595e1977fc7f594fabca2ad}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}!get\+Final\+State@{get\+Final\+State}}
+\index{get\+Final\+State@{get\+Final\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}}
+\subsubsection[{get\+Final\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step.\+get\+Final\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a96d384d7f595e1977fc7f594fabca2ad}
+
+
+Returns the final state of this trace step. 
+
+\begin{DoxyReturn}{Returns}
+the final state of this trace step. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1TraceStep_a2b9d056a58e19a9cfd356bb7d6979aa7}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Trace\+Step}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a0d5a53cde4e4f398bdc25dc87b52df56}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}!get\+Num\+Atomic\+Steps@{get\+Num\+Atomic\+Steps}}
+\index{get\+Num\+Atomic\+Steps@{get\+Num\+Atomic\+Steps}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}}
+\subsubsection[{get\+Num\+Atomic\+Steps}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step.\+get\+Num\+Atomic\+Steps (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a0d5a53cde4e4f398bdc25dc87b52df56}
+
+
+Returns the number of atomic steps contained in this trace step. 
+
+\begin{DoxyReturn}{Returns}
+the number of atomic steps contained in this trace step. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1TraceStep_ae18fe01159b91cd4224a548bac6aae98}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Trace\+Step}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a232e1d4a2e9891d0615d862ce39da62f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}!process\+Identifier@{process\+Identifier}}
+\index{process\+Identifier@{process\+Identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step@{edu\+::udel\+::cis\+::vsl\+::civl\+::kripke\+::common\+::\+Null\+Trace\+Step}}
+\subsubsection[{process\+Identifier}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+common.\+Null\+Trace\+Step.\+process\+Identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1common_1_1NullTraceStep_a232e1d4a2e9891d0615d862ce39da62f}
+
+
+Returns the identifier of the process that this trace step belongs to. 
+
+\begin{DoxyReturn}{Returns}
+the identifier of the process that this trace step belongs to. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1kripke_1_1IF_1_1TraceStep_a7f46e65b0afcd1ab8900baa3ef364028}{edu.\+udel.\+cis.\+vsl.\+civl.\+kripke.\+I\+F.\+Trace\+Step}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/kripke/common/Null\+Trace\+Step.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,23 @@
+/* Test for expression evaluation.  Modulo white space, the output should
+ * be "RIGHT RIGHT RIGHT ...".
+ */
+
+#define X 3
+#define Y 2
+#if X+Y==5
+RIGHT
+#else
+#error "WRONG 1"
+#endif
+
+#if X*Y<=6
+RIGHT
+#else
+#error "WRONG 2"
+#endif
+
+#if defined X && defined(Y) && X>3
+#error "WRONG 3"
+#else
+RIGHT
+#endif

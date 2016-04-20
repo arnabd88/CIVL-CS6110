@@ -1,0 +1,38 @@
+/* stdio-c.cvl: code included into a C/stdio.h program
+ * to support transformation to a CIVL-C program.
+ *
+ * The transformer will have to do the following:
+ *
+ * Replace calls of the form printf(...) to fprintf(stdout, ...).
+ * Replace calls of the form scanf(...) to fscanf(stdin, ...).
+ * 
+ */
+#ifdef __STDIO_C__
+#else
+#define __STDIO_C__
+
+$filesystem CIVL_filesystem = $filesystem_create($here);
+
+/* The files which were modified or created are written here
+ * at the end of the program.   They constitute outputs of
+ * the program.  The files will be sorted in some canonical
+ * way.
+ */
+$output $file CIVL_output_filesystem[];
+
+FILE * stdout = $fopen(CIVL_filesystem, "CIVL_stdout", CIVL_FILE_MODE_WX);
+
+FILE * stderr = $fopen(CIVL_filesystem, "CIVL_stderr", CIVL_FILE_MODE_WX);
+
+FILE * stdin = $fopen(CIVL_filesystem, "CIVL_stdin", CIVL_FILE_MODE_R);
+
+//FILE *fopen(const char * restrict filename, CIVL_File_mode mode) {
+//  return $fopen(CIVL_filesystem, filename, mode);
+//}
+
+// everything else: system function
+// at the end of this scope, copy all files from CIVL_filesystem to CIVL_output_filesystem
+// free file system.
+// $filesystem_copy_output(CIVL_filesystem, CIVL_output_filesystem);
+
+#endif

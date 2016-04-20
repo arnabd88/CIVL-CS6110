@@ -1,0 +1,51 @@
+/* This header file contains the function prototypes for 
+ * concurrency.
+ */
+
+#ifdef __CONCURRENCY__
+#else
+#define __CONCURRENCY__
+
+/* includes civlc.cvh because this library references $scope */
+#include <civlc.cvh>
+
+/* ********************************* Types ********************************* */
+
+/* A data type representing a global barrier which must be operated by local
+ * barriers. 
+ */
+typedef struct __gbarrier__ * $gbarrier;
+ 
+/* A data type representing a global barrier which used for 
+ * operating global barriers. The local barrier type has 
+ * a handle of a global barrier.
+ */
+typedef struct __barrier__ * $barrier;
+
+/* ******************************* Functions ******************************* */
+
+/* Creates a new barrier object and returns a handle to it.
+ * The barrier has the specified size.
+ * The new object will be allocated in the given scope. */
+$gbarrier $gbarrier_create($scope scope, int size);
+
+/* Destroys the gbarrier */
+void $gbarrier_destroy($gbarrier barrier);
+
+/* Creates a new local barrier object and returns a handle to it.
+ * The new barrier will be affiliated with the specified global
+ * barrier.   This local barrier handle will be used as an
+ * argument in most barrier functions.  The place must be in
+ * [0,size-1] and specifies the place in the global barrier
+ * that will be occupied by the local barrier.  
+ * Only one call to $barrier_create may occur for each barrier-place pair.
+ * The new object will be allocated in the given scope. */
+$barrier $barrier_create($scope scope, $gbarrier gbarrier, int place);
+
+/* Destroys the barrier. */
+void $barrier_destroy($barrier barrier);
+
+/* Calls the barrier associated with this local barrier object.*/
+void $barrier_call($barrier barrier);
+
+#endif

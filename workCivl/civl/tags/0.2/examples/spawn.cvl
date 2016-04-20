@@ -1,0 +1,11 @@
+#include<civlc.h>
+void f(int n) {
+  for (int i=0; i<n; i++) ;
+}
+
+void main() {
+  $proc p = $spawn f(3);
+  $proc q = $spawn f(1000);
+  $wait p;
+  $wait q;
+}

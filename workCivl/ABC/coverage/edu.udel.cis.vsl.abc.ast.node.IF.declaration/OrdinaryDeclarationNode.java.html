@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OrdinaryDeclarationNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.declaration</a> &gt; <span class="el_source">OrdinaryDeclarationNode.java</span></div><h1>OrdinaryDeclarationNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.declaration;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+
+/**
+ * &lt;p&gt;
+ * A declaration of a variable or function via a C &quot;declarator&quot;. In addition to
+ * the identifier (common to all declarations), this also specifies a type and
+ * storage information.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;
+ * Note that this is not used to declare members of structures or unions
+ * (&quot;fields&quot;). A {@link FieldDeclarationNode} is used for that.
+ * &lt;/p&gt;
+ * 
+ * @author siegel
+ * 
+ */
+public interface OrdinaryDeclarationNode extends BlockItemNode,
+		DeclarationNode {
+
+	/**
+	 * The different kinds of ordinary declarations.
+	 * 
+	 * @author siegel
+	 * 
+	 */
+<span class="nc" id="L30">	public enum OrdinaryDeclarationKind {</span>
+<span class="nc" id="L31">		/**</span>
+		 * A declaration of a variable.
+		 */
+<span class="nc" id="L34">		VARIABLE_DECLARATION,</span>
+<span class="nc" id="L35">		/**</span>
+		 * A declaration of a function which is not a definition.
+		 */
+<span class="nc" id="L38">		FUNCTION_DECLARATION,</span>
+<span class="nc" id="L39">		/**</span>
+		 * A function definition.
+		 */
+<span class="nc" id="L42">		FUNCTION_DEFINITION,</span>
+<span class="nc" id="L43">		/**</span>
+		 * A declaration of a CIVL-C abstract function.
+		 */
+<span class="nc" id="L46">		ABSTRACT_FUNCTION_DEFINITION</span>
+	}
+
+	/**
+	 * The kind of ordinary declaration this is.
+	 * 
+	 * @return the ordinary declaration kind
+	 */
+	OrdinaryDeclarationKind ordinaryDeclarationKind();
+
+	/**
+	 * The type of the thing being declared. This may be &lt;code&gt;null&lt;/code&gt;:
+	 * e.g., in a function declaration, the parameter types do not necessarily
+	 * have to be declared.
+	 * 
+	 * @return the type node for the type of the entity being declared
+	 * @see #setTypeNode(TypeNode)
+	 */
+	TypeNode getTypeNode();
+
+	/**
+	 * Sets the type node that will be returned by {@link #getTypeNode()}.
+	 * 
+	 * @param type
+	 *            the node representing the type part of the declaration
+	 */
+	void setTypeNode(TypeNode type);
+
+	/**
+	 * Does the declaration include the &lt;code&gt;extern&lt;/code&gt; storage class
+	 * specifier? That specifier can be used for functions and objects.
+	 * 
+	 * @return &lt;code&gt;true&lt;/code&gt; iff the declaration contains
+	 *         &lt;code&gt;extern&lt;/code&gt;
+	 * @see #setExternStorage(boolean)
+	 */
+	boolean hasExternStorage();
+
+	/**
+	 * Sets the value that will be returned by {@link #hasExternStorage()}. The
+	 * initial default value is &lt;code&gt;false&lt;/code&gt;.
+	 * 
+	 * @param value
+	 *            &lt;code&gt;true&lt;/code&gt; iff the declaration contains
+	 *            &lt;code&gt;extern&lt;/code&gt;, else &lt;code&gt;false&lt;/code&gt;
+	 * @see #hasExternStorage()
+	 */
+	void setExternStorage(boolean value);
+
+	/**
+	 * Does the declaration include the &lt;code&gt;static&lt;/code&gt; storage class
+	 * specifier? This maybe used for functions and objects.
+	 * 
+	 * @return &lt;code&gt;true&lt;/code&gt; iff declaration contains &lt;code&gt;static&lt;/code&gt;
+	 * @see #setStaticStorage(boolean)
+	 */
+	boolean hasStaticStorage();
+
+	/**
+	 * Sets the value that will be returned by {@link #hasStaticStorage()}.
+	 * Default value is &lt;code&gt;false&lt;/code&gt;.
+	 * 
+	 * @param value
+	 *            &lt;code&gt;true&lt;/code&gt; iff declaration contains &lt;code&gt;static&lt;/code&gt;
+	 * @see #hasStaticStorage()
+	 */
+	void setStaticStorage(boolean value);
+
+	@Override
+	OrdinaryDeclarationNode copy();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

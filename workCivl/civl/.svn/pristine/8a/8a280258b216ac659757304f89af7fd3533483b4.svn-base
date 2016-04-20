@@ -1,0 +1,51 @@
+/*****************************************************************************
+* SOURCE: This is a translation of a Pthread program from the Lawrence Livermore
+* Computing Center POSIX Threads Programming Exercise at:
+* https://computing.llnl.gov/tutorials/pthreads/exercise.html
+* FILE: bug5.cvl
+* DESCRIPTION:
+*   A simple pthreads program that dies before the threads can do their
+*   work because pthread_exit() is not called.
+* Command line execution:
+* civl verify -inputNUM_THREADS=5 bug5.cvl
+******************************************************************************/
+
+#include "pthread.h"
+#include <civlc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "math.cvh"
+
+$input int NUM_THREADS;
+
+void *PrintHello(void *threadid)
+{
+  int i;
+  double myresult=0.0;
+  printf("thread=%d: starting...\n", threadid); // Removed l from %ld
+  for (i=0; i<1000; i++)
+    myresult += sin(i) * tan(i);
+  printf("thread=%d result=%e. Done.\n",threadid,myresult); // Removed l from %ld
+  pthread_exit(NULL, false, NULL, 0); //Different parameters
+}
+
+int main(void)
+{
+  pthread_t threads[NUM_THREADS];
+  int rc, i;
+  long t[NUM_THREADS];
+
+  for(i=0;i<NUM_THREADS;i++){
+    printf("Main: creating thread %d\n", t);
+    //Add values into array and use address so that each value is unique as int to void * conversion is not supported
+    t[i] = (long)i;
+    rc = pthread_create(&threads[i], NULL, PrintHello, (void *)&t[i]);
+    if (rc){
+      printf("ERROR; return code from pthread_create() is %d\n", rc);
+      exit(-1);
+    }
+  }
+  //pthread_exit(NULL, true, threads, NUM_THREADS); // This is the bug, no pthread_exit causes error
+  printf("Main: Done.\n");
+}
+

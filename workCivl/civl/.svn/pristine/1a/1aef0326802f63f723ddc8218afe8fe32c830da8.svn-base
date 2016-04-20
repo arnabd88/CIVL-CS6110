@@ -1,0 +1,25 @@
+$input int B;
+$input int n;
+$assume 1<=n && n<=B;
+$input double a[n];
+double s;
+
+void main() {
+  double mean1() {
+    double sum=0.0;
+
+    for (int i=0; i<n; i++)
+      sum += a[i];
+    return sum/n;
+  }
+  double mean2() {
+    double result=a[0];
+
+    for (int i=1; i<n; i++)
+      result = result*(i*1.0/(i+1)) + a[i]/(i+1);
+    return result;
+  }
+  double result1 = mean1();
+  double result2 = mean2();
+  $assert result1==result2; 
+}

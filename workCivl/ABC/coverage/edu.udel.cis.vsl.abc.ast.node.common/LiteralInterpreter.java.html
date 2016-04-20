@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LiteralInterpreter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common</a> &gt; <span class="el_source">LiteralInterpreter.java</span></div><h1>LiteralInterpreter.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common;
+
+import java.math.BigInteger;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FloatingConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonFloatingConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonIntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.FloatingType;
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType.SignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType.UnsignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.ast.value.IF.IntegerValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.RealFloatingValue;
+import edu.udel.cis.vsl.abc.ast.value.IF.ValueFactory;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+public class LiteralInterpreter {
+
+	private TypeFactory typeFactory;
+
+	private ValueFactory valueFactory;
+
+	// private StandardSignedIntegerType SCHAR, SSHORT;
+
+	private StandardSignedIntegerType SINT, SLONG, SLLONG;
+
+	// private StandardUnsignedIntegerType UCHAR, USHORT;
+
+	private StandardUnsignedIntegerType UINT, ULONG, ULLONG;
+
+	private FloatingType FLOAT, DOUBLE, LDOUBLE;
+
+	/** The potential type lists for each kind of suffix. */
+	private IntegerType[] noneDec, noneHex, uDec, uHex, lDec, lHex, ulDec,
+			ulHex, llDec, llHex, ullDec, ullHex;
+
+<span class="nc" id="L43">	public LiteralInterpreter(TypeFactory typeFactory, ValueFactory valueFactory) {</span>
+<span class="nc" id="L44">		this.typeFactory = typeFactory;</span>
+<span class="nc" id="L45">		this.valueFactory = valueFactory;</span>
+		// SCHAR = typeFactory.signedIntegerType(SignedIntKind.SIGNED_CHAR);
+		// SSHORT = typeFactory.signedIntegerType(SignedIntKind.SHORT);
+<span class="nc" id="L48">		SINT = typeFactory.signedIntegerType(SignedIntKind.INT);</span>
+<span class="nc" id="L49">		SLONG = typeFactory.signedIntegerType(SignedIntKind.LONG);</span>
+<span class="nc" id="L50">		SLLONG = typeFactory.signedIntegerType(SignedIntKind.LONG_LONG);</span>
+		// UCHAR =
+		// typeFactory.unsignedIntegerType(UnsignedIntKind.UNSIGNED_CHAR);
+		// USHORT = typeFactory
+		// .unsignedIntegerType(UnsignedIntKind.UNSIGNED_SHORT);
+<span class="nc" id="L55">		UINT = typeFactory.unsignedIntegerType(UnsignedIntKind.UNSIGNED);</span>
+<span class="nc" id="L56">		ULONG = typeFactory.unsignedIntegerType(UnsignedIntKind.UNSIGNED_LONG);</span>
+<span class="nc" id="L57">		ULLONG = typeFactory</span>
+<span class="nc" id="L58">				.unsignedIntegerType(UnsignedIntKind.UNSIGNED_LONG_LONG);</span>
+<span class="nc" id="L59">		FLOAT = (FloatingType) typeFactory.basicType(BasicTypeKind.FLOAT);</span>
+<span class="nc" id="L60">		DOUBLE = (FloatingType) typeFactory.basicType(BasicTypeKind.DOUBLE);</span>
+<span class="nc" id="L61">		LDOUBLE = (FloatingType) typeFactory</span>
+<span class="nc" id="L62">				.basicType(BasicTypeKind.LONG_DOUBLE);</span>
+<span class="nc" id="L63">		noneDec = new IntegerType[] { SINT, SLONG, SLLONG };</span>
+<span class="nc" id="L64">		noneHex = new IntegerType[] { SINT, UINT, SLONG, ULONG, SLLONG, ULLONG };</span>
+<span class="nc" id="L65">		uDec = uHex = new IntegerType[] { UINT, ULONG, ULLONG };</span>
+<span class="nc" id="L66">		lDec = new IntegerType[] { SLONG, SLLONG };</span>
+<span class="nc" id="L67">		lHex = new IntegerType[] { SLONG, ULONG, SLLONG, ULLONG };</span>
+<span class="nc" id="L68">		ulDec = ulHex = new IntegerType[] { ULONG, ULLONG };</span>
+<span class="nc" id="L69">		llDec = new IntegerType[] { SLLONG };</span>
+<span class="nc" id="L70">		llHex = new IntegerType[] { SLLONG, ULLONG };</span>
+<span class="nc" id="L71">		ullDec = ullHex = new IntegerType[] { ULLONG };</span>
+<span class="nc" id="L72">	}</span>
+
+	public IntegerConstantNode integerConstant(Source source, String text)
+			throws SyntaxException {
+		String stripped, suffix;
+<span class="nc" id="L77">		int length = text.length();</span>
+		IntegerConstantNode node;
+		IntegerType type;
+		int base;
+		IntegerType[] typeList;
+		BigInteger bigIntValue;
+		IntegerValue value;
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		while (length &gt;= 1) {</span>
+<span class="nc" id="L86">			char c = text.charAt(length - 1);</span>
+
+<span class="nc bnc" id="L88" title="All 8 branches missed.">			if (c != 'U' &amp;&amp; c != 'u' &amp;&amp; c != 'l' &amp;&amp; c != 'L')</span>
+<span class="nc" id="L89">				break;</span>
+<span class="nc" id="L90">			length--;</span>
+		}
+<span class="nc" id="L92">		stripped = text.substring(0, length);</span>
+<span class="nc" id="L93">		suffix = text.substring(length);</span>
+		try {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (stripped.startsWith(&quot;0&quot;)) {</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">				if (stripped.startsWith(&quot;0x&quot;) || stripped.startsWith(&quot;0X&quot;)) {</span>
+<span class="nc" id="L97">					base = 16;</span>
+<span class="nc" id="L98">					stripped = stripped.substring(2);</span>
+<span class="nc" id="L99">				} else {</span>
+<span class="nc" id="L100">					base = 8;</span>
+				}
+<span class="nc" id="L102">			} else {</span>
+<span class="nc" id="L103">				base = 10;</span>
+			}
+<span class="nc" id="L105">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L106">			throw new SyntaxException(&quot;Unable to extract integer value from &quot;</span>
+<span class="nc" id="L107">					+ text + &quot;:\n&quot; + e, source);</span>
+		}
+<span class="nc" id="L109">		bigIntValue = new BigInteger(stripped, base);</span>
+<span class="nc" id="L110">		suffix = suffix.toLowerCase();</span>
+		// see table on C11 page 64
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (suffix.isEmpty())</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			typeList = (base == 10 ? noneDec : noneHex);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		else if (suffix.equals(&quot;u&quot;))</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			typeList = (base == 10 ? uDec : uHex);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		else if (suffix.equals(&quot;l&quot;))</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			typeList = (base == 10 ? lDec : lHex);</span>
+<span class="nc bnc" id="L118" title="All 4 branches missed.">		else if (suffix.equals(&quot;ul&quot;) || suffix.equals(&quot;lu&quot;))</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			typeList = (base == 10 ? ulDec : ulHex);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		else if (suffix.equals(&quot;ll&quot;))</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			typeList = (base == 10 ? llDec : llHex);</span>
+<span class="nc bnc" id="L122" title="All 4 branches missed.">		else if (suffix.equals(&quot;ull&quot;) || suffix.equals(&quot;llu&quot;))</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			typeList = (base == 10 ? ullDec : ullHex);</span>
+		else
+<span class="nc" id="L125">			throw new SyntaxException(&quot;Unknown suffix &quot; + suffix, source);</span>
+<span class="nc" id="L126">		type = typeFactory.rangeChoice(bigIntValue, typeList);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (type == null)</span>
+<span class="nc" id="L128">			throw new SyntaxException(</span>
+<span class="nc" id="L129">					&quot;Unable to find integer type to represent constant &quot;,</span>
+<span class="nc" id="L130">					source);</span>
+<span class="nc" id="L131">		value = valueFactory.integerValue(type, bigIntValue);</span>
+<span class="nc" id="L132">		node = new CommonIntegerConstantNode(source, text, value);</span>
+<span class="nc" id="L133">		return node;</span>
+	}
+
+	public FloatingConstantNode floatingConstant(Source source, String text)
+			throws SyntaxException {
+		int base, length, expPos, dotPos;
+		String stripped, suffix, significand, wholePart, fractionPart, exponent;
+		BigInteger wholePartValue, fractionPartValue, exponentValue;
+		FloatingType type;
+		RealFloatingValue value;
+
+<span class="nc" id="L144">		text = text.toLowerCase();</span>
+<span class="nc" id="L145">		length = text.length();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		while (length &gt;= 1) {</span>
+<span class="nc" id="L147">			char c = text.charAt(length - 1);</span>
+
+<span class="nc bnc" id="L149" title="All 4 branches missed.">			if (c != 'l' &amp;&amp; c != 'f')</span>
+<span class="nc" id="L150">				break;</span>
+<span class="nc" id="L151">			length--;</span>
+		}
+<span class="nc" id="L153">		stripped = text.substring(0, length);</span>
+<span class="nc" id="L154">		suffix = text.substring(length);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (stripped.startsWith(&quot;0x&quot;)) {</span>
+<span class="nc" id="L156">			base = 16;</span>
+<span class="nc" id="L157">			stripped = stripped.substring(2);</span>
+<span class="nc" id="L158">		} else {</span>
+<span class="nc" id="L159">			base = 10;</span>
+		}
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		expPos = stripped.indexOf(base == 10 ? 'e' : 'p');</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (expPos &gt;= 0) {</span>
+<span class="nc" id="L163">			significand = stripped.substring(0, expPos);</span>
+<span class="nc" id="L164">			exponent = stripped.substring(expPos + 1);</span>
+<span class="nc" id="L165">		} else {</span>
+<span class="nc" id="L166">			significand = stripped;</span>
+<span class="nc" id="L167">			exponent = &quot;&quot;;</span>
+		}
+<span class="nc" id="L169">		dotPos = significand.indexOf('.');</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (dotPos &gt;= 0) {</span>
+<span class="nc" id="L171">			wholePart = significand.substring(0, dotPos);</span>
+<span class="nc" id="L172">			fractionPart = significand.substring(dotPos + 1);</span>
+<span class="nc" id="L173">		} else {</span>
+<span class="nc" id="L174">			wholePart = significand;</span>
+<span class="nc" id="L175">			fractionPart = &quot;&quot;;</span>
+		}
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (suffix.isEmpty())</span>
+<span class="nc" id="L178">			type = DOUBLE;</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		else if (&quot;f&quot;.equals(suffix))</span>
+<span class="nc" id="L180">			type = FLOAT;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		else if (&quot;l&quot;.equals(suffix))</span>
+<span class="nc" id="L182">			type = LDOUBLE;</span>
+		else
+<span class="nc" id="L184">			throw new SyntaxException(&quot;Unknown floating suffix: &quot; + suffix,</span>
+<span class="nc" id="L185">					source);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (wholePart.isEmpty())</span>
+<span class="nc" id="L187">			wholePartValue = BigInteger.ZERO;</span>
+		else
+<span class="nc" id="L189">			wholePartValue = new BigInteger(wholePart, base);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (fractionPart.isEmpty())</span>
+<span class="nc" id="L191">			fractionPartValue = BigInteger.ZERO;</span>
+		else
+<span class="nc" id="L193">			fractionPartValue = new BigInteger(fractionPart, base);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (exponent.isEmpty())</span>
+<span class="nc" id="L195">			exponentValue = BigInteger.ZERO;</span>
+		else
+<span class="nc" id="L197">			exponentValue = new BigInteger(exponent, 10);</span>
+<span class="nc" id="L198">		value = valueFactory.realFloatingValue(type, base, wholePartValue,</span>
+<span class="nc" id="L199">				fractionPartValue, fractionPart.length(), exponentValue);</span>
+<span class="nc" id="L200">		return new CommonFloatingConstantNode(source, text, wholePart,</span>
+<span class="nc" id="L201">				fractionPart, exponent, value);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

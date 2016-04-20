@@ -1,0 +1,46 @@
+\hypertarget{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF}{}\section{Package edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F}
+\label{namespaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F}}
+
+
+Module {\bfseries state} is responsible for the creation and manipulation of states of a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CIVLHeapException}{C\+I\+V\+L\+Heap\+Exception}
+\begin{DoxyCompactList}\small\item\em Extends an execution exception with a state at which error occurred. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CIVLStateException}{C\+I\+V\+L\+State\+Exception}
+\begin{DoxyCompactList}\small\item\em Extends an execution exception with a state at which error occurred. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1CollectiveSnapshotsEntry}{Collective\+Snapshots\+Entry}
+\begin{DoxyCompactList}\small\item\em This class represents one complete entry for the snapshots queue used in collective assertion checking. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope}{Dynamic\+Scope}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1DynamicScope}{Dynamic\+Scope} is a runtime instance of a static scope. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit}{Memory\+Unit}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} memory unit represents an object or a part of an object that can be accessed through an expression, e.\+g., a\mbox{[}9\mbox{]}.x, b\mbox{[}8\mbox{]}, c, etc. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory}
+\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitSet}{Memory\+Unit\+Set}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} memory unit set represents a set of memory units. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State} represents the state of a process (thread of execution) in a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StackEntry}{Stack\+Entry}
+\begin{DoxyCompactList}\small\item\em An entry on a call stack of a process; also known as an \char`\"{}activation frame\char`\"{}. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} represents the (global) state of a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} Model. \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory}
+\begin{DoxyCompactList}\small\item\em The state factory is used to create all state objects. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States}{States}
+\begin{DoxyCompactList}\small\item\em Entry point for the state module\+: provides a static method to get a new state factory. \end{DoxyCompactList}\item 
+class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1UnsatisfiablePathConditionException}{Unsatisfiable\+Path\+Condition\+Exception}
+\begin{DoxyCompactList}\small\item\em Thrown when a path condition becomes unsatisfiable, typically due to a side effect from evaluating an expression. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module {\bfseries state} is responsible for the creation and manipulation of states of a \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model. 
+
+The entry point to this module in the class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1States}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+States}. This class provides static method to obtain state factories. The state factory is used to produce new states and modify states.
+
+The interface for this module is provided in package \hyperlink{}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F}. That package defines interfaces for the state factory, the state itself, and various sub-\/components of the state. Users of this module should use only elements from the interface, not the implementation packages.
+
+There are currently two alternative implementations of the state module\+: immutable and transient. In the immutable implementation, states and their components are (essentially) immutable. In the transient module states (and their components) begin in a mutable state but can be made immutable at any time by invoking a \char`\"{}commit\char`\"{} method. The relative advantages and disadvantages of the two approaches are being explored. 

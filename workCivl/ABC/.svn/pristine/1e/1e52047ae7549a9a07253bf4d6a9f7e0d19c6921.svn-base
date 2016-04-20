@@ -1,0 +1,183 @@
+// civlc-omp.cvh: header file for CIVL-C support functions for OpenMP.
+
+#ifndef __CIVLC_OMP__
+#define __CIVLC_OMP__
+
+#include <civlc.cvh>
+#include <domain.cvh>
+
+/** Important notes:
+ * 1. none of those variables that comprise a shared object should ever 
+ *    be accessed directly. All access must happen through $omp_read/write, 
+ *    including the local views, status, and shared view.
+ */
+
+/* *********************** Types *********************** */
+
+/* The status of a shared variable (or component of a shared
+ * variable).  For each shared variable, there is a "local view",
+ * for each thread, which is a copy of the shared variable in
+ * the thread scope.  There is also the shared variable proper.
+ * The local copy may be either empty or full.  Flush operations
+ * copy data between the local and shared copies, and modify
+ * the empty/full bit.  */
+typedef enum $omp_var_status {
+  EMPTY, // local is empty
+  FULL, // local is occupied, no writes to it have been made
+  MODIFIED // local is occupied, writes have been made to it
+} $omp_var_status;
+
+/* An enumerated type specifying the different kinds of OpenMP
+ * "worksharing" constructs. */
+typedef enum $omp_worksharing_kind {
+  LOOP,
+  BARRIER,
+  SECTIONS,
+  SINGLE
+} $omp_worksharing_kind;
+
+/* global shared object, containing a reference to a shared variable. 
+ * A handle type. */
+typedef struct OMP_gshared * $omp_gshared;
+
+/* local view of a shared object, belonging to a single
+ * thread, with reference to the global object, and
+ * a local copy and a status of the shared object. 
+ * The type of the status variable is obtained from
+ * the type of the original variable by replacing
+ * all leaf nodes in the type tree with "int".
+ * A handle type. */
+typedef struct OMP_shared * $omp_shared;
+
+/* the worksharing information that a thread needs for executing 
+ * a worksharing region. It contains the kind of the worksharing 
+ * region, the location of the region, the status of the region 
+ * and the subdomain (iterations/sections/task assigned to the thread).
+ */
+typedef struct OMP_work_record $omp_work_record;
+
+/* global team object, represents a team of threads executing
+ * in a parallel region. A handle type. This is where all the
+ * state needed to correctly execute a parallel region will
+ * be stored. This includes a global barrier, and a worksharing 
+ * queue for every thread. */
+typedef struct OMP_gteam * $omp_gteam;
+
+/*
+ * local object belonging to a single thread and referencing the
+ * global team object.  A handle type. It also includes the local
+ * views of all shared data and a local barrier. */
+typedef struct OMP_team * $omp_team;
+
+
+/* *********************** Functions *********************** */
+
+/* creates new global team object, allocating object in heap
+ * in specified scope. Number of threads that will be in the
+ * team is nthreads. */
+$omp_gteam $omp_gteam_create($scope scope, int nthreads);
+
+/* destroys the global team object. All shared objects
+ * associated to the team must have been destroyed before
+ * calling this function. */
+void $omp_gteam_destroy($omp_gteam gteam);
+
+/* creates new local team object for a specific thread. */
+$omp_team $omp_team_create($scope scope, $omp_gteam gteam, int tid);
+
+/* destroys the local team object */
+void $omp_team_destroy($omp_team team);
+
+/* creates new global shared object, associated to the given
+ * global team. A pointer to the shared variable that this
+ * object corresponds to is given. */
+$omp_gshared $omp_gshared_create($omp_gteam gteam, void *original);
+
+/* destroys the global shared object, copying the content
+ * to the original variable. */
+void $omp_gshared_destroy($omp_gshared gshared);
+
+/* creates a local shared object, returning handle to it.  
+ * The local copy of the shared object is initialized
+ * by copying the values from the original variable referenced to
+ * by the gshared object. The status variable is initialized to FULL.
+ * The created shared object is appended
+ * to the shared queue of the $omp_team object. */
+$omp_shared $omp_shared_create($omp_team team,
+   $omp_gshared gshared, void *local, void *status);
+
+/* destroys the local shared object */
+void $omp_shared_destroy($omp_shared shared);
+
+/* called by a thread to read a shared object.
+ * ref is a pointer into the local copy of the shared variable.
+ * The result of the read is stored in the
+ * memory unit pointed to by result.
+ * assumes ref is a pointer to a scalar.
+ */
+void $omp_read($omp_shared shared, void *result, void *ref);
+
+/* called by a thread to write to the shared object.
+ * ref is a pointer into the local copy of the shared variable.
+ * The value to be written is taken
+ * from the memory unit pointed to by value.
+ * assumes ref is a pointer to a scalar.
+ */
+void $omp_write($omp_shared shared, void *ref, void *value);
+
+/* applies the associative operator
+ * specified by op to the local copy and the corresponding shared copy, 
+ * and writes the result back to the shared copy.
+ * This happens in one atomic step. Example: you can
+ * use this to add some value to a shared variable,
+ * using CIVL_SUM for op.
+ * assumes local is a pointer to a scalar.
+ */
+void $omp_apply_assoc($omp_shared shared,
+                      $operation op,
+                      void *local);
+
+/* performs an OpenMP flush operation on the shared object
+ */
+void $omp_flush($omp_shared shared, void *ref);
+
+/* performs an OpenMP flush operation on all shared
+ * objects. This is the default in OpenMP if no argument
+ * is specified for a flush construct. */
+void $omp_flush_all($omp_team team);
+
+/* performs a barrier only. Note however that usually
+ * (always?) a barrier is accompanied by a flush-all,
+ * so $omp_barrier_and_flush should be used instead.
+ */
+void $omp_barrier($omp_team team);
+
+/* combines a barrier and a flush on all shared objects
+ * owned by the team. Implicit in many OpenMP worksharing
+ * constructs. */
+void $omp_barrier_and_flush($omp_team team);
+
+/* called by a thread when it reaches an omp for loop,
+ * this function returns the subset of the loop domain
+ * specifying the iterations that this thread will execute,
+ * according to the given policy.  In general, this
+ * function is nondeterministic.
+ * The dimension of the domain returned equals the
+ * dimension of the given domain loop_dom.
+ */
+$domain $omp_arrive_loop($omp_team team, int location, $domain loop_dom, 
+    $domain_strategy strategy);
+
+/* called by a thread when it reaches an omp sections
+ * construct, this function returns the subset of the
+ * integers 0..numSections-1 specifying the indexes of
+ * the sections that this thread will execute. The sections
+ * are numbered from 0 in increasing order. */
+$domain(1) $omp_arrive_sections($omp_team team, int location, int numSections);
+
+/* called by a thread when it reaches on omp single
+ * construct, returns the thread ID of the thread that
+ * will execute the single construct. */
+int $omp_arrive_single($omp_team team, int location);
+
+#endif

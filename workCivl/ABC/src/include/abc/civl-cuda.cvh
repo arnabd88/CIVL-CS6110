@@ -1,0 +1,346 @@
+/* This header file contains useful helper functions for manipulating
+ * the CIVL versions of various Cuda objects.
+ */
+
+#ifndef __CUDA_HELPER
+#define __CUDA_HELPER
+
+#include <concurrency.cvh>
+
+/* used to represent the size of three dimensional grids
+ */
+typedef struct {
+  unsigned int x, y, z;
+} dim3;
+
+/* used to represent a location in a three dimensional grid
+ */
+typedef struct {
+  unsigned int x, y, z;
+} uint3;
+
+/* a flag type used to indicate the type of memory transfer to occur
+ * in a call to cudaMemcpy
+ */
+enum cudaMemcpyKind {
+  cudaMemcpyHostToHost,
+  cudaMemcpyHostToDevice,
+  cudaMemcpyDeviceToHost,
+  cudaMemcpyDeviceToDevice,
+  cudaMemcpyDefault
+};
+
+/* the type returned by all Cuda functions
+ */
+enum cudaError {
+  cudaSuccess,
+  cudaErrorMissingConfiguration,
+  cudaErrorMemoryAllocation,
+  cudaErrorInitializationError,
+  cudaErrorLaunchFailure,
+  cudaErrorPriorLaunchFailure,
+  cudaErrorLaunchTimeout,
+  cudaErrorLaunchOutOfResources,
+  cudaErrorInvalidDeviceFunction,
+  cudaErrorInvalidConfiguration,
+  cudaErrorInvalidDevice,
+  cudaErrorInvalidValue,
+  cudaErrorInvalidPitchValue,
+  cudaErrorInvalidSymbol,
+  cudaErrorMapBufferObjectFailed,
+  cudaErrorUnmapBufferObjectFailed,
+  cudaErrorInvalidHostPointer,
+  cudaErrorInvalidDevicePointer,
+  cudaErrorInvalidTexture,
+  cudaErrorInvalidTextureBinding,
+  cudaErrorInvalidChannelDescriptor,
+  cudaErrorInvalidMemcpyDirection,
+  cudaErrorAddressOfConstant,
+  cudaErrorTextureFetchFailed,
+  cudaErrorTextureNotBound,
+  cudaErrorSynchronizationError,
+  cudaErrorInvalidFilterSetting,
+  cudaErrorInvalidNormSetting,
+  cudaErrorMixedDeviceExecution,
+  cudaErrorCudartUnloading,
+  cudaErrorUnknown,
+  cudaErrorNotYetImplemented,
+  cudaErrorMemoryValueTooLarge,
+  cudaErrorInvalidResourceHandle,
+  cudaErrorNotReady,
+  cudaErrorInsufficientDriver,
+  cudaErrorSetOnActiveProcess,
+  cudaErrorInvalidSurface,
+  cudaErrorNoDevice,
+  cudaErrorECCUncorrectable,
+  cudaErrorSharedObjectSymbolNotFound,
+  cudaErrorSharedObjectInitFailed,
+  cudaErrorUnsupportedLimit,
+  cudaErrorDuplicateVariableName,
+  cudaErrorDuplicateTextureName,
+  cudaErrorDuplicateSurfaceName,
+  cudaErrorDevicesUnavailable,
+  cudaErrorInvalidKernelImage,
+  cudaErrorNoKernelImageForDevice,
+  cudaErrorIncompatibleDriverContext,
+  cudaErrorPeerAccessAlreadyEnabled,
+  cudaErrorPeerAccessNotEnabled,
+  cudaErrorDeviceAlreadyInUse,
+  cudaErrorProfilerDisabled,
+  cudaErrorProfilerNotInitialized,
+  cudaErrorProfilerAlreadyStarted,
+  cudaErrorProfilerAlreadyStopped,
+  cudaErrorAssert,
+  cudaErrorTooManyPeers,
+  cudaErrorHostMemoryAlreadyRegistered,
+  cudaErrorHostMemoryNotRegistered,
+  cudaErrorOperatingSystem,
+  cudaErrorStartupFailure,
+  cudaErrorApiFailureBase
+};
+typedef enum cudaError cudaError_t;
+
+/* struct representing the properties of a Cuda device
+ */
+typedef struct cudaDeviceProp {
+  char name[256];
+  size_t totalGlobalMem;
+  size_t sharedMemPerBlock;
+  int regsPerBlock;
+  int warpSize;
+  size_t memPitch;
+  int maxThreadsPerBlock;
+  int maxThreadsDim[3];
+  int maxGridSize[3];
+  int clockRate;
+  size_t totalConstMem;
+  int major;
+  int minor;
+  size_t textureAlignment;
+  size_t texturePitchAlignment;
+  int deviceOverlap;
+  int multiProcessorCount;
+  int kernelExecTimeoutEnabled;
+  int integrated;
+  int canMapHostMemory;
+  int computeMode;
+  int maxTexture1D;
+  int maxTexture1DLinear;
+  int maxTexture2D[2];
+  int maxTexture2DLinear[3];
+  int maxTexture2DGather[2];
+  int maxTexture3D[3];
+  int maxTextureCubemap;
+  int maxTexture1DLayered[2];
+  int maxTexture2DLayered[3];
+  int maxTextureCubemapLayered[2];
+  int maxSurface1D;
+  int maxSurface2D[2];
+  int maxSurface3D[3];
+  int maxSurface1DLayered[2];
+  int maxSurface2DLayered[3];
+  int maxSurfaceCubemap;
+  int maxSurfaceCubemapLayered[2];
+  size_t surfaceAlignment;
+  int concurrentKernels;
+  int ECCEnabled;
+  int pciBusID;
+  int pciDeviceID;
+  int pciDomainID;
+  int tccDriver;
+  int asyncEngineCount;
+  int unifiedAddressing;
+  int memoryClockRate;
+  int memoryBusWidth;
+  int l2CacheSize;
+  int maxThreadsPerMultiProcessor;
+} cudaDeviceProp;
+
+/* flag type used to represent the status of a kernel instance
+ */
+typedef enum $cuda_kernel_status {
+    $cuda_kernel_status_waiting,
+    $cuda_kernel_status_running,
+    $cuda_kernel_status_finished
+} $cuda_kernel_status;
+
+/* type used to represent an instance of a Cuda kernel
+ */
+typedef struct $cuda_kernel_instance $cuda_kernel_instance_t;
+
+$cuda_kernel_status $cuda_get_status($cuda_kernel_instance_t*);
+
+/* a type that wraps a kernel instance for insertion into a list
+ */
+typedef struct $cuda_kernel_instance_node $cuda_kernel_instance_node_t;
+
+/* $cuda_kernel_instance_node_t interface
+ */
+$cuda_kernel_instance_t *$cuda_get_instance($cuda_kernel_instance_node_t*);
+
+/* a type used to represent a Cuda stream
+ */
+typedef struct _CUstream _CUstream;
+typedef _CUstream* cudaStream_t;
+
+/* _CUstream interface
+ */
+$cuda_kernel_instance_node_t *$cuda_get_most_recent(cudaStream_t);
+
+_Bool $cuda_is_usable(cudaStream_t);
+
+void $cuda_set_usable(cudaStream_t, _Bool);
+
+/* a type that wraps a stream for insertion into a list
+ */
+typedef struct $cuda_stream_node $cuda_stream_node_t;
+
+/* $cuda_stream_node_t interface
+ */
+void $cuda_set_stream($cuda_stream_node_t*, cudaStream_t);
+
+void $cuda_set_next($cuda_stream_node_t*, $cuda_stream_node_t*);
+
+/* a type used to represent a Cuda event
+ */
+typedef struct _CUevent _CUevent;
+typedef _CUevent* cudaEvent_t;
+
+/* _CUevent interface
+ */
+$cuda_kernel_instance_t **$cuda_get_instances(cudaEvent_t);
+
+void $cuda_set_instances(cudaEvent_t, $cuda_kernel_instance_t**, int);
+
+int $cuda_get_num_instances(cudaEvent_t);
+
+
+/* a type representing the state of a Cuda device
+ */
+typedef struct $cuda_context $cuda_context_t;
+
+/* $cuda_context_t interface
+ */
+int $cuda_get_num_streams($cuda_context_t*);
+
+$cuda_stream_node_t *$cuda_get_head_node($cuda_context_t*);
+
+cudaStream_t $cuda_get_null_stream($cuda_context_t*);
+
+void $cuda_add_new_stream($cuda_context_t*, $cuda_stream_node_t*);
+
+
+/* Computes the one dimensional index of a grid cell at a given location
+ * in a three dimensional grid of a given size
+ */
+int $cuda_index (dim3 size, uint3 location);
+
+/* Lifts a single integer x into a three dimensional vector representing
+ * a one dimensional grid of length x
+ */
+dim3 $cuda_to_dim3(int x);
+
+/* Given a three dimensional vector representing a grid of size dim,
+ * create and destroy a process, in parallel, for each cell in the grid. 
+ * The location of the cell is passed to the spawning function.
+ */
+void $cuda_run_procs(dim3 dim, void spawningFunction(uint3));
+
+// ------------------------------------------------
+
+/* $wait on a given process is it is non-null
+ */
+void $cuda_try_wait($proc p);
+
+/* The current state of the GPU
+ */
+$cuda_context_t $cuda_current_context;
+
+/* malloc and initialize a new $cuda_kernel_instance_t
+ */
+$cuda_kernel_instance_t *$cuda_kernel_instance_create(void);
+
+/* cleanup and free a given $cuda_kernel_instance_t
+ */
+void $cuda_kernel_instance_destroy($cuda_kernel_instance_t *i);
+
+/* malloc and initialize a new $cuda_kernel_instance_node_t
+ */
+$cuda_kernel_instance_node_t *$cuda_kernel_instance_node_tCreate(void);
+
+/* cleanup and free a given $cuda_kernel_instance_node_t
+ */
+void $cuda_kernel_instance_node_destroy($cuda_kernel_instance_node_t *node);
+
+/* malloc and initialize a new stream
+ */
+cudaStream_t $cuda_stream_create(void);
+
+/* block until the most recently enqueued process on the given stream
+ * has terminated (meaning all kernels in that stream have completed)
+ */
+void $cuda_stream_wait(cudaStream_t s);
+
+/* block until no more streams have kernels executing
+ */
+void $cuda_stream_wait_all(void);
+
+/* cleanup and free a given stream
+ */
+void $cuda_stream_destroy(cudaStream_t s);
+
+/* malloc and initialize a new $cuda_stream_node_t
+ */
+$cuda_stream_node_t *$cuda_stream_node_create(void);
+
+/* cleanup and free a given $cuda_stream_node_t
+ */
+void $cuda_stream_node_destroy($cuda_stream_node_t *node);
+
+/* destroy all stream nodes contained in the context
+ */
+void $cuda_stream_node_destroy_all(void);
+
+/* malloc and initialize a new event
+ */
+cudaEvent_t $cuda_event_create(void);
+
+/* block until all $cuda_kernel_instance_ts contained in this event have
+ * completed
+ */
+void $cuda_event_wait(cudaEvent_t e);
+
+/* cleanup and free a given event
+ */
+void $cuda_event_destroy(cudaEvent_t e);
+
+/* initialize the cuda context. must be called before any cuda functions.
+ */
+void $cuda_init(void);
+
+/* cleanup the cuda context. must be called after all cuda functions.
+ */
+void $cuda_finalize(void);
+
+/* returns an array of pointers to the most recently enqueued kernel
+ * of each stream.
+ */
+$cuda_kernel_instance_t **$cuda_all_most_recent_kernels(void);
+
+/* create a kernel instance for the given function k, and enqueue it
+ * onto the given stream.
+ */
+void $cuda_enqueue_kernel(cudaStream_t stream, void (*k)($cuda_kernel_instance_t*, cudaEvent_t));
+
+/* called by kernel processes. wait on the given event, then update
+ * the status of the calling kernel to indicate it has finished waiting
+ */
+void $cuda_wait_in_queue ($cuda_kernel_instance_t *this, cudaEvent_t e);
+
+/* called by kernel processes. update the status of the calling kernel
+ * to indicate that it has completed execution
+ */
+void $cuda_kernel_finish($cuda_kernel_instance_t *k);
+
+#endif
+

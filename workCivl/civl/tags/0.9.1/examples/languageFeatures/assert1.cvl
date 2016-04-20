@@ -1,0 +1,13 @@
+/* 
+ * Commandline example:
+ *     civl verify assert1.cvl
+ */
+#include<stdbool.h>
+#include<assert.h>
+
+void main(){
+  bool b= true;
+  
+  assert(b);
+  assert(1);
+}

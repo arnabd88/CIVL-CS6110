@@ -1,0 +1,22 @@
+/* Commandline execution:
+ * 		civl verify algebra.cvl
+ */
+#include <civlc.h>
+$input int x;
+$input int y;
+
+void main() {
+  int z0 = x*x + 2*x*y + y*y;
+  int z1 = (x + y) * (x + y);
+  int z2 = x*x - y*y;
+  int z3 = (x + y) * (x - y);
+  int z4 = x*x*x - y*y*y;
+  int z5 = (x - y) * (x*x + x*y + y*y);
+  int z6 = x*x*x + y*y*y;
+  int z7 = (x + y) * (x*x - x*y + y*y);
+  
+  $assert(z0 == z1);
+  $assert(z2 == z3);
+  $assert(z4 == z5);
+  $assert(z6 == z7);
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Analysis.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.IF</a> &gt; <span class="el_source">Analysis.java</span></div><h1>Analysis.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.IF;
+
+import edu.udel.cis.vsl.abc.analysis.common.StandardAnalyzer;
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ConversionFactory;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.Conversions;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entities;
+import edu.udel.cis.vsl.abc.ast.entity.IF.EntityFactory;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * Simple factory class providing static methods for creating new instances of
+ * {@link Analyzer}. This is the prefered way to construct such instances.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc" id="L22">public class Analysis {</span>
+
+	/**
+	 * Constructs a new &quot;standard&quot; analyzer. This analyzer determines the scope
+	 * of every node, the type of any construct that has a type, the entity to
+	 * which every identifier refers, and so on. This &quot;fills in&quot; the missing
+	 * information in the AST so that after the analysis completes the AST
+	 * methods for getting that information will return the correct answers
+	 * instead of &lt;code&gt;null&lt;/code&gt;.
+	 * 
+	 * @param configuration
+	 *            the ABC application configuration
+	 * @param astFactory
+	 *            the factory used for producing AST components
+	 * @param entityFactory
+	 *            the factory used for producing entities
+	 * @param conversionFactory
+	 *            the factory used for producing conversions
+	 * @return the new standard analyzer
+	 */
+	public static Analyzer newStandardAnalyzer(Language language,
+			Configuration configuration, ASTFactory astFactory,
+			EntityFactory entityFactory, ConversionFactory conversionFactory) {
+<span class="nc" id="L45">		return new StandardAnalyzer(language, configuration, astFactory,</span>
+<span class="nc" id="L46">				entityFactory, conversionFactory);</span>
+	}
+
+	/**
+	 * A convenience method for performing the standard analyses on an AST. This
+	 * creates a new standard analyzer and then applies it to the given AST.
+	 * 
+	 * @param configuration
+	 *            the ABC application configuration
+	 * @param ast
+	 *            the AST
+	 * @throws SyntaxException
+	 *             if AST contains a syntax error
+	 * @see #newStandardAnalyzer(Configuration, ASTFactory, EntityFactory,
+	 *      ConversionFactory)
+	 */
+	public static void performStandardAnalysis(Language language,
+			Configuration configuration, AST ast) throws SyntaxException {
+<span class="nc" id="L64">		EntityFactory entityFactory = Entities.newEntityFactory();</span>
+<span class="nc" id="L65">		ASTFactory astFactory = ast.getASTFactory();</span>
+<span class="nc" id="L66">		TypeFactory typeFactory = astFactory.getTypeFactory();</span>
+<span class="nc" id="L67">		ConversionFactory conversionFactory = Conversions</span>
+<span class="nc" id="L68">				.newConversionFactory(typeFactory);</span>
+<span class="nc" id="L69">		Analyzer analyzer = newStandardAnalyzer(language, configuration,</span>
+<span class="nc" id="L70">				astFactory, entityFactory, conversionFactory);</span>
+
+<span class="nc" id="L72">		analyzer.clear(ast);</span>
+<span class="nc" id="L73">		analyzer.analyze(ast);</span>
+<span class="nc" id="L74">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

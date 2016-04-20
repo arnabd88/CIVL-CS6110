@@ -1,0 +1,501 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type}}
+
+
+Parent of all types.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_1_1TypeKind}{Type\+Kind}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a72e3842ef519960df7d0a0758fe5a07c}{}\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_1_1TypeKind}{Type\+Kind} {\bfseries type\+Kind} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a72e3842ef519960df7d0a0758fe5a07c}
+
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ad06e630b2a547346d274f8b21b36eebb}{has\+State} ()
+\begin{DoxyCompactList}\small\item\em If this type contains any array with non-\/constant extent, it \char`\"{}has state\char`\"{} in the sense that the dynamic type may depend on the state. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a49773314fa7c2919346315b64525e86d}{get\+State\+Variable} ()
+\begin{DoxyCompactList}\small\item\em If a type is defined using a struct, union, or typedef, and it contains state, it may have to be evaluated and stored in a variable of type C\+I\+V\+L\+Dynamic\+Type. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a19c0d27e2f4daf676a82a20727f2cd55}{set\+State\+Variable} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} variable)
+\begin{DoxyCompactList}\small\item\em Sets this type\textquotesingle{}s state variable to the given variable. \end{DoxyCompactList}\item 
+Symbolic\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3f01f0f60e869508ee46927aa5012b22}{get\+Dynamic\+Type} (Symbolic\+Universe universe)
+\begin{DoxyCompactList}\small\item\em This returns the dynamic type corresponding to this static type in which all array extent expressions are ignored, i.\+e., all of the dynamic array types are incomplete. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af806f7bcd3ac7859a7f820ca55488ff8}{get\+Dynamic\+Type\+Index} ()
+\begin{DoxyCompactList}\small\item\em All dynamic types occurring in a model are indexed. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a0122255e509357622e3eef6b50ee70ce}{is\+Numeric\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af0a976686814fff1d5a8c090be3ede40}{is\+Integer\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af46257d64202a86830bf518b291043f5}{is\+Real\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a1cb123f9248c8469b566d1007fd8536c}{is\+Pointer\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a37fbc9bc2cda81b40901033cd831d700}{is\+Process\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ab3184abad84c247d9f8f2f4d86cb0b9c}{is\+Scope\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a733473a5ca1ca38b483a33435d1721e0}{is\+Void\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_adfbc8da7beab0f682ed6d4e02b68b9d8}{is\+Heap\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a97c47215fa88e49459d85cf376bf09c6}{is\+Bundle\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a548eed3201fbfb450598acecbaf85bf3}{is\+Struct\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_abd039452838e2ea50c830d0082a2611f}{is\+Union\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ae0a3eb6030d0dca12c595d03dc4e0624}{is\+Array\+Type} ()
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a00c64c7df0bc8c4f53bfb86ccec3dfe8}{}boolean {\bfseries is\+Incomplete\+Array\+Type} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a00c64c7df0bc8c4f53bfb86ccec3dfe8}
+
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a9740f6805fc153f3163f21169b1c637d}{is\+Char\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a1e009d99e6e769136379d471461a3396}{is\+Handle\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ae32800c68307a47a856133fdca61bddc}{is\+Handle\+Object\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3b980c60c5191a2dcf66d1d6a9c66737}{is\+Enumeration\+Type} ()
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a159c9bb81c700a0723cd297a75681789}{is\+Bool\+Type} ()
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a58b5e895cce646f7241835e11764ece0}{}boolean {\bfseries is\+Domain\+Type} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a58b5e895cce646f7241835e11764ece0}
+
+\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_adf2655b0714aefa11fab54900fb75f19}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} {\bfseries copy\+As} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{C\+I\+V\+L\+Primitive\+Type} type, Symbolic\+Universe universe)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_adf2655b0714aefa11fab54900fb75f19}
+
+\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a7ad73051e2737015b6933ce30b78305d}{is\+Super\+Type\+Of} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} subtype)
+\begin{DoxyCompactList}\small\item\em Is this type the super type of the given sub-\/type? If subtype is the same as this type, return true. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a09569c9ab288a65c928c4bb3b2c099e0}{is\+Scalar} ()
+\begin{DoxyCompactList}\small\item\em Is this type a scalar type? \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a9ab881722a06afb89f948e48a31961e3}{are\+Subtypes\+Scalar} ()
+\begin{DoxyCompactList}\small\item\em Are all the sub-\/types of this type scalar? \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a17a54f7335fce006746ebf1660a18189}{}boolean {\bfseries is\+Function} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a17a54f7335fce006746ebf1660a18189}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Parent of all types. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a9ab881722a06afb89f948e48a31961e3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!are\+Subtypes\+Scalar@{are\+Subtypes\+Scalar}}
+\index{are\+Subtypes\+Scalar@{are\+Subtypes\+Scalar}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{are\+Subtypes\+Scalar}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+are\+Subtypes\+Scalar (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a9ab881722a06afb89f948e48a31961e3}
+
+
+Are all the sub-\/types of this type scalar? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_a16a635ed3d26487dd557045ad7ccf8c2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a6f47a50e9964e78df245b60b4ddbf81c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonBundleType_ad9dab4f18945e76b02c4b23d51006f91}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Bundle\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonDomainType_a5cb6a2baec5b5f86a379c240793d6769}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Domain\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonArrayType_a0e4c5c4eb12400e6971da567858d4276}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Array\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_aac2bee5a34bbf35b9ad06b8ad74bde3d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3f01f0f60e869508ee46927aa5012b22}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!get\+Dynamic\+Type@{get\+Dynamic\+Type}}
+\index{get\+Dynamic\+Type@{get\+Dynamic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{get\+Dynamic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+get\+Dynamic\+Type (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Universe}]{universe}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3f01f0f60e869508ee46927aa5012b22}
+
+
+This returns the dynamic type corresponding to this static type in which all array extent expressions are ignored, i.\+e., all of the dynamic array types are incomplete. 
+
+May be null (only in the case of the primitive type of kind \hyperlink{}{Primitive\+Type\+Kind.\+V\+O\+I\+D}).
+
+\begin{DoxyReturn}{Returns}
+the dynamic type corresponding to this static type with incomplete array type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_add099ab8b4376cec1713a55e7392ddfb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_a681718bff036fe6cb172b1945836f5dc}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonFunctionType_a084155381111b5b587021074c9a3556b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Function\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonArrayType_a66d8bcc6cbbcc59194169f67f2524467}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Array\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ade472c99a084bbbb6a890a9e7223d8e9}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonDomainType_a387b8d5a128ebe65e5c4aff813c60cc9}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Domain\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonBundleType_a3d7f5017555879ec72693b10775b822f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Bundle\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_adff4ee2b344ba30f1e8a2c9ffeb6e0fe}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonEnumType_a249a80ddb40c76846065d851ee868edf}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Enum\+Type}, and \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLBundleType_ac3cac0c5af6109a9cddf9ad34383ff59}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Bundle\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af806f7bcd3ac7859a7f820ca55488ff8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!get\+Dynamic\+Type\+Index@{get\+Dynamic\+Type\+Index}}
+\index{get\+Dynamic\+Type\+Index@{get\+Dynamic\+Type\+Index}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{get\+Dynamic\+Type\+Index}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+get\+Dynamic\+Type\+Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af806f7bcd3ac7859a7f820ca55488ff8}
+
+
+All dynamic types occurring in a model are indexed. 
+
+This returns the index of the dynamic type corresponding to this type. \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} associates a single dynamic type to every \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type and does this once at compile time. All the dynamic types which occur as dynamic types of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} types are numbered from 0. This is used in particular to construct the bundle type which is the union of all of the dynamic types. This field is the dynamic type index to this one and it\textquotesingle{}s initially be minus one and can be set later by calling \hyperlink{}{set\+Dynamic\+Type\+Index(int)} and the getter is this method.
+
+\begin{DoxyReturn}{Returns}
+the dynamic type index 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a621ae6102dc7d6cec6c630bcd6441f7d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a49773314fa7c2919346315b64525e86d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!get\+State\+Variable@{get\+State\+Variable}}
+\index{get\+State\+Variable@{get\+State\+Variable}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{get\+State\+Variable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+get\+State\+Variable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a49773314fa7c2919346315b64525e86d}
+
+
+If a type is defined using a struct, union, or typedef, and it contains state, it may have to be evaluated and stored in a variable of type C\+I\+V\+L\+Dynamic\+Type. 
+
+For such a type, this method returns the corresponding variable. For other types, it returns null.
+
+\begin{DoxyReturn}{Returns}
+the state variable associated to this type or null 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a80dee94b35a9a80cdea1e00e463dd02e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ad06e630b2a547346d274f8b21b36eebb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!has\+State@{has\+State}}
+\index{has\+State@{has\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{has\+State}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+has\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ad06e630b2a547346d274f8b21b36eebb}
+
+
+If this type contains any array with non-\/constant extent, it \char`\"{}has state\char`\"{} in the sense that the dynamic type may depend on the state. 
+
+\begin{DoxyReturn}{Returns}
+true iff type contains array with non-\/constant extent 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a461014de970101d826e054920c5eceb3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_ad86d09f35c208d49c830dc4524edec80}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonCompleteArrayType_a3e5f98bd92c8ca49e904fcfffd386c02}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Complete\+Array\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ad13444cbb2f441bec8f7176f0ec9ac52}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonFunctionType_a2d5d11b5d35a1ecdec44f91b2be0b464}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Function\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonArrayType_aba80cab5dd20cab3d14d3685951c3a33}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Array\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonDomainType_a37edd29ccbf71f790083056de05fa87e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Domain\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonBundleType_ae7adbf6b8e8c46eb21cc2705bd0a8ecb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Bundle\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a71dda177dfaf67159a95716f079d85a7}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonEnumType_a2b67cf75418c3dc9cb25fa8d7c16d3ce}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Enum\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ae0a3eb6030d0dca12c595d03dc4e0624}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Array\+Type@{is\+Array\+Type}}
+\index{is\+Array\+Type@{is\+Array\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Array\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Array\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ae0a3eb6030d0dca12c595d03dc4e0624}
+\begin{DoxyReturn}{Returns}
+true iff this type is array type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_aa74c203a049dbe1363bf7d8578d36e04}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonArrayType_aee1fb4be0cd242cd329f995be888245a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Array\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a159c9bb81c700a0723cd297a75681789}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Bool\+Type@{is\+Bool\+Type}}
+\index{is\+Bool\+Type@{is\+Bool\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Bool\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Bool\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a159c9bb81c700a0723cd297a75681789}
+\begin{DoxyReturn}{Returns}
+true iff this type is a boolean type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a5d39059f524a3eee06aa1b9141c5b8c1}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a908c52a47d66a4069a3e6dfb07dc073e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a97c47215fa88e49459d85cf376bf09c6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Bundle\+Type@{is\+Bundle\+Type}}
+\index{is\+Bundle\+Type@{is\+Bundle\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Bundle\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Bundle\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a97c47215fa88e49459d85cf376bf09c6}
+\begin{DoxyReturn}{Returns}
+true iff this type is bundle type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a483c484757c59cc4e3c5bc84e9300062}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonBundleType_a7e0061f9529c034e0424a4944cd83b9e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Bundle\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a9740f6805fc153f3163f21169b1c637d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Char\+Type@{is\+Char\+Type}}
+\index{is\+Char\+Type@{is\+Char\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Char\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Char\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a9740f6805fc153f3163f21169b1c637d}
+\begin{DoxyReturn}{Returns}
+true iff this type is char type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a4383f9e1bff0e49a4e46486251cfec11}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_afe741550bc94d7fa39f3019cfb050d96}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3b980c60c5191a2dcf66d1d6a9c66737}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Enumeration\+Type@{is\+Enumeration\+Type}}
+\index{is\+Enumeration\+Type@{is\+Enumeration\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Enumeration\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Enumeration\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a3b980c60c5191a2dcf66d1d6a9c66737}
+\begin{DoxyReturn}{Returns}
+true iff this type is an enumeration type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_ae9cfcaa4efb6acb13c7e1f817f3e49a4}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonEnumType_a2ce8418efdcc31fcf9515d361309eadb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Enum\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ae32800c68307a47a856133fdca61bddc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Handle\+Object\+Type@{is\+Handle\+Object\+Type}}
+\index{is\+Handle\+Object\+Type@{is\+Handle\+Object\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Handle\+Object\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Handle\+Object\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ae32800c68307a47a856133fdca61bddc}
+\begin{DoxyReturn}{Returns}
+true iff this type is the object type of some handle type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_a35eb30a20ce0ecc516094e60aaf09158}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a53e1f58bf22ca6950d0b251f6c229d9a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0f9528e9f3644283b6c37c0faea45ccd}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a1e009d99e6e769136379d471461a3396}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Handle\+Type@{is\+Handle\+Type}}
+\index{is\+Handle\+Type@{is\+Handle\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Handle\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Handle\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a1e009d99e6e769136379d471461a3396}
+\begin{DoxyReturn}{Returns}
+true iff this type is a handle type (e.\+g., \$gcomm, \$heap, etc) 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a21f8fc743f76283fb4dce5b9c5b36ee3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a0566fe18800958a0b214fda5925dcd70}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_adfbc8da7beab0f682ed6d4e02b68b9d8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Heap\+Type@{is\+Heap\+Type}}
+\index{is\+Heap\+Type@{is\+Heap\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Heap\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Heap\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_adfbc8da7beab0f682ed6d4e02b68b9d8}
+\begin{DoxyReturn}{Returns}
+true iff this type is heap type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a68e14752603ed0af3cfae35ebb75a849}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonHeapType_a0d6a001c5b9a9b110955c76f549591ea}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Heap\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af0a976686814fff1d5a8c090be3ede40}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Integer\+Type@{is\+Integer\+Type}}
+\index{is\+Integer\+Type@{is\+Integer\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Integer\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Integer\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af0a976686814fff1d5a8c090be3ede40}
+\begin{DoxyReturn}{Returns}
+true iff this type is integer type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a616c434e123ed87de6d4ce8bc0e1ea56}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a0967293ecc98a7830d264d8b8d507ad8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a0122255e509357622e3eef6b50ee70ce}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Numeric\+Type@{is\+Numeric\+Type}}
+\index{is\+Numeric\+Type@{is\+Numeric\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Numeric\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Numeric\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a0122255e509357622e3eef6b50ee70ce}
+\begin{DoxyReturn}{Returns}
+true iff this type is numeric 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_af2cb7347dd3cf97e2755e6c57c1ee3f0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_aebfaa599b2207ceb065b0a48e2c40bed}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a1cb123f9248c8469b566d1007fd8536c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Pointer\+Type@{is\+Pointer\+Type}}
+\index{is\+Pointer\+Type@{is\+Pointer\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Pointer\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Pointer\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a1cb123f9248c8469b566d1007fd8536c}
+\begin{DoxyReturn}{Returns}
+true iff this type is pointer type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a38ade978bd12e428c5b41afee1234743}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_ab49813d51a2bc4f067fa3c9944937dbb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a37fbc9bc2cda81b40901033cd831d700}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Process\+Type@{is\+Process\+Type}}
+\index{is\+Process\+Type@{is\+Process\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Process\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Process\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a37fbc9bc2cda81b40901033cd831d700}
+\begin{DoxyReturn}{Returns}
+true iff this type is process type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_abf7588006be760125cbf47a17ef564ea}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a6c20b5860d688e000b73f8b61663f69a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af46257d64202a86830bf518b291043f5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Real\+Type@{is\+Real\+Type}}
+\index{is\+Real\+Type@{is\+Real\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Real\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Real\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_af46257d64202a86830bf518b291043f5}
+\begin{DoxyReturn}{Returns}
+true iff this type is real type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_abc3c30955ff1b4be29eb70bc3bfa40e0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_acf24d673f6fccc4eba5463ce74d8ee30}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a09569c9ab288a65c928c4bb3b2c099e0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Scalar@{is\+Scalar}}
+\index{is\+Scalar@{is\+Scalar}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Scalar}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Scalar (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a09569c9ab288a65c928c4bb3b2c099e0}
+
+
+Is this type a scalar type? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_af9b3e39d5f14cba5ec333ca27589abb6}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a4ac1aa331a9d49338f718038f51df2f8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonEnumType_a3bc735a06a30b7aea263876a6880cb66}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Enum\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPointerType_a0c79bb96d1af652818096a496972655d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Pointer\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ab3184abad84c247d9f8f2f4d86cb0b9c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Scope\+Type@{is\+Scope\+Type}}
+\index{is\+Scope\+Type@{is\+Scope\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Scope\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Scope\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_ab3184abad84c247d9f8f2f4d86cb0b9c}
+\begin{DoxyReturn}{Returns}
+true iff this type is scope type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a98006390e062760c91762ce74c54b518}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_ad845e7568580e63395eb97890bd78b41}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a548eed3201fbfb450598acecbaf85bf3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Struct\+Type@{is\+Struct\+Type}}
+\index{is\+Struct\+Type@{is\+Struct\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Struct\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Struct\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a548eed3201fbfb450598acecbaf85bf3}
+\begin{DoxyReturn}{Returns}
+true iff this type is struct type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_a86b453fbd7d4b6bdb59e20cbc76e0c8e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a0bcddfcee8bb8b4365778d82f1ce1d73}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a7ad73051e2737015b6933ce30b78305d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Super\+Type\+Of@{is\+Super\+Type\+Of}}
+\index{is\+Super\+Type\+Of@{is\+Super\+Type\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Super\+Type\+Of}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Super\+Type\+Of (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{subtype}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a7ad73051e2737015b6933ce30b78305d}
+
+
+Is this type the super type of the given sub-\/type? If subtype is the same as this type, return true. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em subtype} & The type to be tested if it is the sub-\/type of this type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a67017012c5ca1fc1586041055d7769b0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonArrayType_a6a2239188736a79f06b59ef20bb8b421}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Array\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_abd039452838e2ea50c830d0082a2611f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Union\+Type@{is\+Union\+Type}}
+\index{is\+Union\+Type@{is\+Union\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Union\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Union\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_abd039452838e2ea50c830d0082a2611f}
+\begin{DoxyReturn}{Returns}
+true iff this type is union type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonStructOrUnionType_ae9de846c1fb43406ebc9bfd5cf5af97c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Struct\+Or\+Union\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a93989974d5c6d7aa27621835adfc7e8e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a733473a5ca1ca38b483a33435d1721e0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!is\+Void\+Type@{is\+Void\+Type}}
+\index{is\+Void\+Type@{is\+Void\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{is\+Void\+Type}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+is\+Void\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a733473a5ca1ca38b483a33435d1721e0}
+\begin{DoxyReturn}{Returns}
+true iff this type is void type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a0b36d9b96579ea1272bc495c8ebae390}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_af498d6c5239a86a9261a95ad51476a8a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a19c0d27e2f4daf676a82a20727f2cd55}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}!set\+State\+Variable@{set\+State\+Variable}}
+\index{set\+State\+Variable@{set\+State\+Variable}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Type}}
+\subsubsection[{set\+State\+Variable}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Type.\+set\+State\+Variable (
+\begin{DoxyParamCaption}
+\item[{{\bf Variable}}]{variable}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType_a19c0d27e2f4daf676a82a20727f2cd55}
+
+
+Sets this type\textquotesingle{}s state variable to the given variable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em variable} & a variable of type C\+I\+V\+L\+Dynamic\+Type used to store the dynamic type resulting from evaluating this type in a state \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonType_a123146fdba6fbc7b24019945fdad1cc5}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Type}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/type/C\+I\+V\+L\+Type.\+java\end{DoxyCompactItemize}

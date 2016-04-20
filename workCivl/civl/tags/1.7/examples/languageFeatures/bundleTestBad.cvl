@@ -1,0 +1,21 @@
+/* Testing for bundle pack and unpack.
+   Bad example.
+ */
+#include <civlc.cvh>
+#include <bundle.cvh>
+
+void main(){
+  int a3d[3][4][5];
+  int counter = 0;
+  int a4d[2][2][2][2];
+  $bundle bun;
+
+  for(int i=0; i<3; i++)
+    for(int j=0; j<4; j++)
+      for(int k=0; k<5; k++)
+	a3d[i][j][k] = counter++;
+
+  bun = $bundle_pack(&a3d[1][0][3], 8 * sizeof(int));
+
+  $bundle_unpack(bun, &a4d[1][0][1]);
+}

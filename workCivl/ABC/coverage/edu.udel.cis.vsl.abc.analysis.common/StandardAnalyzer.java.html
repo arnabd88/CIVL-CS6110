@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>StandardAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.common</a> &gt; <span class="el_source">StandardAnalyzer.java</span></div><h1>StandardAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.common;
+
+import edu.udel.cis.vsl.abc.analysis.IF.Analyzer;
+import edu.udel.cis.vsl.abc.analysis.entity.EntityAnalyzer;
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.conversion.IF.ConversionFactory;
+import edu.udel.cis.vsl.abc.ast.entity.IF.EntityFactory;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * Performs all standard analyses of a Translation Unit: determines and sets
+ * Scopes, Types, and Entities.
+ * 
+ * @author siegel
+ * 
+ */
+public class StandardAnalyzer implements Analyzer {
+
+	private ScopeAnalyzer scopeAnalyzer;
+
+	private EntityAnalyzer entityAnalyzer;
+
+	private CallAnalyzer callAnalyzer;
+
+<span class="nc" id="L28">	public StandardAnalyzer(Language language, Configuration configuration,</span>
+			ASTFactory astFactory, EntityFactory entityFactory,
+			ConversionFactory conversionFactory) {
+<span class="nc" id="L31">		scopeAnalyzer = new ScopeAnalyzer(entityFactory);</span>
+<span class="nc" id="L32">		entityAnalyzer = new EntityAnalyzer(language, configuration,</span>
+<span class="nc" id="L33">				astFactory, entityFactory, conversionFactory);</span>
+<span class="nc" id="L34">		callAnalyzer = new CallAnalyzer();</span>
+<span class="nc" id="L35">	}</span>
+
+	@Override
+	public void analyze(AST unit) throws SyntaxException {
+<span class="nc" id="L39">		scopeAnalyzer.analyze(unit);</span>
+<span class="nc" id="L40">		entityAnalyzer.analyze(unit);</span>
+<span class="nc" id="L41">		callAnalyzer.analyze(unit);</span>
+<span class="nc" id="L42">	}</span>
+
+	@Override
+	public void clear(AST unit) {
+<span class="nc" id="L46">		scopeAnalyzer.clear(unit);</span>
+<span class="nc" id="L47">		entityAnalyzer.clear(unit);</span>
+<span class="nc" id="L48">		callAnalyzer.clear(unit);</span>
+<span class="nc" id="L49">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

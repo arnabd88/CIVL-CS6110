@@ -1,0 +1,10 @@
+#ifdef __CIVL_SIMPLEPTHREAD__
+#else
+#define __CIVL_SIMPLEPTHREAD__
+#include <civlc.cvh>
+#include <simplepthread.h>
+#include <civlpthread.cvh>
+
+extern __pthread_pool_t _pool={.len = 0};
+
+#endif

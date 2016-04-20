@@ -1,0 +1,8 @@
+
+#include "include2.cvl"
+
+$input int n;
+
+void main() {
+  f2(n);
+}

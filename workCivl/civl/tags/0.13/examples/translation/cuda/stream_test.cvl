@@ -1,0 +1,55 @@
+#include "civlc.h"
+#include "civlc-cuda.cvl"
+#include <stdio.h>
+
+$input int N;
+$input int B;
+$assume(0 <= N && N <= B);
+
+int sum = 0;
+
+void _kernel_k(dim3 gridDim, dim3 blockDim, cudaStream_t s, int i) {
+
+    void _kernel (_kernelInstance *this, cudaEvent_t e) {
+ 
+        _waitInQueue(this, e);
+
+        void _block (uint3 blockIdx) {
+            int _numThreads = blockDim.x * blockDim.y * blockDim.z;
+            $gbarrier _block_barrier = $gbarrier_create($here, _numThreads);
+
+            void _thread (uint3 threadIdx) {
+
+                int _tid = _index(blockDim, threadIdx);
+                $barrier _b = $barrier_create($here, _block_barrier, _tid);
+                sum = i - sum;
+                $barrier_destroy(_b);
+            }
+            _runProcs(blockDim, _thread);
+            $gbarrier_destroy(_block_barrier);
+        }
+        _runProcs(gridDim, _block);
+        _kernelFinish(this);
+    }
+
+    _enqueueKernel(s, _kernel);
+}
+
+int main ( void ) {
+    _cudaInit();
+    dim3 gd = _toDim3(1);
+    dim3 bd = _toDim3(1);
+    cudaStream_t s;
+    cudaStreamCreate(&s);
+    int expected = 0;
+    for (int i = 0; i < N; i++) {
+        _kernel_k(gd, bd, 0, i);
+        expected = i - expected;
+    }
+    cudaStreamSynchronize(0);
+    printf("sum = %d, expected = %d\n", sum, expected);
+    $assert(sum == expected);
+    cudaStreamDestroy(s);
+    _cudaFinalize();
+    return 0;
+}

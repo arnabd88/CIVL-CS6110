@@ -1,0 +1,864 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location}}
+
+
+The parent of all locations.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5f0727f4294dde0104b12978e1a584fc}{Common\+Location} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope, int id)
+\begin{DoxyCompactList}\small\item\em The parent of all locations. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a0f0117e9def8e5cb6c057f7a77a56eca}{add\+Incoming} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a9a167f91e223a1b6129bd996ce5a57e1}{add\+Outgoing} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a558ad87e01f4ecd753d7c4af512b80f4}{all\+Outgoing\+Purely\+Local} ()
+\begin{DoxyCompactList}\small\item\em This is different from \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad3c9de6f56680bf991aaec5149a860d6}{is\+Purely\+Local()}, because the latter is more restricted. \end{DoxyCompactList}\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_1_1AtomicKind}{Atomic\+Kind} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab094cbf120db8395cfbcb24d45caafb6}{atomic\+Kind} ()
+\begin{DoxyCompactList}\small\item\em Result might be\+: \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a636595da9a3680969839b5900033e059}{enter\+Atomic} ()
+\begin{DoxyCompactList}\small\item\em Check if the location is entering a general atomic block. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad79782b8ddd887db635479f687e468d2}{enter\+Atom} ()
+\begin{DoxyCompactList}\small\item\em Check if the location is entering a deterministic atomic block. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a74519695987b194ef8a5db4926706be2}{function} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aabb93e8580c602a9c5ea4f67d8d36197}{get\+Incoming} (int i)
+\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac1521171c70b6dd534eec64199a29bea}{get\+Num\+Incoming} ()
+\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a66e5aa9f09b9d370697dacf3e6930481}{get\+Num\+Outgoing} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_acde4cbde02b6db42bdc150e4429585e7}{get\+Outgoing} (int i)
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a73c5d42039fbca2aea6b2376fe26bfa9}{get\+Sole\+Outgoing} ()
+\begin{DoxyCompactList}\small\item\em Returns the sole outgoing statement from this location. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5d088542502b3d452887807a05cdd391}{id} ()
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5c56e154430f58920f04c97fdf1ab407}{impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block} ()
+\begin{DoxyCompactList}\small\item\em The impact scope of a location is required in the enabler when an atomic/atom block is encountered, in which case the impact scope of all statements in the atomic block should be considered. \end{DoxyCompactList}\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aafcea337248668c348488d07c1022743}{incoming} ()
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad3c9de6f56680bf991aaec5149a860d6}{is\+Purely\+Local} ()
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a7446270538b1504a2b532d7b7e172dda}{leave\+Atomic} ()
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aca7466a888f9b7dd44a03036d50fc847}{leave\+Atom} ()
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad2d23c44d12f5ed9b9ffe3733def21f1}{loop\+Analysis} ()
+\begin{DoxyCompactList}\small\item\em Static analysis for possible loops form by this location. \end{DoxyCompactList}\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a20bac21753d1b4a1778340753f0deaf5}{outgoing} ()
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_af6f7c2c0a34aef048440898b55b88172}{print} (String prefix, Print\+Stream out, boolean is\+Debug)
+\begin{DoxyCompactList}\small\item\em Print this location and all outgoing transitions. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac99167e800c954e5b109d6ef88da0a76}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac99167e800c954e5b109d6ef88da0a76}{purely\+Local\+Analysis} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac99167e800c954e5b109d6ef88da0a76}
+
+\begin{DoxyCompactList}\small\item\em Analyze if the location is purely local. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a72a7d14c2f1670648175b0ebbd32457c}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a72a7d14c2f1670648175b0ebbd32457c}{purely\+Local\+Analysis\+For\+Outgoing} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a72a7d14c2f1670648175b0ebbd32457c}
+
+\begin{DoxyCompactList}\small\item\em Analyze each outgoing statement to see if they are purely local. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad16a97802b8f06f1280f6c39a44f291f}{remove\+Incoming} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)
+\begin{DoxyCompactList}\small\item\em Remove a certain incoming statement. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab668666d935735b701d0f1a2feb40db4}{remove\+Outgoing} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)
+\begin{DoxyCompactList}\small\item\em Remove a certain outgoing statement. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab302fa89ee21cc56cb1c8efc621882da}{scope} ()
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ae2c8077b17cedb0356fe3ff587a043a6}{set\+Enter\+Atomic} (boolean deterministic)
+\begin{DoxyCompactList}\small\item\em This location is the start location of a certain atomic block. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_abf0cbacbc6b111bccef321576caa8130}{set\+Id} (int id)
+\begin{DoxyCompactList}\small\item\em Set the unique I\+D number of this location. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab453c4a8a8de4c5e5376d56811ee242e}{set\+Impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em set the impact scope of a location, only called when this.\+Atomic\+Kind == A\+T\+O\+M\+\_\+\+E\+N\+T\+E\+R or A\+T\+O\+M\+I\+C\+\_\+\+E\+N\+T\+E\+R. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad0c26c9af83bc469844a50825f83a1ac}{set\+Leave\+Atomic} (boolean deterministic)
+\begin{DoxyCompactList}\small\item\em This location is the end location of a certain atomic block. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a47ccce53e01b13aa4c3a74804988a698}{set\+Loop\+Possible} (boolean possible)
+\begin{DoxyCompactList}\small\item\em During the translation of A\+S\+T node into \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model, it is possible to know if a location with more than one incoming statement possible to be a loop location. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a4bf81fc8bef99f0081b1a061836c665f}{set\+Scope} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_af4b41a27245d0737caaa7be3d83de1af}{}boolean {\bfseries equals} (Object that)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_af4b41a27245d0737caaa7be3d83de1af}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a51de4d40b54864509b30b0e18b059d7a}{}int {\bfseries hash\+Code} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a51de4d40b54864509b30b0e18b059d7a}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a61e9b9443b4db8f8a39589bedf4ce3f2}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a61e9b9443b4db8f8a39589bedf4ce3f2}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a10596db63c2f5de17a1076b264316b21}{}void {\bfseries compute\+Writable\+Variables} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ addressed\+Of\+Variables)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a10596db63c2f5de17a1076b264316b21}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a8b17cc7941f9ad20ffe63c084eae80e6}{}void {\bfseries static\+Analysis} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a8b17cc7941f9ad20ffe63c084eae80e6}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a081112a703375b989de9558469eefd70}{}Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} $>$ {\bfseries writable\+Variables} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a081112a703375b989de9558469eefd70}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a15a4555332ae10745f8ee13d9e7154d8}{has\+Derefs} ()
+\begin{DoxyCompactList}\small\item\em This location or some location in the future contains dereferences of some pointers. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a97d18d406d4db74db635530344119703}{}void {\bfseries set\+As\+Start} (boolean value)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a97d18d406d4db74db635530344119703}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a0151d4b7d479e67a65066060ed0be652}{is\+Start} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this location is the start location of a function. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{Memory\+Unit\+Expression} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac145876fa528dec8f4f7206576664118}{impact\+Mem\+Units} ()
+\begin{DoxyCompactList}\small\item\em Returns the impact memory unit expressions of this location. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a34caae5a26a42da334b00282a52b7940}{}Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{Memory\+Unit\+Expression} $>$ {\bfseries reachable\+Mem\+Units\+Wt\+Pointer} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a34caae5a26a42da334b00282a52b7940}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad985bdf66f22444f549e56ef6de23604}{}Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{Memory\+Unit\+Expression} $>$ {\bfseries reachable\+Mem\+Units\+Wo\+Pointer} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad985bdf66f22444f549e56ef6de23604}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aa1c56122b319af33803782e30fbb7c15}{}void {\bfseries set\+Impact\+Memory\+Unit} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{Memory\+Unit\+Expression} $>$ impacts)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aa1c56122b319af33803782e30fbb7c15}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab1b15b09942cedc2c3077559f31a742f}{}void {\bfseries set\+Reachable\+Mem\+Units\+Wt\+Pointer} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{Memory\+Unit\+Expression} $>$ reachable)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab1b15b09942cedc2c3077559f31a742f}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a50304b6ef023d0fa7176cb9c16e938e4}{}void {\bfseries set\+Reachable\+Mem\+Units\+Wo\+Pointer} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1MemoryUnitExpression}{Memory\+Unit\+Expression} $>$ reachable)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a50304b6ef023d0fa7176cb9c16e938e4}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad3003aae38812415cc56c7d16459f8ff}{}void {\bfseries set\+System\+Calls} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} $>$ system\+Calls)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad3003aae38812415cc56c7d16459f8ff}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a596a661546f35fe5005ec1522a939aed}{}Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} $>$ {\bfseries system\+Calls} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a596a661546f35fe5005ec1522a939aed}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5fbc6a373c15140f222e2b96f8506ca4}{has\+Spawn} ()
+\begin{DoxyCompactList}\small\item\em Is a spawn statement reachable from this location? \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ae5b04183c6375938d8af07650f3a8542}{}void {\bfseries set\+Safe\+Loop} (boolean value)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ae5b04183c6375938d8af07650f3a8542}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a1e42bbaab7ff85eabb95f65cecc68123}{}boolean {\bfseries is\+Safe\+Loop} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a1e42bbaab7ff85eabb95f65cecc68123}
+
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a28cfe3ef169b53e83698a602023f91ed}{set\+In\+Noop\+Loop} (boolean value)
+\begin{DoxyCompactList}\small\item\em sets the flag that denotes if the location is in a side-\/effect-\/free loop. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a00c51776b99625c923c17b301737e24c}{is\+In\+Noop\+Loop} ()
+\begin{DoxyCompactList}\small\item\em returns true iff this location is in a side-\/effect-\/free loop. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a551ecc8024926d437529f8964879630e}{path\+Condition} ()
+\begin{DoxyCompactList}\small\item\em returns the path condition of this location from the start location \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ae9074156dd07759ae1e6c7268394dcde}{}void {\bfseries set\+Pathcondition} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} expression)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ae9074156dd07759ae1e6c7268394dcde}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The parent of all locations. 
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5f0727f4294dde0104b12978e1a584fc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!Common\+Location@{Common\+Location}}
+\index{Common\+Location@{Common\+Location}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{Common\+Location}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+Common\+Location (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf Scope}}]{scope, }
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5f0727f4294dde0104b12978e1a584fc}
+
+
+The parent of all locations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The corresponding source (file, line, column, text, etc) of this location \\
+\hline
+{\em scope} & The scope containing this location. \\
+\hline
+{\em id} & The unique id of this location. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a0f0117e9def8e5cb6c057f7a77a56eca}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!add\+Incoming@{add\+Incoming}}
+\index{add\+Incoming@{add\+Incoming}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{add\+Incoming}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+add\+Incoming (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a0f0117e9def8e5cb6c057f7a77a56eca}
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & \hyperlink{structA}{A} new incoming statement. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a87cd359f75b3d67ea62d1c9064f573ff}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a9a167f91e223a1b6129bd996ce5a57e1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!add\+Outgoing@{add\+Outgoing}}
+\index{add\+Outgoing@{add\+Outgoing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{add\+Outgoing}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+add\+Outgoing (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a9a167f91e223a1b6129bd996ce5a57e1}
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & \hyperlink{structA}{A} new outgoing statement. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a2af2802b2bde82c7652339dd68f71462}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a558ad87e01f4ecd753d7c4af512b80f4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!all\+Outgoing\+Purely\+Local@{all\+Outgoing\+Purely\+Local}}
+\index{all\+Outgoing\+Purely\+Local@{all\+Outgoing\+Purely\+Local}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{all\+Outgoing\+Purely\+Local}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+all\+Outgoing\+Purely\+Local (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a558ad87e01f4ecd753d7c4af512b80f4}
+
+
+This is different from \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad3c9de6f56680bf991aaec5149a860d6}{is\+Purely\+Local()}, because the latter is more restricted. 
+
+Because the latter requires the location have exactly one incoming edge in order to avoid loop.
+
+\begin{DoxyReturn}{Returns}
+True iff every outgoing statement is purely local 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a17d6859790de2c1c288285c6b17b5e80}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab094cbf120db8395cfbcb24d45caafb6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!atomic\+Kind@{atomic\+Kind}}
+\index{atomic\+Kind@{atomic\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{atomic\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Atomic\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+atomic\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab094cbf120db8395cfbcb24d45caafb6}
+
+
+Result might be\+: 
+
+
+\begin{DoxyEnumerate}
+\item N\+O\+N\+E\+: a normal location 
+\item E\+N\+T\+E\+R\+: the start location of an \$atomic block 
+\item L\+E\+A\+V\+E\+: the end location of an \$atomic block 
+\item D\+E\+N\+T\+E\+R\+: the start location of an \$atom block 
+\item L\+E\+A\+V\+E\+: the end location of an \$atom block 
+\end{DoxyEnumerate}
+
+\begin{DoxyReturn}{Returns}
+the atomic kind of the location 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a52c91de6daa8098fd56f86d7a7c67972}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad79782b8ddd887db635479f687e468d2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!enter\+Atom@{enter\+Atom}}
+\index{enter\+Atom@{enter\+Atom}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{enter\+Atom}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+enter\+Atom (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad79782b8ddd887db635479f687e468d2}
+
+
+Check if the location is entering a deterministic atomic block. 
+
+\begin{DoxyReturn}{Returns}
+true iff the location is entering a deterministic atomic block. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a96cc7c4c83d4c2da6f1b1fad63eb75f5}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a636595da9a3680969839b5900033e059}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!enter\+Atomic@{enter\+Atomic}}
+\index{enter\+Atomic@{enter\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{enter\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+enter\+Atomic (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a636595da9a3680969839b5900033e059}
+
+
+Check if the location is entering a general atomic block. 
+
+\begin{DoxyReturn}{Returns}
+true iff the location is entering a general atomic block. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a003d4ca21321e062d88dd69c0b87f79c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a74519695987b194ef8a5db4926706be2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!function@{function}}
+\index{function@{function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Function} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a74519695987b194ef8a5db4926706be2}
+\begin{DoxyReturn}{Returns}
+The function containing this location. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_ad3405c385072888e6cb55bba405cc80c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aabb93e8580c602a9c5ea4f67d8d36197}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!get\+Incoming@{get\+Incoming}}
+\index{get\+Incoming@{get\+Incoming}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{get\+Incoming}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+get\+Incoming (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aabb93e8580c602a9c5ea4f67d8d36197}
+
+\begin{DoxyParams}{Parameters}
+{\em i} & index of the statement \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The i\textquotesingle{}th incoming statement 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_aad7212f03897cc9c6b922e36bbeb2370}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac1521171c70b6dd534eec64199a29bea}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!get\+Num\+Incoming@{get\+Num\+Incoming}}
+\index{get\+Num\+Incoming@{get\+Num\+Incoming}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{get\+Num\+Incoming}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+get\+Num\+Incoming (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac1521171c70b6dd534eec64199a29bea}
+\begin{DoxyReturn}{Returns}
+The number of incoming statements. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a03d01021aff866cea5af430b39765a42}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a66e5aa9f09b9d370697dacf3e6930481}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!get\+Num\+Outgoing@{get\+Num\+Outgoing}}
+\index{get\+Num\+Outgoing@{get\+Num\+Outgoing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{get\+Num\+Outgoing}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+get\+Num\+Outgoing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a66e5aa9f09b9d370697dacf3e6930481}
+\begin{DoxyReturn}{Returns}
+The number of outgoing statements. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a12a32064b75c7296a587f97417efdbfc}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_acde4cbde02b6db42bdc150e4429585e7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!get\+Outgoing@{get\+Outgoing}}
+\index{get\+Outgoing@{get\+Outgoing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{get\+Outgoing}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+get\+Outgoing (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_acde4cbde02b6db42bdc150e4429585e7}
+
+\begin{DoxyParams}{Parameters}
+{\em i} & index of the statement \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The i\textquotesingle{}th outgoing statement 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a09c9ee4e0bf3fe0cf22f3a4ffc7dd6e8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a73c5d42039fbca2aea6b2376fe26bfa9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!get\+Sole\+Outgoing@{get\+Sole\+Outgoing}}
+\index{get\+Sole\+Outgoing@{get\+Sole\+Outgoing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{get\+Sole\+Outgoing}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Statement} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+get\+Sole\+Outgoing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a73c5d42039fbca2aea6b2376fe26bfa9}
+
+
+Returns the sole outgoing statement from this location. 
+
+\begin{DoxyReturn}{Returns}
+the outgoing statement 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em C\+I\+V\+L\+Internal\+Exception} & if the number of outgoing statements from this location is not 1 \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_ad8fd432c12bfb7eddeb4be742d6fc6c4}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a15a4555332ae10745f8ee13d9e7154d8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!has\+Derefs@{has\+Derefs}}
+\index{has\+Derefs@{has\+Derefs}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{has\+Derefs}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+has\+Derefs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a15a4555332ae10745f8ee13d9e7154d8}
+
+
+This location or some location in the future contains dereferences of some pointers. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a86ca6e13969746fbc2136b73c0338fdb}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5fbc6a373c15140f222e2b96f8506ca4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!has\+Spawn@{has\+Spawn}}
+\index{has\+Spawn@{has\+Spawn}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{has\+Spawn}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+has\+Spawn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5fbc6a373c15140f222e2b96f8506ca4}
+
+
+Is a spawn statement reachable from this location? 
+
+\begin{DoxyReturn}{Returns}
+true iff a spawn statement is reachable from this location. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a6fc4a6ece1b249d85cab5d9578e63775}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5d088542502b3d452887807a05cdd391}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!id@{id}}
+\index{id@{id}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5d088542502b3d452887807a05cdd391}
+\begin{DoxyReturn}{Returns}
+The unique I\+D number of this location. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_aa087c36f8f37141028bfaf182ee3859b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac145876fa528dec8f4f7206576664118}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!impact\+Mem\+Units@{impact\+Mem\+Units}}
+\index{impact\+Mem\+Units@{impact\+Mem\+Units}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{impact\+Mem\+Units}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Memory\+Unit\+Expression}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+impact\+Mem\+Units (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ac145876fa528dec8f4f7206576664118}
+
+
+Returns the impact memory unit expressions of this location. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_adeaf78fc7a74e2286dcfae5053824430}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5c56e154430f58920f04c97fdf1ab407}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block@{impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block}}
+\index{impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block@{impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scope} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a5c56e154430f58920f04c97fdf1ab407}
+
+
+The impact scope of a location is required in the enabler when an atomic/atom block is encountered, in which case the impact scope of all statements in the atomic block should be considered. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_ad8d174a772556d876e26b768292258fc}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aafcea337248668c348488d07c1022743}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!incoming@{incoming}}
+\index{incoming@{incoming}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{incoming}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf Statement}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+incoming (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aafcea337248668c348488d07c1022743}
+\begin{DoxyReturn}{Returns}
+The iterable object of incoming statements. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_af31316d3f20a4f6a647bca2b19cd5b3b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a00c51776b99625c923c17b301737e24c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!is\+In\+Noop\+Loop@{is\+In\+Noop\+Loop}}
+\index{is\+In\+Noop\+Loop@{is\+In\+Noop\+Loop}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{is\+In\+Noop\+Loop}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+is\+In\+Noop\+Loop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a00c51776b99625c923c17b301737e24c}
+
+
+returns true iff this location is in a side-\/effect-\/free loop. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_ab0c42f2259fc848e5fce432940c370aa}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad3c9de6f56680bf991aaec5149a860d6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!is\+Purely\+Local@{is\+Purely\+Local}}
+\index{is\+Purely\+Local@{is\+Purely\+Local}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{is\+Purely\+Local}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+is\+Purely\+Local (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad3c9de6f56680bf991aaec5149a860d6}
+\begin{DoxyReturn}{Returns}
+true iff the location is purely local 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_afc86b39bb8432f74ea31021b056123fe}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a0151d4b7d479e67a65066060ed0be652}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!is\+Start@{is\+Start}}
+\index{is\+Start@{is\+Start}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{is\+Start}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+is\+Start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a0151d4b7d479e67a65066060ed0be652}
+
+
+Returns true if this location is the start location of a function. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a1767dc2e7af8e1b856e14b1020826ff9}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aca7466a888f9b7dd44a03036d50fc847}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!leave\+Atom@{leave\+Atom}}
+\index{leave\+Atom@{leave\+Atom}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{leave\+Atom}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+leave\+Atom (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_aca7466a888f9b7dd44a03036d50fc847}
+\begin{DoxyReturn}{Returns}
+true iff the location is leaving a deterministic atomic block 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a3e6ddb1ffd8366ab6ee514f19f478123}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a7446270538b1504a2b532d7b7e172dda}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!leave\+Atomic@{leave\+Atomic}}
+\index{leave\+Atomic@{leave\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{leave\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+leave\+Atomic (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a7446270538b1504a2b532d7b7e172dda}
+\begin{DoxyReturn}{Returns}
+true iff the location is leaving a general atomic block 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_abc7e1d7f73fad973f3899d51a452c176}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad2d23c44d12f5ed9b9ffe3733def21f1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!loop\+Analysis@{loop\+Analysis}}
+\index{loop\+Analysis@{loop\+Analysis}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{loop\+Analysis}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+loop\+Analysis (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad2d23c44d12f5ed9b9ffe3733def21f1}
+
+
+Static analysis for possible loops form by this location. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a83901507942e6fa390dc355a28a7d6d2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a20bac21753d1b4a1778340753f0deaf5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!outgoing@{outgoing}}
+\index{outgoing@{outgoing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{outgoing}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf Statement}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+outgoing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a20bac21753d1b4a1778340753f0deaf5}
+\begin{DoxyReturn}{Returns}
+The iterable object of outgoing statements. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_af0512025c474bb62eae10baba9c90a08}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a551ecc8024926d437529f8964879630e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!path\+Condition@{path\+Condition}}
+\index{path\+Condition@{path\+Condition}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{path\+Condition}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+path\+Condition (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a551ecc8024926d437529f8964879630e}
+
+
+returns the path condition of this location from the start location 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_ac4d45b92dfc4d88ad0abf0ef253ee3a0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_af6f7c2c0a34aef048440898b55b88172}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!print@{print}}
+\index{print@{print}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+print (
+\begin{DoxyParamCaption}
+\item[{String}]{prefix, }
+\item[{Print\+Stream}]{out, }
+\item[{boolean}]{is\+Debug}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_af6f7c2c0a34aef048440898b55b88172}
+
+
+Print this location and all outgoing transitions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prefix} & The prefix string for all lines of this printout. \\
+\hline
+{\em out} & The Print\+Stream to use for printing this location. \\
+\hline
+{\em is\+Debug} & True iff the debugging option is enabled \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a9191c775fffac3f82929164eb80ed118}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad16a97802b8f06f1280f6c39a44f291f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!remove\+Incoming@{remove\+Incoming}}
+\index{remove\+Incoming@{remove\+Incoming}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{remove\+Incoming}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+remove\+Incoming (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad16a97802b8f06f1280f6c39a44f291f}
+
+
+Remove a certain incoming statement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & The incoming statement to be removed \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a8aad70555be8392bc7e25745fd2d1c58}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab668666d935735b701d0f1a2feb40db4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!remove\+Outgoing@{remove\+Outgoing}}
+\index{remove\+Outgoing@{remove\+Outgoing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{remove\+Outgoing}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+remove\+Outgoing (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab668666d935735b701d0f1a2feb40db4}
+
+
+Remove a certain outgoing statement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & The outgoing statement to be removed \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a0930ea35b349bebb4ba62db154cc370b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab302fa89ee21cc56cb1c8efc621882da}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!scope@{scope}}
+\index{scope@{scope}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{scope}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scope} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab302fa89ee21cc56cb1c8efc621882da}
+\begin{DoxyReturn}{Returns}
+The scope of this location. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_acca7f0ca8077f826b1f7c60bf5d7af31}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ae2c8077b17cedb0356fe3ff587a043a6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!set\+Enter\+Atomic@{set\+Enter\+Atomic}}
+\index{set\+Enter\+Atomic@{set\+Enter\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{set\+Enter\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+set\+Enter\+Atomic (
+\begin{DoxyParamCaption}
+\item[{boolean}]{deterministic}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ae2c8077b17cedb0356fe3ff587a043a6}
+
+
+This location is the start location of a certain atomic block. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em deterministic} & True iff the atomic block is a \$datomic block \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a0a8ec63fe48199bfd39f86b71585870f}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_abf0cbacbc6b111bccef321576caa8130}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!set\+Id@{set\+Id}}
+\index{set\+Id@{set\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{set\+Id}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+set\+Id (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_abf0cbacbc6b111bccef321576caa8130}
+
+
+Set the unique I\+D number of this location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The unique I\+D number of this location. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_adbbb8b37b9621511c87dcea07f3bebd3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab453c4a8a8de4c5e5376d56811ee242e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!set\+Impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block@{set\+Impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block}}
+\index{set\+Impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block@{set\+Impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{set\+Impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+set\+Impact\+Scope\+Of\+Atomic\+Or\+Atom\+Block (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ab453c4a8a8de4c5e5376d56811ee242e}
+
+
+set the impact scope of a location, only called when this.\+Atomic\+Kind == A\+T\+O\+M\+\_\+\+E\+N\+T\+E\+R or A\+T\+O\+M\+I\+C\+\_\+\+E\+N\+T\+E\+R. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a7a4328a7a88f89edf77670f7ff8f3f33}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a28cfe3ef169b53e83698a602023f91ed}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!set\+In\+Noop\+Loop@{set\+In\+Noop\+Loop}}
+\index{set\+In\+Noop\+Loop@{set\+In\+Noop\+Loop}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{set\+In\+Noop\+Loop}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+set\+In\+Noop\+Loop (
+\begin{DoxyParamCaption}
+\item[{boolean}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a28cfe3ef169b53e83698a602023f91ed}
+
+
+sets the flag that denotes if the location is in a side-\/effect-\/free loop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_ae775a2079bb9a4b84f069fd33daceed8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad0c26c9af83bc469844a50825f83a1ac}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!set\+Leave\+Atomic@{set\+Leave\+Atomic}}
+\index{set\+Leave\+Atomic@{set\+Leave\+Atomic}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{set\+Leave\+Atomic}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+set\+Leave\+Atomic (
+\begin{DoxyParamCaption}
+\item[{boolean}]{deterministic}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_ad0c26c9af83bc469844a50825f83a1ac}
+
+
+This location is the end location of a certain atomic block. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em deterministic} & True iff the atomic block is a \$datomic block \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a845a67bdcd66c936c36bc490e6f4d358}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a47ccce53e01b13aa4c3a74804988a698}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!set\+Loop\+Possible@{set\+Loop\+Possible}}
+\index{set\+Loop\+Possible@{set\+Loop\+Possible}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{set\+Loop\+Possible}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+set\+Loop\+Possible (
+\begin{DoxyParamCaption}
+\item[{boolean}]{possible}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a47ccce53e01b13aa4c3a74804988a698}
+
+
+During the translation of A\+S\+T node into \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model, it is possible to know if a location with more than one incoming statement possible to be a loop location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em possible} & The value to be used to mark whether this location is possible to be a loop location or not \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a0d8b081d18ffa767de8d93fa1b4f0f52}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a4bf81fc8bef99f0081b1a061836c665f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}!set\+Scope@{set\+Scope}}
+\index{set\+Scope@{set\+Scope}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::location\+::\+Common\+Location}}
+\subsubsection[{set\+Scope}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+location.\+Common\+Location.\+set\+Scope (
+\begin{DoxyParamCaption}
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1location_1_1CommonLocation_a4bf81fc8bef99f0081b1a061836c665f}
+
+\begin{DoxyParams}{Parameters}
+{\em scope} & The scope of this location. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location_a69c1eaa336fbde67f17b816d9ad30989}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+location.\+Location}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/location/Common\+Location.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,89 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Trace\+Player Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Trace\+Player@{edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Trace\+Player}}
+
+
+\hyperlink{structA}{A} tool to replay a trace saved by a previous \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} session.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Trace\+Player\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Trace\+Player\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a8cea1dcdcd543d61be60603c1a30b687}{}{\bfseries Trace\+Player} (G\+M\+C\+Configuration config, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} model, Transition\+Chooser$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} $>$ chooser, Print\+Stream out, Print\+Stream err)  throws Command\+Line\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a8cea1dcdcd543d61be60603c1a30b687}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a8b0aab12b85842c97d1a8093b9b0f682}{}{\bfseries Trace\+Player} (G\+M\+C\+Configuration config, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} model, File trace\+File, Print\+Stream out, Print\+Stream err)  throws Command\+Line\+Exception, 			\+I\+O\+Exception, Misguided\+Execution\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a8b0aab12b85842c97d1a8093b9b0f682}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a6f2fb1b834ff66954d09fcb0f2807c6a}{}Trace$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} $>$ {\bfseries run} ()  throws Misguided\+Execution\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a6f2fb1b834ff66954d09fcb0f2807c6a}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a6be3cba38099896c492547336ab3de18}{}void {\bfseries print\+Stats} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a6be3cba38099896c492547336ab3de18}
+
+\item 
+long \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a49c0a3ceb778204c1822fd6c93471d2f}{get\+Seed} ()
+\begin{DoxyCompactList}\small\item\em Returns the random seed if this is a random simulator, otherwise 0. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_aa840166f02789871a26d1dd2f124a8ab}{}boolean {\bfseries is\+Random} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_aa840166f02789871a26d1dd2f124a8ab}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_ad9c748729bfbb77e7631a5b054fab23a}{}static \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer}{Trace\+Player} {\bfseries guided\+Player} (G\+M\+C\+Configuration config, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} model, File trace\+File, Print\+Stream out, Print\+Stream err)  throws Command\+Line\+Exception, I\+O\+Exception, 			\+Misguided\+Execution\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_ad9c748729bfbb77e7631a5b054fab23a}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_acd5af4c1a012c430fe988b9ec9c1e253}{}static \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer}{Trace\+Player} {\bfseries random\+Player} (G\+M\+C\+Configuration config, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} model, Print\+Stream out, Print\+Stream err)  throws Command\+Line\+Exception, I\+O\+Exception, 			\+Misguided\+Execution\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_acd5af4c1a012c430fe988b9ec9c1e253}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} tool to replay a trace saved by a previous \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} session. 
+
+N\+O\+T\+E\+: need to have the new options override the ones specified in the trace file.
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a49c0a3ceb778204c1822fd6c93471d2f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Trace\+Player@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Trace\+Player}!get\+Seed@{get\+Seed}}
+\index{get\+Seed@{get\+Seed}!edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Trace\+Player@{edu\+::udel\+::cis\+::vsl\+::civl\+::run\+::\+I\+F\+::\+Trace\+Player}}
+\subsubsection[{get\+Seed}]{\setlength{\rightskip}{0pt plus 5cm}long edu.\+udel.\+cis.\+vsl.\+civl.\+run.\+I\+F.\+Trace\+Player.\+get\+Seed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1run_1_1IF_1_1TracePlayer_a49c0a3ceb778204c1822fd6c93471d2f}
+
+
+Returns the random seed if this is a random simulator, otherwise 0. 
+
+\begin{DoxyReturn}{Returns}
+the random seed 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/run/\+I\+F/Trace\+Player.\+java\end{DoxyCompactItemize}

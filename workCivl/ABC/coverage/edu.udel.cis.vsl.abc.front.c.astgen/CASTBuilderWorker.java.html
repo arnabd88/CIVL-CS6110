@@ -1,0 +1,2859 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CASTBuilderWorker.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.c.astgen</a> &gt; <span class="el_source">CASTBuilderWorker.java</span></div><h1>CASTBuilderWorker.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.front.c.astgen;
+
+import static edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.CommonTree;
+
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.PairNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.PragmaNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.StaticAssertionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.DesignatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.EnumeratorDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FieldDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CharacterConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.CompoundLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.DerivativeExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FloatingConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IntegerConstantNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.OperatorNode.Operator;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.QuantifiedExpressionNode.Quantifier;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.SizeofNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StatementExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.StringLiteralNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.OrdinaryLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.label.SwitchLabelNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpExecutableNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.omp.OmpForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode.BlockItemKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ChooseStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CompoundStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.DeclarationListNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ExpressionStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ForLoopInitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.LabeledStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode.StatementKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.SwitchNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.ArrayTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.AtomicTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.EnumerationTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.StructureOrUnionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode.TypeNodeKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypedefNameNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardBasicType.BasicTypeKind;
+import edu.udel.cis.vsl.abc.config.IF.Configuration;
+import edu.udel.cis.vsl.abc.err.IF.ABCUnsupportedException;
+import edu.udel.cis.vsl.abc.front.IF.ParseException;
+import edu.udel.cis.vsl.abc.front.c.astgen.AcslContractHandler.AcslContractKind;
+import edu.udel.cis.vsl.abc.front.c.ptree.CParseTree;
+import edu.udel.cis.vsl.abc.front.common.astgen.ASTBuilderWorker;
+import edu.udel.cis.vsl.abc.front.common.astgen.PragmaFactory;
+import edu.udel.cis.vsl.abc.front.common.astgen.PragmaHandler;
+import edu.udel.cis.vsl.abc.front.common.astgen.SimpleScope;
+import edu.udel.cis.vsl.abc.token.IF.CharacterToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSequence;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+import edu.udel.cis.vsl.abc.token.IF.StringToken;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+/**
+ * Builds an AST from an ANTLR tree.
+ * 
+ * TODO: standardize token names across grammar and classes.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc bnc" id="L100" title="All 2 branches missed.">public class CASTBuilderWorker extends ASTBuilderWorker {</span>
+
+<span class="nc" id="L102">	private boolean debug = false;</span>
+
+	/* ************************** Instance Fields ************************* */
+
+	private CParseTree parseTree;
+
+	private NodeFactory nodeFactory;
+
+	private TokenFactory tokenFactory;
+
+	private PragmaFactory pragmaFactory;
+
+	private CommonTree rootTree;
+
+<span class="nc" id="L116">	private Map&lt;String, PragmaHandler&gt; pragmaMap = new HashMap&lt;&gt;();</span>
+
+	/**
+	 * the configuraiton of this translation task, e.g, if svcomp mode is
+	 * enabled
+	 */
+	private Configuration config;
+
+	/**
+	 * The number of anonymous tagged entities (structs, unions, enums)
+	 * encountered so far. Used to assign a unique name to each anonymous
+	 * entity.
+	 */
+<span class="nc" id="L129">	private int anonymousTagCount = 0;</span>
+
+	private AcslContractHandler acslHandler;
+
+	/* *************************** Constructors *************************** */
+
+	/**
+	 * Constructs a new ASTBuilder for the given ANTLR tree.
+	 * 
+	 * @param factory
+	 *            an ASTFactory to use
+	 * @param rootTree
+	 *            the root of the ANTLR tree
+	 * @param tokenSource
+	 *            the CTokenSource used to produce the ANTLR tree
+	 * 
+	 */
+<span class="nc" id="L146">	public CASTBuilderWorker(Configuration config, CParseTree parseTree,</span>
+			ASTFactory astFactory, PragmaFactory pragmaFactory) {
+<span class="nc" id="L148">		this.parseTree = parseTree;</span>
+<span class="nc" id="L149">		this.nodeFactory = astFactory.getNodeFactory();</span>
+<span class="nc" id="L150">		this.tokenFactory = astFactory.getTokenFactory();</span>
+<span class="nc" id="L151">		this.rootTree = parseTree.getRoot();</span>
+<span class="nc" id="L152">		this.pragmaFactory = pragmaFactory;</span>
+<span class="nc" id="L153">		this.config = config;</span>
+<span class="nc" id="L154">		acslHandler = new AcslContractHandler(this.nodeFactory,</span>
+<span class="nc" id="L155">				this.tokenFactory);</span>
+<span class="nc" id="L156">	}</span>
+
+	/* ************************* Private Methods ************************** */
+
+	// Utility methods...
+
+	private SyntaxException error(String message, CommonTree tree) {
+<span class="nc" id="L163">		return new SyntaxException(message, newSource(tree));</span>
+	}
+
+	private SyntaxException error(String message, ASTNode node) {
+<span class="nc" id="L167">		return new SyntaxException(message, node.getSource());</span>
+	}
+
+	private Source newSource(CommonTree tree) {
+<span class="nc" id="L171">		return parseTree.source(tree);</span>
+	}
+
+	private SpecifierAnalysis newSpecifierAnalysis(CommonTree specifiers)
+			throws SyntaxException {
+<span class="nc" id="L176">		return new SpecifierAnalysis(specifiers, parseTree, this.config);</span>
+	}
+
+	private boolean isFunction(TypeNode type, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L181">		return isFunction(type, scope, new HashSet&lt;String&gt;());</span>
+	}
+
+	private boolean isFunction(TypeNode type, SimpleScope scope,
+			Set&lt;String&gt; seenNames) throws SyntaxException {
+<span class="nc" id="L186">		TypeNodeKind kind = type.kind();</span>
+
+<span class="nc bnc" id="L188" title="All 3 branches missed.">		switch (kind) {</span>
+		case FUNCTION:
+<span class="nc" id="L190">			return true;</span>
+		case TYPEDEF_NAME: {
+<span class="nc" id="L192">			String typeName = ((TypedefNameNode) type).getName().name();</span>
+<span class="nc" id="L193">			TypeNode referencedNode = scope.getReferencedType(typeName);</span>
+
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (seenNames.contains(typeName))</span>
+<span class="nc" id="L196">				throw error(&quot;Cycle in typedefs&quot;, type);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			while (referencedNode == null) {</span>
+<span class="nc" id="L198">				scope = scope.getParent();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">				if (scope == null)</span>
+<span class="nc" id="L200">					throw error(&quot;Could not resolve typedef name&quot;, type);</span>
+<span class="nc" id="L201">				referencedNode = scope.getReferencedType(typeName);</span>
+			}
+<span class="nc" id="L203">			seenNames.add(typeName);</span>
+<span class="nc" id="L204">			return isFunction(referencedNode, scope, seenNames);</span>
+		}
+		default:
+<span class="nc" id="L207">			return false;</span>
+		}
+	}
+
+	// Translation of Misc. Primitives...
+
+	private IdentifierNode translateIdentifier(CommonTree identifier) {
+<span class="nc" id="L214">		Token idToken = identifier.getToken();</span>
+		CivlcToken token;
+		Source source;
+
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (idToken instanceof CivlcToken)</span>
+<span class="nc" id="L219">			token = (CivlcToken) idToken;</span>
+		else {
+<span class="nc" id="L221">			token = tokenFactory.newCivlcToken(idToken, null);</span>
+		}
+<span class="nc" id="L223">		source = tokenFactory.newSource(token);</span>
+<span class="nc" id="L224">		return nodeFactory.newIdentifierNode(source, token.getText());</span>
+	}
+
+	// private SequenceNode&lt;VariableDeclarationNode&gt; translateScopeListDef(
+	// CommonTree list) {
+	// int kind = list.getType();
+	//
+	// if (kind == ABSENT) {
+	// return null;
+	// } else {
+	// int numChildren = list.getChildCount();
+	// LinkedList&lt;VariableDeclarationNode&gt; nodeList = new
+	// LinkedList&lt;VariableDeclarationNode&gt;();
+	// SequenceNode&lt;VariableDeclarationNode&gt; result;
+	// Source source = newSource(list);
+	//
+	// for (int i = 0; i &lt; numChildren; i++) {
+	// CommonTree child = (CommonTree) list.getChild(i);
+	// IdentifierNode identifierNode = translateIdentifier(child);
+	// Source childSource = identifierNode.getSource();
+	// TypeNode typeNode = nodeFactory.newScopeTypeNode(childSource);
+	// VariableDeclarationNode declNode = nodeFactory
+	// .newVariableDeclarationNode(childSource,
+	// identifierNode, typeNode);
+	//
+	// nodeList.add(declNode);
+	// }
+	// result = nodeFactory.newSequenceNode(source, &quot;scope list def&quot;,
+	// nodeList);
+	// return result;
+	// }
+	// }
+
+	// private SequenceNode&lt;ExpressionNode&gt; translateScopeListUse(CommonTree
+	// list) {
+	// int kind = list.getType();
+	//
+	// if (kind == ABSENT) {
+	// return null;
+	// } else {
+	// int numChildren = list.getChildCount();
+	// LinkedList&lt;ExpressionNode&gt; nodeList = new LinkedList&lt;ExpressionNode&gt;();
+	// SequenceNode&lt;ExpressionNode&gt; result;
+	// Source source = newSource(list);
+	//
+	// for (int i = 0; i &lt; numChildren; i++) {
+	// CommonTree child = (CommonTree) list.getChild(i);
+	// IdentifierNode identifierNode = translateIdentifier(child);
+	// Source childSource = identifierNode.getSource();
+	// IdentifierExpressionNode exprNode = nodeFactory
+	// .newIdentifierExpressionNode(childSource,
+	// identifierNode);
+	//
+	// nodeList.add(exprNode);
+	// }
+	// result = nodeFactory.newSequenceNode(source, &quot;scope list use&quot;,
+	// nodeList);
+	// return result;
+	// }
+	// }
+
+	// Translation of Expressions...
+
+	private IntegerConstantNode translateIntegerConstant(Source source,
+			CommonTree integerConstant) throws SyntaxException {
+<span class="nc" id="L289">		return nodeFactory.newIntegerConstantNode(source,</span>
+<span class="nc" id="L290">				integerConstant.getText());</span>
+	}
+
+	private FloatingConstantNode translateFloatingConstant(Source source,
+			CommonTree floatingConstant) throws SyntaxException {
+<span class="nc" id="L295">		return nodeFactory.newFloatingConstantNode(source,</span>
+<span class="nc" id="L296">				floatingConstant.getText());</span>
+	}
+
+	private CharacterConstantNode translateCharacterConstant(Source source,
+			CommonTree characterConstant) throws SyntaxException {
+<span class="nc" id="L301">		CharacterToken token = (CharacterToken) characterConstant.getToken();</span>
+
+<span class="nc" id="L303">		return nodeFactory.newCharacterConstantNode(source,</span>
+<span class="nc" id="L304">				characterConstant.getText(), token.getExecutionCharacter());</span>
+	}
+
+	private ConstantNode translateTrue(Source source) {
+<span class="nc" id="L308">		return nodeFactory.newBooleanConstantNode(source, true);</span>
+	}
+
+	private ConstantNode translateFalse(Source source) {
+<span class="nc" id="L312">		return nodeFactory.newBooleanConstantNode(source, false);</span>
+	}
+
+	private StringLiteralNode translateStringLiteral(Source source,
+			CommonTree stringLiteral) throws SyntaxException {
+<span class="nc" id="L317">		StringToken token = (StringToken) stringLiteral.getToken();</span>
+
+<span class="nc" id="L319">		return nodeFactory.newStringLiteralNode(source,</span>
+<span class="nc" id="L320">				stringLiteral.getText(), token.getStringLiteral());</span>
+	}
+
+	private ExpressionNode translateAt(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L326">		CommonTree procExprTree = (CommonTree) expressionTree.getChild(0);</span>
+<span class="nc" id="L327">		CommonTree identifierTree = (CommonTree) expressionTree.getChild(1);</span>
+<span class="nc" id="L328">		ExpressionNode procExpr = translateExpression(procExprTree, scope);</span>
+<span class="nc" id="L329">		IdentifierNode identifierNode = translateIdentifier(identifierTree);</span>
+
+<span class="nc" id="L331">		return nodeFactory.newRemoteExpressionNode(source, procExpr,</span>
+<span class="nc" id="L332">				nodeFactory.newIdentifierExpressionNode(</span>
+<span class="nc" id="L333">						newSource(identifierTree), identifierNode));</span>
+	}
+
+	private ExpressionNode translateRegularRange(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+		{// regular range expression lo..hi or lo..hi#step
+<span class="nc" id="L340">			ExpressionNode loNode = translateExpression(</span>
+<span class="nc" id="L341">					(CommonTree) expressionTree.getChild(0), scope);</span>
+<span class="nc" id="L342">			ExpressionNode hiNode = translateExpression(</span>
+<span class="nc" id="L343">					(CommonTree) expressionTree.getChild(1), scope);</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">			if (expressionTree.getChildCount() &gt; 2) {</span>
+<span class="nc" id="L345">				CommonTree stepTree = (CommonTree) expressionTree.getChild(2);</span>
+
+<span class="nc bnc" id="L347" title="All 4 branches missed.">				if (stepTree != null &amp;&amp; stepTree.getType() != ABSENT) {</span>
+<span class="nc" id="L348">					ExpressionNode stepNode = translateExpression(stepTree,</span>
+<span class="nc" id="L349">							scope);</span>
+
+<span class="nc" id="L351">					return nodeFactory.newRegularRangeNode(source, loNode,</span>
+<span class="nc" id="L352">							hiNode, stepNode);</span>
+				}
+			}
+<span class="nc" id="L355">			return nodeFactory.newRegularRangeNode(source, loNode, hiNode);</span>
+		}
+	}
+
+	private ExpressionNode translateExists(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L362">		SimpleScope newScope = new SimpleScope(scope);</span>
+		VariableDeclarationNode variable;
+
+<span class="nc bnc" id="L365" title="All 2 branches missed.">		if (expressionTree.getChild(0).getType() == TYPE_NAME) {</span>
+<span class="nc" id="L366">			ExpressionNode restriction = translateExpression(</span>
+<span class="nc" id="L367">					(CommonTree) expressionTree.getChild(2), newScope);</span>
+
+<span class="nc" id="L369">			variable = nodeFactory</span>
+<span class="nc" id="L370">					.newVariableDeclarationNode(</span>
+<span class="nc" id="L371">							source,</span>
+<span class="nc" id="L372">							translateIdentifier((CommonTree) expressionTree</span>
+<span class="nc" id="L373">									.getChild(1)),</span>
+<span class="nc" id="L374">							translateTypeName(</span>
+<span class="nc" id="L375">									(CommonTree) expressionTree.getChild(0),</span>
+<span class="nc" id="L376">									newScope));</span>
+<span class="nc" id="L377">			return nodeFactory.newQuantifiedExpressionNode(</span>
+<span class="nc" id="L378">					source,</span>
+<span class="nc" id="L379">					Quantifier.EXISTS,</span>
+<span class="nc" id="L380">					variable,</span>
+<span class="nc" id="L381">					restriction,</span>
+<span class="nc" id="L382">					translateExpression(</span>
+<span class="nc" id="L383">							(CommonTree) expressionTree.getChild(3), newScope));</span>
+		} else {
+			ExpressionNode lower, upper;
+
+<span class="nc" id="L387">			lower = translateExpression(</span>
+<span class="nc" id="L388">					(CommonTree) expressionTree.getChild(1), newScope);</span>
+<span class="nc" id="L389">			upper = translateExpression(</span>
+<span class="nc" id="L390">					(CommonTree) expressionTree.getChild(2), newScope);</span>
+<span class="nc" id="L391">			variable = nodeFactory</span>
+<span class="nc" id="L392">					.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L393">							translateIdentifier((CommonTree) expressionTree</span>
+<span class="nc" id="L394">									.getChild(0)),</span>
+<span class="nc" id="L395">							nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L396">									BasicTypeKind.INT));</span>
+<span class="nc" id="L397">			return nodeFactory.newQuantifiedExpressionNode(</span>
+<span class="nc" id="L398">					source,</span>
+<span class="nc" id="L399">					Quantifier.EXISTS,</span>
+<span class="nc" id="L400">					variable,</span>
+<span class="nc" id="L401">					lower,</span>
+<span class="nc" id="L402">					upper,</span>
+<span class="nc" id="L403">					translateExpression(</span>
+<span class="nc" id="L404">							(CommonTree) expressionTree.getChild(3), newScope));</span>
+		}
+	}
+
+	private ExpressionNode translateUniform(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L411">		SimpleScope newScope = new SimpleScope(scope);</span>
+		VariableDeclarationNode variable;
+
+<span class="nc bnc" id="L414" title="All 2 branches missed.">		if (expressionTree.getChild(0).getType() == TYPE_NAME) {</span>
+<span class="nc" id="L415">			ExpressionNode restriction = translateExpression(</span>
+<span class="nc" id="L416">					(CommonTree) expressionTree.getChild(2), newScope);</span>
+
+<span class="nc" id="L418">			variable = nodeFactory</span>
+<span class="nc" id="L419">					.newVariableDeclarationNode(</span>
+<span class="nc" id="L420">							source,</span>
+<span class="nc" id="L421">							translateIdentifier((CommonTree) expressionTree</span>
+<span class="nc" id="L422">									.getChild(1)),</span>
+<span class="nc" id="L423">							translateTypeName(</span>
+<span class="nc" id="L424">									(CommonTree) expressionTree.getChild(0),</span>
+<span class="nc" id="L425">									newScope));</span>
+<span class="nc" id="L426">			return nodeFactory.newQuantifiedExpressionNode(</span>
+<span class="nc" id="L427">					source,</span>
+<span class="nc" id="L428">					Quantifier.UNIFORM,</span>
+<span class="nc" id="L429">					variable,</span>
+<span class="nc" id="L430">					restriction,</span>
+<span class="nc" id="L431">					translateExpression(</span>
+<span class="nc" id="L432">							(CommonTree) expressionTree.getChild(3), newScope));</span>
+		} else {
+			ExpressionNode lower, upper;
+
+<span class="nc" id="L436">			lower = translateExpression(</span>
+<span class="nc" id="L437">					(CommonTree) expressionTree.getChild(1), newScope);</span>
+<span class="nc" id="L438">			upper = translateExpression(</span>
+<span class="nc" id="L439">					(CommonTree) expressionTree.getChild(2), newScope);</span>
+<span class="nc" id="L440">			variable = nodeFactory</span>
+<span class="nc" id="L441">					.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L442">							translateIdentifier((CommonTree) expressionTree</span>
+<span class="nc" id="L443">									.getChild(0)),</span>
+<span class="nc" id="L444">							nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L445">									BasicTypeKind.INT));</span>
+<span class="nc" id="L446">			return nodeFactory.newQuantifiedExpressionNode(</span>
+<span class="nc" id="L447">					source,</span>
+<span class="nc" id="L448">					Quantifier.UNIFORM,</span>
+<span class="nc" id="L449">					variable,</span>
+<span class="nc" id="L450">					lower,</span>
+<span class="nc" id="L451">					upper,</span>
+<span class="nc" id="L452">					translateExpression(</span>
+<span class="nc" id="L453">							(CommonTree) expressionTree.getChild(3), newScope));</span>
+		}
+	}
+
+	private ExpressionNode translateForall(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L460">		SimpleScope newScope = new SimpleScope(scope);</span>
+		VariableDeclarationNode variable;
+
+<span class="nc bnc" id="L463" title="All 2 branches missed.">		if (expressionTree.getChild(0).getType() == TYPE_NAME) {</span>
+<span class="nc" id="L464">			ExpressionNode restriction = translateExpression(</span>
+<span class="nc" id="L465">					(CommonTree) expressionTree.getChild(2), newScope);</span>
+
+<span class="nc" id="L467">			variable = nodeFactory</span>
+<span class="nc" id="L468">					.newVariableDeclarationNode(</span>
+<span class="nc" id="L469">							source,</span>
+<span class="nc" id="L470">							translateIdentifier((CommonTree) expressionTree</span>
+<span class="nc" id="L471">									.getChild(1)),</span>
+<span class="nc" id="L472">							translateTypeName(</span>
+<span class="nc" id="L473">									(CommonTree) expressionTree.getChild(0),</span>
+<span class="nc" id="L474">									newScope));</span>
+<span class="nc" id="L475">			return nodeFactory.newQuantifiedExpressionNode(</span>
+<span class="nc" id="L476">					source,</span>
+<span class="nc" id="L477">					Quantifier.FORALL,</span>
+<span class="nc" id="L478">					variable,</span>
+<span class="nc" id="L479">					restriction,</span>
+<span class="nc" id="L480">					translateExpression(</span>
+<span class="nc" id="L481">							(CommonTree) expressionTree.getChild(3), newScope));</span>
+		} else {
+
+			ExpressionNode lower, upper;
+
+<span class="nc" id="L486">			lower = translateExpression(</span>
+<span class="nc" id="L487">					(CommonTree) expressionTree.getChild(1), newScope);</span>
+<span class="nc" id="L488">			upper = translateExpression(</span>
+<span class="nc" id="L489">					(CommonTree) expressionTree.getChild(2), newScope);</span>
+<span class="nc" id="L490">			variable = nodeFactory</span>
+<span class="nc" id="L491">					.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L492">							translateIdentifier((CommonTree) expressionTree</span>
+<span class="nc" id="L493">									.getChild(0)),</span>
+<span class="nc" id="L494">							nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L495">									BasicTypeKind.INT));</span>
+<span class="nc" id="L496">			return nodeFactory.newQuantifiedExpressionNode(</span>
+<span class="nc" id="L497">					source,</span>
+<span class="nc" id="L498">					Quantifier.FORALL,</span>
+<span class="nc" id="L499">					variable,</span>
+<span class="nc" id="L500">					lower,</span>
+<span class="nc" id="L501">					upper,</span>
+<span class="nc" id="L502">					translateExpression(</span>
+<span class="nc" id="L503">							(CommonTree) expressionTree.getChild(3), newScope));</span>
+		}
+	}
+
+	private ExpressionNode translateScopeOf(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L510">		ExpressionNode expression = this.translateExpression(</span>
+<span class="nc" id="L511">				(CommonTree) expressionTree.getChild(0), scope);</span>
+
+<span class="nc" id="L513">		return nodeFactory.newScopeOfNode(source, expression);</span>
+	}
+
+	/**
+	 * Translates a derivative expression
+	 * 
+	 * @param source
+	 *            The source information.
+	 * @param expressionTree
+	 *            CommonTree of type DERIV, representing a derivative
+	 *            expression.
+	 * @param scope
+	 *            The scope containing this expression.
+	 * @return A DerivativeExpressionNode corresponding to the ANTLR tree.
+	 * @throws SyntaxException
+	 */
+	private DerivativeExpressionNode translateDeriv(Source source,
+			CommonTree derivTree, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L531">		CommonTree functionTree = (CommonTree) derivTree.getChild(0);</span>
+<span class="nc" id="L532">		CommonTree partialListTree = (CommonTree) derivTree.getChild(1);</span>
+<span class="nc" id="L533">		CommonTree argumentListTree = (CommonTree) derivTree.getChild(2);</span>
+<span class="nc" id="L534">		int numPartials = partialListTree.getChildCount();</span>
+<span class="nc" id="L535">		int numArgs = argumentListTree.getChildCount();</span>
+<span class="nc" id="L536">		ExpressionNode function = translateExpression(functionTree, scope);</span>
+		List&lt;PairNode&lt;IdentifierExpressionNode, IntegerConstantNode&gt;&gt; partials;
+		List&lt;ExpressionNode&gt; arguments;
+
+<span class="nc" id="L540">		partials = new LinkedList&lt;PairNode&lt;IdentifierExpressionNode, IntegerConstantNode&gt;&gt;();</span>
+<span class="nc" id="L541">		arguments = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc bnc" id="L542" title="All 2 branches missed.">		for (int i = 0; i &lt; numPartials; i++) {</span>
+<span class="nc" id="L543">			CommonTree partialTree = (CommonTree) partialListTree.getChild(i);</span>
+<span class="nc" id="L544">			ExpressionNode partialIdentifier = translateExpression(</span>
+<span class="nc" id="L545">					(CommonTree) partialTree.getChild(0), scope);</span>
+<span class="nc" id="L546">			ExpressionNode partialDegree = translateExpression(</span>
+<span class="nc" id="L547">					(CommonTree) partialTree.getChild(1), scope);</span>
+
+<span class="nc bnc" id="L549" title="All 4 branches missed.">			assert partialIdentifier instanceof IdentifierExpressionNode;</span>
+<span class="nc bnc" id="L550" title="All 4 branches missed.">			assert partialDegree instanceof IntegerConstantNode;</span>
+<span class="nc" id="L551">			partials.add(nodeFactory.newPairNode(newSource(partialTree),</span>
+<span class="nc" id="L552">					(IdentifierExpressionNode) partialIdentifier,</span>
+<span class="nc" id="L553">					(IntegerConstantNode) partialDegree));</span>
+		}
+<span class="nc bnc" id="L555" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L556">			CommonTree argumentTree = (CommonTree) argumentListTree.getChild(i);</span>
+<span class="nc" id="L557">			ExpressionNode argumentNode = translateExpression(argumentTree,</span>
+<span class="nc" id="L558">					scope);</span>
+
+<span class="nc" id="L560">			arguments.add(argumentNode);</span>
+		}
+<span class="nc" id="L562">		return nodeFactory.newDerivativeExpressionNode(source, function,</span>
+<span class="nc" id="L563">				nodeFactory.newSequenceNode(newSource(partialListTree),</span>
+<span class="nc" id="L564">						&quot;partials&quot;, partials), nodeFactory.newSequenceNode(</span>
+<span class="nc" id="L565">						newSource(argumentListTree), &quot;arguments&quot;, arguments));</span>
+	}
+
+	/**
+	 * Translates a function call expression.
+	 * 
+	 * @param callTree
+	 *            CommonTree node of type CALL, representing a function call
+	 * @return a FunctionCallNode corresponding to the ANTLR tree
+	 * @throws SyntaxException
+	 */
+	private FunctionCallNode translateCall(Source source, CommonTree callTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L578">		CommonTree functionTree = (CommonTree) callTree.getChild(1);</span>
+<span class="nc" id="L579">		CommonTree contextArgumentListTree = (CommonTree) callTree.getChild(2);</span>
+<span class="nc" id="L580">		CommonTree argumentListTree = (CommonTree) callTree.getChild(3);</span>
+<span class="nc" id="L581">		ExpressionNode functionNode = translateExpression(functionTree, scope);</span>
+<span class="nc" id="L582">		int numContextArgs = contextArgumentListTree.getChildCount();</span>
+<span class="nc" id="L583">		int numArgs = argumentListTree.getChildCount();</span>
+<span class="nc" id="L584">		List&lt;ExpressionNode&gt; contextArgumentList = new LinkedList&lt;ExpressionNode&gt;();</span>
+<span class="nc" id="L585">		List&lt;ExpressionNode&gt; argumentList = new LinkedList&lt;ExpressionNode&gt;();</span>
+		// SequenceNode&lt;ExpressionNode&gt; scopeList =
+		// translateScopeListUse((CommonTree) callTree
+		// .getChild(4));
+
+<span class="nc bnc" id="L590" title="All 2 branches missed.">		for (int i = 0; i &lt; numContextArgs; i++) {</span>
+<span class="nc" id="L591">			CommonTree argumentTree = (CommonTree) contextArgumentListTree</span>
+<span class="nc" id="L592">					.getChild(i);</span>
+<span class="nc" id="L593">			ExpressionNode contextArgumentNode = translateExpression(</span>
+<span class="nc" id="L594">					argumentTree, scope);</span>
+
+<span class="nc" id="L596">			contextArgumentList.add(contextArgumentNode);</span>
+		}
+
+<span class="nc bnc" id="L599" title="All 2 branches missed.">		for (int i = 0; i &lt; numArgs; i++) {</span>
+<span class="nc" id="L600">			CommonTree argumentTree = (CommonTree) argumentListTree.getChild(i);</span>
+<span class="nc" id="L601">			ExpressionNode argumentNode = translateExpression(argumentTree,</span>
+<span class="nc" id="L602">					scope);</span>
+
+<span class="nc" id="L604">			argumentList.add(argumentNode);</span>
+		}
+<span class="nc" id="L606">		return nodeFactory.newFunctionCallNode(source, functionNode,</span>
+<span class="nc" id="L607">				contextArgumentList, argumentList, null);</span>
+	}
+
+	/**
+	 * 
+	 * @param compoundLiteralTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private CompoundLiteralNode translateCompoundLiteral(Source source,
+			CommonTree compoundLiteralTree, SimpleScope scope)
+			throws SyntaxException {
+		// tree has form:
+		// ^(COMPOUND_LITERAL LPAREN typeName initializerList RCURLY)
+<span class="nc" id="L621">		TypeNode typeNode = translateTypeName(</span>
+<span class="nc" id="L622">				(CommonTree) compoundLiteralTree.getChild(1), scope);</span>
+<span class="nc" id="L623">		CompoundInitializerNode initializerList = (CompoundInitializerNode) translateInitializer(</span>
+<span class="nc" id="L624">				(CommonTree) compoundLiteralTree.getChild(2), scope);</span>
+
+<span class="nc" id="L626">		return nodeFactory.newCompoundLiteralNode(source, typeNode,</span>
+<span class="nc" id="L627">				initializerList);</span>
+	}
+
+	/**
+	 * 
+	 * @param expressionTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private ExpressionNode translateDotOrArrow(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L639">		int kind = expressionTree.getType();</span>
+<span class="nc" id="L640">		CommonTree argumentNode = (CommonTree) expressionTree.getChild(0);</span>
+<span class="nc" id="L641">		CommonTree fieldNode = (CommonTree) expressionTree.getChild(1);</span>
+<span class="nc" id="L642">		ExpressionNode argument = translateExpression(argumentNode, scope);</span>
+<span class="nc" id="L643">		IdentifierNode fieldName = translateIdentifier(fieldNode);</span>
+
+<span class="nc bnc" id="L645" title="All 2 branches missed.">		if (kind == DOT)</span>
+<span class="nc" id="L646">			return nodeFactory.newDotNode(source, argument, fieldName);</span>
+		else
+<span class="nc" id="L648">			return nodeFactory.newArrowNode(source, argument, fieldName);</span>
+	}
+
+	/**
+	 * 
+	 * @param expressionTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private OperatorNode translateOperatorExpression(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+		CommonTree operatorTree = (CommonTree) expressionTree.getChild(0);
+		int operatorKind = operatorTree.getType();
+		CommonTree argumentList = (CommonTree) expressionTree.getChild(1);
+		int numArgs = argumentList.getChildCount();
+		List&lt;ExpressionNode&gt; arguments = new LinkedList&lt;ExpressionNode&gt;();
+		Operator operator;
+
+		for (int i = 0; i &lt; numArgs; i++) {
+			ExpressionNode argument = translateExpression(
+					(CommonTree) argumentList.getChild(i), scope);
+
+			arguments.add(argument);
+		}
+		switch (operatorKind) {
+<span class="nc" id="L674">		case AMPERSAND:</span>
+			operator = numArgs == 1 ? Operator.ADDRESSOF : Operator.BITAND;
+			break;
+		case ASSIGN:
+			operator = Operator.ASSIGN;
+			break;
+		case BIG_O:
+			operator = Operator.BIG_O;
+			break;
+		case BITANDEQ:
+			operator = Operator.BITANDEQ;
+			break;
+		case TILDE:
+			operator = Operator.BITCOMPLEMENT;
+			break;
+		case BITOR:
+			operator = Operator.BITOR;
+			break;
+		case BITOREQ:
+			operator = Operator.BITOREQ;
+			break;
+		case BITXOR:
+			operator = Operator.BITXOR;
+			break;
+		case BITXOREQ:
+			operator = Operator.BITXOREQ;
+			break;
+		case COMMA:
+			operator = Operator.COMMA;
+			break;
+		case QMARK:
+			operator = Operator.CONDITIONAL;
+			break;
+		case STAR:
+			operator = numArgs == 1 ? Operator.DEREFERENCE : Operator.TIMES;
+			break;
+		case DIV:
+			operator = Operator.DIV;
+			break;
+		case DIVEQ:
+			operator = Operator.DIVEQ;
+			break;
+		case EQUALS:
+			operator = Operator.EQUALS;
+			break;
+		case GT:
+			operator = Operator.GT;
+			break;
+		case GTE:
+			operator = Operator.GTE;
+			break;
+		case AND:
+			operator = Operator.LAND;
+			break;
+		case OR:
+			operator = Operator.LOR;
+			break;
+		case IMPLIES:
+			operator = Operator.IMPLIES;
+			break;
+		case LT:
+			operator = Operator.LT;
+			break;
+		case LTE:
+			operator = Operator.LTE;
+			break;
+		case SUB:
+			operator = numArgs == 1 ? Operator.UNARYMINUS : Operator.MINUS;
+			break;
+		case SUBEQ:
+			operator = Operator.MINUSEQ;
+			break;
+		case MOD:
+			operator = Operator.MOD;
+			break;
+		case MODEQ:
+			operator = Operator.MODEQ;
+			break;
+		case NEQ:
+			operator = Operator.NEQ;
+			break;
+		case NOT:
+			operator = Operator.NOT;
+			break;
+		case PLUS:
+			operator = numArgs == 1 ? Operator.UNARYPLUS : Operator.PLUS;
+			break;
+		case PLUSEQ:
+			operator = Operator.PLUSEQ;
+			break;
+		case POST_DECREMENT:
+			operator = Operator.POSTDECREMENT;
+			break;
+		case POST_INCREMENT:
+			operator = Operator.POSTINCREMENT;
+			break;
+		case PRE_DECREMENT:
+			operator = Operator.PREDECREMENT;
+			break;
+		case PRE_INCREMENT:
+			operator = Operator.PREINCREMENT;
+			break;
+		case SHIFTLEFT:
+			operator = Operator.SHIFTLEFT;
+			break;
+		case SHIFTLEFTEQ:
+			operator = Operator.SHIFTLEFTEQ;
+			break;
+		case SHIFTRIGHT:
+			operator = Operator.SHIFTRIGHT;
+			break;
+		case SHIFTRIGHTEQ:
+			operator = Operator.SHIFTRIGHTEQ;
+			break;
+		case INDEX:
+			operator = Operator.SUBSCRIPT;
+			break;
+		case STAREQ:
+			operator = Operator.TIMESEQ;
+			break;
+		case HASH:
+			operator = Operator.HASH;
+			break;
+		default:
+			throw error(&quot;Unknown operator :&quot;, operatorTree);
+		}
+		return nodeFactory.newOperatorNode(source, operator, arguments);
+	}
+
+	/**
+	 * 
+	 * @param expressionTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private SizeofNode translateSizeOf(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L812">		int kind = expressionTree.getChild(0).getType();</span>
+<span class="nc" id="L813">		CommonTree child = (CommonTree) expressionTree.getChild(1);</span>
+		SizeableNode sizeable;
+
+<span class="nc bnc" id="L816" title="All 2 branches missed.">		if (kind == EXPR)</span>
+<span class="nc" id="L817">			sizeable = translateExpression(child, scope);</span>
+<span class="nc bnc" id="L818" title="All 2 branches missed.">		else if (kind == TYPE)</span>
+<span class="nc" id="L819">			sizeable = translateTypeName(child, scope);</span>
+		else
+<span class="nc" id="L821">			throw error(&quot;Unexpected argument to sizeof&quot;, expressionTree);</span>
+<span class="nc" id="L822">		return nodeFactory.newSizeofNode(source, sizeable);</span>
+	}
+
+	/**
+	 * 
+	 * @param source
+	 * @param expressionTree
+	 *            has the format: (, COMPOUND_STATEMENT, )
+	 * @param scope
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private StatementExpressionNode translateStatementExpression(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L837">		CompoundStatementNode statement = this.translateCompoundStatement(</span>
+<span class="nc" id="L838">				(CommonTree) expressionTree.getChild(1), scope);</span>
+<span class="nc" id="L839">		BlockItemNode last = statement</span>
+<span class="nc" id="L840">				.getSequenceChild(statement.numChildren() - 1);</span>
+
+<span class="nc bnc" id="L842" title="All 2 branches missed.">		if (!(last instanceof ExpressionStatementNode)) {</span>
+<span class="nc" id="L843">			this.error(&quot;the last element of the compound statement for a &quot;</span>
+					+ &quot;statement expression should only be an expression&quot;,
+<span class="nc" id="L845">					expressionTree);</span>
+		}
+<span class="nc" id="L847">		return this.nodeFactory.newStatementExpressionNode(source, statement);</span>
+	}
+
+	/**
+	 * Translates an expression.
+	 * 
+	 * @param expressionTree
+	 *            any CommonTree node representing an expression
+	 * @return an ExpressionNode
+	 * @throws SyntaxException
+	 */
+	private ExpressionNode translateExpression(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+		int kind = expressionTree.getType();
+
+		switch (kind) {
+<span class="nc" id="L864">		case INTEGER_CONSTANT:</span>
+			return translateIntegerConstant(source, expressionTree);
+		case FLOATING_CONSTANT:
+			return translateFloatingConstant(source, expressionTree);
+		case ENUMERATION_CONSTANT:
+			return nodeFactory
+					.newEnumerationConstantNode(translateIdentifier((CommonTree) expressionTree
+							.getChild(0)));
+		case CHARACTER_CONSTANT:
+			return translateCharacterConstant(source, expressionTree);
+		case STRING_LITERAL:
+			return translateStringLiteral(source, expressionTree);
+		case IDENTIFIER:
+			return nodeFactory.newIdentifierExpressionNode(source,
+					translateIdentifier(expressionTree));
+		case PARENTHESIZED_EXPRESSION:
+			return translateExpression(source,
+					(CommonTree) expressionTree.getChild(1), scope);
+		case GENERIC: // TODO: genericSelection
+			throw new UnsupportedOperationException(
+					&quot;Generic selections not yet implemented&quot;);
+		case CALL:
+			return translateCall(source, expressionTree, scope);
+		case DOT:
+		case ARROW:
+			return translateDotOrArrow(source, expressionTree, scope);
+		case COMPOUND_LITERAL:
+			return translateCompoundLiteral(source, expressionTree, scope);
+		case OPERATOR:
+			return translateOperatorExpression(source, expressionTree, scope);
+		case SIZEOF:
+			return translateSizeOf(source, expressionTree, scope);
+		case SCOPEOF:
+			return translateScopeOf(source, expressionTree, scope);
+		case ALIGNOF:
+			return nodeFactory.newAlignOfNode(
+					source,
+					translateTypeName((CommonTree) expressionTree.getChild(0),
+							scope));
+		case CAST:
+			return nodeFactory.newCastNode(
+					source,
+					translateTypeName((CommonTree) expressionTree.getChild(0),
+							scope),
+					translateExpression(
+							(CommonTree) expressionTree.getChild(1), scope));
+		case SELF:
+			return nodeFactory.newSelfNode(source);
+		case PROCNULL:
+			return nodeFactory.newProcnullNode(source);
+		case HERE:
+			return nodeFactory.newHereNode(source);
+		case ROOT:
+			return nodeFactory.newRootNode(source);
+		case SPAWN:
+			return nodeFactory.newSpawnNode(source,
+					translateCall(source, expressionTree, scope));
+		case TRUE:
+			return translateTrue(source);
+		case FALSE:
+			return translateFalse(source);
+		case RESULT:
+			return nodeFactory.newResultNode(source);
+		case AT:
+			return translateAt(source, expressionTree, scope);
+		case FORALL:
+			return translateForall(source, expressionTree, scope);
+		case UNIFORM:
+			return translateUniform(source, expressionTree, scope);
+		case EXISTS:
+			return translateExists(source, expressionTree, scope);
+		case DERIVATIVE_EXPRESSION:
+			return translateDeriv(source, expressionTree, scope);
+		case DOTDOT:
+			return translateRegularRange(source, expressionTree, scope);
+		case ELLIPSIS:
+			return translateWildcard(source, expressionTree, scope);
+		case CALLS:
+			return nodeFactory.newCallsNode(source,
+					translateCall(source, expressionTree, scope));
+		case STATEMENT_EXPRESSION:
+			return translateStatementExpression(source, expressionTree, scope);
+		default:
+			throw error(&quot;Unknown expression kind&quot;, expressionTree);
+		} // end switch
+	}
+
+	// Translation of Declarations and Types...
+
+	private ExpressionNode translateWildcard(Source source,
+			CommonTree expressionTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L956">		return nodeFactory.newWildcardNode(source);</span>
+	}
+
+	/**
+	 * If typeNode is a struct, union, or enumeration type node, make it in
+	 * complete, i.e., delete the &quot;body&quot; (list of fields, or enumerators) if it
+	 * is present. Otherwise, a no-op.
+	 * 
+	 * @param typeNode
+	 *            any type node
+	 */
+	private TypeNode makeIncomplete(TypeNode typeNode) {
+<span class="nc bnc" id="L968" title="All 2 branches missed.">		if (typeNode instanceof StructureOrUnionTypeNode) {</span>
+<span class="nc" id="L969">			((StructureOrUnionTypeNode) typeNode).makeIncomplete();</span>
+<span class="nc bnc" id="L970" title="All 2 branches missed.">		} else if (typeNode instanceof EnumerationTypeNode) {</span>
+<span class="nc" id="L971">			((EnumerationTypeNode) typeNode).makeIncomplete();</span>
+		}
+<span class="nc" id="L973">		return typeNode;</span>
+	}
+
+	// private VariableDeclarationNode translateScopeDeclaration(
+	// CommonTree scopeDeclTree, SimpleScope scope) throws SyntaxException {
+	// CommonTree identifierTree = (CommonTree) scopeDeclTree.getChild(0);
+	// IdentifierNode identifierNode = translateIdentifier(identifierTree);
+	// Source source = newSource(scopeDeclTree);
+	// TypeNode scopeType = nodeFactory.newScopeTypeNode(source);
+	// VariableDeclarationNode result = nodeFactory
+	// .newVariableDeclarationNode(source, identifierNode, scopeType);
+	//
+	// return result;
+	// }
+
+	/**
+	 * Returns a list consisting of the following kinds of external definitions:
+	 * 
+	 * &lt;ul&gt;
+	 * &lt;li&gt;VariableDeclarationNode&lt;/li&gt;
+	 * &lt;li&gt;FunctionDeclarationNode&lt;/li&gt; (includes FunctionDefinitionNode)
+	 * &lt;li&gt;StructureOrUnionTypeNode&lt;/li&gt;
+	 * &lt;li&gt;EnumerationTypeNode&lt;/li&gt;
+	 * &lt;li&gt;TypedefDeclarationNode&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @param declarationTree
+	 *            CommonTree node of type DECLARATION (not static assertions)
+	 * @return list of external definitions
+	 * @throws SyntaxException
+	 *             if the declaration does not conform to the C11 Standard
+	 */
+	private List&lt;BlockItemNode&gt; translateDeclaration(
+			CommonTree declarationTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L1008">		CommonTree declarationSpecifiers = (CommonTree) declarationTree</span>
+<span class="nc" id="L1009">				.getChild(0);</span>
+<span class="nc" id="L1010">		CommonTree initDeclaratorList = (CommonTree) declarationTree</span>
+<span class="nc" id="L1011">				.getChild(1);</span>
+<span class="nc" id="L1012">		SpecifierAnalysis analysis = newSpecifierAnalysis(declarationSpecifiers);</span>
+<span class="nc" id="L1013">		int numDeclarators = initDeclaratorList.getChildCount();</span>
+<span class="nc" id="L1014">		ArrayList&lt;BlockItemNode&gt; definitionList = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L1015">		Source source = newSource(declarationTree);</span>
+
+<span class="nc bnc" id="L1017" title="All 2 branches missed.">		if (numDeclarators == 0) {</span>
+			TypeNode baseType;
+			BlockItemNode definition;
+
+			// C11 Sec. 6.7 Constraint 2:
+			// &quot;A declaration other than a static_assert declaration shall
+			// declare at least a declarator (other than the parameters of a
+			// function or the members of a structure or union), a tag, or the
+			// members of an enumeration.&quot;
+
+			// error if $input or $output occur here:
+<span class="nc bnc" id="L1028" title="All 4 branches missed.">			if (analysis.inputQualifier || analysis.outputQualifier)</span>
+<span class="nc" id="L1029">				throw error(&quot;Use of $input or $output without variable&quot;,</span>
+<span class="nc" id="L1030">						declarationTree);</span>
+<span class="nc" id="L1031">			baseType = newSpecifierType(analysis, scope);</span>
+<span class="nc bnc" id="L1032" title="All 2 branches missed.">			if (baseType instanceof EnumerationTypeNode)</span>
+<span class="nc" id="L1033">				definition = (EnumerationTypeNode) baseType;</span>
+<span class="nc bnc" id="L1034" title="All 2 branches missed.">			else if (baseType instanceof StructureOrUnionTypeNode)</span>
+<span class="nc" id="L1035">				definition = (StructureOrUnionTypeNode) baseType;</span>
+			else
+<span class="nc" id="L1037">				throw error(&quot;Declaration missing declarator&quot;, declarationTree);</span>
+<span class="nc" id="L1038">			definitionList.add(definition);</span>
+<span class="nc" id="L1039">			return definitionList;</span>
+		}
+<span class="nc bnc" id="L1041" title="All 2 branches missed.">		for (int i = 0; i &lt; numDeclarators; i++) {</span>
+<span class="nc" id="L1042">			CommonTree initDeclarator = (CommonTree) initDeclaratorList</span>
+<span class="nc" id="L1043">					.getChild(i);</span>
+<span class="nc" id="L1044">			CommonTree declaratorTree = (CommonTree) initDeclarator.getChild(0);</span>
+<span class="nc" id="L1045">			CommonTree initializerTree = (CommonTree) initDeclarator</span>
+<span class="nc" id="L1046">					.getChild(1);</span>
+<span class="nc" id="L1047">			InitializerNode initializer = translateInitializer(initializerTree,</span>
+<span class="nc" id="L1048">					scope);</span>
+
+			// TODO: the following won't work if the struct or union
+			// is anonymous. Need to give it a temp name.
+			// Could give a unique name to every anonymous thing in
+			// this translation unit, but might create problem with linking
+			// if two different translation units have anonymous things
+			// with same name. Linker will have to recognize this and
+			// perhaps change names of anonymous things. At least in file scope.
+
+<span class="nc bnc" id="L1058" title="All 2 branches missed.">			TypeNode baseType = i == 0 ? newSpecifierType(analysis, scope)</span>
+<span class="nc" id="L1059">					: makeIncomplete(newSpecifierType(analysis, scope));</span>
+<span class="nc" id="L1060">			DeclaratorData data = processDeclarator(declaratorTree, baseType,</span>
+<span class="nc" id="L1061">					scope);</span>
+			BlockItemNode definition;
+
+			// special handling of $input and $output qualifiers required
+			// these must not go in base type but must be pulled all the
+			// way out to modify the final declarator.
+			// So remove them from the base type, and add them back at end.
+			// $input int x, y;
+			// $input const double a[n];
+
+<span class="nc bnc" id="L1071" title="All 2 branches missed.">			if (analysis.typedefCount &gt; 0) {</span>
+<span class="nc" id="L1072">				TypeNode typeNode = data.type;</span>
+				String name;
+
+<span class="nc" id="L1075">				definition = nodeFactory.newTypedefDeclarationNode(source,</span>
+<span class="nc" id="L1076">						data.identifier, typeNode);</span>
+<span class="nc bnc" id="L1077" title="All 2 branches missed.">				if (data.identifier == null)</span>
+<span class="nc" id="L1078">					throw error(&quot;Missing identifier in typedef&quot;, declaratorTree);</span>
+<span class="nc" id="L1079">				name = data.identifier.name();</span>
+<span class="nc" id="L1080">				scope.putMapping(name, data.type);</span>
+<span class="nc bnc" id="L1081" title="All 2 branches missed.">			} else if (isFunction(data.type, scope)) {</span>
+<span class="nc" id="L1082">				FunctionTypeNode typeNode = (FunctionTypeNode) data.type;</span>
+				FunctionDeclarationNode declaration;
+<span class="nc" id="L1084">				CommonTree contractTree = (CommonTree) declarationTree</span>
+<span class="nc" id="L1085">						.getChild(2);</span>
+<span class="nc" id="L1086">				SequenceNode&lt;ContractNode&gt; contract = getContract(contractTree,</span>
+<span class="nc" id="L1087">						scope);</span>
+
+<span class="nc bnc" id="L1089" title="All 2 branches missed.">				if (analysis.abstractSpecifier) {</span>
+<span class="nc" id="L1090">					declaration = nodeFactory</span>
+<span class="nc" id="L1091">							.newAbstractFunctionDefinitionNode(source,</span>
+<span class="nc" id="L1092">									data.identifier, typeNode, contract,</span>
+<span class="nc" id="L1093">									analysis.continuity);</span>
+<span class="nc" id="L1094">				} else {</span>
+<span class="nc" id="L1095">					declaration = nodeFactory.newFunctionDeclarationNode(</span>
+<span class="nc" id="L1096">							source, data.identifier, typeNode, contract);</span>
+				}
+<span class="nc bnc" id="L1098" title="All 2 branches missed.">				if (debug)</span>
+<span class="nc" id="L1099">					System.out.println(&quot;processing function &quot;</span>
+<span class="nc" id="L1100">							+ data.identifier.name());</span>
+<span class="nc" id="L1101">				declaration.setContract(translateAcslContract(</span>
+<span class="nc" id="L1102">						AcslContractKind.FUNCTION_CONTRACT, declarationTree,</span>
+<span class="nc" id="L1103">						scope));</span>
+<span class="nc" id="L1104">				setFunctionSpecifiers(declaration, analysis);</span>
+<span class="nc" id="L1105">				setStorageSpecifiers(declaration, analysis, scope);</span>
+<span class="nc bnc" id="L1106" title="All 2 branches missed.">				if (initializer != null)</span>
+<span class="nc" id="L1107">					throw error(&quot;Initializer used in function declaration&quot;,</span>
+<span class="nc" id="L1108">							initializerTree);</span>
+<span class="nc" id="L1109">				checkAlignmentSpecifiers(declaration, analysis);</span>
+<span class="nc" id="L1110">				definition = declaration;</span>
+<span class="nc" id="L1111">			} else {</span>
+				VariableDeclarationNode declaration;
+
+<span class="nc bnc" id="L1114" title="All 2 branches missed.">				if (analysis.inputQualifier)</span>
+<span class="nc" id="L1115">					data.type.setInputQualified(true);</span>
+<span class="nc bnc" id="L1116" title="All 2 branches missed.">				if (analysis.outputQualifier)</span>
+<span class="nc" id="L1117">					data.type.setOutputQualified(true);</span>
+<span class="nc" id="L1118">				declaration = nodeFactory.newVariableDeclarationNode(source,</span>
+<span class="nc" id="L1119">						data.identifier, data.type);</span>
+<span class="nc bnc" id="L1120" title="All 2 branches missed.">				if (initializer != null)</span>
+<span class="nc" id="L1121">					declaration.setInitializer(initializer);</span>
+<span class="nc" id="L1122">				setStorageSpecifiers(declaration, analysis, scope);</span>
+<span class="nc" id="L1123">				setAlignmentSpecifiers(declaration, analysis, scope);</span>
+<span class="nc" id="L1124">				checkFunctionSpecifiers(declaration, analysis);</span>
+<span class="nc" id="L1125">				definition = declaration;</span>
+			}
+<span class="nc" id="L1127">			definitionList.add(definition);</span>
+		}
+<span class="nc" id="L1129">		return definitionList;</span>
+	}
+
+	/**
+	 * Creates a new type node based on the result of analyzing a set of type
+	 * specifiers.
+	 * 
+	 * Input and output specifiers are ignored, since these require special
+	 * handling: they must be pulled all the way up to the final type node for
+	 * the variable being declared.
+	 * 
+	 * @param analysis
+	 * @param scope
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private TypeNode newSpecifierType(SpecifierAnalysis analysis,
+			SimpleScope scope) throws SyntaxException {
+		TypeNode result;
+
+<span class="nc bnc" id="L1149" title="All 10 branches missed.">		switch (analysis.typeNameKind) {</span>
+		case VOID:
+<span class="nc" id="L1151">			result = nodeFactory</span>
+<span class="nc" id="L1152">					.newVoidTypeNode(newSource(analysis.typeSpecifierNode));</span>
+<span class="nc" id="L1153">			break;</span>
+		case BASIC: {
+			Source source;
+
+<span class="nc bnc" id="L1157" title="All 2 branches missed.">			if (analysis.specifierListNode.getChildCount() == 0)</span>
+<span class="nc" id="L1158">				source = this.tokenFactory.newSource(tokenFactory</span>
+<span class="nc" id="L1159">						.newCivlcToken(IDENTIFIER,</span>
+<span class="nc" id="L1160">								analysis.basicTypeKind.toString(),</span>
+<span class="nc" id="L1161">								tokenFactory.newSystemFormation(&quot;system&quot;)));</span>
+			else
+<span class="nc" id="L1163">				source = newSource(analysis.specifierListNode);</span>
+<span class="nc" id="L1164">			result = nodeFactory.newBasicTypeNode(source,</span>
+<span class="nc" id="L1165">					analysis.basicTypeKind);</span>
+<span class="nc" id="L1166">			break;</span>
+		}
+		case TYPEDEF_NAME: {
+<span class="nc" id="L1169">			CommonTree typedefNameTree = (CommonTree) analysis.typeSpecifierNode;</span>
+<span class="nc" id="L1170">			CommonTree identifierTree = (CommonTree) typedefNameTree</span>
+<span class="nc" id="L1171">					.getChild(0);</span>
+			// CommonTree scopeListTree = (CommonTree)
+			// typedefNameTree.getChild(1);
+<span class="nc" id="L1174">			IdentifierNode identifierNode = translateIdentifier(identifierTree);</span>
+			// SequenceNode&lt;ExpressionNode&gt; scopeListNode =
+			// translateScopeListUse(scopeListTree);
+
+<span class="nc" id="L1178">			result = nodeFactory.newTypedefNameNode(identifierNode, null);</span>
+<span class="nc" id="L1179">			break;</span>
+		}
+		case TYPEOF: {
+<span class="nc" id="L1182">			CommonTree typeofTree = (CommonTree) analysis.typeSpecifierNode;</span>
+<span class="nc" id="L1183">			CommonTree operandTree = (CommonTree) typeofTree.getChild(1);</span>
+
+<span class="nc bnc" id="L1185" title="All 2 branches missed.">			if (typeofTree.getType() == TYPEOF_TYPE) {</span>
+<span class="nc" id="L1186">				result = this.translateTypeName(operandTree, scope);</span>
+<span class="nc" id="L1187">			} else {</span>
+				Source source;
+<span class="nc" id="L1189">				ExpressionNode expression = this.translateExpression(</span>
+<span class="nc" id="L1190">						operandTree, scope);</span>
+
+<span class="nc bnc" id="L1192" title="All 2 branches missed.">				if (analysis.specifierListNode.getChildCount() == 0)</span>
+<span class="nc" id="L1193">					source = this.tokenFactory.newSource(tokenFactory</span>
+<span class="nc" id="L1194">							.newCivlcToken(IDENTIFIER,</span>
+<span class="nc" id="L1195">									analysis.basicTypeKind.toString(),</span>
+<span class="nc" id="L1196">									tokenFactory.newSystemFormation(&quot;system&quot;)));</span>
+				else
+<span class="nc" id="L1198">					source = newSource(analysis.specifierListNode);</span>
+<span class="nc" id="L1199">				result = this.nodeFactory.newTypeofNode(source, expression);</span>
+			}
+<span class="nc" id="L1201">			break;</span>
+		}
+		case STRUCTURE_OR_UNION:
+<span class="nc" id="L1204">			result = translateStructOrUnionType(analysis.typeSpecifierNode,</span>
+<span class="nc" id="L1205">					scope);</span>
+<span class="nc" id="L1206">			break;</span>
+		case ENUMERATION:
+<span class="nc" id="L1208">			result = translateEnumerationType(analysis.typeSpecifierNode, scope);</span>
+<span class="nc" id="L1209">			break;</span>
+		case ATOMIC:
+<span class="nc" id="L1211">			result = translateAtomicType(analysis.typeSpecifierNode, scope);</span>
+<span class="nc" id="L1212">			break;</span>
+		case DOMAIN: {
+<span class="nc" id="L1214">			CommonTree node = analysis.typeSpecifierNode;</span>
+<span class="nc" id="L1215">			Source source = newSource(node);</span>
+
+<span class="nc bnc" id="L1217" title="All 2 branches missed.">			if (node.getChildCount() != 0) {</span>
+<span class="nc" id="L1218">				CommonTree child = (CommonTree) node.getChild(0);</span>
+
+<span class="nc bnc" id="L1220" title="All 2 branches missed.">				if (child.getToken().getType() != ABSENT) {</span>
+<span class="nc" id="L1221">					ExpressionNode dimensionNode = translateExpression(child,</span>
+<span class="nc" id="L1222">							scope);</span>
+
+<span class="nc" id="L1224">					result = nodeFactory.newDomainTypeNode(source,</span>
+<span class="nc" id="L1225">							dimensionNode);</span>
+<span class="nc" id="L1226">					break;</span>
+				}
+			}
+<span class="nc" id="L1229">			result = nodeFactory.newDomainTypeNode(source);</span>
+<span class="nc" id="L1230">			break;</span>
+		}
+		case RANGE:
+<span class="nc" id="L1233">			result = nodeFactory</span>
+<span class="nc" id="L1234">					.newRangeTypeNode(newSource(analysis.typeSpecifierNode));</span>
+<span class="nc" id="L1235">			break;</span>
+		default:
+<span class="nc" id="L1237">			throw new RuntimeException(&quot;Should not happen.&quot;);</span>
+		}
+<span class="nc bnc" id="L1239" title="All 2 branches missed.">		if (analysis.constQualifier)</span>
+<span class="nc" id="L1240">			result.setConstQualified(true);</span>
+<span class="nc bnc" id="L1241" title="All 2 branches missed.">		if (analysis.volatileQualifier)</span>
+<span class="nc" id="L1242">			result.setVolatileQualified(true);</span>
+<span class="nc bnc" id="L1243" title="All 2 branches missed.">		if (analysis.restrictQualifier)</span>
+<span class="nc" id="L1244">			result.setRestrictQualified(true);</span>
+<span class="nc bnc" id="L1245" title="All 2 branches missed.">		if (analysis.atomicQualifier)</span>
+<span class="nc" id="L1246">			result.setAtomicQualified(true);</span>
+<span class="nc" id="L1247">		return result;</span>
+	}
+
+	/**
+	 * 
+	 * @param structTree
+	 *            CommonTree of type STRUCT or UNION
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private StructureOrUnionTypeNode translateStructOrUnionType(
+			CommonTree structTree, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1259">		Source wholeSource = newSource(structTree);</span>
+<span class="nc" id="L1260">		int kind = structTree.getType();</span>
+<span class="nc bnc" id="L1261" title="All 2 branches missed.">		boolean isStruct = kind == STRUCT;</span>
+<span class="nc" id="L1262">		CommonTree tagTree = (CommonTree) structTree.getChild(0);</span>
+<span class="nc" id="L1263">		CommonTree declListTree = (CommonTree) structTree.getChild(1);</span>
+		IdentifierNode tag;
+		SequenceNode&lt;FieldDeclarationNode&gt; structDeclList;
+
+<span class="nc bnc" id="L1267" title="All 2 branches missed.">		if (tagTree.getType() == ABSENT) {</span>
+<span class="nc" id="L1268">			tag = nodeFactory</span>
+<span class="nc" id="L1269">					.newIdentifierNode(wholeSource, &quot;$anon_&quot;</span>
+<span class="nc bnc" id="L1270" title="All 2 branches missed.">							+ (isStruct ? &quot;struct&quot; : &quot;union&quot;) + &quot;_&quot;</span>
+<span class="nc" id="L1271">							+ anonymousTagCount);</span>
+<span class="nc" id="L1272">			anonymousTagCount++;</span>
+<span class="nc" id="L1273">		} else {</span>
+<span class="nc" id="L1274">			tag = translateIdentifier(tagTree);</span>
+		}
+<span class="nc bnc" id="L1276" title="All 2 branches missed.">		if (declListTree.getType() == ABSENT) {</span>
+<span class="nc" id="L1277">			structDeclList = null;</span>
+<span class="nc" id="L1278">		} else {</span>
+<span class="nc" id="L1279">			int numFields = declListTree.getChildCount();</span>
+
+<span class="nc bnc" id="L1281" title="All 2 branches missed.">			if (numFields &gt; 0) {</span>
+<span class="nc" id="L1282">				List&lt;FieldDeclarationNode&gt; fieldDecls = new LinkedList&lt;FieldDeclarationNode&gt;();</span>
+
+<span class="nc bnc" id="L1284" title="All 2 branches missed.">				for (int i = 0; i &lt; numFields; i++) {</span>
+<span class="nc" id="L1285">					CommonTree declTree = (CommonTree) declListTree.getChild(i);</span>
+<span class="nc" id="L1286">					List&lt;FieldDeclarationNode&gt; fieldDeclarations = translateFieldDeclaration(</span>
+<span class="nc" id="L1287">							declTree, scope);</span>
+
+<span class="nc" id="L1289">					fieldDecls.addAll(fieldDeclarations);</span>
+				}
+<span class="nc" id="L1291">				structDeclList = nodeFactory.newSequenceNode(</span>
+<span class="nc" id="L1292">						newSource(declListTree), &quot;FieldDeclarations&quot;,</span>
+<span class="nc" id="L1293">						fieldDecls);</span>
+<span class="nc" id="L1294">			} else {</span>
+<span class="nc bnc" id="L1295" title="All 4 branches missed.">				if (this.config != null &amp;&amp; this.config.svcomp()) {</span>
+<span class="nc" id="L1296">					structDeclList = null;</span>
+<span class="nc" id="L1297">				} else {</span>
+<span class="nc" id="L1298">					throw this.error(&quot;empty struct is not allowed&quot;, structTree);</span>
+				}
+			}
+		}
+<span class="nc" id="L1302">		return nodeFactory.newStructOrUnionTypeNode(wholeSource, isStruct, tag,</span>
+<span class="nc" id="L1303">				structDeclList);</span>
+	}
+
+	private List&lt;FieldDeclarationNode&gt; translateFieldDeclaration(
+			CommonTree declarationTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L1309">		CommonTree declarationSpecifiers = (CommonTree) declarationTree</span>
+<span class="nc" id="L1310">				.getChild(0); // may be ABSENT</span>
+<span class="nc" id="L1311">		CommonTree structDeclaratorList = (CommonTree) declarationTree</span>
+<span class="nc" id="L1312">				.getChild(1); // may be ABSENT</span>
+<span class="nc" id="L1313">		SpecifierAnalysis analysis = newSpecifierAnalysis(declarationSpecifiers);</span>
+<span class="nc" id="L1314">		int numDeclarators = structDeclaratorList.getChildCount();</span>
+<span class="nc" id="L1315">		List&lt;FieldDeclarationNode&gt; result = new LinkedList&lt;FieldDeclarationNode&gt;();</span>
+<span class="nc" id="L1316">		Source source = newSource(declarationTree);</span>
+
+<span class="nc bnc" id="L1318" title="All 2 branches missed.">		if (numDeclarators == 0) {</span>
+			// this can happen if the specifier is an anonymous struct or union
+<span class="nc" id="L1320">			TypeNode baseType = newSpecifierType(analysis, scope);</span>
+
+<span class="nc" id="L1322">			result.add(nodeFactory.newFieldDeclarationNode(source, null,</span>
+<span class="nc" id="L1323">					baseType, null));</span>
+<span class="nc" id="L1324">		} else {</span>
+<span class="nc bnc" id="L1325" title="All 2 branches missed.">			for (int i = 0; i &lt; numDeclarators; i++) {</span>
+<span class="nc bnc" id="L1326" title="All 2 branches missed.">				TypeNode baseType = i == 0 ? newSpecifierType(analysis, scope)</span>
+<span class="nc" id="L1327">						: makeIncomplete(newSpecifierType(analysis, scope));</span>
+<span class="nc" id="L1328">				CommonTree structDeclarator = (CommonTree) structDeclaratorList</span>
+<span class="nc" id="L1329">						.getChild(i);</span>
+<span class="nc" id="L1330">				CommonTree declaratorTree = (CommonTree) structDeclarator</span>
+<span class="nc" id="L1331">						.getChild(0); // could be ABSENT</span>
+<span class="nc" id="L1332">				CommonTree bitFieldTree = (CommonTree) structDeclarator</span>
+<span class="nc" id="L1333">						.getChild(1); // could be ABSENT</span>
+<span class="nc" id="L1334">				ExpressionNode bitFieldWidth = translateExpression(</span>
+<span class="nc" id="L1335">						bitFieldTree, scope);</span>
+<span class="nc" id="L1336">				DeclaratorData data = processDeclarator(declaratorTree,</span>
+<span class="nc" id="L1337">						baseType, scope);</span>
+				FieldDeclarationNode declaration;
+
+<span class="nc bnc" id="L1340" title="All 2 branches missed.">				if (bitFieldWidth == null)</span>
+<span class="nc" id="L1341">					declaration = nodeFactory.newFieldDeclarationNode(source,</span>
+<span class="nc" id="L1342">							data.identifier, data.type);</span>
+				else
+<span class="nc" id="L1344">					declaration = nodeFactory.newFieldDeclarationNode(source,</span>
+<span class="nc" id="L1345">							data.identifier, data.type, bitFieldWidth);</span>
+
+<span class="nc" id="L1347">				result.add(declaration);</span>
+			}
+		}
+<span class="nc" id="L1350">		return result;</span>
+	}
+
+	/**
+	 * 
+	 * @param enumerationTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private EnumerationTypeNode translateEnumerationType(
+			CommonTree enumerationTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L1362">		Source wholeSource = newSource(enumerationTree);</span>
+		// tagTree may be ABSENT:
+<span class="nc" id="L1364">		CommonTree tagTree = (CommonTree) enumerationTree.getChild(0);</span>
+		// enumeratorListTree may be ABSENT:
+<span class="nc" id="L1366">		CommonTree enumeratorListTree = (CommonTree) enumerationTree</span>
+<span class="nc" id="L1367">				.getChild(1);</span>
+		IdentifierNode tag;
+		SequenceNode&lt;EnumeratorDeclarationNode&gt; enumerators;
+
+<span class="nc bnc" id="L1371" title="All 2 branches missed.">		if (tagTree.getType() == ABSENT) {</span>
+<span class="nc" id="L1372">			tag = nodeFactory.newIdentifierNode(wholeSource, &quot;$anon_enum_&quot;</span>
+<span class="nc" id="L1373">					+ anonymousTagCount);</span>
+<span class="nc" id="L1374">			anonymousTagCount++;</span>
+<span class="nc" id="L1375">		} else {</span>
+<span class="nc" id="L1376">			tag = translateIdentifier(tagTree);</span>
+		}
+<span class="nc bnc" id="L1378" title="All 2 branches missed.">		if (enumeratorListTree.getType() == ABSENT) {</span>
+<span class="nc" id="L1379">			enumerators = null;</span>
+<span class="nc" id="L1380">		} else {</span>
+<span class="nc" id="L1381">			int numEnumerators = enumeratorListTree.getChildCount();</span>
+<span class="nc" id="L1382">			List&lt;EnumeratorDeclarationNode&gt; enumeratorList = new LinkedList&lt;EnumeratorDeclarationNode&gt;();</span>
+
+<span class="nc bnc" id="L1384" title="All 2 branches missed.">			for (int i = 0; i &lt; numEnumerators; i++) {</span>
+<span class="nc" id="L1385">				CommonTree enumeratorTree = (CommonTree) enumeratorListTree</span>
+<span class="nc" id="L1386">						.getChild(i);</span>
+<span class="nc" id="L1387">				CommonTree enumeratorNameTree = (CommonTree) enumeratorTree</span>
+<span class="nc" id="L1388">						.getChild(0);</span>
+<span class="nc" id="L1389">				IdentifierNode enumeratorName = translateIdentifier(enumeratorNameTree);</span>
+<span class="nc" id="L1390">				CommonTree constantTree = (CommonTree) enumeratorTree</span>
+<span class="nc" id="L1391">						.getChild(1);</span>
+<span class="nc" id="L1392">				ExpressionNode constant = translateExpression(constantTree,</span>
+<span class="nc" id="L1393">						scope);</span>
+<span class="nc" id="L1394">				EnumeratorDeclarationNode decl = nodeFactory</span>
+<span class="nc" id="L1395">						.newEnumeratorDeclarationNode(</span>
+<span class="nc" id="L1396">								newSource(enumeratorTree), enumeratorName,</span>
+<span class="nc" id="L1397">								constant);</span>
+
+<span class="nc" id="L1399">				scope.addEnumerationConstant(enumeratorName.name());</span>
+<span class="nc" id="L1400">				enumeratorList.add(decl);</span>
+			}
+<span class="nc" id="L1402">			enumerators = nodeFactory.newSequenceNode(</span>
+<span class="nc" id="L1403">					newSource(enumeratorListTree), &quot;EnumeratorList&quot;,</span>
+<span class="nc" id="L1404">					enumeratorList);</span>
+		}
+<span class="nc" id="L1406">		return nodeFactory</span>
+<span class="nc" id="L1407">				.newEnumerationTypeNode(wholeSource, tag, enumerators);</span>
+	}
+
+	/**
+	 * 
+	 * @param atomicTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private AtomicTypeNode translateAtomicType(CommonTree atomicTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1418">		TypeNode type = translateTypeName((CommonTree) atomicTree.getChild(0),</span>
+<span class="nc" id="L1419">				scope);</span>
+
+<span class="nc" id="L1421">		return nodeFactory.newAtomicTypeNode(newSource(atomicTree), type);</span>
+	}
+
+	/**
+	 * 
+	 * @param declaration
+	 * @param analysis
+	 */
+	private void setFunctionSpecifiers(FunctionDeclarationNode declaration,
+			SpecifierAnalysis analysis) {
+<span class="nc bnc" id="L1431" title="All 2 branches missed.">		if (analysis.inlineSpecifier)</span>
+<span class="nc" id="L1432">			declaration.setInlineFunctionSpecifier(true);</span>
+<span class="nc bnc" id="L1433" title="All 2 branches missed.">		if (analysis.noreturnSpecifier)</span>
+<span class="nc" id="L1434">			declaration.setNoreturnFunctionSpecifier(true);</span>
+<span class="nc bnc" id="L1435" title="All 2 branches missed.">		if (analysis.globalSpecifier)</span>
+<span class="nc" id="L1436">			declaration.setGlobalFunctionSpecifier(true);</span>
+<span class="nc bnc" id="L1437" title="All 2 branches missed.">		if (analysis.pureSpecifier)</span>
+<span class="nc" id="L1438">			declaration.setPureFunctionSpeciier(true);</span>
+<span class="nc bnc" id="L1439" title="All 2 branches missed.">		if (analysis.fatomicSpecifier)</span>
+<span class="nc" id="L1440">			declaration.setAtomicFunctionSpeciier(true);</span>
+<span class="nc bnc" id="L1441" title="All 2 branches missed.">		if (analysis.systemSpecifier)</span>
+<span class="nc" id="L1442">			declaration.setSystemFunctionSpeciier(true);</span>
+<span class="nc" id="L1443">	}</span>
+
+	private void checkFunctionSpecifiers(VariableDeclarationNode declaration,
+			SpecifierAnalysis analysis) throws SyntaxException {
+<span class="nc bnc" id="L1447" title="All 2 branches missed.">		if (analysis.inlineSpecifier)</span>
+<span class="nc" id="L1448">			throw error(&quot;Use of inline specifier in object delcaration&quot;,</span>
+<span class="nc" id="L1449">					declaration);</span>
+<span class="nc bnc" id="L1450" title="All 2 branches missed.">		if (analysis.noreturnSpecifier)</span>
+<span class="nc" id="L1451">			throw error(&quot;Use of _Noreturn specifier in object delcaration&quot;,</span>
+<span class="nc" id="L1452">					declaration);</span>
+<span class="nc" id="L1453">	}</span>
+
+	/**
+	 * 
+	 * @param declaration
+	 * @param analysis
+	 * @throws SyntaxException
+	 */
+	private void setAlignmentSpecifiers(VariableDeclarationNode declaration,
+			SpecifierAnalysis analysis, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc bnc" id="L1464" title="All 2 branches missed.">		if (!analysis.alignmentTypeNodes.isEmpty()) {</span>
+<span class="nc" id="L1465">			List&lt;TypeNode&gt; typeAlignmentSpecifiers = new ArrayList&lt;TypeNode&gt;();</span>
+
+<span class="nc bnc" id="L1467" title="All 2 branches missed.">			for (CommonTree node : analysis.alignmentTypeNodes)</span>
+<span class="nc" id="L1468">				typeAlignmentSpecifiers.add(translateTypeName(node, scope));</span>
+<span class="nc" id="L1469">			declaration.setTypeAlignmentSpecifiers(nodeFactory.newSequenceNode(</span>
+<span class="nc" id="L1470">					newSource(analysis.specifierListNode),</span>
+<span class="nc" id="L1471">					&quot;TypeAlignmentSpecifiers&quot;, typeAlignmentSpecifiers));</span>
+		}
+<span class="nc bnc" id="L1473" title="All 2 branches missed.">		if (!analysis.alignmentExpressionNodes.isEmpty()) {</span>
+<span class="nc" id="L1474">			List&lt;ExpressionNode&gt; constantAlignmentSpecifiers = new ArrayList&lt;ExpressionNode&gt;();</span>
+
+<span class="nc bnc" id="L1476" title="All 2 branches missed.">			for (CommonTree node : analysis.alignmentExpressionNodes)</span>
+<span class="nc" id="L1477">				constantAlignmentSpecifiers</span>
+<span class="nc" id="L1478">						.add(translateExpression(node, scope));</span>
+
+<span class="nc" id="L1480">			declaration.setConstantAlignmentSpecifiers(nodeFactory</span>
+<span class="nc" id="L1481">					.newSequenceNode(newSource(analysis.specifierListNode),</span>
+<span class="nc" id="L1482">							&quot;ConstantAlignmentSpecifiers&quot;,</span>
+<span class="nc" id="L1483">							constantAlignmentSpecifiers));</span>
+		}
+<span class="nc" id="L1485">	}</span>
+
+	private void checkAlignmentSpecifiers(FunctionDeclarationNode declaration,
+			SpecifierAnalysis analysis) throws SyntaxException {
+<span class="nc bnc" id="L1489" title="All 2 branches missed.">		if (!analysis.alignmentTypeNodes.isEmpty()</span>
+<span class="nc bnc" id="L1490" title="All 2 branches missed.">				|| !analysis.alignmentExpressionNodes.isEmpty())</span>
+<span class="nc" id="L1491">			throw error(&quot;Use of alignment specifiers in function declaration&quot;,</span>
+<span class="nc" id="L1492">					declaration);</span>
+<span class="nc" id="L1493">	}</span>
+
+	/**
+	 * 
+	 * @param declaration
+	 * @param analysis
+	 */
+	private void setStorageSpecifiers(VariableDeclarationNode declaration,
+			SpecifierAnalysis analysis, SimpleScope scope) {
+
+<span class="nc bnc" id="L1503" title="All 2 branches missed.">		if (analysis.externCount &gt; 0)</span>
+<span class="nc" id="L1504">			declaration.setExternStorage(true);</span>
+<span class="nc bnc" id="L1505" title="All 2 branches missed.">		if (analysis.staticCount &gt; 0)</span>
+<span class="nc" id="L1506">			declaration.setStaticStorage(true);</span>
+<span class="nc bnc" id="L1507" title="All 2 branches missed.">		if (analysis.threadLocalCount &gt; 0)</span>
+<span class="nc" id="L1508">			declaration.setThreadLocalStorage(true);</span>
+<span class="nc bnc" id="L1509" title="All 2 branches missed.">		if (analysis.autoCount &gt; 0)</span>
+<span class="nc" id="L1510">			declaration.setAutoStorage(true);</span>
+<span class="nc bnc" id="L1511" title="All 2 branches missed.">		if (analysis.registerCount &gt; 0)</span>
+<span class="nc" id="L1512">			declaration.setRegisterStorage(true);</span>
+<span class="nc bnc" id="L1513" title="All 2 branches missed.">		if (analysis.sharedCount &gt; 0)</span>
+<span class="nc" id="L1514">			declaration.setSharedStorage(true);</span>
+<span class="nc" id="L1515">	}</span>
+
+	private void setStorageSpecifiers(FunctionDeclarationNode declaration,
+			SpecifierAnalysis analysis, SimpleScope scope)
+			throws SyntaxException {
+
+<span class="nc bnc" id="L1521" title="All 2 branches missed.">		if (analysis.externCount &gt; 0)</span>
+<span class="nc" id="L1522">			declaration.setExternStorage(true);</span>
+<span class="nc bnc" id="L1523" title="All 2 branches missed.">		if (analysis.staticCount &gt; 0)</span>
+<span class="nc" id="L1524">			declaration.setStaticStorage(true);</span>
+<span class="nc bnc" id="L1525" title="All 2 branches missed.">		if (analysis.threadLocalCount &gt; 0)</span>
+<span class="nc" id="L1526">			throw new SyntaxException(</span>
+<span class="nc" id="L1527">					&quot;Use of _Thread_local in function declaration&quot;,</span>
+<span class="nc" id="L1528">					declaration.getSource());</span>
+<span class="nc bnc" id="L1529" title="All 2 branches missed.">		if (analysis.autoCount &gt; 0)</span>
+<span class="nc" id="L1530">			throw new SyntaxException(&quot;Use of auto in function declaration&quot;,</span>
+<span class="nc" id="L1531">					declaration.getSource());</span>
+<span class="nc bnc" id="L1532" title="All 2 branches missed.">		if (analysis.registerCount &gt; 0)</span>
+<span class="nc" id="L1533">			throw new SyntaxException(</span>
+<span class="nc" id="L1534">					&quot;Use of register in function declaration&quot;,</span>
+<span class="nc" id="L1535">					declaration.getSource());</span>
+<span class="nc bnc" id="L1536" title="All 2 branches missed.">		if (analysis.sharedCount &gt; 0)</span>
+<span class="nc" id="L1537">			throw new SyntaxException(</span>
+<span class="nc" id="L1538">					&quot;Use of __shared__ in function declaration&quot;,</span>
+<span class="nc" id="L1539">					declaration.getSource());</span>
+<span class="nc" id="L1540">	}</span>
+
+	/**
+	 * Creates new DeclaratorData based on given declarator tree node and base
+	 * type. The declarator may be abstract. The data gives the new type formed
+	 * by applying the type derivation operations of the declarator to the base
+	 * type. The data also gives the identifier being declared, though this may
+	 * be null in the case of an abstract declarator.
+	 * 
+	 * @param declarator
+	 *            CommonTree node of type DECLARATOR, ABSTRACT_DECLARATOR, or
+	 *            ABSENT
+	 * @param type
+	 *            the start type before applying declarator operations
+	 * 
+	 * @return new DeclaratorData with type derived from given type and
+	 *         identifier
+	 * 
+	 * @throws SyntaxException
+	 */
+	private DeclaratorData processDeclarator(CommonTree declarator,
+			TypeNode type, SimpleScope scope) throws SyntaxException {
+<span class="nc bnc" id="L1562" title="All 2 branches missed.">		if (declarator.getType() == ABSENT) {</span>
+<span class="nc" id="L1563">			return new DeclaratorData(type, null);</span>
+		} else {
+<span class="nc" id="L1565">			CommonTree pointerTree = (CommonTree) declarator.getChild(0);</span>
+<span class="nc" id="L1566">			CommonTree directDeclarator = (CommonTree) declarator.getChild(1);</span>
+<span class="nc" id="L1567">			type = translatePointers(pointerTree, type, scope);</span>
+
+<span class="nc" id="L1569">			return processDirectDeclarator(directDeclarator, type, scope);</span>
+		}
+	}
+
+	/**
+	 * Creates a new DeclaratorData based on given direct declarator tree node
+	 * and base type. The direct declarator may be abstract.
+	 * 
+	 * @param directDeclarator
+	 *            CommonTree node of type DIRECT_DECLARATOR,
+	 *            DIRECT_ABSTRACT_DECLARATOR, or ABSENT
+	 * @param type
+	 *            base type
+	 * @return new DeclaratorData with derived type and identifier
+	 * @throws SyntaxException
+	 */
+	private DeclaratorData processDirectDeclarator(CommonTree directDeclarator,
+			TypeNode type, SimpleScope scope) throws SyntaxException {
+		if (directDeclarator.getType() == ABSENT) {
+			return new DeclaratorData(type, null);
+		} else {
+			int numChildren = directDeclarator.getChildCount();
+			CommonTree prefix = (CommonTree) directDeclarator.getChild(0);
+
+			// need to peel off right-most suffix first. Example:
+			// T prefix [](); : (array of function returning T) prefix;
+			for (int i = numChildren - 1; i &gt;= 1; i--)
+				type = translateDeclaratorSuffix(
+						(CommonTree) directDeclarator.getChild(i), type, scope);
+			switch (prefix.getType()) {
+<span class="nc" id="L1599">			case IDENTIFIER:</span>
+				return new DeclaratorData(type, translateIdentifier(prefix));
+			case DECLARATOR:
+			case ABSTRACT_DECLARATOR:
+				return processDeclarator(prefix, type, scope);
+			case ABSENT:
+				return new DeclaratorData(type, null);
+			default:
+				throw error(&quot;Unexpected node for direct declarator prefix&quot;,
+						prefix);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param initializerTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private InitializerNode translateInitializer(CommonTree initializerTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1621">		int kind = initializerTree.getType();</span>
+
+<span class="nc bnc" id="L1623" title="All 2 branches missed.">		if (kind == ABSENT)</span>
+<span class="nc" id="L1624">			return null;</span>
+<span class="nc bnc" id="L1625" title="All 2 branches missed.">		if (kind == SCALAR_INITIALIZER) {</span>
+<span class="nc" id="L1626">			return translateExpression(</span>
+<span class="nc" id="L1627">					(CommonTree) initializerTree.getChild(0), scope);</span>
+		}
+<span class="nc bnc" id="L1629" title="All 2 branches missed.">		if (kind == INITIALIZER_LIST) {</span>
+<span class="nc" id="L1630">			int numInits = initializerTree.getChildCount();</span>
+<span class="nc" id="L1631">			List&lt;PairNode&lt;DesignationNode, InitializerNode&gt;&gt; initList = new LinkedList&lt;PairNode&lt;DesignationNode, InitializerNode&gt;&gt;();</span>
+
+<span class="nc bnc" id="L1633" title="All 2 branches missed.">			for (int i = 0; i &lt; numInits; i++) {</span>
+<span class="nc" id="L1634">				CommonTree designatedInitializer = (CommonTree) initializerTree</span>
+<span class="nc" id="L1635">						.getChild(i);</span>
+<span class="nc" id="L1636">				CommonTree designation = (CommonTree) designatedInitializer</span>
+<span class="nc" id="L1637">						.getChild(0);</span>
+<span class="nc" id="L1638">				CommonTree initializer = (CommonTree) designatedInitializer</span>
+<span class="nc" id="L1639">						.getChild(1);</span>
+<span class="nc" id="L1640">				InitializerNode initializerNode = translateInitializer(</span>
+<span class="nc" id="L1641">						initializer, scope);</span>
+				DesignationNode designationNode;
+
+<span class="nc bnc" id="L1644" title="All 2 branches missed.">				if (designation.getType() == ABSENT) {</span>
+<span class="nc" id="L1645">					designationNode = null;</span>
+<span class="nc" id="L1646">				} else {</span>
+<span class="nc" id="L1647">					int numDesignators = designation.getChildCount();</span>
+<span class="nc" id="L1648">					List&lt;DesignatorNode&gt; designators = new LinkedList&lt;DesignatorNode&gt;();</span>
+
+<span class="nc bnc" id="L1650" title="All 2 branches missed.">					for (int j = 0; j &lt; numDesignators; j++) {</span>
+<span class="nc" id="L1651">						CommonTree designator = (CommonTree) designation</span>
+<span class="nc" id="L1652">								.getChild(j);</span>
+<span class="nc" id="L1653">						CommonTree designatorChild = (CommonTree) designator</span>
+<span class="nc" id="L1654">								.getChild(0);</span>
+<span class="nc" id="L1655">						int designatorKind = designator.getType();</span>
+						DesignatorNode designatorNode;
+<span class="nc" id="L1657">						Source designatorSource = newSource(designator);</span>
+
+<span class="nc bnc" id="L1659" title="All 2 branches missed.">						if (designatorKind == ARRAY_ELEMENT_DESIGNATOR) {</span>
+<span class="nc" id="L1660">							designatorNode = nodeFactory</span>
+<span class="nc" id="L1661">									.newArrayDesignatorNode(</span>
+<span class="nc" id="L1662">											designatorSource,</span>
+<span class="nc" id="L1663">											translateExpression(</span>
+<span class="nc" id="L1664">													designatorChild, scope));</span>
+<span class="nc bnc" id="L1665" title="All 2 branches missed.">						} else if (designatorKind == FIELD_DESIGNATOR) {</span>
+<span class="nc" id="L1666">							designatorNode = nodeFactory</span>
+<span class="nc" id="L1667">									.newFieldDesignatorNode(</span>
+<span class="nc" id="L1668">											designatorSource,</span>
+<span class="nc" id="L1669">											translateIdentifier(designatorChild));</span>
+<span class="nc" id="L1670">						} else {</span>
+<span class="nc" id="L1671">							throw error(&quot;Unknown kind of designator&quot;,</span>
+<span class="nc" id="L1672">									designator);</span>
+						}
+<span class="nc" id="L1674">						designators.add(designatorNode);</span>
+					}
+<span class="nc" id="L1676">					designationNode = nodeFactory.newDesignationNode(</span>
+<span class="nc" id="L1677">							newSource(designation), designators);</span>
+				}
+<span class="nc" id="L1679">				initList.add(nodeFactory.newPairNode(</span>
+<span class="nc" id="L1680">						newSource(designatedInitializer), designationNode,</span>
+<span class="nc" id="L1681">						initializerNode));</span>
+			}
+<span class="nc" id="L1683">			return nodeFactory.newCompoundInitializerNode(</span>
+<span class="nc" id="L1684">					newSource(initializerTree), initList);</span>
+		} else {
+<span class="nc" id="L1686">			throw error(&quot;Unrecognized kind of initializer&quot;, initializerTree);</span>
+		}
+	}
+
+	/**
+	 * Returns the new type obtained by taking the given type and applying the
+	 * pointer operations to it. For example, if the old type is &quot;int&quot; and the
+	 * pointerTree is &quot;*&quot;, the result is the type &quot;pointer to int&quot;.
+	 * 
+	 * @param pointerTree
+	 *            CommonTree node of type POINTER or ABSENT
+	 * @param type
+	 *            base type
+	 * @return modified type
+	 * @throws SyntaxException
+	 *             if an unknown kind of type qualifier appears
+	 */
+	private TypeNode translatePointers(CommonTree pointerTree, TypeNode type,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1705">		int numChildren = pointerTree.getChildCount();</span>
+<span class="nc" id="L1706">		Source source = type.getSource();</span>
+
+<span class="nc bnc" id="L1708" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L1709">			CommonTree starNode = (CommonTree) pointerTree.getChild(i);</span>
+<span class="nc" id="L1710">			CommonTree qualifiers = (CommonTree) starNode.getChild(0);</span>
+
+<span class="nc" id="L1712">			source = tokenFactory.join(source, newSource(starNode));</span>
+<span class="nc" id="L1713">			type = nodeFactory.newPointerTypeNode(source, type);</span>
+<span class="nc" id="L1714">			applyQualifiers(qualifiers, type);</span>
+		}
+<span class="nc" id="L1716">		return type;</span>
+	}
+
+	/**
+	 * Given a base type and a declarator suffix, returns the new derived type.
+	 * Example: base type is &quot;int&quot;, suffix is &quot;[10]&quot;, returns the type
+	 * &quot;array of int of length 10&quot;.
+	 * 
+	 * @param suffix
+	 *            a CommonTree node of type ARRAY_SUFFIX or FUNCTION_SUFFIX
+	 * @param type
+	 * @return new type
+	 * @throws SyntaxException
+	 *             if the kind of suffix is not function or array
+	 */
+	private TypeNode translateDeclaratorSuffix(CommonTree suffix,
+			TypeNode baseType, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1733">		int kind = suffix.getType();</span>
+
+<span class="nc bnc" id="L1735" title="All 2 branches missed.">		if (kind == ARRAY_SUFFIX)</span>
+<span class="nc" id="L1736">			return translateArraySuffix(suffix, baseType, scope);</span>
+<span class="nc bnc" id="L1737" title="All 2 branches missed.">		else if (kind == FUNCTION_SUFFIX)</span>
+<span class="nc" id="L1738">			return translateFunctionSuffix(suffix, baseType, scope);</span>
+		else
+<span class="nc" id="L1740">			throw error(&quot;Unknown declarator suffix&quot;, suffix);</span>
+	}
+
+	/**
+	 * Applies the qualifiers in the given qualifier list to the given type.
+	 * Modifies the type accordingly.
+	 * 
+	 * @param qualifierList
+	 *            CommonTree node which is root of list of qualifier nodes, or
+	 *            ABSENT
+	 * @param type
+	 *            the type to modify by applying qualifiers
+	 * @throws SyntaxException
+	 *             if a child of the qualifierList is not a type qualifier
+	 */
+	private void applyQualifiers(CommonTree qualifierList, TypeNode type)
+			throws SyntaxException {
+		int numQualifiers = qualifierList.getChildCount();
+
+		for (int i = 0; i &lt; numQualifiers; i++) {
+			CommonTree qualifier = (CommonTree) qualifierList.getChild(i);
+
+			switch (qualifier.getType()) {
+<span class="nc" id="L1763">			case CONST:</span>
+				type.setConstQualified(true);
+				break;
+			case VOLATILE:
+				type.setVolatileQualified(true);
+				break;
+			case RESTRICT:
+				type.setRestrictQualified(true);
+				break;
+			case ATOMIC:
+				type.setAtomicQualified(true);
+				break;
+			default:
+				throw error(&quot;Unknown type qualifier&quot;, qualifier);
+			}
+		}
+	}
+
+	private void applyArrayQualifiers(CommonTree qualifierList,
+			ArrayTypeNode type) throws SyntaxException {
+		int numQualifiers = qualifierList.getChildCount();
+
+		for (int i = 0; i &lt; numQualifiers; i++) {
+			CommonTree qualifier = (CommonTree) qualifierList.getChild(i);
+
+			switch (qualifier.getType()) {
+<span class="nc" id="L1789">			case CONST:</span>
+				type.setConstInBrackets(true);
+				break;
+			case VOLATILE:
+				type.setVolatileInBrackets(true);
+				break;
+			case RESTRICT:
+				type.setRestrictInBrackets(true);
+				break;
+			case ATOMIC:
+				type.setAtomicInBrackets(true);
+				break;
+			default:
+				throw error(&quot;Unknown type qualifier&quot;, qualifier);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param suffix
+	 * @param baseType
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private ArrayTypeNode translateArraySuffix(CommonTree suffix,
+			TypeNode baseType, SimpleScope scope) throws SyntaxException {
+		CommonTree staticNode = (CommonTree) suffix.getChild(1);
+		CommonTree qualifiers = (CommonTree) suffix.getChild(2);
+		CommonTree extentNode = (CommonTree) suffix.getChild(3);
+		int extentNodeType = extentNode.getType();
+		boolean unspecifiedVariableLength = false;
+		ExpressionNode extent = null;
+		ArrayTypeNode result;
+		Source source = tokenFactory.join(baseType.getSource(),
+				newSource(suffix));
+
+		switch (extentNodeType) {
+<span class="nc" id="L1827">		case ABSENT:</span>
+			break;
+		case STAR:
+			unspecifiedVariableLength = true;
+			break;
+		default:
+			extent = translateExpression(extentNode, scope);
+		}
+		result = nodeFactory.newArrayTypeNode(source, baseType, extent);
+		if (unspecifiedVariableLength)
+			result.setUnspecifiedVariableLength(true);
+		if (staticNode.getType() == STATIC)
+			result.setStaticExtent(true);
+		applyArrayQualifiers(qualifiers, result);
+		return result;
+	}
+
+	/**
+	 * 
+	 * @param suffix
+	 * @param baseType
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private FunctionTypeNode translateFunctionSuffix(CommonTree suffix,
+			TypeNode baseType, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1853">		CommonTree child = (CommonTree) suffix.getChild(1);</span>
+<span class="nc" id="L1854">		int childKind = child.getType();</span>
+		FunctionTypeNode result;
+<span class="nc" id="L1856">		Source source = tokenFactory.join(baseType.getSource(),</span>
+<span class="nc" id="L1857">				newSource(suffix));</span>
+
+<span class="nc bnc" id="L1859" title="All 2 branches missed.">		if (!scope.isFunctionScope()) {</span>
+			// this is not a function definition.
+			// need a &quot;function prototype&quot; scope...
+<span class="nc" id="L1862">			scope = new SimpleScope(scope);</span>
+		}
+<span class="nc bnc" id="L1864" title="All 2 branches missed.">		if (childKind == PARAMETER_TYPE_LIST) {</span>
+<span class="nc" id="L1865">			CommonTree parameterListNode = (CommonTree) child.getChild(0);</span>
+<span class="nc" id="L1866">			CommonTree ellipsisNode = (CommonTree) child.getChild(1);</span>
+<span class="nc" id="L1867">			int numParameters = parameterListNode.getChildCount();</span>
+<span class="nc" id="L1868">			List&lt;VariableDeclarationNode&gt; parameterDeclarations = new ArrayList&lt;VariableDeclarationNode&gt;(</span>
+<span class="nc" id="L1869">					numParameters);</span>
+
+<span class="nc bnc" id="L1871" title="All 2 branches missed.">			for (int i = 0; i &lt; numParameters; i++) {</span>
+<span class="nc" id="L1872">				CommonTree parameterDeclarationNode = (CommonTree) parameterListNode</span>
+<span class="nc" id="L1873">						.getChild(i);</span>
+<span class="nc" id="L1874">				Source parameterDeclarationSource = newSource(parameterDeclarationNode);</span>
+<span class="nc" id="L1875">				CommonTree specifiers = (CommonTree) parameterDeclarationNode</span>
+<span class="nc" id="L1876">						.getChild(0);</span>
+<span class="nc" id="L1877">				SpecifierAnalysis analysis = newSpecifierAnalysis(specifiers);</span>
+<span class="nc" id="L1878">				TypeNode parameterBaseType = newSpecifierType(analysis, scope);</span>
+<span class="nc" id="L1879">				CommonTree declarator = (CommonTree) parameterDeclarationNode</span>
+<span class="nc" id="L1880">						.getChild(1);</span>
+<span class="nc" id="L1881">				int declaratorKind = declarator.getType();</span>
+				VariableDeclarationNode declaration;
+				// TODO: do adjustments here?
+
+<span class="nc bnc" id="L1885" title="All 2 branches missed.">				if (declaratorKind == ABSENT) {</span>
+<span class="nc" id="L1886">					declaration = nodeFactory</span>
+<span class="nc" id="L1887">							.newVariableDeclarationNode(</span>
+<span class="nc" id="L1888">									parameterDeclarationSource, null,</span>
+<span class="nc" id="L1889">									parameterBaseType);</span>
+<span class="nc bnc" id="L1890" title="All 2 branches missed.">				} else if (declaratorKind == DECLARATOR</span>
+<span class="nc bnc" id="L1891" title="All 2 branches missed.">						|| declaratorKind == ABSTRACT_DECLARATOR) {</span>
+<span class="nc" id="L1892">					DeclaratorData data = processDeclarator(declarator,</span>
+<span class="nc" id="L1893">							parameterBaseType, scope);</span>
+
+<span class="nc" id="L1895">					declaration = nodeFactory.newVariableDeclarationNode(</span>
+<span class="nc" id="L1896">							parameterDeclarationSource, data.identifier,</span>
+<span class="nc" id="L1897">							data.type);</span>
+<span class="nc" id="L1898">				} else {</span>
+<span class="nc" id="L1899">					throw error(&quot;Unknown kind of declarator&quot;, declarator);</span>
+				}
+				// TODO: C11 6.7.6.3(2):
+				// &quot;The only storage-class specifier that shall occur in a
+				// parameter declaration is register.&quot;
+				// setFunctionSpecifiers(declaration, analysis);
+<span class="nc" id="L1905">				setAlignmentSpecifiers(declaration, analysis, scope);</span>
+<span class="nc" id="L1906">				setStorageSpecifiers(declaration, analysis, scope);</span>
+<span class="nc" id="L1907">				parameterDeclarations.add(declaration);</span>
+			}
+<span class="nc" id="L1909">			result = nodeFactory.newFunctionTypeNode(source, baseType,</span>
+<span class="nc" id="L1910">					nodeFactory.newSequenceNode(newSource(parameterListNode),</span>
+<span class="nc" id="L1911">							&quot;FormalParameterList&quot;, parameterDeclarations),</span>
+<span class="nc" id="L1912">					false);</span>
+<span class="nc bnc" id="L1913" title="All 2 branches missed.">			if (ellipsisNode.getType() == ELLIPSIS)</span>
+<span class="nc" id="L1914">				result.setVariableArgs(true);</span>
+<span class="nc bnc" id="L1915" title="All 4 branches missed.">		} else if (childKind == IDENTIFIER_LIST || childKind == ABSENT) {</span>
+<span class="nc" id="L1916">			int numParameters = child.getChildCount();</span>
+<span class="nc" id="L1917">			List&lt;VariableDeclarationNode&gt; parameterDeclarations = new ArrayList&lt;VariableDeclarationNode&gt;(</span>
+<span class="nc" id="L1918">					numParameters);</span>
+
+<span class="nc bnc" id="L1920" title="All 2 branches missed.">			for (int i = 0; i &lt; numParameters; i++) {</span>
+<span class="nc" id="L1921">				CommonTree identifierNode = (CommonTree) child.getChild(i);</span>
+<span class="nc" id="L1922">				IdentifierNode identifier = translateIdentifier(identifierNode);</span>
+<span class="nc" id="L1923">				Source identifierSource = newSource(identifierNode);</span>
+<span class="nc" id="L1924">				VariableDeclarationNode declaration = nodeFactory</span>
+<span class="nc" id="L1925">						.newVariableDeclarationNode(identifierSource,</span>
+<span class="nc" id="L1926">								identifier, null);</span>
+
+<span class="nc" id="L1928">				parameterDeclarations.add(declaration);</span>
+			}
+<span class="nc" id="L1930">			result = nodeFactory.newFunctionTypeNode(source, baseType,</span>
+<span class="nc" id="L1931">					nodeFactory.newSequenceNode(source, &quot;IdentifierList&quot;,</span>
+<span class="nc" id="L1932">							parameterDeclarations), true);</span>
+<span class="nc" id="L1933">		} else {</span>
+<span class="nc" id="L1934">			throw error(&quot;Unexpected kind of function suffix&quot;, child);</span>
+		}
+<span class="nc" id="L1936">		return result;</span>
+	}
+
+	/**
+	 * 
+	 * @param typeNameTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private TypeNode translateTypeName(CommonTree typeNameTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1947">		CommonTree specifiers = (CommonTree) typeNameTree.getChild(0);</span>
+<span class="nc" id="L1948">		CommonTree abstractDeclarator = (CommonTree) typeNameTree.getChild(1);</span>
+<span class="nc" id="L1949">		SpecifierAnalysis analysis = newSpecifierAnalysis(specifiers);</span>
+<span class="nc" id="L1950">		TypeNode baseType = newSpecifierType(analysis, scope);</span>
+<span class="nc" id="L1951">		DeclaratorData data = processDeclarator(abstractDeclarator, baseType,</span>
+<span class="nc" id="L1952">				scope);</span>
+
+<span class="nc" id="L1954">		return data.type;</span>
+	}
+
+	// Translation of Statements...
+
+	private LabeledStatementNode translateIdentifierLabeledStatement(
+			CommonTree statementTree, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1961">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L1962">		IdentifierNode labelName = translateIdentifier((CommonTree) statementTree</span>
+<span class="nc" id="L1963">				.getChild(0));</span>
+<span class="nc" id="L1964">		StatementNode statement = translateStatement(</span>
+<span class="nc" id="L1965">				(CommonTree) statementTree.getChild(1), scope);</span>
+<span class="nc" id="L1966">		OrdinaryLabelNode labelDecl = nodeFactory</span>
+<span class="nc" id="L1967">				.newStandardLabelDeclarationNode(labelName.getSource(),</span>
+<span class="nc" id="L1968">						labelName, statement);</span>
+
+<span class="nc" id="L1970">		return nodeFactory.newLabeledStatementNode(statementSource, labelDecl,</span>
+<span class="nc" id="L1971">				statement);</span>
+	}
+
+	private LabeledStatementNode translateCaseLabeledStatement(
+			CommonTree statementTree, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1976">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L1977">		CivlcToken caseToken = (CivlcToken) ((CommonTree) statementTree</span>
+<span class="nc" id="L1978">				.getChild(0)).getToken();</span>
+<span class="nc" id="L1979">		CommonTree expression = (CommonTree) statementTree.getChild(1);</span>
+<span class="nc" id="L1980">		ExpressionNode expressionNode = translateExpression(expression, scope);</span>
+<span class="nc" id="L1981">		StatementNode statement = translateStatement(</span>
+<span class="nc" id="L1982">				(CommonTree) statementTree.getChild(2), scope);</span>
+<span class="nc" id="L1983">		Source expressionSource = newSource(expression);</span>
+<span class="nc" id="L1984">		Source labelSource = tokenFactory.join(expressionSource, caseToken);</span>
+<span class="nc" id="L1985">		SwitchLabelNode labelDecl = nodeFactory.newCaseLabelDeclarationNode(</span>
+<span class="nc" id="L1986">				labelSource, expressionNode, statement);</span>
+
+<span class="nc" id="L1988">		return nodeFactory.newLabeledStatementNode(statementSource, labelDecl,</span>
+<span class="nc" id="L1989">				statement);</span>
+	}
+
+	private LabeledStatementNode translateDefaultLabeledStatement(
+			CommonTree statementTree, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L1994">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L1995">		CivlcToken defaultToken = (CivlcToken) ((CommonTree) statementTree</span>
+<span class="nc" id="L1996">				.getChild(0)).getToken();</span>
+<span class="nc" id="L1997">		Source labelSource = tokenFactory.newSource(defaultToken);</span>
+<span class="nc" id="L1998">		StatementNode statement = translateStatement(</span>
+<span class="nc" id="L1999">				(CommonTree) statementTree.getChild(1), scope);</span>
+<span class="nc" id="L2000">		SwitchLabelNode labelDecl = nodeFactory.newDefaultLabelDeclarationNode(</span>
+<span class="nc" id="L2001">				labelSource, statement);</span>
+
+<span class="nc" id="L2003">		return nodeFactory.newLabeledStatementNode(statementSource, labelDecl,</span>
+<span class="nc" id="L2004">				statement);</span>
+	}
+
+	private StatementNode translateAtom(CommonTree statementTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2009">		StatementNode datomicBody = translateStatement(</span>
+<span class="nc" id="L2010">				(CommonTree) statementTree.getChild(0), new SimpleScope(scope));</span>
+
+<span class="nc" id="L2012">		return nodeFactory.newAtomicStatementNode(newSource(statementTree),</span>
+<span class="nc" id="L2013">				true, datomicBody);</span>
+	}
+
+	private StatementNode translateAtomic(CommonTree statementTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2018">		StatementNode body = translateStatement(</span>
+<span class="nc" id="L2019">				(CommonTree) statementTree.getChild(0), new SimpleScope(scope));</span>
+
+<span class="nc" id="L2021">		return nodeFactory.newAtomicStatementNode(newSource(statementTree),</span>
+<span class="nc" id="L2022">				false, body);</span>
+	}
+
+	private StatementNode translateGoto(CommonTree statementTree) {
+<span class="nc" id="L2026">		Source statementSource = newSource(statementTree);</span>
+
+<span class="nc" id="L2028">		return nodeFactory.newGotoNode(statementSource,</span>
+<span class="nc" id="L2029">				translateIdentifier((CommonTree) statementTree.getChild(0)));</span>
+	}
+
+	private CivlForNode translateCivlFor(CommonTree tree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L2034">		Source statementSource = newSource(tree);</span>
+<span class="nc" id="L2035">		SimpleScope loopScope = new SimpleScope(scope);</span>
+<span class="nc" id="L2036">		CommonTree typeNameTree = (CommonTree) tree.getChild(0);</span>
+<span class="nc" id="L2037">		CommonTree identifierListTree = (CommonTree) tree.getChild(1);</span>
+<span class="nc" id="L2038">		CommonTree domainTree = (CommonTree) tree.getChild(2);</span>
+<span class="nc" id="L2039">		CommonTree bodyTree = (CommonTree) tree.getChild(3);</span>
+<span class="nc" id="L2040">		CommonTree invariantTree = (CommonTree) tree.getChild(4);</span>
+<span class="nc" id="L2041">		int numVars = identifierListTree.getChildCount();</span>
+		DeclarationListNode declListNode;
+<span class="nc" id="L2043">		ExpressionNode domainNode = translateExpression(domainTree, loopScope);</span>
+<span class="nc" id="L2044">		StatementNode bodyNode = translateStatement(bodyTree, loopScope);</span>
+<span class="nc" id="L2045">		ExpressionNode invariantNode = translateExpression(invariantTree,</span>
+<span class="nc" id="L2046">				loopScope);</span>
+		CivlForNode result;
+
+<span class="nc bnc" id="L2049" title="All 2 branches missed.">		if (typeNameTree.getType() != ABSENT) {</span>
+<span class="nc" id="L2050">			List&lt;VariableDeclarationNode&gt; declList = new LinkedList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L2052" title="All 2 branches missed.">			for (int i = 0; i &lt; numVars; i++) {</span>
+<span class="nc" id="L2053">				CommonTree identifierTree = (CommonTree) identifierListTree</span>
+<span class="nc" id="L2054">						.getChild(i);</span>
+<span class="nc" id="L2055">				IdentifierNode identifierNode = translateIdentifier(identifierTree);</span>
+<span class="nc" id="L2056">				TypeNode typeNode = translateTypeName(typeNameTree, loopScope);</span>
+<span class="nc" id="L2057">				VariableDeclarationNode declNode = nodeFactory</span>
+<span class="nc" id="L2058">						.newVariableDeclarationNode(identifierNode.getSource(),</span>
+<span class="nc" id="L2059">								identifierNode, typeNode);</span>
+
+<span class="nc" id="L2061">				declList.add(declNode);</span>
+			}
+<span class="nc" id="L2063">			declListNode = nodeFactory.newForLoopInitializerNode(</span>
+<span class="nc" id="L2064">					newSource(identifierListTree), declList);</span>
+<span class="nc" id="L2065">		} else</span>
+<span class="nc" id="L2066">			throw error(</span>
+<span class="nc" id="L2067">					&quot;Missing int typename in declaration.\n&quot;</span>
+							+ &quot;Both $for and $parfor require loop variables to be declared with integer type, as in:\n&quot;
+<span class="nc" id="L2069">							+ &quot;$for (int i1, i2, ... : domain) ...&quot;, tree);</span>
+<span class="nc" id="L2070">		result = nodeFactory.newCivlForNode(statementSource,</span>
+<span class="nc bnc" id="L2071" title="All 2 branches missed.">				tree.getType() == PARFOR, declListNode, domainNode, bodyNode,</span>
+<span class="nc" id="L2072">				invariantNode);</span>
+<span class="nc" id="L2073">		return result;</span>
+	}
+
+	private StatementNode translateFor(CommonTree statementTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2078">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L2079">		SimpleScope loopScope = new SimpleScope(scope);</span>
+<span class="nc" id="L2080">		CommonTree initializerTree = (CommonTree) statementTree.getChild(0);</span>
+		ForLoopInitializerNode initializerNode;
+<span class="nc" id="L2082">		SequenceNode&lt;ContractNode&gt; contracts = this.translateAcslContract(</span>
+<span class="nc" id="L2083">				AcslContractKind.LOOP_CONTRACT, statementTree, loopScope);</span>
+
+<span class="nc bnc" id="L2085" title="All 2 branches missed.">		if (initializerTree.getType() == DECLARATION) {</span>
+<span class="nc" id="L2086">			List&lt;BlockItemNode&gt; definitions = translateDeclaration(</span>
+<span class="nc" id="L2087">					initializerTree, loopScope);</span>
+<span class="nc" id="L2088">			List&lt;VariableDeclarationNode&gt; declarations = new LinkedList&lt;VariableDeclarationNode&gt;();</span>
+
+<span class="nc bnc" id="L2090" title="All 2 branches missed.">			for (BlockItemNode definition : definitions) {</span>
+<span class="nc bnc" id="L2091" title="All 2 branches missed.">				if (!(definition instanceof VariableDeclarationNode))</span>
+<span class="nc" id="L2092">					throw error(</span>
+<span class="nc" id="L2093">							&quot;For-loop initializer declaration &quot;</span>
+									+ &quot;\&quot;shall only declare identifiers for objects having storage class auto or register.\&quot;&quot;,
+<span class="nc" id="L2095">							initializerTree);</span>
+<span class="nc" id="L2096">				declarations.add((VariableDeclarationNode) definition);</span>
+			}
+<span class="nc" id="L2098">			initializerNode = nodeFactory.newForLoopInitializerNode(</span>
+<span class="nc" id="L2099">					statementSource, declarations);</span>
+<span class="nc" id="L2100">		} else {</span>
+<span class="nc" id="L2101">			initializerNode = translateExpression(initializerTree, loopScope);</span>
+		}
+<span class="nc" id="L2103">		return nodeFactory.newForLoopNode(</span>
+<span class="nc" id="L2104">				statementSource,</span>
+<span class="nc" id="L2105">				initializerNode,</span>
+<span class="nc" id="L2106">				translateExpression((CommonTree) statementTree.getChild(1),</span>
+<span class="nc" id="L2107">						loopScope),</span>
+<span class="nc" id="L2108">				translateExpression((CommonTree) statementTree.getChild(2),</span>
+<span class="nc" id="L2109">						loopScope),</span>
+<span class="nc" id="L2110">				translateStatement((CommonTree) statementTree.getChild(3),</span>
+<span class="nc" id="L2111">						new SimpleScope(loopScope)), contracts);</span>
+	}
+
+	private StatementNode translateDo(CommonTree statementTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2116">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L2117">		SimpleScope loopScope = new SimpleScope(scope);</span>
+<span class="nc" id="L2118">		SequenceNode&lt;ContractNode&gt; contracts = this.translateAcslContract(</span>
+<span class="nc" id="L2119">				AcslContractKind.LOOP_CONTRACT, statementTree, loopScope);</span>
+
+<span class="nc" id="L2121">		return nodeFactory.newDoLoopNode(</span>
+<span class="nc" id="L2122">				statementSource,</span>
+<span class="nc" id="L2123">				translateExpression((CommonTree) statementTree.getChild(1),</span>
+<span class="nc" id="L2124">						loopScope),</span>
+<span class="nc" id="L2125">				translateStatement((CommonTree) statementTree.getChild(0),</span>
+<span class="nc" id="L2126">						new SimpleScope(loopScope)), contracts);</span>
+	}
+
+	private StatementNode translateWhile(CommonTree statementTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2131">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L2132">		SimpleScope loopScope = new SimpleScope(scope);</span>
+<span class="nc" id="L2133">		SequenceNode&lt;ContractNode&gt; contracts = this.translateAcslContract(</span>
+<span class="nc" id="L2134">				AcslContractKind.LOOP_CONTRACT, statementTree, loopScope);</span>
+
+<span class="nc" id="L2136">		return nodeFactory.newWhileLoopNode(</span>
+<span class="nc" id="L2137">				statementSource,</span>
+<span class="nc" id="L2138">				translateExpression((CommonTree) statementTree.getChild(0),</span>
+<span class="nc" id="L2139">						loopScope),</span>
+<span class="nc" id="L2140">				translateStatement((CommonTree) statementTree.getChild(1),</span>
+<span class="nc" id="L2141">						new SimpleScope(loopScope)), contracts);</span>
+	}
+
+	private StatementNode translateSwitch(CommonTree statementTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2146">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L2147">		CommonTree expressionTree = (CommonTree) statementTree.getChild(0);</span>
+<span class="nc" id="L2148">		CommonTree bodyTree = (CommonTree) statementTree.getChild(1);</span>
+<span class="nc" id="L2149">		SimpleScope switchScope = new SimpleScope(scope);</span>
+<span class="nc" id="L2150">		SimpleScope bodyScope = new SimpleScope(switchScope);</span>
+<span class="nc" id="L2151">		ExpressionNode expressionNode = translateExpression(expressionTree,</span>
+<span class="nc" id="L2152">				switchScope);</span>
+<span class="nc" id="L2153">		StatementNode statementNode = translateStatement(bodyTree, bodyScope);</span>
+<span class="nc" id="L2154">		SwitchNode switchNode = nodeFactory.newSwitchNode(statementSource,</span>
+<span class="nc" id="L2155">				expressionNode, statementNode);</span>
+
+<span class="nc" id="L2157">		return switchNode;</span>
+	}
+
+	private StatementNode translateIf(CommonTree statementTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2162">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L2163">		SimpleScope ifScope = new SimpleScope(scope);</span>
+<span class="nc" id="L2164">		ExpressionNode condition = translateExpression(</span>
+<span class="nc" id="L2165">				(CommonTree) statementTree.getChild(0), ifScope);</span>
+<span class="nc" id="L2166">		StatementNode trueBranch = translateStatement(</span>
+<span class="nc" id="L2167">				(CommonTree) statementTree.getChild(1),</span>
+<span class="nc" id="L2168">				new SimpleScope(ifScope));</span>
+<span class="nc" id="L2169">		StatementNode falseBranch = translateStatement(</span>
+<span class="nc" id="L2170">				(CommonTree) statementTree.getChild(2),</span>
+<span class="nc" id="L2171">				new SimpleScope(ifScope));</span>
+
+<span class="nc bnc" id="L2173" title="All 2 branches missed.">		if (falseBranch == null)</span>
+<span class="nc" id="L2174">			return nodeFactory</span>
+<span class="nc" id="L2175">					.newIfNode(statementSource, condition, trueBranch);</span>
+		else
+<span class="nc" id="L2177">			return nodeFactory.newIfNode(statementSource, condition,</span>
+<span class="nc" id="L2178">					trueBranch, falseBranch);</span>
+	}
+
+	private StatementNode translateExpressionStatement(
+			CommonTree statementTree, SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2183">		Source statementSource = newSource(statementTree);</span>
+<span class="nc" id="L2184">		CommonTree expression = (CommonTree) statementTree.getChild(0);</span>
+<span class="nc" id="L2185">		ExpressionNode expressionNode = translateExpression(expression, scope);</span>
+
+<span class="nc bnc" id="L2187" title="All 2 branches missed.">		if (expressionNode == null)</span>
+<span class="nc" id="L2188">			return nodeFactory.newNullStatementNode(statementSource);</span>
+		else
+<span class="nc" id="L2190">			return nodeFactory.newExpressionStatementNode(expressionNode);</span>
+	}
+
+	@SuppressWarnings(&quot;unused&quot;)
+	private ExpressionNode getInvariant(CommonTree invariantTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc bnc" id="L2196" title="All 2 branches missed.">		if (invariantTree == null)</span>
+<span class="nc" id="L2197">			return null;</span>
+<span class="nc bnc" id="L2198" title="All 2 branches missed.">		if (invariantTree.getType() == ABSENT)</span>
+<span class="nc" id="L2199">			return null;</span>
+		else {
+<span class="nc" id="L2201">			CommonTree exprTree = (CommonTree) invariantTree.getChild(0);</span>
+
+<span class="nc" id="L2203">			return translateExpression(exprTree, scope);</span>
+		}
+	}
+
+	private PragmaHandler getPragmaHandler(String code) {
+<span class="nc" id="L2208">		PragmaHandler result = pragmaMap.get(code);</span>
+
+<span class="nc bnc" id="L2210" title="All 2 branches missed.">		if (result == null) {</span>
+<span class="nc" id="L2211">			result = pragmaFactory.newHandler(code, parseTree);</span>
+<span class="nc" id="L2212">			pragmaMap.put(code, result);</span>
+		}
+<span class="nc" id="L2214">		return result;</span>
+	}
+
+	private ASTNode translatePragma(CommonTree pragmaTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L2219">		Source source = newSource(pragmaTree);</span>
+<span class="nc" id="L2220">		CommonTree identifierTree = (CommonTree) pragmaTree.getChild(0);</span>
+<span class="nc" id="L2221">		IdentifierNode identifier = translateIdentifier(identifierTree);</span>
+<span class="nc" id="L2222">		String code = identifier.name();</span>
+<span class="nc" id="L2223">		CommonTree bodyTree = (CommonTree) pragmaTree.getChild(1);</span>
+<span class="nc" id="L2224">		CommonTree newlineTree = (CommonTree) pragmaTree.getChild(2);</span>
+<span class="nc" id="L2225">		CivlcToken newlineToken = (CivlcToken) newlineTree.getToken();</span>
+<span class="nc" id="L2226">		CivlcTokenSequence producer = parseTree</span>
+<span class="nc" id="L2227">				.getTokenSourceProducer(bodyTree);</span>
+<span class="nc" id="L2228">		PragmaNode pragmaNode = nodeFactory.newPragmaNode(source, identifier,</span>
+<span class="nc" id="L2229">				producer, newlineToken);</span>
+<span class="nc" id="L2230">		PragmaHandler handler = getPragmaHandler(code);</span>
+<span class="nc" id="L2231">		ASTNode result = null;</span>
+
+<span class="nc" id="L2233">		identifier.setEntity(handler);</span>
+		try {
+<span class="nc" id="L2235">			result = handler.processPragmaNode(pragmaNode, scope);</span>
+<span class="nc" id="L2236">		} catch (ParseException e) {</span>
+<span class="nc" id="L2237">			this.error(e.getMessage(), pragmaTree);</span>
+		}
+<span class="nc" id="L2239">		return result;</span>
+	}
+
+	/**
+	 * 
+	 * @param compoundStatementTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private CompoundStatementNode translateCompoundStatement(
+			CommonTree compoundStatementTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L2251">		SimpleScope newScope = new SimpleScope(scope);</span>
+<span class="nc" id="L2252">		Source source = newSource(compoundStatementTree);</span>
+<span class="nc" id="L2253">		CommonTree blockItems = (CommonTree) compoundStatementTree.getChild(1);</span>
+<span class="nc" id="L2254">		int numChildren = blockItems.getChildCount();</span>
+<span class="nc" id="L2255">		List&lt;BlockItemNode&gt; items = new LinkedList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L2256">		OmpExecutableNode ompStatementNode = null;</span>
+
+<span class="nc bnc" id="L2258" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L2259">			CommonTree childTree = (CommonTree) blockItems.getChild(i);</span>
+<span class="nc" id="L2260">			List&lt;BlockItemNode&gt; newBlockItems = this.translateBlockItemNode(</span>
+<span class="nc" id="L2261">					childTree, newScope, false);</span>
+
+<span class="nc bnc" id="L2263" title="All 2 branches missed.">			if (newBlockItems.size() == 1</span>
+<span class="nc bnc" id="L2264" title="All 2 branches missed.">					&amp;&amp; newBlockItems.get(0).blockItemKind() == BlockItemKind.STATEMENT) {</span>
+<span class="nc" id="L2265">				StatementNode statementNode = (StatementNode) newBlockItems</span>
+<span class="nc" id="L2266">						.get(0);</span>
+
+<span class="nc bnc" id="L2268" title="All 2 branches missed.">				if (ompStatementNode != null) {</span>
+<span class="nc" id="L2269">					ompStatementNode.setStatementNode(statementNode);</span>
+<span class="nc" id="L2270">					ompStatementNode = null;</span>
+<span class="nc" id="L2271">				} else {</span>
+<span class="nc" id="L2272">					items.add(statementNode);</span>
+<span class="nc bnc" id="L2273" title="All 2 branches missed.">					if (statementNode.statementKind() == StatementKind.OMP) {</span>
+<span class="nc" id="L2274">						ompStatementNode = (OmpExecutableNode) statementNode;</span>
+<span class="nc bnc" id="L2275" title="All 2 branches missed.">						if (ompStatementNode.isComplete())</span>
+<span class="nc" id="L2276">							ompStatementNode = null;</span>
+					}
+				}
+<span class="nc" id="L2279">			} else</span>
+<span class="nc" id="L2280">				items.addAll(newBlockItems);</span>
+		}
+
+<span class="nc" id="L2283">		int numItems = items.size();</span>
+<span class="nc" id="L2284">		boolean changed = false;</span>
+
+<span class="nc bnc" id="L2286" title="All 2 branches missed.">		for (int i = 0; i &lt; numItems; i++) {</span>
+<span class="nc" id="L2287">			ASTNode child = items.get(i);</span>
+
+<span class="nc bnc" id="L2289" title="All 4 branches missed.">			if (child != null &amp;&amp; child instanceof OmpExecutableNode) {</span>
+<span class="nc" id="L2290">				OmpExecutableNode ompStmt = (OmpExecutableNode) child;</span>
+
+<span class="nc bnc" id="L2292" title="All 2 branches missed.">				if (!ompStmt.isComplete()) {</span>
+<span class="nc" id="L2293">					changed = true;</span>
+<span class="nc bnc" id="L2294" title="All 2 branches missed.">					if (ompStmt instanceof OmpForNode) {</span>
+<span class="nc" id="L2295">						OmpForNode ompForNode = (OmpForNode) ompStmt;</span>
+<span class="nc" id="L2296">						int collapse = ompForNode.collapse();</span>
+
+<span class="nc bnc" id="L2298" title="All 2 branches missed.">						if (collapse == 1) {</span>
+<span class="nc" id="L2299">							StatementNode forStatement = (StatementNode) items</span>
+<span class="nc" id="L2300">									.get(i + 1);</span>
+
+<span class="nc" id="L2302">							items.set(i + 1, null);</span>
+<span class="nc" id="L2303">							ompForNode.setStatementNode(forStatement);</span>
+<span class="nc" id="L2304">						} else {</span>
+<span class="nc" id="L2305">							List&lt;BlockItemNode&gt; forList = new ArrayList&lt;&gt;(</span>
+<span class="nc" id="L2306">									collapse);</span>
+							CompoundStatementNode compoundStatement;
+
+<span class="nc" id="L2309">							source = items.get(i + 1).getSource();</span>
+
+<span class="nc bnc" id="L2311" title="All 2 branches missed.">							for (int k = 1; k &lt;= collapse; k++) {</span>
+<span class="nc" id="L2312">								StatementNode forStatement = (StatementNode) items</span>
+<span class="nc" id="L2313">										.get(i + k);</span>
+
+<span class="nc" id="L2315">								items.set(i + k, null);</span>
+<span class="nc" id="L2316">								forList.add(forStatement);</span>
+							}
+<span class="nc" id="L2318">							compoundStatement = nodeFactory</span>
+<span class="nc" id="L2319">									.newCompoundStatementNode(source, forList);</span>
+<span class="nc" id="L2320">							ompForNode.setStatementNode(compoundStatement);</span>
+						}
+<span class="nc" id="L2322">						items.set(i, ompForNode);</span>
+<span class="nc" id="L2323">					} else {</span>
+<span class="nc" id="L2324">						StatementNode statementNode = (StatementNode) items</span>
+<span class="nc" id="L2325">								.get(i + 1);</span>
+
+<span class="nc" id="L2327">						items.set(i + 1, null);</span>
+<span class="nc" id="L2328">						ompStmt.setStatementNode(statementNode);</span>
+<span class="nc" id="L2329">						items.set(i, ompStmt);</span>
+					}
+				}
+			}
+		}
+<span class="nc bnc" id="L2334" title="All 2 branches missed.">		if (changed) {</span>
+<span class="nc" id="L2335">			List&lt;BlockItemNode&gt; newItems = new LinkedList&lt;&gt;();</span>
+<span class="nc bnc" id="L2336" title="All 2 branches missed.">			for (int i = 0; i &lt; numItems; i++) {</span>
+<span class="nc" id="L2337">				BlockItemNode item = items.get(i);</span>
+<span class="nc bnc" id="L2338" title="All 2 branches missed.">				if (item != null)</span>
+<span class="nc" id="L2339">					newItems.add(item);</span>
+			}
+<span class="nc" id="L2341">			items = newItems;</span>
+		}
+<span class="nc" id="L2343">		return nodeFactory.newCompoundStatementNode(source, items);</span>
+	}
+
+	private ChooseStatementNode translateChooseStatement(
+			CommonTree chooseStatementTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L2349">		int numChildren = chooseStatementTree.getChildCount();</span>
+<span class="nc" id="L2350">		List&lt;StatementNode&gt; statements = new LinkedList&lt;StatementNode&gt;();</span>
+
+<span class="nc bnc" id="L2352" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L2353">			CommonTree statementTree = (CommonTree) chooseStatementTree</span>
+<span class="nc" id="L2354">					.getChild(i);</span>
+<span class="nc" id="L2355">			StatementNode statement = translateStatement(statementTree, scope);</span>
+
+<span class="nc" id="L2357">			statements.add(statement);</span>
+		}
+<span class="nc" id="L2359">		return nodeFactory.newChooseStatementNode(</span>
+<span class="nc" id="L2360">				newSource(chooseStatementTree), statements);</span>
+	}
+
+	/**
+	 * 
+	 * @param statementTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private StatementNode translateStatement(CommonTree tree, SimpleScope scope)
+			throws SyntaxException {
+		int kind = tree.getType();
+
+		if (kind == ABSENT)
+			return null;
+
+		CommonTree statementTree = (CommonTree) tree.getChild(0);
+
+		kind = statementTree.getType();
+		switch (kind) {
+<span class="nc" id="L2380">		case BREAK:</span>
+			return nodeFactory.newBreakNode(newSource(statementTree));
+		case CASE_LABELED_STATEMENT:
+			return translateCaseLabeledStatement(statementTree, scope);
+		case CHOOSE:
+			return translateChooseStatement(statementTree, scope);
+		case CIVLATOM:
+			return translateAtom(statementTree, scope);
+		case CIVLATOMIC:
+			return translateAtomic(statementTree, scope);
+		case CIVLFOR:
+		case PARFOR:
+			return translateCivlFor(statementTree, scope);
+		case COMPOUND_STATEMENT: {
+			CompoundStatementNode compound = translateCompoundStatement(
+					statementTree, scope);
+
+			return compound;
+		}
+		case CONTINUE:
+			return nodeFactory.newContinueNode(newSource(statementTree));
+		case DEFAULT_LABELED_STATEMENT:
+			return translateDefaultLabeledStatement(statementTree, scope);
+		case DO:
+			return translateDo(statementTree, scope);
+		case EXPRESSION_STATEMENT:
+			return translateExpressionStatement(statementTree, scope);
+		case FOR:
+			return translateFor(statementTree, scope);
+		case GOTO:
+			return translateGoto(statementTree);
+		case IDENTIFIER_LABELED_STATEMENT:
+			return translateIdentifierLabeledStatement(statementTree, scope);
+		case IF:
+			return translateIf(statementTree, scope);
+		case PRAGMA: {
+			ASTNode newNode = translatePragma(statementTree, scope);
+
+			if (newNode instanceof StatementNode)
+				return (StatementNode) newNode;
+			else
+				throw error(&quot;This pragma cannot be used as a statement&quot;,
+						newNode);
+		}
+		case RETURN:
+			return nodeFactory.newReturnNode(
+					newSource(statementTree),
+					translateExpression((CommonTree) statementTree.getChild(0),
+							scope));
+		case SWITCH:
+			return translateSwitch(statementTree, scope);
+		case WHEN:
+			return nodeFactory.newWhenNode(
+					newSource(statementTree),
+					translateExpression((CommonTree) statementTree.getChild(0),
+							scope),
+					translateStatement((CommonTree) statementTree.getChild(1),
+							scope));
+		case WHILE:
+			return translateWhile(statementTree, scope);
+		default:
+			throw error(&quot;Unknown statement type &quot; + kind, statementTree);
+		}
+	}
+
+	// Translation of Static Assertions and External Definitions...
+
+	/**
+	 * 
+	 * @param staticAssertTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private StaticAssertionNode translateStaticAssertion(
+			CommonTree staticAssertTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L2456">		CommonTree stringLiteral = (CommonTree) staticAssertTree.getChild(1);</span>
+<span class="nc" id="L2457">		Source stringLiteralSource = newSource(stringLiteral);</span>
+
+<span class="nc" id="L2459">		return nodeFactory.newStaticAssertionNode(</span>
+<span class="nc" id="L2460">				newSource(staticAssertTree),</span>
+<span class="nc" id="L2461">				translateExpression((CommonTree) staticAssertTree.getChild(0),</span>
+<span class="nc" id="L2462">						scope),</span>
+<span class="nc" id="L2463">				translateStringLiteral(stringLiteralSource,</span>
+<span class="nc" id="L2464">						(CommonTree) staticAssertTree.getChild(1)));</span>
+	}
+
+	private SequenceNode&lt;ContractNode&gt; translateAcslContract(
+			AcslContractKind kind, CommonTree blockItemTree, SimpleScope scope)
+			throws SyntaxException {
+<span class="nc" id="L2470">		CivlcToken contractToken = this.parseTree</span>
+<span class="nc" id="L2471">				.getHiddenSubTokenSource(blockItemTree.getTokenStartIndex() - 1);</span>
+<span class="nc" id="L2472">		List&lt;ContractNode&gt; contracts = null;</span>
+<span class="nc" id="L2473">		Source source = null;</span>
+
+<span class="nc bnc" id="L2475" title="All 2 branches missed.">		if (contractToken != null) {</span>
+<span class="nc" id="L2476">			String commentsText = contractToken.getText();</span>
+
+<span class="nc" id="L2478">			contracts = acslHandler.translateContracts(contractToken.getLine(),</span>
+<span class="nc" id="L2479">					commentsText, scope, contractToken.getFormation(), kind);</span>
+<span class="nc" id="L2480">			source = contracts.get(0).getSource();</span>
+		}
+<span class="nc bnc" id="L2482" title="All 4 branches missed.">		if (contracts != null &amp;&amp; contracts.size() &gt; 0)</span>
+<span class="nc" id="L2483">			return this.nodeFactory.newSequenceNode(source, &quot;ACSL contracts&quot;,</span>
+<span class="nc" id="L2484">					contracts);</span>
+<span class="nc" id="L2485">		return null;</span>
+	}
+
+	/**
+	 * 
+	 * @param functionDefinitionTree
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private BlockItemNode translateFunctionDefinition(
+			CommonTree functionDefinitionTree, SimpleScope scope)
+			throws SyntaxException {
+		// two different ways of declaring parameters:
+		// (1) parameter-type list and no declarations
+		// (2) identifier list and declarations
+<span class="nc" id="L2500">		SimpleScope newScope = new SimpleScope(scope, true);</span>
+<span class="nc" id="L2501">		CommonTree specifiers = (CommonTree) functionDefinitionTree.getChild(0);</span>
+<span class="nc" id="L2502">		CommonTree declarator = (CommonTree) functionDefinitionTree.getChild(1);</span>
+<span class="nc" id="L2503">		CommonTree declarationList = (CommonTree) functionDefinitionTree</span>
+<span class="nc" id="L2504">				.getChild(2);</span>
+<span class="nc" id="L2505">		CommonTree compoundStatementTree = (CommonTree) functionDefinitionTree</span>
+<span class="nc" id="L2506">				.getChild(3);</span>
+		// CommonTree contractTree = (CommonTree) functionDefinitionTree
+		// .getChild(4);
+		// CommonTree scopeListTree = (CommonTree) functionDefinitionTree
+		// .getChild(5);
+		// SequenceNode&lt;VariableDeclarationNode&gt; scopeListNode =
+		// translateScopeListDef(scopeListTree);
+		// if(specifiers)
+<span class="nc" id="L2514">		SpecifierAnalysis analysis = newSpecifierAnalysis(specifiers);</span>
+<span class="nc" id="L2515">		TypeNode baseType = newSpecifierType(analysis, newScope);</span>
+<span class="nc" id="L2516">		DeclaratorData data = processDeclarator(declarator, baseType, newScope);</span>
+<span class="nc" id="L2517">		FunctionTypeNode functionType = (FunctionTypeNode) data.type;</span>
+		CompoundStatementNode body;
+		BlockItemNode result;
+
+<span class="nc bnc" id="L2521" title="All 2 branches missed.">		if (functionType.hasIdentifierList()) {</span>
+<span class="nc" id="L2522">			SequenceNode&lt;VariableDeclarationNode&gt; formalSequenceNode = functionType</span>
+<span class="nc" id="L2523">					.getParameters();</span>
+<span class="nc" id="L2524">			int numFormals = formalSequenceNode.numChildren();</span>
+<span class="nc" id="L2525">			int numDeclarations = declarationList.getChildCount();</span>
+
+<span class="nc bnc" id="L2527" title="All 2 branches missed.">			if (numFormals == 0) {</span>
+<span class="nc bnc" id="L2528" title="All 2 branches missed.">				if (numDeclarations != 0)</span>
+<span class="nc" id="L2529">					throw error(</span>
+<span class="nc" id="L2530">							&quot;Function with empty identifier list has parameter declarations&quot;,</span>
+<span class="nc" id="L2531">							declarationList);</span>
+			} else {
+				SequenceNode&lt;VariableDeclarationNode&gt; newFormalSequenceNode;
+<span class="nc" id="L2534">				List&lt;VariableDeclarationNode&gt; newFormalList = new LinkedList&lt;VariableDeclarationNode&gt;();</span>
+<span class="nc" id="L2535">				Map&lt;String, VariableDeclarationNode&gt; declMap = new HashMap&lt;String, VariableDeclarationNode&gt;();</span>
+
+<span class="nc bnc" id="L2537" title="All 2 branches missed.">				for (int i = 0; i &lt; numDeclarations; i++) {</span>
+<span class="nc" id="L2538">					CommonTree declarationTree = (CommonTree) declarationList</span>
+<span class="nc" id="L2539">							.getChild(i);</span>
+<span class="nc" id="L2540">					List&lt;BlockItemNode&gt; declNodes = translateDeclaration(</span>
+<span class="nc" id="L2541">							declarationTree, newScope);</span>
+
+<span class="nc bnc" id="L2543" title="All 2 branches missed.">					for (BlockItemNode definition : declNodes) {</span>
+						String parameterName;
+						VariableDeclarationNode oldDeclaration;
+
+<span class="nc bnc" id="L2547" title="All 2 branches missed.">						if (!(definition instanceof VariableDeclarationNode))</span>
+<span class="nc" id="L2548">							throw error(&quot;Illegal parameter declaration&quot;,</span>
+<span class="nc" id="L2549">									declarationTree);</span>
+<span class="nc" id="L2550">						parameterName = ((VariableDeclarationNode) definition)</span>
+<span class="nc" id="L2551">								.getIdentifier().name();</span>
+<span class="nc bnc" id="L2552" title="All 2 branches missed.">						if (parameterName == null)</span>
+<span class="nc" id="L2553">							throw error(&quot;Illegal parameter declaration&quot;,</span>
+<span class="nc" id="L2554">									declarationTree);</span>
+<span class="nc" id="L2555">						oldDeclaration = declMap.get(parameterName);</span>
+<span class="nc bnc" id="L2556" title="All 2 branches missed.">						if (oldDeclaration != null)</span>
+<span class="nc" id="L2557">							throw error(</span>
+<span class="nc" id="L2558">									&quot;Re-declaration of parameter. Old declaration was at &quot;</span>
+<span class="nc" id="L2559">											+ oldDeclaration, declarationTree);</span>
+<span class="nc" id="L2560">						declMap.put(parameterName,</span>
+<span class="nc" id="L2561">								(VariableDeclarationNode) definition);</span>
+					}
+				}
+<span class="nc bnc" id="L2564" title="All 2 branches missed.">				for (VariableDeclarationNode formal : formalSequenceNode) {</span>
+<span class="nc" id="L2565">					String parameterName = formal.getIdentifier().name();</span>
+					VariableDeclarationNode newDeclaration;
+
+<span class="nc bnc" id="L2568" title="All 2 branches missed.">					if (parameterName == null)</span>
+<span class="nc" id="L2569">						throw error(</span>
+<span class="nc" id="L2570">								&quot;Formal parameter declaration missing name: &quot;</span>
+<span class="nc" id="L2571">										+ formal, declarator);</span>
+<span class="nc" id="L2572">					newDeclaration = declMap.get(parameterName);</span>
+<span class="nc bnc" id="L2573" title="All 2 branches missed.">					if (newDeclaration == null)</span>
+<span class="nc" id="L2574">						throw error(&quot;Missing declaration for parameter &quot;</span>
+<span class="nc" id="L2575">								+ parameterName, declarationList);</span>
+<span class="nc" id="L2576">					newFormalList.add(newDeclaration);</span>
+<span class="nc" id="L2577">					declMap.remove(parameterName);</span>
+				}
+<span class="nc bnc" id="L2579" title="All 2 branches missed.">				if (!declMap.isEmpty())</span>
+<span class="nc" id="L2580">					throw error(</span>
+<span class="nc" id="L2581">							&quot;Function contains declarations for variables that are not parameters&quot;,</span>
+<span class="nc" id="L2582">							declarationList);</span>
+<span class="nc" id="L2583">				newFormalSequenceNode = nodeFactory.newSequenceNode(</span>
+<span class="nc" id="L2584">						newSource(declarationList),</span>
+<span class="nc" id="L2585">						&quot;FormalParameterDeclarations&quot;, newFormalList);</span>
+<span class="nc" id="L2586">				functionType.setParameters(newFormalSequenceNode);</span>
+			}
+		}
+<span class="nc" id="L2589">		body = translateCompoundStatement(compoundStatementTree, newScope);</span>
+		// result = nodeFactory.newFunctionDefinitionNode(
+		// newSource(functionDefinitionTree), data.identifier,
+		// (FunctionTypeNode) data.type,
+		// getContract(contractTree, newScope), body);
+<span class="nc" id="L2594">		result = nodeFactory.newFunctionDefinitionNode(</span>
+<span class="nc" id="L2595">				newSource(functionDefinitionTree), data.identifier,</span>
+<span class="nc" id="L2596">				(FunctionTypeNode) data.type, this.translateAcslContract(</span>
+<span class="nc" id="L2597">						AcslContractKind.FUNCTION_CONTRACT,</span>
+<span class="nc" id="L2598">						functionDefinitionTree, newScope), body);</span>
+		// TODO: Should function specifiers actually be set here? I added this
+		// call because otherwise specifiers are not added to function
+		// definitions, only declarations
+<span class="nc" id="L2602">		setFunctionSpecifiers((FunctionDefinitionNode) result, analysis);</span>
+<span class="nc" id="L2603">		return result;</span>
+	}
+
+	private SequenceNode&lt;ContractNode&gt; getContract(CommonTree contractTree,
+			SimpleScope scope) throws SyntaxException {
+		SequenceNode&lt;ContractNode&gt; contract;
+
+		if (contractTree == null)
+			contract = null;
+		else {
+			int kind = contractTree.getType();
+
+			if (kind == ABSENT)
+				contract = null;
+			else {
+				int numItems = contractTree.getChildCount();
+				List&lt;ContractNode&gt; items = new LinkedList&lt;ContractNode&gt;();
+
+				if (numItems == 0) {
+					contract = null;
+				} else {
+					for (int i = 0; i &lt; numItems; i++) {
+						CommonTree itemTree = (CommonTree) contractTree
+								.getChild(i);
+						int itemKind = itemTree.getType();
+						ContractNode contractNode;
+						Source source = newSource(itemTree);
+
+						if (itemKind == ASSIGNS || itemKind == READS
+								|| itemKind == DEPENDS) {
+							List&lt;ExpressionNode&gt; argumentList = new ArrayList&lt;&gt;();
+							int expressionCount = itemTree.getChildCount();
+							// CommonTree conditionTree = null;
+							CommonTree listTree;
+							int listKind;
+							// ExpressionNode condition = null;
+							// SequenceNode&lt;ExpressionNode&gt; list;
+
+							if (expressionCount == 2) {
+								// conditionTree = (CommonTree) itemTree
+								// .getChild(0);
+								listTree = (CommonTree) itemTree.getChild(1);
+							} else {
+								listTree = (CommonTree) itemTree.getChild(0);
+							}
+							listKind = listTree.getType();
+							// if (conditionTree != null) {
+							// condition = translateExpression(conditionTree,
+							// scope);
+							// }
+							if (listKind == ARGUMENT_LIST) {
+								int numArgs = listTree.getChildCount();
+
+								for (int j = 0; j &lt; numArgs; j++) {
+									CommonTree argumentTree = (CommonTree) listTree
+											.getChild(j);
+									ExpressionNode argumentNode = translateExpression(
+											argumentTree, scope);
+
+									argumentList.add(argumentNode);
+								}
+								// list = nodeFactory.newSequenceNode(
+								// newSource(listTree),
+								// &quot;$assigns/$reads/$depends arguments&quot;,
+								// argumentList);
+								if (itemKind == ASSIGNS)
+									contractNode = null;// nodeFactory.newAssignsNode(
+								// source, condition, list);
+								else if (itemKind == READS)
+									contractNode = null;// nodeFactory.newReadsNode(
+								// source, condition, list);
+								else
+									contractNode = nodeFactory.newDependsNode(
+											source, null, null);
+							} else {
+								throw new SyntaxException(
+										&quot;Invalid arguments for $assigns/$reads clause&quot;,
+										source);
+							}
+						} else {
+							CommonTree exprTree = (CommonTree) itemTree
+									.getChild(0);
+							ExpressionNode expr = translateExpression(exprTree,
+									scope);
+
+							switch (itemKind) {
+<span class="nc" id="L2689">							case ENSURES:</span>
+								contractNode = nodeFactory.newEnsuresNode(
+										source, expr);
+								break;
+							case REQUIRES:
+								contractNode = nodeFactory.newRequiresNode(
+										source, expr);
+								break;
+							case GUARD:
+								contractNode = nodeFactory.newGuardNode(source,
+										expr);
+								break;
+							default:
+								throw error(&quot;Unknown kind of contract item: &quot;
+										+ itemTree, itemTree);
+							}
+						}
+						items.add(contractNode);
+					}
+					contract = nodeFactory.newSequenceNode(
+							newSource(contractTree), &quot;Contract&quot;, items);
+				}
+			}
+		}
+		return contract;
+	}
+
+	// Translation of Translation Unit...
+
+	/**
+	 * @param translationUnit
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private SequenceNode&lt;BlockItemNode&gt; translateTranslationUnit(
+			CommonTree translationUnit) throws SyntaxException {
+<span class="nc" id="L2725">		int numChildren = translationUnit.getChildCount();</span>
+<span class="nc" id="L2726">		ArrayList&lt;BlockItemNode&gt; definitions = new ArrayList&lt;BlockItemNode&gt;();</span>
+<span class="nc" id="L2727">		SimpleScope scope = new SimpleScope(null);</span>
+
+<span class="nc bnc" id="L2729" title="All 2 branches missed.">		if (numChildren == 0) {</span>
+<span class="nc" id="L2730">			throw error(&quot;Translation unit contains no definitions&quot;,</span>
+<span class="nc" id="L2731">					translationUnit);</span>
+		}
+<span class="nc bnc" id="L2733" title="All 2 branches missed.">		for (int i = 0; i &lt; numChildren; i++) {</span>
+			// TODO need to know what's the language and decide whether the
+			// external definition node type needs to be checked, because C
+			// doesn't allow statement in the filescope
+<span class="nc" id="L2737">			definitions.addAll(this.translateBlockItemNode(</span>
+<span class="nc" id="L2738">					(CommonTree) translationUnit.getChild(i), scope, false));</span>
+		}
+
+		// TODO: maybe find a better way to handle this (e.g. only when Cuda
+		// flag specified so we don't have to rely on automatically detecting
+		// Cuda programs
+<span class="nc bnc" id="L2744" title="All 2 branches missed.">		for (BlockItemNode defNode : definitions) {</span>
+<span class="nc bnc" id="L2745" title="All 2 branches missed.">			if (defNode instanceof FunctionDeclarationNode) {</span>
+<span class="nc" id="L2746">				if (((FunctionDeclarationNode) defNode)</span>
+<span class="nc bnc" id="L2747" title="All 2 branches missed.">						.hasGlobalFunctionSpecifier()) {</span>
+					// assume that the presence of __global__ means that
+					// this is a Cuda program -&gt; act as if cuda.cvh header
+					// file has been included. other ways to check include
+					// cheacking for the presence of a __shared__ variable
+					// declaration, or a function call with an execution context
+					// &lt;&lt;&lt;...&gt;&gt;&gt;
+
+<span class="nc" id="L2755">					break;</span>
+				}
+			}
+		}
+
+<span class="nc" id="L2760">		return nodeFactory.newTranslationUnitNode(newSource(translationUnit),</span>
+<span class="nc" id="L2761">				definitions);</span>
+	}
+
+	/**
+	 * Translates a block item node.
+	 * 
+	 * @param blockItemTree
+	 * @param scope
+	 * @return
+	 * @throws SyntaxException
+	 */
+	private List&lt;BlockItemNode&gt; translateBlockItemNode(
+			CommonTree blockItemTree, SimpleScope scope,
+			boolean checkCExternalDefs) throws SyntaxException {
+		int kind = blockItemTree.getType();
+		List&lt;BlockItemNode&gt; items = new LinkedList&lt;BlockItemNode&gt;();
+
+		switch (kind) {
+<span class="nc" id="L2779">		case DECLARATION:</span>
+			for (BlockItemNode declaration : translateDeclaration(
+					blockItemTree, scope))
+				items.add(declaration);
+			break;
+		case FUNCTION_DEFINITION:
+			items.add((BlockItemNode) translateFunctionDefinition(
+					blockItemTree, scope));
+			break;
+		case PRAGMA:
+			items.add((BlockItemNode) this
+					.translatePragma(blockItemTree, scope));
+			break;
+		case STATEMENT:
+			if (checkCExternalDefs) {
+				throw new SyntaxException(&quot;statement is not allowed in &quot;, null);
+			}
+			items.add((BlockItemNode) this.translateStatement(blockItemTree,
+					scope));
+			break;
+		case STATICASSERT:
+			items.add(translateStaticAssertion(blockItemTree, scope));
+			break;
+		default:
+			throw new ABCUnsupportedException(&quot;translating block item node of &quot;
+					+ kind + &quot; kind&quot;);
+		}
+		return items;
+	}
+
+	/* ********************* ASTBuilderWorker Methods ********************* */
+
+	/**
+	 * The main method: given an ANTLR tree, produces a TranslationUnit.
+	 * 
+	 * @param tree
+	 *            an ANTLR syntax tree
+	 * @return a TranslationUnit representing the given syntax tree
+	 * @throws SyntaxException
+	 *             if there is something in the tree that does not conform to
+	 *             the C11 standard
+	 */
+	@Override
+	public SequenceNode&lt;BlockItemNode&gt; translateRoot() throws SyntaxException {
+<span class="nc" id="L2823">		return translateTranslationUnit(rootTree);</span>
+	}
+
+	@Override
+	public ExpressionNode translateExpression(CommonTree expressionTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2829">		int kind = expressionTree.getType();</span>
+
+<span class="nc bnc" id="L2831" title="All 2 branches missed.">		if (kind == ABSENT)</span>
+<span class="nc" id="L2832">			return null;</span>
+<span class="nc" id="L2833">		return translateExpression(newSource(expressionTree), expressionTree,</span>
+<span class="nc" id="L2834">				scope);</span>
+	}
+
+	@Override
+	public List&lt;BlockItemNode&gt; translateBlockItem(CommonTree blockItemTree,
+			SimpleScope scope) throws SyntaxException {
+<span class="nc" id="L2840">		return translateBlockItemNode(blockItemTree, scope, false);</span>
+	}
+}
+
+/**
+ * Helper class which wraps a type node and identifier.
+ * 
+ * @author siegel
+ * 
+ */
+class DeclaratorData {
+	TypeNode type;
+	IdentifierNode identifier;
+
+<span class="nc" id="L2854">	DeclaratorData(TypeNode type, IdentifierNode identifier) {</span>
+<span class="nc" id="L2855">		this.type = type;</span>
+<span class="nc" id="L2856">		this.identifier = identifier;</span>
+<span class="nc" id="L2857">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

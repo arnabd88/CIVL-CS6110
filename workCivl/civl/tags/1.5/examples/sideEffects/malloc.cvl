@@ -1,0 +1,11 @@
+#include<civlc.cvh>
+#include<stdlib.h>
+#include<assert.h>
+
+void main() {
+  double *a;
+  int m = 5;
+
+  if ( (a=(double *)malloc(m*sizeof(double))) == NULL )
+    assert(0);
+}

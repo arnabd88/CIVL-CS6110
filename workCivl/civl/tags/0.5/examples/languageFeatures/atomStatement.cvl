@@ -1,0 +1,59 @@
+/* Commandline execution:
+ *		civl verify atomStatement.cvl
+ * */
+int n = 3;
+void foo(){
+  int k = n;
+  k = k + 1;
+}
+
+void main(){
+  int i = 0;
+  int x = 3;
+	
+  $atom {
+    if(i < 0)
+	  i = 1;
+    else 
+	  i = 2;
+  }
+  $assert i == 2;
+  $atom
+    if(i > 0)
+      i = 1;
+	else 
+	  i = 2;
+  $assert i == 1;
+  $atom {
+    i = 2;
+	switch(i) {
+	  case 1: i = 2;
+	  case 2: i = 3;break;
+	  default: i = 5;
+	}
+  }
+  $assert i == 3;
+  $atom {
+    i = 0;
+    for(int j = 0; j < 10; j++) {
+      i += j;
+    }
+  }
+  $assert i == 45;
+  $atom {
+    for(int m = 0; m < 5; m++) {
+      $spawn foo();
+	}
+  }
+  //nested atomic and non-pure-local atomic block
+  $atom {
+    n = 0;
+    n += 1;
+    $atom {
+      i+=2;
+      i += 3; 
+    }
+    n += 9;
+  }
+  $assert n == 10;
+}

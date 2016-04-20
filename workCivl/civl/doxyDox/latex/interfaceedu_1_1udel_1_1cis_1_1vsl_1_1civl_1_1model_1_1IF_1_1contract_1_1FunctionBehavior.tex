@@ -1,0 +1,544 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior}}
+
+
+This represents a non-\/named behavior of the A\+C\+S\+L function contract.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ab5735521005f84817478e4752c901f6d}{requirements} ()
+\begin{DoxyCompactList}\small\item\em Returns the preconditions of this behavior. \end{DoxyCompactList}\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ac63226afa43432b0291cf5f9477e1df0}{ensurances} ()
+\begin{DoxyCompactList}\small\item\em Returns the postconditions of this behavior. \end{DoxyCompactList}\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a6f07ebca1d3f7804ef113992d5241877}{assigns\+Memory\+Units} ()
+\begin{DoxyCompactList}\small\item\em Returns the assigns clause of this behavior. \end{DoxyCompactList}\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a5b8eea85e92deb02c077a1eb4450536e}{reads\+Memory\+Units} ()
+\begin{DoxyCompactList}\small\item\em Returns the reads clause of this behavior. \end{DoxyCompactList}\item 
+Iterable$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1DependsEvent}{Depends\+Event} $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_af6aa313ee96582ff4bac86cc75254107}{depends\+Events} ()
+\begin{DoxyCompactList}\small\item\em Returns the depends events of this behavior. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a186bf1d130895cef4e0ff1501cf5e782}{reads\+Nothing} ()
+\begin{DoxyCompactList}\small\item\em Does this function reads nothing? That is, is there a {\ttfamily reads ;} clause in the contract. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a78e6bb4496fbbf13f9facd500e08160a}{assigns\+Nothing} ()
+\begin{DoxyCompactList}\small\item\em Does this function assigns nothing? That is, is there a {\ttfamily assigns ;} clause in the contract. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a0e43e6b5ebfcdee6c9d969422dc10316}{depends\+Noact} ()
+\begin{DoxyCompactList}\small\item\em Is this function depending on nothing? \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a5b6512bd2ba9313b195dc2a443e1b1c4}{depends\+Anyact} ()
+\begin{DoxyCompactList}\small\item\em Is this function depending on anything? \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_acd33ade2e37990a8d4bc5f80a1d65eb5}{set\+Reads\+Nothing} ()
+\begin{DoxyCompactList}\small\item\em When a {\ttfamily reads ;} clause appears, sets the function behavior to be reading nothing. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a6c2b0741275e9558090ecaf2bed73637}{set\+Assings\+Nothing} ()
+\begin{DoxyCompactList}\small\item\em When a {\ttfamily assigns ;} clause appears, sets the function behavior to be assigning nothing. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_aa0c08dc66b6b8f11ac04382b84f485e7}{set\+Depends\+Noact} ()
+\begin{DoxyCompactList}\small\item\em When a {\ttfamily depends ;} clause appears, sets the function behavior to be depending on nothing. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ac5a37d96ba15dd7ffc6564f5b68bfd04}{set\+Depends\+Anyact} ()
+\begin{DoxyCompactList}\small\item\em When a {\ttfamily depends ;} clause appears, sets the function behavior to be depending on anything. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ab33d77a2304ad7306bafdb673d5f8639}{add\+Precondition} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} condition)
+\begin{DoxyCompactList}\small\item\em Returns the precondition of this behavior. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a92c17c20f3a98820f16bcd4217a37e21}{add\+Postcondition} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} condition)
+\begin{DoxyCompactList}\small\item\em Returns the post condition of this behavior. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a797d894a07e6c9a0f9a3d61404d00c6c}{add\+Assigns\+Memory\+Unit} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} mu)
+\begin{DoxyCompactList}\small\item\em Add an assigns clause to this behavior. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a827de032920a57af4877502c185fe1a0}{add\+Reads\+Memory\+Unit} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} mu)
+\begin{DoxyCompactList}\small\item\em Add a reads clause to this behavior. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a43eb2c62be669c1348fcd08574c168ce}{add\+Depends\+Event} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1DependsEvent}{Depends\+Event} depends\+Event)
+\begin{DoxyCompactList}\small\item\em Add a depends event to this behavior. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a3a8c39af99c9e0c044e8cb92f0e9e332}{num\+Requirements} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of preconditions of this behavior. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ad0fd6d7a0ae1f0c9e2f4cf304bcbdedf}{num\+Ensurances} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of postconditions of this behavior. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a20560c108ae098e7dc47b62b3c1d1fe9}{num\+Assigns\+Memory\+Units} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of assigns clauses of this behavior. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a9031ecbbc7776afc892c4440cba5e3ca}{num\+Reads\+Memory\+Units} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of reads clauses of this behavior. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a36115bc2ddad41d0073bbd84cf83569f}{num\+Depends\+Events} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of depends events of this behavior. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_af898b35b9fa1723720214dabfbfdfd3e}{print} (String prefix, Print\+Stream out, boolean is\+Debug)
+\begin{DoxyCompactList}\small\item\em Prints this behavior. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_adbd9db83467023c06096297d07d63cc0}{}void \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_adbd9db83467023c06096297d07d63cc0}{clear\+Depends\+Events} ()\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_adbd9db83467023c06096297d07d63cc0}
+
+\begin{DoxyCompactList}\small\item\em clears the depends events of this behavior. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This represents a non-\/named behavior of the A\+C\+S\+L function contract. 
+
+It contains the common components of the default behavior and any named behavior of a function contract.
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a797d894a07e6c9a0f9a3d61404d00c6c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!add\+Assigns\+Memory\+Unit@{add\+Assigns\+Memory\+Unit}}
+\index{add\+Assigns\+Memory\+Unit@{add\+Assigns\+Memory\+Unit}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{add\+Assigns\+Memory\+Unit}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+add\+Assigns\+Memory\+Unit (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression}}]{mu}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a797d894a07e6c9a0f9a3d61404d00c6c}
+
+
+Add an assigns clause to this behavior. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em assigns} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a3a4a08be629b8e0ab64c79a08a8e1be0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a43eb2c62be669c1348fcd08574c168ce}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!add\+Depends\+Event@{add\+Depends\+Event}}
+\index{add\+Depends\+Event@{add\+Depends\+Event}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{add\+Depends\+Event}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+add\+Depends\+Event (
+\begin{DoxyParamCaption}
+\item[{{\bf Depends\+Event}}]{depends\+Event}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a43eb2c62be669c1348fcd08574c168ce}
+
+
+Add a depends event to this behavior. 
+
+~\newline
+ Precondition\+: \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a0e43e6b5ebfcdee6c9d969422dc10316}{depends\+Noact()}==false;
+
+
+\begin{DoxyParams}{Parameters}
+{\em depends} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a9a53082a157dd7d394269e90ea1eb101}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a92c17c20f3a98820f16bcd4217a37e21}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!add\+Postcondition@{add\+Postcondition}}
+\index{add\+Postcondition@{add\+Postcondition}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{add\+Postcondition}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+add\+Postcondition (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression}}]{condition}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a92c17c20f3a98820f16bcd4217a37e21}
+
+
+Returns the post condition of this behavior. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em condition} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a92e7aeaa0d05bb7ada64ecb9d8eb2a26}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ab33d77a2304ad7306bafdb673d5f8639}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!add\+Precondition@{add\+Precondition}}
+\index{add\+Precondition@{add\+Precondition}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{add\+Precondition}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+add\+Precondition (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression}}]{condition}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ab33d77a2304ad7306bafdb673d5f8639}
+
+
+Returns the precondition of this behavior. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em condition} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a7326c71a448cb0a261fa19265332c38e}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a827de032920a57af4877502c185fe1a0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!add\+Reads\+Memory\+Unit@{add\+Reads\+Memory\+Unit}}
+\index{add\+Reads\+Memory\+Unit@{add\+Reads\+Memory\+Unit}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{add\+Reads\+Memory\+Unit}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+add\+Reads\+Memory\+Unit (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression}}]{mu}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a827de032920a57af4877502c185fe1a0}
+
+
+Add a reads clause to this behavior. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reads} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_abdee38d7475fa6fb163351de33cd2a56}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a6f07ebca1d3f7804ef113992d5241877}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!assigns\+Memory\+Units@{assigns\+Memory\+Units}}
+\index{assigns\+Memory\+Units@{assigns\+Memory\+Units}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{assigns\+Memory\+Units}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf Expression}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+assigns\+Memory\+Units (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a6f07ebca1d3f7804ef113992d5241877}
+
+
+Returns the assigns clause of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a93d082c6a0f633c10f8cbe9c654bb2e1}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a78e6bb4496fbbf13f9facd500e08160a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!assigns\+Nothing@{assigns\+Nothing}}
+\index{assigns\+Nothing@{assigns\+Nothing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{assigns\+Nothing}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+assigns\+Nothing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a78e6bb4496fbbf13f9facd500e08160a}
+
+
+Does this function assigns nothing? That is, is there a {\ttfamily assigns ;} clause in the contract. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a71fc0d174c68adfe4fba8e2ab7a76fe9}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a5b6512bd2ba9313b195dc2a443e1b1c4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!depends\+Anyact@{depends\+Anyact}}
+\index{depends\+Anyact@{depends\+Anyact}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{depends\+Anyact}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+depends\+Anyact (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a5b6512bd2ba9313b195dc2a443e1b1c4}
+
+
+Is this function depending on anything? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a1fda256a7065a3968baee25c772e6dec}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_af6aa313ee96582ff4bac86cc75254107}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!depends\+Events@{depends\+Events}}
+\index{depends\+Events@{depends\+Events}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{depends\+Events}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf Depends\+Event}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+depends\+Events (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_af6aa313ee96582ff4bac86cc75254107}
+
+
+Returns the depends events of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_aba3c33cd31403372e8f0a81941e23763}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a0e43e6b5ebfcdee6c9d969422dc10316}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!depends\+Noact@{depends\+Noact}}
+\index{depends\+Noact@{depends\+Noact}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{depends\+Noact}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+depends\+Noact (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a0e43e6b5ebfcdee6c9d969422dc10316}
+
+
+Is this function depending on nothing? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a024acdc5f10c50e7049b40054a5f7388}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ac63226afa43432b0291cf5f9477e1df0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!ensurances@{ensurances}}
+\index{ensurances@{ensurances}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{ensurances}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf Expression}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+ensurances (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ac63226afa43432b0291cf5f9477e1df0}
+
+
+Returns the postconditions of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a0e67337f87d9a5ea629f2657d6541312}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a20560c108ae098e7dc47b62b3c1d1fe9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!num\+Assigns\+Memory\+Units@{num\+Assigns\+Memory\+Units}}
+\index{num\+Assigns\+Memory\+Units@{num\+Assigns\+Memory\+Units}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{num\+Assigns\+Memory\+Units}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+num\+Assigns\+Memory\+Units (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a20560c108ae098e7dc47b62b3c1d1fe9}
+
+
+Returns the number of assigns clauses of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a59a08d96bd3dfa3eb4eec8c4500bbc0a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a36115bc2ddad41d0073bbd84cf83569f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!num\+Depends\+Events@{num\+Depends\+Events}}
+\index{num\+Depends\+Events@{num\+Depends\+Events}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{num\+Depends\+Events}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+num\+Depends\+Events (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a36115bc2ddad41d0073bbd84cf83569f}
+
+
+Returns the number of depends events of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a96ee68a47842985d73d7b22e290ee409}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ad0fd6d7a0ae1f0c9e2f4cf304bcbdedf}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!num\+Ensurances@{num\+Ensurances}}
+\index{num\+Ensurances@{num\+Ensurances}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{num\+Ensurances}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+num\+Ensurances (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ad0fd6d7a0ae1f0c9e2f4cf304bcbdedf}
+
+
+Returns the number of postconditions of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_aa287c25a5f400f3afd29e1b5ca522445}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a9031ecbbc7776afc892c4440cba5e3ca}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!num\+Reads\+Memory\+Units@{num\+Reads\+Memory\+Units}}
+\index{num\+Reads\+Memory\+Units@{num\+Reads\+Memory\+Units}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{num\+Reads\+Memory\+Units}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+num\+Reads\+Memory\+Units (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a9031ecbbc7776afc892c4440cba5e3ca}
+
+
+Returns the number of reads clauses of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_adc82ec1e41c44cf0a8ddf98560d863db}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a3a8c39af99c9e0c044e8cb92f0e9e332}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!num\+Requirements@{num\+Requirements}}
+\index{num\+Requirements@{num\+Requirements}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{num\+Requirements}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+num\+Requirements (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a3a8c39af99c9e0c044e8cb92f0e9e332}
+
+
+Returns the number of preconditions of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_aa1ff7490751a66b62103397055b82e0a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_af898b35b9fa1723720214dabfbfdfd3e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!print@{print}}
+\index{print@{print}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+print (
+\begin{DoxyParamCaption}
+\item[{String}]{prefix, }
+\item[{Print\+Stream}]{out, }
+\item[{boolean}]{is\+Debug}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_af898b35b9fa1723720214dabfbfdfd3e}
+
+
+Prints this behavior. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sub\+Prefix} & \\
+\hline
+{\em out} & \\
+\hline
+{\em is\+Debug} & \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_af5a865f41e4abda9ae0dc97ffb7bf3f3}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1NamedFunctionBehavior_abf6d930679400632ffbe71bf79633173}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Named\+Function\+Behavior}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonNamedFunctionBehavior_aa18a0646de0b39fe3cebb2d1c27f6b89}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Named\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a5b8eea85e92deb02c077a1eb4450536e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!reads\+Memory\+Units@{reads\+Memory\+Units}}
+\index{reads\+Memory\+Units@{reads\+Memory\+Units}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{reads\+Memory\+Units}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf Expression}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+reads\+Memory\+Units (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a5b8eea85e92deb02c077a1eb4450536e}
+
+
+Returns the reads clause of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a15c0ff3c2d5d62afa561b91e64e4b741}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a186bf1d130895cef4e0ff1501cf5e782}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!reads\+Nothing@{reads\+Nothing}}
+\index{reads\+Nothing@{reads\+Nothing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{reads\+Nothing}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+reads\+Nothing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a186bf1d130895cef4e0ff1501cf5e782}
+
+
+Does this function reads nothing? That is, is there a {\ttfamily reads ;} clause in the contract. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a1e38c5d9d4d0aa0aadd803bf72b70a75}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ab5735521005f84817478e4752c901f6d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!requirements@{requirements}}
+\index{requirements@{requirements}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{requirements}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<${\bf Expression}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+requirements (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ab5735521005f84817478e4752c901f6d}
+
+
+Returns the preconditions of this behavior. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a6e6904a93945d339fa6c77dd40a06615}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a6c2b0741275e9558090ecaf2bed73637}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!set\+Assings\+Nothing@{set\+Assings\+Nothing}}
+\index{set\+Assings\+Nothing@{set\+Assings\+Nothing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{set\+Assings\+Nothing}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+set\+Assings\+Nothing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a6c2b0741275e9558090ecaf2bed73637}
+
+
+When a {\ttfamily assigns ;} clause appears, sets the function behavior to be assigning nothing. 
+
+~\newline
+ Precondition\+: \hyperlink{}{num\+Assigns\+Clauses()}==0; 
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_adae24a5d26a46c2a81190cf0b728f8d0}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ac5a37d96ba15dd7ffc6564f5b68bfd04}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!set\+Depends\+Anyact@{set\+Depends\+Anyact}}
+\index{set\+Depends\+Anyact@{set\+Depends\+Anyact}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{set\+Depends\+Anyact}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+set\+Depends\+Anyact (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_ac5a37d96ba15dd7ffc6564f5b68bfd04}
+
+
+When a {\ttfamily depends ;} clause appears, sets the function behavior to be depending on anything. 
+
+~\newline
+ Precondition\+: \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a0e43e6b5ebfcdee6c9d969422dc10316}{depends\+Noact()==false}; 
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a5242fa038f0bbef971ecaca6f107d3db}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_aa0c08dc66b6b8f11ac04382b84f485e7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!set\+Depends\+Noact@{set\+Depends\+Noact}}
+\index{set\+Depends\+Noact@{set\+Depends\+Noact}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{set\+Depends\+Noact}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+set\+Depends\+Noact (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_aa0c08dc66b6b8f11ac04382b84f485e7}
+
+
+When a {\ttfamily depends ;} clause appears, sets the function behavior to be depending on nothing. 
+
+~\newline
+ Precondition\+: \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a36115bc2ddad41d0073bbd84cf83569f}{num\+Depends\+Events()}==0 \&\& \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_a5b6512bd2ba9313b195dc2a443e1b1c4}{==false}; 
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a6ceed9313d18c1ce441e8ab04775021d}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_acd33ade2e37990a8d4bc5f80a1d65eb5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}!set\+Reads\+Nothing@{set\+Reads\+Nothing}}
+\index{set\+Reads\+Nothing@{set\+Reads\+Nothing}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::contract\+::\+Function\+Behavior}}
+\subsubsection[{set\+Reads\+Nothing}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+contract.\+Function\+Behavior.\+set\+Reads\+Nothing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1contract_1_1FunctionBehavior_acd33ade2e37990a8d4bc5f80a1d65eb5}
+
+
+When a {\ttfamily reads ;} clause appears, sets the function behavior to be reading nothing. 
+
+~\newline
+ Precondition\+: \hyperlink{}{num\+Reads\+Clauses()}==0; 
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1contract_1_1CommonFunctionBehavior_a01b38aa4f43c06985f84f33efd95b597}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+contract.\+Common\+Function\+Behavior}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/contract/Function\+Behavior.\+java\end{DoxyCompactItemize}

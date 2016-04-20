@@ -1,0 +1,80 @@
+/* This header file contains the function prototypes for 
+ * pointer operations.
+ */
+
+#ifndef __POINTER__
+#define __POINTER__
+
+#include<civlc.cvh>
+
+/* ******************************* Functions ******************************* */
+
+/* updates the leaf nodes of a status variable to the default value 0 */
+$system void $set_default(void *obj);
+
+/* applies the operation op on obj1 and obj2 and stores the result */
+$system void $apply(void *obj1, $operation op, void *obj2, void *result);
+
+/* are the object pointed to equal? */
+$system _Bool $equals(void *x, void *y);
+
+/* Assert that the two objects pointed are equal */
+$system void $assert_equals(void *x, void *y, ...);
+
+/* Semantics: Does the object pointed to by obj1 contain that
+pointed to by obj1? */
+$system _Bool $contains(void *obj1, void *obj2);
+
+/* Translates a pointer into one object to a pointer
+ * into a different object with similar structure. */
+$system void * $translate_ptr(void *ptr, void *obj);
+
+/* Copies the value pointed to by the right operand to the memory 
+ * location specified by the left operand. */
+$system void $copy(void *ptr, void *value);
+
+/*
+  copy the references to the leaf nodes of obj to the given array
+  obj: pointer to type T' whose leaf node types are all type T
+  array: pointer to array of pointer to type T
+*/
+$system void $leaf_node_ptrs(void *array, void *obj);
+
+/*
+  returns true if the given pointer is referencing to 
+  an object by identity reference
+*/
+$system _Bool $is_identity_ref(void *obj);
+
+/*
+  updates the leaf nodes of the given objects to with
+  the given integer value
+*/
+$system void $set_leaf_nodes(void *obj, int value);
+
+/*
+  returns true iff all leaf nodes of the given
+  object equal to the given value
+*/
+$system _Bool $leaf_nodes_equal_to(void *obj, int value);
+
+/*
+  returns true iff at least one leaf nodes of the given
+  object equal to the given value
+ */
+$system _Bool $has_leaf_node_equal_to(void *obj, int value);
+
+/*
+  can the given pointer be safely referenced?
+  A derefable pointer is not NULL
+  and is referring to a memory location of some dyscope.
+*/
+$system _Bool $is_derefable_pointer(void *ptr);
+
+/* 
+   Gives a pointer addition operation. Note that the input pointer will always be
+   casted to the form of a pointer to a primitive data type.
+ */
+$system void * $pointer_add(const void *ptr,  int offset, int type_size);
+
+#endif

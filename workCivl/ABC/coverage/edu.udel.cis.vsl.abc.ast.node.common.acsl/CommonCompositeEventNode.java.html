@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonCompositeEventNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.acsl</a> &gt; <span class="el_source">CommonCompositeEventNode.java</span></div><h1>CommonCompositeEventNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.acsl;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.CompositeEventNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.DependsEventNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonCompositeEventNode extends CommonDependsEventNode implements
+		CompositeEventNode {
+
+	private EventOperator operator;
+
+	public CommonCompositeEventNode(Source source, EventOperator op,
+			DependsEventNode left, DependsEventNode right) {
+<span class="nc" id="L16">		super(source, left, right);</span>
+<span class="nc" id="L17">		this.operator = op;</span>
+<span class="nc" id="L18">	}</span>
+
+	@Override
+	public DependsEventNodeKind getEventKind() {
+<span class="nc" id="L22">		return DependsEventNodeKind.COMPOSITE;</span>
+	}
+
+	@Override
+	public CompositeEventNode copy() {
+<span class="nc" id="L27">		return new CommonCompositeEventNode(getSource(), this.operator,</span>
+<span class="nc" id="L28">				duplicate(getLeft()), duplicate(getRight()));</span>
+	}
+
+	@Override
+	public DependsEventNode getLeft() {
+<span class="nc" id="L33">		return (DependsEventNode) this.child(0);</span>
+	}
+
+	@Override
+	public DependsEventNode getRight() {
+<span class="nc" id="L38">		return (DependsEventNode) this.child(1);</span>
+	}
+
+	@Override
+	public EventOperator eventOperator() {
+<span class="nc" id="L43">		return this.operator;</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L48">		out.println(&quot;OperatorEvent&quot;);</span>
+<span class="nc" id="L49">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,311 @@
+Message passing notes.
+
+Scoping goals:
+  - it should be possible to statically determine the scope
+    of any expression.  That means the expression only references
+    objects in that scope.
+  - it should be possible to specify/verify the "read scope"
+    and "write scope" of any procedure.
+  - the goals above are complicated by pointers, which can
+    potentially to point to any scope if not controlled.
+    So there must be ways to specify/verify some restrictions
+    on the scopes of pointers.
+
+Scopes:
+
+First, scopes are declared like variable declarations:
+
+{ ...
+  $scope s;
+  ...
+}
+
+gives a name to that scope.  In fact, every scope has a name
+automatically, this just gives the program a way to refer to it.
+
+Scopes cannot be used in expressions except as specified
+below.  In particular they cannot be assigned
+or passed as arguments to functions.
+
+Pointer types:
+
+Given any object type T, there is a type "pointer-to-T".
+Given in addition a scope s, there is a type "pointer-to-T-in-s".
+The type "pointer-to-T-in-s" is a subtype of "pointer-to-T".
+The type "pointer-to-T" is identical to the type
+"pointer-to-T-in-s0", where s0 is the system (most global) scope.
+
+Furthermore, if s1 is contained in s2, "pointer-to-T-in-s1"
+is a subtype of "pointer-to-T-in-s2". 
+
+Syntax: a variable is declared to have type
+"pointer-to-int-in-s", for example, as follows:
+
+  int *<s> t;
+  
+In general, the scope modifier is always placed after the
+* and surrounded by angle brackets.
+
+Address-of: the address-of operator (&) returns a pointer
+of the appropriate subtype using the innermost scope
+in which its lhs argument is declared.  For example:
+
+{ 
+  $scope s1;
+  int x;
+  double a[N];
+  int *<s1> p = &x;
+  double *<s1> q = &a[2];
+}
+
+is legal (it will type-check) because &x has type
+pointer-to-int-in-s1, since s1 is the scope in which x
+is declared. Etc.
+
+Pointer addition: if p has type pointer-to-T-in-s,
+then p+i (for an integer i) has type pointer-to-T-in-s.
+I.e., pointer addition cannot leave the scope.
+(in fact, it cannot leave the object).
+
+Pointer subtraction: pointer subtraction is
+defined on two pointers of the same type, where "same"
+includes the scope.
+
+Pointer casts: if scope s1 is contained in scope s2,
+an expression of type pointer-to-T-in-s1 can always
+be cast to pointer-to-T-in-s2, because the first
+is a subtype of the second.  This is checked
+statically.  The cast in the other direction is also OK,
+but will only be checked at runtime.  If neither s1 is
+contained in s2 nor s2 is contained in s1, a cast from
+one pointer type to the other is illegal and will be 
+reported as a syntax error statically.
+
+A type pointer-to-T1-in-s can be cast to a type
+pointer-to-T2-in-s according to the usual rules
+of C (or whatever variation is used in CIVL-C).
+In other words, usual casting rules apply as long
+as you don't change the scope.
+
+Parameterized typedefs:
+
+typedefs can be parameterized by scopes, e.g.
+
+<s> typedef struct message_struct {
+  int size;
+  void *<s> data;
+} Message;
+
+When the typedef is used, you specify the scope parameters:
+
+Message<s1> buffer[N];
+
+For each scope s, you get a different type Message<s>.
+There is no (subtype or other) relaltionship between
+Message<s1> and Message<s2> and you cannot cast from one
+to the other.
+
+Multiple scope can be used as parameters:
+
+<s1,s2,s3> typedef struct ...
+ 
+
+Prameterized procedures:
+
+procedures can be parameterized by scopes, for example, as follows:
+
+<s> int *<s> f(int *<s> p);
+
+This means: for any scope s, f takes a pointer-to-int-in-s and
+returns a pointer-to-int-in-s.  Multiple scopes can be used
+as parameters: <s,t> ....
+
+The procedure f is invoked by specifying the scope as follows
+   ... f<s1>(...) ...
+Eventually we can infer the s in most cases.
+
+Procedure contracts:  Procedure contracts
+can be optionally associated to procedure declarations
+or definitions in CIVL-C.  There will be typical
+requires/ensures and other clauses in these contracts.
+In addition, the following two kinds of clauses
+can be used:
+
+    $reads s1;
+    $writes s2;
+
+where s1 and s2 are scopes.  This means that any object
+read in any execution of f must lie in scope s1 and any
+object modified in any execution of f must lie is scope
+s2.  The scopes s1 and s2 can be parameters, as in:
+
+<s1,s2> double *<s2> f(int *<s1> p)
+  $reads s1;
+  $writes s2;
+  {
+    ...
+  }
+  
+
+Heaps:
+
+A heap is declared using the built-in type $heap:
+{ ... $heap h1; ...}
+
+However, a heap cannot be assigned or used in expressions,
+with one exception: it can be the argument of address-of (&).
+Hence this is fine:
+
+{ ...
+  $scope s1;
+  $heap h1;
+  $heap *<s1> p = &h1;
+  ...
+}
+
+Malloc and free: these built-in functions have the following
+signatures:
+
+<s> void *<s> $malloc($heap *<s> heap, int size)
+  $reads s;
+  $writes s;
+  
+<s> void $free($heap *<s> heap, void *<s> ptr)
+  $reads s;
+  $writes s;
+
+This means:
+ - for any scope s, $malloc takes a pointer-to-heap-in-s,
+   and an integer size, and returns a pointer-to-void-in-s.
+ - $free takes a pointer-to-heap-in-s and a pointer-to-void-in-s,
+   and returns nothing.
+ - both procedures can only read and modify s.
+
+A runtime error will be generated if the second argument
+to $free is not really a pointer to the heap specified in 
+the first argument.
+
+It may be that the first argument to $free is unnecessary.
+However, it helps keep track of what is modified by the procedure
+(namely, the heap that that arguments points to).  At the very
+least, we need to keep track of the scope of the heap.
+Possibly, we could get by with:
+
+<s> void $free(void *<s> ptr)
+  $reads s;
+  $writes s;
+
+
+Memcpy: this is another built-in function with signature:
+
+  <s,t> void memcpy(void *<s> p, void *<t> q, size_t size)
+    $reads t;
+    $writes s;
+
+This copies data from q to p as usual.  
+
+
+Examples:
+
+{
+  $scope shared;
+  $heap shared_heap;
+  double *<shared> p = $malloc<shared>(&shared_heap, n*sizeof(double));
+  double *<shared> q = $malloc<shared>(&shared_heap, n*sizeof(double));
+
+  for (int i=0; i<n; i++) p[i] = (double)i;
+  $memcpy<shared,shared>(p, q, n*sizeof(double));
+  $free<shared>(&shared_heap, p);
+  $free<shared>(&shared_heap, q);
+}
+
+Here is how an MPI program can be modeled with every process
+getting its own heap:
+
+void MPI_proc(int pid) {
+  $scope proc_scope;
+  $heap proc_heap;
+  ...
+  ... $malloc<proc_scope>(&proc_heap, size) ...
+  ...
+}
+
+void main(int nprocs) {
+  $proc procs[nprocs];
+  
+  for (int i=0; i<nprocs; i++)
+    procs[i] = $spawn MPI_proc(i);
+  ...
+}
+
+------------------------------------------------------------
+
+First attempt
+
+$input int NPROCS;
+$assume NPROCS >= 1;
+$scope top;
+$heap mp_heap;
+
+typedef struct Message {
+  struct Message *<top> next;
+  struct Message *<top> prev;
+  int tag;
+  int size;
+  void *<top> data;
+}
+
+typedef struct Comm {
+  int nprocs;
+  
+
+
+-------------------------------------------------------------
+
+<s> typedef struct _CIVL_Message {
+  struct _CIVL_Message *<s> next; // next message in this queue
+  struct _CIVL_Message *<s> prev; // previous message in this queue
+  int tag; // message tag
+  int size; // number of elements
+  void *<s> data; // pointer to first element
+} CIVL_Message;
+
+<s> typedef struct _CIVL_Comm {
+  $heap heap;
+  int numProcs; // number of procs in this communicator
+  $proc *<s> procs; // array of length numProcs
+  CIVL_Message *<s>*<s>*<s> buf_front; // oldest element of each msg queue
+  CIVL_Message *<s>*<s>*<s> buf_back; // newest element of each msg queue
+} CIVL_Comm;
+
+<s> CIVL_Comm CIVL_Comm_create(int nprocs, $proc *<s> procs)
+{ YOU CAN'T DO THIS: if you want the scope of comm to be s,
+  you need a pointer to a heap in s...............
+  Alternatively, declare this within the scope
+  
+  CIVL_Comm<s> comm;
+  
+  comm.numProcs = nprocs;
+  comm.procs = $malloc(&comm.heap, nprocs*sizeof(int));
+  for (int i=0; i<nprocs; i++) comm.procs[i] = procs[i];
+  comm.buf_front =
+    (CIVL_Message *<s>*<s>*<s>) 
+    $malloc(&comm.heap, nprocs*sizeof(CIVL_Message *<s>*<s>));
+  for (int i=0; i<nprocs; i++) {
+    comm.buf_front[i] =
+      (CIVL_Message *<s>*<s>)
+      $malloc(&comm.heap, nprocs*sizeof(CIVL_Message *<s>));
+    for (int j=0; j<nprocs; j++)
+      comm.buf_front[i][j] = NULL;
+  }
+  // ditto for comm.buf_back
+  return comm;
+}
+
+<s> send(int source, void *<s> buf, int size, int dest, int tag,
+         CIVL_Comm<s>)
+  $reads s;
+  $writes s;
+{
+    
+}

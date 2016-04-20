@@ -1,0 +1,534 @@
+#ifdef __CIVL_CIVLMPI__
+#else
+#define __CIVL_CIVLMPI__
+
+#include <civlc.cvh>
+#include <concurrency.cvh>
+#include <comm.cvh>
+#include <bundle.cvh>
+#include <mpi.h>
+#include <civl-mpi.cvh>
+#include <string.h>
+#include <pointer.cvh>
+
+/**************************** Duplicated Part *************************************/
+/* Duplicated definition with the same struct in mpi.h.
+   The reason of this duplication is to make civlmpi.cvl
+   independent with mpi.cvl. */
+typedef struct MPI_Comm {
+  $comm p2p; // point-to-point communication
+  $comm col; // collective communication
+  $collect_checker collect_checker;
+  $barrier barrier;
+  int gcommIndex; //the index of the corresponding global communicator.
+}MPI_Comm;
+
+/* Definition of CMPI_Gcomm (CMPI_Gcomm has a type of __CMPI_Gcomm) 
+   and MPI_Comm */
+struct CMPI_Gcomm {
+  $gcomm p2p; // point-to-point communication
+  $gcomm col; // collective communication
+  $gcollect_checker collect_checker;
+  $gbarrier gbarrier;
+};
+
+/****************************** Helper Functions **********************************/
+int sizeofDatatype(MPI_Datatype datatype) {
+  switch (datatype) {
+  case MPI_INT:
+    return sizeof(int);
+  case MPI_2INT:
+    return (sizeof(int)*2);
+  case MPI_FLOAT:
+    return sizeof(float);
+  case MPI_DOUBLE:
+    return sizeof(double);
+  case MPI_CHAR:
+    return sizeof(char);
+  case MPI_BYTE:
+    return sizeof(char); // char is always one byte ?
+  case MPI_SHORT:
+    return sizeof(short);
+  case MPI_LONG:
+    return sizeof(long);
+  case MPI_LONG_DOUBLE:
+    return sizeof(long double);
+  case MPI_LONG_LONG_INT:
+    return sizeof(long long int);
+  case MPI_LONG_LONG:
+    return sizeof(long long);
+  case MPI_UNSIGNED_LONG_LONG:
+    return sizeof(unsigned long long);
+  default:
+    $assert(0, "Unreachable");
+  }
+}
+
+/************************** MPI LIB Implementations *******************************/
+CMPI_Gcomm CMPI_Gcomm_create($scope scope, int size) {
+  CMPI_Gcomm result;
+
+  result.p2p = $gcomm_create(scope, size);
+  result.col = $gcomm_create(scope, size);
+  result.collect_checker = $gcollect_checker_create(scope);
+  result.gbarrier = $gbarrier_create(scope, size);
+  return result;
+}
+
+void CMPI_Gcomm_destroy(CMPI_Gcomm gc) {
+  $gcomm_destroy(gc.p2p);
+  $gcomm_destroy(gc.col);
+  $gcollect_checker_destroy(gc.collect_checker);
+  $gbarrier_destroy(gc.gbarrier);
+}
+
+MPI_Comm CMPI_Comm_create($scope scope, CMPI_Gcomm gc, int rank) {
+  MPI_Comm result;
+  
+  result.p2p = $comm_create(scope, gc.p2p, rank);
+  result.col = $comm_create(scope, gc.col, rank);
+  result.collect_checker = $collect_checker_create(scope, gc.collect_checker);
+  result.barrier = $barrier_create(scope, gc.gbarrier, rank);
+  result.gcommIndex = 0;
+  return result;
+}
+
+void CMPI_Comm_destroy(MPI_Comm comm) {
+  __MPI_Sys_status__ curr_status;
+
+  curr_status = CMPI_Get_status();
+  if(comm.gcommIndex == 0)
+    $assert(curr_status == __FINALIZED, "Process terminates without "
+	    "calling MPI_Finalize() first.");
+  $comm_destroy(comm.p2p);
+  $comm_destroy(comm.col);
+  $collect_checker_destroy(comm.collect_checker);
+  $barrier_destroy(comm.barrier);
+}
+
+int _MPI_Init(void) {
+  CMPI_Set_status(__INIT);
+  return 0;
+}
+
+int _MPI_Finalize(void) {
+  CMPI_Set_status(__FINALIZED);
+  return 0;
+}
+
+void * CMPI_PointerAdd(const void * ptr, int offset, MPI_Datatype datatype) {
+  int type_size = sizeofDatatype(datatype);
+
+  return $pointer_add(ptr, offset, type_size);
+}
+
+/********************* Lower level MPI routines  *********************/
+/* CMPI_Send and CMPI_Recv are a pair of send receives functions that
+   help implementing MPI routines. They should never be block which
+   means no potential deadlocks related to these functions */
+int CMPI_Send(void *buf, int count, MPI_Datatype datatype, int dest,
+	      int tag, $comm comm) {
+  if (dest >= 0) {
+    int size = count*sizeofDatatype(datatype);
+    int place = $comm_place(comm);
+    $message out = $message_pack(place, dest, tag, buf, size);
+    $comm_enqueue(comm, out);
+  }
+  return 0;
+}
+
+int CMPI_Recv(void *buf, int count, MPI_Datatype datatype, int source,
+	      int tag, $comm comm, MPI_Status *status) {
+  if (source >= 0 || source == MPI_ANY_SOURCE) {
+    $message in = $comm_dequeue(comm, source, tag);
+    int size = count*sizeofDatatype(datatype);
+
+    $message_unpack(in, buf, size);
+    if (status != MPI_STATUS_IGNORE) {
+      status->size = $message_size(in);
+      status->MPI_SOURCE = $message_source(in);
+      status->MPI_TAG = $message_tag(in);
+      status->MPI_ERROR = 0;
+    }
+  }
+  return 0;
+}
+
+int CMPI_Sendrecv(const void *sendbuf, int sendcount, MPI_Datatype sendtype,
+		  int dest, int sendtag, void *recvbuf, int recvcount, 
+		  MPI_Datatype recvtype, int source, int recvtag,
+		  $comm comm, MPI_Status *status) {
+  //send and receive triggering flags
+  if((dest >= 0) && ((source >= 0 || source == MPI_ANY_SOURCE))) {
+    $message out, in;
+    int size = sendcount*sizeofDatatype(sendtype);
+    int place = $comm_place(comm);
+
+    out = $message_pack(place, dest, sendtag, sendbuf, size);
+    $choose {
+      $when (1){ 
+	$comm_enqueue(comm, out);
+	in = $comm_dequeue(comm, source, recvtag);
+      }
+      $when (1){
+	in = $comm_dequeue(comm, source, recvtag);
+	$comm_enqueue(comm, out);
+      }
+    }
+    size = recvcount*sizeofDatatype(recvtype);
+    $message_unpack(in, recvbuf, size);
+    if (status != MPI_STATUS_IGNORE) {
+      status->size = $message_size(in);
+      status->MPI_SOURCE = $message_source(in);
+      status->MPI_TAG = $message_tag(in);
+      status->MPI_ERROR = 0;
+    }
+  }
+  else if (dest >= 0) {
+    CMPI_Send(sendbuf, sendcount, sendtype, dest, sendtag, comm);
+  }
+  else if (source >= 0 || source == MPI_ANY_SOURCE) {
+    CMPI_Recv(recvbuf, recvcount, recvtype, source, recvtag, comm, status);
+  }
+  return 0;
+}
+
+/********************* Collective helper functions ********************/
+/* Note: collective helpers functions are functions have same
+   behaviors as MPI collective functions, it can be re-used as a part
+   of implementation by different MPI routines. For example,
+   MPI_Allreduce will call CMPI_Reduce and CMPI_Bcast, both of them
+   should throw errors (if encounters any) as if errors are thrown
+   from MPI_Allreduce.
+*/
+int CMPI_Collective_recv(void *buf, int count, MPI_Datatype datatype, 
+			 int source, int tag, $comm comm, 
+			 MPI_Status * status, char * routName) {
+  if(source >= 0 || source == MPI_ANY_SOURCE) {
+    $message in = $comm_dequeue(comm, source, MPI_ANY_TAG);
+    int size = count*sizeofDatatype(datatype);
+    int recvTag;
+
+    recvTag = $message_tag(in);
+    $assert (recvTag == tag , "Collective routine %s receives a "
+	     "message with a mismatched tag\n", routName);
+    $message_unpack(in, buf, size);
+    if (status != MPI_STATUS_IGNORE) {
+      status->size = $message_size(in);
+      status->MPI_SOURCE = $message_source(in);
+      status->MPI_TAG = recvTag;
+      status->MPI_ERROR = 0;
+    }
+  }
+  return 0;
+}
+
+/* Broadcast helper function that uses any specified message tag */
+int CMPI_Bcast(void *buf, int count, MPI_Datatype datatype, int root, int tag,
+	       MPI_Comm comm, char * routName) {
+  if ($comm_place(comm.col) == root) {
+    int nprocs = $comm_size(comm.col);
+
+    for (int i=0; i<nprocs; i++)
+      if (i != root)
+	CMPI_Send(buf, count, datatype, i, tag, comm.col);
+  } else
+    CMPI_Collective_recv(buf, count, datatype, root, tag, comm.col,
+			 MPI_STATUS_IGNORE, routName);
+  return 0;
+}
+
+/* Reduction helper function that uses any specified message tag */
+int CMPI_Reduce(const void* sendbuf, void* recvbuf, int count,
+		MPI_Datatype datatype, MPI_Op op, int root, int tag,
+		MPI_Comm comm, char * routName) {
+  int rank;
+
+  rank = $comm_place(comm.col);
+  if (rank != root)
+    CMPI_Send(sendbuf, count, datatype, root, tag, comm.col);
+  else {
+    int nprocs = $comm_size(comm.col);
+    int size;
+
+    size = count * sizeofDatatype(datatype);
+    memcpy(recvbuf, sendbuf, size);
+    for (int i = 0; i<nprocs; i++) {
+      if(i != root){
+	int colTag;
+	$message in = $comm_dequeue(comm.col, i, MPI_ANY_TAG);
+	
+	colTag = $message_tag(in);
+	$assert (colTag == tag , "Collective routine %s receives a "
+		 "message with a mismatched tag\n", routName);
+	/* the third argument "count" indicates the number of cells needs doing the
+	   operation. */
+	$bundle_unpack_apply(in.data, recvbuf, count, op);
+	$assert (in.size <= size ,
+		 "Message of size %d exceeds the specified size %d.", in.size, size);
+      }
+    }
+  }
+  return 0;
+}
+
+/* Gathering helper function that uses any specified message tag */
+int CMPI_Gather(const void* sendbuf, int sendcount, MPI_Datatype sendtype, 
+	       void* recvbuf, int recvcount, MPI_Datatype recvtype, 
+		int root, int tag, MPI_Comm comm, char * routName){
+  int rank, nprocs;
+  MPI_Status status;
+
+  rank = $comm_place(comm.col);
+  nprocs = $comm_size(comm.col);
+  /* MPI standard requirement:
+   * For root process, sendtype must be equal to 
+   * recvtype. */
+  if(rank == root)
+    $assert (sendtype == recvtype,
+	     "%s asks for equality "
+	     "between 'sendtype' and 'recvtype'.", routName);
+  /* MPI_standard requirement: 
+   * Only root process can use MPI_IN_PLACE*/
+  if(sendbuf == MPI_IN_PLACE){
+    $assert (root == rank,
+	     "Only root can replace 'sendbuf' with 'MPI_IN_PLACE'.");
+  } else if(root == rank) {
+    void * ptr;
+
+    $assert(sendcount == recvcount, "Root process of routine %d without using"
+	    " MPI_IN_PLACE should give the same value for recvcount and sendcount",
+	    routName);
+    ptr = CMPI_PointerAdd(recvbuf, root * recvcount, recvtype);
+    memcpy(ptr, sendbuf, recvcount * sizeofDatatype(recvtype));
+  } else
+    CMPI_Send(sendbuf, sendcount, sendtype, root, tag, comm.col);
+  /* Root process receives messages and put them in right places */
+  if(rank == root){
+    int real_recvcount;
+    int offset;
+
+    for(int i=0; i<nprocs; i++){
+      if(i != root) {
+	void * ptr;
+	
+	offset = i * recvcount; 
+	ptr = CMPI_PointerAdd(recvbuf, offset, recvtype);	
+	CMPI_Collective_recv(ptr, recvcount, recvtype, 
+			     i, tag, comm.col, &status, routName);
+	real_recvcount = status.size/sizeofDatatype(recvtype);
+	$assert(real_recvcount == recvcount,
+		"%s asks for equality between"
+		" the amount of data sent and the "
+		"amount of data received.", routName);
+      }
+    }
+  }
+  return 0;
+}
+
+int CMPI_Gatherv(const void* sendbuf, int sendcount, MPI_Datatype sendtype,
+		void* recvbuf, const int recvcounts[], const int displs[],
+		 MPI_Datatype recvtype, int root, int tag, 
+		 MPI_Comm comm, char * routName){
+  int rank, nprocs;
+
+  rank = $comm_place(comm.col);
+  nprocs = $comm_size(comm.col);
+  /* MPI standard requirement:
+   * For root process, sendtype must be equal to 
+   * recvtype. */
+  if(rank == root)
+    $assert(sendtype == recvtype, "%s asks for equality "
+	    "between 'sendtype' and 'recvtype'.", routName);
+  /* MPI_standard requirement: 
+   * Only root process can use MPI_IN_PLACE*/
+  if(sendbuf == MPI_IN_PLACE){
+    $assert(root == rank, "Only root can replace 'sendbuf' with 'MPI_IN_PLACE'.");
+  }else if(root == rank) {
+    void * ptr;
+    
+    $assert(sendcount == recvcounts[root], "For routine %s, recvcounts[%d] "
+	    "should be same as the sendcount of the process with rank %d.\n", 
+	    routName, root, root);
+    ptr = CMPI_PointerAdd(recvbuf, displs[rank], recvtype);
+    memcpy(ptr, sendbuf, sendcount * sizeofDatatype(recvtype));
+  }else{
+    CMPI_Send(sendbuf, sendcount, sendtype, root, tag, comm.col);
+  }
+  /* Root process receives messages and put them in right places */
+  if(rank == root){
+    int real_recvcount;
+    MPI_Status status;
+    
+    for(int i=0; i<nprocs; i++){
+      if(i != root){
+	void * ptr = CMPI_PointerAdd(recvbuf, displs[i], recvtype);
+	
+	CMPI_Collective_recv(ptr, recvcounts[i], 
+			     recvtype, i, tag, comm.col, &status, routName);
+	real_recvcount = status.size/sizeofDatatype(recvtype);
+	$assert(real_recvcount == recvcounts[i], "%s asks for equality between"
+		" the amount of data sent and the "
+		"amount of data received.", routName);
+      }
+    }
+  }
+  return 0;
+}
+
+/* Scatter helper function that uses any specified message tag */
+int CMPI_Scatter(const void* sendbuf, int sendcount, MPI_Datatype sendtype, 
+		 void* recvbuf, int recvcount, MPI_Datatype recvtype, int root,
+		 int tag, MPI_Comm comm, char * routName){
+  int rank, nprocs;
+
+  rank = $comm_place(comm.col);
+  nprocs = $comm_size(comm.col);
+  /* MPI standard requirement:
+   * For root process, sendtype must be equal to 
+   * recvtype. */
+  if(rank == root)     
+    $assert(sendtype == recvtype, "MPI_Scatter() asks for equality "
+	    "between 'sendtype' and 'recvtype'.");
+  /* MPI_standard requirement: 
+   * Only root process can use MPI_IN_PLACE */
+  if(recvbuf == MPI_IN_PLACE){
+    $assert(root == rank, "Only root can replace 'recvbuf' with 'MPI_IN_PLACE'.");
+  }else if(rank == root) {
+    void * ptr;
+
+    $assert(sendcount == recvcount, "Root process of routine %d without using"
+	    " MPI_IN_PLACE should give the same value for recvcount and sendcount",
+	    routName);	   
+    ptr = CMPI_PointerAdd(sendbuf, root*recvcount, sendtype);
+    memcpy(recvbuf, ptr, sizeofDatatype(recvtype)*recvcount);
+  }
+  /* Root process scatters data to other processes */
+  if(rank == root){
+    int offset;
+
+    for(int i=0; i<nprocs; i++){
+      if(i != root) {
+	void * ptr;
+
+	offset = i * sendcount;
+	ptr = CMPI_PointerAdd(sendbuf, offset, sendtype);
+	CMPI_Send(ptr, sendcount, sendtype, i, tag, comm.col);
+      }
+    }
+  }
+  /* Non-root processes receive data */
+  if(!(root == rank)){
+    int real_recvcount;
+    MPI_Status status;
+    
+    CMPI_Collective_recv(recvbuf, recvcount, recvtype, 
+			 root, tag, comm.col, &status, routName);
+    real_recvcount = status.size/sizeofDatatype(recvtype);
+    $assert(real_recvcount == recvcount,
+    "%s asks for equality between"
+      " the amount of data sent and the "
+	    "amount of data received.", routName);
+  }
+  return 0;
+}
+
+/* Scatterv helper function that uses any specified message tag */
+int CMPI_Scatterv(const void* sendbuf, const int sendcounts[], const
+		 int displs[], MPI_Datatype sendtype, void* recvbuf,
+		 int recvcount, MPI_Datatype recvtype, int root, int tag,
+		  MPI_Comm comm, char * routName){
+  int rank, nprocs;
+
+  rank = $comm_place(comm.col);
+  nprocs = $comm_size(comm.col);
+  /* MPI standard requirement:
+   * For root process, sendtype must be equal to 
+   * recvtype. */
+  if(rank == root)
+    $assert(sendtype == recvtype, "%s asks for equality "
+	    "between 'sendtype' and 'recvtype'.", routName);
+  /* MPI_standard requirement: 
+   * Only root process can use MPI_IN_PLACE */
+  if(recvbuf == MPI_IN_PLACE){
+    $assert(root == rank, "Only root can replace 'recvbuf' with 'MPI_IN_PLACE'.");
+  } else if(rank == root) {
+    void * ptr;
+
+    $assert(sendcounts[root] == recvcount, "For routine %s, sendcounts[%d] "
+	    "should be same as the recvcount of the process with rank %d.\n", 
+	    routName, root, root);
+    ptr = CMPI_PointerAdd(sendbuf, displs[root], sendtype);
+    memcpy(recvbuf, ptr, recvcount*sizeofDatatype(recvtype));
+  }
+  /* Root process scatters data to other processes */
+  if(rank == root){
+    for(int i=0; i<nprocs; i++){
+      if(i != root) {
+	void * ptr = CMPI_PointerAdd(sendbuf, displs[i], sendtype);
+	
+	CMPI_Send(ptr, sendcounts[i], sendtype, i, 
+		  tag, comm.col);
+      }
+    }
+  }
+  if(!(root == rank)){
+    MPI_Status status;
+    int real_recvcount;
+    
+    CMPI_Collective_recv(recvbuf, recvcount, recvtype, 
+			 root, tag, comm.col, &status, routName);
+    real_recvcount = status.size/sizeofDatatype(recvtype);
+    $assert(real_recvcount == recvcount, "Process rank:%d\n%s asks for equality between"
+	    " the amount of data sent (%d) and the "
+	    "amount of data received (%d).", rank, routName, real_recvcount, recvcount);
+  }
+  return 0;
+}
+
+int CMPI_Comm_dup($scope scope, MPI_Comm comm, MPI_Comm * newcomm, char * routName) {
+  int place = $comm_place(comm.col);
+  CMPI_Gcomm newgcomm;
+  int idx;
+  $scope CMPI_ROOT_SCOPE = CMPI_Root_scope(comm.col);
+
+  if(place == 0) {
+    int size = $comm_size(comm.col);
+
+    newgcomm = CMPI_Gcomm_create(CMPI_ROOT_SCOPE, size);
+    idx = CMPI_NewGcomm(CMPI_ROOT_SCOPE, newgcomm);
+  }
+  CMPI_Bcast(&idx, 1, MPI_INT, 0, COMMDUP_TAG,
+	     comm, routName);
+  newgcomm = CMPI_GetGcomm(CMPI_ROOT_SCOPE, idx);
+  (*newcomm) = CMPI_Comm_create(scope, newgcomm, place);
+  newcomm->gcommIndex = idx;
+  $barrier_call(comm.barrier);
+  $gcomm_dup(comm.p2p, newcomm->p2p);
+  $gcomm_dup(comm.col, newcomm->col);
+  $barrier_call(comm.barrier);
+  return 0;
+}
+
+int CMPI_Comm_free(MPI_Comm * comm) {
+  int place = $comm_place(comm->col);
+  int size = $comm_size(comm->col);
+  int buf[size];
+  int gcommIndex = comm->gcommIndex;
+  $scope CMPI_ROOT_SCOPE = CMPI_Root_scope(comm->col);
+
+  //TODO: CMPI_Gather here is just a ugly synchronization
+  CMPI_Gather(&place, 1, MPI_INT, buf, 1, MPI_INT, 0, 
+	      COMMFREE_TAG, (*comm), "MPI_Comm_free synchronization.");
+  CMPI_Comm_destroy(*comm);
+  if(place == 0) {
+    CMPI_Gcomm temp = CMPI_GetGcomm(CMPI_ROOT_SCOPE, gcommIndex);
+
+    CMPI_Gcomm_destroy(temp);
+  }
+  return 0;
+}
+
+#endif
+

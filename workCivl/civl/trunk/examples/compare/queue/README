@@ -1,0 +1,11 @@
+Two classic queue algorithm:
+
+Two_lock Concurrent Queue: a "Two-Lock Concurrent Queue Algorithm", from Michael and Scott,
+https://www.cs.rochester.edu/research/synchronization/pseudocode/queues.html.
+Originally from "Simple, Fast, and Practical Non-Blocking and Blocking Concurrent Queue Algorithms", PODC96.
+
+Non-Blocking Concurrent Queue Algorithm from Michael and Scott
+https://www.cs.rochester.edu/research/synchronization/pseudocode/queues.html.
+Originally from "Simple, Fast, and Practical Non-Blocking and Blocking Concurrent Queue Algorithms", PODC96.
+The free in the algorithm (setFree method in Dequeue in this code) is meant to represent a function putting the node back on to a locally-maintained special-use free list and not the partner to malloc.
+http://blog.shealevy.com/2015/04/23/use-after-free-bug-in-maged-m-michael-and-michael-l-scotts-non-blocking-concurrent-queue-algorithm/#up1

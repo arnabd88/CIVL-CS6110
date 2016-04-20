@@ -1,0 +1,114 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Primitive\+Type Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Primitive\+Type@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Primitive\+Type}}
+
+
+\hyperlink{structA}{A} primitive type is a type of which there is only one instance.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Primitive\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=277pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Primitive\+Type\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_1_1PrimitiveTypeKind}{Primitive\+Type\+Kind}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_1_1PrimitiveTypeKind}{Primitive\+Type\+Kind} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_af1dc0801fb7fdb522cb49e2ca9b53467}{primitive\+Type\+Kind} ()
+\item 
+Numeric\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_af4eb0df58b2a3fb7be600d2daf3e8357}{get\+Sizeof} ()
+\begin{DoxyCompactList}\small\item\em Returns the symbolic value representing the size of this primitive type, i.\+e., the value of \char`\"{}sizeof(t)\char`\"{}. \end{DoxyCompactList}\item 
+Boolean\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_a8a4ecb9554c8958a5e3b1982caee7268}{get\+Facts} ()
+\begin{DoxyCompactList}\small\item\em Returns facts about this primitive type that should be added to the path condition whenever it is used. \end{DoxyCompactList}\item 
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_a51df81c56dc32769f32fa9e3af801136}{}Symbolic\+Expression {\bfseries initial\+Value} (Symbolic\+Universe universe)\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_a51df81c56dc32769f32fa9e3af801136}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} primitive type is a type of which there is only one instance. 
+
+In addition, there is a single symbolic type corresponding to each primitive type.
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_a8a4ecb9554c8958a5e3b1982caee7268}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type}!get\+Facts@{get\+Facts}}
+\index{get\+Facts@{get\+Facts}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type}}
+\subsubsection[{get\+Facts}]{\setlength{\rightskip}{0pt plus 5cm}Boolean\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Primitive\+Type.\+get\+Facts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_a8a4ecb9554c8958a5e3b1982caee7268}
+
+
+Returns facts about this primitive type that should be added to the path condition whenever it is used. 
+
+For example, that \char`\"{}sizeof(t)$>$0\char`\"{}.
+
+\begin{DoxyReturn}{Returns}
+predicate which must hold concerning this type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a4238c6dc7edd88a874d60ccdeb3e350b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_af4eb0df58b2a3fb7be600d2daf3e8357}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type}!get\+Sizeof@{get\+Sizeof}}
+\index{get\+Sizeof@{get\+Sizeof}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type}}
+\subsubsection[{get\+Sizeof}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Primitive\+Type.\+get\+Sizeof (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_af4eb0df58b2a3fb7be600d2daf3e8357}
+
+
+Returns the symbolic value representing the size of this primitive type, i.\+e., the value of \char`\"{}sizeof(t)\char`\"{}. 
+
+\begin{DoxyReturn}{Returns}
+the size of this type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a6fdc74681ebce22982b7a022883c9c85}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_af1dc0801fb7fdb522cb49e2ca9b53467}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type}!primitive\+Type\+Kind@{primitive\+Type\+Kind}}
+\index{primitive\+Type\+Kind@{primitive\+Type\+Kind}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::type\+::\+C\+I\+V\+L\+Primitive\+Type}}
+\subsubsection[{primitive\+Type\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Primitive\+Type\+Kind} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+type.\+C\+I\+V\+L\+Primitive\+Type.\+primitive\+Type\+Kind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLPrimitiveType_af1dc0801fb7fdb522cb49e2ca9b53467}
+\begin{DoxyReturn}{Returns}
+The kind of this primitive type, an element of the enumerated type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1type_1_1CommonPrimitiveType_a7c594169f53a7bba0d734d27f17a9395}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+type.\+Common\+Primitive\+Type}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/type/C\+I\+V\+L\+Primitive\+Type.\+java\end{DoxyCompactItemize}

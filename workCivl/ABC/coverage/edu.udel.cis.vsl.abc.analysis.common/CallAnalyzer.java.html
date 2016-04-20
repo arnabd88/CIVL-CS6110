@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CallAnalyzer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.common</a> &gt; <span class="el_source">CallAnalyzer.java</span></div><h1>CallAnalyzer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.common;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import edu.udel.cis.vsl.abc.analysis.IF.Analyzer;
+import edu.udel.cis.vsl.abc.ast.IF.AST;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDefinitionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.FunctionType;
+import edu.udel.cis.vsl.abc.ast.type.IF.PointerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardSignedIntegerType.SignedIntKind;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+
+/**
+ * Given an AST, determines caller/callee relationships among functions.
+ * 
+ * Calls through a function pointer are approximated by the set of functions
+ * whose type matches the function pointer type.
+ * 
+ * Analysis is two-phase: First &quot;collect&quot; the set of functions declared for each
+ * function type. Second &quot;process&quot; call nodes using the function-type relation
+ * to resolve indirect calls.
+ * 
+ * @author dwyer
+ * 
+ */
+<span class="nc bnc" id="L38" title="All 2 branches missed.">public class CallAnalyzer implements Analyzer {</span>
+<span class="nc" id="L39">	Map&lt;FunctionType, Set&lt;Function&gt;&gt; functionsOfAType = new HashMap&lt;FunctionType, Set&lt;Function&gt;&gt;();</span>
+	AST currentAST;
+
+	private void collectProgram(ASTNode node) {
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (node instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L44">			collectFunctionDefinitionNode((FunctionDefinitionNode) node);</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		} else if (node instanceof FunctionDeclarationNode) {</span>
+			// Will only reach this code if this is a prototype declaration
+<span class="nc" id="L47">			collectFunctionDeclarationNode((FunctionDeclarationNode) node);</span>
+		}
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		for (ASTNode child : node.children()) {</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">			if (child != null)</span>
+<span class="nc" id="L51">				collectProgram(child);</span>
+		}
+<span class="nc" id="L53">	}</span>
+
+	private void collectFunctionDefinitionNode(FunctionDefinitionNode funNode) {
+<span class="nc" id="L56">		Function fEntity = funNode.getEntity();</span>
+
+<span class="nc" id="L58">		FunctionType funType = (FunctionType) funNode.getTypeNode().getType();</span>
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (fEntity.getName().equals(&quot;main&quot;)) {</span>
+			// Return type of main is &quot;int&quot;
+<span class="nc" id="L62">			Type rType = funType.getReturnType();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (rType instanceof StandardSignedIntegerType</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">					&amp;&amp; ((StandardSignedIntegerType) rType).getIntKind() == SignedIntKind.INT) {</span>
+				// Main has either 0 or 2 parameters
+<span class="nc bnc" id="L66" title="All 2 branches missed.">				if (funType.getNumParameters() == 0) {</span>
+<span class="nc" id="L67">					currentAST.setMain(fEntity);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">				} else if (funType.getNumParameters() == 2) {</span>
+					// If it has parameters they are of type &quot;int&quot; and &quot;char **&quot;
+<span class="nc" id="L70">					Type p0 = funType.getParameterType(0);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">					if (p0 instanceof StandardSignedIntegerType</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">							&amp;&amp; ((StandardSignedIntegerType) p0).getIntKind() == SignedIntKind.INT) {</span>
+<span class="nc" id="L73">						Type p1 = funType.getParameterType(1);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">						if (p1 instanceof PointerType) {</span>
+<span class="nc" id="L75">							Type derefP1 = ((PointerType) p1).referencedType();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">							if (derefP1 instanceof PointerType) {</span>
+<span class="nc" id="L77">								Type deDerefP1 = ((PointerType) derefP1)</span>
+<span class="nc" id="L78">										.referencedType();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">								if (deDerefP1 instanceof StandardSignedIntegerType</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">										&amp;&amp; ((StandardSignedIntegerType) deDerefP1)</span>
+<span class="nc" id="L81">												.getIntKind() == SignedIntKind.SIGNED_CHAR) {</span>
+<span class="nc" id="L82">									currentAST.setMain(fEntity);</span>
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+<span class="nc" id="L91">		collectFunctionType(funType);</span>
+
+<span class="nc" id="L93">		Set&lt;Function&gt; funsOfThisType = getFunctionsOfAType(funType);</span>
+<span class="nc" id="L94">		funsOfThisType.add(fEntity);</span>
+<span class="nc" id="L95">	}</span>
+
+	private void collectFunctionDeclarationNode(FunctionDeclarationNode funcNode) {
+<span class="nc" id="L98">		collectFunctionType((FunctionType) (funcNode.getTypeNode().getType()));</span>
+<span class="nc" id="L99">	}</span>
+
+	private void collectFunctionType(FunctionType funType) {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (getFunctionsOfAType(funType) == null) {</span>
+<span class="nc" id="L103">			functionsOfAType.put(funType, new HashSet&lt;Function&gt;());</span>
+		}
+<span class="nc" id="L105">	}</span>
+
+	private Set&lt;Function&gt; getFunctionsOfAType(FunctionType funType) {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		for (FunctionType fType : functionsOfAType.keySet()) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (funType.compatibleWith(fType)) {</span>
+<span class="nc" id="L110">				return functionsOfAType.get(fType);</span>
+			}
+		}
+<span class="nc" id="L113">		return null;</span>
+	}
+
+	private void processFunctionDefinitionNode(FunctionDefinitionNode funcNode) {
+<span class="nc" id="L117">		Function fEntity = funcNode.getEntity();</span>
+<span class="nc" id="L118">		processFunctionBody(funcNode.getBody(), fEntity);</span>
+<span class="nc" id="L119">	}</span>
+
+	private void processFunctionBody(ASTNode node, Function caller) {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (node instanceof FunctionCallNode) {</span>
+<span class="nc" id="L123">			FunctionCallNode fcn = (FunctionCallNode) node;</span>
+
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (fcn.getFunction() instanceof IdentifierExpressionNode) {</span>
+<span class="nc" id="L126">				IdentifierNode calledFunId = ((IdentifierExpressionNode) fcn</span>
+<span class="nc" id="L127">						.getFunction()).getIdentifier();</span>
+
+				// Call directly to a function
+<span class="nc bnc" id="L130" title="All 2 branches missed.">				if (calledFunId.getEntity() instanceof Function) {</span>
+<span class="nc" id="L131">					Function callee = (Function) calledFunId.getEntity();</span>
+<span class="nc" id="L132">					caller.getCallees().add(callee);</span>
+<span class="nc" id="L133">					callee.getCallers().add(caller);</span>
+<span class="nc" id="L134">				} else {</span>
+					// Call through an expression (an identifier)
+<span class="nc" id="L136">					PointerType pFunType = (PointerType) fcn.getFunction()</span>
+<span class="nc" id="L137">							.getConvertedType();</span>
+<span class="nc" id="L138">					FunctionType funType = (FunctionType) pFunType</span>
+<span class="nc" id="L139">							.referencedType();</span>
+
+<span class="nc" id="L141">					Set&lt;Function&gt; callees = getFunctionsOfAType(funType);</span>
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">					if (callees != null)</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">						for (Function callee : callees) {</span>
+<span class="nc" id="L145">							caller.getCallees().add(callee);</span>
+<span class="nc" id="L146">							callee.getCallers().add(caller);</span>
+						}
+				}
+<span class="nc" id="L149">			} else {</span>
+<span class="nc" id="L150">				Type funcExpressionType = fcn.getFunction().getConvertedType();</span>
+				FunctionType funType;
+
+				// the type of the function expression in a function call could
+				// be either function type or pointer to function type
+<span class="nc bnc" id="L155" title="All 2 branches missed.">				if (funcExpressionType instanceof FunctionType) {</span>
+<span class="nc" id="L156">					funType = (FunctionType) funcExpressionType;</span>
+<span class="nc" id="L157">				} else {</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">					assert (funcExpressionType instanceof PointerType);</span>
+<span class="nc" id="L159">					funType = (FunctionType) ((PointerType) funcExpressionType)</span>
+<span class="nc" id="L160">							.referencedType();</span>
+				}
+
+<span class="nc" id="L163">				Set&lt;Function&gt; callees = functionsOfAType.get(funType);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if (callees != null) {</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">					for (Function callee : callees) {</span>
+<span class="nc" id="L166">						caller.getCallees().add(callee);</span>
+<span class="nc" id="L167">						callee.getCallers().add(caller);</span>
+					}
+				}
+			}
+
+			// Check arguments for nested calls
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			for (ExpressionNode arg : fcn.getArguments()) {</span>
+<span class="nc" id="L174">				processFunctionBody(arg, caller);</span>
+			}
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		} else if (node != null) {</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc" id="L178">				processFunctionBody(child, caller);</span>
+			}
+		}
+<span class="nc" id="L181">	}</span>
+
+	private void processProgram(ASTNode node) {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (node instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L185">			processFunctionDefinitionNode((FunctionDefinitionNode) node);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		} else if (node != null) {</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc" id="L188">				processProgram(child);</span>
+			}
+		}
+<span class="nc" id="L191">	}</span>
+
+	@Override
+	public void clear(AST unit) {
+<span class="nc" id="L195">		functionsOfAType.clear();</span>
+<span class="nc" id="L196">		clearNode(unit.getRootNode());</span>
+<span class="nc" id="L197">	}</span>
+
+	private void clearNode(ASTNode node) {
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (node != null) {</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (node instanceof FunctionDefinitionNode) {</span>
+<span class="nc" id="L202">				Function f = ((FunctionDefinitionNode) node).getEntity();</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">				if (f != null) {</span>
+<span class="nc" id="L204">					Set&lt;Function&gt; callers = f.getCallers();</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">					if (callers != null)</span>
+<span class="nc" id="L206">						callers.clear();</span>
+<span class="nc" id="L207">					Set&lt;Function&gt; callees = f.getCallees();</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">					if (callees != null)</span>
+<span class="nc" id="L209">						callees.clear();</span>
+				}
+			}
+<span class="nc bnc" id="L212" title="All 2 branches missed.">			for (ASTNode child : node.children()) {</span>
+<span class="nc" id="L213">				clearNode(child);</span>
+			}
+		}
+<span class="nc" id="L216">	}</span>
+
+	@Override
+	public void analyze(AST unit) throws SyntaxException {
+<span class="nc" id="L220">		currentAST = unit;</span>
+<span class="nc" id="L221">		ASTNode root = unit.getRootNode();</span>
+
+<span class="nc" id="L223">		collectProgram(root);</span>
+<span class="nc" id="L224">		processProgram(root);</span>
+<span class="nc" id="L225">	}</span>
+
+<span class="nc" id="L227">	static private Set&lt;Function&gt; seen;</span>
+
+	static public void printCallGraph(AST unit) {
+<span class="nc" id="L230">		System.out.println(unit.getMain().getName());</span>
+<span class="nc" id="L231">		seen = new HashSet&lt;Function&gt;();</span>
+<span class="nc" id="L232">		seen.add(unit.getMain());</span>
+<span class="nc" id="L233">		printCallGraphNodes(unit.getMain(), &quot; &quot;);</span>
+<span class="nc" id="L234">	}</span>
+
+	static private void printCallGraphNodes(Function f, String pre) {
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		for (Function callee : f.getCallees()) {</span>
+<span class="nc" id="L238">			System.out.print(pre + callee.getName() + &quot; [&quot;);</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">			for (Function caller : callee.getCallers()) {</span>
+<span class="nc" id="L240">				System.out.print(&quot; &quot; + caller.getName());</span>
+			}
+<span class="nc" id="L242">			System.out.println(&quot; ]&quot;);</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">			if (!seen.contains(callee)) {</span>
+<span class="nc" id="L244">				seen.add(callee);</span>
+<span class="nc" id="L245">				printCallGraphNodes(callee, pre + &quot; &quot;);</span>
+<span class="nc" id="L246">				seen.remove(callee);</span>
+<span class="nc" id="L247">			} else {</span>
+<span class="nc" id="L248">				System.out.println(pre + &quot; &lt;recursion&gt;&quot;);</span>
+			}
+		}
+<span class="nc" id="L251">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

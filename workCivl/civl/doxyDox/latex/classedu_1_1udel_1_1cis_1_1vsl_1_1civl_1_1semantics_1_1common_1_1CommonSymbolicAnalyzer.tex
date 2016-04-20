@@ -1,0 +1,576 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer}}
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a047fecead7b9634bf8ea285db159b8ee}{}{\bfseries Common\+Symbolic\+Analyzer} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config, Symbolic\+Universe universe, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a047fecead7b9634bf8ea285db159b8ee}
+
+\item 
+Symbolic\+Universe \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a58fe750cba5db0ac34168e34b383818d}{get\+Universe} ()
+\begin{DoxyCompactList}\small\item\em Gets the symbolic universe used by this symbolic analyzer. \end{DoxyCompactList}\item 
+Reference\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a869ebc146a241c10b575fa195366e07d}{get\+Mem\+Base\+Reference} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Symbolic\+Expression pointer, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)
+\begin{DoxyCompactList}\small\item\em pre-\/condition\+: \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a0d92603fac82fc1c76c88b6ab7f7d16a}{get\+Sub\+Array} (Symbolic\+Expression array, Numeric\+Expression start\+Index, Numeric\+Expression end\+Index, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Given an array, a start index, and end index, returns the array which is the subsequence of the given array consisting of the elements in positions start index through end index minus one. \end{DoxyCompactList}\item 
+String\+Buffer \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_aed777769775cde37062975ba085047b5}{state\+To\+String} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Computes the user-\/friendly and complete string representation of a state. \end{DoxyCompactList}\item 
+String\+Buffer \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ac8f6d6109c1d80505d84fb9c168fc1f8}{state\+To\+String} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int last\+Saved\+State, int sequence\+Id)
+\begin{DoxyCompactList}\small\item\em Computes the user-\/friendly and complete string representation of a state. \end{DoxyCompactList}\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a6ea8d25ad6bdb84a1b2b6d5f314177fe}{symbolic\+Expression\+To\+String} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type, Symbolic\+Expression symbolic\+Expression)
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_af88928932b58406b4a5dac52fb709070}{type\+Of\+Obj\+By\+Pointer} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} soruce, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Computes the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the object referring to by the given pointer. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a3d017b9b198ca3e4c66c3619af2b8c01}{get\+Array\+Base\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression array\+Ptr)
+\begin{DoxyCompactList}\small\item\em pre-\/condition\+: \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, String $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_adaa27c5f369ddc101986a8bd4749cb6b}{expression\+Evaluation} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} expression, boolean result\+Only)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Compute a friendly string representation of an expression\textquotesingle{}s evaluation. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a5c2fcd3fb3c27b5586204e36f5196a03}{}String\+Buffer {\bfseries statement\+Evaluation} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} post\+State, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a5c2fcd3fb3c27b5586204e36f5196a03}
+
+\item 
+String\+Buffer \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ae78ff2966db1a6c365b09bc0b45c2e39}{state\+Information} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)
+\begin{DoxyCompactList}\small\item\em Computes the user-\/friendly and brief string representation of a state. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a629d8b26b928cf511bb12d04f2f11224}{}String\+Buffer {\bfseries input\+Variables\+To\+String\+Buffer} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a629d8b26b928cf511bb12d04f2f11224}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a478821b377dd9f62dc3b3c5063bf101a}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} {\bfseries evaluator} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a478821b377dd9f62dc3b3c5063bf101a}
+
+\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_acaddcb573248b57aa5b47b0d06bec95b}{pointer\+Arithmetics} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, boolean is\+Subtract, Symbolic\+Expression pointer, Symbolic\+Expression offset)
+\begin{DoxyCompactList}\small\item\em C11, 6.\+2.\+6.\+1 paragraph 4\+: \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ Boolean\+Expression, Result\+Type $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ae1ff2344d15fae6b3b47bad105fba93a}{is\+Derefable\+Pointer} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Is this a derefable pointer? In other words, check if the pointer can be dereferenced safely. \end{DoxyCompactList}\item 
+String\+Buffer \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a4d9ea9eeb4fc3aef2d056902f16aa709}{pathcondition\+To\+String} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String prefix, Boolean\+Expression pc)
+\begin{DoxyCompactList}\small\item\em Pretty representation of a path condition, which is broken into lines if it is in C\+N\+F. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ Boolean\+Expression, Result\+Type $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a052e670ff81ef2c308553f01e8e928ee}{is\+Defined\+Pointer} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Is this an defined pointer? \hyperlink{structA}{A} pointer is defined if one of the following holds\+: \end{DoxyCompactList}\item 
+String\+Buffer \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_abe934e472cb99d4cf7d9b70afb0abada}{memory\+Unit\+To\+String} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnit}{Memory\+Unit} mu)
+\begin{DoxyCompactList}\small\item\em Pretty representation of a memory unit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_adaa27c5f369ddc101986a8bd4749cb6b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!expression\+Evaluation@{expression\+Evaluation}}
+\index{expression\+Evaluation@{expression\+Evaluation}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{expression\+Evaluation}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<${\bf State}, String$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+expression\+Evaluation (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Expression}}]{expression, }
+\item[{boolean}]{result\+Only}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_adaa27c5f369ddc101986a8bd4749cb6b}
+
+
+Compute a friendly string representation of an expression\textquotesingle{}s evaluation. 
+
+Eg, if the expression is a+b, then return 8+9 supposing a=8, b=9.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_a45ba9f855e00d09161471b437e13ad15}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a3d017b9b198ca3e4c66c3619af2b8c01}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!get\+Array\+Base\+Type@{get\+Array\+Base\+Type}}
+\index{get\+Array\+Base\+Type@{get\+Array\+Base\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{get\+Array\+Base\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+get\+Array\+Base\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{array\+Ptr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a3d017b9b198ca3e4c66c3619af2b8c01}
+
+
+pre-\/condition\+: 
+
+
+\begin{DoxyEnumerate}
+\item \char`\"{}array\+Ptr\char`\"{} must point to an array 
+\item \char`\"{}source\char`\"{} is thelink C\+I\+V\+L\+Source\} of the pointer expression 
+\end{DoxyEnumerate}post-\/condition\+: 
+\begin{DoxyEnumerate}
+\item the returned \hyperlink{}{C\+I\+V\+L\+Type} must not be an array type 
+\item the returned object cannot be null 
+\end{DoxyEnumerate}Get the type of the non-\/array element of an array by given a pointer to an array
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the type of the non-\/array element of an array 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_a0c9564662a701144510741b1c81c00d2}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a869ebc146a241c10b575fa195366e07d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!get\+Mem\+Base\+Reference@{get\+Mem\+Base\+Reference}}
+\index{get\+Mem\+Base\+Reference@{get\+Mem\+Base\+Reference}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{get\+Mem\+Base\+Reference}]{\setlength{\rightskip}{0pt plus 5cm}Reference\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+get\+Mem\+Base\+Reference (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a869ebc146a241c10b575fa195366e07d}
+
+
+pre-\/condition\+: 
+
+
+\begin{DoxyEnumerate}
+\item \char`\"{}source\char`\"{} is thelink C\+I\+V\+L\+Source\} of the pointer expression 
+\end{DoxyEnumerate}post-\/condition\+: 
+\begin{DoxyEnumerate}
+\item the returned object cannot be null 
+\end{DoxyEnumerate}Returns the \hyperlink{}{Reference\+Expression} directly to the object which has the physical base type of the pointed array (or object) residing in memory. ~\newline
+ Note\+: The \char`\"{}physical base type\char`\"{} means the base type of the a physical sequence of objects in memory space. For example\+: {\ttfamily  int $\ast$$\ast$ a; int b\mbox{[}2\mbox{]}\mbox{[}2\mbox{]}; int c;}
+
+{\ttfamily a = (int $\ast$$\ast$)malloc(..); } The \char`\"{}physical base type\char`\"{} of \char`\"{}a\char`\"{} is \char`\"{}int $\ast$\char`\"{} while both of \char`\"{}b\char`\"{} and of \char`\"{}c\char`\"{} is \char`\"{}int\char`\"{}.
+
+\begin{DoxyAuthor}{Author}
+Ziqing Luo 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em process} & The information of the process \\
+\hline
+{\em source} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of the pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Reference to the object that has physical base type 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_a1c40f36a127ec7e4469a435ef395ddcc}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a0d92603fac82fc1c76c88b6ab7f7d16a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!get\+Sub\+Array@{get\+Sub\+Array}}
+\index{get\+Sub\+Array@{get\+Sub\+Array}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{get\+Sub\+Array}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+get\+Sub\+Array (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{array, }
+\item[{Numeric\+Expression}]{start\+Index, }
+\item[{Numeric\+Expression}]{end\+Index, }
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a0d92603fac82fc1c76c88b6ab7f7d16a}
+
+
+Given an array, a start index, and end index, returns the array which is the subsequence of the given array consisting of the elements in positions start index through end index minus one. 
+
+The length of the new array is end\+Index -\/ start\+Index. T\+O\+D\+O move to libcivlc?
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & \\
+\hline
+{\em start\+Index} & \\
+\hline
+{\em end\+Index} & \\
+\hline
+{\em assumption} & \\
+\hline
+{\em source} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_ac6aa40c18b6166b74ffc1f83b51f454f}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a58fe750cba5db0ac34168e34b383818d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!get\+Universe@{get\+Universe}}
+\index{get\+Universe@{get\+Universe}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{get\+Universe}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Universe edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+get\+Universe (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a58fe750cba5db0ac34168e34b383818d}
+
+
+Gets the symbolic universe used by this symbolic analyzer. 
+
+\begin{DoxyReturn}{Returns}
+the symbolic universe 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_aee638149710a496ce3ad6f3487b650cc}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a052e670ff81ef2c308553f01e8e928ee}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!is\+Defined\+Pointer@{is\+Defined\+Pointer}}
+\index{is\+Defined\+Pointer@{is\+Defined\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{is\+Defined\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<$Boolean\+Expression, Result\+Type$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+is\+Defined\+Pointer (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a052e670ff81ef2c308553f01e8e928ee}
+
+
+Is this an defined pointer? \hyperlink{structA}{A} pointer is defined if one of the following holds\+: 
+
+
+\begin{DoxyItemize}
+\item it can be dereferenced (derefable pointer), e.\+g., {\ttfamily \&a}, {\ttfamily \&b\mbox{[}0\mbox{]}} where {\ttfamily a} is a scalar variable and {\ttfamily b} is an array of length 5. 
+\item it is the N\+U\+L\+L pointer. 
+\item it points to the end of an array, e.\+g., {\ttfamily \&b\mbox{[}5\mbox{]}} where {\ttfamily b} is an array of length 5. 
+\end{DoxyItemize}For the latter two cases, the pointer is called underefable pointer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & The pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the given pointer is defined. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_a35562b6847f9b51a92e628bb2e855021}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ae1ff2344d15fae6b3b47bad105fba93a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!is\+Derefable\+Pointer@{is\+Derefable\+Pointer}}
+\index{is\+Derefable\+Pointer@{is\+Derefable\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{is\+Derefable\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<$Boolean\+Expression, Result\+Type$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+is\+Derefable\+Pointer (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ae1ff2344d15fae6b3b47bad105fba93a}
+
+
+Is this a derefable pointer? In other words, check if the pointer can be dereferenced safely. 
+
+Examples of derefable pointers\+: {\ttfamily \&a}, {\ttfamily \&b\mbox{[}0\mbox{]}} where {\ttfamily a} is a scalar variable and {\ttfamily b} is an array of length 5. Examples of underefable pointers\+: N\+U\+L\+L, {\ttfamily \&b\mbox{[}5\mbox{]}} where {\ttfamily b} is an array of length 5.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pointer} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_a2a6e4f37a41fcf3bfa5fc3a629f561bf}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_abe934e472cb99d4cf7d9b70afb0abada}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!memory\+Unit\+To\+String@{memory\+Unit\+To\+String}}
+\index{memory\+Unit\+To\+String@{memory\+Unit\+To\+String}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{memory\+Unit\+To\+String}]{\setlength{\rightskip}{0pt plus 5cm}String\+Buffer edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+memory\+Unit\+To\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{{\bf Memory\+Unit}}]{mu}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_abe934e472cb99d4cf7d9b70afb0abada}
+
+
+Pretty representation of a memory unit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em mu} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_aa28325c0cd68fc78ccaf283ba8e9292e}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a4d9ea9eeb4fc3aef2d056902f16aa709}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!pathcondition\+To\+String@{pathcondition\+To\+String}}
+\index{pathcondition\+To\+String@{pathcondition\+To\+String}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{pathcondition\+To\+String}]{\setlength{\rightskip}{0pt plus 5cm}String\+Buffer edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+pathcondition\+To\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{String}]{prefix, }
+\item[{Boolean\+Expression}]{pc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a4d9ea9eeb4fc3aef2d056902f16aa709}
+
+
+Pretty representation of a path condition, which is broken into lines if it is in C\+N\+F. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em pc} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_a651a2000d266dae34dd1eafa7956d879}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_acaddcb573248b57aa5b47b0d06bec95b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!pointer\+Arithmetics@{pointer\+Arithmetics}}
+\index{pointer\+Arithmetics@{pointer\+Arithmetics}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{pointer\+Arithmetics}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+pointer\+Arithmetics (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{boolean}]{is\+Subtract, }
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{Symbolic\+Expression}]{offset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_acaddcb573248b57aa5b47b0d06bec95b}
+
+
+C11, 6.\+2.\+6.\+1 paragraph 4\+: 
+
+Values stored in non-\/bit-\/field objects of any other object type consist of n × C\+H\+A\+R\+\_\+\+B\+I\+T bits, where n is the size of an object of that type, in bytes. The value may be copied into an object of type unsigned char \href{e.g., by memcpy}{\tt n}; the resulting set of bytes is called the object representation of the value.
+
+6.\+3.\+2.\+3 Pointers p7\+:
+
+... When a pointer to an object is converted to a pointer to a character type, the result points to the lowest addressed byte of the object. Successive increments of the result, up to the size of the object, yield pointers to the remaining bytes of the object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & \\
+\hline
+{\em state} & \\
+\hline
+{\em is\+Subtract} & \\
+\hline
+{\em pointer} & \\
+\hline
+{\em offset} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ae78ff2966db1a6c365b09bc0b45c2e39}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!state\+Information@{state\+Information}}
+\index{state\+Information@{state\+Information}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{state\+Information}]{\setlength{\rightskip}{0pt plus 5cm}String\+Buffer edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+state\+Information (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ae78ff2966db1a6c365b09bc0b45c2e39}
+
+
+Computes the user-\/friendly and brief string representation of a state. 
+
+Only the call stack is printed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state whose string representation is to be computed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The user-\/friendly string representation of a state. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_adc04562fe108f600052b507471cd05b6}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_aed777769775cde37062975ba085047b5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!state\+To\+String@{state\+To\+String}}
+\index{state\+To\+String@{state\+To\+String}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{state\+To\+String}]{\setlength{\rightskip}{0pt plus 5cm}String\+Buffer edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+state\+To\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_aed777769775cde37062975ba085047b5}
+
+
+Computes the user-\/friendly and complete string representation of a state. 
+
+Everything including dyscopes, call stacks is printed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_ae2b4298ca01764e97ed22611afb3359c}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ac8f6d6109c1d80505d84fb9c168fc1f8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!state\+To\+String@{state\+To\+String}}
+\index{state\+To\+String@{state\+To\+String}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{state\+To\+String}]{\setlength{\rightskip}{0pt plus 5cm}String\+Buffer edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+state\+To\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{last\+Saved\+State, }
+\item[{int}]{sequence\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_ac8f6d6109c1d80505d84fb9c168fc1f8}
+
+
+Computes the user-\/friendly and complete string representation of a state. 
+
+Everything including dyscopes, call stacks is printed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+{\em last\+Saved\+State} & the last saved state that this state is generated from. -\/1 if the there is no such last saved state. \\
+\hline
+{\em sequence\+Id} & the place that this state have in the sequence of intermediate states after executing the last saved state. -\/1 iff last\+Saved\+State is -\/1. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_ac98060c832c84748ae46e82069c83278}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a6ea8d25ad6bdb84a1b2b6d5f314177fe}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!symbolic\+Expression\+To\+String@{symbolic\+Expression\+To\+String}}
+\index{symbolic\+Expression\+To\+String@{symbolic\+Expression\+To\+String}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{symbolic\+Expression\+To\+String}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+symbolic\+Expression\+To\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf State}}]{state, }
+\item[{{\bf C\+I\+V\+L\+Type}}]{type, }
+\item[{Symbolic\+Expression}]{symbolic\+Expression}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_a6ea8d25ad6bdb84a1b2b6d5f314177fe}
+Computes the user-\/friendly string representation of a symbolic expression. 
+
+If the given expression is a pointer, then its string representation is computed according to the object that it refers to\+: 
+\begin{DoxyItemize}
+\item a variable\+: {\ttfamily \& variable $<$dyscope name$>$}; ~\newline
+ e.\+g.,
+
+
+\begin{DoxyPre}
+int a = 9; int * p = 
+\end{DoxyPre}
+
+
+The representation of {\ttfamily p} would be {\ttfamily \&a$<$d0$>$} assuming that the name of the dynamic scope of {\ttfamily a} is {\ttfamily d0}. 
+\item an element of an array\+: {\ttfamily \&array$<$dyscope name$>$\mbox{[}index\mbox{]}};~\newline
+ e.\+g.,
+
+
+\begin{DoxyPre}
+int a[5]; int *p = \&a[1];
+\end{DoxyPre}
+
+
+The representation of {\ttfamily p} would be {\ttfamily \&a$<$d0$>$\mbox{[}1\mbox{]}} assuming that the name of the dynamic scope of {\ttfamily a} is {\ttfamily d0}. 
+\item a field of a struct\+: {\ttfamily \&struct$<$dyscope name$>$.field};~\newline
+ e.\+g.,
+
+
+\begin{DoxyPre}
+typedef struct \{int x; int y;\} \hyperlink{structA}{A}; \hyperlink{structA}{A} s; int*p = \&s.y;
+\end{DoxyPre}
+
+
+The representation of p would be {\ttfamily \&a$<$d0$>$.y} assuming that the name of the dynamic scope of {\ttfamily a} is {\ttfamily d0}.
+
+
+\item a heap cell\+: {\ttfamily heap\+Object$<$dyscope name, malloc I\+D, number of malloc call$>$} . 
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code information related to the symbolic expression for error report if any. \\
+\hline
+{\em state} & The state that the symbolic expression belongs to. \\
+\hline
+{\em symbolic\+Expression} & The symbolic expression whose string representation is to be computed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The user-\/friendly string representation of a state. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_aaf6a45bb9d15f4e489fc0dc965faf094}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_af88928932b58406b4a5dac52fb709070}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}!type\+Of\+Obj\+By\+Pointer@{type\+Of\+Obj\+By\+Pointer}}
+\index{type\+Of\+Obj\+By\+Pointer@{type\+Of\+Obj\+By\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::common\+::\+Common\+Symbolic\+Analyzer}}
+\subsubsection[{type\+Of\+Obj\+By\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+common.\+Common\+Symbolic\+Analyzer.\+type\+Of\+Obj\+By\+Pointer (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{soruce, }
+\item[{{\bf State}}]{state, }
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1common_1_1CommonSymbolicAnalyzer_af88928932b58406b4a5dac52fb709070}
+
+
+Computes the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the object referring to by the given pointer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em soruce} & The source code information related to the symbolic expression for error report if any. \\
+\hline
+{\em state} & The state that the given pointer belongs to. \\
+\hline
+{\em pointer} & The pointer the type of whose object is to be computed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the object referring to by the given pointer. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer_a668611f8eddcd2a8f302011cdf6fed6e}{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Symbolic\+Analyzer}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/common/Common\+Symbolic\+Analyzer.\+java\end{DoxyCompactItemize}

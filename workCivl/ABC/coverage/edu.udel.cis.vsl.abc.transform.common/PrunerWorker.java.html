@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PrunerWorker.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.transform.common</a> &gt; <span class="el_source">PrunerWorker.java</span></div><h1>PrunerWorker.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.transform.common;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.IF.ASTException;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Scope;
+import edu.udel.cis.vsl.abc.ast.entity.IF.TaggedEntity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Variable;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.AttributeKey;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.PragmaNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.StaticAssertionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.OrdinaryDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.TypedefDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.IdentifierExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.BlockItemNode.BlockItemKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.CivlForNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.ExpressionStatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.statement.StatementNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Enumerator;
+import edu.udel.cis.vsl.abc.ast.type.IF.QualifiedObjectType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.token.IF.SyntaxException;
+import edu.udel.cis.vsl.abc.transform.common.Pruner.Reachability;
+
+/**
+ * Finds all reachable nodes in the AST and marks them REACHABLE. Assumes that
+ * the AST has already had the standard analyses performed, so that every
+ * identifier has been resolved to refer to some Entity.
+ * 
+ * @author siegel
+ * 
+ */
+public class PrunerWorker {
+
+	private ASTNode root;
+
+	private AttributeKey reachedKey;
+
+<span class="nc" id="L54">	List&lt;ASTNode&gt; reachableNodes = new LinkedList&lt;ASTNode&gt;();</span>
+
+<span class="nc" id="L56">	public PrunerWorker(AttributeKey reachedKey, ASTNode root)</span>
+			throws SyntaxException {
+<span class="nc" id="L58">		this.reachedKey = reachedKey;</span>
+<span class="nc" id="L59">		this.root = root;</span>
+<span class="nc" id="L60">		search();</span>
+<span class="nc" id="L61">	}</span>
+
+	/**
+	 * Marks a node and its descendants reachable.
+	 * 
+	 * If &lt;code&gt;node&lt;/code&gt; is already marked reachable, returns immediately.
+	 * Otherwise marks the node as reachable and recurses over the node's
+	 * children. For each child, if the child is an identifier node, the entity
+	 * to which that identifier refers is explored. In addition, if the child is
+	 * anything other than an ordinary declaration (i.e., a function or variable
+	 * declaration) or a typedef declaration, then &lt;code&gt;markReachable&lt;/code&gt; is
+	 * invoked recursively on the child.
+	 * 
+	 * @param node
+	 */
+	private void markReachable(ASTNode node) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (node.getAttribute(reachedKey) == Reachability.REACHABLE)</span>
+<span class="nc" id="L78">			return;</span>
+		else {
+<span class="nc" id="L80">			Iterable&lt;ASTNode&gt; children = node.children();</span>
+
+<span class="nc" id="L82">			node.setAttribute(reachedKey, Reachability.REACHABLE);</span>
+<span class="nc" id="L83">			reachableNodes.add(node);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (node instanceof FunctionTypeNode) {</span>
+				// special case: don't want to remove unused formal parameters
+<span class="nc" id="L86">				SequenceNode&lt;VariableDeclarationNode&gt; formals = ((FunctionTypeNode) node)</span>
+<span class="nc" id="L87">						.getParameters();</span>
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">				for (VariableDeclarationNode formal : formals)</span>
+<span class="nc" id="L90">					markReachable(formal);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			} else if (node instanceof CivlForNode) {</span>
+				// special case: cannot remove any loop variables
+<span class="nc" id="L93">				CivlForNode forNode = (CivlForNode) node;</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				for (VariableDeclarationNode decl : forNode.getVariables())</span>
+<span class="nc" id="L96">					markReachable(decl);</span>
+			}
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (node instanceof TypeNode) {</span>
+				// special case: if this is a type node under a
+				// typedef declaration node, the whole typedef declaration
+				// is reachable...
+<span class="nc" id="L102">				ASTNode parent = node.parent();</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">				if (parent instanceof TypedefDeclarationNode) {</span>
+<span class="nc" id="L105">					markReachable(parent);</span>
+				}
+			}
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			for (ASTNode child : children) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (child != null) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">					if (child instanceof IdentifierNode) {</span>
+<span class="nc" id="L111">						Entity entity = ((IdentifierNode) child).getEntity();</span>
+
+<span class="nc bnc" id="L113" title="All 4 branches missed.">						if (entity != null &amp;&amp; entity instanceof ProgramEntity)</span>
+							// TODO: check this: throw new
+							// ASTException(&quot;Identifier not resolved: &quot;
+							// + child.getSource().getSummary(false));
+<span class="nc" id="L117">							explore((ProgramEntity) entity);</span>
+					}
+<span class="nc bnc" id="L119" title="All 2 branches missed.">					if (child instanceof OrdinaryDeclarationNode</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">							|| child instanceof TypedefDeclarationNode) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">						if (child instanceof VariableDeclarationNode) {</span>
+<span class="nc" id="L122">							InitializerNode init = ((VariableDeclarationNode) child)</span>
+<span class="nc" id="L123">									.getInitializer();</span>
+
+							// at some point improve this to keep the init
+							// but not necessarily the variable...
+<span class="nc bnc" id="L127" title="All 4 branches missed.">							if (init != null &amp;&amp; !init.isSideEffectFree(true))</span>
+<span class="nc" id="L128">								markReachable(child);</span>
+						}
+						// do nothing: we want to see if we can reach these
+<span class="nc" id="L131">					} else</span>
+<span class="nc" id="L132">						markReachable(child);</span>
+				}
+			}
+		}
+<span class="nc" id="L136">	}</span>
+
+	/**
+	 * Invokes {@link #markReachable(ASTNode)} on all declarations of the
+	 * entity.
+	 * 
+	 * @param entity
+	 *            an Entity occurring in the AST
+	 */
+	private void explore(ProgramEntity entity) {
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (entity instanceof TaggedEntity) {</span>
+			// only need the first decl and the defn:
+<span class="nc" id="L148">			ASTNode firstDecl = entity.getFirstDeclaration();</span>
+<span class="nc" id="L149">			ASTNode defn = entity.getDefinition();</span>
+
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			if (firstDecl != null)</span>
+<span class="nc" id="L152">				markReachable(firstDecl);</span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">			if (defn != null &amp;&amp; defn != firstDecl)</span>
+<span class="nc" id="L154">				markReachable(defn);</span>
+<span class="nc" id="L155">		} else {</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			for (DeclarationNode dn : entity.getDeclarations())</span>
+<span class="nc" id="L157">				markReachable(dn);</span>
+			// special case: if you use at least one enumerator
+			// in the enumeration, you use the whole enumeration...
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (entity instanceof Enumerator) {</span>
+<span class="nc" id="L161">				explore(((Enumerator) entity).getType());</span>
+			}
+		}
+<span class="nc" id="L164">	}</span>
+
+	/**
+	 * Searches AST, marking reachable nodes as REACHABLE.
+	 * 
+	 * @throws SyntaxException
+	 */
+	private void search() throws SyntaxException {
+<span class="nc" id="L172">		Scope rootScope = root.getScope();</span>
+<span class="nc" id="L173">		Function main = (Function) rootScope.getOrdinaryEntity(false, &quot;main&quot;);</span>
+<span class="nc" id="L174">		Iterable&lt;ASTNode&gt; children = root.children();</span>
+
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		for (Variable variable : rootScope.getVariables()) {</span>
+<span class="nc" id="L177">			Type type = variable.getType();</span>
+
+<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (type instanceof QualifiedObjectType) {</span>
+<span class="nc" id="L180">				QualifiedObjectType qotype = (QualifiedObjectType) type;</span>
+
+<span class="nc bnc" id="L182" title="All 4 branches missed.">				if (qotype.isInputQualified() || qotype.isOutputQualified()) {</span>
+<span class="nc" id="L183">					VariableDeclarationNode decl = variable.getDefinition();</span>
+
+<span class="nc bnc" id="L185" title="All 2 branches missed.">					if (decl == null)</span>
+<span class="nc" id="L186">						throw new ASTException(</span>
+<span class="nc" id="L187">								&quot;No definition for input or output variable: &quot;</span>
+<span class="nc" id="L188">										+ variable);</span>
+<span class="nc" id="L189">					markReachable(decl);</span>
+				}
+			}
+		}
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		for (ASTNode child : children) {</span>
+<span class="nc" id="L194">			BlockItemNode externalDef = (BlockItemNode) child;</span>
+
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			if (externalDef instanceof PragmaNode</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">					|| externalDef instanceof StaticAssertionNode</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">					|| isAssumeOrAssert(externalDef)</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">					|| externalDef instanceof StatementNode)</span>
+				// || isElaborateDomainFunction(externalDef))
+<span class="nc" id="L201">				markReachable(externalDef);</span>
+		}
+<span class="nc" id="L203">		explore(main);</span>
+<span class="nc" id="L204">	}</span>
+
+	// private boolean isElaborateDomainFunction(BlockItemNode item) {
+	// if ((item != null) &amp;&amp; item instanceof FunctionDeclarationNode)
+	// return ((FunctionDeclarationNode) item).getIdentifier().name()
+	// .equals(&quot;$elaborate_rectangular_domain&quot;);
+	// return false;
+	// }
+
+	private boolean isAssumeOrAssert(BlockItemNode item) {
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (item == null)</span>
+<span class="nc" id="L215">			return false;</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (item.blockItemKind() == BlockItemKind.STATEMENT) {</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (item instanceof ExpressionStatementNode) {</span>
+<span class="nc" id="L218">				ExpressionStatementNode exprStmt = (ExpressionStatementNode) item;</span>
+<span class="nc" id="L219">				ExpressionNode expr = exprStmt.getExpression();</span>
+
+<span class="nc bnc" id="L221" title="All 2 branches missed.">				if (expr instanceof FunctionCallNode) {</span>
+<span class="nc" id="L222">					FunctionCallNode funcCall = (FunctionCallNode) expr;</span>
+<span class="nc" id="L223">					ExpressionNode function = funcCall.getFunction();</span>
+
+<span class="nc bnc" id="L225" title="All 2 branches missed.">					if (function instanceof IdentifierExpressionNode) {</span>
+<span class="nc" id="L226">						IdentifierExpressionNode funcID = (IdentifierExpressionNode) function;</span>
+<span class="nc" id="L227">						String funcName = funcID.getIdentifier().name();</span>
+
+<span class="nc bnc" id="L229" title="All 2 branches missed.">						if (funcName.equals(&quot;$assert&quot;)</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">								|| funcName.equals(&quot;$assume&quot;))</span>
+<span class="nc" id="L231">							return true;</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L236">		return false;</span>
+	}
+
+	public List&lt;ASTNode&gt; getReachableNodes() {
+<span class="nc" id="L240">		return reachableNodes;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

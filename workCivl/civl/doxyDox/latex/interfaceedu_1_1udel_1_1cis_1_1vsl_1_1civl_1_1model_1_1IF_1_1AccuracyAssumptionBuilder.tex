@@ -1,0 +1,66 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1AccuracyAssumptionBuilder}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Accuracy\+Assumption\+Builder Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1AccuracyAssumptionBuilder}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Accuracy\+Assumption\+Builder@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Accuracy\+Assumption\+Builder}}
+
+
+An accuracy assumption builder provides logic for determining additional assumptions that should be added after an assumption involving an abstract function call.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Accuracy\+Assumption\+Builder\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1AccuracyAssumptionBuilder__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{Fragment} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1AccuracyAssumptionBuilder_a55574da8c81d81379e9ec4e7ddf90f32}{accuracy\+Assumptions} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} assumption, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Analyze an assumption. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An accuracy assumption builder provides logic for determining additional assumptions that should be added after an assumption involving an abstract function call. 
+
+\begin{DoxyAuthor}{Author}
+zirkel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1AccuracyAssumptionBuilder_a55574da8c81d81379e9ec4e7ddf90f32}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Accuracy\+Assumption\+Builder@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Accuracy\+Assumption\+Builder}!accuracy\+Assumptions@{accuracy\+Assumptions}}
+\index{accuracy\+Assumptions@{accuracy\+Assumptions}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Accuracy\+Assumption\+Builder@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::\+Accuracy\+Assumption\+Builder}}
+\subsubsection[{accuracy\+Assumptions}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Fragment} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+Accuracy\+Assumption\+Builder.\+accuracy\+Assumptions (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression}}]{assumption, }
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1AccuracyAssumptionBuilder_a55574da8c81d81379e9ec4e7ddf90f32}
+
+
+Analyze an assumption. 
+
+If that assumption contains an abstract function call, use heuristics to come up with appropriate Taylor series expansions when possible. Return these as a fragment of code consisting of additional assumptions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em assumption} & The expression being added to the path condition. \\
+\hline
+{\em scope} & The scope containing the expression. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} fragment (possibly empty) with assumptions relating to Taylor expansions of any abstract functions that are called within the assumption. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1CommonAccuracyAssumptionBuilder_a53a4952027da7effe41c5d152ae81fa8}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Common\+Accuracy\+Assumption\+Builder}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/Accuracy\+Assumption\+Builder.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OmpForNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.omp</a> &gt; <span class="el_source">OmpForNode.java</span></div><h1>OmpForNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.node.IF.omp;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FunctionCallNode;
+
+/**
+ * This interface represents the OpenMP loop construct. &lt;br&gt;
+ * The syntax of the loop construct is specified in Section 2.7.1, OpenMP 4.0.0,
+ * as follows:
+ * 
+ * &lt;pre&gt;
+ * #pragma omp for [clause[[,] clause] ... ] new-line 
+ * for-loops
+ * &lt;/pre&gt;
+ * 
+ * where clause is one of the following:
+ * 
+ * &lt;pre&gt;
+ * private(list)
+ * firstprivate(list) 
+ * lastprivate(list) 
+ * reduction(reduction-identifier: list)
+ * schedule(kind[, chunk_size])
+ * collapse(n)
+ * ordered
+ * nowait
+ * &lt;/pre&gt;
+ * 
+ * @author Manchun Zheng
+ * 
+ */
+public interface OmpForNode extends OmpWorksharingNode {
+
+	/**
+	 * The schedule kind of an OpenMP for pragma.
+	 * 
+	 * @author Manchun Zheng
+	 * 
+	 */
+<span class="nc" id="L41">	public enum OmpScheduleKind {</span>
+<span class="nc" id="L42">		AUTO, DYNAMIC, GUIDED, RUNTIME, STATIC, </span>
+<span class="nc" id="L43">		/**</span>
+		 * The schedule clause is absent
+		 */
+<span class="nc" id="L46">		NONE</span>
+	};
+
+	/**
+	 * Returns the schedule kind of the loop construct. The default schedule is
+	 * implementation defined, in our case we choose &lt;code&gt;STATIC&lt;/code&gt;.
+	 * 
+	 * @return The schedule kind of the loop construct.
+	 */
+	OmpScheduleKind schedule();
+
+	/**
+	 * Updates the schedule kind of this loop construct.
+	 * 
+	 * @param ompScheduleKind
+	 *            The schedule kind to be used to update this loop construct.
+	 */
+	void setSchedule(OmpScheduleKind ompScheduleKind);
+
+	/**
+	 * Returns the number of loops associated with this loop construct. 1 by
+	 * default if there is no explicit collapse clause.
+	 * 
+	 * @return The number of loops associated with this loop construct.
+	 */
+	int collapse();
+
+	/**
+	 * Updates the number of loops associated with this loop construct.
+	 * 
+	 * @param value
+	 *            The number to be used to update this loop construct.
+	 */
+	void setCollapse(int value);
+
+	/**
+	 * Returns true iff &lt;code&gt;ordered&lt;/code&gt; clause is present.
+	 * 
+	 * @return true iff &lt;code&gt;ordered&lt;/code&gt; clause is present.
+	 */
+	boolean ordered();
+
+	/**
+	 * Updates the ordered flag of this loop construct.
+	 * 
+	 * @param value
+	 *            The value to be used to update this loop construct.
+	 */
+	void setOrdered(boolean value);
+
+	/**
+	 * Returns the chunk size. NULL if there is no schedule clause.
+	 * 
+	 * @return the chunk size, NULL if there is no schedule clause.
+	 */
+	ExpressionNode chunkSize();
+
+	/**
+	 * Updates the chunk size of this loop construct.
+	 * 
+	 * @param chunkSize
+	 *            The expression node representing the new chunk size.
+	 */
+	void setChunsize(ExpressionNode chunkSize);
+
+	/**
+	 * Returns the assertions to be checked before the entry of this loop
+	 * construct.
+	 * 
+	 * @return the assertions to be checked before the entry of this loop
+	 *         construct.
+	 */
+	SequenceNode&lt;FunctionCallNode&gt; assertions();
+
+	/**
+	 * Updates the assertions to be checked before the entry of this loop
+	 * construct.
+	 * 
+	 * @param assertions
+	 *            The assertions to be used to update this loop construct.
+	 */
+	void setAssertions(SequenceNode&lt;FunctionCallNode&gt; assertions);
+
+	/**
+	 * Returns the loop invariant.
+	 * 
+	 * @return the loop invariant.
+	 */
+	FunctionCallNode invariant();
+
+	/**
+	 * Updates the loop invariant of this loop construct.
+	 * 
+	 * @param invariant
+	 *            The assertion to be used as the new invariant.
+	 */
+	void setInvariant(FunctionCallNode invariant);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

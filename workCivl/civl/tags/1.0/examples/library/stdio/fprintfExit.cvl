@@ -1,0 +1,15 @@
+#include<stdio.h>
+#include<civlc.cvh>
+
+$input int K;
+
+int main(){
+  int a = 1, b = 2, c = 3;
+  
+  fprintf(stdout, "a is %d\n", a);
+  fprintf(stdout, "b is %d\n", b);
+  if(K == 0)
+    $exit();
+  fprintf(stderr, "c is %d\n", c);
+  return 0;
+}

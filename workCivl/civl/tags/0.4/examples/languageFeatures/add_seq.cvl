@@ -1,0 +1,12 @@
+/* Compare sequential and parallel sum of array */
+#include<civlc.h>
+$input int N;
+$assume N>=0;
+$input double a[N];
+double sum_seq;
+
+void main() {
+  sum_seq = 0.0;
+  for (int i=0; i<N; i++)
+    sum_seq += a[i];
+}

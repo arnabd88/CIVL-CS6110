@@ -1,0 +1,17 @@
+#ifndef __CIVL_CIVLPTHREAD__
+#define __CIVL_CIVLPTHREAD__
+
+#include <civl-pthread.cvh>
+#include <pthread.h>
+
+struct _pthread_gpool_t{
+  pthread_t * threads[];
+};
+
+struct _pthread_pool_t{
+  $pthread_gpool_t gpool; 
+  $proc tid;
+  pthread_t * thread;
+};
+
+#endif

@@ -1,0 +1,13 @@
+/* Commandline execution:
+ *		civl verify mallocBad2.cvl
+ * */
+#include <civlc.cvh>
+void main() {
+  $scope s=$here;
+  double *p;
+  
+  // Uses pointer without malloc.
+  p[4]=3.14;
+  $assert(p[4]==3.14);
+  $free(p);
+}   

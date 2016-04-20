@@ -1,0 +1,12 @@
+/* test if ResultType is not "YES"
+ *		
+ * */
+#include <civlc.cvh>
+void main() {
+  double *p = (double *) $malloc($here, 5.1*sizeof(double)); //5.1 is not valid
+  
+  p[4]=3.14;
+  $free(p);
+  // Uses pointer after free.
+  $assert(p[4]==3.14);
+}   

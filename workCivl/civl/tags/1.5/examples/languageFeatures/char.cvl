@@ -1,0 +1,11 @@
+/* 
+ * Commandline example:
+ *     civl verify char.cvl
+ */
+#include <stdio.h>
+void main(){
+  char a = 'a';
+  
+  a = 'b';
+  printf("The char value is %c", a);
+}

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonHereOrRootNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.expression</a> &gt; <span class="el_source">CommonHereOrRootNode.java</span></div><h1>CommonHereOrRootNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.expression;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.HereOrRootNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonHereOrRootNode extends CommonConstantNode implements
+		HereOrRootNode {
+	private boolean isRootNode;
+
+	public CommonHereOrRootNode(Source source, String representation,
+			Type scopeType) {
+<span class="nc" id="L18">		super(source, representation, scopeType);</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">		if (representation.equalsIgnoreCase(&quot;$root&quot;))</span>
+<span class="nc" id="L20">			isRootNode = true;</span>
+		else
+<span class="nc" id="L22">			isRootNode = false;</span>
+<span class="nc" id="L23">	}</span>
+
+	@Override
+	public HereOrRootNode copy() {
+<span class="nc" id="L27">		String representation = &quot;$here&quot;;</span>
+
+<span class="nc bnc" id="L29" title="All 2 branches missed.">		if (isRootNode)</span>
+<span class="nc" id="L30">			representation = &quot;$root&quot;;</span>
+<span class="nc" id="L31">		return new CommonHereOrRootNode(getSource(), representation,</span>
+<span class="nc" id="L32">				getInitialType());</span>
+	}
+
+	@Override
+	public boolean isHereNode() {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		return !this.isRootNode;</span>
+	}
+
+	@Override
+	public boolean isRootNode() {
+<span class="nc" id="L42">		return this.isRootNode;</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (isRootNode)</span>
+<span class="nc" id="L48">			out.print(&quot;$root&quot;);</span>
+		else
+<span class="nc" id="L50">			out.print(&quot;$here&quot;);</span>
+<span class="nc" id="L51">	}</span>
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (that instanceof HereOrRootNode)</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">			if (this.isRootNode == ((HereOrRootNode) that).isRootNode())</span>
+<span class="nc" id="L57">				return null;</span>
+			else
+<span class="nc" id="L59">				return new DifferenceObject(this, that, DiffKind.OTHER,</span>
+<span class="nc" id="L60">						&quot;different $root/$here value&quot;);</span>
+<span class="nc" id="L61">		return new DifferenceObject(this, that);</span>
+	}
+
+	@Override
+	public ConstantKind constantKind() {
+<span class="nc" id="L66">		return ConstantKind.HERE_OR_ROOT;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

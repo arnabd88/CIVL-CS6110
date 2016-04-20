@@ -1,0 +1,266 @@
+      CIVL: The Concurrency Intermediate Verification Language
+                               v1.7
+
+------------------------------ Overview -------------------------------
+
+CIVL is a framework encompassing... 
+
+ * a programming language, CIVL-C, which adds to C a number of
+   concurrency primitives, as well as the ability to define
+   functions in any scope.  Together, these features make for
+   a very expressive concurrent language that can faithfully
+   represent programs using various APIs and parallel languages,
+   such as MPI, OpenMP, Pthread, CUDA, and Chapel. CIVL-C also 
+   provides a number of primitives supporting verification.
+ * a model checker which uses symbolic execution to verify a
+   number of safety properties of CIVL-C programs.   The model
+   checker can also be used to verify that two CIVL-C programs
+   are functionally equivalent.
+ * a number of translators from various commonly-used languages
+   and APIs to CIVL-C. (This part is still a work in progress.)
+
+CIVL is developed by the Verified Software Laboratory at the
+University of Delaware Department of Computer Science.
+For more information, visit http://vsl.cis.udel.edu/civl
+
+Active Developers:
+Matthew B. Dwyer
+Mitchell Gerrard
+Si Li
+Ziqing Luo
+Stephen F. Siegel
+Wenhao Wu
+Yihao Yan
+Manchun Zheng
+
+Inactive Developers:
+John Edenhofner
+Andre Marianiello
+Michael Rogers
+Timothy K. Zirkel
+
+------------------------------- License -------------------------------
+
+CIVL is open source software distributed under the GNU
+General Public License.  However, the libraries used by CIVL
+(and incorporated into the complete distribution) use various
+licenses.  See directory licenses for the license of each component.
+
+-------------------------- Updates from v1.6 -------------------------
+- ABC: 
+  	fixing bugs in side-effect remover regarding the translation of 
+  	logical and/or operators;
+  	fixing a bug in grammar related to variable declarations.
+- SARL: 
+	simplifying the representation of symbolic expressions in SARL
+- New Features:
+  	system function $pow (in civlc.cvh) for power operations
+  	examples from VerifyThis competition are added
+	
+   
+------------------------- Binary Installation -------------------------
+
+For most users, this will be the easiest way to install and
+use CIVL.  Developers should instead follow the instructions for
+"Source Installation" below.
+
+1. Install at least one of the theorem provers below.
+The more provers you install, the more precise CIVL analysis will
+be.  Note that CIVL only requires the binary executable
+version of each prover; you can ignore the libraries, various
+API bindings, etc.   You just need to ensure that
+each binary executable is in your PATH when you run
+"civl config".   The currently supported provers are:
+  
+   - CVC3, http://www.cs.nyu.edu/acsys/cvc3/download.html
+     download the latest, optimized build with static library
+     and executable for your OS.  Place the executable file
+     "cvc3" in your PATH.  You can discard everything else.
+     Alternatively, on some linux systems, CVC3 can be installed
+     using the package manager via "sudo apt-get install cvc3".
+     This will place cvc3 in /usr/bin.
+     
+   - CVC4,  http://cvc4.cs.nyu.edu/downloads/
+   
+   - Z3, http://z3.codeplex.com/SourceControl/latest
+
+2. Install a Java 7 SDK if you have not already.  Go to
+
+  http://www.oracle.com/technetwork/java/javase/downloads/
+
+for the latest from Oracle.  On linux, you can instead use
+the package manager:
+
+  sudo apt-get install openjdk-7-jdk
+
+3. Download the CIVL distribution from http://vsl.cis.udel.edu/civl.
+
+4. Unzip and untar the CIVL distribution file if this
+does not happen automatically.  This should result in a
+folder named CIVL-TAG, where TAG is some version ID string.
+This folder contains the following:
+
+ - README   : this file
+ - bin      : containing one executable sh script called "civl"
+ - lib      : containing civl-TAG.jar
+ - doc      : containing the manual and the tutorial of CIVL
+ - emacs    : CIVL-C emacs mode and its installation instructions
+ - licenses : licenses for CIVL and included libraries
+ - examples : some example CIVL programs
+
+5.  You can move the CIVL folder wherever you want.
+The JAR file in the lib directory is all you need to run CIVL.
+You may also move this jar file wherever you want.   You 
+run CIVL by typing a command that begins
+"java -jar /path/to/civl-TAG.jar ...".  For convenience
+you may instead use the shell script "civl" in bin,
+which allows you to replace "java -jar /path/to/civl-TAG.jar"
+with just "civl" on the command line.   Simply edit the civl script
+to reflect the path to civl-TAG.jar and place the script 
+somewhere in your PATH.   Alternatively, you can just define
+an alias in your .profile, .bash_profile, or equivalent, such as
+
+alias civl='java -jar /path/to/civl-TAG.jar'
+
+In the following, we will assume that you have defined
+a command "civl" in one these ways.
+
+6. Type "civl config".  This should report that it found
+the theorem provers you installed (and are in your PATH).
+It should create a file called ".sarl" in your home directory
+which you can also edit by hand.
+
+
+------------------------- Source Installation -------------------------
+
+We recommend using the Eclipse IDE for Java/EE developers.
+
+0. Install theorem provers following the directions above.
+Install Eclipse IDE for Java/EE developers if you have not already
+done so.
+
+1. Install an SVN plugin in Eclipse (such as Subversive) if you have
+   not already.
+
+2. Install prerequisite projects ABC, SARL and GMC. 
+   Make sure that the three projects are put in the workspace
+   directory where CIVL will be created.  Specifically:
+
+    a. Install the symbolic algebra and reasoning library SARL.
+	   In Eclipse, select New Project...from SVN, use the archive 
+	   svn://vsl.cis.udel.edu/sarl. After entering that, open it 
+	   up and select the "trunk". After checking out trunk, name 
+	   the project "SARL". Then follow the instructions in the INSTALL 
+	   file for Eclipse installation. Build the sarl.jar from within 
+	   Eclipse by right-clicking (or ctrl-clicking) on the build.xml 
+	   file and selecting Run As->Ant Build.
+	   
+    b. Install the C front-end ABC. In Eclipse, 
+	   select New Project...from SVN, use the archive 
+	   svn://vsl.cis.udel.edu/abc. After entering that, open it 
+	   up and select the "trunk". After checking out trunk, name 
+	   the project "ABC". Then follow the instructions in the INSTALL
+	   file for Eclipse installation. Build the abc.jar from within
+	   Eclipse by right-clicking (or ctrl-clicking on OS X) on the
+	   build.xml file and selecting Run As->Ant Build.
+	
+    c. Install the generic model checking utilities package GMC.
+	   In Eclipse, select New Project...from SVN, use the archive 
+	   svn://vsl.cis.udel.edu/gmc. After entering that, open it 
+	   up and select the "trunk". After checking out trunk, name 
+	   the project "GMC". Build the gmc.jar from within Eclipse
+	   by right-clicking (or ctrl-clicking) on the build.xml file and
+	   selecting Run As->Ant Build.
+
+3. From within Eclipse, select New Project...from SVN. The archive is
+   svn://vsl.cis.udel.edu/civl.  After entering that, open it up and
+   select the "trunk". (It is simplest to just check out the trunk for
+   the Eclipse project.)
+
+4. Check out the trunk, and create the project using the New Java
+   Project Wizard as usual, naming it "CIVL". The .project, .classpath,
+   and other Eclipse meta-data are already in the SVN archive,
+   saving you a bunch of work.
+
+5. If you already have the VSL dependencies library, you may
+   skip this step. Otherwise, download the tgz archive of VSL
+   dependencies from http://vsl.cis.udel.edu/lib/tools/vsl_depend
+   Unzip the .tgz file and you will have the folder vsl.
+   Move vsl to /opt.
+   Note: you probably will need to use sudo for this.
+   Also, if you don't already have a directory called /opt, 
+   you will have to create it with "mkdir /opt".  Also, if you 
+   don't want to use /opt for some reason, you can use any 
+   directory you want; just modify the instructions below
+   accordingly.
+
+   Suppose that you put the .tgz file (or .tar file if your browser
+   unzipped it automatically to a .tar file) in the directory DOWNLOAD.
+   You can use the following commands:
+
+   		$ cd DOWNLOAD
+   		$ tar xzf YourTgzOrTarFile vsl
+   		$ sudo mv vsl /opt
+
+   (Leave out the "x" in the tar command if the file was already
+   unzipped.) Now you can type "ls /opt/vsl", and the output
+   should be
+
+   		README.txt    lib        licenses    src
+
+6. If default_build.properties matches the configuration of your system,
+   then you can skip this step. Otherwise, you may need to create a file 
+   build.properties in the directory containing build.xml.
+   Copy and paste the content from any file under properties, edit each 
+   entry with the path configured in your system. The newly created file
+   build.properties will automatically be used by ant to to build the
+   .jar file.
+
+7. Navigate to Preferences -> Java -> Build Path -> ClassPath 
+   Variables, and then select New to create a classpath variable VSL, 
+   and specify its value to be /opt/vsl.
+
+8. Do a clean build.  Everything should compile.  Generate the civl.jar
+   by right-clicking (or ctrl-click on OS X) the build.xml file and
+   Run As->Ant Build. 
+   
+9. Somewhere on your system, create a plain text file containing
+   exactly the following two lines:
+   
+#!/bin/sh
+java -jar /Path/To/Your/workspace/CIVL/civl.jar $@
+ 
+   where "/Path/To/Your/workspace" is replaced with the path
+   to your Eclipse workspace directory.  Name this file "civl",
+   put it in your PATH, and make it executable (chmod ugo+x civl).
+   Alternatively, you can define an alias in your .profile,
+   .bash_profile, .bashrc, or equivalent:
+
+alias civl='java -jar /Path/To/Your/workspace/CIVL/civl.jar'
+
+10. From a terminal window, execute "civl config".  This should
+    find the theorem provers in your PATH and create a file
+    .sarl in your home directory.
+
+11. In Eclipse, navigate to "Run->Run Configurations... Create a new
+   JUnit configuration."
+   Name it "CIVL Regression Tests". Select "Run all tests in the
+   selected project..." and navigate to the folder "test/regress"
+   in the CIVL project. The Test runner should be JUnit 4. Under the
+   Arguments tab, type "-ea" (without the quotes) in the VM arguments
+   area (to enable assertion checking).
+
+12. An example of how to set up a single test from within Eclipse:
+   create a new Run Configuration via the Run->Run
+   Configurations... menu.  Create a new "Java Application"
+   configuration.  Call it "CIVL barrier2".  The Project is CIVL.  The
+   main class is edu.udel.cis.vsl.civl.CIVL.  Under the Arguments tab,
+   set the Program arguments to 
+   
+       verify examples/concurrency/barrier2.cvl
+   
+   Modify the VM arguments as in the step above.  You should now be
+   able to run the test by clicking "Run".
+   
+
+   

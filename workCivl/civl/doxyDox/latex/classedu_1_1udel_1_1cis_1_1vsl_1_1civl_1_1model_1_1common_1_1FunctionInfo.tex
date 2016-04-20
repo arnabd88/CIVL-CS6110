@@ -1,0 +1,324 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info}}
+
+
+Maintains the information, e.\+g.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a351632b7601e7545c51df87c51386f56}{Function\+Info} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} function)
+\begin{DoxyCompactList}\small\item\em Create a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo}{Function\+Info}. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ad095fe5f64e87d13c5687785a9af60e8}{add\+Break\+Set} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ statement\+Set)
+\begin{DoxyCompactList}\small\item\em Add a set of statements to the break statement stack 
+
+{\bfseries Preconditions\+:}  \hyperlink{structA}{A} new loop or switch is just encountered. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ae2d689b95f6f095a8d47f13a5f7721dc}{add\+Continue\+Set} (Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ statement\+Set)
+\begin{DoxyCompactList}\small\item\em Add a set of statements to the continue statement stack 
+
+{\bfseries Preconditions\+:}  \hyperlink{structA}{A} new loop is just encountered. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a98610ddcf627cbdeed06b374122b0ebc}{}void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a98610ddcf627cbdeed06b374122b0ebc}{add\+Bound\+Variable} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} type)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a98610ddcf627cbdeed06b374122b0ebc}
+
+\begin{DoxyCompactList}\small\item\em Add a bound variable to the stack of bound variables. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1680ec437178dac2c5425ff419301e49}{bound\+Variable\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} name)
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a5fc1d2d85d5dac62ed6be12d10f61130}{complete\+Function} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Fragment}{Fragment} function\+Body)
+\begin{DoxyCompactList}\small\item\em Complete the function with a fragment translated from its body node, including\+: \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_aa26f85c1a6c97f257de4e6d033dd98bb}{contains\+Bound\+Variable} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} name)
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLFunction}{C\+I\+V\+L\+Function} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a6938931465946cc1c802c0cb576f99cd}{function} ()
+\begin{DoxyCompactList}\small\item\em Get the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} function that is being processed. \end{DoxyCompactList}\item 
+Map$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement}, Label\+Node $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1dfd9e1f8a29f743b15ec092aa439406}{goto\+Statements} ()
+\begin{DoxyCompactList}\small\item\em Return the map of goto statements. \end{DoxyCompactList}\item 
+Map$<$ Label\+Node, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ac27c534bf0acc3d4caffd0eeb0263b36}{labeled\+Locations} ()
+\begin{DoxyCompactList}\small\item\em Return the map of labeled locations. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ac6de12b871a2f970a5b45d8dd4c1fa7d}{peek\+Break\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Peek the break stack, called only when processing a jump node with break kind. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a3ac22a99cc7c8eae9ec696b7858c3201}{peek\+Continue\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Peek the continue stack, called only when processing a jump node with continue kind. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1a8fe1914429a2f3076506d1271ecb40}{pop\+Break\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Pop the set of break statements from the stack. \end{DoxyCompactList}\item 
+Set$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_af4c184e55a5be2553fdb5d68c2512cfd}{pop\+Continue\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Pop the set of continue statements from the stack. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Identifier}{Identifier} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a9372adfb41e6bbdc415ee20ce813da4f}{pop\+Bound\+Variable\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Pop the top identifier from the bound variable stack. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_adad18a517a0f8c42f932d8a384391148}{put\+To\+Goto\+Statement} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement, Label\+Node label\+Node)
+\begin{DoxyCompactList}\small\item\em Add a mapping of a goto statement and a label node to the map of goto statements. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a6af95a0efa12d1ae0223e016996dc72d}{put\+To\+Labeled\+Locations} (Label\+Node label\+Node, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1location_1_1Location}{Location} location)
+\begin{DoxyCompactList}\small\item\em Add a mapping from a label node to a location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Maintains the information, e.\+g. 
+
+labeled location, goto statements, continue/break statement stack, that is required in the translation of the definition of a function from A\+B\+C A\+S\+T to \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} model.
+
+\begin{DoxyAuthor}{Author}
+zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a351632b7601e7545c51df87c51386f56}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!Function\+Info@{Function\+Info}}
+\index{Function\+Info@{Function\+Info}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{Function\+Info}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+Function\+Info (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Function}}]{function}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a351632b7601e7545c51df87c51386f56}
+
+
+Create a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo}{Function\+Info}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em function} & the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} function object that is being processed \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ad095fe5f64e87d13c5687785a9af60e8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!add\+Break\+Set@{add\+Break\+Set}}
+\index{add\+Break\+Set@{add\+Break\+Set}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{add\+Break\+Set}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+add\+Break\+Set (
+\begin{DoxyParamCaption}
+\item[{Set$<$ {\bf Statement} $>$}]{statement\+Set}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ad095fe5f64e87d13c5687785a9af60e8}
+
+
+Add a set of statements to the break statement stack 
+
+{\bfseries Preconditions\+:}  \hyperlink{structA}{A} new loop or switch is just encountered. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement\+Set} & an empty set of statements \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ae2d689b95f6f095a8d47f13a5f7721dc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!add\+Continue\+Set@{add\+Continue\+Set}}
+\index{add\+Continue\+Set@{add\+Continue\+Set}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{add\+Continue\+Set}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+add\+Continue\+Set (
+\begin{DoxyParamCaption}
+\item[{Set$<$ {\bf Statement} $>$}]{statement\+Set}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ae2d689b95f6f095a8d47f13a5f7721dc}
+
+
+Add a set of statements to the continue statement stack 
+
+{\bfseries Preconditions\+:}  \hyperlink{structA}{A} new loop is just encountered. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement\+Set} & an empty set of statement \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1680ec437178dac2c5425ff419301e49}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!bound\+Variable\+Type@{bound\+Variable\+Type}}
+\index{bound\+Variable\+Type@{bound\+Variable\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{bound\+Variable\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+bound\+Variable\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf Identifier}}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1680ec437178dac2c5425ff419301e49}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of a bound variable. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the bound variable with the given name. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a5fc1d2d85d5dac62ed6be12d10f61130}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!complete\+Function@{complete\+Function}}
+\index{complete\+Function@{complete\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{complete\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+complete\+Function (
+\begin{DoxyParamCaption}
+\item[{{\bf Fragment}}]{function\+Body}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a5fc1d2d85d5dac62ed6be12d10f61130}
+
+
+Complete the function with a fragment translated from its body node, including\+: 
+
+
+\begin{DoxyEnumerate}
+\item set the target location of each goto statement, which can\textquotesingle{}t be decided when the goto node is translated; 
+\item add all locations and statements reachable from the start location of the body fragment into the function. 
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em function\+Body} & a fragment translated from the body of the function \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_aa26f85c1a6c97f257de4e6d033dd98bb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!contains\+Bound\+Variable@{contains\+Bound\+Variable}}
+\index{contains\+Bound\+Variable@{contains\+Bound\+Variable}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{contains\+Bound\+Variable}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+contains\+Bound\+Variable (
+\begin{DoxyParamCaption}
+\item[{{\bf Identifier}}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_aa26f85c1a6c97f257de4e6d033dd98bb}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of a variable. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether or not this variable is on the stack of bound variables. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a6938931465946cc1c802c0cb576f99cd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!function@{function}}
+\index{function@{function}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Function} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a6938931465946cc1c802c0cb576f99cd}
+
+
+Get the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} function that is being processed. 
+
+\begin{DoxyReturn}{Returns}
+The current function 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1dfd9e1f8a29f743b15ec092aa439406}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!goto\+Statements@{goto\+Statements}}
+\index{goto\+Statements@{goto\+Statements}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{goto\+Statements}]{\setlength{\rightskip}{0pt plus 5cm}Map$<${\bf Statement}, Label\+Node$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+goto\+Statements (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1dfd9e1f8a29f743b15ec092aa439406}
+
+
+Return the map of goto statements. 
+
+\begin{DoxyReturn}{Returns}
+mapping from goto statement to label node 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ac27c534bf0acc3d4caffd0eeb0263b36}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!labeled\+Locations@{labeled\+Locations}}
+\index{labeled\+Locations@{labeled\+Locations}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{labeled\+Locations}]{\setlength{\rightskip}{0pt plus 5cm}Map$<$Label\+Node, {\bf Location}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+labeled\+Locations (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ac27c534bf0acc3d4caffd0eeb0263b36}
+
+
+Return the map of labeled locations. 
+
+\begin{DoxyReturn}{Returns}
+mapping from labeled node to locations 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ac6de12b871a2f970a5b45d8dd4c1fa7d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!peek\+Break\+Stack@{peek\+Break\+Stack}}
+\index{peek\+Break\+Stack@{peek\+Break\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{peek\+Break\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Statement}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+peek\+Break\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_ac6de12b871a2f970a5b45d8dd4c1fa7d}
+
+
+Peek the break stack, called only when processing a jump node with break kind. 
+
+\begin{DoxyReturn}{Returns}
+the set of break statements on the top of the stack 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a3ac22a99cc7c8eae9ec696b7858c3201}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!peek\+Continue\+Stack@{peek\+Continue\+Stack}}
+\index{peek\+Continue\+Stack@{peek\+Continue\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{peek\+Continue\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Statement}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+peek\+Continue\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a3ac22a99cc7c8eae9ec696b7858c3201}
+
+
+Peek the continue stack, called only when processing a jump node with continue kind. 
+
+\begin{DoxyReturn}{Returns}
+the set of continue statements on the top of the stack 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a9372adfb41e6bbdc415ee20ce813da4f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!pop\+Bound\+Variable\+Stack@{pop\+Bound\+Variable\+Stack}}
+\index{pop\+Bound\+Variable\+Stack@{pop\+Bound\+Variable\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{pop\+Bound\+Variable\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Identifier} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+pop\+Bound\+Variable\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a9372adfb41e6bbdc415ee20ce813da4f}
+
+
+Pop the top identifier from the bound variable stack. 
+
+\begin{DoxyReturn}{Returns}
+The identifier from the top of the bound variable stack. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1a8fe1914429a2f3076506d1271ecb40}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!pop\+Break\+Stack@{pop\+Break\+Stack}}
+\index{pop\+Break\+Stack@{pop\+Break\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{pop\+Break\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Statement}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+pop\+Break\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a1a8fe1914429a2f3076506d1271ecb40}
+
+
+Pop the set of break statements from the stack. 
+
+\begin{DoxyReturn}{Returns}
+the set of break statements from the top of the stack 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_af4c184e55a5be2553fdb5d68c2512cfd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!pop\+Continue\+Stack@{pop\+Continue\+Stack}}
+\index{pop\+Continue\+Stack@{pop\+Continue\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{pop\+Continue\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}Set$<${\bf Statement}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+pop\+Continue\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_af4c184e55a5be2553fdb5d68c2512cfd}
+
+
+Pop the set of continue statements from the stack. 
+
+\begin{DoxyReturn}{Returns}
+the set of continue statements from the top of the stack 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_adad18a517a0f8c42f932d8a384391148}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!put\+To\+Goto\+Statement@{put\+To\+Goto\+Statement}}
+\index{put\+To\+Goto\+Statement@{put\+To\+Goto\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{put\+To\+Goto\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+put\+To\+Goto\+Statement (
+\begin{DoxyParamCaption}
+\item[{{\bf Statement}}]{statement, }
+\item[{Label\+Node}]{label\+Node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_adad18a517a0f8c42f932d8a384391148}
+
+
+Add a mapping of a goto statement and a label node to the map of goto statements. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em statement} & The goto statement \\
+\hline
+{\em label\+Node} & The label node of the target of the goto statement \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a6af95a0efa12d1ae0223e016996dc72d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}!put\+To\+Labeled\+Locations@{put\+To\+Labeled\+Locations}}
+\index{put\+To\+Labeled\+Locations@{put\+To\+Labeled\+Locations}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::common\+::\+Function\+Info}}
+\subsubsection[{put\+To\+Labeled\+Locations}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+Function\+Info.\+put\+To\+Labeled\+Locations (
+\begin{DoxyParamCaption}
+\item[{Label\+Node}]{label\+Node, }
+\item[{{\bf Location}}]{location}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1FunctionInfo_a6af95a0efa12d1ae0223e016996dc72d}
+
+
+Add a mapping from a label node to a location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label\+Node} & The label node \\
+\hline
+{\em location} & The location corresponding to the label node \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/common/Function\+Info.\+java\end{DoxyCompactItemize}

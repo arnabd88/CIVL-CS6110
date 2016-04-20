@@ -1,0 +1,9 @@
+#include <civlc.cvh>
+
+void main() {
+  $domain(1) dom = ($domain){0 .. 5};
+  int sum = 0;
+  
+  $parfor (int i, j: dom) // too many variables
+    sum += i;
+}

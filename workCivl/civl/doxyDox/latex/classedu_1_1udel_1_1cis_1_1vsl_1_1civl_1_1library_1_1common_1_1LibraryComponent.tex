@@ -1,0 +1,209 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Library\+Component Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Library\+Component@{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Library\+Component}}
+
+
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent}{Library\+Component} class provides the common data and operations of library evaluator, enabler, and executor.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Library\+Component\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Library\+Component\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_1_1CIVLOperator}{C\+I\+V\+L\+Operator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_af73cb2ab3ef623a9f247edf2656c1cab}{name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name associated to this library executor or enabler, for example, \char`\"{}stdio\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aef20655e297dc498596d7cee555e3243}{Library\+Component} (String name, Symbolic\+Universe \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a15e177f8c241bccac36c3ac9fd65a0b7}{universe}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}{symbolic\+Util}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a7a1213c02b2d29a79f550c7090594967}{symbolic\+Analyzer}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a223e603cab7a909db88f49c256b2ce98}{civl\+Config}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} lib\+Evaluator\+Loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ac38a7c7971f70f8c969e55538a17f016}{model\+Factory}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} err\+Logger)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of a library. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a264c583d48c1e9fc4a01fb5165a83a1f}{apply\+C\+I\+V\+L\+Operator} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, String process, Symbolic\+Expression arg0, Symbolic\+Expression arg1, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_1_1CIVLOperator}{C\+I\+V\+L\+Operator} op, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} civlsource)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Completing an operation (which is included in C\+I\+V\+L\+Operation enumerator). \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aeec06c871204eded3c096fc5bf32680c}{}\hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_1_1CIVLOperator}{C\+I\+V\+L\+Operator} {\bfseries translate\+Operator} (int op)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aeec06c871204eded3c096fc5bf32680c}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aa3b6c020dbbeb8f88f74ac9902760f71}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State}, Symbolic\+Expression\mbox{[}$\,$\mbox{]}$>$ {\bfseries evaluate\+Arguments} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}\mbox{[}$\,$\mbox{]} arguments)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aa3b6c020dbbeb8f88f74ac9902760f71}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a593837c12b0a6af76efbceb885bedddf}{}Numeric\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a593837c12b0a6af76efbceb885bedddf}{one}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a593837c12b0a6af76efbceb885bedddf}
+
+\begin{DoxyCompactList}\small\item\em The symbolic expression of one. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a9fd461623f8f7e6f4461c5fbae08aa35}{}Int\+Object \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a9fd461623f8f7e6f4461c5fbae08aa35}{one\+Object}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a9fd461623f8f7e6f4461c5fbae08aa35}
+
+\begin{DoxyCompactList}\small\item\em The symbolic object of integer one. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a646bf3037111956ea229af271a05dd3e}{}Numeric\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a646bf3037111956ea229af271a05dd3e}{three}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a646bf3037111956ea229af271a05dd3e}
+
+\begin{DoxyCompactList}\small\item\em The symbolic expression of three. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a948cd67dc8d10b89f3cd240e9bba4bd9}{}Int\+Object \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a948cd67dc8d10b89f3cd240e9bba4bd9}{three\+Object}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a948cd67dc8d10b89f3cd240e9bba4bd9}
+
+\begin{DoxyCompactList}\small\item\em The symbolic object of integer three. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aef194c347907bebaebeaf4e41d60b5d4}{}Numeric\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aef194c347907bebaebeaf4e41d60b5d4}{two}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aef194c347907bebaebeaf4e41d60b5d4}
+
+\begin{DoxyCompactList}\small\item\em The symbolic expression of two. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_acc605a3f9c742ad672bbc0df4f918803}{}Int\+Object \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_acc605a3f9c742ad672bbc0df4f918803}{two\+Object}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_acc605a3f9c742ad672bbc0df4f918803}
+
+\begin{DoxyCompactList}\small\item\em The symbolic object of integer two. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a0db393ff135988d88d83a8b290764b62}{}Numeric\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a0db393ff135988d88d83a8b290764b62}{zero}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a0db393ff135988d88d83a8b290764b62}
+
+\begin{DoxyCompactList}\small\item\em The symbolic expression of zero. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_afc478b67e879b683421f1ac3c79ad788}{}Int\+Object \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_afc478b67e879b683421f1ac3c79ad788}{zero\+Object}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_afc478b67e879b683421f1ac3c79ad788}
+
+\begin{DoxyCompactList}\small\item\em The symbolic object of integer zero. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a15e177f8c241bccac36c3ac9fd65a0b7}{}Symbolic\+Universe \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a15e177f8c241bccac36c3ac9fd65a0b7}{universe}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a15e177f8c241bccac36c3ac9fd65a0b7}
+
+\begin{DoxyCompactList}\small\item\em The symbolic universe for symbolic computations. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}{symbolic\+Util}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}
+
+\begin{DoxyCompactList}\small\item\em The symbolic universe for symbolic computations. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a7a1213c02b2d29a79f550c7090594967}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a7a1213c02b2d29a79f550c7090594967}{symbolic\+Analyzer}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a7a1213c02b2d29a79f550c7090594967}
+
+\begin{DoxyCompactList}\small\item\em The symbolic analyzer for operations on symbolic expressions and states. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aaec07e3e9d1818b94595bfbf9425bd80}{}String {\bfseries name}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aaec07e3e9d1818b94595bfbf9425bd80}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a9eb95aceeee4c36b9f441b35212163e6}{}Boolean\+Expression {\bfseries true\+Value}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a9eb95aceeee4c36b9f441b35212163e6}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a225be8153a5989ac3aea533740af2d9b}{}Boolean\+Expression {\bfseries false\+Value}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a225be8153a5989ac3aea533740af2d9b}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a1e949210edf7700ce373f46436a6b80a}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} {\bfseries lib\+Evaluator\+Loader}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a1e949210edf7700ce373f46436a6b80a}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ac38a7c7971f70f8c969e55538a17f016}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ac38a7c7971f70f8c969e55538a17f016}{model\+Factory}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ac38a7c7971f70f8c969e55538a17f016}
+
+\begin{DoxyCompactList}\small\item\em The model factory of the system. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a793947b7f5a2562067a2e4a81f1097cb}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Model}{Model} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a793947b7f5a2562067a2e4a81f1097cb}{model}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a793947b7f5a2562067a2e4a81f1097cb}
+
+\begin{DoxyCompactList}\small\item\em The static model of the program. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a31816429c874af2e0fa1224761c0de98}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLTypeFactory}{C\+I\+V\+L\+Type\+Factory} {\bfseries type\+Factory}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a31816429c874af2e0fa1224761c0de98}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a223e603cab7a909db88f49c256b2ce98}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a223e603cab7a909db88f49c256b2ce98}{civl\+Config}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a223e603cab7a909db88f49c256b2ce98}
+
+\begin{DoxyCompactList}\small\item\em The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} configuration object. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ace012a5fe7ab66f158cf2123931c8d30}{}\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} {\bfseries error\+Logger}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ace012a5fe7ab66f158cf2123931c8d30}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent}{Library\+Component} class provides the common data and operations of library evaluator, enabler, and executor. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aef20655e297dc498596d7cee555e3243}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component}!Library\+Component@{Library\+Component}}
+\index{Library\+Component@{Library\+Component}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component}}
+\subsubsection[{Library\+Component}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Library\+Component.\+Library\+Component (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{Symbolic\+Universe}]{universe, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config, }
+\item[{{\bf Library\+Evaluator\+Loader}}]{lib\+Evaluator\+Loader, }
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf C\+I\+V\+L\+Error\+Logger}}]{err\+Logger}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_aef20655e297dc498596d7cee555e3243}
+
+
+Creates a new instance of a library. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em universe} & The symbolic universe to be used. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility to be used. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer to be used. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a264c583d48c1e9fc4a01fb5165a83a1f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component}!apply\+C\+I\+V\+L\+Operator@{apply\+C\+I\+V\+L\+Operator}}
+\index{apply\+C\+I\+V\+L\+Operator@{apply\+C\+I\+V\+L\+Operator}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component}}
+\subsubsection[{apply\+C\+I\+V\+L\+Operator}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Library\+Component.\+apply\+C\+I\+V\+L\+Operator (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{String}]{process, }
+\item[{Symbolic\+Expression}]{arg0, }
+\item[{Symbolic\+Expression}]{arg1, }
+\item[{{\bf C\+I\+V\+L\+Operator}}]{op, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{civlsource}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a264c583d48c1e9fc4a01fb5165a83a1f}
+
+
+Completing an operation (which is included in C\+I\+V\+L\+Operation enumerator). 
+
+\begin{DoxyAuthor}{Author}
+Ziqing Luo 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em arg0} & The new data got from the bundle \\
+\hline
+{\em arg1} & The data has already been received previously \\
+\hline
+{\em op} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} Operation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_af73cb2ab3ef623a9f247edf2656c1cab}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component}!name@{name}}
+\index{name@{name}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Library\+Component}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Library\+Component.\+name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_af73cb2ab3ef623a9f247edf2656c1cab}
+
+
+Returns the name associated to this library executor or enabler, for example, \char`\"{}stdio\char`\"{}. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/library/common/Library\+Component.\+java\end{DoxyCompactItemize}

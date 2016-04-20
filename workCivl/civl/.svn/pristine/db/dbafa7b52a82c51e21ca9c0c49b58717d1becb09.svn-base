@@ -1,0 +1,32 @@
+#include <stdlib.h>
+#include <civlc.cvh>
+
+int main(){
+  double (*p)[2];
+  double * q;
+  double a[3][2];
+  double b[3][2];
+  double **x;
+
+  p = a; //p == &a[0]
+  q = &b[0][0];
+  p += 1;
+  q += 6;
+  x = (double **)$malloc($root, sizeof(double *) * 3);
+
+  for(int i=0; i<3; i++)
+    x[i] = (double *)$malloc($root, sizeof(double) * 2);
+
+  $assert((p - a) == 1);
+  $assert((q - &b[0][0]) == 6);
+  $assert(&x[0] - &x[2] == -2);
+  $assert(&x[0][1] - x[0] == 1);
+  $assert(&x[3] - x == 3);
+  for(int i=0; i<3; i++)
+    $free(x[i]);
+
+  $free(x);
+  return 0;
+}
+
+

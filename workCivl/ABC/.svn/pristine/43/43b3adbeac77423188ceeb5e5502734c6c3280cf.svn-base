@@ -1,0 +1,596 @@
+<!--
+    build.xml : Ant build file for ABC
+    Author: Stephen F. Siegel, University of Delaware
+    Last modified: 03-Jun-2012
+    
+    The following can be defined on command line with -Dprop=val:
+    revision.  This is for the use of our SVN commit hook, which 
+    runs the test suite and performs other tasks every time a commit
+    is made.  The SVN revision number is just used here to insert
+    into reports.
+-->
+
+<project name="ABC" basedir="." default="jar" xmlns:jacoco="antlib:org.jacoco.ant">
+
+	<!-- Directories -->
+	<condition property="properties.file" value="build.properties" else="build_default.properties">
+		<available file="build.properties" />
+	</condition>
+	<property file="${properties.file}" />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="c.real.src.dir" value="${src.dir}/edu/udel/cis/vsl/abc/front/c" />
+	<property name="fortran.real.src.dir" value="${src.dir}/edu/udel/cis/vsl/abc/front/fortran" />
+	<property name="bin.dir" value="${basedir}/bin" />
+	<property name="c.grammar.dir" value="${basedir}/grammar/c" />
+	<property name="fortran.grammar.dir" value="${basedir}/grammar/fortran" />
+	<property name="javadoc.dir" value="${basedir}/doc/javadoc" />
+	<property name="jar-name" value="abc.jar" />
+	<property name="jar-path" value="${basedir}/${jar-name}" />
+	<property name="main-class" value="edu.udel.cis.vsl.abc.main.ABC" />
+
+	<!-- Junit and JaCoCo Coverage  -->
+
+	<property name="test.src.dir" location="${basedir}/test" />
+	<property name="test.bin.dir" location="${basedir}/bin-test" />
+	<property name="junit.dir" location="${basedir}/junit" />
+	<property name="junit.data.dir" location="${junit.dir}/data" />
+	<property name="junit.reports.dir" location="${junit.dir}/reports" />
+	<property name="coverage.dir" location="${basedir}/coverage" />
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath path="${jacoco.jar}" />
+	</taskdef>
+
+	<!-- Running ANTLR -->
+
+	<path id="antlr.class.path">
+		<pathelement location="${antlr.jar}" />
+	</path>
+
+	<!-- targets for fortran parsers come here
+	<target name="fortranParsers" depends="blah0,blah1,blah2"> </target>
+		-->
+
+	<target name="fortranLexer" depends="FortranLexer">
+	</target>
+
+	<!--
+		FortranLexer.java should be built if FortranLexer.g 
+		is newer than FortranLexer.java
+	-->
+
+	<target name="FortranLexerDependencies">
+		<uptodate property="FortranLexerUpToDate" srcfile="${fortran.grammar.dir}/FortranLexer.g" targetfile="${fortran.real.src.dir}/preproc/FortranLexer.java" />
+	</target>
+
+	<target name="FortranLexer" depends="FortranLexerDependencies" unless="FortranLexerUpToDate">
+		<delete file="${fortran.grammar.dir}/FortranLexer.tokens" />
+		<touch file="${fortran.grammar.dir}/FortranLexer.tokens" />
+		<delete file="${fortran.real.src.dir}/preproc/FortranLexer.java" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${fortran.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="FortranLexer.g" />
+		</java>
+		<move file="${fortran.grammar.dir}/FortranLexer.java" todir="${fortran.real.src.dir}/preproc/" />
+	</target>
+
+	<target name="fortranParsers" depends="FortranLexer,FortranParser08,FortranParserExtras,FortranParserRiceCAF">
+	</target>
+
+	<!--
+			FortranParser08.java should be built if FortranParser08.g
+			is newer than FortranParser08.java OR FortranLexer.java
+			is newer than FortranParser08.java.
+			
+			BUT: you only want to check if FortranLexer.java is newer
+			than FortranParser08.java AFTER the lexer things happens.
+	-->
+
+	<target name="FortranParser08Dependencies" depends="FortranLexer">
+		<uptodate property="unchangedFortranParser08Grammar" srcfile="${fortran.grammar.dir}/FortranParser08.g" targetfile="${fortran.real.src.dir}/parse/FortranParser08.java" />
+		<uptodate property="FortranLexerBeforeFortranParser08" srcfile="${fortran.real.src.dir}/preproc/FortranLexer.java" targetfile="${fortran.real.src.dir}/parse/FortranParser08.java" />
+		<condition property="FortranParser08UpToDate">
+			<and>
+				<isset property="unchangedFortranParser08Grammar" />
+				<isset property="FortranLexerBeforeFortranParser08" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="FortranParser08" depends="FortranParser08Dependencies" unless="FortranParser08UpToDate">
+		<delete file="${fortran.grammar.dir}/FortranParser08.tokens" />
+		<delete file="${fortran.real.src.dir}/parse/FortranParser08.java" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${fortran.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="FortranParser08.g" />
+		</java>
+		<move file="${fortran.grammar.dir}/FortranParser08.java" todir="${fortran.real.src.dir}/parse/" />
+	</target>
+
+	<!--
+			FortranParserExtras.java should be built if FortranParserExtras.g
+			is newer than FortranParserExtras.java OR FortranLexer.java
+			is newer than FortranParserExtras.java.
+			
+			BUT: you only want to check if FortranLexer.java is newer
+			than FortranParserExtras.java AFTER the lexer things happens.
+	-->
+
+	<target name="FortranParserExtrasDependencies" depends="FortranLexer">
+		<uptodate property="unchangedFortranParserExtrasGrammar" srcfile="${fortran.grammar.dir}/FortranParserExtras.g" targetfile="${fortran.real.src.dir}/parse/FortranParserExtras.java" />
+		<uptodate property="FortranLexerBeforeFortranParserExtras" srcfile="${fortran.real.src.dir}/preproc/FortranLexer.java" targetfile="${fortran.real.src.dir}/parse/FortranParserExtras.java" />
+		<condition property="FortranParserExtrasUpToDate">
+			<and>
+				<isset property="unchangedFortranParserExtrasGrammar" />
+				<isset property="FortranLexerBeforeFortranParserExtras" />
+			</and>
+		</condition>
+	</target>
+
+	<!-- 
+			FortranParserExtras is a composite grammar. It also requires inserting some text
+			(packages and imported packages) at the beginning manually, because ANTLR 3.5 
+			doesn't allow redefinition of headers in composite grammar.
+	-->
+
+	<target name="FortranParserExtras" depends="FortranParserExtrasDependencies" unless="FortranParserExtrasUpToDate">
+		<!--delete file="${fortran.grammar.dir}/FortranParserExtras.tokens" /-->
+		<delete file="${fortran.real.src.dir}/parse/FortranParserExtras.java" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="false" dir="${fortran.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="FortranParserExtras.g" />
+		</java>
+		<move file="${fortran.grammar.dir}/FortranParserExtras.java" tofile="${fortran.grammar.dir}/FortranParserExtras2.java" />
+		<echo message="package edu.udel.cis.vsl.abc.front.fortran.parse;${line.separator}import edu.udel.cis.vsl.abc.front.fortran.parse.IActionEnums;${line.separator}${line.separator}" file="${fortran.grammar.dir}/FortranParserExtras.java" />
+		<concat destfile="${fortran.grammar.dir}/FortranParserExtras.java" append="true">
+			<filelist dir="${fortran.grammar.dir}" files="FortranParserExtras2.java" />
+		</concat>
+		<delete file="${fortran.grammar.dir}/FortranParserExtras2.java" />
+		<move file="${fortran.grammar.dir}/FortranParserExtras.java" todir="${fortran.real.src.dir}/parse/" />
+		<move file="${fortran.grammar.dir}/FortranParserExtras_FortranParser08.java" todir="${fortran.real.src.dir}/parse/" />
+	</target>
+
+	<!--
+			FortranParserRiceCAF.java should be built if FortranParserRiceCAF.g
+			is newer than FortranParserRiceCAF.java OR FortranLexer.java
+			is newer than FortranParserRiceCAF.java.
+			
+			BUT: you only want to check if FortranLexer.java is newer
+			than FortranParserRiceCAF.java AFTER the lexer things happens.
+	-->
+
+	<target name="FortranParserRiceCAFDependencies" depends="FortranLexer">
+		<uptodate property="unchangedFortranParserRiceCAFGrammar" srcfile="${fortran.grammar.dir}/FortranParserRiceCAF.g" targetfile="${fortran.real.src.dir}/parse/FortranParserRiceCAF.java" />
+		<uptodate property="FortranLexerBeforeFortranParserRiceCAF" srcfile="${fortran.real.src.dir}/preproc/FortranLexer.java" targetfile="${fortran.real.src.dir}/parse/FortranParserRiceCAF.java" />
+		<condition property="FortranParserRiceCAFUpToDate">
+			<and>
+				<isset property="unchangedFortranParserRiceCAFGrammar" />
+				<isset property="FortranLexerBeforeFortranParserRiceCAF" />
+			</and>
+		</condition>
+	</target>
+
+	<!-- 
+			FortranParserRiceCAF is a composite grammar. It also requires inserting some text
+			(packages and imported packages) at the beginning manually, because ANTLR 3.5 
+			doesn't allow redefinition of headers in composite grammar.
+	-->
+
+	<target name="FortranParserRiceCAF" depends="FortranParserRiceCAFDependencies" unless="FortranParserRiceCAFUpToDate">
+		<!--delete file="${fortran.grammar.dir}/FortranParserRiceCAF.tokens" /-->
+		<delete file="${fortran.real.src.dir}/parse/FortranParserRiceCAF.java" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="false" dir="${fortran.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="FortranParserRiceCAF.g" />
+		</java>
+		<move file="${fortran.grammar.dir}/FortranParserRiceCAF.java" tofile="${fortran.grammar.dir}/FortranParserRiceCAF2.java" />
+		<echo message="package edu.udel.cis.vsl.abc.front.fortran.parse;${line.separator}import edu.udel.cis.vsl.abc.front.fortran.parse.IActionEnums;${line.separator}${line.separator}" file="${fortran.grammar.dir}/FortranParserRiceCAF.java" />
+		<concat destfile="${fortran.grammar.dir}/FortranParserRiceCAF.java" append="true">
+			<filelist dir="${fortran.grammar.dir}" files="FortranParserRiceCAF2.java" />
+		</concat>
+		<delete file="${fortran.grammar.dir}/FortranParserRiceCAF2.java" />
+		<move file="${fortran.grammar.dir}/FortranParserRiceCAF.java" todir="${fortran.real.src.dir}/parse/" />
+		<move file="${fortran.grammar.dir}/FortranParserRiceCAF_FortranParser08.java" todir="${fortran.real.src.dir}/parse/" />
+	</target>
+
+
+
+	<target name="cParsers" depends="CPreprocessorExpressionParser,CivlCParser,OmpParser, AcslParser">
+	</target>
+
+
+	<!--
+		PreprocessorLexer.java should be built if PreprocessorLexer.g
+		is newer than PreprocessorLexer.java
+	-->
+
+	<target name="CPreprocessorLexerDependencies">
+		<uptodate property="CPreprocessorLexerUpToDate" srcfile="${c.grammar.dir}/PreprocessorLexer.g" targetfile="${c.real.src.dir}/preproc/PreprocessorLexer.java" />
+	</target>
+
+	<target name="CPreprocessorLexer" depends="CPreprocessorLexerDependencies" unless="CPreprocessorLexerUpToDate">
+		<delete file="${c.grammar.dir}/PreprocessorParser.tokens" />
+		<delete file="${c.real.src.dir}/preproc/PreprocessorLexer.java" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${c.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="PreprocessorLexer.g" />
+		</java>
+		<move file="${c.grammar.dir}/PreprocessorLexer.java" todir="${c.real.src.dir}/preproc/" />
+	</target>
+
+	<!--
+		PreprocessorParser.java should be built if PreprocessorParser.g
+		is newer than PreprocessorParser.java OR PreprocessorLexer.java
+		is newer than PreprocessorParser.java.
+		
+		BUT: you only want to check if PreprocessorLexer.java is newer
+		than PreprocessorParser.java AFTER the lexer things happens.
+	-->
+
+	<target name="CPreprocessorParserDependencies" depends="CPreprocessorLexer">
+		<uptodate property="unchangedCPreprocessorParserGrammar" srcfile="${c.grammar.dir}/PreprocessorParser.g" targetfile="${c.real.src.dir}/preproc/PreprocessorParser.java" />
+		<uptodate property="CPreprocessorLexerBeforePreprocessorParser" srcfile="${c.real.src.dir}/preproc/PreprocessorLexer.java" targetfile="${c.real.src.dir}/preproc/PreprocessorParser.java" />
+		<condition property="CPreprocessorParserUpToDate">
+			<and>
+				<isset property="unchangedCPreprocessorParserGrammar" />
+				<isset property="CPreprocessorLexerBeforePreprocessorParser" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="CPreprocessorParser" depends="CPreprocessorParserDependencies" unless="CPreprocessorParserUpToDate">
+		<delete file="${c.grammar.dir}/PreprocessorParser.tokens" />
+		<delete file="${c.real.src.dir}/preproc/PreprocessorParser.java" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${c.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="PreprocessorParser.g" />
+		</java>
+		<move file="${c.grammar.dir}/PreprocessorParser.java" todir="${c.real.src.dir}/preproc" />
+	</target>
+
+	<!--
+		PreprocessorExpressionParser.java should be built if PreprocessorExpressionParser.g
+		is newer than PreprocessorExpressionParser.java OR PreprocessorLexer.java
+		is newer than PreprocessorExpressionParser.java.
+	-->
+
+	<target name="CPreprocessorExpressionParserDependencies" depends="CPreprocessorLexer">
+		<uptodate property="unchangedCPreprocessorExpressionParserGrammar" srcfile="${c.grammar.dir}/PreprocessorExpressionParser.g" targetfile="${c.real.src.dir}/preproc/PreprocessorExpressionParser.java" />
+		<uptodate property="CPreprocessorLexerBeforePreprocessorExpressionParser" srcfile="${c.real.src.dir}/preproc/PreprocessorLexer.java" targetfile="${c.real.src.dir}/preproc/PreprocessorExpressionParser.java" />
+		<condition property="CPreprocessorExpressionParserUpToDate">
+			<and>
+				<isset property="unchangedCPreprocessorExpressionParserGrammar" />
+				<isset property="CPreprocessorLexerBeforePreprocessorExpressionParser" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="CPreprocessorExpressionParser" depends="CPreprocessorExpressionParserDependencies" unless="CPreprocessorExpressionParserUpToDate">
+		<delete file="${c.grammar.dir}/PreprocessorExpressionParser.tokens" />
+		<delete file="${c.real.src.dir}/preproc/PreprocessorExpressionParser.java" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${c.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="PreprocessorExpressionParser.g" />
+		</java>
+		<move file="${c.grammar.dir}/PreprocessorExpressionParser.java" todir="${c.real.src.dir}/preproc" />
+	</target>
+
+
+	<!--
+		CivlCParser.java depends on CivlCParser.g and PreprocessorParser.java
+	-->
+
+	<target name="CivlCParserDependencies" depends="CPreprocessorParser">
+		<uptodate property="unchangedCivlCParserGrammar" srcfile="${c.grammar.dir}/CivlCParser.g" targetfile="${c.real.src.dir}/parse/CivlCParser.java" />
+		<uptodate property="PreprocessorParserBeforeCivlCParser" srcfile="${c.real.src.dir}/preproc/PreprocessorParser.java" targetfile="${c.real.src.dir}/parse/CivlCParser.java" />
+		<condition property="CivlCParserUpToDate">
+			<and>
+				<isset property="unchangedCivlCParserGrammar" />
+				<isset property="PreprocessorParserBeforeCivlCParser" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="CivlCParser" depends="CivlCParserDependencies" unless="CivlCParserUpToDate">
+		<delete file="${c.grammar.dir}/CivlCParser.tokens" />
+		<delete file="${c.real.src.dir}/parse/CivlCParser.java" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${c.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="CivlCParser.g" />
+		</java>
+		<move file="${c.grammar.dir}/CivlCParser.java" todir="${c.real.src.dir}/parse" />
+	</target>
+
+
+	<!--
+		OmpLexer is a composite grammar.
+		It is needed only for its tokens.  The java file can be
+		thrown away.
+		OmpLexer.tokens depends on OmpLexer.g and CivlCParser.tokens.
+	-->
+
+	<target name="OmpLexerDependencies" depends="CivlCParser">
+		<uptodate property="unchangedOmpLexerGrammar" srcfile="${c.grammar.dir}/OmpLexer.g" targetfile="${c.grammar.dir}/OmpLexer.tokens" />
+		<uptodate property="CivlCParserTokensBeforeOmpLexer" srcfile="${c.real.src.dir}/parse/CivlCParser.java" targetfile="${c.grammar.dir}/OmpLexer.tokens" />
+		<condition property="OmpLexerUpToDate">
+			<and>
+				<isset property="unchangedOmpLexerGrammar" />
+				<isset property="CivlCParserTokensBeforeOmpLexer" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="OmpLexer" depends="OmpLexerDependencies" unless="OmpLexerUpToDate">
+		<delete file="${c.grammar.dir}/OmpLexer.tokens" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${c.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="OmpLexer.g" />
+		</java>
+		<delete file="${c.grammar.dir}/OmpLexer.java" />
+	</target>
+
+	<!--
+		OmpParser is a composite grammar.
+		OmpParser.java depends on OmpParser.g, OmpLexer.tokens,
+		and CivlCParser.java.  It also requires inserting some text
+		at beginning manually.
+	-->
+
+	<target name="OmpParserDependencies" depends="OmpLexer,CivlCParser">
+		<uptodate property="unchangedOmpParserGrammar" srcfile="${c.grammar.dir}/OmpParser.g" targetfile="${c.real.src.dir}/parse/OmpParser.java" />
+		<uptodate property="OmpLexerBeforeOmpParser" srcfile="${c.grammar.dir}/OmpLexer.tokens" targetfile="${c.real.src.dir}/parse/OmpParser.java" />
+		<uptodate property="CivlCParserBeforeOmpParser" srcfile="${c.real.src.dir}/parse/CivlCParser.java" targetfile="${c.real.src.dir}/parse/OmpParser.java" />
+		<condition property="OmpParserUpToDate">
+			<and>
+				<isset property="unchangedOmpParserGrammar" />
+				<isset property="OmpLexerBeforeOmpParser" />
+				<isset property="CivlCParserBeforeOmpParser" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="OmpParser" depends="OmpParserDependencies" unless="OmpParserUpToDate">
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${c.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="OmpParser.g" />
+		</java>
+		<move file="${c.grammar.dir}/OmpParser.java" tofile="${c.grammar.dir}/OmpParser2.java" />
+		<echo message="package edu.udel.cis.vsl.abc.front.c.parse;${line.separator}import edu.udel.cis.vsl.abc.front.IF.RuntimeParseException;${line.separator}import edu.udel.cis.vsl.abc.front.c.preproc.*;${line.separator}${line.separator}" file="${c.grammar.dir}/OmpParser.java" />
+		<concat destfile="${c.grammar.dir}/OmpParser.java" append="true">
+			<filelist dir="${c.grammar.dir}" files="OmpParser2.java" />
+		</concat>
+		<delete file="${c.grammar.dir}/OmpParser2.java" />
+		<move file="${c.grammar.dir}/OmpParser.java" todir="${c.real.src.dir}/parse" />
+		<move file="${c.grammar.dir}/OmpParser_CivlCParser.java" todir="${c.real.src.dir}/parse" />
+	</target>
+
+	<!--
+			AcslLexer is the lexer for ACSL contracts.
+			Both AcslLexer.java and AcslLexer.tokens are needed.
+			They depend on AcslLexer.g.
+		-->
+
+	<target name="AcslLexerDependencies">
+		<uptodate property="unchangedAcslLexerGrammar" srcfile="${c.grammar.dir}/AcslLexer.g" targetfile="${c.grammar.dir}/AcslLexer.tokens" />
+	</target>
+
+	<target name="AcslLexer" depends="AcslLexerDependencies" unless="unchangedAcslLexerGrammar">
+		<delete file="${c.grammar.dir}/AcslLexer.tokens" />
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${c.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="AcslLexer.g" />
+		</java>
+		<move file="${c.grammar.dir}/AcslLexer.java" todir="${c.real.src.dir}/preproc" />
+	</target>
+
+	<!--
+			AcslParser is the parser for ACSL contracts.
+			AcslParser.java depends on AcslParser.g, AcslLexer.tokens,
+			and AcslLexer.java.
+		-->
+
+	<target name="AcslParserDependencies" depends="AcslLexer">
+		<uptodate property="unchangedAcslParserGrammar" srcfile="${c.grammar.dir}/AcslParser.g" targetfile="${c.real.src.dir}/parse/AcslParser.java" />
+		<uptodate property="AcslLexerBeforeAcslParser" srcfile="${c.grammar.dir}/AcslLexer.g" targetfile="${c.grammar.dir}/AcslLexer.tokens" />
+		<condition property="AcslParserUpToDate">
+			<and>
+				<isset property="unchangedAcslParserGrammar" />
+				<isset property="AcslLexerBeforeAcslParser" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="AcslParser" depends="AcslParserDependencies" unless="AcslParserUpToDate">
+		<java classname="org.antlr.Tool" classpathref="antlr.class.path" fork="true" failonerror="true" dir="${c.grammar.dir}">
+			<arg value="-verbose" />
+			<arg value="AcslParser.g" />
+		</java>
+		<move file="${c.grammar.dir}/AcslParser.java" tofile="${c.real.src.dir}/parse/AcslParser.java" />
+	</target>
+
+
+	<!-- Source compilation and JAR construction -->
+
+	<path id="src.compile.classpath">
+		<pathelement location="${src.dir}" />
+		<pathelement location="${antlr.jar}" />
+		<pathelement location="${sarl.jar}" />
+	</path>
+
+	<target name="compile" description="Compile all java source files." depends="cParsers,fortranParsers">
+		<mkdir dir="${bin.dir}" />
+		<javac debug="true" srcdir="${src.dir}" destdir="${bin.dir}" classpathref="src.compile.classpath" encoding="UTF-8" includeantruntime="false">
+		</javac>
+		<copy todir="${bin.dir}/include">
+			<fileset dir="${src.dir}/include" />
+		</copy>
+	</target>
+
+	<target name="jar" depends="compile" description="Jar up class files and header files">
+		<jar destfile="${jar-path}">
+			<fileset dir="${bin.dir}" />
+			<zipfileset includes="**/*.class" src="${antlr.runtime.jar}" />
+			<zipfileset includes="**/*.class" src="${sarl.jar}" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Plain JUnit tests -->
+
+	<path id="test.compile.classpath">
+		<pathelement location="${test.src.dir}" />
+		<pathelement location="${bin.dir}" />
+		<pathelement location="${antlr.jar}" />
+		<pathelement location="${junit.jar}" />
+		<pathelement location="${hamcrest.jar}" />
+		<pathelement location="${sarl.jar}" />
+	</path>
+
+	<path id="test.execute.classpath">
+		<pathelement location="${test.bin.dir}" />
+		<pathelement location="${bin.dir}" />
+		<pathelement location="${antlr.jar}" />
+		<pathelement location="${junit.jar}" />
+		<pathelement location="${src.dir}" />
+		<pathelement location="${hamcrest.jar}" />
+		<pathelement location="${sarl.jar}" />
+	</path>
+
+	<target name="test-init">
+		<delete dir="${junit.dir}" quiet="true" />
+		<delete dir="${test.bin.dir}" quiet="true" />
+		<mkdir dir="${junit.dir}" />
+		<mkdir dir="${junit.data.dir}" />
+		<mkdir dir="${junit.reports.dir}" />
+		<mkdir dir="${test.bin.dir}" />
+	</target>
+
+	<target name="test-compile" depends="compile,test-init">
+		<javac destdir="${test.bin.dir}" debug="true" failonerror="false" classpathref="test.compile.classpath" encoding="UTF-8" includeantruntime="true">
+			<src path="${test.src.dir}" />
+		</javac>
+	</target>
+
+	<target name="test-run" depends="test-compile">
+		<jacoco:coverage>
+			<junit fork="true" forkmode="once" timeout="300000">
+				<jvmarg value="-ea" />
+				<classpath refid="test.execute.classpath" />
+				<formatter type="brief" usefile="false" />
+				<formatter type="xml" />
+				<batchtest todir="${junit.data.dir}">
+					<fileset dir="${test.bin.dir}" includes="**/*Test.class" />
+				</batchtest>
+			</junit>
+		</jacoco:coverage>
+		<junitreport todir="${junit.data.dir}">
+			<fileset dir="${junit.data.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${junit.reports.dir}">
+				<param name="TITLE" expression="JUnit Report for ABC ${revision}" />
+			</report>
+		</junitreport>
+	</target>
+
+	<target name="test" depends="test-run">
+		<jacoco:report>
+			<executiondata>
+				<file file="jacoco.exec" />
+			</executiondata>
+			<structure name="Test Coverage Report for ABC ${revision}">
+				<classfiles>
+					<fileset dir="${bin.dir}" />
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${src.dir}" />
+				</sourcefiles>
+			</structure>
+			<html destdir="coverage" />
+		</jacoco:report>
+	</target>
+
+	<!-- Javadoc Tasks -->
+
+	<target name="javadoc">
+		<delete dir="${javadoc.dir}" quiet="true" />
+		<mkdir dir="${javadoc.dir}" />
+		<javadoc destdir="${javadoc.dir}" Overview="src/overview.html" author="false" version="true" use="true" windowtitle="API for ABC ${revision}" access="public" classpathref="test.execute.classpath" failonerror="false">
+
+			<packageset dir="${src.dir}" defaultexcludes="yes">
+				<include name="**/IF" />
+				<include name="**/IF/**" />
+				<include name="edu/udel/cis/vsl/abc" />
+				<include name="edu/udel/cis/vsl/abc/util" />
+			</packageset>
+
+		</javadoc>
+	</target>
+
+	<!-- Clean -->
+
+	<target name="cleanAcsl" description="Delete all generated files.">
+		<delete file="${c.grammar.dir}/AcslLexer.tokens" />
+		<delete file="${c.real.src.dir}/preproc/AcslLexer.java" />
+		<delete file="${c.grammar.dir}/AcslParser.tokens" />
+		<delete file="${c.real.src.dir}/parse/AcslParser.java" />
+	</target>
+
+	<target name="cleanOmp" description="Delete all generated files.">
+		<delete file="${c.grammar.dir}/OmpLexer.tokens" />
+		<delete file="${c.real.src.dir}/preproc/OmpLexer.java" />
+		<delete file="${c.real.src.dir}/preproc/OmpLexer_PreprocessorLexer.java" />
+		<delete file="${c.grammar.dir}/OmpParser.tokens" />
+		<delete file="${c.real.src.dir}/parse/OmpParser.java" />
+		<delete file="${c.real.src.dir}/parse/OmpParser_CivlCParser.java" />
+	</target>
+
+	<target name="cleanFortran" description="Delete all generated files related to Fortran Parser">
+		<delete file="${fortran.grammar.dir}/FortranLexer.tokens" />
+		<!--<touch file="${fortran.grammar.dir}/FortranLexer.tokens" />-->
+		<delete file="${fortran.real.src.dir}/preproc/FortranLexer.java" />
+		<delete file="${fortran.grammar.dir}/FortranParser08.tokens" />
+		<!--<touch file="${fortran.grammar.dir}/FortranParser08.tokens" />-->
+		<delete file="${fortran.real.src.dir}/parse/FortranParser08.java" />
+		<delete file="${fortran.grammar.dir}/FortranParserExtras.tokens" />
+		<!--<touch file="${fortran.grammar.dir}/FortranParserExtras.tokens" />-->
+		<delete file="${fortran.real.src.dir}/parse/FortranParserExtras.java" />
+		<delete file="${fortran.real.src.dir}/parse/FortranParserExtras_FortranParser08.java" />
+		<delete file="${fortran.grammar.dir}/FortranParserRiceCAF.tokens" />
+		<!--<touch file="${fortran.grammar.dir}/FortranParserRiceCAF.tokens" />-->
+		<delete file="${fortran.real.src.dir}/parse/FortranParserRiceCAF.java" />
+		<delete file="${fortran.real.src.dir}/parse/FortranParserRiceCAF_FortranParser08.java" />
+	</target>
+
+	<target name="clean" description="Delete all generated files." depends="cleanFortran, cleanAcsl">
+		<delete dir="${bin.dir}" />
+		<delete dir="${test.bin.dir}" />
+		<delete dir="${junit.dir}" />
+		<delete dir="${javadoc.dir}" />
+		<delete dir="${coverage.dir}" />
+		<delete file="${jar-path}" />
+		<delete file="${basedir}/jacoco.exec" />
+		<delete file="${manifest-file}" />
+		<delete file="${c.grammar.dir}/PreprocessorLexer.tokens" />
+		<delete file="${c.real.src.dir}/preproc/PreprocessorLexer.java" />
+		<delete file="${c.grammar.dir}/PreprocessorParser.tokens" />
+		<delete file="${c.real.src.dir}/preproc/PreprocessorParser.java" />
+		<delete file="${c.grammar.dir}/PreprocessorExpressionParser.tokens" />
+		<delete file="${c.real.src.dir}/preproc/PreprocessorExpressionParser.java" />
+		<delete file="${c.grammar.dir}/CivlCParser.tokens" />
+		<delete file="${c.real.src.dir}/parse/CivlCParser.java" />
+		<delete file="${c.grammar.dir}/OmpLexer.tokens" />
+		<delete file="${c.real.src.dir}/preproc/OmpLexer.java" />
+		<delete file="${c.real.src.dir}/preproc/OmpLexer_PreprocessorLexer.java" />
+		<delete file="${c.grammar.dir}/OmpParser.tokens" />
+		<delete file="${c.real.src.dir}/parse/OmpParser.java" />
+		<delete file="${c.real.src.dir}/parse/OmpParser_CivlCParser.java" />
+	</target>
+
+	<!-- Do everything -->
+
+	<target name="all" depends="jar,test,javadoc" />
+
+</project>

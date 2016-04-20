@@ -1,0 +1,15 @@
+#include <civlc.cvh>
+
+typedef struct A{
+  int a;
+  int b;
+} A;
+
+$output A k;
+
+void main(){
+  int *p = &k.a;
+  int ka;
+  
+  ka = *p;
+}

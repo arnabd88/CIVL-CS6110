@@ -1,0 +1,4 @@
+This folder contains examples of translating Pthread programs into CIVL model.
+Run "make" will execute the verification of all CIVL models in this folder.
+All programs are taken from the Pthread benchmarks of SV-COMP 2014
+(https://svn.sosy-lab.org/software/sv-benchmarks/tags/svcomp14/).

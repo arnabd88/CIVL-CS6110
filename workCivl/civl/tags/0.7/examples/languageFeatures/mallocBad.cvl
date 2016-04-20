@@ -1,0 +1,13 @@
+/* Commandline execution:
+ *		civl verify mallocBad.cvl
+ * */
+#include <civlc.h>
+void main() {
+  $heap h;
+  double *p = (double *) $malloc(&h, 5*sizeof(double));
+  
+  p[4]=3.14;
+  $free(&h, p);
+  // Uses pointer after free.
+  $assert(p[4]==3.14);
+}   

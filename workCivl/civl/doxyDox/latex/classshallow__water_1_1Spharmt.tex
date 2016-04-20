@@ -1,0 +1,150 @@
+\hypertarget{classshallow__water_1_1Spharmt}{}\section{shallow\+\_\+water.\+Spharmt Class Reference}
+\label{classshallow__water_1_1Spharmt}\index{shallow\+\_\+water.\+Spharmt@{shallow\+\_\+water.\+Spharmt}}
+
+
+Inheritance diagram for shallow\+\_\+water.\+Spharmt\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{classshallow__water_1_1Spharmt__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for shallow\+\_\+water.\+Spharmt\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{classshallow__water_1_1Spharmt__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classshallow__water_1_1Spharmt_a03fd51b970fa1bfe29f3cb4efd3ac31f}{\+\_\+\+\_\+init\+\_\+\+\_\+}
+\item 
+def \hyperlink{classshallow__water_1_1Spharmt_a188caea350ae7e548e75cd7011242b43}{grdtospec} (self, data)
+\item 
+def \hyperlink{classshallow__water_1_1Spharmt_a5ce9185948d15d314b0d0fc233284639}{spectogrd} (self, dataspec)
+\item 
+def \hyperlink{classshallow__water_1_1Spharmt_aa69e8c9f102ee6e19217b71740545bbe}{getuv} (self, vrtspec, divspec)
+\item 
+def \hyperlink{classshallow__water_1_1Spharmt_abbe0354bbc6180f3fa8449cfb6b045e6}{getvrtdivspec} (self, u, v)
+\item 
+def \hyperlink{classshallow__water_1_1Spharmt_ad0a7eeb0530ce2eeac2194b9c8f9c115}{getgrad} (self, divspec)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_ae3cb89106312472633bc691d4f4a67a6}{}{\bfseries lats}\label{classshallow__water_1_1Spharmt_ae3cb89106312472633bc691d4f4a67a6}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_ad2090dbb6502b9eea96a3956041623f5}{}{\bfseries lons}\label{classshallow__water_1_1Spharmt_ad2090dbb6502b9eea96a3956041623f5}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_ade8eeba6217ce6a53b9cc6630908e266}{}{\bfseries nlons}\label{classshallow__water_1_1Spharmt_ade8eeba6217ce6a53b9cc6630908e266}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_a539f0747b002f5e84bcea66e158e6378}{}{\bfseries nlats}\label{classshallow__water_1_1Spharmt_a539f0747b002f5e84bcea66e158e6378}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_aafaedd7dea7dd7adb3bbeb58d109d179}{}{\bfseries ntrunc}\label{classshallow__water_1_1Spharmt_aafaedd7dea7dd7adb3bbeb58d109d179}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_af1d8e8d420edee43d57b03af7f075e44}{}{\bfseries nlm}\label{classshallow__water_1_1Spharmt_af1d8e8d420edee43d57b03af7f075e44}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_a5ea0a3ae4d8ec65744178a0f01088c41}{}{\bfseries degree}\label{classshallow__water_1_1Spharmt_a5ea0a3ae4d8ec65744178a0f01088c41}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_a152a3328910e22636da46836fa20c9c7}{}{\bfseries lap}\label{classshallow__water_1_1Spharmt_a152a3328910e22636da46836fa20c9c7}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_af8ecca11f2568d62cca5409ef88eac7d}{}{\bfseries invlap}\label{classshallow__water_1_1Spharmt_af8ecca11f2568d62cca5409ef88eac7d}
+
+\item 
+\hypertarget{classshallow__water_1_1Spharmt_ae0ef89fada8e186a7cef1cc6a0e43f76}{}{\bfseries rsphere}\label{classshallow__water_1_1Spharmt_ae0ef89fada8e186a7cef1cc6a0e43f76}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}wrapper class for commonly used spectral transform operations in
+atmospheric models.  Provides an interface to shtns compatible
+with pyspharm (pyspharm.googlecode.com).
+\end{DoxyVerb}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classshallow__water_1_1Spharmt_a03fd51b970fa1bfe29f3cb4efd3ac31f}{}\index{shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}}
+\subsubsection[{\+\_\+\+\_\+init\+\_\+\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}def shallow\+\_\+water.\+Spharmt.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{nlons, }
+\item[{}]{nlats, }
+\item[{}]{ntrunc, }
+\item[{}]{rsphere, }
+\item[{}]{gridtype = {\ttfamily \textquotesingle{}gaussian\textquotesingle{}}}
+\end{DoxyParamCaption}
+)}\label{classshallow__water_1_1Spharmt_a03fd51b970fa1bfe29f3cb4efd3ac31f}
+\begin{DoxyVerb}initialize
+nlons:  number of longitudes
+nlats:  number of latitudes\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classshallow__water_1_1Spharmt_ad0a7eeb0530ce2eeac2194b9c8f9c115}{}\index{shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}!getgrad@{getgrad}}
+\index{getgrad@{getgrad}!shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}}
+\subsubsection[{getgrad}]{\setlength{\rightskip}{0pt plus 5cm}def shallow\+\_\+water.\+Spharmt.\+getgrad (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{divspec}
+\end{DoxyParamCaption}
+)}\label{classshallow__water_1_1Spharmt_ad0a7eeb0530ce2eeac2194b9c8f9c115}
+\begin{DoxyVerb}compute gradient vector from spectral coeffs\end{DoxyVerb}
+ \hypertarget{classshallow__water_1_1Spharmt_aa69e8c9f102ee6e19217b71740545bbe}{}\index{shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}!getuv@{getuv}}
+\index{getuv@{getuv}!shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}}
+\subsubsection[{getuv}]{\setlength{\rightskip}{0pt plus 5cm}def shallow\+\_\+water.\+Spharmt.\+getuv (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{vrtspec, }
+\item[{}]{divspec}
+\end{DoxyParamCaption}
+)}\label{classshallow__water_1_1Spharmt_aa69e8c9f102ee6e19217b71740545bbe}
+\begin{DoxyVerb}compute wind vector from spectral coeffs of vorticity and divergence\end{DoxyVerb}
+ \hypertarget{classshallow__water_1_1Spharmt_abbe0354bbc6180f3fa8449cfb6b045e6}{}\index{shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}!getvrtdivspec@{getvrtdivspec}}
+\index{getvrtdivspec@{getvrtdivspec}!shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}}
+\subsubsection[{getvrtdivspec}]{\setlength{\rightskip}{0pt plus 5cm}def shallow\+\_\+water.\+Spharmt.\+getvrtdivspec (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{u, }
+\item[{}]{v}
+\end{DoxyParamCaption}
+)}\label{classshallow__water_1_1Spharmt_abbe0354bbc6180f3fa8449cfb6b045e6}
+\begin{DoxyVerb}compute spectral coeffs of vorticity and divergence from wind vector\end{DoxyVerb}
+ \hypertarget{classshallow__water_1_1Spharmt_a188caea350ae7e548e75cd7011242b43}{}\index{shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}!grdtospec@{grdtospec}}
+\index{grdtospec@{grdtospec}!shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}}
+\subsubsection[{grdtospec}]{\setlength{\rightskip}{0pt plus 5cm}def shallow\+\_\+water.\+Spharmt.\+grdtospec (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{data}
+\end{DoxyParamCaption}
+)}\label{classshallow__water_1_1Spharmt_a188caea350ae7e548e75cd7011242b43}
+\begin{DoxyVerb}compute spectral coefficients from gridded data\end{DoxyVerb}
+ \hypertarget{classshallow__water_1_1Spharmt_a5ce9185948d15d314b0d0fc233284639}{}\index{shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}!spectogrd@{spectogrd}}
+\index{spectogrd@{spectogrd}!shallow\+\_\+water\+::\+Spharmt@{shallow\+\_\+water\+::\+Spharmt}}
+\subsubsection[{spectogrd}]{\setlength{\rightskip}{0pt plus 5cm}def shallow\+\_\+water.\+Spharmt.\+spectogrd (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dataspec}
+\end{DoxyParamCaption}
+)}\label{classshallow__water_1_1Spharmt_a5ce9185948d15d314b0d0fc233284639}
+\begin{DoxyVerb}compute gridded data from spectral coefficients\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/examples/omp/shtns/examples/shallow\+\_\+water.\+py\end{DoxyCompactItemize}

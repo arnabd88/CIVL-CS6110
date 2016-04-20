@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ArithmeticConversionType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">ArithmeticConversionType.java</span></div><h1>ArithmeticConversionType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.io.PrintStream;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.IntegerType;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+
+/**
+ * Represents the sort of &quot;join&quot; of two integer types: this is the least integer
+ * type that is a supertype of the two given integer types.
+ * 
+ * @author siegel
+ *
+ */
+public class ArithmeticConversionType extends CommonIntegerType {
+
+<span class="nc" id="L18">	public final static int classCode = ArithmeticConversionType.class</span>
+<span class="nc" id="L19">			.hashCode();</span>
+
+	private IntegerType type1;
+
+	private IntegerType type2;
+
+	public ArithmeticConversionType(IntegerType type1, IntegerType type2) {
+<span class="nc" id="L26">		super(TypeKind.OTHER_INTEGER);</span>
+
+<span class="nc" id="L28">		this.type1 = type1;</span>
+<span class="nc" id="L29">		this.type2 = type2;</span>
+<span class="nc" id="L30">	}</span>
+
+	@Override
+	public boolean isEnumeration() {
+<span class="nc" id="L34">		return false;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L39">		return &quot;ArithmeticConversionType[&quot; + type1 + &quot;, &quot; + type2 + &quot;]&quot;;</span>
+	}
+
+	@Override
+	public void print(String prefix, PrintStream out, boolean abbrv) {
+<span class="nc" id="L44">		out.print(this);</span>
+<span class="nc" id="L45">	}</span>
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (obj instanceof ArithmeticConversionType) {</span>
+<span class="nc" id="L50">			ArithmeticConversionType that = (ArithmeticConversionType) obj;</span>
+
+			// the arithmetic conversion type represents the sort of
+			// &quot;join&quot; of type1 and type2. It is a commutative operator,
+			// so order doesn't matter:
+<span class="nc bnc" id="L55" title="All 4 branches missed.">			return type1.equals(that.type1) &amp;&amp; type2.equals(that.type2)</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">					|| type2.equals(that.type1) &amp;&amp; type1.equals(that.type2);</span>
+		}
+<span class="nc" id="L58">		return false;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L63">		return classCode + type1.hashCode() + type2.hashCode();</span>
+	}
+
+	@Override
+	protected boolean similar(Type other, boolean equivalent,
+			Map&lt;TypeKey, Type&gt; seen) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (other instanceof ArithmeticConversionType) {</span>
+<span class="nc" id="L70">			ArithmeticConversionType that = (ArithmeticConversionType) other;</span>
+<span class="nc" id="L71">			CommonType t11 = (CommonType) type1, t12 = (CommonType) type2;</span>
+<span class="nc" id="L72">			CommonType t21 = (CommonType) that.type1, t22 = (CommonType) that.type2;</span>
+
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			return t11.similar(t21, equivalent, seen)</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">					&amp;&amp; t12.similar(t22, equivalent, seen)</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">					|| t12.similar(t22, equivalent, seen)</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">					&amp;&amp; t11.similar(t22, equivalent, seen);</span>
+		}
+<span class="nc" id="L79">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

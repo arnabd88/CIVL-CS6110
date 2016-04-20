@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ASTs.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.IF</a> &gt; <span class="el_source">ASTs.java</span></div><h1>ASTs.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.IF;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.common.ASTPrettyPrinter;
+import edu.udel.cis.vsl.abc.ast.common.CommonASTFactory;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.NodeFactory;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.ast.type.IF.TypeFactory;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+/**
+ * Factory class providing static method to produce a new {@link ASTFactory}.
+ * This is the entry point for the &lt;strong&gt;ast&lt;/strong&gt; module. To construct an
+ * AST, one starts by invoking
+ * {@link #newASTFactory(NodeFactory, TokenFactory, TypeFactory)} to get an
+ * {@link ASTFactory}, then uses that ASTFactory to produce the components of
+ * the AST and finally the AST itself.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc" id="L25">public class ASTs {</span>
+
+	/**
+	 * Create a new ASTFactory that used the given node factory, token factory,
+	 * and type factory.
+	 * 
+	 * @param nodeFactory
+	 *            a factory for producing {@link ASTNode}s
+	 * @param tokenFactory
+	 *            a factory for producing {@link CivlcToken}s
+	 * @param typeFactory
+	 *            a factory for producing {@link Type}s
+	 * @return the new ASTFactory
+	 */
+	public static ASTFactory newASTFactory(NodeFactory nodeFactory,
+			TokenFactory tokenFactory, TypeFactory typeFactory) {
+<span class="nc" id="L41">		return new CommonASTFactory(nodeFactory, tokenFactory, typeFactory);</span>
+	}
+	
+	/**
+	 * Prints an AST node in the form of the original programming language.
+	 * 
+	 * @param node
+	 *            the AST node to be printed
+	 * @param out
+	 *            the print stream to be used for printing
+	 */
+	public static void prettyPrint(ASTNode node, PrintStream out){
+<span class="nc" id="L53">		ASTPrettyPrinter.prettyPrint(node, out);</span>
+<span class="nc" id="L54">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

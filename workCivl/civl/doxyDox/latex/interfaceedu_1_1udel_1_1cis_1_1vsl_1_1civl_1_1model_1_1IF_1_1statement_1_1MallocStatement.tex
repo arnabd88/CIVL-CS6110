@@ -1,0 +1,236 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement@{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement}}
+
+
+\hyperlink{structA}{A} statement for dynamic allocation of objects.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a9570887f917256ada3fb6d5222e981e6}{get\+Malloc\+Id} ()
+\begin{DoxyCompactList}\small\item\em The malloc statements in the model are indexed, so each has unique I\+D number. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_ad7e57b22866ac6462dd24449c1c32f53}{get\+Scope\+Expression} ()
+\begin{DoxyCompactList}\small\item\em The first argument to the \$malloc function is an expression of type pointer-\/to-\/heap. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aa182f4839b69a8d99cdebba5734bc63f}{get\+Static\+Element\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns the static type of the elements that are to be allocated. \end{DoxyCompactList}\item 
+Symbolic\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a2a05ca6af44d9b07e71acbd672c92ce0}{get\+Dynamic\+Element\+Type} ()
+\begin{DoxyCompactList}\small\item\em This returns the dynamic (symbolic type) corresponding to the static element type. \end{DoxyCompactList}\item 
+Symbolic\+Array\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aab8cf4e1964f1c4a884ddc86e4e9c13c}{get\+Dynamic\+Object\+Type} ()
+\begin{DoxyCompactList}\small\item\em The object is the thing that is allocated; it is an array of some number of elements of the specified type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aac53eca91ab139f6717926f69e3dfc13}{get\+Size\+Expression} ()
+\begin{DoxyCompactList}\small\item\em The second argument to the \$malloc function is an integer expression specifying the size (number of bytes) to malloc. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a6866c8d8b34a27192a52c543a7963984}{get\+Undefined\+Object} ()
+\begin{DoxyCompactList}\small\item\em For every symbolic type, there is a symbolic constant of that type representing \char`\"{}undefined\char`\"{} value of that type. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1LHSExpression}{L\+H\+S\+Expression} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a7c6ffb8ed3f43e217dee0b3f5fefe4ae}{get\+L\+H\+S} ()
+\begin{DoxyCompactList}\small\item\em Returns the expression on the left-\/hand side of the assignment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} statement for dynamic allocation of objects. 
+
+Results from translation of an expression like
+
+{\ttfamily p = (double$\ast$)\$malloc(\&h, sizeof(double)$\ast$10)}
+
+Where {\ttfamily h} is an object of heap type. Executing such a statement results in the creation of an array of elements of the specified type (in this case, reals) and length (in this case, 10). The array object is inserted into the heap pointed to by the first argument.
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a2a05ca6af44d9b07e71acbd672c92ce0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}!get\+Dynamic\+Element\+Type@{get\+Dynamic\+Element\+Type}}
+\index{get\+Dynamic\+Element\+Type@{get\+Dynamic\+Element\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}}
+\subsubsection[{get\+Dynamic\+Element\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement.\+get\+Dynamic\+Element\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a2a05ca6af44d9b07e71acbd672c92ce0}
+
+
+This returns the dynamic (symbolic type) corresponding to the static element type. 
+
+It is obtained by ignoring any array extent expressions. Hence if the static type is \char`\"{}array of float of length 3$\ast$n+1\char`\"{} the dynamic type will be \char`\"{}array of real\char`\"{}. Since that dynamic type includes in its domain array of any length, it is an over-\/estimate of the types of elements that can be allocaged.
+
+In the example, the dynamic type returned would be the symbolic type \char`\"{}real\char`\"{}
+
+\begin{DoxyReturn}{Returns}
+dynamic type corresonding to static element type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a7511914ceafa7f42e33c238715a87a1a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aab8cf4e1964f1c4a884ddc86e4e9c13c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}!get\+Dynamic\+Object\+Type@{get\+Dynamic\+Object\+Type}}
+\index{get\+Dynamic\+Object\+Type@{get\+Dynamic\+Object\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}}
+\subsubsection[{get\+Dynamic\+Object\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Array\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement.\+get\+Dynamic\+Object\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aab8cf4e1964f1c4a884ddc86e4e9c13c}
+
+
+The object is the thing that is allocated; it is an array of some number of elements of the specified type. 
+
+This returns the dynamic type of the object (which is always an array type). In the example, it would be \char`\"{}array of real\char`\"{}.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2a0a10a21a066972181d84491e8371b2}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a7c6ffb8ed3f43e217dee0b3f5fefe4ae}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}!get\+L\+H\+S@{get\+L\+H\+S}}
+\index{get\+L\+H\+S@{get\+L\+H\+S}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}}
+\subsubsection[{get\+L\+H\+S}]{\setlength{\rightskip}{0pt plus 5cm}{\bf L\+H\+S\+Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement.\+get\+L\+H\+S (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a7c6ffb8ed3f43e217dee0b3f5fefe4ae}
+
+
+Returns the expression on the left-\/hand side of the assignment. 
+
+In the example, this would be {\ttfamily p}. This expression will be assigned a pointer to the first element of the array object created by the malloc.
+
+It may be null, but this is unusual.
+
+\begin{DoxyReturn}{Returns}
+the left hand side of the assignment 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a0b4a12ff2b0693bb2f8145e856e2f62b}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a9570887f917256ada3fb6d5222e981e6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}!get\+Malloc\+Id@{get\+Malloc\+Id}}
+\index{get\+Malloc\+Id@{get\+Malloc\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}}
+\subsubsection[{get\+Malloc\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement.\+get\+Malloc\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a9570887f917256ada3fb6d5222e981e6}
+
+
+The malloc statements in the model are indexed, so each has unique I\+D number. 
+
+This returns it
+
+\begin{DoxyReturn}{Returns}
+the I\+D number of this malloc statement 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a957b210a72b5b2b2a9d204f876e93837}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_ad7e57b22866ac6462dd24449c1c32f53}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}!get\+Scope\+Expression@{get\+Scope\+Expression}}
+\index{get\+Scope\+Expression@{get\+Scope\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}}
+\subsubsection[{get\+Scope\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement.\+get\+Scope\+Expression (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_ad7e57b22866ac6462dd24449c1c32f53}
+
+
+The first argument to the \$malloc function is an expression of type pointer-\/to-\/heap. 
+
+This returns that expression. In the example, it is the expression {\ttfamily \&h}.
+
+\begin{DoxyReturn}{Returns}
+the first argument to \$malloc 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a2230bc67a6731665b833243bb1889545}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aac53eca91ab139f6717926f69e3dfc13}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}!get\+Size\+Expression@{get\+Size\+Expression}}
+\index{get\+Size\+Expression@{get\+Size\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}}
+\subsubsection[{get\+Size\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement.\+get\+Size\+Expression (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aac53eca91ab139f6717926f69e3dfc13}
+
+
+The second argument to the \$malloc function is an integer expression specifying the size (number of bytes) to malloc. 
+
+It is typically some multiple of an expression of the form \char`\"{}sizeof(t)\char`\"{}. This method returns the argument.
+
+In the example, it would be the expression {\ttfamily sizeof(double)$\ast$10}
+
+\begin{DoxyReturn}{Returns}
+the second argument to the \$malloc statement, an integer-\/valued expression 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_add74b5c088aebe654d694a797001df3a}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aa182f4839b69a8d99cdebba5734bc63f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}!get\+Static\+Element\+Type@{get\+Static\+Element\+Type}}
+\index{get\+Static\+Element\+Type@{get\+Static\+Element\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}}
+\subsubsection[{get\+Static\+Element\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement.\+get\+Static\+Element\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_aa182f4839b69a8d99cdebba5734bc63f}
+
+
+Returns the static type of the elements that are to be allocated. 
+
+Each malloc statement must have a static type associated to it. The type can usually be determined by examining the cast expression which wraps the \$malloc. In the example, the type is \char`\"{}double\char`\"{}.
+
+\begin{DoxyReturn}{Returns}
+the type of elements to malloc. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_a0728e0ad13f5a6e5728c2aa8a2f9d06c}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a6866c8d8b34a27192a52c543a7963984}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}!get\+Undefined\+Object@{get\+Undefined\+Object}}
+\index{get\+Undefined\+Object@{get\+Undefined\+Object}!edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement@{edu\+::udel\+::cis\+::vsl\+::civl\+::model\+::\+I\+F\+::statement\+::\+Malloc\+Statement}}
+\subsubsection[{get\+Undefined\+Object}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+I\+F.\+statement.\+Malloc\+Statement.\+get\+Undefined\+Object (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1MallocStatement_a6866c8d8b34a27192a52c543a7963984}
+
+
+For every symbolic type, there is a symbolic constant of that type representing \char`\"{}undefined\char`\"{} value of that type. 
+
+The name of that symbolic constant might very well be \char`\"{}\+U\+N\+D\+E\+F\+I\+N\+E\+D\char`\"{}. This method returns the undefined value whose type is the dynamic\+Object\+Type. This is the expression used in place of an object that has been deallocated (by a {\ttfamily \$free} instruction) until that object is swept up by the garbage collector.
+
+In the example, this would return the symbolic constant U\+N\+D\+E\+F\+I\+N\+E\+D of type array of real.
+
+\begin{DoxyReturn}{Returns}
+undefined expression of dynamic object type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1common_1_1statement_1_1CommonMallocStatement_af14d4be2f9162433802ac993a8a135b1}{edu.\+udel.\+cis.\+vsl.\+civl.\+model.\+common.\+statement.\+Common\+Malloc\+Statement}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/model/\+I\+F/statement/Malloc\+Statement.\+java\end{DoxyCompactItemize}

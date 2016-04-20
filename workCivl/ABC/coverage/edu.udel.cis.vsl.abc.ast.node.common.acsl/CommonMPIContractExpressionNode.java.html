@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonMPIContractExpressionNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.acsl</a> &gt; <span class="el_source">CommonMPIContractExpressionNode.java</span></div><h1>CommonMPIContractExpressionNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.acsl;
+
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.MPIContractExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.common.expression.CommonExpressionNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonMPIContractExpressionNode extends CommonExpressionNode
+		implements MPIContractExpressionNode {
+
+	private MPIContractExpressionKind kind;
+
+	private ExpressionNode[] arguments;
+
+<span class="nc" id="L20">	private int numArgs = -1;</span>
+
+	private String exprName;
+
+	public CommonMPIContractExpressionNode(Source source,
+			List&lt;ExpressionNode&gt; arguments, MPIContractExpressionKind kind,
+			String exprName) {
+<span class="nc" id="L27">		super(source, arguments);</span>
+<span class="nc" id="L28">		this.kind = kind;</span>
+<span class="nc" id="L29">		this.exprName = exprName;</span>
+<span class="nc" id="L30">		this.arguments = new ExpressionNode[arguments.size()];</span>
+<span class="nc" id="L31">		arguments.toArray(this.arguments);</span>
+<span class="nc" id="L32">	}</span>
+
+	@Override
+	public ExpressionNode copy() {
+<span class="nc" id="L36">		List&lt;ExpressionNode&gt; argCopy = new LinkedList&lt;&gt;();</span>
+
+<span class="nc" id="L38">		argCopy.addAll(Arrays.asList(arguments));</span>
+<span class="nc" id="L39">		return new CommonMPIContractExpressionNode(this.getSource(), argCopy,</span>
+<span class="nc" id="L40">				kind, exprName);</span>
+	}
+
+	@Override
+	public MPIContractExpressionKind MPIContractExpressionKind() {
+<span class="nc" id="L45">		return kind;</span>
+	}
+
+	@Override
+	public ExpressionKind expressionKind() {
+<span class="nc" id="L50">		return ExpressionKind.MPI_CONTRACT_EXPRESSION;</span>
+	}
+
+	@Override
+	public boolean isConstantExpression() {
+<span class="nc" id="L55">		return false;</span>
+	}
+
+	@Override
+	public boolean isSideEffectFree(boolean errorsAreSideEffects) {
+<span class="nc" id="L60">		return true;</span>
+	}
+
+	@Override
+	public int numArguments() {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (numArgs &gt; 0)</span>
+<span class="nc" id="L66">			return numArgs;</span>
+		else {
+<span class="nc bnc" id="L68" title="All 6 branches missed.">			switch (kind) {</span>
+			case MPI_EMPTY_IN:
+<span class="nc" id="L70">				numArgs = 1;</span>
+<span class="nc" id="L71">				break;</span>
+			case MPI_EMPTY_OUT:
+<span class="nc" id="L73">				numArgs = 1;</span>
+<span class="nc" id="L74">				break;</span>
+			case MPI_AGREE:
+<span class="nc" id="L76">				numArgs = 1;</span>
+<span class="nc" id="L77">				break;</span>
+			case MPI_REGION:
+<span class="nc" id="L79">				numArgs = 3;</span>
+<span class="nc" id="L80">				break;</span>
+			case MPI_EQUALS:
+<span class="nc" id="L82">				numArgs = 4;</span>
+<span class="nc" id="L83">				break;</span>
+			default:
+<span class="nc" id="L85">				numArgs = -1;</span>
+			}
+		}
+<span class="nc" id="L88">		return numArgs;</span>
+	}
+
+	@Override
+	public ExpressionNode getArgument(int index) {
+<span class="nc" id="L93">		return arguments[index];</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L98">		out.print(kind);</span>
+<span class="nc" id="L99">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

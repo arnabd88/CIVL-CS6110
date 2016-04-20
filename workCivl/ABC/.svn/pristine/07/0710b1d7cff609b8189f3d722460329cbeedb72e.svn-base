@@ -1,0 +1,2 @@
+/* Try to include a file that is not in paths */
+#include "DoesNotExist"

@@ -1,0 +1,25 @@
+#include <civlc.cvh>
+
+typedef struct Point{
+  double x;
+  double y;
+} Point;
+
+typedef struct Line{
+  Point start;
+  Point end;
+} Line;
+
+$input int N;
+$input int K;
+$assume(0 <= K && K < N);
+
+void main(){
+  Line A[N];
+  Point p0={0,0}, p1={1,1};
+  Line l0={p0, p1};
+
+  A[K]=l0;
+  $assert(A[K].start.x==0);
+}
+

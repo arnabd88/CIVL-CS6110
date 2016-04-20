@@ -1,0 +1,84 @@
+
+int MPI_Comm_size(MPI_Comm comm, int *size) {
+  *size = $comm_size(comm);
+  return 0;
+}
+
+int MPI_Comm_rank(MPI_Comm comm, int* rank) {
+  // this only works for MPI_COMM_WORLD.
+  // for multiple communicators, you will need 
+  // a map (array) from PID to rank for each comm
+  *rank = $comm_place(comm);
+  return 0;
+}
+
+int MPI_Send(void *buf, int count, MPI_Datatype datatype,
+             int dest, int tag, MPI_Comm comm) {
+  //$atom {
+    int size;
+    
+    switch (datatype) {
+    case MPI_INT:
+      buf = (int*)buf;
+      size = count*sizeof(int); 
+      break;
+    case MPI_FLOAT:
+      buf = (float*)buf;
+      size = count*sizeof(float);
+      break;
+    case MPI_DOUBLE:
+      buf = (double*)buf;
+      size = count*sizeof(double);     
+      break;
+    case MPI_CHAR:
+      buf = (char*)buf;
+      size = count*sizeof(char);
+      break;
+    default:
+      printf("Unsupported datatype %d\n", datatype);
+      $assert($false);    
+    }
+    $message out = $message_pack(__rank, dest, tag, buf, size);
+    $comm_enqueue(comm, out);
+  //}
+  return 0;
+}
+
+int MPI_Recv(void *buf, int count, MPI_Datatype datatype,
+             int source, int tag, MPI_Comm comm, MPI_Status *status) {
+  $message in = $comm_dequeue(comm, source, tag);
+  //$atom {
+    int size;
+    
+    switch (datatype) {
+    case MPI_INT:
+      buf = (int*)buf;
+      size = count*sizeof(int); 
+      break;
+    case MPI_FLOAT:
+      buf = (float*)buf;
+      size = count*sizeof(float);
+      break;
+    case MPI_DOUBLE:
+      buf = (double*)buf;
+      size = count*sizeof(double);     
+      break;
+    case MPI_CHAR:
+      buf = (char*)buf;
+      size = count*sizeof(char);
+      break;
+    default:
+      printf("Unsupported datatype %d\n", datatype);
+      $assert($false);    
+    }
+    $message_unpack(in, buf, size);
+    if (status != MPI_STATUS_IGNORE) {
+      status->MPI_SOURCE = in.source;
+      status->MPI_TAG = in.tag;
+      status->size = in.size;
+    }
+  //}
+  return 0;
+}
+
+$when (__start);

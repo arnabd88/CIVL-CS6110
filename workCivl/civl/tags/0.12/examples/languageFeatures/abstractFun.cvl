@@ -1,0 +1,19 @@
+#include<civlc.h>
+#include<stdio.h>
+
+$input int N;
+$assume N>2;
+$abstract int colorOf(double x);
+
+void main() {
+  double u[N];
+
+  void f() {
+    int x = colorOf(u[2]);
+
+    printf("x=%d\n", x);
+    x = colorOf(u[1]);
+    printf("x=%d\n", x);
+  }
+  f();
+}

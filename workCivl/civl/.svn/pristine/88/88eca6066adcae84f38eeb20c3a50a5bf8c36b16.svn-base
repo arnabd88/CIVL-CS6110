@@ -1,0 +1,17 @@
+/* Commandline execution:
+ *		civl verify quantifiers.cvl
+ * */
+#include<civlc.cvh>
+
+$input double b[10];
+
+void main() {
+  int a[5];
+  
+  for (int i = 0; i < 5; i++) {
+    a[i] = i;
+  }
+
+  $assert(($exists {int k | k >= 0 && k < 5} a[k] > 3));
+  $assert(($exists {k = 0 .. 4} a[k] > 3));
+}

@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TranslationTask.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.main</a> &gt; <span class="el_source">TranslationTask.java</span></div><h1>TranslationTask.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.main;
+
+import java.io.File;
+import java.io.PrintStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.config.IF.Configuration.Architecture;
+import edu.udel.cis.vsl.abc.config.IF.Configurations.Language;
+
+/**
+ * A {@link TranslationTask} object specifies all of the options and parameters
+ * needed to perform a complete translation task.
+ * 
+ * @author siegel
+ */
+public class TranslationTask {
+
+	/**
+	 * The language (e.g., {@link Language#C} or {@link Language#CIVL_C}).
+	 */
+	private Language language;
+
+	/**
+	 * List of system include paths for the preprocessor.
+	 */
+	private File[] systemIncludes;
+
+	/**
+	 * List of user include paths for the preprocessor.
+	 */
+	private File[] userIncludes;
+
+	/**
+	 * Map of macros: (name, object).
+	 */
+	private Map&lt;String, String&gt; macros;
+
+	/**
+	 * Output stream: where to print human-readable descriptions of translation
+	 * artifacts.
+	 */
+	private PrintStream out;
+
+	/**
+	 * If true, stop after preprocessing. Otherwise, go all the way to
+	 * generating and transforming a complete program.
+	 */
+	private boolean preprocOnly;
+
+	/**
+	 * Print out information on intermediate steps, not just the final result.
+	 */
+	private boolean verbose;
+
+	/**
+	 * Print out program in original language, as opposed to a hierarchical
+	 * representation.
+	 */
+	private boolean prettyPrint;
+
+	/**
+	 * The source files to translate. Each generates one translation unit.
+	 */
+	private File[] files;
+
+	/**
+	 * The codes specifying the transformations to apply to the program after
+	 * linking the translation units.
+	 */
+	private List&lt;String&gt; transformCodes;
+
+	/**
+	 * Show symbol and type tables.
+	 */
+	private boolean showTables;
+
+	/**
+	 * Show the timing of each phase.
+	 */
+	private boolean showTime;
+
+	/**
+	 * Shows the difference of two ASTs.
+	 */
+<span class="pc" id="L89">	private boolean showDiff = false;</span>
+
+	/**
+	 * allows GNU C features?
+	 */
+<span class="pc" id="L94">	private boolean gnuc = false;</span>
+
+	/**
+	 * don't print parsing result
+	 */
+<span class="pc" id="L99">	private boolean silent = false;</span>
+
+	/**
+	 * prints functions that are used but without no definitions are given
+	 */
+<span class="pc" id="L104">	private boolean unkownFunc = false;</span>
+
+	/**
+	 * turns on special configuration for svcomp, including GNU-C features.
+	 */
+<span class="pc" id="L109">	private boolean svcomp = false;</span>
+
+	/**
+	 * the architecture to be assumed for this translation task, unknown by
+	 * default
+	 */
+<span class="pc" id="L115">	private Architecture architecture = Architecture.UNKNOWN;</span>
+
+	/**
+	 * Constructs a new task with language C, empty system and user include
+	 * paths, output stream {@link System#out}, not preproc only, verbose, no
+	 * files, no transform codes.
+	 */
+<span class="fc" id="L122">	public TranslationTask() {</span>
+<span class="fc" id="L123">		language = Language.C;</span>
+<span class="fc" id="L124">		systemIncludes = ABC.DEFAULT_SYSTEM_INCLUDE_PATHS;</span>
+<span class="fc" id="L125">		userIncludes = ABC.DEFAULT_USER_INCLUDE_PATHS;</span>
+<span class="fc" id="L126">		out = System.out;</span>
+<span class="fc" id="L127">		preprocOnly = false;</span>
+<span class="fc" id="L128">		verbose = true;</span>
+<span class="fc" id="L129">		prettyPrint = false;</span>
+<span class="fc" id="L130">		files = null;</span>
+<span class="fc" id="L131">		transformCodes = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L132">		showTables = false;</span>
+<span class="fc" id="L133">		macros = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L134">	}</span>
+
+<span class="nc" id="L136">	public TranslationTask(Language language, File[] files) {</span>
+<span class="nc" id="L137">		this.language = language;</span>
+<span class="nc" id="L138">		this.setFiles(files);</span>
+<span class="nc" id="L139">		this.out = System.out;</span>
+<span class="nc" id="L140">		systemIncludes = new File[0];</span>
+<span class="nc" id="L141">		userIncludes = new File[0];</span>
+<span class="nc" id="L142">		preprocOnly = false;</span>
+<span class="nc" id="L143">		verbose = true;</span>
+<span class="nc" id="L144">		prettyPrint = false;</span>
+<span class="nc" id="L145">		transformCodes = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L146">		showTables = false;</span>
+<span class="nc" id="L147">		macros = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L149">	}</span>
+
+	public TranslationTask(Language language, File file) {
+<span class="nc" id="L152">		this(language, new File[] { file });</span>
+<span class="nc" id="L153">	}</span>
+
+	/**
+	 * @return the language
+	 */
+	public Language getLanguage() {
+<span class="nc" id="L159">		return language;</span>
+	}
+
+	/**
+	 * @param language
+	 *            the language to set
+	 */
+	public void setLanguage(Language language) {
+<span class="fc" id="L167">		this.language = language;</span>
+<span class="fc" id="L168">	}</span>
+
+	/**
+	 * @return the systemIncludes
+	 */
+	public File[] getSystemIncludes() {
+<span class="nc" id="L174">		return systemIncludes;</span>
+	}
+
+	/**
+	 * @param systemIncludes
+	 *            the systemIncludes to set
+	 */
+	public void setSystemIncludes(File[] systemIncludes) {
+<span class="fc" id="L182">		this.systemIncludes = systemIncludes;</span>
+<span class="fc" id="L183">	}</span>
+
+	/**
+	 * @return the userIncludes
+	 */
+	public File[] getUserIncludes() {
+<span class="nc" id="L189">		return userIncludes;</span>
+	}
+
+	/**
+	 * @param userIncludes
+	 *            the userIncludes to set
+	 */
+	public void setUserIncludes(File[] userIncludes) {
+<span class="fc" id="L197">		this.userIncludes = userIncludes;</span>
+<span class="fc" id="L198">	}</span>
+
+	/**
+	 * 
+	 * @return the macro names that are predefined.
+	 */
+	public Map&lt;String, String&gt; getMacros() {
+<span class="nc" id="L205">		return this.macros;</span>
+	}
+
+	/**
+	 * updates the predefined macros.
+	 * 
+	 * @param macros
+	 */
+	public void setMacroNames(Map&lt;String, String&gt; macros) {
+<span class="fc" id="L214">		this.macros = macros;</span>
+<span class="fc" id="L215">	}</span>
+
+	/**
+	 * @return the out
+	 */
+	public PrintStream getOut() {
+<span class="nc" id="L221">		return out;</span>
+	}
+
+	/**
+	 * @param out
+	 *            the out to set
+	 */
+	public void setOut(PrintStream out) {
+<span class="fc" id="L229">		this.out = out;</span>
+<span class="fc" id="L230">	}</span>
+
+	/**
+	 * @return the preprocOnly
+	 */
+	public boolean isPreprocOnly() {
+<span class="nc" id="L236">		return preprocOnly;</span>
+	}
+
+	/**
+	 * @param preprocOnly
+	 *            the preprocOnly to set
+	 */
+	public void setPreprocOnly(boolean preprocOnly) {
+<span class="fc" id="L244">		this.preprocOnly = preprocOnly;</span>
+<span class="fc" id="L245">	}</span>
+
+	/**
+	 * @return the verbose
+	 */
+	public boolean isVerbose() {
+<span class="nc" id="L251">		return verbose;</span>
+	}
+
+	/**
+	 * @param verbose
+	 *            the verbose to set
+	 */
+	public void setVerbose(boolean verbose) {
+<span class="fc" id="L259">		this.verbose = verbose;</span>
+<span class="fc" id="L260">	}</span>
+
+	/**
+	 * @return the files
+	 */
+	public File[] getFiles() {
+<span class="fc" id="L266">		return files;</span>
+	}
+
+	/**
+	 * @param files
+	 *            the files to set
+	 */
+	public void setFiles(File[] files) {
+<span class="fc" id="L274">		this.files = files;</span>
+<span class="fc" id="L275">	}</span>
+
+	public Collection&lt;String&gt; getTransformCodes() {
+<span class="nc" id="L278">		return transformCodes;</span>
+	}
+
+	public void addTransformCode(String code) {
+<span class="fc" id="L282">		transformCodes.add(code);</span>
+<span class="fc" id="L283">	}</span>
+
+	public void addAllTransformCodes(Collection&lt;String&gt; codes) {
+<span class="fc" id="L286">		transformCodes.addAll(codes);</span>
+<span class="fc" id="L287">	}</span>
+
+	public boolean doPrettyPrint() {
+<span class="nc" id="L290">		return prettyPrint;</span>
+	}
+
+	public void setPrettyPrint(boolean value) {
+<span class="fc" id="L294">		this.prettyPrint = value;</span>
+<span class="fc" id="L295">	}</span>
+
+	public boolean doShowTables() {
+<span class="nc" id="L298">		return showTables;</span>
+	}
+
+	public void setShowTables(boolean value) {
+<span class="fc" id="L302">		this.showTables = value;</span>
+<span class="fc" id="L303">	}</span>
+
+	public boolean doShowTime() {
+<span class="nc" id="L306">		return showTime;</span>
+	}
+
+	public boolean doShowDiff() {
+<span class="nc" id="L310">		return this.showDiff;</span>
+	}
+
+	public void setShowTime(boolean showTime) {
+<span class="fc" id="L314">		this.showTime = showTime;</span>
+<span class="fc" id="L315">	}</span>
+
+	public void setShowDiff(boolean showDiff) {
+<span class="fc" id="L318">		this.showDiff = showDiff;</span>
+<span class="fc" id="L319">	}</span>
+
+	/**
+	 * @return the gnuc
+	 */
+	public boolean doGnuc() {
+<span class="nc" id="L325">		return gnuc;</span>
+	}
+
+	/**
+	 * @param gnuc
+	 *            the gnuc to set
+	 */
+	public void setGnuc(boolean gnuc) {
+<span class="fc" id="L333">		this.gnuc = gnuc;</span>
+<span class="fc" id="L334">	}</span>
+
+	/**
+	 * @return the silent
+	 */
+	public boolean doSilent() {
+<span class="nc" id="L340">		return silent;</span>
+	}
+
+	/**
+	 * @param silent
+	 *            the silent to set
+	 */
+	public void setSilent(boolean silent) {
+<span class="fc" id="L348">		this.silent = silent;</span>
+<span class="fc" id="L349">	}</span>
+
+	/**
+	 * @return the unkownFunc
+	 */
+	public boolean doUnkownFunc() {
+<span class="nc" id="L355">		return unkownFunc;</span>
+	}
+
+	/**
+	 * @param unkownFunc
+	 *            the unkownFunc to set
+	 */
+	public void setUnkownFunc(boolean unkownFunc) {
+<span class="fc" id="L363">		this.unkownFunc = unkownFunc;</span>
+<span class="fc" id="L364">	}</span>
+
+	/**
+	 * @return the svcomp
+	 */
+	public boolean doSvcomp() {
+<span class="nc" id="L370">		return svcomp;</span>
+	}
+
+	/**
+	 * @param svcomp
+	 *            the svcomp to set
+	 */
+	public void setSvcomp(boolean svcomp) {
+<span class="fc" id="L378">		this.svcomp = svcomp;</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (svcomp)</span>
+<span class="fc" id="L380">			this.setGnuc(true);</span>
+<span class="fc" id="L381">	}</span>
+
+	public Architecture doArchitecture() {
+<span class="nc" id="L384">		return architecture;</span>
+	}
+
+	public void setArchitecture(Architecture architecture) {
+<span class="fc" id="L388">		this.architecture = architecture;</span>
+<span class="fc" id="L389">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

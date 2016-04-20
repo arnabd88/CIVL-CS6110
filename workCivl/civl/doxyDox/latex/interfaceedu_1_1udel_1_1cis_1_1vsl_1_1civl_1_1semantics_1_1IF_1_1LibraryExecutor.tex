@@ -1,0 +1,75 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor}}
+
+
+\hyperlink{structA}{A} Library \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} provides the semantics for system functions defined in a library.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor_a383136ab6e875742f46b5dbd94673984}{execute} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} statement, String function\+Name)  throws Unsatisfiable\+Path\+Condition\+Exception
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} Library \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} provides the semantics for system functions defined in a library. 
+
+It provides a method to \char`\"{}execute\char`\"{} each system library function.\+A new library is implemented in the package named as \char`\"{}edu.\+udel.\+cis.\+vsl.\+civl.\+library.\char`\"{} ( \hyperlink{}{Common\+Library\+Loader\#\+C\+L\+A\+S\+S\+\_\+\+P\+R\+E\+F\+I\+X})
+\begin{DoxyItemize}
+\item library name. And the class name of the executor is\+: \char`\"{}\+Lib\char`\"{} + library name + \char`\"{}\+Enabler\char`\"{}. For example, the stdio library executor is implemented as the class \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1stdio_1_1LibstdioExecutor}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+stdio.\+Libstdio\+Executor}. 
+\end{DoxyItemize}
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor_a383136ab6e875742f46b5dbd94673984}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Executor}!execute@{execute}}
+\index{execute@{execute}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Library\+Executor}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Library\+Executor.\+execute (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{{\bf Call\+Or\+Spawn\+Statement}}]{statement, }
+\item[{String}]{function\+Name}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutor_a383136ab6e875742f46b5dbd94673984}
+Executes the given call statement for a certain process at the given state. 
+
+Precondition\+: the given call statement is enabled for the process with the given pid, and the function of the call statement is provided by this library. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state where the call statement is to be executed. \\
+\hline
+{\em pid} & The P\+I\+D of the process that the statement belongs to. \\
+\hline
+{\em statement} & The call statement to be executed. \\
+\hline
+{\em function\+Name} & The name of the system function that this call is going to executed. Note\+: we need this when the function of the call statement is a function pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The resulting state after executing the call statement. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1stdio_1_1LibstdioExecutor_a27f512e778eeaca488868223526fde15}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+stdio.\+Libstdio\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1bundle_1_1LibbundleExecutor_a19d1aa506489d9e5351d69c49c90f51f}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+bundle.\+Libbundle\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1time_1_1LibtimeExecutor_a4d75c4ed5b84ad8ea1d7caef437ea815}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+time.\+Libtime\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1string_1_1LibstringExecutor_a0ace8a486ff508d216d3b3e8024dd976}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+string.\+Libstring\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1civlc_1_1LibcivlcExecutor_a10ccbb00d236c1a0c66b93ed83d67e90}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+civlc.\+Libcivlc\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1mpi_1_1LibmpiExecutor_a941f2030281bfe6baced8fbcaa59568f}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+mpi.\+Libmpi\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1stdlib_1_1LibstdlibExecutor_aad6301cf093b353820dc14451d447890}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+stdlib.\+Libstdlib\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1pthread_1_1LibpthreadExecutor_acdc0c2d50350eb58b6e8bda63ddcea7c}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+pthread.\+Libpthread\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1concurrency_1_1LibconcurrencyExecutor_ab9fc99d2846f42a5600135abf4796579}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+concurrency.\+Libconcurrency\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1comm_1_1LibcommExecutor_a63cdf3422becd2d35181bc01408f7f2a}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+comm.\+Libcomm\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1domain_1_1LibdomainExecutor_a3138c3d5ea07443884b5a91f4d321557}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+domain.\+Libdomain\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1pointer_1_1LibpointerExecutor_a3c32570966fa2b8c9faaf407c3bdf42b}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+pointer.\+Libpointer\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1seq_1_1LibseqExecutor_a405ee05f2c245c3c0e16820c7916ce1d}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+seq.\+Libseq\+Executor}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1scope_1_1LibscopeExecutor_a5e7c37bb53f83b9573ddc7052208e987}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+scope.\+Libscope\+Executor}, and \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1asserts_1_1LibassertsExecutor_ae3ec1c756bf2a4b23cf37d7d9f74aeb3}{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+asserts.\+Libasserts\+Executor}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/\+I\+F/Library\+Executor.\+java\end{DoxyCompactItemize}

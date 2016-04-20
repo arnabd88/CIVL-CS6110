@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonFloatingConstantNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.expression</a> &gt; <span class="el_source">CommonFloatingConstantNode.java</span></div><h1>CommonFloatingConstantNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.expression;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.FloatingConstantNode;
+import edu.udel.cis.vsl.abc.ast.value.IF.RealFloatingValue;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonFloatingConstantNode extends CommonConstantNode implements
+		FloatingConstantNode {
+
+	private String wholePart;
+
+	private String fractionPart;
+
+	private String exponent;
+
+	public CommonFloatingConstantNode(Source source, String representation,
+			String wholePart, String fractionPart, String exponent,
+			RealFloatingValue value) {
+<span class="nc" id="L21">		super(source, representation, value.getType());</span>
+<span class="nc" id="L22">		this.wholePart = wholePart;</span>
+<span class="nc" id="L23">		this.fractionPart = fractionPart;</span>
+<span class="nc" id="L24">		this.exponent = exponent;</span>
+<span class="nc" id="L25">		setConstantValue(value);</span>
+<span class="nc" id="L26">	}</span>
+
+	@Override
+	public RealFloatingValue getConstantValue() {
+<span class="nc" id="L30">		return (RealFloatingValue) super.getConstantValue();</span>
+	}
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L35">		out.print(toString());</span>
+<span class="nc" id="L36">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L40">		return &quot;FloatingConstantNode[radix=&quot; + getConstantValue().getRadix()</span>
+<span class="nc" id="L41">				+ &quot;, significand=&quot; + wholePart + &quot;.&quot; + fractionPart</span>
+<span class="nc" id="L42">				+ &quot;, exponent=&quot; + exponent + &quot;, doubleValue=&quot;</span>
+<span class="nc" id="L43">				+ getConstantValue().getDoubleValue() + &quot;]&quot;;</span>
+	}
+
+	@Override
+	public String wholePart() {
+<span class="nc" id="L48">		return wholePart;</span>
+	}
+
+	@Override
+	public String fractionPart() {
+<span class="nc" id="L53">		return fractionPart;</span>
+	}
+
+	@Override
+	public String exponent() {
+<span class="nc" id="L58">		return exponent;</span>
+	}
+
+	@Override
+	public FloatingConstantNode copy() {
+<span class="nc" id="L63">		return new CommonFloatingConstantNode(getSource(),</span>
+<span class="nc" id="L64">				getStringRepresentation(), wholePart(), fractionPart(),</span>
+<span class="nc" id="L65">				exponent(), getConstantValue());</span>
+	}
+
+	@Override
+	public ConstantKind constantKind() {
+<span class="nc" id="L70">		return ConstantKind.FLOAT;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

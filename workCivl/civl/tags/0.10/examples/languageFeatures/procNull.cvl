@@ -1,0 +1,11 @@
+#include<civlc.h>
+#include<stdio.h>
+
+void main(){
+  $proc p = $self;
+  
+  $proc_null(&p);
+  if($self != p){
+	  printf("I'm not null.\n");
+  }
+}

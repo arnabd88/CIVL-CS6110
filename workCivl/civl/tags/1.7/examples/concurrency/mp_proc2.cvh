@@ -1,0 +1,89 @@
+#include <civlc.cvh>
+
+int sizeofDatatype(MPI_Datatype datatype) {
+  switch (datatype) {
+  case MPI_INT:
+    return sizeof(int);
+  case MPI_FLOAT:
+    return sizeof(float);
+  case MPI_DOUBLE:
+    return sizeof(double);
+  case MPI_CHAR:
+    return sizeof(char);
+  default:
+    $assert(0, "Unreachable");
+  }
+}
+
+int MPI_Comm_size(MPI_Comm comm, int *size) {
+  *size = $comm_size(comm);
+  return 0;
+}
+
+int MPI_Comm_rank(MPI_Comm comm, int* rank) {
+  // this only works for MPI_COMM_WORLD.
+  // for multiple communicators, you will need 
+  // a map (array) from PID to rank for each comm
+  *rank = $comm_place(comm);
+  return 0;
+}
+
+int MPI_Send(void *buf, int count, MPI_Datatype datatype,
+             int dest, int tag, MPI_Comm comm) {
+  //$atom {
+    int size;
+    
+    size = sizeofDatatype(datatype);
+    $message out = $message_pack(__rank, dest, tag, buf, size);
+    $comm_enqueue(comm, out);
+  //}
+  return 0;
+}
+
+int MPI_Recv(void *buf, int count, MPI_Datatype datatype,
+             int source, int tag, MPI_Comm comm, MPI_Status *status) {
+  $message in = $comm_dequeue(comm, source, tag);
+  //$atom {
+    int size;
+    
+    size = sizeofDatatype(datatype);
+    $message_unpack(in, buf, size);
+    if (status != MPI_STATUS_IGNORE) {
+      status->MPI_SOURCE = in.source;
+      status->MPI_TAG = in.tag;
+      status->size = in.size;
+    }
+  //}
+  return 0;
+}
+
+int MPI_Sendrecv(void *sendbuf, int sendcount, MPI_Datatype sendtype,
+             int dest, int sendtag, void *recvbuf, int recvcount, MPI_Datatype recvtype,
+             int source, int recvtag, MPI_Comm comm, MPI_Status *status){
+  int sendsize, recvsize;
+  $message out , in;
+  _Bool probe;
+
+  sendsize = sendcount * sizeofDatatype(sendtype);  
+  recvsize = recvcount * sizeofDatatype(recvtype);
+  out = $message_pack(__rank, dest, sendtag, sendbuf, sendsize);
+  probe = $comm_probe(comm, source, recvtag);
+  $choose {
+    $when (1){ 
+      $comm_enqueue(comm, out);
+      in = $comm_dequeue(comm, source, recvtag);
+    }
+    $when (probe){
+      in = $comm_dequeue(comm, source, recvtag);
+      $comm_enqueue(comm, out);
+    }
+  }
+  $message_unpack(in, recvbuf, recvsize);
+  if (status != MPI_STATUS_IGNORE) {
+    status->MPI_SOURCE = in.source;
+    status->MPI_TAG = in.tag;
+    status->size = in.size;
+  }
+}
+
+$when (__start);

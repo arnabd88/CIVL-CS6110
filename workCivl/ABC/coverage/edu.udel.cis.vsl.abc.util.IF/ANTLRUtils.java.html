@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ANTLRUtils.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.util.IF</a> &gt; <span class="el_source">ANTLRUtils.java</span></div><h1>ANTLRUtils.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.util.IF;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
+
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.Tree;
+
+<span class="nc" id="L13">public class ANTLRUtils {</span>
+
+	public static void printTree(PrintStream out, Tree tree) {
+<span class="nc bnc" id="L16" title="All 2 branches missed.">		if (tree == null) {</span>
+<span class="nc" id="L17">			out.println(&quot;null&quot;);</span>
+<span class="nc" id="L18">		} else {</span>
+<span class="nc" id="L19">			printNode(out, tree, &quot;&quot;);</span>
+		}
+<span class="nc" id="L21">	}</span>
+
+	/**
+	 * Pretty-prints tree using one line per node and nice indentation.
+	 * 
+	 * @param out
+	 *            stream to which output should be sent
+	 * @param node
+	 *            a non-null instance of CommonTree
+	 * @param prefix
+	 *            any text you wish to precede output
+	 */
+	private static void printNode(PrintStream out, Tree node, String prefix) {
+		int numChildren;
+<span class="nc" id="L35">		Token token = ((CommonTree) node).getToken();</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">		String nodeString = (token == null ? &quot;null&quot; : token.toString());</span>
+
+<span class="nc" id="L38">		out.print(prefix);</span>
+<span class="nc" id="L39">		out.println(nodeString);</span>
+<span class="nc" id="L40">		out.flush();</span>
+<span class="nc" id="L41">		numChildren = node.getChildCount();</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">		if (numChildren &gt; 0) {</span>
+<span class="nc" id="L43">			String newPrefix = prefix + &quot;| &quot;;</span>
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">			for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L46">				Tree child = node.getChild(i);</span>
+
+<span class="nc" id="L48">				printNode(out, child, newPrefix);</span>
+			}
+		}
+<span class="nc" id="L51">	}</span>
+
+	/**
+	 * Applies method source to the file with the given filename.
+	 * 
+	 * @param out
+	 *            a PrintStream to which the output is sent
+	 * @param filename
+	 *            name of a file
+	 * @throws IOException
+	 */
+	public static void source(PrintStream out, String filename)
+			throws IOException {
+<span class="nc" id="L64">		source(out, new File(filename));</span>
+<span class="nc" id="L65">	}</span>
+
+	/**
+	 * Prints the original text file to the give output stream, unaltered.
+	 * 
+	 * @param out
+	 *            a PrintStream to which the output is sent
+	 * @param file
+	 *            the file to read
+	 * @throws IOException
+	 *             if an I/O exception occurs while reading the file
+	 */
+	public static void source(PrintStream out, File file) throws IOException {
+<span class="nc" id="L78">		out.println(&quot;Contents of file &quot; + file + &quot;:\n&quot;);</span>
+<span class="nc" id="L79">		out.println(&quot;-----------------------------------&gt;&quot;);</span>
+<span class="nc" id="L80">		FileReader fileReader = new FileReader(file);</span>
+<span class="nc" id="L81">		BufferedReader bufferedReader = new BufferedReader(fileReader);</span>
+		String line;
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		while ((line = bufferedReader.readLine()) != null)</span>
+<span class="nc" id="L85">			out.println(line);</span>
+<span class="nc" id="L86">		out.println(&quot;&lt;-----------------------------------&quot;);</span>
+<span class="nc" id="L87">		out.flush();</span>
+<span class="nc" id="L88">		bufferedReader.close();</span>
+<span class="nc" id="L89">		fileReader.close();</span>
+<span class="nc" id="L90">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

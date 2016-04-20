@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Renamer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.program.common</a> &gt; <span class="el_source">Renamer.java</span></div><h1>Renamer.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.program.common;
+
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.ast.entity.IF.ProgramEntity;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+
+/**
+ * Simple class for renaming entities in an AST. It modifies the nodes, but does
+ * not create new nodes. The AST must be analyzed with current entity
+ * information.
+ * 
+ * @author siegel
+ * 
+ */
+public class Renamer {
+
+	/**
+	 * Map from entities to new name.
+	 */
+	private Map&lt;ProgramEntity, String&gt; map;
+
+	/**
+	 * Constructs new renamed with given renaming map.
+	 * 
+	 * @param map
+	 */
+<span class="nc" id="L30">	public Renamer(Map&lt;ProgramEntity, String&gt; map) {</span>
+<span class="nc" id="L31">		this.map = map;</span>
+<span class="nc" id="L32">	}</span>
+
+	/**
+	 * Performs renaming on given node and all its descendants. If the node is
+	 * an identifier node and entity associated to that identifier occurs as a
+	 * key in the map, the name of the identifier is set to the new name. Method
+	 * is called recursively on the children nods.
+	 * 
+	 * @param node
+	 *            a node in the AST
+	 */
+	public void renameFrom(ASTNode node) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		if (node instanceof IdentifierNode) {</span>
+<span class="nc" id="L45">			IdentifierNode inode = (IdentifierNode) node;</span>
+<span class="nc" id="L46">			Entity entity = inode.getEntity();</span>
+<span class="nc" id="L47">			String newName = map.get(entity);</span>
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">			if (newName != null) {</span>
+<span class="nc" id="L50">				inode.setName(newName);</span>
+			}
+<span class="nc" id="L52">		} else {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">			for (ASTNode child : node.children())</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">				if (child != null)</span>
+<span class="nc" id="L55">					renameFrom(child);</span>
+		}
+<span class="nc" id="L57">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,33 @@
+/* Dining philosophers, standard version, which deadlocks.
+ *
+ *		civl verify -inputB=4 diningBad.cvl
+ * or (if you want to find the minimal counterexample)
+ *		civl verify -inputB=4 diningBad.cvl -min
+ */
+#include <civlc.cvh>
+
+$input int B = 4; // upper bound on number of philosophers
+$input int n;     // number of philosophers
+$assume(2<=n && n<=B);
+
+_Bool forks[n]; // Each fork will be on the table ($true) or in a hand ($false).
+
+void dine(int id) {
+  int left = id;
+  int right = (id + 1) % n;
+
+  while (1) {
+    $when (forks[left]) forks[left] = $false;
+    $when (forks[right]) forks[right] = $false;
+    forks[right] = $true;
+    forks[left] = $true;
+  }
+}
+
+void main() { 
+  $elaborate(n);
+  $for(int i: 0 .. n-1)
+    forks[i] = $true;
+  $parfor(int i: 0 .. n-1)
+    dine(i);
+}

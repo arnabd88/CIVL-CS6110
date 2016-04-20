@@ -1,0 +1,41 @@
+Session name....... spawnBad
+Directory.......... CIVLREP
+Date............... Tue Apr 19 17:44:24 MDT 2016
+Trace ID........... 0
+Violation number....... 0
+
+== Begin Violation Message == 
+Violation 0[length=6, file=CIVLREP/spawnBad_0.trace]:
+CIVL execution violation in p0(id=0) (kind: ASSERTION_VIOLATION, certainty: PROVEABLE)
+at spawnBad.cvl:23.2-17 "$assert(s1==s2)":
+
+Assertion: (s1==s2)
+        -> 1==0
+        -> false
+
+Input:
+  N=10
+Context:
+  true
+Call stacks:
+process p0 (id=0):
+  main at spawnBad.cvl:23.2-9 "$assert"
+process p1 (id=1):
+  f1 at spawnBad.cvl:11.26-28 "s1"
+process p2 (id=2):
+  f2 at spawnBad.cvl:15.2-4 "s2"
+
+== End Violation Message == 
+
+== Begin Configuration ==
+examples/concurrency/spawnBad.cvl
+== End Configuration ==
+
+== Begin Trace ==
+LENGTH = 6
+0
+0
+0
+0
+0
+== End Trace ==

@@ -1,0 +1,189 @@
+Session name....... diningBad
+Directory.......... CIVLREP
+Date............... Wed Apr 20 10:51:32 MDT 2016
+Trace ID........... 0
+Violation number....... 0
+
+== Begin Violation Message == 
+Violation 0[length=154, file=CIVLREP/diningBad_0.trace]:
+CIVL execution violation (kind: DEADLOCK, certainty: PROVEABLE)
+at diningBad.cvl:31.11-12 ";":
+A deadlock is possible:
+  Path condition: true
+  Enabling predicate: false
+process p0 (id=0): false
+process p1 (id=1): false
+process p2 (id=2): false
+
+Call stacks:
+process p0 (id=0):
+  main at diningBad.cvl:31.11-12 ";"
+process p1 (id=1):
+  dine at diningBad.cvl:21.4-9 "$when" called from
+  _par_proc0 at diningBad.cvl:31.4-8 "dine"
+process p2 (id=2):
+  dine at diningBad.cvl:21.4-9 "$when" called from
+  _par_proc0 at diningBad.cvl:31.4-8 "dine"
+
+== End Violation Message == 
+
+== Begin Configuration ==
+examples/concurrency/diningBad.cvl
+== End Configuration ==
+
+== Begin Trace ==
+LENGTH = 154
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+== End Trace ==

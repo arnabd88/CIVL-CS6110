@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FortranStream.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.front.fortran.preproc</a> &gt; <span class="el_source">FortranStream.java</span></div><h1>FortranStream.java</h1><pre class="source lang-java linenums">/*******************************************************************************
+ * Copyright (c) 2005, 2006 Los Alamos National Security, LLC.
+ * This material was produced under U.S. Government contract DE-AC52-06NA25396
+ * for Los Alamos National Laboratory (LANL), which is operated by the Los Alamos
+ * National Security, LLC (LANS) for the U.S. Department of Energy. The U.S. Government has
+ * rights to use, reproduce, and distribute this software. NEITHER THE
+ * GOVERNMENT NOR LANS MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR
+ * ASSUMES ANY LIABILITY FOR THE USE OF THIS SOFTWARE. If software is modified
+ * to produce derivative works, such modified software should be clearly marked,
+ * so as not to confuse it with the version available from LANL.
+ *
+ * Additionally, this program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+package edu.udel.cis.vsl.abc.front.fortran.preproc;
+
+import java.io.*;
+
+import org.antlr.runtime.*;
+
+public class FortranStream extends ANTLRFileStream
+{
+   private int sourceForm;
+   private String filename;
+   private String filepath;
+
+   public static final int UNKNOWN_SOURCE_FORM = -1;
+   public static final int FREE_FORM = 1;
+   public static final int FIXED_FORM = 2;
+
+   /**
+    * Create a new input buffer and use it to fix line continuation.  This
+    * buffer will be used to strip out continuation characters, extra '\n'
+    * characters, and in fixed form, extra characters in columns 1-6,
+    * including TAB.  It also moves comments and preprocesser commands if
+    * they are in the middle of continuation lines.
+    * 
+    * Note that Holleriths in edit descriptors must be recognized, otherwise
+    * what looks like a comment will be processed incorrectly, consider the
+    * the very evil
+    * 
+    * 100   format (1h1,58x,1h!,/,60x,/,59x,1h*,/)
+    *  
+    *  which has &quot;1h!&quot; as a hollerith, not a comment!
+    *
+    * Also consider
+    *
+    * 200   format (1h1,58x,2h!)
+    *      &amp;)
+    */
+   public FortranStream(String filename) throws IOException
+   {
+<span class="nc" id="L56">      super(filename);</span>
+<span class="nc" id="L57">      this.filename = filename;</span>
+
+<span class="nc" id="L59">      File file = new File(filename);</span>
+<span class="nc" id="L60">      this.filepath = file.getAbsolutePath();</span>
+      
+<span class="nc" id="L62">      this.sourceForm = determineSourceForm(filename);</span>
+<span class="nc" id="L63">      convertInputBuffer();</span>
+<span class="nc" id="L64">      line = 1;</span>
+<span class="nc" id="L65">   }</span>
+
+   public FortranStream(String filename, String path, int sourceForm) throws IOException
+   {
+<span class="nc" id="L69">      super(path);</span>
+<span class="nc" id="L70">      this.filename = filename;</span>
+<span class="nc" id="L71">      this.filepath = path;</span>
+<span class="nc" id="L72">      this.sourceForm = sourceForm;</span>
+<span class="nc" id="L73">   }</span>
+
+
+   public int determineSourceForm(String fileName) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">      if (fileName.endsWith(new String(&quot;.f&quot;)) == true ||</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">	      fileName.endsWith(new String(&quot;.F&quot;)) == true) {</span>
+<span class="nc" id="L79">         this.sourceForm = FIXED_FORM;</span>
+<span class="nc" id="L80">         return FIXED_FORM;</span>
+      } else {
+<span class="nc" id="L82">         this.sourceForm = FREE_FORM;</span>
+<span class="nc" id="L83">         return FREE_FORM;</span>
+      }
+   } // end determineSourceForm()
+
+   public int getSourceForm()
+   {
+<span class="nc" id="L89">      return this.sourceForm;</span>
+   }
+
+   public String getFileName()
+   {
+<span class="nc" id="L94">      return filename;</span>
+   }
+
+   public String getAbsolutePath()
+   {
+<span class="nc" id="L99">      return filepath;</span>
+   }
+
+   /**
+    * Convert characters to upper case.  This is only for look ahead
+    * used in building tokens, in particular key words, the actually
+    * character buffer is unchanged so id tokens have original case. 
+    */
+   public int LA(int i)
+   {
+<span class="nc" id="L109">      int letter_value = super.LA(i);</span>
+
+      // the letter is lower-case
+<span class="nc bnc" id="L112" title="All 2 branches missed.">      if (Character.isLowerCase((char)letter_value)) {</span>
+         // convert to upper-case
+<span class="nc" id="L114">         letter_value = (int) Character.toUpperCase((char)(letter_value));</span>
+      }
+
+<span class="nc" id="L117">      return letter_value;</span>
+
+/****OBSOLETE*****
+      int char_pos = super.getCharPositionInLine();
+
+      if (this.sourceForm == FrontEnd.FIXED_FORM) {
+         System.out.println(&quot;FIXED_FORM: i=&quot; + i + &quot; pos=&quot; + char_pos + &quot; &quot; + letter_value);
+
+         if (char_pos == 0) {
+            if (letter_value == 'C' || letter_value == '*') {
+               // return '!' to signify a line comment so the lexer won't try
+               // and parse this line.
+               letter_value = (int) '!';
+            }
+         }
+         else {
+            // Look for continuation character. The convention we use
+            // is for TAB + (WS | '0') acts as ';'.  TAB + other char is a
+            // continuation line.  This follows DEC (I believe) but is
+            // non standard Fortran.
+            //
+        	 
+            // location of continuation character
+            int continue_pos = 5; // 6th column
+            
+            // check for tab formatting, note, this seems to work because LA always
+            // called with i==1, so getCharPositionInLine is always as expected
+            if (super.LA(-char_pos) == (int) '\t') {
+               // first character in line is a tab
+               continue_pos = 1;
+            }
+            
+            if (char_pos == continue_pos) {
+               // if neither '0' nor whitespace then a continuation character
+               if (! (letter_value == (int)'0' || Character.isWhitespace((char)letter_value))) {
+                  letter_value = (int)'&amp;';
+               }
+            }
+         }
+      }
+      return letter_value;
+*****OBSOLETE*****/
+
+   } // end LA()
+   
+   
+   private void convertInputBuffer()
+   {
+      //
+      // Processing is a lot easier if we add a couple of '\n'
+      // chars to buffer, as file can terminate on '!', for example.
+      //
+      // IMPORTANT NOTE: In processing a buffer we assume we can always
+      // advance to character beyond a '\n'.
+      // TODO - I believe this means we don't have to check for end
+      // of buffer (as currently doing in many places) and these
+      // checks, for example, 
+      //
+      //      if (i &lt; super.n &amp;&amp; buf[i] == '!') {
+      //
+      // can be removed.
+      //
+<span class="nc" id="L179">      char[] newData = new char[super.n+2];</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">      for (int i = 0; i &lt; super.n; i++) {</span>
+<span class="nc" id="L181">         newData[i] = super.data[i];</span>
+      }
+<span class="nc" id="L183">      newData[super.n]   = '\n';</span>
+<span class="nc" id="L184">      newData[super.n+1] = '\n';</span>
+<span class="nc" id="L185">      super.data = newData;</span>
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">      if (this.sourceForm == FIXED_FORM) {</span>
+<span class="nc" id="L188">         convertFixedFormInputBuffer();</span>
+<span class="nc" id="L189">      }</span>
+      else {
+<span class="nc" id="L191">         convertFreeFormInputBuffer();</span>
+      }
+<span class="nc" id="L193">   }</span>
+
+
+   private void convertFreeFormInputBuffer()
+   {
+      // buffer for line comments and preprocessor lines
+<span class="nc" id="L199">      StringBuffer comments = new StringBuffer();</span>
+
+<span class="nc" id="L201">      char[] newData = new char[super.n];</span>
+<span class="nc" id="L202">      boolean continuation = false;</span>
+<span class="nc" id="L203">      int count = 0;</span>
+<span class="nc" id="L204">      int col   = 1;    // 1 based </span>
+      //int line  = 1;    // 1 based
+
+<span class="nc bnc" id="L207" title="All 2 branches missed.">      for (int i = 0; i &lt; super.n; i++) {</span>
+         int ii;
+         
+         // process column 1 special characters
+<span class="nc bnc" id="L211" title="All 2 branches missed.">         if (col == 1) {</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">            while ((ii = consumePreprocessLine(i, data, comments)) != i) {</span>
+               // preprocess line can't be added immediately because
+               // could be in the middle of a continued line
+<span class="nc" id="L215">               line += 1;</span>
+<span class="nc" id="L216">               i = ii;</span>
+            }
+            
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            while ((ii = consumeFreeFormCommentLine(i, data, comments)) != i) {</span>
+               // comment line can't be added immediately because
+               // could be in the middle of a continued line
+<span class="nc" id="L222">               line += 1;</span>
+<span class="nc" id="L223">               i = ii;</span>
+            }
+            
+<span class="nc bnc" id="L226" title="All 2 branches missed.">            if (continuation) {</span>
+               // '&amp;' may be first nonblank character in a line,               
+               // if so, skip over the continuation character
+<span class="nc bnc" id="L229" title="All 2 branches missed.">               if ((ii = skipFreeFormContinuationAtBegin(i, data)) != i) {</span>
+<span class="nc" id="L230">                  col += ii - i;</span>
+<span class="nc" id="L231">                  i = ii;</span>
+<span class="nc" id="L232">               }</span>
+               // process a string if it exists
+<span class="nc bnc" id="L234" title="All 2 branches missed.">               else if (matchFreeFormString(i, data)) {</span>
+<span class="nc" id="L235">                  ii = consumeFreeFormString(i, data, count, newData);</span>
+<span class="nc" id="L236">                  char quoteChar = data[i];</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">                  while (data[ii] == '&amp;') {</span>
+                     // string is continued across multiple lines
+<span class="nc" id="L239">                     line += 1;</span>
+<span class="nc" id="L240">                     count += ii - i;</span>
+<span class="nc" id="L241">                     col   += ii - i;</span>
+<span class="nc" id="L242">                     i = ii;</span>
+<span class="nc" id="L243">                     ii = completeContinuedString(quoteChar, i, data, count, newData);</span>
+                  }
+<span class="nc" id="L245">                  count += ii - i;</span>
+<span class="nc" id="L246">                  col   += ii - i;</span>
+<span class="nc" id="L247">                  i = ii;</span>
+               }
+<span class="nc" id="L249">               continuation = false;</span>
+<span class="nc" id="L250">            }</span>
+            else {
+               // add any comments and preprocess lines since not in 
+               // the middle of a continued line
+<span class="nc bnc" id="L254" title="All 2 branches missed.">               if (comments.length() &gt; 0) {</span>
+<span class="nc" id="L255">                  count = consumeCommentLines(count, newData, comments);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">                  if (i &gt;= super.n) {</span>
+                     // this can occur if last line is a comment line
+<span class="nc" id="L258">                     continue;</span>
+                  }
+               }
+            }
+         }
+
+         // process all columns &gt; 1 
+         else {
+            // consume comment if it exists but retain '\n'
+<span class="nc bnc" id="L267" title="All 2 branches missed.">            if ((ii = consumeComment(i, data, comments)) != i) {</span>
+<span class="nc" id="L268">               count = consumeCommentLines(count, newData, comments);</span>
+<span class="nc" id="L269">               i = ii;</span>
+<span class="nc" id="L270">            }</span>
+            // remove continuation if it exists but retain '\n'
+<span class="nc bnc" id="L272" title="All 2 branches missed.">            else if (matchFreeFormContinuationAtEnd(i, data)) {</span>
+<span class="nc" id="L273">               ii = consumeFreeFormContinuationAtEnd(i, data, comments);</span>
+<span class="nc" id="L274">               continuation = true;</span>
+<span class="nc" id="L275">               i = ii;</span>
+<span class="nc" id="L276">            }</span>
+            // process a string if it exists but retain trailing quote char
+<span class="nc bnc" id="L278" title="All 2 branches missed.">            else if (matchFreeFormString(i, data)) {</span>
+<span class="nc" id="L279">               ii = consumeFreeFormString(i, data, count, newData);</span>
+<span class="nc" id="L280">               char quoteChar = data[i];</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">               while (data[ii] == '&amp;') {</span>
+                  // string is continued across multiple lines
+<span class="nc" id="L283">                  line += 1;</span>
+<span class="nc" id="L284">                  count += ii - i;</span>
+<span class="nc" id="L285">                  col   += ii - i;</span>
+<span class="nc" id="L286">                  i = ii;</span>
+<span class="nc" id="L287">                  ii = completeContinuedString(quoteChar, i, data, count, newData);</span>
+               }
+<span class="nc" id="L289">               count += ii - i;</span>
+<span class="nc" id="L290">               col   += ii - i;</span>
+<span class="nc" id="L291">               i = ii;</span>
+<span class="nc" id="L292">            }</span>
+            // Holleriths are matched after strings so Hollerith matching doesn't have
+            // to worry about string, i.e, the string, &quot;4HThis is a string&quot;.
+<span class="nc bnc" id="L295" title="All 2 branches missed.">            else if ((ii = consumeHollerith(i, data, count, newData)) != i) {</span>
+               //System.out.println(&quot;Found Hollerith character&quot;);
+<span class="nc" id="L297">               count += ii - i;</span>
+<span class="nc" id="L298">               col   += ii - i;</span>
+<span class="nc" id="L299">               i = ii;</span>
+            }
+         }
+
+         // copy current character
+<span class="nc bnc" id="L304" title="All 2 branches missed.">         if (!continuation) {</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">            if (data[i] == '\n') {</span>
+<span class="nc" id="L306">               col = 1;</span>
+<span class="nc" id="L307">               line += 1;</span>
+               // copy comments that were caught up with continuation
+<span class="nc" id="L309">               count = consumeCommentLines(count, newData, comments);</span>
+<span class="nc" id="L310">            }</span>
+            else {
+<span class="nc" id="L312">               col += 1;</span>
+            }
+<span class="nc" id="L314">    	    newData[count++] = data[i];</span>
+<span class="nc" id="L315">         }</span>
+
+         // this line is to be continued
+         else {
+<span class="nc" id="L319">            col = 1;</span>
+         }
+      }
+
+      // switch to new data buffer
+<span class="nc" id="L324">      this.data = newData;</span>
+<span class="nc" id="L325">      this.n = count;</span>
+<span class="nc" id="L326">   }</span>
+
+
+   /**
+    * All comments in the middle of continuation lines are moved to a location
+    * immediately AFTER the continued line.
+    */
+   private void convertFixedFormInputBuffer()
+   {
+      // buffer for line comments and preprocessor lines
+<span class="nc" id="L336">      StringBuffer comments = new StringBuffer();</span>
+
+<span class="nc" id="L338">      char[] newData = new char[super.n];</span>
+<span class="nc" id="L339">      int count = 0;</span>
+<span class="nc" id="L340">      int col   = 1;    // 1 based </span>
+      //int line  = 1;    // 1 based
+
+<span class="nc bnc" id="L343" title="All 2 branches missed.">      for (int i = 0; i &lt; super.n; i++) {</span>
+         int ii;
+
+         // process column 1 special characters
+<span class="nc bnc" id="L347" title="All 2 branches missed.">         if (col == 1) {</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">            while ((ii = consumePreprocessLine(i, data, comments)) != i) {</span>
+<span class="nc" id="L349">               count = consumeCommentLines(count, newData, comments);</span>
+<span class="nc" id="L350">               line += 1;</span>
+<span class="nc" id="L351">               i = ii;</span>
+            }
+            
+<span class="nc bnc" id="L354" title="All 2 branches missed.">            while ((ii = consumeFixedFormCommentLine(i, data, comments)) != i) {</span>
+<span class="nc" id="L355">               count = consumeCommentLines(count, newData, comments);</span>
+<span class="nc" id="L356">               line += 1;</span>
+<span class="nc" id="L357">               i = ii;</span>
+            }
+
+<span class="nc bnc" id="L360" title="All 2 branches missed.">            if (i &gt;= super.n) {</span>
+               // this can occur if last line is a comment line
+<span class="nc" id="L362">               continue;</span>
+            }
+
+            // &quot;expand&quot; TABs by bumping to column 5
+<span class="nc bnc" id="L366" title="All 2 branches missed.">            if (data[i] == '\t') {</span>
+<span class="nc" id="L367">               col = 5;   // column 5 will pick up TAB character</span>
+            }
+<span class="nc" id="L369">         }</span>
+
+<span class="nc bnc" id="L371" title="All 4 branches missed.">         else if (col &gt; 1 &amp;&amp; col &lt; 6) {</span>
+            // consume a comment if it exists but retain '\n' or EOF
+<span class="nc bnc" id="L373" title="All 2 branches missed.">            if (matchComment(i, data)) {</span>
+<span class="nc" id="L374">               i = consumeComment(i, data, comments);</span>
+               // can't add comments yet if the line is continued
+<span class="nc bnc" id="L376" title="All 2 branches missed.">               if (!matchFixedFormContinuation(i, data)) {</span>
+<span class="nc" id="L377">                  count = consumeCommentLines(count, newData, comments);</span>
+               }
+            }
+<span class="nc" id="L380">         }</span>
+
+<span class="nc bnc" id="L382" title="All 2 branches missed.">         else if (col == 6) {</span>
+            // Continuation checked at '\n' so no need to here, just pass the character.
+            // If first line is a continuation it is an error so won't need to be
+            // caught here.  TODO - what about included files with continuation, legal?
+
+            // but I think 0 in column 6 to start is legal (gfortran and ifort disagree)
+<span class="nc bnc" id="L388" title="All 2 branches missed.">            if (data[i] == '0') data[i] = ' ';</span>
+<span class="nc" id="L389">         }</span>
+
+         else {
+            // consume a comment if it exists but retain '\n' or EOF
+<span class="nc bnc" id="L393" title="All 2 branches missed.">            if (matchComment(i, data)) {</span>
+<span class="nc" id="L394">               i = consumeComment(i, data, comments);</span>
+               // can't add comments yet if the line is continued
+<span class="nc bnc" id="L396" title="All 2 branches missed.">               if (!matchFixedFormContinuation(i, data)) {</span>
+<span class="nc" id="L397">                  count = consumeCommentLines(count, newData, comments);</span>
+               }
+<span class="nc" id="L399">            }</span>
+            // consume a string if it exists but retain trailing quote char
+<span class="nc bnc" id="L401" title="All 2 branches missed.">            else if (matchFixedFormString(i, data)) {</span>
+<span class="nc" id="L402">               ii = consumeFixedFormString(i, data, count, newData);</span>
+<span class="nc" id="L403">               count += ii - i;</span>
+<span class="nc" id="L404">               col   += ii - i;</span>
+<span class="nc" id="L405">               i = ii;</span>
+<span class="nc" id="L406">            }</span>
+            // Holleriths are matched after strings so Hollerith matching doesn't have
+            // to worry about strings, i.e, the string, &quot;4HThis is a string&quot;.
+<span class="nc bnc" id="L409" title="All 2 branches missed.">            else if ((ii = consumeHollerith(i, data, count, newData)) != i) {</span>
+               //System.out.println(&quot;Found Hollerith character&quot;);
+<span class="nc" id="L411">               count += ii - i;</span>
+<span class="nc" id="L412">               col   += ii - i;</span>
+<span class="nc" id="L413">               i = ii;</span>
+            }
+         }
+            
+<span class="nc bnc" id="L417" title="All 4 branches missed.">    	 while (data[i] == '\n' &amp;&amp; matchFixedFormContinuation(i, data)) {</span>
+<span class="nc" id="L418">            i = consumeFixedFormContinuation(i, data, comments);</span>
+         }
+
+         // copy current character
+<span class="nc" id="L422">         newData[count++] = data[i];</span>
+
+<span class="nc" id="L424">         col += 1;</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">         if (data[i] == '\n') {</span>
+<span class="nc" id="L426">            col = 1;</span>
+<span class="nc" id="L427">            line += 1;</span>
+            // copy comments that were caught up with continuation
+<span class="nc" id="L429">            count = consumeCommentLines(count, newData, comments);</span>
+         }
+      }
+
+      // switch to new data buffer
+<span class="nc" id="L434">      this.data = newData;</span>
+<span class="nc" id="L435">      this.n = count;</span>
+<span class="nc" id="L436">   }</span>
+
+
+   /**
+    * Copy comment line and preprocessor lines to data buffer
+    */
+   int consumeCommentLines(int i, char [] newData, StringBuffer comments)
+   {
+<span class="nc bnc" id="L444" title="All 2 branches missed.">      for(int ii = 0; ii &lt; comments.length(); ii++) {</span>
+<span class="nc" id="L445">         newData[i++] = comments.charAt(ii);</span>
+      }
+<span class="nc" id="L447">      comments.delete(0, comments.length());</span>
+<span class="nc" id="L448">      return i;</span>
+   }
+
+   /**
+    * Return true if this character starts a comment
+    */
+   private boolean matchComment(int i, char buf[])
+   {
+<span class="nc bnc" id="L456" title="All 2 branches missed.">      return (buf[i] == '!');</span>
+   }
+
+   /**
+    * if a comment, copy comment to comments buffer excluding terminating '\n' character 
+    */
+   private int consumeComment(int i, char buf[], StringBuffer comments)
+   {
+<span class="nc bnc" id="L464" title="All 4 branches missed.">      if (i &lt; super.n &amp;&amp; buf[i] == '!') {</span>
+         // found comment character, copy characters up to '\n'
+         do {
+<span class="nc" id="L467">            comments.append(buf[i++]);</span>
+         }
+<span class="nc bnc" id="L469" title="All 4 branches missed.">         while (i &lt; super.n &amp;&amp; buf[i] != '\n');</span>
+      }
+<span class="nc" id="L471">      return i;</span>
+   }
+
+   /**
+    * Return true if a comment line beginning with '!' is found
+    */
+   private boolean matchFreeFormCommentLine(int i, char buf[])
+   {
+      // skip over leading blank characters
+      // TODO - what about TABS
+<span class="nc" id="L481">      int i1 = i;</span>
+<span class="nc bnc" id="L482" title="All 4 branches missed.">      while(i1 &lt; super.n &amp;&amp; buf[i1] == ' ') i1 += 1;</span>
+
+<span class="nc bnc" id="L484" title="All 2 branches missed.">      if (i1 &gt;= super.n) return false;</span>
+
+<span class="nc bnc" id="L486" title="All 4 branches missed.">      if (buf[i1] == '!' || buf[i1] == '\n') return true;</span>
+
+<span class="nc" id="L488">      return false;</span>
+   }
+
+   private int consumeFreeFormCommentLine(int i, char buf[], StringBuffer comments)
+   {
+<span class="nc bnc" id="L493" title="All 2 branches missed.">      if (i &gt;= super.n) return i;</span>
+      
+      // skip over leading blank characters
+<span class="nc" id="L496">      int i1 = i;</span>
+<span class="nc bnc" id="L497" title="All 4 branches missed.">      while(i1 &lt; super.n &amp;&amp; buf[i1] == ' ') i1 += 1;</span>
+
+      // nothing to do if not a comment line
+<span class="nc bnc" id="L500" title="All 6 branches missed.">      if (i1 &lt; super.n &amp;&amp; buf[i1] != '!' &amp;&amp; buf[i1] != '\n') return i;</span>
+
+      // copy leading blank characters
+<span class="nc bnc" id="L503" title="All 2 branches missed.">      for (int ii = 0; ii &lt; i1-i; ii++) comments.append(' ');</span>
+
+<span class="nc bnc" id="L505" title="All 2 branches missed.">      if (i1 == super.n) return super.n;</span>
+
+<span class="nc bnc" id="L507" title="All 2 branches missed.">      if (buf[i1] == '\n') {</span>
+         // a comment line with only whitespace
+<span class="nc" id="L509">         comments.append('\n');</span>
+<span class="nc" id="L510">         i = i1+1;</span>
+<span class="nc" id="L511">      }</span>
+      else {
+<span class="nc" id="L513">         i = processLineForCommentChar('!', i1, buf, comments);</span>
+      }         
+
+<span class="nc" id="L516">      return i;</span>
+   }
+
+   /**
+    * If a comment, beginning with '!', copy the comment to comments buffer excluding
+    * the terminating '\n' character.  Because the next line could be a fixed form
+    * continuation, we can't immediately consume the comment as all comments must
+    * come after all continued lines (comments can be interspersed between continued
+    * lines).
+    * 
+    * Unused for now.  In future could be used to shorten code in made section
+    * when processing comments.
+    */
+   @SuppressWarnings(&quot;unused&quot;)
+private int consumeFixedFormComments(int i, char buf[], StringBuffer comments)
+   {
+<span class="nc bnc" id="L532" title="All 4 branches missed.">      if (i &lt; super.n &amp;&amp; buf[i] == '!') {</span>
+         // found comment character, copy characters up to '\n'
+         do {
+<span class="nc" id="L535">            comments.append(buf[i++]);</span>
+         }
+<span class="nc bnc" id="L537" title="All 4 branches missed.">         while (i &lt; super.n &amp;&amp; buf[i] != '\n');</span>
+      }
+
+      // consume all comment lines before looking for continuation
+      //
+<span class="nc bnc" id="L542" title="All 2 branches missed.">      while (matchFixedFormCommentLine(i, buf)) {</span>
+         // add '\n' so comments are not merged on a single line
+<span class="nc" id="L544">         comments.append('\n');</span>
+         // TODO - bump line number and set column?
+<span class="nc" id="L546">         i = consumeFixedFormCommentLine(i, buf, comments);</span>
+      }
+
+<span class="nc" id="L549">      return i;</span>
+   }
+
+   /**
+    * Return true if a fixed form comment line is found.
+    *
+    * Check for comment characters, 'C', '*', and '!' at the start of
+    * a line.  A blank line is also a comment line.
+    */
+   private boolean matchFixedFormCommentLine(int i, char buf[])
+   {
+<span class="nc bnc" id="L560" title="All 2 branches missed.">      if (i &gt;= super.n) return false;</span>
+
+      // first check for free form ('!' comments and blank character lines)
+<span class="nc bnc" id="L563" title="All 2 branches missed.">      if (matchFreeFormCommentLine(i, buf)) return true;</span>
+
+      // check for a normal comment line
+<span class="nc bnc" id="L566" title="All 6 branches missed.">      if (buf[i] == '*' || buf[i] == 'C' || buf[i] == 'c') return true;</span>
+      
+<span class="nc" id="L568">      return false;</span>
+   }
+
+   /**
+    * Check for comment characters, 'C', '*', and '!' at start of
+    * a line.  A blank line is also a comment line. If a comment line is
+    * found, copy the line comment to the comments buffer (without trailing
+    * '\n', and return the position of the character after the '\n' character.
+    */
+   private int consumeFixedFormCommentLine(int i, char buf[], StringBuffer comments)
+   {
+<span class="nc bnc" id="L579" title="All 2 branches missed.">      if (i &gt;= super.n) return i;</span>
+
+      // first check for free form ('!' comments and blank character lines)
+<span class="nc" id="L582">      int ii = consumeFreeFormCommentLine(i, buf, comments);</span>
+<span class="nc bnc" id="L583" title="All 2 branches missed.">      if (ii != i) return ii;</span>
+
+      // check for a normal comment line
+<span class="nc bnc" id="L586" title="All 2 branches missed.">      if (buf[i] == '*')      ii = processLineForCommentChar('*', i,  buf, comments);</span>
+<span class="nc bnc" id="L587" title="All 2 branches missed.">      else if (buf[i] == 'C') ii = processLineForCommentChar('C', i,  buf, comments);</span>
+<span class="nc bnc" id="L588" title="All 2 branches missed.">      else if (buf[i] == 'c') ii = processLineForCommentChar('c', i,  buf, comments);</span>
+      
+<span class="nc" id="L590">      return ii;</span>
+   }
+
+   /**
+    * If character at i == c, skip to next line advancing past '\n', while
+    * copying intervening characters to comments buffer.
+    */
+   private int processLineForCommentChar(char c, int i, char buf[], StringBuffer comments)
+   {
+<span class="nc bnc" id="L599" title="All 2 branches missed.">      if (i &gt;= super.n) return i;</span>
+
+<span class="nc bnc" id="L601" title="All 2 branches missed.">      if (buf[i] == c) {</span>
+<span class="nc bnc" id="L602" title="All 6 branches missed.">         if (buf[i] == '*' || buf[i] == 'C' || buf[i] == 'c') {</span>
+            // replace by free form comment character
+<span class="nc" id="L604">            comments.append('!');</span>
+<span class="nc" id="L605">         } else {</span>
+<span class="nc" id="L606">            comments.append(buf[i]);</span>
+         }
+<span class="nc" id="L608">         i += 1;</span>
+ 
+         // found character, copy rest of line
+<span class="nc bnc" id="L611" title="All 4 branches missed.">         while (i &lt; super.n &amp;&amp; buf[i] != '\n') {</span>
+<span class="nc" id="L612">            comments.append(buf[i++]);</span>
+         }
+<span class="nc bnc" id="L614" title="All 2 branches missed.">         if (i &lt; super.n) {</span>
+<span class="nc" id="L615">            comments.append(buf[i++]);  // copy '\n' also</span>
+         }
+      }
+
+<span class="nc" id="L619">      return i;</span>
+   }
+
+
+   private boolean matchPreprocessLine(int i, char buf[])
+   {
+<span class="nc bnc" id="L625" title="All 2 branches missed.">      return (buf[i] == '#');</span>
+   }
+
+   private int consumePreprocessLine(int i, char buf[], StringBuffer comments)
+   {
+<span class="nc" id="L630">      return processLineForCommentChar('#', i, buf, comments);</span>
+   }
+
+   /**
+    * Return true if the current character is '&amp;'
+    */
+   private boolean matchFreeFormContinuationAtEnd(int i, char buf[])
+   {
+<span class="nc bnc" id="L638" title="All 2 branches missed.">      return (buf[i] == '&amp;');</span>
+   }
+
+   /**
+    * If the current character is '&amp;', skip the '&amp;' character and
+    * copy all remaining characters to the comments buffer, including
+    * '\n', to retain possible comments following the continuation character.
+    */
+   private int consumeFreeFormContinuationAtEnd(int i, char buf[], StringBuffer comments)
+   {
+<span class="nc bnc" id="L648" title="All 4 branches missed.">      if (i &gt;= super.n || buf[i] != '&amp;') return i;</span>
+      
+<span class="nc" id="L650">      i += 1;   // skip the continuation character</span>
+
+<span class="nc bnc" id="L652" title="All 4 branches missed.">      while (i &lt; super.n &amp;&amp; buf[i] != '\n') {</span>
+<span class="nc" id="L653">         comments.append(buf[i++]);</span>
+      }
+<span class="nc bnc" id="L655" title="All 2 branches missed.">      if (i &lt; super.n) {</span>
+<span class="nc" id="L656">         comments.append(buf[i++]);  // copy '\n' also</span>
+      }
+
+<span class="nc" id="L659">      return i-1;  // retain the '\n'</span>
+   }
+
+   /**
+    * Check to see if there is a continuation character as '&amp;'
+    * the first non-blank character in a line.  If there is, return
+    * the position after the '&amp;' character.
+    */
+   private int skipFreeFormContinuationAtBegin(int i, char buf[])
+   {
+<span class="nc" id="L669">      int ii = i;</span>
+
+<span class="nc bnc" id="L671" title="All 6 branches missed.">      while (ii &lt; super.n &amp;&amp; buf[ii] == ' ' &amp;&amp; buf[ii] != '&amp;') ii += 1;</span>
+<span class="nc bnc" id="L672" title="All 2 branches missed.">      if (buf[ii] == '&amp;') i = ii + 1;</span>
+
+<span class="nc" id="L674">      return i;</span>
+   }
+
+
+   /**
+    * Called when at a '\n' character.  Look ahead for continuation
+    * character at column 6.  There could be comment or preprocess
+    * lines in between so have to skip over comment lines and if
+    * they exist.
+    *
+    * The convention for a TAB character in columns 1..5 followed
+    * by a digit 1..9 is a continuation line.  If TAB + '0' the
+    * '0' is ignored in the input stream.  This follows DEC convention
+    * (I believe) but is non standard Fortran.
+    *
+    * WARNING, don't go beyond length of stream, super.n
+    */
+   private boolean matchFixedFormContinuation(int i, char buf[])
+   {
+      int ii;
+     
+      // skip all preprocessor and comment lines
+      //
+<span class="nc" id="L697">      i += 1;</span>
+<span class="nc bnc" id="L698" title="All 4 branches missed.">      while (matchPreprocessLine(i, buf) || matchFixedFormCommentLine(i, buf)) {</span>
+<span class="nc" id="L699">         i = findCharacter('\n', i, buf);</span>
+<span class="nc bnc" id="L700" title="All 2 branches missed.">         if (buf[i] != '\n') return false;</span>
+<span class="nc" id="L701">         i += 1;</span>
+      }
+
+      // search for TAB in columns 1..5, otherwise continued position will be ii
+<span class="nc" id="L705">      ii = i;</span>
+<span class="nc bnc" id="L706" title="All 2 branches missed.">      for (int j = 0; j &lt; 5; j++) {</span>
+<span class="nc bnc" id="L707" title="All 2 branches missed.">         if (buf[ii]   == '\n') return false;</span>
+<span class="nc bnc" id="L708" title="All 2 branches missed.">         if (buf[ii++] == '\t') {</span>
+<span class="nc bnc" id="L709" title="All 4 branches missed.">            if (buf[ii] &gt;= '1' &amp;&amp; buf[ii] &lt;= '9') {</span>
+<span class="nc" id="L710">               return true;</span>
+            }
+            else {
+<span class="nc" id="L713">               return false;</span>
+            }
+         }
+      }
+
+<span class="nc bnc" id="L718" title="All 4 branches missed.">      if (buf[ii] != '0' &amp;&amp; buf[ii] != ' ') {</span>
+<span class="nc" id="L719">         return true;</span>
+      }
+
+<span class="nc" id="L722">      return false;</span>
+   }
+
+
+   /**
+    * Called when at a '\n' character.  Look ahead for continuation
+    * character at column 6.  There could be comment or preprocess
+    * lines in between so have to search for comment lines and remove
+    * them if they exist.
+    *
+    * The convention for a TAB character in columns 1..5 followed
+    * by a digit 1..9 is a continuation line.  If TAB + '0' the
+    * '0' is ignored in the input stream.  This follows DEC convention
+    * (I believe) but is non standard Fortran.
+    *
+    * WARNING, don't go beyond length of stream, super.n
+    */
+   private int consumeFixedFormContinuation(int i, char buf[], StringBuffer comments)
+   {
+<span class="nc" id="L741">      int i0 = i;      // save initial value of i</span>
+<span class="nc" id="L742">      int ii = i + 1;  // look ahead past the '\n'</span>
+     
+      // consume all preprocessor and comment lines
+      //
+<span class="nc" id="L746">      i += 1;</span>
+<span class="nc bnc" id="L747" title="All 2 branches missed.">      if (matchPreprocessLine(i, buf)) {</span>
+<span class="nc" id="L748">         return (consumePreprocessLine(i, buf, comments) - 1);  // retain the '\n'</span>
+      }
+<span class="nc bnc" id="L750" title="All 2 branches missed.">      if (matchFixedFormCommentLine(i, buf)) {</span>
+<span class="nc" id="L751">         return (consumeFixedFormCommentLine(i, buf, comments) - 1);  // retain the '\n'</span>
+      }
+      
+      // search for TAB in columns 1..5, otherwise continued position will be ii
+<span class="nc bnc" id="L755" title="All 2 branches missed.">      for (int j = 0; j &lt; 5; j++) {</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">         if (buf[ii]   == '\n') return i0;</span>
+<span class="nc bnc" id="L757" title="All 2 branches missed.">         if (buf[ii++] == '\t') {</span>
+<span class="nc bnc" id="L758" title="All 4 branches missed.">            if (buf[ii] &gt;= '1' &amp;&amp; buf[ii] &lt;= '9') {</span>
+<span class="nc" id="L759">               return ii+1;</span>
+            }
+            else {
+<span class="nc bnc" id="L762" title="All 2 branches missed.">               if (i == i0 + 1)  return i0;    // nothing found</span>
+<span class="nc" id="L763">               else              return i-1;   // '\n' position from comment line</span>
+            }
+         }
+      }
+
+<span class="nc bnc" id="L768" title="All 4 branches missed.">      if (buf[ii] != '0' &amp;&amp; buf[ii] != ' ') {</span>
+<span class="nc" id="L769">         comments.append('\n');</span>
+<span class="nc" id="L770">         return ii+1;  // a continuation found</span>
+      }
+
+      // if statement begins after '0', replace '0' with ' ' for parsing
+<span class="nc bnc" id="L774" title="All 2 branches missed.">      if (buf[ii] == '0') {</span>
+<span class="nc" id="L775">         buf[ii] = ' ';</span>
+      }
+      
+<span class="nc" id="L778">      return i0;  // nothing found (expect possibly replacing '0' in column 6</span>
+   }
+
+
+   /**
+    * Check for a Hollerith following the current character position.  First must
+    * ensure that it's not an identifier, &quot;var_2Hxx&quot;, so look for preceding
+    * character, ' ', '(', ',' (and perhaps more).  Then look for digit string, n,
+    * followed by 'H'|'h' and then n characters (none of which is \'n').
+    * Perhaps we want to change Hollerith to a quoted string.  In any case,
+    * copy string representation to newBuf.
+    *
+    * We would like to be conservative while matching Hollerith's.  Examples showing
+    * characters that can precede a Hollerith constant:
+    * &quot; 1Hx&quot;, &quot;=1Hx&quot;, &quot;.eq.1Hx&quot;, &quot;(1Hx&quot;, &quot;-1Hx&quot;, &quot;,1Hx&quot;.  Note Hollerith constants
+    * have no data type; they assume a numeric type based on the way they are used.
+    * They cannot assume a  character data type and cannot be used where a character
+    * value is expected (from a DEC manual for F77, I believe).  Not sure this
+    * applies to Hollerith edit descriptors.
+    *
+    * Assume that strings have been matched so a Hollerith-like constant
+    * within a string doesn't have to been considered.
+    *
+    * Return the last character position in the Hollerith constant if found.
+    */
+   private int consumeHollerith(int i, char buf[], int count, char newBuf[])
+   {
+      int k;
+
+<span class="nc bnc" id="L807" title="All 2 branches missed.">      if (i &gt;= super.n) return i;</span>
+
+      // Return i if the first character can be used in a name context, e.g.,
+      // &quot;v1H&quot; or &quot;_1H&quot; as this could have been the name &quot;v_1H&quot;. A name is
+      // A name is a letter followed by an alphanumeric character
+      // (letter, digit, '_').  
+
+      // it might be conservative and look for only what CAN precede Hollerith
+
+<span class="nc bnc" id="L816" title="All 4 branches missed.">      if (buf[i] &gt;= 'a' &amp;&amp; buf[i] &lt;= 'z') return i;</span>
+<span class="nc bnc" id="L817" title="All 4 branches missed.">      if (buf[i] &gt;= 'A' &amp;&amp; buf[i] &lt;= 'Z') return i;</span>
+<span class="nc bnc" id="L818" title="All 2 branches missed.">      if (buf[i] == '_') return i;</span>
+
+      // count digits preceding possible Hollerith
+
+<span class="nc" id="L822">      int ii = i + 1;</span>
+<span class="nc" id="L823">      int numDigits = 0;</span>
+<span class="nc bnc" id="L824" title="All 4 branches missed.">      while (buf[ii] &gt;= '0' &amp;&amp; buf[ii] &lt;= '9') {</span>
+<span class="nc" id="L825">         ii += 1;</span>
+<span class="nc" id="L826">         numDigits += 1;</span>
+      }
+<span class="nc bnc" id="L828" title="All 2 branches missed.">      if (numDigits == 0) return i;</span>
+<span class="nc bnc" id="L829" title="All 4 branches missed.">      if (buf[ii] != 'H' &amp;&amp; buf[ii] != 'h') return i;</span>
+      
+      // found Hollerith
+      
+<span class="nc" id="L833">      StringBuffer chars = new StringBuffer(numDigits);</span>
+<span class="nc bnc" id="L834" title="All 2 branches missed.">      for (k = 0; k &lt; numDigits; k++) {</span>
+<span class="nc" id="L835">         chars.append(buf[i+1+k]);</span>
+      }      
+<span class="nc" id="L837">      int numChars = Integer.parseInt(chars.toString());</span>
+
+      // look for numChars printable characters
+<span class="nc" id="L840">      ii += 1;</span>
+<span class="nc bnc" id="L841" title="All 2 branches missed.">      for (k = 0; k &lt; numChars; k++) {</span>
+<span class="nc bnc" id="L842" title="All 4 branches missed.">         if (buf[ii+k] &lt; ' ' || buf[ii+k] &gt; '-') break;</span>
+      }
+
+<span class="nc bnc" id="L845" title="All 2 branches missed.">      if (k != numChars) return i;</span>
+      
+      // number of characters to copy (includes preceding character)
+<span class="nc" id="L848">      int numTotal = 1 + numDigits + 1 + numChars;</span>
+
+      // found a Hollerith constant, copy all but last character to newBuf
+<span class="nc bnc" id="L851" title="All 2 branches missed.">      for (k = 0; k &lt; numTotal-1; k++) {</span>
+<span class="nc" id="L852">         newBuf[count++] = buf[i+k];</span>
+      }
+
+<span class="nc" id="L855">      return i + numTotal - 1;</span>
+   }
+
+   /**
+    * Complete the processing of a string that is continued across multiple lines.
+    */
+   private int completeContinuedString(char quoteChar, int i, char buf[], int count, char newBuf[])
+   {
+<span class="nc" id="L863">      int i0 = i;</span>
+
+      // skip initial '&amp;'
+<span class="nc bnc" id="L866" title="All 2 branches missed.">      if (++i &gt;= super.n) return i0;</span>
+
+      // skip characters after initial '&amp;'
+<span class="nc bnc" id="L869" title="All 4 branches missed.">      while (i &lt; super.n &amp;&amp; buf[i] != '\n') i += 1;  // TODO - check for comment</span>
+<span class="nc" id="L870">      i += 1;  // skip '\n'</span>
+
+      // skip ' ' characters on next line
+      // TODO - what about TABS?
+<span class="nc bnc" id="L874" title="All 4 branches missed.">      while (i &lt; super.n &amp;&amp; buf[i] == ' ') i += 1;</span>
+
+      //
+      // This should be removed in 0.8.3
+      //
+      //      if (i &gt;= super.n || buf[i] != '&amp;') {
+      //         // first non-blank character is part of the continued string so back up to get it
+      //         i -= 1;
+      //
+      //         //CER System.err.println(&quot;Terminating '&amp;' not found in continued string at character position &quot; + i);
+      //         //CER return i0;
+      //      }
+
+<span class="nc bnc" id="L887" title="All 2 branches missed.">      if (i &gt;= super.n) return i-1;</span>
+
+      // skip trailing '&amp;'
+      //
+      // NOTE: gfortran doesn't require the terminating character (warns with -Wall)
+      // so we also ignore the standard here if the trailing '&amp;' is missing
+      //
+<span class="nc bnc" id="L894" title="All 2 branches missed.">      if (buf[i] == '&amp;') i += 1;</span>
+
+<span class="nc bnc" id="L896" title="All 2 branches missed.">      if (i &gt;= super.n) return i-1;</span>
+
+      do {
+<span class="nc" id="L899">         newBuf[count++] = buf[i++];</span>
+         // look for two quote chars in a row, if found copy both
+<span class="nc bnc" id="L901" title="All 6 branches missed.">         if (i &lt; super.n - 1 &amp;&amp; buf[i] == quoteChar &amp;&amp; buf[i+1] == quoteChar) {</span>
+<span class="nc" id="L902">            newBuf[count++] = buf[i++];</span>
+<span class="nc" id="L903">            newBuf[count++] = buf[i++];</span>
+         }
+      }
+<span class="nc bnc" id="L906" title="All 8 branches missed.">      while (i &lt; super.n &amp;&amp; buf[i] != quoteChar &amp;&amp; buf[i] != '&amp;' &amp;&amp; buf[i] != '\n');</span>
+
+<span class="nc" id="L908">      return i;</span>
+   }
+
+   /**
+    * Check for the beginning of a string at this character position.
+    */
+   private boolean matchFreeFormString(int i, char buf[])
+   {
+<span class="nc bnc" id="L916" title="All 2 branches missed.">      if (i &gt;= super.n) return false;</span>
+
+<span class="nc" id="L918">      char quote_char = buf[i];</span>
+<span class="nc bnc" id="L919" title="All 4 branches missed.">      if (quote_char == '&quot;' || quote_char == '\'') return true;</span>
+<span class="nc" id="L920">      else                                         return false;</span>
+   }
+
+   /**
+    * Check for the beginning of a string at this character position.  If
+    * found copy the characters of the string into newBuf, except for the
+    * terminating quote character.  A string may be continued, if so it
+    * continues after the '&amp;' character on the next line; return the position
+    * of the trailing '&amp;'.  If a string doesn't terminate it's an error,
+    * return '\n' position.  
+    */
+   private int consumeFreeFormString(int i, char buf[], int count, char newBuf[])
+   {
+<span class="nc bnc" id="L933" title="All 2 branches missed.">      if (i &gt;= super.n) return i;</span>
+
+<span class="nc" id="L935">      char quote_char = buf[i];</span>
+<span class="nc bnc" id="L936" title="All 4 branches missed.">      if (quote_char != '&quot;' &amp;&amp; quote_char != '\'') return i;  // not the start of a string</span>
+
+      do {
+<span class="nc" id="L939">         newBuf[count++] = buf[i++];</span>
+         // look for two quote chars in a row, if found copy both
+<span class="nc bnc" id="L941" title="All 6 branches missed.">         if (i &lt; super.n - 1 &amp;&amp; buf[i] == quote_char &amp;&amp; buf[i+1] == quote_char) {</span>
+<span class="nc" id="L942">            newBuf[count++] = buf[i++];</span>
+<span class="nc" id="L943">            newBuf[count++] = buf[i++];</span>
+         }
+         // look for continuation character as last non-blank character and
+         // if found, return the '&amp;' position so caller can process continuation
+<span class="nc bnc" id="L947" title="All 2 branches missed.">         if (buf[i] == '&amp;') {</span>
+<span class="nc" id="L948">            int ii = i;</span>
+<span class="nc bnc" id="L949" title="All 2 branches missed.">            while (buf[++ii] == ' ');</span>
+<span class="nc bnc" id="L950" title="All 2 branches missed.">            if (buf[ii] != '\n') {</span>
+               // '&amp;' not a continuation, just part of the string, so just copy it
+<span class="nc" id="L952">               newBuf[count++] = buf[i++];</span>
+	    }
+	 }
+      }
+<span class="nc bnc" id="L956" title="All 8 branches missed.">      while (i &lt; super.n &amp;&amp; buf[i] != quote_char &amp;&amp; buf[i] != '&amp;' &amp;&amp; buf[i] != '\n');</span>
+
+<span class="nc" id="L958">      return i;</span>
+   }
+
+   /**
+    * Check for the beginning of a string at this character position.
+    */
+   private boolean matchFixedFormString(int i, char buf[])
+   {
+<span class="nc" id="L966">      return matchFreeFormString(i, buf);</span>
+   }
+
+   /**
+    * Check for the beginning of a string at this character position.  If
+    * found copy the characters of the string into newBuf, except for the
+    * terminating quote character.  If a string doesn't terminate it's an error,
+    * return '\n' position.  
+    */
+   private int consumeFixedFormString(int i, char buf[], int count, char newBuf[])
+   {
+<span class="nc bnc" id="L977" title="All 2 branches missed.">      if (i &gt;= super.n) return i;</span>
+
+<span class="nc" id="L979">      char quote_char = buf[i];</span>
+<span class="nc bnc" id="L980" title="All 4 branches missed.">      if (quote_char != '&quot;' &amp;&amp; quote_char != '\'') return i;  // not the start of a string</span>
+
+      do {
+<span class="nc" id="L983">         newBuf[count++] = buf[i++];</span>
+         // look for two quote chars in a row, if found copy both
+<span class="nc bnc" id="L985" title="All 6 branches missed.">         if (i &lt; super.n - 1 &amp;&amp; buf[i] == quote_char &amp;&amp; buf[i+1] == quote_char) {</span>
+<span class="nc" id="L986">            newBuf[count++] = buf[i++];</span>
+<span class="nc" id="L987">            newBuf[count++] = buf[i++];</span>
+         }
+      }
+<span class="nc bnc" id="L990" title="All 6 branches missed.">      while (i &lt; super.n &amp;&amp; buf[i] != quote_char &amp;&amp; buf[i] != '\n');</span>
+
+<span class="nc" id="L992">      return i;</span>
+   }
+
+   private int findCharacter(char ch, int i, char buf[])
+   {
+<span class="nc" id="L997">      int i0 = i;</span>
+<span class="nc bnc" id="L998" title="All 4 branches missed.">      while (i &lt; super.n &amp;&amp; buf[i] != ch) i += 1;</span>
+<span class="nc bnc" id="L999" title="All 2 branches missed.">      if (buf[i] == ch) return i;</span>
+<span class="nc" id="L1000">      else              return i0;</span>
+   }
+
+} // end class FortranStream
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

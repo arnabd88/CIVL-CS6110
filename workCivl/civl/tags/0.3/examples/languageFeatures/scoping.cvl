@@ -1,0 +1,12 @@
+#include <civlc.h>
+
+void main() {
+  int x = 0;
+  
+  for (int i = 0; i < 5; i++) {
+    int x = i + 1;
+    x++;
+    $assert x == i + 2;
+  }
+  $assert x == 0;
+}

@@ -1,0 +1,1730 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility@{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility}}
+
+
+\hyperlink{structA}{A} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} provides all the common operations of symbolic expressions.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=266pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+String\+Buffer \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a1679028fb7cb5ab96a8905185249b61c}{char\+Array\+To\+String} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression char\+Array, int start\+Index, boolean for\+Print)
+\begin{DoxyCompactList}\small\item\em Constructs the string representation of an array of characters, which contains at least one \textquotesingle{}\textbackslash{}0\textquotesingle{} character, starting from the given index and ending at the index of \textquotesingle{}\textbackslash{}0\textquotesingle{} minus one. \end{DoxyCompactList}\item 
+Boolean\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a4008ab17a75fe949bcb5674096463cb9}{contains} (Symbolic\+Expression container, Symbolic\+Expression element)
+\begin{DoxyCompactList}\small\item\em Checks if the object that the container pointer points to contains that of the element pointer. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9d79c66017bf3533f5545ecdce61f1b8}{expression\+Of\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} civl\+Type, Symbolic\+Type type)
+\begin{DoxyCompactList}\small\item\em Given a symbolic type, returns a canonic symbolic expression which somehow wraps that type so it can be used as a value. \end{DoxyCompactList}\item 
+Symbolic\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a91419d6daccfe07631b1da5885799b6b}{get\+Type} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression expr)
+\begin{DoxyCompactList}\small\item\em Given a symbolic expression returned by the method \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9d79c66017bf3533f5545ecdce61f1b8}{expression\+Of\+Type}, this extracts the type that was used to create that expression. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac6b651468219e3d2e997c3b35d022cd4}{extract\+Int} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Numeric\+Expression expression)
+\begin{DoxyCompactList}\small\item\em Gets a Java concrete int from a symbolic expression. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad521b2245cc408621c89c701fb779f17}{extract\+Int\+Field} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression tuple, Int\+Object field\+Index)
+\begin{DoxyCompactList}\small\item\em Gets a concrete Java int from the field of a symbolic expression of tuple type or throws exception. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_aa73866f72afaf0babce24d2abe74dcd8}{get\+Array\+Index} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression pointer)
+\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a18322dfd95bf364c6226760a743f46b9}{get\+Dyscope\+Id} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Given a pointer value, returns the dynamic scope I\+D component of that pointer value. \end{DoxyCompactList}\item 
+Reference\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a911d8ffa48b7515cd23b225280f41967}{get\+Sym\+Ref} (Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Given a pointer value, returns the symbolic reference component of that value. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a5e3382dcf9ee49c403fe92496532c8d6}{set\+Sym\+Ref} (Symbolic\+Expression pointer, Reference\+Expression sym\+Ref)
+\begin{DoxyCompactList}\small\item\em Returns the pointer value obtained by replacing the sym\+Ref component of the given pointer value with the given sym\+Ref. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a0ed54e898812f189f5ef7816dd74ef32}{get\+Variable\+Id} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Given a pointer value, returns the variable I\+D component of that value. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9b37893cff12adb1b49d94660d45a856}{heap\+Mem\+Unit} (Symbolic\+Expression pointer)
+\item 
+Symbolic\+Constant \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_abf1291e97e5bc4445343ccb25f718907}{invalid\+Heap\+Object} (Symbolic\+Type heap\+Object\+Type)
+\begin{DoxyCompactList}\small\item\em Constructs an invalid heap object of a certain type. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_acdda7f972cb27bdce430a5e662bfe44e}{is\+Disjoint\+With} (Symbolic\+Expression pointer1, Symbolic\+Expression pointer2)
+\begin{DoxyCompactList}\small\item\em Checks if the components (either a complete object or a sub-\/component of an object) that the two pointers point to have no intersection. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad1bb0169544fe21280f7159a8ed00fb6}{is\+Empty\+Heap} (Symbolic\+Expression heap\+Value)
+\begin{DoxyCompactList}\small\item\em Checks if a heap is empty, i.\+e., either it is the S\+A\+R\+L null expression or all heap objects it holds are marked as I\+N\+V\+A\+L\+I\+D (already deallocated). \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab7d04bcc71c1672fbac5f5a284c367eb}{is\+Malloc\+Pointer} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Is the given pointer the result of some malloc/handle create operation? \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac742c32f54173267e148d4d9467eb462}{is\+Initialized} (Symbolic\+Expression value)
+\begin{DoxyCompactList}\small\item\em Checks if a given value is initialized. \end{DoxyCompactList}\item 
+Boolean\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a03af7646291d90162209d9e0a6484758}{is\+In\+Range} (Symbolic\+Expression value, Symbolic\+Expression range)
+\begin{DoxyCompactList}\small\item\em Checks if the given value is within the index-\/th range of a certain rectangular domain. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a500bf2359a189ffe2a8d8d8eb9f2dee2}{is\+Invalid\+Heap\+Object} (Symbolic\+Expression heap\+Object)
+\begin{DoxyCompactList}\small\item\em Is this heap object invalid? \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a6313c34bb13dd04e09b7db5934c5999e}{is\+Null\+Pointer} (Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Checks if a given pointer is a N\+U\+L\+L pointer. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad94b2ae8a01ad5ebbad94519543ef271}{is\+Heap\+Pointer} (Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Is the given pointer pointing to a memory space that is part of a heap? \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_afd154afd83db373375a1792fa8f5d39a}{is\+Valid\+Ref\+Of} (Reference\+Expression ref, Symbolic\+Expression component)
+\begin{DoxyCompactList}\small\item\em Checks if the given reference is valid for a certain object or a sub-\/component of some object. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a708c31ed4be7f16b4b7ae01786bf9227}{make\+Pointer} (int dyscope\+Id, int var\+Id, Reference\+Expression sym\+Ref)
+\begin{DoxyCompactList}\small\item\em Makes a pointer value from the given dynamic scope I\+D, variable I\+D, and symbolic reference value. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a049588d60329e9a56a3bcd784aa03582}{make\+Pointer} (Symbolic\+Expression old\+Pointer, Reference\+Expression sym\+Ref)
+\begin{DoxyCompactList}\small\item\em Constructs a new pointer by replacing the reference expression of a given pointer. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab97faf30b768b2266909d3d118197600}{extend\+Pointer} (Symbolic\+Expression component\+Pointer, Reference\+Expression reference)
+\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a47844f092c95502c126cae3611d3f991}{new\+Array} (Boolean\+Expression context, Symbolic\+Type element\+Value\+Type, Numeric\+Expression length, Symbolic\+Expression ele\+Value)
+\begin{DoxyCompactList}\small\item\em Creates a new array of given length, using the given type as its element type, and each element having the given value. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab932e22e41ff7e3f8dc2fa6c0cf0ed6b}{null\+Pointer} ()
+\begin{DoxyCompactList}\small\item\em Returns the N\+U\+L\+L pointer of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad5d4021442518638e1b805ab4ff1bbac}{parent\+Pointer} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Given a non-\/trivial pointer, i.\+e., a pointer to some location inside an object, returns the parent pointer. \end{DoxyCompactList}\item 
+Reference\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac84eef033cd5150ec25d3fba4accb9f9}{reference\+Of\+Pointer} (Symbolic\+Expression pointer)
+\begin{DoxyCompactList}\small\item\em Computes the reference expression of a pointer. \end{DoxyCompactList}\item 
+Reference\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a85dff23f772e32aaf75fe4f1e79b08ca}{reference\+To\+Heap\+Mem\+Unit} (Symbolic\+Expression heap\+Pointer)
+\begin{DoxyCompactList}\small\item\em Computes the reference expression of a given heap pointer w.\+r.\+t the corresponding heap object. \end{DoxyCompactList}\item 
+Numeric\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a406796da0190363471a6918d0e863afa}{sizeof} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} civl\+Type, Symbolic\+Type type)
+\begin{DoxyCompactList}\small\item\em Compute the symbolic representation of the size of a given symbolic type. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9f9938e9d9edbecd960a01c5d54a9cd8}{sizeof\+Function} ()
+\begin{DoxyCompactList}\small\item\em Returns the abstract function {\ttfamily \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a406796da0190363471a6918d0e863afa}{sizeof()}}. \end{DoxyCompactList}\item 
+Reference\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a32dd8635690fdd07a27ce72550d3557a}{make\+Array\+Element\+Reference} (Reference\+Expression array\+Reference, Numeric\+Expression\mbox{[}$\,$\mbox{]} new\+Indices)
+\begin{DoxyCompactList}\small\item\em Returns an array element reference by giving the array reference and the coordinates to indexing the element. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a18d94e4f52d8d13f10973781a0dfa9e9}{undefined\+Pointer} ()
+\begin{DoxyCompactList}\small\item\em Returns the undefined pointer of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}, which is an uninitialized pointer value. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a1cd347558a2c39a4364292e5c3e9bd32}{is\+Literal\+Domain} (Symbolic\+Expression domain)
+\begin{DoxyCompactList}\small\item\em Returns true if and only if the domain is more precisely a literal domain. \end{DoxyCompactList}\item 
+List$<$ Symbolic\+Expression $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a2b4cbf8679e81829e15e2258a48175bd}{get\+Domain\+Init} (Symbolic\+Expression dom\+Value)
+\begin{DoxyCompactList}\small\item\em Get the first integer tuple of a domain. \end{DoxyCompactList}\item 
+Numeric\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a204e44e0a26034113225490137ffbb35}{get\+Domain\+Size} (Symbolic\+Expression domain)
+\begin{DoxyCompactList}\small\item\em Computes the size of a domain, that is the number of elements contained in the domain. \end{DoxyCompactList}\item 
+Symbolic\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac3b51626ccac148a9336b29ee66498fb}{get\+Domain\+Element\+Type} (Symbolic\+Expression domain)
+\begin{DoxyCompactList}\small\item\em Get the type of elements of domain which are also elements of literal domain object. \end{DoxyCompactList}\item 
+Iterator$<$ List$<$ Symbolic\+Expression $>$ $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_af7ac99e4c2cf626eba58cc25dd707b37}{get\+Domain\+Iterator} (Symbolic\+Expression domain)
+\begin{DoxyCompactList}\small\item\em Return a iterator for a domain object. \end{DoxyCompactList}\item 
+List$<$ Symbolic\+Expression $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9ba051e6cf7a907d0dbeb99a253660b6}{get\+Next\+In\+Rectangular\+Domain} (Symbolic\+Expression dom\+Value, List$<$ Symbolic\+Expression $>$ current\+Tuple, int concrete\+Dim)
+\begin{DoxyCompactList}\small\item\em Get the subsequence of the given element of the domain. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a3d7e82c034d596a25117938fc85a2e7e}{rec\+Domain\+Has\+Next} (Symbolic\+Expression rectangular\+Domain, int concrete\+Dim, List$<$ Symbolic\+Expression $>$ dom\+Element)
+\begin{DoxyCompactList}\small\item\em Check if the given domain element has a subsequence in the given rectangular domain. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a179be20da2aa0508e8e8fa615901a56d}{literal\+Domain\+Searcher} (Symbolic\+Expression literal\+Domain, List$<$ Symbolic\+Expression $>$ literal\+Dom\+Element, int dim)
+\begin{DoxyCompactList}\small\item\em Iterating a literal domain to match a given domain element. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae7dec2776313e6f3647e38263a756988}{is\+Empty\+Domain} (Symbolic\+Expression domain, int dim, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)
+\begin{DoxyCompactList}\small\item\em Returns true if and only if the given domain is empty which means there is no elements in the domain. \end{DoxyCompactList}\item 
+Numeric\+Expression\mbox{[}$\,$\mbox{]} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac6281c37831483b2d418939fdc9fe396}{array\+Slices\+Sizes} (Numeric\+Expression\mbox{[}$\,$\mbox{]} coordinate\+Sizes)  throws Unsatisfiable\+Path\+Condition\+Exception
+\begin{DoxyCompactList}\small\item\em pre-\/condition\+: \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae855d4ccb5d4b433e5af57a0c37d642d}{array\+Root\+Ptr} (Symbolic\+Expression array\+Ptr, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)
+\begin{DoxyCompactList}\small\item\em pre-\/condition\+: \end{DoxyCompactList}\item 
+Numeric\+Expression\mbox{[}$\,$\mbox{]} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a45145c8a687f3bdd5baecb1a56f9c457}{strip\+Indices\+From\+Reference} (Array\+Element\+Reference ele\+Ref)
+\begin{DoxyCompactList}\small\item\em Returns an array of indices in the given \hyperlink{}{Array\+Element\+Reference}. \end{DoxyCompactList}\item 
+Numeric\+Expression\mbox{[}$\,$\mbox{]} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab6b9bf10aed1a24050ddd26257024206}{array\+Coordinate\+Sizes} (Symbolic\+Complete\+Array\+Type array\+Type)
+\begin{DoxyCompactList}\small\item\em Computes size of each coordinate of a given array. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1util_1_1IF_1_1Pair}{Pair}$<$ Numeric\+Expression, Numeric\+Expression $>$ \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_af3a0c32caeff3ded56834d853aae6ed4}{arithmetic\+Int\+Divide} (Numeric\+Expression dividend, Numeric\+Expression denominator)
+\begin{DoxyCompactList}\small\item\em This function does an arithmetic integer division, returns the quotient and remainder. \end{DoxyCompactList}\item 
+Symbolic\+Tuple\+Type \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab861fc6203189623bb190e9033fc5de9}{dynamic\+Type} ()
+\begin{DoxyCompactList}\small\item\em returns the symbolic type of dynamic type which is used to model user-\/defined types. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1type_1_1CIVLType}{C\+I\+V\+L\+Type} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a100acc20048188a6b5f616e8856f63b6}{get\+Static\+Type\+Of\+Dynamic\+Type} (Symbolic\+Expression type\+Id)
+\begin{DoxyCompactList}\small\item\em returns the corresponding \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the given dynamic type with the specified I\+D. \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ada8294a7662922a67414f2db5a68f554}{is\+Rectangular\+Domain} (Symbolic\+Expression domain)
+\begin{DoxyCompactList}\small\item\em Is the given domain a rectangular domain? \end{DoxyCompactList}\item 
+boolean \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_aa3d03db3e74d45603a62b9540dcb478b}{is\+Regular\+Range} (Symbolic\+Expression range)
+\begin{DoxyCompactList}\small\item\em Is the given range a regular range? \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a78bb80c8c383c01324b44eba72698b64}{get\+Range\+Of\+Rectangular\+Domain} (Symbolic\+Expression domain, int index)
+\begin{DoxyCompactList}\small\item\em Returns the given index-\/th range of a rectangular domain. \end{DoxyCompactList}\item 
+Numeric\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a3412a53bd2318815dbcf12d98a131c99}{get\+High\+Of\+Regular\+Range} (Symbolic\+Expression range)
+\begin{DoxyCompactList}\small\item\em Returns the upper bound of the given range. \end{DoxyCompactList}\item 
+Numeric\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a5b53945651fbf5d75629142ea16ba735}{get\+Low\+Of\+Regular\+Range} (Symbolic\+Expression range)
+\begin{DoxyCompactList}\small\item\em Returns the lower bound of the given range. \end{DoxyCompactList}\item 
+Numeric\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a73c5ca9ccd6bdfc9884b34d1b6bbc1a2}{get\+Step\+Of\+Regular\+Range} (Symbolic\+Expression range)
+\begin{DoxyCompactList}\small\item\em Returns the step of the given range. \end{DoxyCompactList}\item 
+Numeric\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae7d21995a1a5e8ece42caf15392f39a3}{get\+Dimension\+Of} (Symbolic\+Expression domain)
+\begin{DoxyCompactList}\small\item\em Returns the dimension of the given domain. \end{DoxyCompactList}\item 
+Boolean\+Expression\mbox{[}$\,$\mbox{]} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a57bdff48f226aff63352ac954a796fe2}{get\+Conjunctive\+Clauses} (Boolean\+Expression cnf\+Clause)
+\begin{DoxyCompactList}\small\item\em Returns the sub-\/clauses of a C\+N\+F clause. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a4f0912f5c9c28465348043f1ce039c02}{get\+Abstract\+Guard\+Of\+Function\+Call} (String library, String function, Symbolic\+Expression\mbox{[}$\,$\mbox{]} argument\+Values)
+\begin{DoxyCompactList}\small\item\em returns the abstract guard of a function call \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab672d2620b3dfc7aa54e184712837cf4}{apply\+Reverse\+Function} (String original\+Function, Symbolic\+Expression argument)
+\begin{DoxyCompactList}\small\item\em Apply the reverse of a given uninterpreted function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} provides all the common operations of symbolic expressions. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab672d2620b3dfc7aa54e184712837cf4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!apply\+Reverse\+Function@{apply\+Reverse\+Function}}
+\index{apply\+Reverse\+Function@{apply\+Reverse\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{apply\+Reverse\+Function}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+apply\+Reverse\+Function (
+\begin{DoxyParamCaption}
+\item[{String}]{original\+Function, }
+\item[{Symbolic\+Expression}]{argument}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab672d2620b3dfc7aa54e184712837cf4}
+
+
+Apply the reverse of a given uninterpreted function. 
+
+If the argument is {\ttfamily f(\+X)} and the given function is f, then returns {\ttfamily X}. If the argument is {\ttfamily f(\+X,\+Y,\+Z)}, then returns N\+U\+L\+L. If the given function doesn\textquotesingle{}t match the argument\textquotesingle{}s function name, returns N\+U\+L\+L. If the argument\textquotesingle{}s operator isn\textquotesingle{}t A\+P\+P\+L\+Y, then returns N\+U\+L\+L.
+
+
+\begin{DoxyParams}{Parameters}
+{\em original\+Function} & \\
+\hline
+{\em argument} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ad63ac7cf02e65b5584c4d5dc05235df1}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_af3a0c32caeff3ded56834d853aae6ed4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!arithmetic\+Int\+Divide@{arithmetic\+Int\+Divide}}
+\index{arithmetic\+Int\+Divide@{arithmetic\+Int\+Divide}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{arithmetic\+Int\+Divide}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pair}$<$Numeric\+Expression, Numeric\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+arithmetic\+Int\+Divide (
+\begin{DoxyParamCaption}
+\item[{Numeric\+Expression}]{dividend, }
+\item[{Numeric\+Expression}]{denominator}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_af3a0c32caeff3ded56834d853aae6ed4}
+
+
+This function does an arithmetic integer division, returns the quotient and remainder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dividend} & The \hyperlink{}{Numeric\+Expression} of the quotient, must be a Integer number \\
+\hline
+{\em denominator} & The \hyperlink{}{Numeric\+Expression} of the denominator, must be a Integer number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} \hyperlink{}{Pair} of quotient (left) and remainder (right) 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_aa94f3283729252483f76074c315c1821}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab6b9bf10aed1a24050ddd26257024206}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!array\+Coordinate\+Sizes@{array\+Coordinate\+Sizes}}
+\index{array\+Coordinate\+Sizes@{array\+Coordinate\+Sizes}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{array\+Coordinate\+Sizes}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+array\+Coordinate\+Sizes (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Complete\+Array\+Type}]{array\+Type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab6b9bf10aed1a24050ddd26257024206}
+
+
+Computes size of each coordinate of a given array. 
+
+Returns an Java Array of those coordinate sizes which are in the same order as the array being declared.~\newline
+ For example, giving an array \char`\"{}int a\mbox{[}2\mbox{]}\mbox{[}3\mbox{]}\mbox{[}4\mbox{]}\char`\"{} returns \{2, 3, 4\}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em array\+Type} & The type of the target array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Java Array contains array extents information. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a9263d7353306d6d776733f15236edd8a}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae855d4ccb5d4b433e5af57a0c37d642d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!array\+Root\+Ptr@{array\+Root\+Ptr}}
+\index{array\+Root\+Ptr@{array\+Root\+Ptr}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{array\+Root\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+array\+Root\+Ptr (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{array\+Ptr, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae855d4ccb5d4b433e5af57a0c37d642d}
+
+
+pre-\/condition\+: 
+
+
+\begin{DoxyEnumerate}
+\item \char`\"{}array\+Ptr\char`\"{} must not be \char`\"{}null\char`\"{} 
+\end{DoxyEnumerate}post-\/condition\+: 
+\begin{DoxyEnumerate}
+\item the returned object must not be \char`\"{}null\char`\"{} 
+\end{DoxyEnumerate}Get the most ancestor pointer of the given array element reference pointer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em array\+Ptr} & An array element reference pointer or a pointer to an array \\
+\hline
+{\em source} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of the pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the most ancestor pointer of the given array element reference pointer. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a9851cdffd52e41217d567bf88a9ced05}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac6281c37831483b2d418939fdc9fe396}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!array\+Slices\+Sizes@{array\+Slices\+Sizes}}
+\index{array\+Slices\+Sizes@{array\+Slices\+Sizes}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{array\+Slices\+Sizes}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+array\+Slices\+Sizes (
+\begin{DoxyParamCaption}
+\item[{Numeric\+Expression\mbox{[}$\,$\mbox{]}}]{coordinate\+Sizes}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac6281c37831483b2d418939fdc9fe396}
+
+
+pre-\/condition\+: 
+
+
+\begin{DoxyEnumerate}
+\item \char`\"{}coordinate\+Sizes\char`\"{} must not be null 
+\end{DoxyEnumerate}post-\/condition\+: 
+\begin{DoxyEnumerate}
+\item the returned \hyperlink{}{C\+I\+V\+L\+Type} must not be null 
+\end{DoxyEnumerate}Computing sizes of all slices of the given array. Here an array slice is a sub-\/array with a lower dimension of the given array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em coordinate\+Sizes} & Sizes of coordinates representing an array. e.\+g. \{2,3,4\} stands for an array T a\mbox{[}2\mbox{]}\mbox{[}3\mbox{]}\mbox{[}4\mbox{]}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Sizes of all array slices. e.\+g. input\+:\{2,3,4\} ==$>$ output\+:\{12, 4, 1\} 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_affaa1d9253f7b8844165f0a18e5526c5}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a1679028fb7cb5ab96a8905185249b61c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!char\+Array\+To\+String@{char\+Array\+To\+String}}
+\index{char\+Array\+To\+String@{char\+Array\+To\+String}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{char\+Array\+To\+String}]{\setlength{\rightskip}{0pt plus 5cm}String\+Buffer edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+char\+Array\+To\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{char\+Array, }
+\item[{int}]{start\+Index, }
+\item[{boolean}]{for\+Print}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a1679028fb7cb5ab96a8905185249b61c}
+
+
+Constructs the string representation of an array of characters, which contains at least one \textquotesingle{}\textbackslash{}0\textquotesingle{} character, starting from the given index and ending at the index of \textquotesingle{}\textbackslash{}0\textquotesingle{} minus one. 
+
+If the result is to be printed, then special characters like \textquotesingle{}\textquotesingle{}, \textquotesingle{}\textquotesingle{}, etc, will be replaced as the actual string representation \char`\"{}\textbackslash{}\textbackslash{}r\char`\"{}, \char`\"{}\textbackslash{}\textbackslash{}t\char`\"{}, etc.
+
+For example, given an character array \{\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}\textquotesingle{}, \textquotesingle{}c\textquotesingle{}, \textquotesingle{}d\textquotesingle{}, \textquotesingle{}~\newline
+\textquotesingle{}, \textquotesingle{}\textbackslash{}0\textquotesingle{}\}, if starting index is 1, and is it not for print, then the result string will be \char`\"{}b\textbackslash{}tcd\textbackslash{}n\char`\"{}; if it is for print, then the result string is \char`\"{}b\textbackslash{}\textbackslash{}tcd\textbackslash{}\textbackslash{}n\char`\"{}.
+
+Notions for pointer Value\+: ~\newline
+ undefined\+: default initialized value/freed/ defined\+:~\newline
+ derefable\+: can be dereferenced, e.\+g., a, a+4 (a is int\mbox{[}5\mbox{]}) underefable\+: e.\+g., N\+U\+L\+L, a+5 (a is int\mbox{[}5\mbox{]})~\newline
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code information for error report. \\
+\hline
+{\em char\+Array} & The character array in the representation of symbolic sequence \\
+\hline
+{\em start\+Index} & The index in the character array where the string starts \\
+\hline
+{\em for\+Print} & Will the result be printed? If yes, then special characters need to be handled specifically, e.\+g., \textquotesingle{}~\newline
+\textquotesingle{} becomes \char`\"{}\textbackslash{}\textbackslash{}n\char`\"{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the string representation from the given character array with 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ad64faeec6c1e384e1a4f53f635b805da}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a4008ab17a75fe949bcb5674096463cb9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!contains@{contains}}
+\index{contains@{contains}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{contains}]{\setlength{\rightskip}{0pt plus 5cm}Boolean\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+contains (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{container, }
+\item[{Symbolic\+Expression}]{element}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a4008ab17a75fe949bcb5674096463cb9}
+
+
+Checks if the object that the container pointer points to contains that of the element pointer. 
+
+Precondition\+: both pointers can be safely dereferenced.
+
+
+\begin{DoxyParams}{Parameters}
+{\em container} & The pointer that is expected to contain the object of the element pointer. \\
+\hline
+{\em element} & The element pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the object that the first pointer points to contains that of the send pointer. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a733b13042420ddf3c5bb74935fdfa730}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab861fc6203189623bb190e9033fc5de9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!dynamic\+Type@{dynamic\+Type}}
+\index{dynamic\+Type@{dynamic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{dynamic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Tuple\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+dynamic\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab861fc6203189623bb190e9033fc5de9}
+
+
+returns the symbolic type of dynamic type which is used to model user-\/defined types. 
+
+In \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}, each user-\/defined type (e.\+g., a struct) has a unique I\+D and is represented as a symbolic expression of the type \char`\"{}dynamic type\char`\"{}.
+
+\begin{DoxyReturn}{Returns}
+the symbolic type of dynamic type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a819b317c8a752c847f4d5d8c0d585a1c}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9d79c66017bf3533f5545ecdce61f1b8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!expression\+Of\+Type@{expression\+Of\+Type}}
+\index{expression\+Of\+Type@{expression\+Of\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{expression\+Of\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+expression\+Of\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Type}}]{civl\+Type, }
+\item[{Symbolic\+Type}]{type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9d79c66017bf3533f5545ecdce61f1b8}
+
+
+Given a symbolic type, returns a canonic symbolic expression which somehow wraps that type so it can be used as a value. 
+
+Nothing should be assumed about the symbolic expression. To extract the type from such an expression, use method \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a91419d6daccfe07631b1da5885799b6b}{get\+Type}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em civl\+Type} & the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type that the symbolic type corresponds to. \\
+\hline
+{\em type} & a symbolic type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a canonic symbolic expression wrapping that type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a46cdc7af0f0389429057e9c994c49c2e}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab97faf30b768b2266909d3d118197600}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!extend\+Pointer@{extend\+Pointer}}
+\index{extend\+Pointer@{extend\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{extend\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+extend\+Pointer (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{component\+Pointer, }
+\item[{Reference\+Expression}]{reference}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab97faf30b768b2266909d3d118197600}
+
+\begin{DoxyItemize}
+\item Constructs a pointer by combining a pointer to a component, either an object (a heap atomic object or a normal object) or a sub-\/component of an object, and a reference expression w.\+r.\+t that component.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em component\+Pointer} & a pointer to a component \\
+\hline
+{\em reference} & a reference expression \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new pointer by combining the component pointer and the given reference w.\+r.\+t. that component. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a8855f7fe8b25a7289d27ef8be8247363}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac6b651468219e3d2e997c3b35d022cd4}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!extract\+Int@{extract\+Int}}
+\index{extract\+Int@{extract\+Int}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{extract\+Int}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+extract\+Int (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Numeric\+Expression}]{expression}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac6b651468219e3d2e997c3b35d022cd4}
+
+
+Gets a Java concrete int from a symbolic expression. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & source code information for error report \\
+\hline
+{\em expression} & a numeric expression expected to hold concrete int value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the concrete int 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ad4e3d9eec8877d1600c42b976193c708}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad521b2245cc408621c89c701fb779f17}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!extract\+Int\+Field@{extract\+Int\+Field}}
+\index{extract\+Int\+Field@{extract\+Int\+Field}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{extract\+Int\+Field}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+extract\+Int\+Field (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{tuple, }
+\item[{Int\+Object}]{field\+Index}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad521b2245cc408621c89c701fb779f17}
+
+
+Gets a concrete Java int from the field of a symbolic expression of tuple type or throws exception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & source code information for error report \\
+\hline
+{\em tuple} & symbolic expression of tuple type \\
+\hline
+{\em field\+Index} & index of a field in that tuple \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the concrete int value of that field 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em C\+I\+V\+L\+Internal\+Exception} & if a concrete integer value cannot be extracted \\
+\hline
+\end{DoxyExceptions}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ae4dd5da9c701d7921a0a75ce4632b8a3}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a4f0912f5c9c28465348043f1ce039c02}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Abstract\+Guard\+Of\+Function\+Call@{get\+Abstract\+Guard\+Of\+Function\+Call}}
+\index{get\+Abstract\+Guard\+Of\+Function\+Call@{get\+Abstract\+Guard\+Of\+Function\+Call}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Abstract\+Guard\+Of\+Function\+Call}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Abstract\+Guard\+Of\+Function\+Call (
+\begin{DoxyParamCaption}
+\item[{String}]{library, }
+\item[{String}]{function, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{argument\+Values}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a4f0912f5c9c28465348043f1ce039c02}
+
+
+returns the abstract guard of a function call 
+
+
+\begin{DoxyParams}{Parameters}
+{\em function} & \\
+\hline
+{\em arguments} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ace831f63cb275c918105b95f1065ec24}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_aa73866f72afaf0babce24d2abe74dcd8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Array\+Index@{get\+Array\+Index}}
+\index{get\+Array\+Index@{get\+Array\+Index}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Array\+Index}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Array\+Index (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_aa73866f72afaf0babce24d2abe74dcd8}
+Given a pointer to a certain element of some array, returns the index of the element that the pointer points to. 
+
+Precondition\+: pointer must point to an element of some array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code information for error report. \\
+\hline
+{\em pointer} & The pointer checks. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The index of the element that the pointer points to. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a2a4ae7f805372c9f755400db506a16d7}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a57bdff48f226aff63352ac954a796fe2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Conjunctive\+Clauses@{get\+Conjunctive\+Clauses}}
+\index{get\+Conjunctive\+Clauses@{get\+Conjunctive\+Clauses}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Conjunctive\+Clauses}]{\setlength{\rightskip}{0pt plus 5cm}Boolean\+Expression \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Conjunctive\+Clauses (
+\begin{DoxyParamCaption}
+\item[{Boolean\+Expression}]{cnf\+Clause}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a57bdff48f226aff63352ac954a796fe2}
+
+
+Returns the sub-\/clauses of a C\+N\+F clause. 
+
+For example, if the given C\+N\+F clause is {\ttfamily  X==3 \&\& Y$<$5 \&\& (a\mbox{[}k\mbox{]}$>$2 $\vert$$\vert$ k$<$0) }, then the result is an array of clauses\+:{\ttfamily \{ X==3, Y$<$5, a\mbox{[}k\mbox{]}$>$2 $\vert$$\vert$ k$<$0\}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em cnf\+Clause} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sub-\/clauses of a C\+N\+F clause 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a11c3c01116c48e3f4be40511a08dd621}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae7d21995a1a5e8ece42caf15392f39a3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Dimension\+Of@{get\+Dimension\+Of}}
+\index{get\+Dimension\+Of@{get\+Dimension\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Dimension\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Dimension\+Of (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{domain}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae7d21995a1a5e8ece42caf15392f39a3}
+
+
+Returns the dimension of the given domain. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the dimension of the given domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_af0ebe75a0fc685cb4e156bc5fa16bf67}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac3b51626ccac148a9336b29ee66498fb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Domain\+Element\+Type@{get\+Domain\+Element\+Type}}
+\index{get\+Domain\+Element\+Type@{get\+Domain\+Element\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Domain\+Element\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Domain\+Element\+Type (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{domain}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac3b51626ccac148a9336b29ee66498fb}
+
+
+Get the type of elements of domain which are also elements of literal domain object. 
+
+For an N dimensional domain, the element type should be an array of integers of length of N, i.\+e. {\ttfamily int \mbox{[}N\mbox{]}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & The symbolic expression of a domain object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+domain element type 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a887ef1fd00bb8adfc7d6811fa08e788e}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a2b4cbf8679e81829e15e2258a48175bd}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Domain\+Init@{get\+Domain\+Init}}
+\index{get\+Domain\+Init@{get\+Domain\+Init}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Domain\+Init}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Domain\+Init (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{dom\+Value}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a2b4cbf8679e81829e15e2258a48175bd}
+
+
+Get the first integer tuple of a domain. 
+
+Return null if domain is empty.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dom\+Value} & The domain object which will contribute a first element. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the first integer tuple of a domain, null if the domain is empty 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_afb7607f502a2433dfbf49bfefb8daa3e}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_af7ac99e4c2cf626eba58cc25dd707b37}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Domain\+Iterator@{get\+Domain\+Iterator}}
+\index{get\+Domain\+Iterator@{get\+Domain\+Iterator}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Domain\+Iterator}]{\setlength{\rightskip}{0pt plus 5cm}Iterator$<$List$<$Symbolic\+Expression$>$ $>$ edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Domain\+Iterator (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{domain}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_af7ac99e4c2cf626eba58cc25dd707b37}
+
+
+Return a iterator for a domain object. 
+
+(This function can be applied on all domain types)
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & The symbolic expression of the domain object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the iterator for iterating over the domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a1137c18944ee518692048162a18dacfd}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a204e44e0a26034113225490137ffbb35}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Domain\+Size@{get\+Domain\+Size}}
+\index{get\+Domain\+Size@{get\+Domain\+Size}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Domain\+Size}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Domain\+Size (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{domain}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a204e44e0a26034113225490137ffbb35}
+
+
+Computes the size of a domain, that is the number of elements contained in the domain. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & The symbolic expression of domain. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of elements contained in the domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a91190f8c425dfddddd8e4f737c3190f6}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a18322dfd95bf364c6226760a743f46b9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Dyscope\+Id@{get\+Dyscope\+Id}}
+\index{get\+Dyscope\+Id@{get\+Dyscope\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Dyscope\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Dyscope\+Id (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a18322dfd95bf364c6226760a743f46b9}
+
+
+Given a pointer value, returns the dynamic scope I\+D component of that pointer value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & the source code information for error report. \\
+\hline
+{\em pointer} & a pointer value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the dynamic scope I\+D component of that pointer value 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a71e8fa510b3896769626e05b7ebf4a9f}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a3412a53bd2318815dbcf12d98a131c99}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+High\+Of\+Regular\+Range@{get\+High\+Of\+Regular\+Range}}
+\index{get\+High\+Of\+Regular\+Range@{get\+High\+Of\+Regular\+Range}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+High\+Of\+Regular\+Range}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+High\+Of\+Regular\+Range (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{range}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a3412a53bd2318815dbcf12d98a131c99}
+
+
+Returns the upper bound of the given range. 
+
+Precondition\+: range is a regular range
+
+
+\begin{DoxyParams}{Parameters}
+{\em range} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the upper bound of the given range. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_aea7c78d01bb0e24a0d759590cdc6acfc}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a5b53945651fbf5d75629142ea16ba735}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Low\+Of\+Regular\+Range@{get\+Low\+Of\+Regular\+Range}}
+\index{get\+Low\+Of\+Regular\+Range@{get\+Low\+Of\+Regular\+Range}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Low\+Of\+Regular\+Range}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Low\+Of\+Regular\+Range (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{range}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a5b53945651fbf5d75629142ea16ba735}
+
+
+Returns the lower bound of the given range. 
+
+Precondition\+: range is a regular range
+
+
+\begin{DoxyParams}{Parameters}
+{\em range} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the lower bound of the given range. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a552fefe4a245d99894b09d0611edc7bd}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9ba051e6cf7a907d0dbeb99a253660b6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Next\+In\+Rectangular\+Domain@{get\+Next\+In\+Rectangular\+Domain}}
+\index{get\+Next\+In\+Rectangular\+Domain@{get\+Next\+In\+Rectangular\+Domain}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Next\+In\+Rectangular\+Domain}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Symbolic\+Expression$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Next\+In\+Rectangular\+Domain (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{dom\+Value, }
+\item[{List$<$ Symbolic\+Expression $>$}]{current\+Tuple, }
+\item[{int}]{concrete\+Dim}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9ba051e6cf7a907d0dbeb99a253660b6}
+
+
+Get the subsequence of the given element of the domain. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dom\+Value} & The symbolic expression of the rectangular domain field. \\
+\hline
+{\em current\+Tuple} & The current integer tuple which is an element of the domain. \\
+\hline
+{\em concrete\+Dim} & The dimension of domain, which should be concrete. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the next integer tuple in the domain 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a51ca3df071d373d810cf904a2e380fd2}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a78bb80c8c383c01324b44eba72698b64}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Range\+Of\+Rectangular\+Domain@{get\+Range\+Of\+Rectangular\+Domain}}
+\index{get\+Range\+Of\+Rectangular\+Domain@{get\+Range\+Of\+Rectangular\+Domain}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Range\+Of\+Rectangular\+Domain}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Range\+Of\+Rectangular\+Domain (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{domain, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a78bb80c8c383c01324b44eba72698b64}
+
+
+Returns the given index-\/th range of a rectangular domain. 
+
+Precondition\+: domain is a rectangular domain.
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & \\
+\hline
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index-\/th range of the given rectangular domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_aa5e32e2fd0e9f64aac908f467849b5cc}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a100acc20048188a6b5f616e8856f63b6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Static\+Type\+Of\+Dynamic\+Type@{get\+Static\+Type\+Of\+Dynamic\+Type}}
+\index{get\+Static\+Type\+Of\+Dynamic\+Type@{get\+Static\+Type\+Of\+Dynamic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Static\+Type\+Of\+Dynamic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+I\+V\+L\+Type} edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Static\+Type\+Of\+Dynamic\+Type (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{type\+Id}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a100acc20048188a6b5f616e8856f63b6}
+
+
+returns the corresponding \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the given dynamic type with the specified I\+D. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type\+Id} & The I\+D of the symbolic type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the corresponding \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type of the given dynamic type with the specified I\+D 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a7c8218434fabf774f60f3f98e6efff6a}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a73c5ca9ccd6bdfc9884b34d1b6bbc1a2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Step\+Of\+Regular\+Range@{get\+Step\+Of\+Regular\+Range}}
+\index{get\+Step\+Of\+Regular\+Range@{get\+Step\+Of\+Regular\+Range}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Step\+Of\+Regular\+Range}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Step\+Of\+Regular\+Range (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{range}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a73c5ca9ccd6bdfc9884b34d1b6bbc1a2}
+
+
+Returns the step of the given range. 
+
+Precondition\+: range is a regular range
+
+
+\begin{DoxyParams}{Parameters}
+{\em range} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the step of the given range 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ac147f0a82db935e2e0e09f4a63d2dd88}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a911d8ffa48b7515cd23b225280f41967}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Sym\+Ref@{get\+Sym\+Ref}}
+\index{get\+Sym\+Ref@{get\+Sym\+Ref}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Sym\+Ref}]{\setlength{\rightskip}{0pt plus 5cm}Reference\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Sym\+Ref (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a911d8ffa48b7515cd23b225280f41967}
+
+
+Given a pointer value, returns the symbolic reference component of that value. 
+
+The \char`\"{}sym\+Ref\char`\"{} refers to a sub-\/structure of the variable pointed to.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & a pointer value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the sym\+Ref component 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a7865dd8888c58af0b4b29a3bc97814e4}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a91419d6daccfe07631b1da5885799b6b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Type edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{expr}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a91419d6daccfe07631b1da5885799b6b}
+
+
+Given a symbolic expression returned by the method \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9d79c66017bf3533f5545ecdce61f1b8}{expression\+Of\+Type}, this extracts the type that was used to create that expression. 
+
+If the given expression is not an expression that was created by \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9d79c66017bf3533f5545ecdce61f1b8}{expression\+Of\+Type}, the behavior is undefined.
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & the source information of the expression. \\
+\hline
+{\em expr} & a symbolic expression returned by method \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9d79c66017bf3533f5545ecdce61f1b8}{expression\+Of\+Type} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the symbolic type used to create that expression 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ac3d5b649db56bcbd05cafdd94daab526}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a0ed54e898812f189f5ef7816dd74ef32}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!get\+Variable\+Id@{get\+Variable\+Id}}
+\index{get\+Variable\+Id@{get\+Variable\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{get\+Variable\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+get\+Variable\+Id (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a0ed54e898812f189f5ef7816dd74ef32}
+
+
+Given a pointer value, returns the variable I\+D component of that value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & the source code information for error report. \\
+\hline
+{\em pointer} & a pointer value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the variable I\+D component of that value 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_abcedc27b1959d8c107b6056044b24ea3}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9b37893cff12adb1b49d94660d45a856}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!heap\+Mem\+Unit@{heap\+Mem\+Unit}}
+\index{heap\+Mem\+Unit@{heap\+Mem\+Unit}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{heap\+Mem\+Unit}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+heap\+Mem\+Unit (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9b37893cff12adb1b49d94660d45a856}
+Returns the heap memory unit involved by the given pointer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & \hyperlink{structA}{A} valid pointer that points to some part of a heap. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} pointer to a heap object that is involved by the given pointer. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a76acc1653d7756ec7c8a772216e455f3}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_abf1291e97e5bc4445343ccb25f718907}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!invalid\+Heap\+Object@{invalid\+Heap\+Object}}
+\index{invalid\+Heap\+Object@{invalid\+Heap\+Object}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{invalid\+Heap\+Object}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Constant edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+invalid\+Heap\+Object (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Type}]{heap\+Object\+Type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_abf1291e97e5bc4445343ccb25f718907}
+
+
+Constructs an invalid heap object of a certain type. 
+
+\hyperlink{structA}{A} heap object becomes invalid when it gets deallocated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em heap\+Object\+Type} & The type of the heap object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The invalid heap object of the given type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a1bc5a8274ff55136072607a26c5563ea}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_acdda7f972cb27bdce430a5e662bfe44e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Disjoint\+With@{is\+Disjoint\+With}}
+\index{is\+Disjoint\+With@{is\+Disjoint\+With}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Disjoint\+With}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Disjoint\+With (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer1, }
+\item[{Symbolic\+Expression}]{pointer2}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_acdda7f972cb27bdce430a5e662bfe44e}
+
+
+Checks if the components (either a complete object or a sub-\/component of an object) that the two pointers point to have no intersection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer1} & The first pointer. \\
+\hline
+{\em pointer2} & The second pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff there is no intersection between the components that the given two pointers point to. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ad7345c1026c2af610403e39b79d1dca0}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae7dec2776313e6f3647e38263a756988}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Empty\+Domain@{is\+Empty\+Domain}}
+\index{is\+Empty\+Domain@{is\+Empty\+Domain}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Empty\+Domain}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Empty\+Domain (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{domain, }
+\item[{int}]{dim, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ae7dec2776313e6f3647e38263a756988}
+
+
+Returns true if and only if the given domain is empty which means there is no elements in the domain. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & The symbolic expression of the domain object. \\
+\hline
+{\em dim} & The concrete number of dimension of the domain. It\textquotesingle{}s only significant when the domain is a rectangular domain. \\
+\hline
+{\em source} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of the statement involves this empty checking operation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true iff the given domain is empty 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_acf3e65a7f014f13c663f069192c71d3b}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad1bb0169544fe21280f7159a8ed00fb6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Empty\+Heap@{is\+Empty\+Heap}}
+\index{is\+Empty\+Heap@{is\+Empty\+Heap}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Empty\+Heap}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Empty\+Heap (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{heap\+Value}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad1bb0169544fe21280f7159a8ed00fb6}
+
+
+Checks if a heap is empty, i.\+e., either it is the S\+A\+R\+L null expression or all heap objects it holds are marked as I\+N\+V\+A\+L\+I\+D (already deallocated). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em heap\+Value} & The value of the heap to be checked. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the heap has null value or is empty. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_aed498b2ad5be8db07e7fedd13bc7a15a}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad94b2ae8a01ad5ebbad94519543ef271}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Heap\+Pointer@{is\+Heap\+Pointer}}
+\index{is\+Heap\+Pointer@{is\+Heap\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Heap\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Heap\+Pointer (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad94b2ae8a01ad5ebbad94519543ef271}
+
+
+Is the given pointer pointing to a memory space that is part of a heap? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & The pointer to be tested.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the pointer points to a certain part of some heap. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a330afce1fd252aaa5cc5c8975cbd288f}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac742c32f54173267e148d4d9467eb462}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Initialized@{is\+Initialized}}
+\index{is\+Initialized@{is\+Initialized}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Initialized}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Initialized (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{value}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac742c32f54173267e148d4d9467eb462}
+
+
+Checks if a given value is initialized. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to be checked. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the value is already initialized. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a025ea919fac4a00e39ec09cc14d6c522}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a03af7646291d90162209d9e0a6484758}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+In\+Range@{is\+In\+Range}}
+\index{is\+In\+Range@{is\+In\+Range}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+In\+Range}]{\setlength{\rightskip}{0pt plus 5cm}Boolean\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+In\+Range (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{value, }
+\item[{Symbolic\+Expression}]{range}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a03af7646291d90162209d9e0a6484758}
+
+
+Checks if the given value is within the index-\/th range of a certain rectangular domain. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to be tested if it is in range. \\
+\hline
+{\em range} & The range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the given value is within the index-\/th range of a certain domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_abe50a9361a8a895d74772838afc688d3}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a500bf2359a189ffe2a8d8d8eb9f2dee2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Invalid\+Heap\+Object@{is\+Invalid\+Heap\+Object}}
+\index{is\+Invalid\+Heap\+Object@{is\+Invalid\+Heap\+Object}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Invalid\+Heap\+Object}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Invalid\+Heap\+Object (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{heap\+Object}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a500bf2359a189ffe2a8d8d8eb9f2dee2}
+
+
+Is this heap object invalid? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em heap\+Object} & The heap object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the given heap object is invalid. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a960409c77023ce433a6087f1e464117a}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a1cd347558a2c39a4364292e5c3e9bd32}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Literal\+Domain@{is\+Literal\+Domain}}
+\index{is\+Literal\+Domain@{is\+Literal\+Domain}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Literal\+Domain}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Literal\+Domain (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{domain}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a1cd347558a2c39a4364292e5c3e9bd32}
+
+
+Returns true if and only if the domain is more precisely a literal domain. 
+
+\hyperlink{structA}{A} literal domain has the form of an array if integer tuples with fixed size (i.\+e., the domain\textquotesingle{}s dimension).
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & The symbolic expression of a domain object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true iff the given domain is a literal domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_aee865fd0d3f2b529eb2926faabe47231}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab7d04bcc71c1672fbac5f5a284c367eb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Malloc\+Pointer@{is\+Malloc\+Pointer}}
+\index{is\+Malloc\+Pointer@{is\+Malloc\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Malloc\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Malloc\+Pointer (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab7d04bcc71c1672fbac5f5a284c367eb}
+
+
+Is the given pointer the result of some malloc/handle create operation? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code information for error report. \\
+\hline
+{\em pointer} & The pointer to be checked. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the given pointer is the result of some malloc/handle create operation. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a10700ebb579beffae9ccda4725cf36bb}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a6313c34bb13dd04e09b7db5934c5999e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Null\+Pointer@{is\+Null\+Pointer}}
+\index{is\+Null\+Pointer@{is\+Null\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Null\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Null\+Pointer (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a6313c34bb13dd04e09b7db5934c5999e}
+
+
+Checks if a given pointer is a N\+U\+L\+L pointer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & The pointer to be checked. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the given pointer is N\+U\+L\+L. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a4b68d3c1ff230f1380f20620f2058870}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ada8294a7662922a67414f2db5a68f554}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Rectangular\+Domain@{is\+Rectangular\+Domain}}
+\index{is\+Rectangular\+Domain@{is\+Rectangular\+Domain}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Rectangular\+Domain}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Rectangular\+Domain (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{domain}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ada8294a7662922a67414f2db5a68f554}
+
+
+Is the given domain a rectangular domain? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true iff the given domain is a rectangular domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a5dfc8f254568c6da40ba1a87d0653fcd}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_aa3d03db3e74d45603a62b9540dcb478b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Regular\+Range@{is\+Regular\+Range}}
+\index{is\+Regular\+Range@{is\+Regular\+Range}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Regular\+Range}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Regular\+Range (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{range}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_aa3d03db3e74d45603a62b9540dcb478b}
+
+
+Is the given range a regular range? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em range} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true iff the given range is a regular range. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_acd710887d5b28facfcb477e0a98afe1b}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_afd154afd83db373375a1792fa8f5d39a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!is\+Valid\+Ref\+Of@{is\+Valid\+Ref\+Of}}
+\index{is\+Valid\+Ref\+Of@{is\+Valid\+Ref\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{is\+Valid\+Ref\+Of}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+is\+Valid\+Ref\+Of (
+\begin{DoxyParamCaption}
+\item[{Reference\+Expression}]{ref, }
+\item[{Symbolic\+Expression}]{component}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_afd154afd83db373375a1792fa8f5d39a}
+
+
+Checks if the given reference is valid for a certain object or a sub-\/component of some object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ref} & The reference. \\
+\hline
+{\em component} & The given component which can be an object or a sub-\/component of an object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True iff the given reference expression is applicable for the given object. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a84ca8ded86813e4bb9b076baf640845d}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a179be20da2aa0508e8e8fa615901a56d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!literal\+Domain\+Searcher@{literal\+Domain\+Searcher}}
+\index{literal\+Domain\+Searcher@{literal\+Domain\+Searcher}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{literal\+Domain\+Searcher}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+literal\+Domain\+Searcher (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{literal\+Domain, }
+\item[{List$<$ Symbolic\+Expression $>$}]{literal\+Dom\+Element, }
+\item[{int}]{dim}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a179be20da2aa0508e8e8fa615901a56d}
+
+
+Iterating a literal domain to match a given domain element. 
+
+Returns the index of the element.
+
+
+\begin{DoxyParams}{Parameters}
+{\em literal\+Domain} & The symbolic expression of the literal domain union field \\
+\hline
+{\em literal\+Dom\+Element} & The given element will be matched \\
+\hline
+{\em dim} & The dimension of the literal domain \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index of the element in the domain or -\/1 which means the given element is not a member of the domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_aa067847fab759ff0940c9ded900a7520}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a32dd8635690fdd07a27ce72550d3557a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!make\+Array\+Element\+Reference@{make\+Array\+Element\+Reference}}
+\index{make\+Array\+Element\+Reference@{make\+Array\+Element\+Reference}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{make\+Array\+Element\+Reference}]{\setlength{\rightskip}{0pt plus 5cm}Reference\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+make\+Array\+Element\+Reference (
+\begin{DoxyParamCaption}
+\item[{Reference\+Expression}]{array\+Reference, }
+\item[{Numeric\+Expression\mbox{[}$\,$\mbox{]}}]{new\+Indices}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a32dd8635690fdd07a27ce72550d3557a}
+
+
+Returns an array element reference by giving the array reference and the coordinates to indexing the element. 
+
+This function makes the \hyperlink{}{Array\+Element\+Reference} based on the given array reference. For example, for an array \char`\"{}int a\mbox{[}2\mbox{]}\mbox{[}3\mbox{]}\mbox{[}4\mbox{]}\char`\"{}, giving the reference to \char`\"{}a\mbox{[}1\mbox{]}\char`\"{} and an indices array \{1,2\}, it returns the new reference to \char`\"{}a\mbox{[}1\mbox{]}\mbox{[}1\mbox{]}\mbox{[}2\mbox{]}\char`\"{}.
+
+\begin{DoxyAuthor}{Author}
+Ziqing Luo 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em array\+Reference} & An reference to an array \\
+\hline
+{\em new\+Indices} & indexes for referencing the element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new array\+Element\+Reference 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a9b745ec8472d840851d867be767e0a28}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a708c31ed4be7f16b4b7ae01786bf9227}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!make\+Pointer@{make\+Pointer}}
+\index{make\+Pointer@{make\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{make\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+make\+Pointer (
+\begin{DoxyParamCaption}
+\item[{int}]{dyscope\+Id, }
+\item[{int}]{var\+Id, }
+\item[{Reference\+Expression}]{sym\+Ref}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a708c31ed4be7f16b4b7ae01786bf9227}
+
+
+Makes a pointer value from the given dynamic scope I\+D, variable I\+D, and symbolic reference value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dyscope\+Id} & I\+D number of a dynamic scope \\
+\hline
+{\em var\+Id} & I\+D number of a variable within that scope \\
+\hline
+{\em sym\+Ref} & a symbolic reference to a point within the variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pointer value as specified by the 3 components 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_aaf5ab5e7044fd66d81b66ea566557ad9}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a049588d60329e9a56a3bcd784aa03582}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!make\+Pointer@{make\+Pointer}}
+\index{make\+Pointer@{make\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{make\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+make\+Pointer (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{old\+Pointer, }
+\item[{Reference\+Expression}]{sym\+Ref}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a049588d60329e9a56a3bcd784aa03582}
+
+
+Constructs a new pointer by replacing the reference expression of a given pointer. 
+
+For example, given a pointer \&a\mbox{[}5\mbox{]} and a reference \mbox{[}0\mbox{]}, the result will be \&a\mbox{[}0\mbox{]}. The given pointer can refer to a heap object, in which case, the heap object reference is considered the old \char`\"{}variable\char`\"{} and will remain the same.
+
+
+\begin{DoxyParams}{Parameters}
+{\em old\+Pointer} & The old pointer whose reference expression will be changed. \\
+\hline
+{\em sym\+Ref} & The new reference expression to be used for the new pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new pointer which refers to the same variable/heap object as the given pointer, but with a new reference expression. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_af144a65fabd18fb62a51cda316573cf8}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a47844f092c95502c126cae3611d3f991}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!new\+Array@{new\+Array}}
+\index{new\+Array@{new\+Array}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{new\+Array}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+new\+Array (
+\begin{DoxyParamCaption}
+\item[{Boolean\+Expression}]{context, }
+\item[{Symbolic\+Type}]{element\+Value\+Type, }
+\item[{Numeric\+Expression}]{length, }
+\item[{Symbolic\+Expression}]{ele\+Value}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a47844f092c95502c126cae3611d3f991}
+
+
+Creates a new array of given length, using the given type as its element type, and each element having the given value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em context} & The context of the operation, i.\+e., the path condition of the current state. \\
+\hline
+{\em element\+Value\+Type} & The type of the array element. Note necessarily the type of {\ttfamily ele\+Value}. \\
+\hline
+{\em length} & The length of the array. \\
+\hline
+{\em ele\+Value} & The element value of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new array of the given length, with each element initialized with the given symbolic expression. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ad90018076e79122b424cff0173178edc}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab932e22e41ff7e3f8dc2fa6c0cf0ed6b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!null\+Pointer@{null\+Pointer}}
+\index{null\+Pointer@{null\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{null\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+null\+Pointer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ab932e22e41ff7e3f8dc2fa6c0cf0ed6b}
+
+
+Returns the N\+U\+L\+L pointer of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. 
+
+\begin{DoxyReturn}{Returns}
+The N\+U\+L\+L pointer of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a1458809869499edbfca1ea4dac7d37a1}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad5d4021442518638e1b805ab4ff1bbac}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!parent\+Pointer@{parent\+Pointer}}
+\index{parent\+Pointer@{parent\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{parent\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+parent\+Pointer (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ad5d4021442518638e1b805ab4ff1bbac}
+
+
+Given a non-\/trivial pointer, i.\+e., a pointer to some location inside an object, returns the parent pointer. 
+
+For example, a pointer to an array element returns the pointer to the array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & the source information of the pointer \\
+\hline
+{\em pointer} & non-\/trivial pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to parent 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a00389b2e83ef53fd8693acc9f3fd0d42}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a3d7e82c034d596a25117938fc85a2e7e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!rec\+Domain\+Has\+Next@{rec\+Domain\+Has\+Next}}
+\index{rec\+Domain\+Has\+Next@{rec\+Domain\+Has\+Next}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{rec\+Domain\+Has\+Next}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+rec\+Domain\+Has\+Next (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{rectangular\+Domain, }
+\item[{int}]{concrete\+Dim, }
+\item[{List$<$ Symbolic\+Expression $>$}]{dom\+Element}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a3d7e82c034d596a25117938fc85a2e7e}
+
+
+Check if the given domain element has a subsequence in the given rectangular domain. 
+
+\hyperlink{structA}{A} rectangular domain is the cartesian product of a number of ranges.\+s
+
+
+\begin{DoxyParams}{Parameters}
+{\em rectangular\+Domain} & The rectangular domain union object. \\
+\hline
+{\em concrete\+Dim} & The number of the dimension of the domain \\
+\hline
+{\em dom\+Element} & The element of the domain \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true iff there is at least one subsequent element of the given one in the given rectangular domain. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a6defcd99c6e48b08ba6ebb4f544c24f0}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac84eef033cd5150ec25d3fba4accb9f9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!reference\+Of\+Pointer@{reference\+Of\+Pointer}}
+\index{reference\+Of\+Pointer@{reference\+Of\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{reference\+Of\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Reference\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+reference\+Of\+Pointer (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_ac84eef033cd5150ec25d3fba4accb9f9}
+
+
+Computes the reference expression of a pointer. 
+
+If the pointer is pointing to some part of the heap, then the reference expression is the reference expression w.\+r.\+t the corresponding heap atomic object; otherwise, it is the original reference expression of the pointer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & The pointer to whose reference is to be computed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The reference expression of the pointer w.\+r.\+t the object it points to. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a1f61aa2f79eafccfed9b490ba600ac89}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a85dff23f772e32aaf75fe4f1e79b08ca}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!reference\+To\+Heap\+Mem\+Unit@{reference\+To\+Heap\+Mem\+Unit}}
+\index{reference\+To\+Heap\+Mem\+Unit@{reference\+To\+Heap\+Mem\+Unit}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{reference\+To\+Heap\+Mem\+Unit}]{\setlength{\rightskip}{0pt plus 5cm}Reference\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+reference\+To\+Heap\+Mem\+Unit (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{heap\+Pointer}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a85dff23f772e32aaf75fe4f1e79b08ca}
+
+
+Computes the reference expression of a given heap pointer w.\+r.\+t the corresponding heap object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em heap\+Pointer} & The heap pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The reference expression of a given pointer w.\+r.\+t the corresponding heap memory unit. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a808e09e1e4ad6c600ab190b41be04b23}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a5e3382dcf9ee49c403fe92496532c8d6}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!set\+Sym\+Ref@{set\+Sym\+Ref}}
+\index{set\+Sym\+Ref@{set\+Sym\+Ref}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{set\+Sym\+Ref}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+set\+Sym\+Ref (
+\begin{DoxyParamCaption}
+\item[{Symbolic\+Expression}]{pointer, }
+\item[{Reference\+Expression}]{sym\+Ref}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a5e3382dcf9ee49c403fe92496532c8d6}
+
+
+Returns the pointer value obtained by replacing the sym\+Ref component of the given pointer value with the given sym\+Ref. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & a pointer value \\
+\hline
+{\em sym\+Ref} & a symbolic reference expression \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the pointer obtained by modifying the given one by replacing its sym\+Ref field with the given sym\+Ref 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a82ec7455e2a593bef497ef2b80823a47}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a406796da0190363471a6918d0e863afa}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!sizeof@{sizeof}}
+\index{sizeof@{sizeof}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{sizeof}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+sizeof (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{{\bf C\+I\+V\+L\+Type}}]{civl\+Type, }
+\item[{Symbolic\+Type}]{type}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a406796da0190363471a6918d0e863afa}
+
+
+Compute the symbolic representation of the size of a given symbolic type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source code element to be used in the error report (if any). \\
+\hline
+{\em civl\+Type} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} type corresponding to the symbolic type \\
+\hline
+{\em type} & The symbolic type whose size is to evaluated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The symbolic representation of the size of the symbolic type. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ab06c6649800d749fae5313911a122649}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9f9938e9d9edbecd960a01c5d54a9cd8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!sizeof\+Function@{sizeof\+Function}}
+\index{sizeof\+Function@{sizeof\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{sizeof\+Function}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+sizeof\+Function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a9f9938e9d9edbecd960a01c5d54a9cd8}
+
+
+Returns the abstract function {\ttfamily \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a406796da0190363471a6918d0e863afa}{sizeof()}}. 
+
+\begin{DoxyReturn}{Returns}
+The abstract function {\ttfamily \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a406796da0190363471a6918d0e863afa}{sizeof()}}. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_aa57f0566a295e1dcb98f53df64a5500a}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a45145c8a687f3bdd5baecb1a56f9c457}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!strip\+Indices\+From\+Reference@{strip\+Indices\+From\+Reference}}
+\index{strip\+Indices\+From\+Reference@{strip\+Indices\+From\+Reference}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{strip\+Indices\+From\+Reference}]{\setlength{\rightskip}{0pt plus 5cm}Numeric\+Expression \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+strip\+Indices\+From\+Reference (
+\begin{DoxyParamCaption}
+\item[{Array\+Element\+Reference}]{ele\+Ref}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a45145c8a687f3bdd5baecb1a56f9c457}
+
+
+Returns an array of indices in the given \hyperlink{}{Array\+Element\+Reference}. 
+
+Note\+: The order of indices is from right to left which is same as the visual expression order.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ele\+Ref} & \hyperlink{structA}{A} reference of element of an array \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an array of indices with the given reference 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_a180532fa7b4363479ef899acf5be5de5}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a18d94e4f52d8d13f10973781a0dfa9e9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}!undefined\+Pointer@{undefined\+Pointer}}
+\index{undefined\+Pointer@{undefined\+Pointer}!edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility@{edu\+::udel\+::cis\+::vsl\+::civl\+::dynamic\+::\+I\+F\+::\+Symbolic\+Utility}}
+\subsubsection[{undefined\+Pointer}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+I\+F.\+Symbolic\+Utility.\+undefined\+Pointer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility_a18d94e4f52d8d13f10973781a0dfa9e9}
+
+
+Returns the undefined pointer of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}, which is an uninitialized pointer value. 
+
+In \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L}, a pointer becomes undefined when the memory space it points to get deallocated.
+
+\begin{DoxyReturn}{Returns}
+The undefined pointer. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1common_1_1CommonSymbolicUtility_ab0ce2de739a46abc3ade425833b718ae}{edu.\+udel.\+cis.\+vsl.\+civl.\+dynamic.\+common.\+Common\+Symbolic\+Utility}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/dynamic/\+I\+F/Symbolic\+Utility.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,14 @@
+#include <civlc.cvh>
+
+typedef union U{
+  int x;
+  double y;
+} U1;
+
+void main() {
+  U1 k = {.x = 1, .y = 8.4};
+  
+  $assert((k.y == 8.4));
+  k.x = 2;
+  $assert((k.x == 2));
+}

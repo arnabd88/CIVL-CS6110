@@ -1,0 +1,40 @@
+
+How to release a new version of CIVL.
+
+1. Check all tests pass.
+
+2. Edit the fields named "version" and "date" in class
+edu.udel.cis.vsl.civl.CIVL to use the new version and today's date.
+
+3. Create the tag: to create version 0.2, for example:
+
+svn copy svn://vsl.cis.udel.edu/civl/trunk svn://vsl.cis.udel.edu/civl/tags/0.2
+
+4. Create a new config file for autotest: check out
+svn://vsl.cis.udel.edu/scripts if you have not already,
+or update it if you already have a local copy.  Create
+a new file config_civl-0.2.sh (for example) based on
+one of the other config_civl configuration files.  There
+are 3 points that must be changed: (1) BRANCH should
+be set to 0.2 (for example); this is the name that will
+be assigned to this branch, (2) REPO needs to be changed
+to point to the new tagged version, e.g.
+svn://vsl.cis.udel.edu/civl/tags/0.2, and (3)
+WORKER_CONFIG needs to be changed to refer to the 
+same configuration file you are creating, i.e.,
+${WORKER_SCRIPT_DIR}/config_civl-0.2.sh in this example.
+Save this file and commit it.
+
+5. Update the scripts on nikolai:
+ssh tester@nikolai.cis.udel.edu
+cd repos/scripts/
+svn update
+
+6. Log on to vsl.cis.udel.edu, eecise_su svn, and edit
+/home/svn/repositories/civl/hooks/post-commit
+by changing the second autotest command to refer to the
+new version configuration file.  (You could also add
+a completely new autotest command; it will work
+either way.)
+
+7. Update Trac milestones.

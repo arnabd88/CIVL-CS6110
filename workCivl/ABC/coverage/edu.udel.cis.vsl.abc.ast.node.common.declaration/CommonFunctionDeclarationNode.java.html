@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonFunctionDeclarationNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.declaration</a> &gt; <span class="el_source">CommonFunctionDeclarationNode.java</span></div><h1>CommonFunctionDeclarationNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.declaration;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Function;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.acsl.ContractNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.FunctionDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.FunctionTypeNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+public class CommonFunctionDeclarationNode extends
+		CommonOrdinaryDeclarationNode implements FunctionDeclarationNode {
+
+<span class="nc" id="L19">	private boolean inlineFunctionSpecifier = false;</span>
+
+<span class="nc" id="L21">	private boolean noreturnFunctionSpecifier = false;</span>
+
+<span class="nc" id="L23">	private boolean globalFunctionSpecifier = false;</span>
+
+<span class="nc" id="L25">	private boolean atomicFunctionSpecifier = false;// $atomic_f</span>
+<span class="nc" id="L26">	private boolean pureFunctionSpecifier = false;</span>
+<span class="nc" id="L27">	private boolean systemFunctionSpecifier = false;</span>
+
+	public CommonFunctionDeclarationNode(Source source,
+			IdentifierNode identifier, FunctionTypeNode type,
+			SequenceNode&lt;ContractNode&gt; contract) {
+<span class="nc" id="L32">		super(source, identifier, type);</span>
+<span class="nc" id="L33">		addChild(contract); // child 2</span>
+<span class="nc" id="L34">	}</span>
+
+	@Override
+	public Function getEntity() {
+<span class="nc" id="L38">		return (Function) super.getEntity();</span>
+	}
+
+	@Override
+	public boolean hasInlineFunctionSpecifier() {
+<span class="nc" id="L43">		return inlineFunctionSpecifier;</span>
+	}
+
+	@Override
+	public void setInlineFunctionSpecifier(boolean value) {
+<span class="nc" id="L48">		this.inlineFunctionSpecifier = value;</span>
+<span class="nc" id="L49">	}</span>
+
+	@Override
+	public boolean hasNoreturnFunctionSpecifier() {
+<span class="nc" id="L53">		return this.noreturnFunctionSpecifier;</span>
+	}
+
+	@Override
+	public void setNoreturnFunctionSpecifier(boolean value) {
+<span class="nc" id="L58">		this.noreturnFunctionSpecifier = value;</span>
+<span class="nc" id="L59">	}</span>
+
+	@Override
+	public boolean hasGlobalFunctionSpecifier() {
+<span class="nc" id="L63">		return this.globalFunctionSpecifier;</span>
+	}
+
+	@Override
+	public void setGlobalFunctionSpecifier(boolean value) {
+<span class="nc" id="L68">		this.globalFunctionSpecifier = value;</span>
+<span class="nc" id="L69">	}</span>
+
+	protected void printKind(PrintStream out) {
+<span class="nc" id="L72">		out.print(&quot;FunctionDeclaration&quot;);</span>
+<span class="nc" id="L73">	}</span>
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L77">		boolean needSeparator = false;</span>
+
+<span class="nc" id="L79">		printKind(out);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (hasExternStorage()) {</span>
+<span class="nc" id="L81">			out.print(&quot;[&quot;);</span>
+<span class="nc" id="L82">			out.print(&quot;extern&quot;);</span>
+<span class="nc" id="L83">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (hasStaticStorage()) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			out.print(needSeparator ? &quot;, &quot; : &quot;[&quot;);</span>
+<span class="nc" id="L87">			out.print(&quot;static&quot;);</span>
+<span class="nc" id="L88">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (inlineFunctionSpecifier) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			out.print(needSeparator ? &quot;, &quot; : &quot;[&quot;);</span>
+<span class="nc" id="L92">			out.print(&quot;inline&quot;);</span>
+<span class="nc" id="L93">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (noreturnFunctionSpecifier) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			out.print(needSeparator ? &quot;, &quot; : &quot;[&quot;);</span>
+<span class="nc" id="L97">			out.print(&quot;noreturn&quot;);</span>
+<span class="nc" id="L98">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (needSeparator)</span>
+<span class="nc" id="L101">			out.print(&quot;]&quot;);</span>
+<span class="nc" id="L102">	}</span>
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public SequenceNode&lt;ContractNode&gt; getContract() {
+<span class="nc" id="L107">		return (SequenceNode&lt;ContractNode&gt;) child(2);</span>
+	}
+
+	@Override
+	public void setContract(SequenceNode&lt;ContractNode&gt; contract) {
+<span class="nc" id="L112">		setChild(2, contract);</span>
+<span class="nc" id="L113">	}</span>
+
+	@Override
+	public FunctionTypeNode getTypeNode() {
+<span class="nc" id="L117">		return (FunctionTypeNode) super.getTypeNode();</span>
+	}
+
+	@Override
+	public FunctionDeclarationNode copy() {
+<span class="nc" id="L122">		CommonFunctionDeclarationNode result = new CommonFunctionDeclarationNode(</span>
+<span class="nc" id="L123">				getSource(), duplicate(getIdentifier()),</span>
+<span class="nc" id="L124">				duplicate(getTypeNode()), duplicate(getContract()));</span>
+
+<span class="nc" id="L126">		result.setInlineFunctionSpecifier(hasInlineFunctionSpecifier());</span>
+<span class="nc" id="L127">		result.setNoreturnFunctionSpecifier(hasNoreturnFunctionSpecifier());</span>
+<span class="nc" id="L128">		result.setGlobalFunctionSpecifier(hasGlobalFunctionSpecifier());</span>
+<span class="nc" id="L129">		result.setAtomicFunctionSpeciier(this.hasAtomicFunctionSpeciier());</span>
+<span class="nc" id="L130">		result.setSystemFunctionSpeciier(this.hasSystemFunctionSpeciier());</span>
+<span class="nc" id="L131">		copyStorage(result);</span>
+<span class="nc" id="L132">		return result;</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L137">		return NodeKind.FUNCTION_DECLARATION;</span>
+	}
+
+	@Override
+	public OrdinaryDeclarationKind ordinaryDeclarationKind() {
+<span class="nc" id="L142">		return OrdinaryDeclarationKind.FUNCTION_DECLARATION;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (that instanceof FunctionDeclarationNode) {</span>
+<span class="nc" id="L148">			FunctionDeclarationNode thatFunction = (FunctionDeclarationNode) that;</span>
+
+<span class="nc" id="L150">			if (!(this.inlineFunctionSpecifier == thatFunction</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">					.hasInlineFunctionSpecifier() &amp;&amp; this.noreturnFunctionSpecifier == thatFunction</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">					.hasNoreturnFunctionSpecifier()))</span>
+<span class="nc" id="L153">				return new DifferenceObject(this, that, DiffKind.OTHER,</span>
+<span class="nc" id="L154">						&quot;different function inline/noreturn specifier&quot;);</span>
+			else
+<span class="nc" id="L156">				return null;</span>
+		}
+<span class="nc" id="L158">		return new DifferenceObject(this, that);</span>
+	}
+
+	@Override
+	public void setPureFunctionSpeciier(boolean value) {
+<span class="nc" id="L163">		this.pureFunctionSpecifier = value;</span>
+<span class="nc" id="L164">	}</span>
+
+	@Override
+	public void setAtomicFunctionSpeciier(boolean value) {
+<span class="nc" id="L168">		this.atomicFunctionSpecifier = value;</span>
+<span class="nc" id="L169">	}</span>
+
+	@Override
+	public void setSystemFunctionSpeciier(boolean value) {
+<span class="nc" id="L173">		this.systemFunctionSpecifier = value;</span>
+<span class="nc" id="L174">	}</span>
+
+	@Override
+	public boolean hasPureFunctionSpeciier() {
+<span class="nc" id="L178">		return this.pureFunctionSpecifier;</span>
+	}
+
+	@Override
+	public boolean hasAtomicFunctionSpeciier() {
+<span class="nc" id="L183">		return this.atomicFunctionSpecifier;</span>
+	}
+
+	@Override
+	public boolean hasSystemFunctionSpeciier() {
+<span class="nc" id="L188">		return this.systemFunctionSpecifier;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

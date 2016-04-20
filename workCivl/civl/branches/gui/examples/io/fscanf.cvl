@@ -1,0 +1,42 @@
+#include<civlc.cvh>
+#include<stdio.h>
+#include<civl-stdio.cvh>
+
+int fooLength = $textFileLength("foo");
+
+$assume(fooLength == 5);
+//$assume($textFileLength("foo") == 5);
+
+void main(){
+  FILE *file = fopen("foo", "r");
+  int a[5];
+  int i = 0;
+  
+  while($true){
+    int count = fscanf(file, "%d", &a[i]);
+    
+    if(count == EOF)
+      break;
+    i++;
+  } 
+  $free(file);
+}
+/*
+typedef enum type_t{
+  INT, DOUBLE, BOOL
+} type_t;
+
+int getType(type_t type){
+  if(type == INT)
+    return 0;
+  else if(type == DOUBLE)
+    return 1;
+  else
+    return 2;
+}
+
+void main(){
+  int k = 3;
+  
+  k = getType(DOUBLE);
+}*/

@@ -1,0 +1,43 @@
+/* Commandline execution:
+ *		civl verify linkedList.cvl
+ * */
+#include<civlc.cvh>
+
+$input int N;
+$assume(N > 0 && N <= 5);
+
+typedef struct Node {
+  double value;
+  struct Node* next;
+} Node;
+
+void main() {
+  $scope s = $here; 
+  Node* head;
+  Node* current = (Node *) $malloc(s, sizeof(Node));
+  Node final;
+  
+  head = current;
+  head->value = 0.0;
+  for (int i = 0; i < N-1; i++) {
+    Node* newNode = (Node *) $malloc(s, sizeof(Node));
+    
+    newNode->value = (i+1)*2.71828;
+    current->next = newNode;
+    current = newNode;
+  }
+  current->next = NULL;
+  final = *head;
+  while (final.next != NULL) {
+    final = *(final.next);
+  }
+  $assert((final.value == (N-1)*2.71828));
+  $assert((final.value == current->value));
+  while (head->next != NULL) {
+    Node* tmp = head;
+    
+    head = head->next;
+    $free(tmp);
+  }
+  $free(head);
+}

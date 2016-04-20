@@ -1,0 +1,411 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics@{edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics}}
+
+
+Entry point of the module civl.\+semantics.  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{Library\+Executor\+Loader} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a544f0f9539940b5f76e9f0bd90a74931}{new\+Library\+Executor\+Loader} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} lib\+Evaluator\+Loader, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of library executor loader. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a3252aa264945a2298365543fdb306577}{new\+Library\+Evaluator\+Loader} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of library evaluator loader. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a410f143cf8c954a4a521c8488f8c9f00}{new\+Executor} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} state\+Factory, Error\+Log log, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{Library\+Executor\+Loader} loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} evaluator, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} symbolic\+Analyzer, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} err\+Logger, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} executor. \end{DoxyCompactList}\item 
+static \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractExecutor}{Contract\+Executor} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_ae20e176bcdc45afcc8ccb9bf9ba4cc37}{new\+Contract\+Executor} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} state\+Factory, Error\+Log log, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{Library\+Executor\+Loader} loader, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1contract_1_1ContractEvaluator}{Contract\+Evaluator} evaluator, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} symbolic\+Analyzer, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} err\+Logger, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator}{Contract\+Condition\+Generator} condition\+Generator)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} \hyperlink{}{Contract\+Executor}. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_abde22ce803e7084c0776ac86f03772e0}{new\+Evaluator} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} state\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} symbolic\+Analyzer, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Unit\+Factory, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} err\+Logger, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} evaluator. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a59d495558323d8ac75da88aa3c6d6ef7}{new\+Contract\+Evaluator} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} state\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} symbolic\+Analyzer, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Unit\+Factory, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} err\+Logger, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} \hyperlink{}{Contract\+Evaluator}. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator}{Contract\+Condition\+Generator} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a31892d74983c18c2f07cc433829b44ca}{new\+Contract\+Condition\+Generator} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} state\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} symbolic\+Analyzer, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Unit\+Factory, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1log_1_1IF_1_1CIVLErrorLogger}{C\+I\+V\+L\+Error\+Logger} err\+Logger, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} config)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator}{Contract\+Condition\+Generator}. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a5d4f7ad65bb0eb6872bdfbd5fc37ae22}{new\+Symbolic\+Analyzer} (\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} civl\+Config, Symbolic\+Universe universe, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} model\+Factory, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} symbolic\+Util)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of symbolic analyzer. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a654fd8ee662f5d2719f237f1c793f41f}{new\+Transition} (Boolean\+Expression path\+Condition, int pid, int process\+Identifier, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_1_1AtomicLockAction}{Atomic\+Lock\+Action} atomic\+Lock\+Action)
+\begin{DoxyCompactList}\small\item\em Create a new \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} transition. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition}{Transition} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_af88ed6fcd3f46651e087a76ff4a5ee3d}{new\+Transition} (Boolean\+Expression path\+Condition, int pid, int process\+Identifier, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement, boolean simplify\+State, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_1_1AtomicLockAction}{Atomic\+Lock\+Action} atomic\+Lock\+Action)
+\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1NoopTransition}{Noop\+Transition} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_abf331667c35ee427b9b3bf41dec850b3}{new\+Noop\+Transition} (Boolean\+Expression path\+Condition, int pid, int process\+Identifier, Boolean\+Expression assumption, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1Statement}{Statement} statement, boolean symplify\+State, \hyperlink{enumedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Transition_1_1AtomicLockAction}{Atomic\+Lock\+Action} atomic\+Lock\+Action)
+\begin{DoxyCompactList}\small\item\em Create a new Noop transition. \end{DoxyCompactList}\item 
+static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1TransitionSequence}{Transition\+Sequence} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a87ce2f19f6cb098dd62d0cc1daa1e18f}{new\+Transition\+Sequence} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, boolean containing\+All\+Enabled)
+\begin{DoxyCompactList}\small\item\em Create a new transition sequence. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_af5c87ff3ebb7971541f7afac4071a484}{}static \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1MemoryUnitExpressionEvaluator}{Memory\+Unit\+Expression\+Evaluator} {\bfseries new\+Memory\+Unit\+Evaluator} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} evaluator, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1MemoryUnitFactory}{Memory\+Unit\+Factory} mem\+Unit\+Factory)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_af5c87ff3ebb7971541f7afac4071a484}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Entry point of the module civl.\+semantics. 
+
+\begin{DoxyAuthor}{Author}
+zmanchun 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a31892d74983c18c2f07cc433829b44ca}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Contract\+Condition\+Generator@{new\+Contract\+Condition\+Generator}}
+\index{new\+Contract\+Condition\+Generator@{new\+Contract\+Condition\+Generator}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Contract\+Condition\+Generator}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Contract\+Condition\+Generator} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Contract\+Condition\+Generator (
+\begin{DoxyParamCaption}
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf State\+Factory}}]{state\+Factory, }
+\item[{{\bf Library\+Evaluator\+Loader}}]{loader, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf Memory\+Unit\+Factory}}]{mem\+Unit\+Factory, }
+\item[{{\bf C\+I\+V\+L\+Error\+Logger}}]{err\+Logger, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a31892d74983c18c2f07cc433829b44ca}
+
+
+Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator}{Contract\+Condition\+Generator}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+Factory} & The model factory of the system. \\
+\hline
+{\em state\+Factory} & The state factory of the system. \\
+\hline
+{\em loader} & The library evaluator loader for evaluating the guards of system functions. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility for manipulations of symbolic expressions. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+{\em err\+Logger} & The error logger for reporting execution errors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} evaluator. 
+
+The \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1ContractConditionGenerator}{Contract\+Condition\+Generator} 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a59d495558323d8ac75da88aa3c6d6ef7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Contract\+Evaluator@{new\+Contract\+Evaluator}}
+\index{new\+Contract\+Evaluator@{new\+Contract\+Evaluator}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Contract\+Evaluator}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Evaluator} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Contract\+Evaluator (
+\begin{DoxyParamCaption}
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf State\+Factory}}]{state\+Factory, }
+\item[{{\bf Library\+Evaluator\+Loader}}]{loader, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf Memory\+Unit\+Factory}}]{mem\+Unit\+Factory, }
+\item[{{\bf C\+I\+V\+L\+Error\+Logger}}]{err\+Logger, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a59d495558323d8ac75da88aa3c6d6ef7}
+
+
+Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} \hyperlink{}{Contract\+Evaluator}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+Factory} & The model factory of the system. \\
+\hline
+{\em state\+Factory} & The state factory of the system. \\
+\hline
+{\em loader} & The library evaluator loader for evaluating the guards of system functions. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility for manipulations of symbolic expressions. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+{\em err\+Logger} & The error logger for reporting execution errors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} evaluator. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_ae20e176bcdc45afcc8ccb9bf9ba4cc37}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Contract\+Executor@{new\+Contract\+Executor}}
+\index{new\+Contract\+Executor@{new\+Contract\+Executor}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Contract\+Executor}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Contract\+Executor} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Contract\+Executor (
+\begin{DoxyParamCaption}
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf State\+Factory}}]{state\+Factory, }
+\item[{Error\+Log}]{log, }
+\item[{{\bf Library\+Executor\+Loader}}]{loader, }
+\item[{{\bf Contract\+Evaluator}}]{evaluator, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf C\+I\+V\+L\+Error\+Logger}}]{err\+Logger, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config, }
+\item[{{\bf Contract\+Condition\+Generator}}]{condition\+Generator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_ae20e176bcdc45afcc8ccb9bf9ba4cc37}
+
+
+Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} \hyperlink{}{Contract\+Executor}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+Factory} & The model factory of the system. \\
+\hline
+{\em state\+Factory} & The state factory of the system. \\
+\hline
+{\em log} & The error logger of the system. \\
+\hline
+{\em loader} & The library executor loader for executing system functions. \\
+\hline
+{\em evaluator} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} evaluator for evaluating expressions. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+{\em err\+Logger} & The error logger for reporting execution errors. \\
+\hline
+{\em civl\+Config} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} configuration. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} executor. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_abde22ce803e7084c0776ac86f03772e0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Evaluator@{new\+Evaluator}}
+\index{new\+Evaluator@{new\+Evaluator}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Evaluator}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Evaluator} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Evaluator (
+\begin{DoxyParamCaption}
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf State\+Factory}}]{state\+Factory, }
+\item[{{\bf Library\+Evaluator\+Loader}}]{loader, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf Memory\+Unit\+Factory}}]{mem\+Unit\+Factory, }
+\item[{{\bf C\+I\+V\+L\+Error\+Logger}}]{err\+Logger, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_abde22ce803e7084c0776ac86f03772e0}
+
+
+Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} evaluator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+Factory} & The model factory of the system. \\
+\hline
+{\em state\+Factory} & The state factory of the system. \\
+\hline
+{\em loader} & The library evaluator loader for evaluating the guards of system functions. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility for manipulations of symbolic expressions. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+{\em err\+Logger} & The error logger for reporting execution errors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} evaluator. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a410f143cf8c954a4a521c8488f8c9f00}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Executor@{new\+Executor}}
+\index{new\+Executor@{new\+Executor}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Executor}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Executor} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Executor (
+\begin{DoxyParamCaption}
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf State\+Factory}}]{state\+Factory, }
+\item[{Error\+Log}]{log, }
+\item[{{\bf Library\+Executor\+Loader}}]{loader, }
+\item[{{\bf Evaluator}}]{evaluator, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf C\+I\+V\+L\+Error\+Logger}}]{err\+Logger, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a410f143cf8c954a4a521c8488f8c9f00}
+
+
+Creates a new instance of \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} executor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+Factory} & The model factory of the system. \\
+\hline
+{\em state\+Factory} & The state factory of the system. \\
+\hline
+{\em log} & The error logger of the system. \\
+\hline
+{\em loader} & The library executor loader for executing system functions. \\
+\hline
+{\em evaluator} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} evaluator for evaluating expressions. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+{\em err\+Logger} & The error logger for reporting execution errors. \\
+\hline
+{\em civl\+Config} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} configuration. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} executor. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a3252aa264945a2298365543fdb306577}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Library\+Evaluator\+Loader@{new\+Library\+Evaluator\+Loader}}
+\index{new\+Library\+Evaluator\+Loader@{new\+Library\+Evaluator\+Loader}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Library\+Evaluator\+Loader}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Library\+Evaluator\+Loader} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Library\+Evaluator\+Loader (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a3252aa264945a2298365543fdb306577}
+
+
+Creates a new instance of library evaluator loader. 
+
+\begin{DoxyReturn}{Returns}
+The new library evaluator loader. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a544f0f9539940b5f76e9f0bd90a74931}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Library\+Executor\+Loader@{new\+Library\+Executor\+Loader}}
+\index{new\+Library\+Executor\+Loader@{new\+Library\+Executor\+Loader}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Library\+Executor\+Loader}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Library\+Executor\+Loader} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Library\+Executor\+Loader (
+\begin{DoxyParamCaption}
+\item[{{\bf Library\+Evaluator\+Loader}}]{lib\+Evaluator\+Loader, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a544f0f9539940b5f76e9f0bd90a74931}
+
+
+Creates a new instance of library executor loader. 
+
+\begin{DoxyReturn}{Returns}
+The new library executor loader. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_abf331667c35ee427b9b3bf41dec850b3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Noop\+Transition@{new\+Noop\+Transition}}
+\index{new\+Noop\+Transition@{new\+Noop\+Transition}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Noop\+Transition}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Noop\+Transition} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Noop\+Transition (
+\begin{DoxyParamCaption}
+\item[{Boolean\+Expression}]{path\+Condition, }
+\item[{int}]{pid, }
+\item[{int}]{process\+Identifier, }
+\item[{Boolean\+Expression}]{assumption, }
+\item[{{\bf Statement}}]{statement, }
+\item[{boolean}]{symplify\+State, }
+\item[{{\bf Atomic\+Lock\+Action}}]{atomic\+Lock\+Action}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_abf331667c35ee427b9b3bf41dec850b3}
+
+
+Create a new Noop transition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path\+Condition} & The path condition that should be used when executing the statement of the transition \\
+\hline
+{\em pid} & The process id of the process executing this transition. \\
+\hline
+{\em process\+Identifier} & The process identifier of the process executing this transition. \\
+\hline
+{\em target} & The target location of the process after this transition \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new transition with the given path condition and target location. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a5d4f7ad65bb0eb6872bdfbd5fc37ae22}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Symbolic\+Analyzer@{new\+Symbolic\+Analyzer}}
+\index{new\+Symbolic\+Analyzer@{new\+Symbolic\+Analyzer}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Symbolic\+Analyzer}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Symbolic\+Analyzer} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Symbolic\+Analyzer (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config, }
+\item[{Symbolic\+Universe}]{universe, }
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a5d4f7ad65bb0eb6872bdfbd5fc37ae22}
+
+
+Creates a new instance of symbolic analyzer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em universe} & The symbolic universe to be used. \\
+\hline
+{\em model\+Factory} & The model factory to be used. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility to be used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new symbolic analyzer. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a654fd8ee662f5d2719f237f1c793f41f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Transition@{new\+Transition}}
+\index{new\+Transition@{new\+Transition}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Transition}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Transition} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Transition (
+\begin{DoxyParamCaption}
+\item[{Boolean\+Expression}]{path\+Condition, }
+\item[{int}]{pid, }
+\item[{int}]{process\+Identifier, }
+\item[{{\bf Statement}}]{statement, }
+\item[{{\bf Atomic\+Lock\+Action}}]{atomic\+Lock\+Action}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a654fd8ee662f5d2719f237f1c793f41f}
+
+
+Create a new \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} transition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path\+Condition} & The path condition that should be used when executing the statement of the transition \\
+\hline
+{\em pid} & The process id of the process executing this transition. \\
+\hline
+{\em process\+Identifier} & The process identifier of the process executing this transition. \\
+\hline
+{\em statement} & The statement corresponding to this transition, which should be atomic and deterministic. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new transition with the given path condition and statement. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_af88ed6fcd3f46651e087a76ff4a5ee3d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Transition@{new\+Transition}}
+\index{new\+Transition@{new\+Transition}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Transition}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Transition} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Transition (
+\begin{DoxyParamCaption}
+\item[{Boolean\+Expression}]{path\+Condition, }
+\item[{int}]{pid, }
+\item[{int}]{process\+Identifier, }
+\item[{{\bf Statement}}]{statement, }
+\item[{boolean}]{simplify\+State, }
+\item[{{\bf Atomic\+Lock\+Action}}]{atomic\+Lock\+Action}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_af88ed6fcd3f46651e087a76ff4a5ee3d}
+
+\begin{DoxyParams}{Parameters}
+{\em path\+Condition} & \\
+\hline
+{\em pid} & \\
+\hline
+{\em process\+Identifier} & \\
+\hline
+{\em statement} & \\
+\hline
+{\em simplify\+State} & \\
+\hline
+{\em atomic\+Lock\+Action} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a87ce2f19f6cb098dd62d0cc1daa1e18f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}!new\+Transition\+Sequence@{new\+Transition\+Sequence}}
+\index{new\+Transition\+Sequence@{new\+Transition\+Sequence}!edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics@{edu\+::udel\+::cis\+::vsl\+::civl\+::semantics\+::\+I\+F\+::\+Semantics}}
+\subsubsection[{new\+Transition\+Sequence}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Transition\+Sequence} edu.\+udel.\+cis.\+vsl.\+civl.\+semantics.\+I\+F.\+Semantics.\+new\+Transition\+Sequence (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{boolean}]{containing\+All\+Enabled}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Semantics_a87ce2f19f6cb098dd62d0cc1daa1e18f}
+
+
+Create a new transition sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The state of the program before this transition sequence departs. \\
+\hline
+{\em containing\+All\+Enabled} & does this contain all enabled transitions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structA}{A} new transition sequence. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/semantics/\+I\+F/Semantics.\+java\end{DoxyCompactItemize}

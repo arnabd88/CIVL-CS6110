@@ -1,0 +1,37 @@
+/*Command line execution:
+ * civl verify -por=new -inputN=3 adder2.cvl
+ * 
+ * This example is to show that the new POR is working properly.
+ * 
+ */
+#include<civlc.h>
+
+$input int N;
+
+void adder(int* result, int k){
+  int local = 0;
+	
+  for(int i = 1; i <= k; i++)
+    local += i;
+  /*
+   * result is a parameter of pointer type and the actual value here 
+   * refers to a shared variable in a higher scope. 
+   * A correct POR should detect this statement as dependent.
+   * */
+  result[k-1] = local;
+}
+
+void main(){
+  int sum[N];
+  $proc procs[N];
+	
+  for(int i = 0; i < N; i++) {
+    procs[i] = $spawn adder(sum, i+1);
+  }
+  for(int i = 0; i < N; i++) {
+    $wait procs[i];
+  }
+  for(int i = 0; i < N; i++) {
+    $assert(sum[i] == ((i+1)*(i+2)/2));
+  }
+}

@@ -1,0 +1,33 @@
+Session name....... wildcardBad
+Directory.......... CIVLREP
+Date............... Tue Apr 19 22:34:52 MDT 2016
+numErrors.......... 1
+numDistinctErrors.. 1
+search truncated... true
+
+Violation 0[length=178, file=CIVLREP/wildcardBad_0.trace]:
+CIVL execution violation (kind: DEADLOCK, certainty: PROVEABLE)
+at MPITransformer:0.-1-20 "$parfor (int i: 0 ..." inserted by MPITransformer.$parfor MPI_Process before op.h:21.1-10 "Operation" included from civlc.cvh:8.8-14 "<op.h>" included from stdio.cvl:10.10-21 "<civlc.cvh>":
+A deadlock is possible:
+  Path condition: X__gen_argc - 9 <= 0 && 0 <= SIZEOF_INT - 1 && 0 <= X__gen_argc - 1
+  Enabling predicate: false
+process p0 (id=0): false
+process p1 (id=1): false
+process p2 (id=2): terminated
+process p3 (id=3): terminated
+
+Call stacks:
+process p0 (id=0):
+  main at MPITransformer:0.-1-20 "$parfor (int i: 0 ..." inserted by MPITransformer.$parfor MPI_Process before op.h:21.1-10 "Operation" included from civlc.cvh:8.8-14 "<op.h>" included from stdio.cvl:10.10-21 "<civlc.cvh>"
+process p1 (id=1):
+  $mpi_recv at civl-mpi.cvl:199.9-22 "$comm_dequeue" called from
+  MPI_Recv at mpi.cvl:83.9-18 "$mpi_recv" called from
+  _gen_main at wildcardBad.c:23.4-12 "MPI_Recv" called from
+  _mpi_process at GeneralTransformer:0.-1-20 "_gen_argc, &(_gen_..." inserted by GeneralTransformer.new main function before wildcardBad.c:6.14-18 "argc" called from
+  _par_proc0 at MPITransformer:0.-1-0 "i" inserted by MPITransformer.function call _mpi_process before op.h:21.1-10 "Operation" included from civlc.cvh:8.8-14 "<op.h>" included from stdio.cvl:10.10-21 "<civlc.cvh>"
+process p2 (id=2):
+  terminated
+process p3 (id=3):
+  terminated
+
+

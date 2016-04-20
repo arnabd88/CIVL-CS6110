@@ -1,0 +1,15 @@
+/* Commandline execution:
+ *		civl verify arrayPointer.cvl
+ * */
+#include<civlc.cvh>
+
+void foo(int* array) {
+  array[0] = 2;
+}
+
+void main() {
+  int a[1];
+  
+  foo(a);
+  $assert(a[0] == 2);
+}

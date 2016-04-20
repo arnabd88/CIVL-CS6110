@@ -1,0 +1,51 @@
+/* Commandline execution:
+ *		civl verify pointersBad.cvl
+ * This is an example for covering some erroneous cases.
+ * */
+#include<civlc.cvh>
+#include<pointer.cvh>
+#include<stdlib.h>
+
+#ifdef UNION
+union myStruct {
+  int integer;
+  double real;
+}number0, number1;
+#else
+struct myStruct {
+  int integer;
+  double real;
+}number0, number1;
+#endif
+
+$output int out;
+$input int X;
+$input int *x_ptr;
+void main() {
+  int a = 0;
+  int* b, *c;
+  int * nilPtr = NULL;
+  int arr0[];
+  int arr1[X];
+
+  c = (void *)(-1);
+  b = (int *)malloc(sizeof(int));
+  number0.integer = 0;
+  number0.real = .1;
+  free(b);
+  $choose {
+#ifdef ICLeafNode                         //pointer to incomplete array 
+    {$leaf_node_ptrs(&arr1, &arr0);}
+#elif defined NCLeafNode                  //pointer to array of non-concrete extent
+    {$leaf_node_ptrs(&arr0, &arr1);}
+#else              
+    {$leaf_node_ptrs(&number1, &number0);}//pointer to an object of struct type
+    {a = *(&out);}
+    {a = *x_ptr;}
+    {c = &a + 1; a = *c;}
+    {a = *c;}
+    {a = *b;}
+    {a = *nilPtr;}
+#endif
+  }
+}

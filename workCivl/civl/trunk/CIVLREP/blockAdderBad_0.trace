@@ -1,0 +1,156 @@
+Session name....... blockAdderBad
+Directory.......... CIVLREP
+Date............... Tue Apr 19 17:41:44 MDT 2016
+Trace ID........... 0
+Violation number....... 0
+
+== Begin Violation Message == 
+Violation 0[length=156, file=CIVLREP/blockAdderBad_0.trace]:
+CIVL execution violation (kind: DEADLOCK, certainty: PROVEABLE)
+at blockAdderBad.cvl:46.2-10 "$waitall":
+A deadlock is possible:
+  Path condition: true
+  Enabling predicate: false
+process p0 (id=0): false
+process p1 (id=1): false
+process p2 (id=2): terminated
+
+Call stacks:
+process p0 (id=0):
+  adder_par at blockAdderBad.cvl:46.2-10 "$waitall" called from
+  main at blockAdderBad.cvl:52.19-28 "adder_par"
+process p1 (id=1):
+  run_worker at blockAdderBad.cvl:38.4-9 "$when"
+process p2 (id=2):
+  terminated
+
+== End Violation Message == 
+
+== Begin Configuration ==
+examples/concurrency/blockAdderBad.cvl
+== End Configuration ==
+
+== Begin Trace ==
+LENGTH = 156
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+== End Trace ==

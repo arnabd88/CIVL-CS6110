@@ -1,0 +1,53 @@
+/** 
+ * In linear algebra, a symmetric n × n real matrix M is said to be positive definite
+ * if z^{T}Mz is positive for every non-zero column vector z of n real numbers. 
+ * Here z^{T} denotes the transpose of z.
+ * SARL can't prove the query: 0<X0[1]^2+X0[0]^2 
+ * under the contex: exists i : int . ((0 < -1*i+2) && (0 <= i) && (0 != X0[i]))
+ * 
+*/
+
+#include<civlc.cvh>
+
+$input int n=2;
+$input double z[n];
+double M[n][n];
+$assume(n>0);
+// z is a non-zero column vector
+$assume($exists {int i | 0 <=i && i<n} z[i] != 0);
+
+// use Identity matrix for a test here
+void initialize(){
+  for(int i=0; i<n; i++){
+    for(int j=0; j<n; j++){
+      if(i==j)
+	M[i][j]=1;
+      else
+	M[i][j]=0;
+    }
+  }
+}
+
+double compute(){
+  double zTxM[n], result=0;
+  _Bool assumption=$false;
+
+  for(int i=0; i<n; i++){
+    zTxM[i]=0;
+    for(int j=0; j<n; j++){
+      // checks that M is symmetric
+      $assert(M[i][j]==M[j][i]);
+      zTxM[i]+=z[i]*M[i][j];
+    }
+  }
+  for(int i=0; i<n; i++){
+    result+=zTxM[i]*z[i];
+  }
+  $assert(result>0);
+  return result;
+}
+
+int main(){
+  initialize();
+  compute();
+}

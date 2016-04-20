@@ -1,0 +1,16 @@
+#include<civlc.cvh>
+
+int main(){
+  int a=1, b=2, c=3;
+
+  $when(a>0){
+    $atomic{
+      $when(b>0){
+	//if(a>1){
+	if(a>1 ? b<3 : c>2){
+	  a=9;
+	}
+      }
+    }
+  }
+}

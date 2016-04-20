@@ -1,0 +1,340 @@
+#ifdef __CIVL_MPI__
+#else
+#define __CIVL_MPI__
+
+#include <concurrency.cvh>
+#include <bundle.cvh>
+#include <mpi.h>
+#include <civlmpi.cvh>
+#include <string.h>
+
+/* Completed definition for mpi-common.h */
+struct MPI_Request{
+  int id;
+};
+
+struct MPI_Comm {
+  $comm p2p; // point-to-point communication
+  $comm col; // collective communication
+  $barrier barrier;
+  __MPI_Sys_status__ status;
+};
+
+/********************************** State *****************************************/
+/* The number of times the MPI_Wtime function has been called */
+int CMPI_time_count = 0;
+
+/************************** MPI LIB Implementations *******************************/
+double MPI_Wtime() {
+  double result = CMPI_time(CMPI_time_count);
+  
+  CMPI_time_count++;
+  return result;
+}
+
+int MPI_Comm_size(MPI_Comm comm, int *size) {
+  $assert comm.status == __INIT :
+  "MPI_Comm_size() cannot be invoked without MPI_Init() being called before.\n";
+  *size = $comm_size(comm.p2p);
+  return 0;
+}
+
+int MPI_Comm_rank(MPI_Comm comm, int *rank) {
+  $assert comm.status == __INIT :
+  "MPI_Comm_rank() cannot be invoked without MPI_Init() being called before.\n";
+  *rank = $comm_place(comm.p2p);
+  return 0;
+}
+
+int MPI_Send(void *buf, int count, MPI_Datatype datatype, int dest,
+	     int tag, MPI_Comm comm) {
+  $assert comm.status == __INIT :
+  "MPI_Send() cannot be invoked without MPI_Init() being called before.\n";
+  return CMPI_Send(buf, count, datatype, dest, tag, comm.p2p);
+}
+
+int MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source,
+	     int tag, MPI_Comm comm, MPI_Status *status) {
+  $assert comm.status == __INIT :
+	  "MPI_Recv() cannot be invoked without "
+	  "MPI_Init() being called before.\n";
+  return CMPI_Recv(buf, count, datatype, source, tag, comm.p2p, status);
+}
+
+int MPI_Get_count(MPI_Status *status, MPI_Datatype datatype, int *count) {
+  *count = status->size/sizeofDatatype(datatype);
+  return 0;
+}
+
+int MPI_Sendrecv(void *sendbuf, int sendcount, MPI_Datatype sendtype,
+		 int dest, int sendtag,
+		 void *recvbuf, int recvcount, MPI_Datatype recvtype,
+		 int source, int recvtag,
+		 MPI_Comm comm, MPI_Status *status) {
+  $assert comm.status == __INIT :
+	  "MPI_Sendrecv() cannot be invoked "
+	  "without MPI_Init() being called before.\n";
+  // not correct for checking potential deadlock...rewrite:
+  MPI_Send(sendbuf, sendcount, sendtype, dest, sendtag, comm);
+  MPI_Recv(recvbuf, recvcount, recvtype, source, recvtag, comm, status);
+  return 0;
+}
+/******************************** Collective ***********************************/
+/* Broadcasts a message from root to everyone else.
+ * Need to use a differnt comm.
+ */
+int MPI_Bcast(void *buf, int count, MPI_Datatype datatype, int root,
+	      MPI_Comm comm) {
+  $assert comm.status == __INIT :
+	  "MPI_Bcast() cannot be invoked without MPI_Init() "
+	  "being called before.\n";
+  if ($comm_place(comm.col) == root) {
+    int nprocs = $comm_size(comm.col);
+
+    for (int i=0; i<nprocs; i++)
+      if (i != root)
+	CMPI_Send(buf, count, datatype, i, BCAST_TAG, comm.col);
+  } else {
+    CMPI_Recv(buf, count, datatype, root, BCAST_TAG, comm.col,
+	      MPI_STATUS_IGNORE);
+  }
+  return 0;
+}
+
+/* Reduces values on all processes to a single value */
+int MPI_Reduce(void* sendbuf, void* recvbuf, int count,
+	       MPI_Datatype datatype, MPI_Op op, int root,
+	       MPI_Comm comm) {
+  int rank;
+
+  $assert comm.status == __INIT :
+	  "MPI_Reduce() cannot be invoked without "
+	  "MPI_Init() being called before.\n";
+  rank = $comm_place(comm.col);
+  if (rank != root)
+    CMPI_Send(sendbuf, count, datatype, root, REDUCE_TAG, comm.col);
+  else {
+    int nprocs = $comm_size(comm.col);
+    int size;
+
+    for (int i = 0; i<nprocs; i++) {
+      if(i == root) continue;
+      else{
+	$message in = $comm_dequeue(comm.col, i, REDUCE_TAG);
+	size = count * sizeofDatatype(datatype);
+
+	/* the third argument "count" indicates the number of cells needs doing the
+	   operation. */
+	$bundle_unpack_apply(in.data, sendbuf, count, op);
+	$assert in.size <= size :
+	"Message of size %d exceeds the specified size %d.", in.size, size;
+      }
+    }
+    size = count * sizeofDatatype(datatype);
+    memcpy(recvbuf, sendbuf, size);
+  }
+  return 0;
+}
+
+/* Combines values from all processes and distributes the result back to all processes */
+/* default root is 0 */
+int MPI_Allreduce(void* sendbuf, void* recvbuf, int count,
+		  MPI_Datatype datatype,
+		  MPI_Op op, MPI_Comm comm) {
+  int root = 0;
+  MPI_Status status;
+  
+  $assert comm.status == __INIT :
+  "MPI_Allreduce() cannot be invoked without "
+    "MPI_Init() being called before.\n";
+  MPI_Reduce(sendbuf, recvbuf, count, datatype, op, root, comm);
+  MPI_Bcast(recvbuf, count, datatype, root, comm);
+  return 0;
+}
+
+int MPI_Barrier(MPI_Comm comm){
+  $assert comm.status == __INIT : "MPI_Allreduce() cannot be invoked without MPI_Init() being called before.\n";
+  $barrier_call(comm.barrier);
+  return 0;
+}
+
+/* 1. If comm is an intracommunicator, each process (includes root process) sends the content
+   of its send buffer to the root process. Root process receives the messages and stores 
+   them in rank order 
+   2. TODO: If comm is an intercommunicator, it's not supported yet */
+int MPI_Gather(const void* sendbuf, int sendcount, MPI_Datatype sendtype, 
+	       void* recvbuf, int recvcount, MPI_Datatype recvtype, 
+	       int root, MPI_Comm comm){
+  int rank, nprocs;
+  _Bool rootInPlace = $false;
+  MPI_Status status;
+
+  $assert comm.status == __INIT :
+  "MPI_Gather() cannot be invoked without "
+    "MPI_Init() being called before.\n";
+  rank = $comm_place(comm.col);
+  nprocs = $comm_size(comm.col);
+  if(sendbuf == MPI_IN_PLACE){// Sendbuf is ignored at root
+    $assert root == rank:
+    "Only root can replace 'sendbuf' with 'MPI_IN_PLACE'.";
+    rootInPlace = $true;
+  }
+  else
+    MPI_Send(sendbuf, sendcount, sendtype, root, GATHER_TAG, comm);
+  // sendbuf cannot be ignored
+  if(rank == root){
+    int real_recvcount;
+    int offset;
+
+    // For root process, check if sendtype is equal to 
+    // recvtype which is required by MPI standard.
+    $assert sendtype == recvtype :
+    "MPI_Gather() asks for equality "
+      "between 'sendtype' and 'recvtype'.";    
+    for(int i=0; i<nprocs; i++){
+      // Since currently we don't support pointer addition 
+      // on non-array type obejcts, we don't need 
+      // to care about datatype extent.
+      offset = i * recvcount; 
+      //If optional ignorance not used or it's not at root iteration, then we do MPI_Send()
+      if(!rootInPlace || i != root) {
+	MPI_Recv(recvbuf + offset, recvcount, recvtype, i, GATHER_TAG, comm, &status);
+	MPI_Get_count(&status, recvtype, &real_recvcount);
+	$assert real_recvcount == recvcount :
+	"MPI_Gather() asks for equality between"
+	  " the amount of data sent and the "
+	  "amount of data received.";
+      }
+    }
+  }
+  return 0;
+}
+
+/* The inverse operation of MPI_Gather() */
+int MPI_Scatter(const void* sendbuf, int sendcount, MPI_Datatype sendtype, 
+		void* recvbuf, int recvcount, MPI_Datatype recvtype, int root,
+		MPI_Comm comm){
+  int rank, nprocs;
+  _Bool rootInPlace = $false;
+
+  $assert comm.status == __INIT :
+  "MPI_Scatter() cannot be invoked without "
+    "MPI_Init() being called before.\n";
+  rank = $comm_place(comm.col);
+  nprocs = $comm_size(comm.col);
+  if(recvbuf == MPI_IN_PLACE){// Sendbuf is ignored at root
+    $assert root == rank:
+    "Only root can replace 'recvbuf' with 'MPI_IN_PLACE'.";
+    rootInPlace = $true;
+  }
+  if(rank == root){
+    int offset;
+
+    // For root process, check if sendtype is equal to  
+    // recvtype which is required by MPI standard.
+    $assert sendtype == recvtype :
+    "MPI_Scatter() asks for equality "
+      "between 'sendtype' and 'recvtype'.";
+    for(int i=0; i<nprocs; i++){
+      offset = i * sendcount;
+      if(!rootInPlace || i != root)
+	MPI_Send(sendbuf + offset, sendcount, sendtype, i, SCATTER_TAG, comm);
+    }
+  }
+  if(!rootInPlace){//Already checked that (rootInPlace == true)==>(root==rank)
+    int real_recvcount;
+    MPI_Status status;
+    
+    MPI_Recv(recvbuf, recvcount, recvtype, root, SCATTER_TAG, comm, &status);
+    MPI_Get_count(&status, recvtype, &real_recvcount);
+    $assert real_recvcount == recvcount :
+    "MPI_Gather() asks for equality between"
+      " the amount of data sent and the "
+      "amount of data received.";
+  }
+}
+
+
+/* MPI_Gatherv extends the functionality of MPI_Gather by allowing a varying count of data to be sent to root process, since recvcounts is now an array.*/
+int MPI_Gatherv(const void* sendbuf, int sendcount, MPI_Datatype sendtype,
+		void* recvbuf, const int recvcounts[], const int displs[],
+		MPI_Datatype recvtype, int root, MPI_Comm comm){
+  int rank, nprocs;
+  _Bool rootInPlace = $false;
+
+  $assert comm.status == __INIT :
+  "MPI_Gatherv() cannot be invoked without "
+    "MPI_Init() being called before.\n";
+  rank = $comm_place(comm.col);
+  nprocs = $comm_size(comm.col);
+  if(sendbuf == MPI_IN_PLACE){
+    $assert root == rank:
+    "Only root can replace 'sendbuf' with 'MPI_IN_PLACE'.";
+    rootInPlace = $true;
+  }else{
+    MPI_Send(sendbuf, sendcount, sendtype, root, GATHERV_TAG, comm);
+  }
+  //Root receive
+  if(rank == root){
+    int real_recvcount;
+    MPI_Status status;
+
+    $assert sendtype == recvtype :
+    "MPI_Gatherv() asks for equality "
+      "between 'sendtype' and 'recvtype'.";
+    for(int i=0; i<nprocs; i++){
+      if(!rootInPlace || i != root){
+	MPI_Recv(recvbuf + displs[i], recvcounts[i], recvtype, i, GATHERV_TAG, comm, &status);
+	MPI_Get_count(&status, recvtype, &real_recvcount);
+	$assert real_recvcount == recvcounts[i] :
+	"MPI_Gatherv() asks for equality between"
+	  " the amount of data sent and the "
+	  "amount of data received.";
+      }
+    }
+  }
+}
+
+/* MPI_Scatterv extends the functionality of MPI_Scatter by allowing a varying count of data to be sent to each process, since sendcounts is now an array.*/
+int MPI_Scatterv(const void* sendbuf, const int sendcounts[], const
+		 int displs[], MPI_Datatype sendtype, void* recvbuf,
+		 int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm){
+  int rank, nprocs;
+  _Bool rootInPlace = $false;
+
+  $assert comm.status == __INIT :
+  "MPI_Scatterv() cannot be invoked without "
+    "MPI_Init() being called before.\n";
+  rank = $comm_place(comm.col);
+  nprocs = $comm_size(comm.col);
+  if(recvbuf == MPI_IN_PLACE){
+    $assert root == rank:
+    "Only root can replace 'recvbuf' with 'MPI_IN_PLACE'.";
+    rootInPlace = $true;
+  }
+  if(rank == root){
+    //For process root, check sendtype and recvtype
+    $assert sendtype == recvtype :
+    "MPI_Scatterv() asks for equality "
+      "between 'sendtype' and 'recvtype'.";
+
+    for(int i=0; i<nprocs; i++){
+      if(!rootInPlace || i != root)
+	MPI_Send(sendbuf + displs[i], sendcounts[i], sendtype, i, 
+		 SCATTERV_TAG, comm);
+    }
+  }
+  if(!rootInPlace){
+    MPI_Status status;
+    int real_recvcount;
+
+    MPI_Recv(recvbuf, recvcount, recvtype, root, SCATTERV_TAG, comm, &status);
+    MPI_Get_count(&status, recvtype, &real_recvcount);
+    $assert real_recvcount == recvcount :
+    "MPI_Gather() asks for equality between"
+      " the amount of data sent and the "
+      "amount of data received.";
+  }
+}
+
+#endif

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonVariableDeclarationNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.common.declaration</a> &gt; <span class="el_source">CommonVariableDeclarationNode.java</span></div><h1>CommonVariableDeclarationNode.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.node.common.declaration;
+
+import java.io.PrintStream;
+
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject;
+import edu.udel.cis.vsl.abc.ast.IF.DifferenceObject.DiffKind;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Variable;
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.IdentifierNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.SequenceNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.InitializerNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.expression.ExpressionNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.type.TypeNode;
+import edu.udel.cis.vsl.abc.token.IF.Source;
+
+// child 0: identifier
+// child 1: type
+// child 2: initializer or null or absent
+// child 3: constant alignment specifiers or null or absent
+// child 4: type alignment specifiers or null or absent
+
+public class CommonVariableDeclarationNode extends
+		CommonOrdinaryDeclarationNode implements VariableDeclarationNode {
+
+<span class="nc" id="L26">	private boolean autoStorage = false;</span>
+
+<span class="nc" id="L28">	private boolean registerStorage = false;</span>
+
+<span class="nc" id="L30">	private boolean threadLocalStorage = false;</span>
+
+<span class="nc" id="L32">	private boolean sharedStorage = false;</span>
+
+<span class="nc" id="L34">	private boolean isRefParameter = true;</span>
+
+	public CommonVariableDeclarationNode(Source source,
+			IdentifierNode identifier, TypeNode type) {
+<span class="nc" id="L38">		super(source, identifier, type);</span>
+<span class="nc" id="L39">	}</span>
+
+	/**
+	 * Constructor for declarator-based declarations that are not function
+	 * definitions (including function prototypes).
+	 * 
+	 * @param source
+	 * @param identifier
+	 * @param type
+	 * @param initializer
+	 */
+	public CommonVariableDeclarationNode(Source source,
+			IdentifierNode identifier, TypeNode type,
+			InitializerNode initializer) {
+<span class="nc" id="L53">		super(source, identifier, type);</span>
+<span class="nc" id="L54">		addChild(initializer);</span>
+<span class="nc" id="L55">	}</span>
+
+	@Override
+	public Variable getEntity() {
+<span class="nc" id="L59">		return (Variable) super.getEntity();</span>
+	}
+
+	@Override
+	public boolean hasAutoStorage() {
+<span class="nc" id="L64">		return autoStorage;</span>
+	}
+
+	@Override
+	public void setAutoStorage(boolean value) {
+<span class="nc" id="L69">		autoStorage = value;</span>
+<span class="nc" id="L70">	}</span>
+
+	@Override
+	public boolean hasRegisterStorage() {
+<span class="nc" id="L74">		return registerStorage;</span>
+	}
+
+	@Override
+	public void setRegisterStorage(boolean value) {
+<span class="nc" id="L79">		registerStorage = value;</span>
+<span class="nc" id="L80">	}</span>
+
+	@Override
+	public InitializerNode getInitializer() {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (this.numChildren() &gt;= 3)</span>
+<span class="nc" id="L85">			return (InitializerNode) child(2);</span>
+		else
+<span class="nc" id="L87">			return null;</span>
+	}
+
+	@Override
+	public void setInitializer(InitializerNode initializer) {
+<span class="nc" id="L92">		setChild(2, initializer);</span>
+<span class="nc" id="L93">	}</span>
+
+	@Override
+	public boolean hasThreadLocalStorage() {
+<span class="nc" id="L97">		return threadLocalStorage;</span>
+	}
+
+	@Override
+	public void setThreadLocalStorage(boolean value) {
+<span class="nc" id="L102">		threadLocalStorage = value;</span>
+<span class="nc" id="L103">	}</span>
+
+	@Override
+	public boolean hasSharedStorage() {
+<span class="nc" id="L107">		return sharedStorage;</span>
+	}
+
+	@Override
+	public void setSharedStorage(boolean value) {
+<span class="nc" id="L112">		sharedStorage = value;</span>
+<span class="nc" id="L113">	}</span>
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public SequenceNode&lt;TypeNode&gt; typeAlignmentSpecifiers() {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (numChildren() &gt;= 5)</span>
+<span class="nc" id="L119">			return (SequenceNode&lt;TypeNode&gt;) child(4);</span>
+		else
+<span class="nc" id="L121">			return null;</span>
+	}
+
+	@Override
+	public void setTypeAlignmentSpecifiers(SequenceNode&lt;TypeNode&gt; specifiers) {
+<span class="nc" id="L126">		setChild(4, specifiers);</span>
+<span class="nc" id="L127">	}</span>
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Override
+	public SequenceNode&lt;ExpressionNode&gt; constantAlignmentSpecifiers() {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (numChildren() &gt;= 4) {</span>
+<span class="nc" id="L133">			ASTNode result = child(3);</span>
+
+<span class="nc" id="L135">			return (SequenceNode&lt;ExpressionNode&gt;) result;</span>
+		} else {
+<span class="nc" id="L137">			return null;</span>
+		}
+	}
+
+	@Override
+	public void setConstantAlignmentSpecifiers(
+			SequenceNode&lt;ExpressionNode&gt; specifiers) {
+<span class="nc" id="L144">		setChild(3, specifiers);</span>
+<span class="nc" id="L145">	}</span>
+
+	protected void printKind(PrintStream out) {
+<span class="nc" id="L148">		out.print(&quot;ObjectDeclaration&quot;);</span>
+<span class="nc" id="L149">	}</span>
+
+	@Override
+	protected void printBody(PrintStream out) {
+<span class="nc" id="L153">		boolean needSeparator = false;</span>
+
+<span class="nc" id="L155">		printKind(out);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (hasExternStorage()) {</span>
+<span class="nc" id="L157">			out.print(&quot;[&quot;);</span>
+<span class="nc" id="L158">			out.print(&quot;extern&quot;);</span>
+<span class="nc" id="L159">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (hasStaticStorage()) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			out.print(needSeparator ? &quot;, &quot; : &quot;[&quot;);</span>
+<span class="nc" id="L163">			out.print(&quot;static&quot;);</span>
+<span class="nc" id="L164">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (autoStorage) {</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			out.print(needSeparator ? &quot;, &quot; : &quot;[&quot;);</span>
+<span class="nc" id="L168">			out.print(&quot;auto&quot;);</span>
+<span class="nc" id="L169">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (registerStorage) {</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">			out.print(needSeparator ? &quot;, &quot; : &quot;[&quot;);</span>
+<span class="nc" id="L173">			out.print(&quot;register&quot;);</span>
+<span class="nc" id="L174">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (threadLocalStorage) {</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			out.print(needSeparator ? &quot;, &quot; : &quot;[&quot;);</span>
+<span class="nc" id="L178">			out.print(&quot;threadLocal&quot;);</span>
+<span class="nc" id="L179">			needSeparator = true;</span>
+		}
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (needSeparator)</span>
+<span class="nc" id="L182">			out.print(&quot;]&quot;);</span>
+<span class="nc" id="L183">	}</span>
+
+	@Override
+	public VariableDeclarationNode copy() {
+<span class="nc" id="L187">		InitializerNode initializer = getInitializer();</span>
+		CommonVariableDeclarationNode result;
+<span class="nc" id="L189">		SequenceNode&lt;ExpressionNode&gt; specifiers = constantAlignmentSpecifiers();</span>
+<span class="nc" id="L190">		SequenceNode&lt;TypeNode&gt; typeAlignmentSpecifiers = typeAlignmentSpecifiers();</span>
+
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (initializer == null)</span>
+<span class="nc" id="L193">			result = new CommonVariableDeclarationNode(getSource(),</span>
+<span class="nc" id="L194">					duplicate(getIdentifier()), duplicate(getTypeNode()));</span>
+		else
+<span class="nc" id="L196">			result = new CommonVariableDeclarationNode(getSource(),</span>
+<span class="nc" id="L197">					duplicate(getIdentifier()), duplicate(getTypeNode()),</span>
+<span class="nc" id="L198">					duplicate(initializer));</span>
+<span class="nc" id="L199">		copyStorage(result);</span>
+<span class="nc" id="L200">		result.setAutoStorage(hasAutoStorage());</span>
+<span class="nc" id="L201">		result.setRegisterStorage(hasRegisterStorage());</span>
+<span class="nc" id="L202">		result.setThreadLocalStorage(hasThreadLocalStorage());</span>
+<span class="nc" id="L203">		result.setSharedStorage(hasSharedStorage());</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (specifiers != null)</span>
+<span class="nc" id="L205">			result.setConstantAlignmentSpecifiers(specifiers.copy());</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (typeAlignmentSpecifiers != null)</span>
+<span class="nc" id="L207">			result.setTypeAlignmentSpecifiers(typeAlignmentSpecifiers.copy());</span>
+<span class="nc" id="L208">		return result;</span>
+	}
+
+	@Override
+	public NodeKind nodeKind() {
+<span class="nc" id="L213">		return NodeKind.VARIABLE_DECLARATION;</span>
+	}
+
+	@Override
+	public OrdinaryDeclarationKind ordinaryDeclarationKind() {
+<span class="nc" id="L218">		return OrdinaryDeclarationKind.VARIABLE_DECLARATION;</span>
+	}
+
+	@Override
+	protected DifferenceObject diffWork(ASTNode that) {
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (that instanceof VariableDeclarationNode) {</span>
+<span class="nc" id="L224">			VariableDeclarationNode thatVar = (VariableDeclarationNode) that;</span>
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (!(this.autoStorage == thatVar.hasAutoStorage()</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">					&amp;&amp; this.registerStorage == thatVar.hasRegisterStorage() &amp;&amp; this.threadLocalStorage == thatVar</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">						.hasThreadLocalStorage()))</span>
+<span class="nc" id="L229">				return new DifferenceObject(this, that, DiffKind.OTHER,</span>
+<span class="nc" id="L230">						&quot;different variable declaration auto/register/thread-local specifier&quot;);</span>
+			else
+<span class="nc" id="L232">				return null;</span>
+		}
+<span class="nc" id="L234">		return new DifferenceObject(this, that);</span>
+	}
+
+	@Override
+	public boolean isRefParameter() {
+<span class="nc" id="L239">		return isRefParameter;</span>
+	}
+
+	@Override
+	public void setIsRefParameter(boolean isRefParameter) {
+<span class="nc" id="L244">		this.isRefParameter = isRefParameter;</span>
+<span class="nc" id="L245">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

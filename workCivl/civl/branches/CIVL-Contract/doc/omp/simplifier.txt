@@ -1,0 +1,52 @@
+Key concept is one of independence of code executed in "omp parallel" scopes
+ - a block of (non-pragma enclosed code) can be independent if
+   it references only private or per-thread data
+ - "for" can be independent if loop is dependence-free
+ - "sections" is independent if the contained sections are 
+   mutually independent
+ - "single", "master", "critical" are independent by definition
+ - "barrier" divides code before and after into portions whose
+   independence can be reasoned about separately
+ -> "parallel" is independent if ALL subconstructs are independent
+
+Strategies for computing independence
+ - overapproximate dependence - if there is none then its independent
+ - precise dependence tracking, e.g., symbolic execution
+   - note that this really should be demand-driven and targetted at
+     shared data
+
+Systematic analysis of constructs
+ - "omp for"
+   - sync -> breaks regions into before and after
+ - "omp for nowait"
+ - "omp master", "omp single", "omp atomic"
+   - a single thread executes within block
+   - no sync on entry or exit
+   - atomic has a very restricted form
+ - "omp critical"
+   - one thread at a time in the block
+   - no sync on entry or exit
+ - "omp barrier"
+   - sync -> breaks regions into before and after
+ - "omp sections"
+ - "omp section"
+
+Treatment of omp_* calls
+ - when simplifying a construct to remove parallelism
+   - replace omp_get_thread_num() with "0"
+   - replace omp_get_num_threads() with "1"
+   - how should other calls be handled?
+     - conservatively we can prevent simplification if other calls
+       are present
+
+Clauses
+ - "if", "num_threads" 
+   - these can be ignored, we check unconditional independence of workshares
+ - privacy-related
+   - must be processed to accurately compute dependences
+
+Deferred until later
+ - "omp taskwait"
+ - "omp taskgroup"
+ - "omp flush"
+ - "omp ordered"

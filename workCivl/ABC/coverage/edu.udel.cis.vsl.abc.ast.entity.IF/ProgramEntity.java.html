@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ProgramEntity.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.entity.IF</a> &gt; <span class="el_source">ProgramEntity.java</span></div><h1>ProgramEntity.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.ast.entity.IF;</span>
+
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.DeclarationNode;
+import edu.udel.cis.vsl.abc.ast.type.IF.Type;
+import edu.udel.cis.vsl.abc.front.common.astgen.PragmaHandler;
+
+public interface ProgramEntity extends Entity {
+
+	/**
+	 * The different kinds of linkage an entity may have: external, internal, or
+	 * none. Roughly speaking, an entity with external linkage refers to a thing
+	 * which may lie outside of the translation union; one with internal linkage
+	 * refers to a single thing which lies in the translation unit but may be
+	 * declared in multiple scopes; something with no linkage can only be
+	 * declared in the one scope where it resides.
+	 */
+<span class="nc" id="L17">	public static enum LinkageKind {</span>
+<span class="nc" id="L18">		EXTERNAL, INTERNAL, NONE</span>
+	}
+
+	/**
+	 * Returns an iterator over all the known delcarations of this entity. An
+	 * entity may be declared multiple times. This includes the definition.
+	 * 
+	 * @return iterator over declarations of this entity
+	 */
+	Iterable&lt;DeclarationNode&gt; getDeclarations();
+
+	/**
+	 * Gets one of the declarations of this entity.
+	 * 
+	 * @return a declaration of this entity or &lt;code&gt;null&lt;/code&gt; if there aren't
+	 *         any
+	 */
+	DeclarationNode getFirstDeclaration();
+
+	/**
+	 * Returns the number of declarations of this entity.
+	 * 
+	 * @return the number of declarations of this entity
+	 */
+	int getNumDeclarations();
+
+	/**
+	 * Returns the index-th declaration of this entity.
+	 * 
+	 * @param index
+	 *            an integer in the range [0,n), where n is the number of
+	 *            declarations of this entity
+	 * @return the index-th declaration of this entity
+	 */
+	DeclarationNode getDeclaration(int index);
+
+	/**
+	 * Adds a declaration to this entity.
+	 * 
+	 * @param declaration
+	 *            a declaration of this entity
+	 */
+	void addDeclaration(DeclarationNode declaration);
+
+	/**
+	 * &lt;p&gt;
+	 * Gets the definition, i.e., the defining declaration of this entity. Every
+	 * entity has at most one definition. The definition is a declaration of a
+	 * special kind. For example, for an object (variable), a definition is the
+	 * declaration that allocates storage for that object. For a function, a
+	 * definition is the declaration the contains the function body.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The definition is initially &lt;code&gt;null&lt;/code&gt;, but can be set using
+	 * method {@link #setDefinition(DeclarationNode)}.
+	 * &lt;/p&gt;
+	 * 
+	 * @return the definition of this entity or &lt;code&gt;null&lt;/code&gt;
+	 */
+	DeclarationNode getDefinition();
+
+	/**
+	 * &lt;p&gt;
+	 * Sets the definition for this entity. Every entity has at most one
+	 * definition. The definition is a declaration of a special kind. For
+	 * example, for an object (variable), a definition is the declaration that
+	 * allocates storage for that object. For a function, a definition is the
+	 * declaration the contains the function body.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The definition is initially &lt;code&gt;null&lt;/code&gt;, and can be set using this
+	 * method. Note that this does not affect the list of declarations of this
+	 * entity. It is the client's responsibility to add the definition to the
+	 * list of declarations as well as to invoke this method, to ensure that the
+	 * definition occurs in the list of declarations.
+	 * &lt;/p&gt;
+	 * 
+	 * @param declaration
+	 *            the declaration node for the definition
+	 */
+	void setDefinition(DeclarationNode declaration);
+
+	/**
+	 * Returns the kind of linkage this entity has.
+	 * 
+	 * @return the kind of linkage this entity has
+	 */
+	ProgramEntity.LinkageKind getLinkage();
+
+	/**
+	 * Sets the linkage of this entity. It is initially {@link LinkageKind#NONE}
+	 * .
+	 * 
+	 * @param linkage
+	 *            the linkage kind of this entity
+	 */
+	void setLinkage(ProgramEntity.LinkageKind linkage);
+
+	/**
+	 * &lt;p&gt;
+	 * Other than {@link Label}, and {@link PragmaHandler}, every kind of Entity
+	 * has a type, returned by this method. For a {@link Label} or
+	 * {@link PragmaHandler}, this returns &lt;code&gt;null&lt;/code&gt;.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * The type is initially &lt;code&gt;null&lt;/code&gt;. It can be set using method
+	 * {@link #setType(Type)}.
+	 * &lt;/p&gt;
+	 * 
+	 * @return the type of this entity or &lt;code&gt;null&lt;/code&gt;
+	 */
+	Type getType();
+
+	/**
+	 * Sets the type of this entity.
+	 * 
+	 * @param type
+	 *            the type of this entity
+	 */
+	void setType(Type type);
+
+	/**
+	 * Is this a system-defined entity (as opposed to a user-defined one)?
+	 * Examples include standard types, like &lt;code&gt;size_t&lt;/code&gt;. The default is
+	 * false; it can be changed using method {@link #setIsSystem(boolean)}.
+	 */
+	boolean isSystem();
+
+	/**
+	 * Declares that this entity is or is not a system-defined entity.
+	 * 
+	 * @param value
+	 *            if &lt;code&gt;true&lt;/code&gt;, declares this to be a system-defined
+	 *            entity; if &lt;code&gt;false&lt;/code&gt;, declares this to be a
+	 *            user-defined entity. The default is &lt;code&gt;false&lt;/code&gt;.
+	 */
+	void setIsSystem(boolean value);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

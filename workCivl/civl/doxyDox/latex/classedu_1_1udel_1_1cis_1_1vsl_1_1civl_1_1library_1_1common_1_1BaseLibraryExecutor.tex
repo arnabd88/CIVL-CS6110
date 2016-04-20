@@ -1,0 +1,227 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor@{edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor}}
+
+
+This class provides the common data and operations of library executors.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a59a60ccf84169b74f9c2457490b54697}{Base\+Library\+Executor} (String name, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_afe2a7474184cb94b790a80eb36706865}{primary\+Executor}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1ModelFactory}{Model\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_ac38a7c7971f70f8c969e55538a17f016}{model\+Factory}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1dynamic_1_1IF_1_1SymbolicUtility}{Symbolic\+Utility} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a18214426269e7c352f4926264837c8a6}{symbolic\+Util}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1SymbolicAnalyzer}{Symbolic\+Analyzer} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a7a1213c02b2d29a79f550c7090594967}{symbolic\+Analyzer}, \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1config_1_1IF_1_1CIVLConfiguration}{C\+I\+V\+L\+Configuration} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1LibraryComponent_a223e603cab7a909db88f49c256b2ce98}{civl\+Config}, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{Library\+Executor\+Loader} lib\+Executor\+Loader, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryEvaluatorLoader}{Library\+Evaluator\+Loader} lib\+Evaluator\+Loader)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of a library executor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_ac189728eafe8ee0647d6799bd184406d}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} {\bfseries execute\+Assert} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}\mbox{[}$\,$\mbox{]} arguments, Symbolic\+Expression\mbox{[}$\,$\mbox{]} argument\+Values, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1statement_1_1CallOrSpawnStatement}{Call\+Or\+Spawn\+Statement} statement)  throws Unsatisfiable\+Path\+Condition\+Exception \label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_ac189728eafe8ee0647d6799bd184406d}
+
+\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a3ae5405b72be6866ff1b81f704327be1}{execute\+Free} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}\mbox{[}$\,$\mbox{]} arguments, Symbolic\+Expression\mbox{[}$\,$\mbox{]} argument\+Values, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em Executes the function call \char`\"{}\$free($\ast$void)\char`\"{}\+: removes from the heap the object referred to by the given pointer. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a022003b2b3b72464022933a1961bd97e}{report\+Assertion\+Failure} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid, String process, Result\+Type result\+Type, String message, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1expression_1_1Expression}{Expression}\mbox{[}$\,$\mbox{]} arguments, Symbolic\+Expression\mbox{[}$\,$\mbox{]} argument\+Values, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1CIVLSource}{C\+I\+V\+L\+Source} source, Boolean\+Expression claim, int msg\+Offset)  throws Unsatisfiable\+Path\+Condition\+Exception 
+\begin{DoxyCompactList}\small\item\em \hyperlink{structA}{A} helper function for reporting runtime assertion failure. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_ab134d63cb77125549d1bda3ec39425aa}{execute\+Exit} (\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State}{State} state, int pid)
+\begin{DoxyCompactList}\small\item\em \$exit terminates the calling process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a13e4ab39d3ab919e50d8db7d4eb92a04}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Evaluator}{Evaluator} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a13e4ab39d3ab919e50d8db7d4eb92a04}{evaluator}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a13e4ab39d3ab919e50d8db7d4eb92a04}
+
+\begin{DoxyCompactList}\small\item\em The evaluator for evaluating expressions. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_afe2a7474184cb94b790a80eb36706865}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1Executor}{Executor} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_afe2a7474184cb94b790a80eb36706865}{primary\+Executor}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_afe2a7474184cb94b790a80eb36706865}
+
+\begin{DoxyCompactList}\small\item\em The primary executor of the system. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_ae97e9856e63f5f9acd8b7a2e19f4ed8a}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1StateFactory}{State\+Factory} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_ae97e9856e63f5f9acd8b7a2e19f4ed8a}{state\+Factory}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_ae97e9856e63f5f9acd8b7a2e19f4ed8a}
+
+\begin{DoxyCompactList}\small\item\em The state factory for state-\/related computation. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a4aeca8febd706cdde98514036b889fed}{}Set$<$ Character $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a4aeca8febd706cdde98514036b889fed}{numbers}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a4aeca8febd706cdde98514036b889fed}
+
+\begin{DoxyCompactList}\small\item\em The set of characters that are used to construct a number in a format string. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a82c22ad84478bb7575cd2b1d4bfa973c}{}\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1semantics_1_1IF_1_1LibraryExecutorLoader}{Library\+Executor\+Loader} {\bfseries lib\+Executor\+Loader}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a82c22ad84478bb7575cd2b1d4bfa973c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class provides the common data and operations of library executors. 
+
+\begin{DoxyAuthor}{Author}
+Manchun Zheng (zmanchun) 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a59a60ccf84169b74f9c2457490b54697}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor}!Base\+Library\+Executor@{Base\+Library\+Executor}}
+\index{Base\+Library\+Executor@{Base\+Library\+Executor}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor}}
+\subsubsection[{Base\+Library\+Executor}]{\setlength{\rightskip}{0pt plus 5cm}edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor.\+Base\+Library\+Executor (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{{\bf Executor}}]{primary\+Executor, }
+\item[{{\bf Model\+Factory}}]{model\+Factory, }
+\item[{{\bf Symbolic\+Utility}}]{symbolic\+Util, }
+\item[{{\bf Symbolic\+Analyzer}}]{symbolic\+Analyzer, }
+\item[{{\bf C\+I\+V\+L\+Configuration}}]{civl\+Config, }
+\item[{{\bf Library\+Executor\+Loader}}]{lib\+Executor\+Loader, }
+\item[{{\bf Library\+Evaluator\+Loader}}]{lib\+Evaluator\+Loader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a59a60ccf84169b74f9c2457490b54697}
+
+
+Creates a new instance of a library executor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em primary\+Executor} & The executor for normal \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} execution. \\
+\hline
+{\em output} & The output stream to be used in the enabler. \\
+\hline
+{\em enable\+Printf} & If printing is enabled for the printf function. \\
+\hline
+{\em model\+Factory} & The model factory of the system. \\
+\hline
+{\em symbolic\+Util} & The symbolic utility used in the system. \\
+\hline
+{\em symbolic\+Analyzer} & The symbolic analyzer used in the system. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_ab134d63cb77125549d1bda3ec39425aa}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor}!execute\+Exit@{execute\+Exit}}
+\index{execute\+Exit@{execute\+Exit}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor}}
+\subsubsection[{execute\+Exit}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor.\+execute\+Exit (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_ab134d63cb77125549d1bda3ec39425aa}
+
+
+\$exit terminates the calling process. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state. \\
+\hline
+{\em pid} & The process I\+D of the process to be terminated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The state resulting from removing the specified process. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a3ae5405b72be6866ff1b81f704327be1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor}!execute\+Free@{execute\+Free}}
+\index{execute\+Free@{execute\+Free}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor}}
+\subsubsection[{execute\+Free}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor.\+execute\+Free (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{{\bf Expression}\mbox{[}$\,$\mbox{]}}]{arguments, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{argument\+Values, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a3ae5405b72be6866ff1b81f704327be1}
+
+
+Executes the function call \char`\"{}\$free($\ast$void)\char`\"{}\+: removes from the heap the object referred to by the given pointer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state. \\
+\hline
+{\em pid} & The I\+D of the process that the function call belongs to. \\
+\hline
+{\em arguments} & The static representation of the arguments of the function call. \\
+\hline
+{\em argument\+Values} & The dynamic representation of the arguments of the function call. \\
+\hline
+{\em source} & The source code element to be used for error report. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new state after executing the function call. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a022003b2b3b72464022933a1961bd97e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor}!report\+Assertion\+Failure@{report\+Assertion\+Failure}}
+\index{report\+Assertion\+Failure@{report\+Assertion\+Failure}!edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor@{edu\+::udel\+::cis\+::vsl\+::civl\+::library\+::common\+::\+Base\+Library\+Executor}}
+\subsubsection[{report\+Assertion\+Failure}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State} edu.\+udel.\+cis.\+vsl.\+civl.\+library.\+common.\+Base\+Library\+Executor.\+report\+Assertion\+Failure (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{state, }
+\item[{int}]{pid, }
+\item[{String}]{process, }
+\item[{Result\+Type}]{result\+Type, }
+\item[{String}]{message, }
+\item[{{\bf Expression}\mbox{[}$\,$\mbox{]}}]{arguments, }
+\item[{Symbolic\+Expression\mbox{[}$\,$\mbox{]}}]{argument\+Values, }
+\item[{{\bf C\+I\+V\+L\+Source}}]{source, }
+\item[{Boolean\+Expression}]{claim, }
+\item[{int}]{msg\+Offset}
+\end{DoxyParamCaption}
+) throws {\bf Unsatisfiable\+Path\+Condition\+Exception}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1library_1_1common_1_1BaseLibraryExecutor_a022003b2b3b72464022933a1961bd97e}
+
+
+\hyperlink{structA}{A} helper function for reporting runtime assertion failure. 
+
+The helper function is aiming to be re-\/used by both execution implementations of \$assert() and \$assert\+\_\+equal();
+
+\begin{DoxyAuthor}{Author}
+ziqing luo 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state \\
+\hline
+{\em pid} & The P\+I\+D of the process \\
+\hline
+{\em process} & The string identifier of the process \\
+\hline
+{\em result\+Type} & The \hyperlink{}{Result\+Type} of the failure assertion \\
+\hline
+{\em arguments} & The expressions of the arguments \\
+\hline
+{\em argument\+Values} & The symbolic expressions of the arguments \\
+\hline
+{\em source} & The \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} source of the assertion statement \\
+\hline
+{\em claim} & The boolean expression of the value of the assertion claim \\
+\hline
+{\em msg\+Offset} & the start index in arguments list of the assertion failure messages. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new state after reporting the assertion failure 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Unsatisfiable\+Path\+Condition\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/library/common/Base\+Library\+Executor.\+java\end{DoxyCompactItemize}

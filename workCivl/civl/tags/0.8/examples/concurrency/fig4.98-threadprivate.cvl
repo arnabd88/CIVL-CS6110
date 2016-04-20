@@ -1,0 +1,54 @@
+/*
+ * Command line execution:
+ *     civl verify -inputTHREADS_BOUND=10 -inputN_BOUND=40 fig4.98-threadprivate.cvl -enablePrintf=false
+ */
+#include<civlc.h>
+#include<stdio.h>
+$input int THREADS_BOUND; // upper bound of number of threads 
+$input int NTHREADS;// number of threads
+$assume 0 < NTHREADS && NTHREADS <=THREADS_BOUND;
+$input int N_BOUND; // upper bound of N
+$input int N; // the value of the variable n
+$assume 0 < N && N <=N_BOUND;
+#define OWNS(numIters, threadId, index) ((index)%NTHREADS==threadId)
+$proc threads[NTHREADS];
+
+int calculate_sum(int length, int *_pglobal) {
+   int sum = 0;
+
+   for (int j=0; j<length; j++) sum += _pglobal[j];
+   return(sum);
+}
+
+void main() {
+  int i, j, sum, TID, n= N; // the oringial program uses 5 for n, but we need to use a larger value of n for verification when there are more than 5 threads.
+  int length[n], check[n];
+
+  for (i=0; i<n; i++) {
+    length[i] = 10*(i+1);
+    check[i] = length[i]*(length[i]+1)/2;
+  }
+
+  void __par_1(int _TID) { // every thread runs this
+    int *_pglobal;
+
+    void __for_loop_1 (int _i) {
+      int _j, _sum;
+
+      _pglobal = (int*)$malloc($root, length[_i]*sizeof(int));
+      _sum = 0;
+      for (_j=0; _j<length[_i]; _j++) _pglobal[_j]=_j+1;
+        _sum = calculate_sum(length[_i], _pglobal);
+      printf("TID %d: value of sum for i = %d is %8d (check = %8d)\n",
+               _TID, _i, _sum, check[_i]);
+      $assert(_sum == check[_i]);
+      $free(_pglobal);
+    }
+
+    for (int _i=0; _i<n; _i++)
+      if (OWNS(n, _TID, _i)) __for_loop_1(_i);
+  }
+  
+  for (int t=0; t<NTHREADS; t++) threads[t] = $spawn __par_1(t);
+  for (int t=0; t<NTHREADS; t++) $wait(threads[t]);
+}

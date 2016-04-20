@@ -1,0 +1,49 @@
+\hypertarget{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1Deadlock}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Deadlock Interface Reference}
+\label{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1Deadlock}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Deadlock@{edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Deadlock}}
+
+
+An absolute deadlock occurs if all of the following hold\+:  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Deadlock\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=269pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1Deadlock__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+predicate.\+I\+F.\+Deadlock\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1predicate_1_1IF_1_1Deadlock__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An absolute deadlock occurs if all of the following hold\+: 
+
+
+\begin{DoxyEnumerate}
+\item not every process has terminated 
+\item no process has an enabled statement (note that a send statement is enabled iff the current number of buffered messages is less than the buffer bound). 
+\end{DoxyEnumerate}
+
+It is to be contrasted with a \char`\"{}potentially deadlocked\char`\"{} state, i.\+e., one in which there may be send transitions enabled, but the send transitions can only execute if buffering is allowed, i.\+e., no matching receives are currently posted. Every absolutely deadlocked state is potentially deadlocked, but not necessarily vice-\/versa.
+
+\begin{DoxyAuthor}{Author}
+Timothy K. Zirkel (zirkel) 
+\end{DoxyAuthor}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/predicate/\+I\+F/Deadlock.\+java\end{DoxyCompactItemize}

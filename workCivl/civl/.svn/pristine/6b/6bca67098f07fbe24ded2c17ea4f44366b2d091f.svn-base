@@ -1,0 +1,13 @@
+#ifdef __CIVL_SYSTIME__
+#else
+#define __CIVL_SYSTIME__
+
+#include <sys/time.h>
+
+struct timezone{
+  int blank;
+};
+
+
+
+#endif

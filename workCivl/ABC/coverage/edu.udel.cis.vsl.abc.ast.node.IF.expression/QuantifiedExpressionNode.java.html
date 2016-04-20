@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>QuantifiedExpressionNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.node.IF.expression</a> &gt; <span class="el_source">QuantifiedExpressionNode.java</span></div><h1>QuantifiedExpressionNode.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">/**</span>
+ * 
+ */
+package edu.udel.cis.vsl.abc.ast.node.IF.expression;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.declaration.VariableDeclarationNode;
+
+/**
+ * A CIVL-C quantified expression, e.g.,
+ * 
+ * &lt;pre&gt;
+ * forall {int x | x &gt; 0} x &gt; -1
+ * &lt;/pre&gt;
+ * 
+ * which means &quot;for all ints x for which x&amp;gt;0, x&amp;gt;-1&quot;. As can be seen in
+ * this example, the CIVL-C syntax allows one to restrict the domain of x to a
+ * subset of the domain of its type. It is equivalent to &quot;for all ints x, x&amp;gt;0
+ * implies x&amp;gt;-1&quot; but can be more convenient and also enable optimizations.
+ * 
+ * @author zirkel
+ * 
+ */
+public interface QuantifiedExpressionNode extends ExpressionNode {
+
+	/**
+	 * An enumerated type for the different quantifiers.
+	 * 
+	 * @author siegel
+	 * 
+	 */
+<span class="nc" id="L31">	enum Quantifier {</span>
+<span class="nc" id="L32">		/**</span>
+		 * The universal quantifier &quot;for all&quot;.
+		 */
+<span class="nc" id="L35">		FORALL,</span>
+<span class="nc" id="L36">		/**</span>
+		 * The existential quantifier &quot;there exists&quot;.
+		 */
+<span class="nc" id="L39">		EXISTS,</span>
+<span class="nc" id="L40">		/**</span>
+		 * A special case of the universal quantifier for expression of uniform
+		 * continuity.
+		 */
+<span class="nc" id="L44">		UNIFORM;</span>
+	}
+
+	/**
+	 * Returns the quantifier.
+	 * 
+	 * @return The quantifier used by this quantifier expression.
+	 */
+	Quantifier quantifier();
+
+	/**
+	 * Returns the declaration of the bound variable.
+	 * 
+	 * @return The bound variable declaration
+	 */
+	VariableDeclarationNode variable();
+
+	/**
+	 * Determines if this quantifier expression has the following alternative
+	 * form: the quantified variable has integer type, and the restriction has
+	 * the form &quot; &lt;code&gt;i=lo..hi&lt;/code&gt;&quot;, a special notation indicating
+	 * &lt;code&gt;lo&lt;/code&gt;&amp;le; &lt;code&gt;i&lt;/code&gt;&amp;le;&lt;code&gt;hi&lt;/code&gt;.
+	 * 
+	 * 
+	 * @return &lt;code&gt;true&lt;/code&gt; iff the bound variable in this expression is
+	 *         specified to have a range (e.g. i=0..n).
+	 */
+	boolean isRange();
+
+	/**
+	 * Returns the predicate which specifies the restriction on the domain of
+	 * the bound variable.
+	 * 
+	 * @return the boolean expression involving the bound variable which
+	 *         restricts the domain of that variable, or &lt;code&gt;null&lt;/code&gt; if
+	 *         {@link #isRange()} is &lt;code&gt;true&lt;/code&gt;
+	 */
+	ExpressionNode restriction();
+
+	/**
+	 * If this expression has an integer range restriction, returns the lower
+	 * bound of the range, else returns &lt;code&gt;null&lt;/code&gt;
+	 * 
+	 * @return If the bound variable in this expression is specified to have a
+	 *         range, the lower end of the range (e.g., 0 in i=0..n). Returns
+	 *         &lt;code&gt;null&lt;/code&gt; iff {@link #isRange()} is &lt;code&gt;false&lt;/code&gt;
+	 */
+	ExpressionNode lower();
+
+	/**
+	 * If this expression has an integer range restriction, returns the upper
+	 * bound of the range, else returns &lt;code&gt;null&lt;/code&gt;
+	 * 
+	 * @return If the bound variable in this expression is specified to have a
+	 *         range, the upper bound of the range (e.g., n in i=0..n). Returns
+	 *         &lt;code&gt;null&lt;/code&gt; iff {@link #isRange()} is &lt;code&gt;false&lt;/code&gt;
+	 */
+	ExpressionNode upper();
+
+	/**
+	 * The quantified expression.
+	 * 
+	 * @return The quantified expression.
+	 */
+	ExpressionNode expression();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,16 @@
+#include <civlc.cvh>
+
+$input int N=5;
+int counter = 0;
+
+int incrCounter(){
+  return counter++;
+}
+
+int main(){
+  for(int i = 0; i < N; i++){
+    int count = incrCounter();
+
+    $assert((i == count));
+  }
+}

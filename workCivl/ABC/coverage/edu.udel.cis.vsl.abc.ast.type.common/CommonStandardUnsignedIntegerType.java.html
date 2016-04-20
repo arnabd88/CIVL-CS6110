@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonStandardUnsignedIntegerType.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.ast.type.common</a> &gt; <span class="el_source">CommonStandardUnsignedIntegerType.java</span></div><h1>CommonStandardUnsignedIntegerType.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.ast.type.common;
+
+import java.math.BigInteger;
+
+import edu.udel.cis.vsl.abc.ast.type.IF.StandardUnsignedIntegerType;
+
+public class CommonStandardUnsignedIntegerType extends CommonBasicType
+		implements StandardUnsignedIntegerType {
+
+	/**
+	 * Minimum value for UCHAR_MAX, the maximum value for an object of type
+	 * unsigned char.
+	 */
+<span class="nc" id="L14">	public static final BigInteger UCHAR_MAX_MIN = new BigInteger(&quot;255&quot;); // 2^8-1</span>
+
+	/**
+	 * Minimum value for MB_LEN_MAX, the maximum number of bytes in a multibyte
+	 * character, for any supported locale.
+	 */
+<span class="nc" id="L20">	public static final BigInteger MB_LEN_MAX_MIN = new BigInteger(&quot;1&quot;);</span>
+
+	/**
+	 * Minimum value for USHRT_MAX, the maximum value for an object of type
+	 * unsigned short int.
+	 */
+<span class="nc" id="L26">	public static final BigInteger USHRT_MAX_MIN = new BigInteger(&quot;65535&quot;);// 2^16-1</span>
+
+	/**
+	 * Minimum value for UINT_MAX, the maximum value for an object of type
+	 * unsigned int.
+	 */
+<span class="nc" id="L32">	public static final BigInteger UINT_MAX_MIN = new BigInteger(&quot;65535&quot;); // 2^16-1</span>
+
+	/**
+	 * Minimum value for ULONG_MAX, the maximum value for an object of type
+	 * unsigned long int.
+	 */
+<span class="nc" id="L38">	public static final BigInteger ULONG_MAX_MIN = new BigInteger(&quot;4294967295&quot;);// 2^32-1</span>
+
+	/**
+	 * Minimum value for ULLONG_MAX, the maximum value for an object of type
+	 * unsigned long long int.
+	 */
+<span class="nc" id="L44">	public static final BigInteger ULLONG_MAX_MIN = new BigInteger(</span>
+<span class="nc" id="L45">			&quot;18446744073709551615&quot;);// 2^64-1</span>
+
+	private static BasicTypeKind integerToBasic(UnsignedIntKind integerTypeKind) {
+<span class="nc bnc" id="L48" title="All 7 branches missed.">		switch (integerTypeKind) {</span>
+		case BOOL:
+<span class="nc" id="L50">			return BasicTypeKind.BOOL;</span>
+		case UNSIGNED_CHAR:
+<span class="nc" id="L52">			return BasicTypeKind.UNSIGNED_CHAR;</span>
+		case UNSIGNED_SHORT:
+<span class="nc" id="L54">			return BasicTypeKind.UNSIGNED_SHORT;</span>
+		case UNSIGNED:
+<span class="nc" id="L56">			return BasicTypeKind.UNSIGNED;</span>
+		case UNSIGNED_LONG:
+<span class="nc" id="L58">			return BasicTypeKind.UNSIGNED_LONG;</span>
+		case UNSIGNED_LONG_LONG:
+<span class="nc" id="L60">			return BasicTypeKind.UNSIGNED_LONG_LONG;</span>
+		}
+<span class="nc" id="L62">		throw new RuntimeException(&quot;Unreachable&quot;);</span>
+	}
+
+	private UnsignedIntKind integerTypeKind;
+
+	public CommonStandardUnsignedIntegerType(UnsignedIntKind integerTypeKind) {
+<span class="nc" id="L68">		super(integerToBasic(integerTypeKind));</span>
+<span class="nc" id="L69">		this.integerTypeKind = integerTypeKind;</span>
+<span class="nc" id="L70">	}</span>
+
+	@Override
+	public UnsignedIntKind getIntKind() {
+<span class="nc" id="L74">		return integerTypeKind;</span>
+	}
+
+	public BigInteger getMinimumMaxValue() {
+<span class="nc bnc" id="L78" title="All 6 branches missed.">		switch (integerTypeKind) {</span>
+		case UNSIGNED_CHAR:
+<span class="nc" id="L80">			return UCHAR_MAX_MIN;</span>
+		case UNSIGNED_SHORT:
+<span class="nc" id="L82">			return USHRT_MAX_MIN;</span>
+		case UNSIGNED:
+<span class="nc" id="L84">			return UINT_MAX_MIN;</span>
+		case UNSIGNED_LONG:
+<span class="nc" id="L86">			return ULONG_MAX_MIN;</span>
+		case UNSIGNED_LONG_LONG:
+<span class="nc" id="L88">			return ULLONG_MAX_MIN;</span>
+		default:
+<span class="nc" id="L90">			throw new RuntimeException(&quot;unreachable&quot;);</span>
+		}
+	}
+
+	@Override
+	public boolean inMinimumRange(BigInteger intVal) {
+<span class="nc bnc" id="L96" title="All 4 branches missed.">		return intVal.signum() &gt;= 0</span>
+<span class="nc" id="L97">				&amp;&amp; intVal.compareTo(getMinimumMaxValue()) &lt;= 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

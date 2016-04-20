@@ -1,0 +1,69 @@
+
+Notes on CompareCombiner.
+
+Summary: the compare combiner combines two AST's into one for comparing their functional equivalence.
+One program is called the specification (Spec) and the other the implementation (Impl).
+Input and output variables and (file-scope) assumptions related to input variables are moved to the
+filescope of the final AST. There will be two "copies" output variables, one for the Spec, and the other 
+for the Impl. After making such modifications, the remaining of the original AST, local(Spec) and local(Impl),
+becomes the body of functions spec() and impl(), respetively, local(AST) stands for the localized
+AST of the given AST. Then a main function is constructed to invoke spec() and impl() in sequence, 
+compare their outputs, print the outputs, and check if the outputs are the same.
+
+Given two AST's
+
+AST Spec; 
+AST Impl;
+
+the of compare combiner is:
+
+Input variables of Spec and Impl
+output variables of Spec; // variables with $output qualifier, renamed with the suffix "_spec"
+output variables of Impl; // variables with $output qualifier, not renamed
+assumptions 
+
+void spec(){
+  local(Spec);
+}
+
+void impl(){
+  local(Impl);
+}
+
+int main(){
+  spec();
+  impl();
+  
+  // compare results
+  printf("===== Results of output =====\n");
+  for((var_sepc, var): common variables of spec and impl){
+    _Bool _defined_spec, _defined_impl;
+    
+    _defined_spec = $defined(&var_spec);
+    _defined_impl = $defined(&var);
+    $assert _defined_spec == _defined_impl;
+    if(_defined_spec){
+      _Bool _isEqual=$equal(&var_spec, &var);;
+      
+      if(_isEqual){
+        printf("var=%s\n", var);
+      }else{
+        printf("specification: var=%s\n", var_spec);
+        printf("implementation: var=%s\n", var);
+        $assert _isEqual;
+      }
+    }else{
+      printf("var is never initialized in both specification and implementation.\n");
+    }
+  }
+}
+
+Special handlings:
+
+- IO
+ -- $file type declaration node: required by the output variable CIVL_filesystem (array-of-$file type)
+ Needs to move it to the final file scope.
+  
+- Extra system functions: $equal, $defined
+  Needs to create the function declaration node (just the prototype) for these functions
+  

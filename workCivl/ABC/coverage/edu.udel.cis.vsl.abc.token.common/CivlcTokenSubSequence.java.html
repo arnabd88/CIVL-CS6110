@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CivlcTokenSubSequence.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.token.common</a> &gt; <span class="el_source">CivlcTokenSubSequence.java</span></div><h1>CivlcTokenSubSequence.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.token.common;
+
+import java.io.PrintStream;
+import java.util.Collection;
+
+import org.antlr.runtime.Token;
+
+import edu.udel.cis.vsl.abc.front.IF.CivlcTokenConstant;
+import edu.udel.cis.vsl.abc.token.IF.CivlcToken;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSequence;
+import edu.udel.cis.vsl.abc.token.IF.CivlcTokenSource;
+import edu.udel.cis.vsl.abc.token.IF.SourceFile;
+import edu.udel.cis.vsl.abc.token.IF.TokenFactory;
+
+public class CivlcTokenSubSequence implements CivlcTokenSequence {
+
+	int startTokenIndex;
+
+	int lastTokenIndex;
+
+	CivlcTokenSource rootSource;
+
+	CivlcToken eofToken;
+
+	/**
+	 * A helper class which represents a subsequence of sequence of tokens
+	 * through the CTokenSource abstraction.
+	 * 
+	 * @author siegel
+	 * 
+	 */
+<span class="nc" id="L32">	class SubTokenSource implements CivlcTokenSource {</span>
+
+<span class="nc" id="L34">		int currentTokenIndex = startTokenIndex;</span>
+
+		@Override
+		public Token nextToken() {
+<span class="nc bnc" id="L38" title="All 2 branches missed.">			if (currentTokenIndex &gt; lastTokenIndex) {</span>
+<span class="nc" id="L39">				return eofToken;</span>
+			} else {
+<span class="nc" id="L41">				Token result = rootSource.getToken(currentTokenIndex);</span>
+
+<span class="nc" id="L43">				currentTokenIndex++;</span>
+<span class="nc" id="L44">				return result;</span>
+			}
+		}
+
+		@Override
+		public String getSourceName() {
+<span class="nc" id="L50">			return rootSource.getSourceName();</span>
+		}
+
+		@Override
+		public int getNumTokens() {
+<span class="nc" id="L55">			return currentTokenIndex - startTokenIndex;</span>
+		}
+
+		@Override
+		public CivlcToken getToken(int index) {
+<span class="nc" id="L60">			return rootSource.getToken(index);</span>
+		}
+
+		@Override
+		public TokenFactory getTokenFactory() {
+<span class="nc" id="L65">			return rootSource.getTokenFactory();</span>
+		}
+
+		@Override
+		public void printShorterFileNameMap(PrintStream out) {
+<span class="nc" id="L70">			rootSource.printShorterFileNameMap(out);</span>
+<span class="nc" id="L71">		}</span>
+
+		@Override
+		public Collection&lt;SourceFile&gt; getSourceFiles() {
+<span class="nc" id="L75">			return rootSource.getSourceFiles();</span>
+		}
+	}
+
+<span class="nc" id="L79">	public CivlcTokenSubSequence(CivlcTokenSource rootSource, int startTokenIndex,</span>
+			int lastTokenIndex) {
+<span class="nc" id="L81">		this.rootSource = rootSource;</span>
+<span class="nc" id="L82">		this.startTokenIndex = startTokenIndex;</span>
+<span class="nc" id="L83">		this.lastTokenIndex = lastTokenIndex;</span>
+<span class="nc" id="L84">		this.eofToken = rootSource.getTokenFactory().newCivlcToken(</span>
+<span class="nc" id="L85">				CivlcTokenConstant.EOF, &quot;EOF&quot;, null);</span>
+<span class="nc" id="L86">	}</span>
+
+	@Override
+	public CivlcTokenSource newSource() {
+<span class="nc" id="L90">		return new SubTokenSource();</span>
+	}
+
+	@Override
+	public CivlcToken[] getTokens() {
+<span class="nc" id="L95">		int numTokens = size();</span>
+<span class="nc" id="L96">		CivlcToken[] result = new CivlcToken[numTokens];</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (int i = 0; i &lt; numTokens; i++) {</span>
+<span class="nc" id="L99">			result[i] = rootSource.getToken(startTokenIndex + i);</span>
+		}
+<span class="nc" id="L101">		return result;</span>
+	}
+
+	@Override
+	public int size() {
+<span class="nc" id="L106">		return lastTokenIndex - startTokenIndex + 1;</span>
+	}
+
+	@Override
+	public CivlcToken getEOFToken() {
+<span class="nc" id="L111">		return this.eofToken;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,664 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker@{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker}}
+
+
+Object used to perform one transformation task.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a941e4476972b2f2fde7dea261b62d53e}{}{\bfseries Base\+Worker} (String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ac0c58f181ddacf06a1b997857d8641ab}{transformer\+Name}, A\+S\+T\+Factory \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a44812bb476e4511fb6ca29a808427186}{ast\+Factory})\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a941e4476972b2f2fde7dea261b62d53e}
+
+\item 
+abstract A\+S\+T \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a8b55fd46dd0e7f3f55394b7b03bc5db5}{transform} (A\+S\+T ast)  throws Syntax\+Exception
+\begin{DoxyCompactList}\small\item\em Transforms the A\+S\+T. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_af43dca4f3c3e1bcbf4ea97c761374690}{}Statement\+Node {\bfseries elaborate\+Call\+Node} (Expression\+Node argument)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_af43dca4f3c3e1bcbf4ea97c761374690}
+
+\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a99f0b8cc5d320eac4a1d52446d0181f3}{has\+\_\+gen\+\_\+main\+Function} (Sequence\+Node$<$ Block\+Item\+Node $>$ root)
+\begin{DoxyCompactList}\small\item\em Does the root node contains a \+\_\+main function definition in its children? \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f5bccabd2ba03b77c0bc9f2b427ee8b}{reduce\+Duplicate\+Node} (A\+S\+T\+Node root, Node\+Predicate node\+Predicate)
+\begin{DoxyCompactList}\small\item\em Identifies adjacent nodes that are redundant and reduce them to exactly one node. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_af48235955a11eaf3dc99407cd5bf6060}{}A\+S\+T\+Node {\bfseries non\+Null\+Child\+Before} (A\+S\+T\+Node \hyperlink{structnode}{node}, int index)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_af48235955a11eaf3dc99407cd5bf6060}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a3cd0538d54e1bedeaf6de0d774664f68}{}int {\bfseries get\+Int\+Value} (Integer\+Constant\+Node constant)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a3cd0538d54e1bedeaf6de0d774664f68}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a23746937eb3705c8db8568fe1d944d1a}{}A\+S\+T\+Node {\bfseries get\+Very\+Last\+Item\+Node\+Of\+Compound\+Statement} (Compound\+Statement\+Node compound)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a23746937eb3705c8db8568fe1d944d1a}
+
+\item 
+A\+S\+T\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a7451a0988a98376650c88976d488762a}{normalize\+Compound\+Statement\+Nodes} (A\+S\+T\+Node \hyperlink{structnode}{node})
+\begin{DoxyCompactList}\small\item\em For a compound statement node, removes any child node that is null or an empty compound statement node. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a96246816abc8b40137039611d73cc08b}{}boolean {\bfseries is\+Empty\+Compound\+Statement\+Node} (Compound\+Statement\+Node compound)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a96246816abc8b40137039611d73cc08b}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a6114d8bd372191360f990dc08ff30283}{}boolean {\bfseries is\+\_\+callee\+\_\+name\+\_\+equals} (Function\+Call\+Node call, String name)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a6114d8bd372191360f990dc08ff30283}
+
+\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1b423136b60c021853437a567eb3f4a9}{transform\+Main\+Function} (Sequence\+Node$<$ Block\+Item\+Node $>$ root)
+\begin{DoxyCompactList}\small\item\em rename all main function declaration to \+\_\+main, and all function call to main to \+\_\+main. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a75f1bad128c8f9cefe0c4d1147dc5a42}{}void {\bfseries create\+New\+Main\+Function} (Sequence\+Node$<$ Block\+Item\+Node $>$ root)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a75f1bad128c8f9cefe0c4d1147dc5a42}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a2479f1dad231f9630460317217835aa5}{}Function\+Declaration\+Node {\bfseries assume\+Function\+Declaration} (Source source)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a2479f1dad231f9630460317217835aa5}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a29cf8efbe3009de840fb570fbac30c10}{}Function\+Call\+Node {\bfseries function\+Call} (Source source, String name, List$<$ Expression\+Node $>$ arguments)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a29cf8efbe3009de840fb570fbac30c10}
+
+\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a5f60ef0a62dac423bbe90567a3063572}{new\+Unique\+Identifier} (String name)
+\begin{DoxyCompactList}\small\item\em Produces a unique identifier ending with the given name. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a42a995c22d318ef4656c6ceba306e97c}{}Statement\+Node {\bfseries assume\+Node} (Expression\+Node expression)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a42a995c22d318ef4656c6ceba306e97c}
+
+\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a54d8757137b5b447ecf9519c9768107b}{new\+Unique\+Identifier\+Prefix} ()
+\begin{DoxyCompactList}\small\item\em Produces a unique identifier. \end{DoxyCompactList}\item 
+A\+S\+T \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_aa2a48e284d7eb6f96e72b75015685de8}{parse\+System\+Library} (String filename)  throws Syntax\+Exception 
+\begin{DoxyCompactList}\small\item\em parses a certain \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} library (which resides in the folder text/include) into an A\+S\+T. \end{DoxyCompactList}\item 
+Source \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source} (String method, int token\+Type)
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{}{Source} object to associate to A\+S\+T nodes that are invented by this transformer worker. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a6e4863b6255d4f5be905a6b989d868f5}{complete\+Sources} (A\+S\+T\+Node \hyperlink{structnode}{node})
+\begin{DoxyCompactList}\small\item\em This method should be called after the transformer has completed its transformation; it finds all source objects (in node and the descendants of node) that were created by this transformer and adds more information to them. \end{DoxyCompactList}\item 
+Identifier\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a336cc5e1bfb1136816ef3eb2d0615a27}{identifier} (String name)
+\begin{DoxyCompactList}\small\item\em Creates an identifier node with a given name. \end{DoxyCompactList}\item 
+Expression\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a5e675e2c66849b7d35a0fceec59d8372}{identifier\+Expression} (String name)
+\begin{DoxyCompactList}\small\item\em Creates an identifier expression node with a given name. \end{DoxyCompactList}\item 
+Expression\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_adef13efd163ca0330c6f2bdf132d6507}{identifier\+Expression} (Source source, String name)
+\begin{DoxyCompactList}\small\item\em Creates an identifier expression node with a given name. \end{DoxyCompactList}\item 
+Variable\+Declaration\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f6440953394086890ac1fade5468481}{variable\+Declaration} (String name, Type\+Node type)
+\begin{DoxyCompactList}\small\item\em Creates a variable declaration node with a given name of the specified type. \end{DoxyCompactList}\item 
+Variable\+Declaration\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_aba54c222dbe905b31699920e5e057b74}{variable\+Declaration} (String name, Type\+Node type, Expression\+Node init)
+\begin{DoxyCompactList}\small\item\em Creates a variable declaration node with a given name of the specified type and initializer. \end{DoxyCompactList}\item 
+Expression\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0fd4589ffcbfa9db8159db75bb2a047d}{here\+Node} ()
+\begin{DoxyCompactList}\small\item\em Creates a constant node of {\ttfamily \$here}, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. \end{DoxyCompactList}\item 
+Type\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ad9fc6e7ce22c949cf68b8352a6de6a8c}{void\+Type} ()
+\begin{DoxyCompactList}\small\item\em Creates a type node of void type, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. \end{DoxyCompactList}\item 
+Type\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1a68b5a63251d13e6a14a63497de6ceb}{basic\+Type} (Basic\+Type\+Kind kind)
+\begin{DoxyCompactList}\small\item\em Creates a type node of a certain basic type kind, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. \end{DoxyCompactList}\item 
+Type\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a3e41fcfa006f5287dfe10570a22a8e4f}{type\+Node} (Type type)
+\begin{DoxyCompactList}\small\item\em Creates a type node of a given type, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. \end{DoxyCompactList}\item 
+Type\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1d37624cd75e890bc98a570ea1662045}{type\+Node} (Source source, Type type)
+\begin{DoxyCompactList}\small\item\em Creates a type node of a given type, with the given source. \end{DoxyCompactList}\item 
+Expression\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f604b0aa676663d51f870e705f6f025}{boolean\+Constant} (boolean value)
+\begin{DoxyCompactList}\small\item\em Creates a boolean constant node (either {\ttfamily \$true} or {\ttfamily \$false}), the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. \end{DoxyCompactList}\item 
+Expression\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a7319636f3dfa7b664614020a9644caed}{integer\+Constant} (int value)  throws Syntax\+Exception 
+\begin{DoxyCompactList}\small\item\em Creates an integer constant node of the specified value, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. \end{DoxyCompactList}\item 
+A\+S\+T \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ababeeb0da2669691b3e64445cc33d348}{combine\+A\+S\+Ts} (A\+S\+T first, A\+S\+T second)  throws Syntax\+Exception 
+\begin{DoxyCompactList}\small\item\em Combines two A\+S\+Ts into one, assuming that there are no name conflicts. \end{DoxyCompactList}\item 
+Compound\+Statement\+Node \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ae7e4963406c0589fc8219552b591a3a0}{insert\+To\+Compound\+Statement} (Compound\+Statement\+Node compound\+Node, Block\+Item\+Node \hyperlink{structnode}{node}, int index)
+\begin{DoxyCompactList}\small\item\em insert a block item node to a compound statement node at the given index. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ad4a228f5e07d9d42e9356536743504a7}{}void {\bfseries release\+Nodes} (List$<$?extends A\+S\+T\+Node $>$ nodes)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ad4a228f5e07d9d42e9356536743504a7}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a9fb909383f658d60661eaca302088133}{}String {\bfseries identifier\+Prefix}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a9fb909383f658d60661eaca302088133}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ae73608de16f709bfae7316d25b729ff4}{}int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ae73608de16f709bfae7316d25b729ff4}{new\+Identifier\+Counter} = 0\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ae73608de16f709bfae7316d25b729ff4}
+
+\begin{DoxyCompactList}\small\item\em The number of new identifiers created by this transformer worker. \end{DoxyCompactList}\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ac0c58f181ddacf06a1b997857d8641ab}{transformer\+Name}
+\begin{DoxyCompactList}\small\item\em The name of this transformer, e.\+g., \char`\"{}\+O\+M\+Pto\+C\+I\+V\+L\+Transformer\char`\"{}. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a44812bb476e4511fb6ca29a808427186}{}A\+S\+T\+Factory \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a44812bb476e4511fb6ca29a808427186}{ast\+Factory}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a44812bb476e4511fb6ca29a808427186}
+
+\begin{DoxyCompactList}\small\item\em The A\+S\+T factory used by this transformer for all its A\+S\+T needs. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a699b2a2571447faac2c963bd6772d880}{}Node\+Factory \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a699b2a2571447faac2c963bd6772d880}{node\+Factory}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a699b2a2571447faac2c963bd6772d880}
+
+\begin{DoxyCompactList}\small\item\em The node factory used by this transformer; same as the node factory associated to the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a44812bb476e4511fb6ca29a808427186}{ast\+Factory}. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ad1f6a3d2896f27ad6d2eb84f25fd2d54}{}Token\+Factory \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ad1f6a3d2896f27ad6d2eb84f25fd2d54}{token\+Factory}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ad1f6a3d2896f27ad6d2eb84f25fd2d54}
+
+\begin{DoxyCompactList}\small\item\em The token factory used by this transformer; same as the token factory used by the \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a44812bb476e4511fb6ca29a808427186}{ast\+Factory}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_af47a05df8f15b1b9fdda749e2da32ef8}{}static final String {\bfseries G\+E\+N\+\_\+\+M\+A\+I\+N} = \char`\"{}\+\_\+gen\+\_\+main\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_af47a05df8f15b1b9fdda749e2da32ef8}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_af041743753b5980860bb0be4ac2039e3}{}static final String {\bfseries M\+A\+I\+N} = \char`\"{}main\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_af041743753b5980860bb0be4ac2039e3}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_aaa1bbbc9b52071f90fbd27be91e6ece0}{}static final String {\bfseries A\+S\+S\+U\+M\+E} = \char`\"{}\$assume\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_aaa1bbbc9b52071f90fbd27be91e6ece0}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ab8766f089f3a852fc5db7cb9873b5d88}{}static final String {\bfseries A\+S\+S\+E\+R\+T} = \char`\"{}\$assert\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ab8766f089f3a852fc5db7cb9873b5d88}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ab967bb952146d7489cb30c929bc0ba04}{}static final String {\bfseries E\+L\+A\+B\+O\+R\+A\+T\+E} = \char`\"{}\$elaborate\char`\"{}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ab967bb952146d7489cb30c929bc0ba04}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Object used to perform one transformation task. 
+
+It is instantiated to carry out one invocation of \hyperlink{}{C\+I\+V\+L\+Base\+Transformer\#transform(\+A\+S\+T)}.
+
+\begin{DoxyAuthor}{Author}
+siegel 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1a68b5a63251d13e6a14a63497de6ceb}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!basic\+Type@{basic\+Type}}
+\index{basic\+Type@{basic\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{basic\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Type\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+basic\+Type (
+\begin{DoxyParamCaption}
+\item[{Basic\+Type\+Kind}]{kind}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1a68b5a63251d13e6a14a63497de6ceb}
+
+
+Creates a type node of a certain basic type kind, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kind} & the specified basic type kind \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new basic type node. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f604b0aa676663d51f870e705f6f025}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!boolean\+Constant@{boolean\+Constant}}
+\index{boolean\+Constant@{boolean\+Constant}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{boolean\+Constant}]{\setlength{\rightskip}{0pt plus 5cm}Expression\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+boolean\+Constant (
+\begin{DoxyParamCaption}
+\item[{boolean}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f604b0aa676663d51f870e705f6f025}
+
+
+Creates a boolean constant node (either {\ttfamily \$true} or {\ttfamily \$false}), the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value of the boolean constant \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new boolean constant node 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ababeeb0da2669691b3e64445cc33d348}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!combine\+A\+S\+Ts@{combine\+A\+S\+Ts}}
+\index{combine\+A\+S\+Ts@{combine\+A\+S\+Ts}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{combine\+A\+S\+Ts}]{\setlength{\rightskip}{0pt plus 5cm}A\+S\+T edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+combine\+A\+S\+Ts (
+\begin{DoxyParamCaption}
+\item[{A\+S\+T}]{first, }
+\item[{A\+S\+T}]{second}
+\end{DoxyParamCaption}
+) throws Syntax\+Exception\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ababeeb0da2669691b3e64445cc33d348}
+
+
+Combines two A\+S\+Ts into one, assuming that there are no name conflicts. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em first} & the first A\+S\+T \\
+\hline
+{\em second} & the second A\+S\+T \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Syntax\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a6e4863b6255d4f5be905a6b989d868f5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!complete\+Sources@{complete\+Sources}}
+\index{complete\+Sources@{complete\+Sources}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{complete\+Sources}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+complete\+Sources (
+\begin{DoxyParamCaption}
+\item[{A\+S\+T\+Node}]{node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a6e4863b6255d4f5be905a6b989d868f5}
+
+
+This method should be called after the transformer has completed its transformation; it finds all source objects (in node and the descendants of node) that were created by this transformer and adds more information to them. 
+
+The new information includes the pretty-\/print textual representation of the content of that node (and its descendants), and the precise point in original actual source code where the new content was inserted.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & a node in the A\+S\+T being transformed; typically, the root node \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a99f0b8cc5d320eac4a1d52446d0181f3}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!has\+\_\+gen\+\_\+main\+Function@{has\+\_\+gen\+\_\+main\+Function}}
+\index{has\+\_\+gen\+\_\+main\+Function@{has\+\_\+gen\+\_\+main\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{has\+\_\+gen\+\_\+main\+Function}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+has\+\_\+gen\+\_\+main\+Function (
+\begin{DoxyParamCaption}
+\item[{Sequence\+Node$<$ Block\+Item\+Node $>$}]{root}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a99f0b8cc5d320eac4a1d52446d0181f3}
+
+
+Does the root node contains a \+\_\+main function definition in its children? 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0fd4589ffcbfa9db8159db75bb2a047d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!here\+Node@{here\+Node}}
+\index{here\+Node@{here\+Node}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{here\+Node}]{\setlength{\rightskip}{0pt plus 5cm}Expression\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+here\+Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0fd4589ffcbfa9db8159db75bb2a047d}
+
+
+Creates a constant node of {\ttfamily \$here}, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. 
+
+\begin{DoxyReturn}{Returns}
+the new here node. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a336cc5e1bfb1136816ef3eb2d0615a27}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!identifier@{identifier}}
+\index{identifier@{identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{identifier}]{\setlength{\rightskip}{0pt plus 5cm}Identifier\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+identifier (
+\begin{DoxyParamCaption}
+\item[{String}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a336cc5e1bfb1136816ef3eb2d0615a27}
+
+
+Creates an identifier node with a given name. 
+
+The source information of the new node is automatically constructed using the method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new identifier node. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a5e675e2c66849b7d35a0fceec59d8372}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!identifier\+Expression@{identifier\+Expression}}
+\index{identifier\+Expression@{identifier\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{identifier\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}Expression\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+identifier\+Expression (
+\begin{DoxyParamCaption}
+\item[{String}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a5e675e2c66849b7d35a0fceec59d8372}
+
+
+Creates an identifier expression node with a given name. 
+
+The source information of the new node is automatically constructed using the method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new identifier expression node. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_adef13efd163ca0330c6f2bdf132d6507}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!identifier\+Expression@{identifier\+Expression}}
+\index{identifier\+Expression@{identifier\+Expression}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{identifier\+Expression}]{\setlength{\rightskip}{0pt plus 5cm}Expression\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+identifier\+Expression (
+\begin{DoxyParamCaption}
+\item[{Source}]{source, }
+\item[{String}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_adef13efd163ca0330c6f2bdf132d6507}
+
+
+Creates an identifier expression node with a given name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source information of the identifier. \\
+\hline
+{\em name} & The name of the identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new identifier expression node. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ae7e4963406c0589fc8219552b591a3a0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!insert\+To\+Compound\+Statement@{insert\+To\+Compound\+Statement}}
+\index{insert\+To\+Compound\+Statement@{insert\+To\+Compound\+Statement}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{insert\+To\+Compound\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}Compound\+Statement\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+insert\+To\+Compound\+Statement (
+\begin{DoxyParamCaption}
+\item[{Compound\+Statement\+Node}]{compound\+Node, }
+\item[{Block\+Item\+Node}]{node, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ae7e4963406c0589fc8219552b591a3a0}
+
+
+insert a block item node to a compound statement node at the given index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em compound\+Node} & \\
+\hline
+{\em node} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a7319636f3dfa7b664614020a9644caed}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!integer\+Constant@{integer\+Constant}}
+\index{integer\+Constant@{integer\+Constant}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{integer\+Constant}]{\setlength{\rightskip}{0pt plus 5cm}Expression\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+integer\+Constant (
+\begin{DoxyParamCaption}
+\item[{int}]{value}
+\end{DoxyParamCaption}
+) throws Syntax\+Exception\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a7319636f3dfa7b664614020a9644caed}
+
+
+Creates an integer constant node of the specified value, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value of the integer constant \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new integer constant node 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!new\+Source@{new\+Source}}
+\index{new\+Source@{new\+Source}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{new\+Source}]{\setlength{\rightskip}{0pt plus 5cm}Source edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+new\+Source (
+\begin{DoxyParamCaption}
+\item[{String}]{method, }
+\item[{int}]{token\+Type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}
+
+
+Creates a new \hyperlink{}{Source} object to associate to A\+S\+T nodes that are invented by this transformer worker. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em method} & any string which identifies the specific part of this transformer responsible for creating the new content; typically, the name of the method that created the new context. This will appear in error message to help isolate the source of the new content. \\
+\hline
+{\em text} & the text to be shown for the source which should be some informative message about the source \\
+\hline
+{\em token\+Type} & the integer code for the type of the token used to represent the source; use one of the constants in \hyperlink{}{C\+Parser} or \hyperlink{}{C\+Omp\+Parser}, for example, such as \hyperlink{}{C\+Parser\#\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new source object 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a5f60ef0a62dac423bbe90567a3063572}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!new\+Unique\+Identifier@{new\+Unique\+Identifier}}
+\index{new\+Unique\+Identifier@{new\+Unique\+Identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{new\+Unique\+Identifier}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+new\+Unique\+Identifier (
+\begin{DoxyParamCaption}
+\item[{String}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a5f60ef0a62dac423bbe90567a3063572}
+
+
+Produces a unique identifier ending with the given name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The ending of the new unique identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a unique identifier ending with the given name. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a54d8757137b5b447ecf9519c9768107b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!new\+Unique\+Identifier\+Prefix@{new\+Unique\+Identifier\+Prefix}}
+\index{new\+Unique\+Identifier\+Prefix@{new\+Unique\+Identifier\+Prefix}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{new\+Unique\+Identifier\+Prefix}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+new\+Unique\+Identifier\+Prefix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a54d8757137b5b447ecf9519c9768107b}
+
+
+Produces a unique identifier. 
+
+\begin{DoxyReturn}{Returns}
+a unique identifier. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a7451a0988a98376650c88976d488762a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!normalize\+Compound\+Statement\+Nodes@{normalize\+Compound\+Statement\+Nodes}}
+\index{normalize\+Compound\+Statement\+Nodes@{normalize\+Compound\+Statement\+Nodes}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{normalize\+Compound\+Statement\+Nodes}]{\setlength{\rightskip}{0pt plus 5cm}A\+S\+T\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+normalize\+Compound\+Statement\+Nodes (
+\begin{DoxyParamCaption}
+\item[{A\+S\+T\+Node}]{node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a7451a0988a98376650c88976d488762a}
+
+
+For a compound statement node, removes any child node that is null or an empty compound statement node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_aa2a48e284d7eb6f96e72b75015685de8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!parse\+System\+Library@{parse\+System\+Library}}
+\index{parse\+System\+Library@{parse\+System\+Library}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{parse\+System\+Library}]{\setlength{\rightskip}{0pt plus 5cm}A\+S\+T edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+parse\+System\+Library (
+\begin{DoxyParamCaption}
+\item[{String}]{filename}
+\end{DoxyParamCaption}
+) throws Syntax\+Exception\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_aa2a48e284d7eb6f96e72b75015685de8}
+
+
+parses a certain \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1CIVL}{C\+I\+V\+L} library (which resides in the folder text/include) into an A\+S\+T. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & the file name of the library, e.\+g., civlc.\+cvh, civlc-\/omp.\+cvh, etc. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the A\+S\+T of the given library. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Syntax\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f5bccabd2ba03b77c0bc9f2b427ee8b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!reduce\+Duplicate\+Node@{reduce\+Duplicate\+Node}}
+\index{reduce\+Duplicate\+Node@{reduce\+Duplicate\+Node}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{reduce\+Duplicate\+Node}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+reduce\+Duplicate\+Node (
+\begin{DoxyParamCaption}
+\item[{A\+S\+T\+Node}]{root, }
+\item[{Node\+Predicate}]{node\+Predicate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f5bccabd2ba03b77c0bc9f2b427ee8b}
+
+
+Identifies adjacent nodes that are redundant and reduce them to exactly one node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & \\
+\hline
+{\em node\+Predicate} & The predicate that if an A\+S\+T node holds then it will be considered as the target one. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a8b55fd46dd0e7f3f55394b7b03bc5db5}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!transform@{transform}}
+\index{transform@{transform}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{transform}]{\setlength{\rightskip}{0pt plus 5cm}abstract A\+S\+T edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+transform (
+\begin{DoxyParamCaption}
+\item[{A\+S\+T}]{ast}
+\end{DoxyParamCaption}
+) throws Syntax\+Exception\hspace{0.3cm}{\ttfamily [abstract]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a8b55fd46dd0e7f3f55394b7b03bc5db5}
+
+
+Transforms the A\+S\+T. 
+
+This is the method that will be invoked to implement \hyperlink{}{Transformer\#transform(\+A\+S\+T)}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ast} & the given A\+S\+T to transform \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the transformed A\+S\+T, which may or may not == the given one 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Syntax\+Exception} & if some statically-\/detectable error is discovered in the process of transformation \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1b423136b60c021853437a567eb3f4a9}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!transform\+Main\+Function@{transform\+Main\+Function}}
+\index{transform\+Main\+Function@{transform\+Main\+Function}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{transform\+Main\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+transform\+Main\+Function (
+\begin{DoxyParamCaption}
+\item[{Sequence\+Node$<$ Block\+Item\+Node $>$}]{root}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1b423136b60c021853437a567eb3f4a9}
+
+
+rename all main function declaration to \+\_\+main, and all function call to main to \+\_\+main. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a3e41fcfa006f5287dfe10570a22a8e4f}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!type\+Node@{type\+Node}}
+\index{type\+Node@{type\+Node}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{type\+Node}]{\setlength{\rightskip}{0pt plus 5cm}Type\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+type\+Node (
+\begin{DoxyParamCaption}
+\item[{Type}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a3e41fcfa006f5287dfe10570a22a8e4f}
+
+
+Creates a type node of a given type, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & the specified type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new type node. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1d37624cd75e890bc98a570ea1662045}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!type\+Node@{type\+Node}}
+\index{type\+Node@{type\+Node}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{type\+Node}]{\setlength{\rightskip}{0pt plus 5cm}Type\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+type\+Node (
+\begin{DoxyParamCaption}
+\item[{Source}]{source, }
+\item[{Type}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a1d37624cd75e890bc98a570ea1662045}
+
+
+Creates a type node of a given type, with the given source. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source of the type node \\
+\hline
+{\em type} & the specified type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new type node 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f6440953394086890ac1fade5468481}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!variable\+Declaration@{variable\+Declaration}}
+\index{variable\+Declaration@{variable\+Declaration}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{variable\+Declaration}]{\setlength{\rightskip}{0pt plus 5cm}Variable\+Declaration\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+variable\+Declaration (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{Type\+Node}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a0f6440953394086890ac1fade5468481}
+
+
+Creates a variable declaration node with a given name of the specified type. 
+
+The sources are created automatically through the method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the variable \\
+\hline
+{\em type} & The type of the variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new variable declaration node 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_aba54c222dbe905b31699920e5e057b74}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!variable\+Declaration@{variable\+Declaration}}
+\index{variable\+Declaration@{variable\+Declaration}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{variable\+Declaration}]{\setlength{\rightskip}{0pt plus 5cm}Variable\+Declaration\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+variable\+Declaration (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{Type\+Node}]{type, }
+\item[{Expression\+Node}]{init}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_aba54c222dbe905b31699920e5e057b74}
+
+
+Creates a variable declaration node with a given name of the specified type and initializer. 
+
+The sources are created automatically through the method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the variable \\
+\hline
+{\em type} & The type of the variable \\
+\hline
+{\em init} & The initializer of the variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the new variable declaration node. 
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ad9fc6e7ce22c949cf68b8352a6de6a8c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!void\+Type@{void\+Type}}
+\index{void\+Type@{void\+Type}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{void\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Type\+Node edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+void\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ad9fc6e7ce22c949cf68b8352a6de6a8c}
+
+
+Creates a type node of void type, the source of which is generated automatically using \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_a45d64b7e09a96de3fe161198a0ad8f5a}{new\+Source(\+String, int)}. 
+
+\begin{DoxyReturn}{Returns}
+the new void type node. 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ac0c58f181ddacf06a1b997857d8641ab}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}!transformer\+Name@{transformer\+Name}}
+\index{transformer\+Name@{transformer\+Name}!edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker@{edu\+::udel\+::cis\+::vsl\+::civl\+::transform\+::common\+::\+Base\+Worker}}
+\subsubsection[{transformer\+Name}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Base\+Worker.\+transformer\+Name\hspace{0.3cm}{\ttfamily [protected]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1BaseWorker_ac0c58f181ddacf06a1b997857d8641ab}
+
+
+The name of this transformer, e.\+g., \char`\"{}\+O\+M\+Pto\+C\+I\+V\+L\+Transformer\char`\"{}. 
+
+To be used in output such as error messages. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/transform/common/Base\+Worker.\+java\end{DoxyCompactItemize}

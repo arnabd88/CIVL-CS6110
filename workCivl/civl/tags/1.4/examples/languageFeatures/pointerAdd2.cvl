@@ -1,0 +1,50 @@
+/*************************************************/
+/* FILE: pointerAdd2.cvl
+   AUTHOR: Ziqing Luo
+
+   This example tries to verify 3 d array in general 
+   case with iterating all possible values for every 
+   symbolic input variable. The reason of why we don't
+   just use symbolic execution is the prover may not be
+   able to prove the assertion in certainty. So we force
+   to iterate all possible values for every input variable.
+*/
+/*************************************************/
+#include <civlc.cvh>
+#include <stdio.h>
+
+$input int N;
+$input int M;
+$input int L;
+$input int x,y,z;
+$input int offset;
+$input int a[N][M][L];
+$assume(0< N && N <= 2);
+$assume(0< M && M <= 2);
+$assume(0< L && L <= 2);
+$assume(0 <= x && x < N);
+$assume(0 <= y && y < M);
+$assume(0 <= z && z < L);
+$assume(offset + x*M*L + y*L + z < M*N*L &&
+        offset + x*M*L + y*L + z >= 0);
+
+void main(){
+   for(int i=0; i<M; i++);    
+   for(int i=0; i<N; i++);    
+   for(int i=0; i<L; i++);    
+   for(int i=0; i<x; i++);   
+   for(int i=0; i<y; i++);   
+   for(int i=0; i<z; i++);    
+   for(int i=0; i<offset; i++);   
+
+  int oldTotal = x * M * L + y * L + z;
+  int newTotal = oldTotal + offset;
+  int X,Y,Z;            //new indexes
+
+  X = newTotal / (M * L);
+  newTotal = newTotal - X * M * L;
+  Y = newTotal / (L);
+  Z = newTotal - Y * L;
+  $assert((*(&a[x][y][z] + offset) == a[X][Y][Z]));
+
+}

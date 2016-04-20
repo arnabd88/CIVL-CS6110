@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Transform.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.transform.IF</a> &gt; <span class="el_source">Transform.java</span></div><h1>Transform.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package edu.udel.cis.vsl.abc.transform.IF;</span>
+
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import edu.udel.cis.vsl.abc.ast.IF.ASTFactory;
+import edu.udel.cis.vsl.abc.ast.entity.IF.Entity;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+import edu.udel.cis.vsl.abc.transform.common.CommonNameTransformer;
+import edu.udel.cis.vsl.abc.transform.common.CompareCombiner;
+import edu.udel.cis.vsl.abc.transform.common.Pruner;
+import edu.udel.cis.vsl.abc.transform.common.SideEffectRemover;
+
+/**
+ * This class manages the set of transformations provided by an execution of
+ * ABC.
+ * 
+ * It provides a static method {@link #newTransformer(String, ASTFactory)} to
+ * create a new transformer instance based on the transformer code. It also
+ * provides a method that lists all the known codes.
+ * 
+ * If you create a new {@link Transformer}, you may edit this file so it knows
+ * about your transformer, following the pattern of the others: simply add an
+ * entry to array {@link #records}. It is not required for you to do so---your
+ * transformer can be used to transform a program whether or not it appears
+ * here. The advantage of appearing here is that a switch will be automatically
+ * added to the command line interface for all transformers appearing here.
+ * 
+ * Alternatively, you can add your transformer at runtime using method
+ * {@link #addTransform(TransformRecord)}.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc" id="L36">public class Transform {</span>
+
+<span class="nc" id="L38">	private static CompareCombiner compareCombiner = new CompareCombiner();</span>
+
+	/**
+	 * A list of the transformers available to the command line interface. Add
+	 * one entry here when you create a new transformer, following the same
+	 * pattern as the others.
+	 */
+<span class="nc" id="L45">	private static TransformRecord[] records = new TransformRecord[] {</span>
+
+<span class="nc" id="L47">			new TransformRecord(SideEffectRemover.CODE,</span>
+<span class="nc" id="L48">					SideEffectRemover.LONG_NAME,</span>
+<span class="nc" id="L49">					SideEffectRemover.SHORT_DESCRIPTION) {</span>
+				@Override
+				public Transformer create(ASTFactory astFactory) {
+<span class="nc" id="L52">					return new SideEffectRemover(astFactory);</span>
+				}
+			},
+
+<span class="nc" id="L56">			new TransformRecord(Pruner.CODE, Pruner.LONG_NAME,</span>
+<span class="nc" id="L57">					Pruner.SHORT_DESCRIPTION) {</span>
+				@Override
+				public Transformer create(ASTFactory astFactory) {
+<span class="nc" id="L60">					return new Pruner(astFactory);</span>
+				}
+			}
+
+	// add more here.
+
+	};
+
+	/**
+	 * Map from transform codes to corresponding records.
+	 */
+<span class="nc" id="L71">	private static Map&lt;String, TransformRecord&gt; codeToRecord = new LinkedHashMap&lt;&gt;();</span>
+
+	/*
+	 * Initializes codeToRecord using the list of hard-wired transforms in array
+	 * records.
+	 */
+	static {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (TransformRecord record : records) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (codeToRecord.put(record.code, record) != null)</span>
+<span class="nc" id="L80">				throw new ABCRuntimeException(&quot;Two transformations named &quot;</span>
+<span class="nc" id="L81">						+ record.code);</span>
+		}
+<span class="nc" id="L83">	}</span>
+
+	/**
+	 * Adds a new transform to the collection of known ones. Use this method if
+	 * you don't want to hardwire your transform in to the ABC code base. You
+	 * will need to create an instance of TransformRecord, for example, in the
+	 * anonymous way done above with the built-in transforms. It can be added at
+	 * any time but usually it is done in some initialization phase.
+	 * 
+	 * @param record
+	 *            a transform record
+	 * @throws ABCRuntimeException
+	 *             if there is already a transform with the given code in this
+	 *             current collection
+	 */
+	public static void addTransform(TransformRecord record) {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (codeToRecord.put(record.code, record) != null)</span>
+<span class="nc" id="L100">			throw new ABCRuntimeException(&quot;Two transformations named &quot;</span>
+<span class="nc" id="L101">					+ record.code);</span>
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Returns the set of transformer codes.
+	 * 
+	 * @return the set of transformer codes
+	 */
+	public static Collection&lt;String&gt; getCodes() {
+<span class="nc" id="L110">		return codeToRecord.keySet();</span>
+	}
+
+	/**
+	 * Returns the short description associated to the given transformer code.
+	 * 
+	 * @param code
+	 *            a transformer code currently in the collection
+	 * @return the short description of the transformation
+	 * @throws ABCRuntimeException
+	 *             if there is no such code in the current collection
+	 */
+	public static String getShortDescription(String code) {
+<span class="nc" id="L123">		TransformRecord record = codeToRecord.get(code);</span>
+
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (record == null)</span>
+<span class="nc" id="L126">			throw new ABCRuntimeException(&quot;No transformation with code &quot; + code);</span>
+<span class="nc" id="L127">		return record.shortDescription;</span>
+	}
+
+	/**
+	 * Returns the long name associated to the given transformer code.
+	 * 
+	 * @param code
+	 *            a transformer code currently in the collection
+	 * @return the long name of that transformer, e.g., &quot;MPITransformer&quot;
+	 * @throws ABCRuntimeException
+	 *             if there is no such code in the current collection
+	 */
+	public static String getLongName(String code) {
+<span class="nc" id="L140">		TransformRecord record = codeToRecord.get(code);</span>
+
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (record == null)</span>
+<span class="nc" id="L143">			throw new ABCRuntimeException(&quot;No transformation with code &quot; + code);</span>
+<span class="nc" id="L144">		return record.name;</span>
+	}
+
+	/**
+	 * Produces a new transformer using the given AST Factory. The kind of
+	 * transformer produced is determined by the given code, which is a string.
+	 * This string is a short name used to identify the transformer, e.g.,
+	 * &quot;prune&quot; for the Pruner. The short name can also be used as a commandline
+	 * flag to induce use of that transformer, e.g., &quot;abc -prune foo.c&quot;.
+	 * 
+	 * The given AST Factory become permanently identified with the new
+	 * transformer. That transformer can only operate on ASTs that were produced
+	 * with the same AST Factory.
+	 * 
+	 * 
+	 * 
+	 * @param code
+	 *            a short string indicating the kind of transformer to produce
+	 * @param astFactory
+	 *            the AST factory that will is used to produce all the ASTs upon
+	 *            which the new transformer will operate
+	 * @return a new transformer instance of the specified kind
+	 * @throws ABCRuntimeException
+	 *             if there is no such code in the current collection
+	 */
+	public static Transformer newTransformer(String code, ASTFactory astFactory) {
+<span class="nc" id="L170">		TransformRecord record = codeToRecord.get(code);</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (record == null)</span>
+<span class="nc" id="L173">			throw new ABCRuntimeException(&quot;No transformation with code &quot; + code);</span>
+<span class="nc" id="L174">		return record.create(astFactory);</span>
+	}
+
+	/**
+	 * Gets the compare combiner for combining two CIVL programs into one which
+	 * compares the two for functional equivalence.
+	 * 
+	 * @return the new compare combiner
+	 */
+	public static Combiner compareCombiner() {
+<span class="nc" id="L184">		return Transform.compareCombiner;</span>
+	}
+
+	public static NameTransformer nameTransformer(
+			Map&lt;Entity, String&gt; newNameMap, ASTFactory astFactory) {
+<span class="nc" id="L189">		return new CommonNameTransformer(newNameMap, astFactory);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

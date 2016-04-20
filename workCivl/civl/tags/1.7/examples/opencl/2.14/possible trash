@@ -1,0 +1,57 @@
+
+//clCreateProgram for each individual one, because the struct args is defined here
+cl_program clCreateProgram(args * argument)
+{
+  cl_program program;
+  program.arguments = argument;
+  
+  return program;
+}
+
+/*
+int clSetKernelArg(cl_kernel kernel, int index, size_t size, void * value)
+{
+  if (index == 0)
+  {
+    kernel.program.arguments.input = (int *)malloc(size);
+  }
+  
+  return CL_SUCCESS;
+}
+*/
+
+/*
+  Inserts devices based on the number of entries, and unlike the openCL version, is the exact number not the maximum
+  int numEntries		- Number of devices to be inputted
+  cl_device_id * devices- pointer to devices
+*/
+int clGetDeviceIDs(int numEntries, cl_device_id * devices)
+{
+  for (int i=0; i<numEntries; i++) {
+    devices[i].id = i;
+    // exactly equivalent to: (devices+i)->id = i
+  }
+  return CL_SUCCESS;
+}
+
+/* 
+  Creates a command queue based off of the device inputted, must be called as many times as needed
+  cl_device_id devices - the device to be put into the queue
+*/
+cl_command_queue clCreateCommandQueue(cl_device_id devices)
+{
+  cl_command_queue queue;
+  
+  queue.device = devices;
+  
+  return queue;
+}
+//would pick the kernel by name, but not currently in place
+
+//example usage of the methods above
+  int err = clGetDeviceIDs(1, &device_id);
+  
+  //ignore clCreateContext for now, until we get an example that uses multiple ones
+  
+  //clCreateCommandQueue, could use context later
+  commands = clCreateCommandQueue(device_id);

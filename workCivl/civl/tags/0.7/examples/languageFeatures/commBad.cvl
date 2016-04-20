@@ -1,0 +1,21 @@
+/* Deadlocking use of communicator. Commandline execution:
+ *		civl verify commBad.cvl
+ * */
+#include <civlc.h>
+#define TAG 0
+
+$comm comm;
+_Bool start = $false;
+
+void worker(int me) {
+  $when (start);
+  $comm_dequeue(&comm, me, me, TAG);
+}
+
+void main() {
+  $proc worker_proc = $spawn worker(0);
+  
+  comm = $comm_create(1, &worker_proc);
+  start = $true;
+  $wait worker_proc;  
+}

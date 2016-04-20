@@ -1,0 +1,62 @@
+Comments on CommonModelBuilder
+
+Don't use Vector.  Use ArrayList instead.
+
+put a javadoc over each of the private fields describing briefly
+what they are
+
+buildModel: would it make more sense to iterate over the
+entities of the AST rather than over the nodes?  Entities
+provide a more abstract interface.  You can iterate over all
+the variables, then over all the functions for examples.  
+A single function may have multiple external definition nodes
+associated to it, because there could be multiple declarations and
+one definition.  Maybe you want to translate the types first
+by getting all the types from the typefactory.
+
+in buildModel, "if (node instanceof VariableDeclarationNode) ...":
+consider using switch on the node kind instead of the sequence
+of if...else if...
+
+line 176, "processVariableDeclaration(system.outerScope(),
+						(VariableDeclarationNode) rootNode.child(i));":
+"rootNode.child(i)" can be replaced by "node"
+						
+consider making processVariableDeclaration return the Variable it
+creates.  Then in method buildModel, you can get rid of this:
+"system.outerScope().getVariable(system.outerScope().numVariables() - 1)"
+because you will already have the Variable that was just created.
+
+in buildModel line 187 "right = expression((ExpressionNode) init,
+							system.outerScope());",
+this assumes the initializer is an ExpressionNode.  It might be
+a compound initializer instead.
+
+when you need to iterate over elements of a map, as here:
+"for (CallStatement statement : callStatements.keySet()) {
+			statement
+					.setFunction(functionMap.get(callStatements.get(statement)));
+}"
+
+It is more effecient to iterate over the (Entry)s of the map:
+
+for (Entry<X,Y> entry : callStatements.entrySet()) {
+  .... entry.getKey() .... entry.getValue() ...
+}
+
+"if (typeNode.kind() == TypeNodeKind.BASIC) { ..." : again, in place of
+long sequence of if else if..., use switch
+
+"if (typeNode.kind() == TypeNodeKind.STRUCTURE_OR_UNION) {..." : the ABC node
+could be a structure or union, but translator assumes it is structure.
+Even if unions are not (yet) supported, throw an exception saying so rather
+that mis-translate it as struct.
+
+in method expression "if (expression instanceof OperatorNode) {..."
+replace with switch on NodeKind.
+
+
+		
+		
+
+											

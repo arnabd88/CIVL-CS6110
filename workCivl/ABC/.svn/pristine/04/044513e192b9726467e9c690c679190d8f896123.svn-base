@@ -1,0 +1,55 @@
+/* This header file provides types and function prototypes for domains.
+ */
+
+#ifndef __DOMAIN__
+#define __DOMAIN__
+
+/* An enumerated type used to specify how domains are decomposed.
+ * This is used, for example, to specify how a domain is partitioned
+ * among members of a thread team at OpenMP "for" loops.  The model
+ * checker can explore all possible partitions (very expensive), or
+ * use just one particular partition, or something inbetween.
+ * */
+typedef enum $domain_strategy {
+  ALL, // decomposition by round robin order
+  RANDOM, // random decomposition
+  ROUND_ROBIN // decomposition by round robin order
+} $domain_strategy;
+
+/* the data structure for the decomposition result of a domain */
+typedef struct $domain_decomposition {
+  int numSubdomains;
+  $domain subdomains[];
+} $domain_decomposition;
+
+/* takes a domain and some n>0 and returns some partition of the
+   domain into n sub-domains, according to the decomposition strategy
+   specified.
+*/
+$system $domain_decomposition $domain_partition($domain domain, 
+      $domain_strategy strategy, int n);
+
+/* returns the index-th range of the given domain
+   index should be between 1 and the dimension of dom minus 1.
+ */
+$system $range $range_of_rectangular_domain($domain dom, int index);
+
+/* returns the upper bound of a regular range */
+$system int $high_of_regular_range($range range);
+
+/* returns the lower bound of a regular range */
+$system int $low_of_regular_range($range range);
+
+/* returns the step of a regular range */
+$system int $step_of_regular_range($range range);
+
+/* is this domain a rectangular domain? */
+$system _Bool $is_rectangular_domain($domain domain);
+
+/* is this range a regular range? */
+$system _Bool $is_regular_range($range range);
+
+/* returns the dimension of the given domain */
+$system int $dimension_of($domain domain);
+
+#endif

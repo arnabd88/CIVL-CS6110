@@ -1,0 +1,372 @@
+
+
+#include "cl.cvl"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#include <civlc.h>
+
+int numArgs = 4;
+
+#include "reduce_int_kernel.cvl"
+
+$input int MAX_WORKGROUP_SIZE;
+
+/*
+    __global int *output, 
+    __global const int *input, 
+    __local int *shared,
+    const unsigned int n
+*/
+typedef struct
+{
+  void * param[numArgs];
+  int mallocflag[numArgs];
+}args;
+
+cl_kernel clCreateKernel(args * argument, char * function)
+{
+  cl_kernel kernel;
+  kernel.arguments = argument;
+  kernel.method = function;
+  
+  for(int j = 0; j < numArgs; j++)
+  {
+    ((args*)kernel.arguments)->mallocflag[j] = 0;
+  }
+  
+  return kernel;
+}
+
+void clReleaseKernel(cl_kernel kernel)
+{
+  for (int i = 0; i < numArgs; i++)
+  {
+    //printf("I am argument %d with value %d\n", i, ((args*)kernel.arguments)->mallocflag[i]);
+    if (((args*)kernel.arguments)->mallocflag[i] == 1)
+    {
+     //printf("and I pass the flag check\n");
+      free(((args*)kernel.arguments)->param[i]);
+    }
+  }
+}
+
+void workfunc(size_t local, size_t global, cl_kernel param)
+{
+  $proc procs[local];
+  char * reduceChar = "reduce";
+  for(int i = local * param.workgroup; i < local * param.workgroup + local; i++)
+  {
+    int n = *(int*)(((args*)param.arguments)->param[3]);
+    param.local_id = i % local;
+    param.global_id = i;
+    printf("My workgroup id is %d, my global id is %d, my local id is %d, and my method is %s\n", param.workgroup, param.global_id, param.local_id, param.method);
+    
+    
+    if(strcmp(param.method, reduceChar) == 0)
+    {
+      procs[param.local_id] = $spawn reduce(param.workgroup, param.global_id, param.local_id, ((args*)param.arguments)->param[0], ((args*)param.arguments)->param[1], ((args*)param.arguments)->param[2], n);
+    }
+  }
+  for(int j = 0; j < local; j++)
+  {
+    $wait(procs[j]);
+  }
+}
+
+int clEnqueueNDRangeKernel(cl_kernel kernel, size_t global, size_t local)
+{
+
+  $assert(global % local == 0);
+  int numworkgroups = global/local;
+  cl_kernel param[numworkgroups];
+  $proc procs[numworkgroups];
+  //consider $parfor
+  
+  /*
+  $domain(1) dom = {0 .. numworkgroups - 1};
+  
+  $for(int i: dom)
+  {
+    param[i] = kernel;
+    param[i].workgroup = i;
+  }
+  $parfor(int i: dom)
+  {
+    workfunc(local, global, param[i]);
+  }
+  */
+  
+  for(int i = 0; i < global/local; i++)
+  {
+    param[i] = kernel;
+    param[i].workgroup = i;
+    procs[i] = $spawn workfunc(local, global, param[i]);
+  }
+       
+  //this part here is the new clFinish(commands);
+  for(int i = 0; i < global/local; i++)
+  {
+    $wait(procs[i]);
+  }
+  
+  return CL_SUCCESS;
+  
+}
+
+#define MIN_ERROR       (1e-7)
+#define MAX_GROUPS      (64)
+#define MAX_WORK_ITEMS  (64)
+#define SEPARATOR       ("----------------------------------------------------------------------\n")
+
+//count is too large, was 1024 * 1024
+static int iterations = 1000;
+static int count      = 4 * 4;
+static int channels   = 1;
+static bool integer   = true;
+
+
+void reduce_validate_int(int *data, int size, int * result)
+{
+    int i;
+    int sum = data[0];
+    int c = (int)0.0f;              
+    for (i = 1; i < size; i++)
+    {
+        int y = data[i] - c;  
+        int t = sum + y;      
+        c = (t - sum) - y;  
+        sum = t;            
+    }
+    result[0] = sum;
+}
+
+void create_reduction_pass_counts(
+    int count, 
+    int max_group_size,    
+    int max_groups,
+    int max_work_items, 
+    int *pass_count, 
+    size_t **group_counts, 
+    size_t **work_item_counts,
+    int **operation_counts,
+    int **entry_counts)
+{
+    int work_items = (count < max_work_items * 2) ? count / 2 : max_work_items;
+    if(count < 1)
+        work_items = 1;
+        
+    int groups = count / (work_items * 2);
+    groups = max_groups < groups ? max_groups : groups;
+
+    int max_levels = 1;
+    int s = groups;
+
+    while(s > 1) 
+    {
+        int work_items = (s < max_work_items * 2) ? s / 2 : max_work_items;
+        s = s / (work_items*2);
+        max_levels++;
+    }
+ 
+    *group_counts = (size_t*)malloc(max_levels * sizeof(size_t));
+    *work_item_counts = (size_t*)malloc(max_levels * sizeof(size_t));
+    *operation_counts = (int*)malloc(max_levels * sizeof(int));
+    *entry_counts = (int*)malloc(max_levels * sizeof(int));
+
+    (*pass_count) = max_levels;
+    (*group_counts)[0] = groups;
+    (*work_item_counts)[0] = work_items;
+    (*operation_counts)[0] = 1;
+    (*entry_counts)[0] = count;
+    if(max_group_size < work_items)
+    {
+        (*operation_counts)[0] = work_items;
+        (*work_item_counts)[0] = max_group_size;
+    }
+    
+    s = groups;
+    int level = 1;
+   
+    while(s > 1) 
+    {
+        int work_items = (s < max_work_items * 2) ? s / 2 : max_work_items;
+        int groups = s / (work_items * 2);
+        groups = (max_groups < groups) ? max_groups : groups;
+
+        (*group_counts)[level] = groups;
+        (*work_item_counts)[level] = work_items;
+        (*operation_counts)[level] = 1;
+        (*entry_counts)[level] = s;
+        if(max_group_size < work_items)
+        {
+            (*operation_counts)[level] = work_items;
+            (*work_item_counts)[level] = max_group_size;
+        }
+        
+        s = s / (work_items*2);
+        level++;
+    }
+}
+
+
+int main(int argc, char** argv)
+{
+
+  int         		t1 = 0;
+  int         		t2 = 0;
+  int              	err;
+  cl_device_id     	device_id;
+  cl_command_queue 	commands;
+  cl_context       	context;
+  /*
+  cl_mem			output_buffer;
+  cl_mem           	input_buffer;
+  cl_mem           	partials_buffer;
+  */
+  void *			output_buffer;
+  void *           	input_buffer;
+  void *           	partials_buffer;
+  size_t           	typesize;
+  int             	pass_count = 0;
+  size_t*         	group_counts = 0;
+  size_t*        	work_item_counts = 0;
+  int*           	operation_counts = 0;
+  int*           	entry_counts = 0;
+  int             	use_gpu = 1;
+    
+  int i;
+  int c;
+  
+  float *float_data = (float*)malloc(count * channels * sizeof(float));
+  int *integer_data = (int*)malloc(count * channels * sizeof(int));
+  
+  //Cannot use strstr
+  use_gpu = 0;
+  integer = true;
+  channels = 1;
+  
+  //can use random, but cannot check numbers
+  for (i = 0; i < count * channels; i++)
+  {
+    float_data[i] = ((float) rand() / (float) RAND_MAX);
+    integer_data[i] = (int) (255.0f * float_data[i]);
+  }
+  
+  size_t returned_size = 0;
+  size_t max_workgroup_size = 0;
+  //clGetDeviceInfo happens here
+  max_workgroup_size = MAX_WORKGROUP_SIZE;
+  
+  printf(SEPARATOR);
+  typesize = integer ? (sizeof(int)) : (sizeof(float));
+  
+  
+  size_t buffer_size = typesize * count * channels;
+  input_buffer = (int*)malloc(buffer_size);
+  
+  void *input_data = (integer) ? (void*)integer_data : (void*)float_data;
+  
+  //clEnqueueWriteBuffer
+  memcpy(input_buffer, input_data, buffer_size);
+  
+  //clCreateBuffer
+  partials_buffer = (int*)malloc(buffer_size);
+  output_buffer = (int*)malloc(buffer_size);
+  
+  create_reduction_pass_counts(
+    count, max_workgroup_size, 
+    MAX_GROUPS, MAX_WORK_ITEMS, 
+    &pass_count, &group_counts, 
+    &work_item_counts, &operation_counts,
+    &entry_counts);
+    
+  args * arguments;
+  arguments = (args*)malloc(sizeof(args) * pass_count);
+    
+  cl_kernel *kernels = (cl_kernel*)malloc(pass_count * sizeof(cl_kernel));
+  //memset(kernels, 0, pass_count * sizeof(cl_kernel));
+  //no memset
+  
+  for(i = 0; i < pass_count; i++)
+  {
+    kernels[i] = clCreateKernel(arguments+i, "reduce");
+  }
+  
+  void * pass_swap;
+  void * pass_input = output_buffer;
+  void * pass_output = input_buffer;
+    
+  for(i = 0; i < pass_count; i++)
+  {
+    size_t global = group_counts[i] * work_item_counts[i];        
+    size_t local = work_item_counts[i];
+    unsigned int operations = operation_counts[i];
+    unsigned int entries = entry_counts[i];
+    size_t shared_size = typesize * channels * local * operations;
+
+    printf("Pass[%4d] Global[%4d] Local[%4d] Groups[%4d] WorkItems[%4d] Operations[%d] Entries[%d]\n",  i, 
+      (int)global, (int)local, (int)group_counts[i], (int)work_item_counts[i], operations, entries);
+      
+    pass_swap = pass_input;
+    pass_input = pass_output;
+    pass_output = pass_swap;
+/*
+  __global int *output, 
+  __global const int *input, 
+  __local int *shared,
+  const unsigned int n
+*/
+    ((args*)kernels[i].arguments)->param[0] = pass_output;
+    ((args*)kernels[i].arguments)->param[1] = pass_input;
+    
+    ((args*)kernels[i].arguments)->param[2] = (int*)malloc(shared_size);
+    
+    
+    ((args*)kernels[i].arguments)->param[3] = (int*)malloc(sizeof(int));
+    memcpy(((args*)kernels[i].arguments)->param[3], &entries,sizeof(int));
+    ((args*)kernels[i].arguments)->mallocflag[3] = 1;
+    
+    if(pass_input == input_buffer)
+    {
+      pass_input = partials_buffer;
+    }
+    clEnqueueNDRangeKernel(kernels[i], global, local);
+  }
+  /*
+  for (int k = 0 ; k < iterations; k++)
+  {    
+    for(int i = 0; i < pass_count; i++)
+    {
+      size_t global = group_counts[i] * work_item_counts[i];        
+      size_t local = work_item_counts[i];
+
+      clEnqueueNDRangeKernel(kernels[i], global, local);
+
+    }
+  }
+  */
+  for(i = 0; i < pass_count; i++)
+  {
+    clReleaseKernel(kernels[i]);
+  }
+  
+  free(arguments);
+  
+  free(output_buffer);
+  free(partials_buffer);
+  free(input_buffer);
+  
+  free(group_counts);
+  free(work_item_counts);
+  free(operation_counts);
+  free(entry_counts);
+  //free(computed_result);
+  free(kernels);
+  free(float_data);
+  free(integer_data);
+  
+  return 0;
+}
+

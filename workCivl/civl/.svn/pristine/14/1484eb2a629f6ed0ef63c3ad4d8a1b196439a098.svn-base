@@ -1,0 +1,23 @@
+/* Commandline execution:
+ *		civl verify -inputN=3 atomicWait.cvl
+ * */
+#include <civlc.h>
+$input int N;
+int sum = 0;
+
+void foo(int i){
+	sum += i;
+}
+
+void main(){
+	$atomic{
+		$proc ps[N];
+		for(int j = 1; j < N+1; j ++){
+			ps[j-1] = $spawn foo(j);
+		}
+		for(int j = 1; j < N+1; j ++){
+			$wait ps[j-1];
+		}
+	}
+	$assert sum == N*(N+1)/2;
+}

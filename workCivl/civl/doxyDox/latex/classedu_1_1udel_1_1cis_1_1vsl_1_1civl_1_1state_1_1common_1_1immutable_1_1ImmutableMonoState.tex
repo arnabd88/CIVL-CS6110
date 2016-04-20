@@ -1,0 +1,770 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State@{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State}}
+
+
+\hyperlink{structA}{A} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}{Immutable\+Mono\+State} is different from \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} on that it only contains one \hyperlink{}{Process\+State} and the corresponding \hyperlink{}{Dynamic\+Scope} array to that Process\+State.  
+
+
+
+
+Inheritance diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Process\+State\+Iterable}
+\begin{DoxyCompactList}\small\item\em An \hyperlink{}{$<$?$>$} for \hyperlink{}{Process\+State}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableProcessState}{Immutable\+Process\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a47aff836c4736874adbd036610cd077d}{get\+Process\+State} ()
+\begin{DoxyCompactList}\small\item\em Return the single \hyperlink{}{Process\+State} inside this Mono\+State. \end{DoxyCompactList}\item 
+String \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a1990d2b6ca9431801c5f82503fe7a49a}{identifier} ()
+\begin{DoxyCompactList}\small\item\em The string of the form canonic\+Id\+:instance\+Id. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a2acae2194bec6b4ce820c45660ecae71}{num\+Dyscopes} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of dynamic scopes in this state. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a52cbe6709e1666084437fad01d81f09b}{num\+Procs} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of process states in this state. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a83ae4073ef40082541e4c19659acec7c}{num\+Live\+Procs} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of \char`\"{}live\char`\"{} processes. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a6aa0f21ed28a283be51de9cdb47be459}{root\+Dyscope\+I\+D} ()
+\begin{DoxyCompactList}\small\item\em Returns the dynamic scope I\+D of the root (or \char`\"{}system\char`\"{}) scope. \end{DoxyCompactList}\item 
+Boolean\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a16b5ff80c0c95322035f704203a58990}{get\+Path\+Condition} ()
+\begin{DoxyCompactList}\small\item\em Returns the path condition. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a05fb152d9409bc3002beb5dda72d8063}{seen} ()
+\begin{DoxyCompactList}\small\item\em Has this state been seen before in the depth-\/first search? This is simply the \char`\"{}getter\char`\"{} for the \char`\"{}setter\char`\"{} method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_af198e587242e465f4c7eb6e529424112}{set\+Seen(boolean)}. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a0c9ad662a923c041793cfe59156c73ac}{on\+Stack} ()
+\begin{DoxyCompactList}\small\item\em Is this state currently on the depth-\/frist search stack? This is simply the \char`\"{}getter\char`\"{} for the \char`\"{}setter\char`\"{} method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_abcbd2d81aa0e7490632a3e47f267013e}{set\+On\+Stack(boolean)}. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_af198e587242e465f4c7eb6e529424112}{set\+Seen} (boolean value)
+\begin{DoxyCompactList}\small\item\em Sets the seen bit to the given value. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_abcbd2d81aa0e7490632a3e47f267013e}{set\+On\+Stack} (boolean on\+Stack)
+\begin{DoxyCompactList}\small\item\em Sets the \char`\"{}on\+Stack\char`\"{} bit to the given value. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a68991670a5d0f69b9ad7c578660f73b2}{get\+Parent\+Id} (int dyscope\+Id)
+\begin{DoxyCompactList}\small\item\em Gets the dynamic scope I\+D (dyscope I\+D) of the parent of the dynamic scope with the given dyscope I\+D. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_aedc5c11f6fa66871ce28c303b745a6ac}{get\+Dyscope\+I\+D} (int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} variable)
+\begin{DoxyCompactList}\small\item\em Given a process I\+D and a variable, finds the first dyscope containing the variable in the path starting from the dyscope of the current (top) frame of the process call stack and following the parent edges of the dyscope tree. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a3df06b9188b54abb1d661933492658bc}{get\+Variable\+Value} (int dyscope\+I\+D, int variable\+I\+D)
+\begin{DoxyCompactList}\small\item\em Given a dyscope I\+D and a variable I\+D, returns the value of the first corresponding variable. \end{DoxyCompactList}\item 
+Symbolic\+Expression \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a61d3656b588d2a57c6669f8e8bd3b7f0}{value\+Of} (int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1variable_1_1Variable}{Variable} variable)
+\begin{DoxyCompactList}\small\item\em Given a process I\+D and a variable, returns the value of the variable. \end{DoxyCompactList}\item 
+String\+Buffer \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a35342bb1fd19c20bc4b96638b4c0f3ee}{call\+Stack\+To\+String} ()
+\begin{DoxyCompactList}\small\item\em Gets the call stack information (function, location, but no dyscope) of each process and return it as a string buffer object. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a7fae06fbb7605d4a3081997f346e562c}{set\+Depth} (int value)
+\begin{DoxyCompactList}\small\item\em Sets the \char`\"{}depth\char`\"{} field of this state to the given value. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a3890bacb2f593bac490881f904d4e971}{get\+Depth} ()
+\begin{DoxyCompactList}\small\item\em Returns the \char`\"{}depth\char`\"{} field for this state. \end{DoxyCompactList}\item 
+\hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_aba851537d62bf88ec7d49bc37faf66d0}{get\+Process\+State} (int pid)
+\begin{DoxyCompactList}\small\item\em Returns the process state for the pid-\/th process. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableDynamicScope}{Immutable\+Dynamic\+Scope} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ad692cd64db1f8f5035364e77e011b4fc}{get\+Dyscope} (int id)
+\begin{DoxyCompactList}\small\item\em Returns the id-\/th dynamic scope in this state. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a0474dd81df5571cf02b55bf56de1d3ae}{get\+Dyscope} (int pid, \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1model_1_1IF_1_1Scope}{Scope} scope)
+\begin{DoxyCompactList}\small\item\em Given a P\+I\+D and a static scope, returns the I\+D of the first dyscope corresponding to the static scope and reachable from the given process. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a5e63c853c0ae6980bc2bae95fc860d93}{get\+Dyscope} (int pid, int scope\+I\+D)
+\begin{DoxyCompactList}\small\item\em Given a P\+I\+D and a static scope I\+D , returns the I\+D of the first dyscope corresponding to the static scope and reachable from the given process. \end{DoxyCompactList}\item 
+Iterable$<$?extends \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1ProcessState}{Process\+State} $>$ \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a43c23e116de70f1afe5de88ac5b96caa}{get\+Process\+States} ()
+\begin{DoxyCompactList}\small\item\em Returns the set of process states as an {\ttfamily Iterable}. \end{DoxyCompactList}\item 
+\hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}{Immutable\+Mono\+State} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ac10cd50dfa69d112dbeb68480fdd98be}{set\+Path\+Condition} (Boolean\+Expression path\+Condition)
+\begin{DoxyCompactList}\small\item\em Sets the path condition to the given value. \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a401018c7bf43665cc7ccb292653e6ca7}{number\+Of\+Reachers} (int sid)
+\begin{DoxyCompactList}\small\item\em How many processes can reach this dynamic scope? \hyperlink{structA}{A} process p can reach a dynamic scope d iff there is a path starting from a dynamic scope which is referenced in a frame on p\textquotesingle{}s call stack to d, following the \char`\"{}parent\char`\"{} edges in the scope tree. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ac5526c96a0a86a5dd7da324fa35f85f1}{reachable\+By\+Process} (int sid, int pid)
+\begin{DoxyCompactList}\small\item\em Is this dynamic scope reachable by the process with the given P\+I\+D? \end{DoxyCompactList}\item 
+int \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a28a4f6278358c567c56f9efba09204a8}{get\+Canonic\+Id} ()
+\begin{DoxyCompactList}\small\item\em Returns the canonic I\+D of the state. \end{DoxyCompactList}\item 
+void \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_acac5d69aa079690720a3e339b622bf9c}{print} (Print\+Stream out)
+\begin{DoxyCompactList}\small\item\em Prints the state to a given print stream. \end{DoxyCompactList}\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a008d36555059b2acdec798c5a0c97b41}{}boolean {\bfseries equals} (Object obj)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a008d36555059b2acdec798c5a0c97b41}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a6e8e9243bef5a0337141a6c0ec18bbb6}{}String {\bfseries to\+String} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a6e8e9243bef5a0337141a6c0ec18bbb6}
+
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a866d58bbaa2b7a159b9698e0ee8b6a0c}{}int {\bfseries hash\+Code} ()\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a866d58bbaa2b7a159b9698e0ee8b6a0c}
+
+\item 
+Symbolic\+Expression\mbox{[}$\,$\mbox{]} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ad62141dbb70b8135cbf006d9be7fa318}{get\+Output\+Values} (String\mbox{[}$\,$\mbox{]} output\+Names)
+\begin{DoxyCompactList}\small\item\em Returns value of the output variables in the order of the given list of output names. \end{DoxyCompactList}\item 
+boolean \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a91cdff28e6e914a211167e4a34e7abea}{is\+Final\+State} ()
+\begin{DoxyCompactList}\small\item\em Is this the final state upon execution termination? \hyperlink{structA}{A} state is considered as a final state if it has only one process and the process has empty call stack. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState}{Immutable\+Mono\+State} is different from \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableState}{Immutable\+State} on that it only contains one \hyperlink{}{Process\+State} and the corresponding \hyperlink{}{Dynamic\+Scope} array to that Process\+State. 
+
+\begin{DoxyAuthor}{Author}
+ziqing 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a35342bb1fd19c20bc4b96638b4c0f3ee}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!call\+Stack\+To\+String@{call\+Stack\+To\+String}}
+\index{call\+Stack\+To\+String@{call\+Stack\+To\+String}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{call\+Stack\+To\+String}]{\setlength{\rightskip}{0pt plus 5cm}String\+Buffer edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+call\+Stack\+To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a35342bb1fd19c20bc4b96638b4c0f3ee}
+
+
+Gets the call stack information (function, location, but no dyscope) of each process and return it as a string buffer object. 
+
+\begin{DoxyReturn}{Returns}
+the call stack information of each process 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_abf9cf2a86cfa39aa10d752c22cd87c48}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a28a4f6278358c567c56f9efba09204a8}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Canonic\+Id@{get\+Canonic\+Id}}
+\index{get\+Canonic\+Id@{get\+Canonic\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Canonic\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Canonic\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a28a4f6278358c567c56f9efba09204a8}
+
+
+Returns the canonic I\+D of the state. 
+
+Returns -\/1 when the state is not yet canonicalized.
+
+\begin{DoxyReturn}{Returns}
+the canonic I\+D of the state, or -\/1 when the state is not yet canonicalized. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a89232165ee750dbe566cb20e76c579a4}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a3890bacb2f593bac490881f904d4e971}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Depth@{get\+Depth}}
+\index{get\+Depth@{get\+Depth}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Depth}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Depth (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a3890bacb2f593bac490881f904d4e971}
+
+
+Returns the \char`\"{}depth\char`\"{} field for this state. 
+
+This is another field used by a depth-\/first search. It is used when searching for a minimal counterexample, i.\+e., a shortest path to a violating state.
+
+\begin{DoxyReturn}{Returns}
+an integer which is currently the least depth at which this state has been encountered in the D\+F\+S 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_abe0c48d65b63faec3ee1efb870665776}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ad692cd64db1f8f5035364e77e011b4fc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Dyscope@{get\+Dyscope}}
+\index{get\+Dyscope@{get\+Dyscope}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Dyscope}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+Dynamic\+Scope} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Dyscope (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ad692cd64db1f8f5035364e77e011b4fc}
+
+
+Returns the id-\/th dynamic scope in this state. 
+
+The dynamic scopes are numbered starting from 0.
+
+The dynamic scope specifies a value (a symbolic expression) for each variable occurring in the static scope of which the dynamic scope is an instance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & the dyscope I\+D, an integer in the range \mbox{[}0,num\+Scopes-\/1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the dynamic scope with that I\+D 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a3ed5dc0cd76d013a391e8183a6d36798}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a0474dd81df5571cf02b55bf56de1d3ae}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Dyscope@{get\+Dyscope}}
+\index{get\+Dyscope@{get\+Dyscope}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Dyscope}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Dyscope (
+\begin{DoxyParamCaption}
+\item[{int}]{pid, }
+\item[{{\bf Scope}}]{scope}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a0474dd81df5571cf02b55bf56de1d3ae}
+
+
+Given a P\+I\+D and a static scope, returns the I\+D of the first dyscope corresponding to the static scope and reachable from the given process. 
+
+The search starts at the dyscope referenced by the top frame of the process\textquotesingle{}s call stack, and walks its way up in the dyscope tree until it finds a dyscope whose lexical scope is the specified one.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pid} & The I\+D of the process whose current dynamic scope is the starting point of the searching. \\
+\hline
+{\em scope} & The static scope \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the I\+D of the first dynamic scope corresponding to the static scope and reachable from the given process. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a947a6f459448a955c3bb59c5cfcda346}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a5e63c853c0ae6980bc2bae95fc860d93}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Dyscope@{get\+Dyscope}}
+\index{get\+Dyscope@{get\+Dyscope}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Dyscope}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Dyscope (
+\begin{DoxyParamCaption}
+\item[{int}]{pid, }
+\item[{int}]{scope\+I\+D}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a5e63c853c0ae6980bc2bae95fc860d93}
+
+
+Given a P\+I\+D and a static scope I\+D , returns the I\+D of the first dyscope corresponding to the static scope and reachable from the given process. 
+
+The search starts at the dyscope referenced by the top frame of the process\textquotesingle{}s call stack, and walks its way up in the dyscope tree until it finds a dyscope whose lexical scope is the specified one.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pid} & The I\+D of the process whose current dynamic scope is the starting point of the searching. \\
+\hline
+{\em scope} & The static scope I\+D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the I\+D of the first dynamic scope corresponding to the static scope and reachable from the given process. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a55581f3667d4b3dd987873bbe8780d94}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_aedc5c11f6fa66871ce28c303b745a6ac}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Dyscope\+I\+D@{get\+Dyscope\+I\+D}}
+\index{get\+Dyscope\+I\+D@{get\+Dyscope\+I\+D}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Dyscope\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Dyscope\+I\+D (
+\begin{DoxyParamCaption}
+\item[{int}]{pid, }
+\item[{{\bf Variable}}]{variable}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_aedc5c11f6fa66871ce28c303b745a6ac}
+
+
+Given a process I\+D and a variable, finds the first dyscope containing the variable in the path starting from the dyscope of the current (top) frame of the process call stack and following the parent edges of the dyscope tree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pid} & The I\+D of the process whose current dynamic scope is the starting point of the search \\
+\hline
+{\em variable} & \hyperlink{structA}{A} (static) variable in the model \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the I\+D of the first dyscope reachable from the process whose static scope is the scope of the given variable, or -\/1 if there is no such scope (i.\+e., if the variable is not visible) 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a20214baa72ceeeef8c7a81915d853bf7}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ad62141dbb70b8135cbf006d9be7fa318}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Output\+Values@{get\+Output\+Values}}
+\index{get\+Output\+Values@{get\+Output\+Values}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Output\+Values}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression \mbox{[}$\,$\mbox{]} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Output\+Values (
+\begin{DoxyParamCaption}
+\item[{String\mbox{[}$\,$\mbox{]}}]{output\+Names}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ad62141dbb70b8135cbf006d9be7fa318}
+
+
+Returns value of the output variables in the order of the given list of output names. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em output\+Names} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_ade21b1fec0829a7282b04943af54ebdb}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a68991670a5d0f69b9ad7c578660f73b2}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Parent\+Id@{get\+Parent\+Id}}
+\index{get\+Parent\+Id@{get\+Parent\+Id}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Parent\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Parent\+Id (
+\begin{DoxyParamCaption}
+\item[{int}]{dyscope\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a68991670a5d0f69b9ad7c578660f73b2}
+
+
+Gets the dynamic scope I\+D (dyscope I\+D) of the parent of the dynamic scope with the given dyscope I\+D. 
+
+If the dynamic scope with the given I\+D is the root scope (which has no parent), the result is -\/1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dyscope\+Id} & a dynamic scope I\+D in the range \mbox{[}0,num\+Scopes-\/1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+dynamic scope I\+D of the parent of the dynamic scope specified by scope\+Id 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a1b4059c4fa8faf244103ff44107e49d4}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a16b5ff80c0c95322035f704203a58990}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Path\+Condition@{get\+Path\+Condition}}
+\index{get\+Path\+Condition@{get\+Path\+Condition}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Path\+Condition}]{\setlength{\rightskip}{0pt plus 5cm}Boolean\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Path\+Condition (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a16b5ff80c0c95322035f704203a58990}
+
+
+Returns the path condition. 
+
+\begin{DoxyReturn}{Returns}
+the path condition. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a5c981340454bb37fa750d0e1900138e5}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a47aff836c4736874adbd036610cd077d}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Process\+State@{get\+Process\+State}}
+\index{get\+Process\+State@{get\+Process\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Process\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+Process\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Process\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a47aff836c4736874adbd036610cd077d}
+
+
+Return the single \hyperlink{}{Process\+State} inside this Mono\+State. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_aba851537d62bf88ec7d49bc37faf66d0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Process\+State@{get\+Process\+State}}
+\index{get\+Process\+State@{get\+Process\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Process\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Process\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Process\+State (
+\begin{DoxyParamCaption}
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_aba851537d62bf88ec7d49bc37faf66d0}
+
+
+Returns the process state for the pid-\/th process. 
+
+The process state encodes the state of the call stack for the process. The result could be null when the process has terminated but not yet removed from the state.
+
+The processes in this state are numbered with consecutive integers starting from 0. This number is the P\+I\+D.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pid} & the process I\+D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the process state 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_ae35f5324d6b3619cb735a380ea8e30fa}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a43c23e116de70f1afe5de88ac5b96caa}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Process\+States@{get\+Process\+States}}
+\index{get\+Process\+States@{get\+Process\+States}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Process\+States}]{\setlength{\rightskip}{0pt plus 5cm}Iterable$<$? extends {\bf Process\+State}$>$ edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Process\+States (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a43c23e116de70f1afe5de88ac5b96caa}
+
+
+Returns the set of process states as an {\ttfamily Iterable}. 
+
+This should not be modified. It is convenient when you want to iterate over the states, e.\+g., {\ttfamily for (Process\+State p \+: state.\+get\+Process\+States())}. Alternatively, you can invoke the {\ttfamily iterator()} method to get an {\ttfamily Iterator}.
+
+\begin{DoxyReturn}{Returns}
+iterable object yielding all the process states in this state 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a6ffa3f7b2d0eb674c200a70171e378e7}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a3df06b9188b54abb1d661933492658bc}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!get\+Variable\+Value@{get\+Variable\+Value}}
+\index{get\+Variable\+Value@{get\+Variable\+Value}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{get\+Variable\+Value}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+get\+Variable\+Value (
+\begin{DoxyParamCaption}
+\item[{int}]{dyscope\+I\+D, }
+\item[{int}]{variable\+I\+D}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a3df06b9188b54abb1d661933492658bc}
+
+
+Given a dyscope I\+D and a variable I\+D, returns the value of the first corresponding variable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dyscope\+I\+D} & The dynamic scope I\+D. \\
+\hline
+{\em variable\+I\+D} & The variable I\+D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the corresponding variable. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a193f399ccb91de6987f22a45cc47e3b1}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a1990d2b6ca9431801c5f82503fe7a49a}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!identifier@{identifier}}
+\index{identifier@{identifier}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{identifier}]{\setlength{\rightskip}{0pt plus 5cm}String edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a1990d2b6ca9431801c5f82503fe7a49a}
+
+
+The string of the form canonic\+Id\+:instance\+Id. 
+
+Used to easily identify this instance.
+
+\begin{DoxyReturn}{Returns}
+string canonic\+Id\+:instance\+Id 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a0f39b4dd994e588d9c6d371e1bc7ec95}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a91cdff28e6e914a211167e4a34e7abea}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!is\+Final\+State@{is\+Final\+State}}
+\index{is\+Final\+State@{is\+Final\+State}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{is\+Final\+State}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+is\+Final\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a91cdff28e6e914a211167e4a34e7abea}
+
+
+Is this the final state upon execution termination? \hyperlink{structA}{A} state is considered as a final state if it has only one process and the process has empty call stack. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a297e9429091944997c4059a8831312c7}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a401018c7bf43665cc7ccb292653e6ca7}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!number\+Of\+Reachers@{number\+Of\+Reachers}}
+\index{number\+Of\+Reachers@{number\+Of\+Reachers}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{number\+Of\+Reachers}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+number\+Of\+Reachers (
+\begin{DoxyParamCaption}
+\item[{int}]{sid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a401018c7bf43665cc7ccb292653e6ca7}
+
+
+How many processes can reach this dynamic scope? \hyperlink{structA}{A} process p can reach a dynamic scope d iff there is a path starting from a dynamic scope which is referenced in a frame on p\textquotesingle{}s call stack to d, following the \char`\"{}parent\char`\"{} edges in the scope tree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sid} & The dynamic scope I\+D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the number of processes which can reach this dynamic scope 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a4ec2455adf73710a9e19c826fb78902a}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a2acae2194bec6b4ce820c45660ecae71}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!num\+Dyscopes@{num\+Dyscopes}}
+\index{num\+Dyscopes@{num\+Dyscopes}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{num\+Dyscopes}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+num\+Dyscopes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a2acae2194bec6b4ce820c45660ecae71}
+
+
+Returns the number of dynamic scopes in this state. 
+
+\begin{DoxyReturn}{Returns}
+the number of dynamic scopes in this state 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a26c87296927d9183e682fc2f1498419d}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a83ae4073ef40082541e4c19659acec7c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!num\+Live\+Procs@{num\+Live\+Procs}}
+\index{num\+Live\+Procs@{num\+Live\+Procs}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{num\+Live\+Procs}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+num\+Live\+Procs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a83ae4073ef40082541e4c19659acec7c}
+
+
+Returns the number of \char`\"{}live\char`\"{} processes. 
+
+This includes processes which have terminated (i.\+e., have empty call stack), but have not yet been \char`\"{}waited on\char`\"{}. Once a process has been waited on, it is no longer live\+: it becomes \char`\"{}null\char`\"{} and is eligible for garbage collection.
+
+\begin{DoxyReturn}{Returns}
+the number of non-\/null process states in this state 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a9c8021bfb042fb76cba67a223c3df39c}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a52cbe6709e1666084437fad01d81f09b}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!num\+Procs@{num\+Procs}}
+\index{num\+Procs@{num\+Procs}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{num\+Procs}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+num\+Procs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a52cbe6709e1666084437fad01d81f09b}
+
+
+Returns the number of process states in this state. 
+
+\begin{DoxyReturn}{Returns}
+the number of process states in this state, including nulls. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a1fb9bc3c57e059c2885a73ba4d08b441}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a0c9ad662a923c041793cfe59156c73ac}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!on\+Stack@{on\+Stack}}
+\index{on\+Stack@{on\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{on\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+on\+Stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a0c9ad662a923c041793cfe59156c73ac}
+
+
+Is this state currently on the depth-\/frist search stack? This is simply the \char`\"{}getter\char`\"{} for the \char`\"{}setter\char`\"{} method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_abcbd2d81aa0e7490632a3e47f267013e}{set\+On\+Stack(boolean)}. 
+
+\begin{DoxyReturn}{Returns}
+true iff this state is on the D\+F\+S stack 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a40a44e43817d3155cd89140fbd28693a}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_acac5d69aa079690720a3e339b622bf9c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!print@{print}}
+\index{print@{print}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+print (
+\begin{DoxyParamCaption}
+\item[{Print\+Stream}]{out}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_acac5d69aa079690720a3e339b622bf9c}
+
+
+Prints the state to a given print stream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & The print stream to be used. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a58c7a4c12e85f4443cf8456b91e06ef5}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ac5526c96a0a86a5dd7da324fa35f85f1}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!reachable\+By\+Process@{reachable\+By\+Process}}
+\index{reachable\+By\+Process@{reachable\+By\+Process}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{reachable\+By\+Process}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+reachable\+By\+Process (
+\begin{DoxyParamCaption}
+\item[{int}]{sid, }
+\item[{int}]{pid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ac5526c96a0a86a5dd7da324fa35f85f1}
+
+
+Is this dynamic scope reachable by the process with the given P\+I\+D? 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sid} & The dynamic scope I\+D \\
+\hline
+{\em pid} & the process I\+D (P\+I\+D) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true iff this dynamic scope is reachable from the process with pid P\+I\+D 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a2f80f3b036393587fc1cf6ddc8f06d6c}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a6aa0f21ed28a283be51de9cdb47be459}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!root\+Dyscope\+I\+D@{root\+Dyscope\+I\+D}}
+\index{root\+Dyscope\+I\+D@{root\+Dyscope\+I\+D}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{root\+Dyscope\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}int edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+root\+Dyscope\+I\+D (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a6aa0f21ed28a283be51de9cdb47be459}
+
+
+Returns the dynamic scope I\+D of the root (or \char`\"{}system\char`\"{}) scope. 
+
+\begin{DoxyReturn}{Returns}
+the root dynamic scope I\+D 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a7b1945673b73092026e36841342c0332}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a05fb152d9409bc3002beb5dda72d8063}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!seen@{seen}}
+\index{seen@{seen}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{seen}]{\setlength{\rightskip}{0pt plus 5cm}boolean edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+seen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a05fb152d9409bc3002beb5dda72d8063}
+
+
+Has this state been seen before in the depth-\/first search? This is simply the \char`\"{}getter\char`\"{} for the \char`\"{}setter\char`\"{} method \hyperlink{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_af198e587242e465f4c7eb6e529424112}{set\+Seen(boolean)}. 
+
+\begin{DoxyReturn}{Returns}
+true iff this state has been seen before 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a6d1e8c23aebce43b60feb6d7d1b5125b}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a7fae06fbb7605d4a3081997f346e562c}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!set\+Depth@{set\+Depth}}
+\index{set\+Depth@{set\+Depth}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{set\+Depth}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+set\+Depth (
+\begin{DoxyParamCaption}
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a7fae06fbb7605d4a3081997f346e562c}
+
+
+Sets the \char`\"{}depth\char`\"{} field of this state to the given value. 
+
+This is another field used by a depth-\/first search. It is used when searching for a minimal counterexample, i.\+e., a shortest path to a violating state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & an integer which is currently the least depth at which this state has been encountered in the D\+F\+S \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a993289259ba4fafd64bb2c24e9e058a1}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_abcbd2d81aa0e7490632a3e47f267013e}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!set\+On\+Stack@{set\+On\+Stack}}
+\index{set\+On\+Stack@{set\+On\+Stack}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{set\+On\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+set\+On\+Stack (
+\begin{DoxyParamCaption}
+\item[{boolean}]{on\+Stack}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_abcbd2d81aa0e7490632a3e47f267013e}
+
+
+Sets the \char`\"{}on\+Stack\char`\"{} bit to the given value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em on\+Stack} & whether this state is on the D\+F\+S stack \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a1bfe417f4c4b97225837175914e34951}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ac10cd50dfa69d112dbeb68480fdd98be}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!set\+Path\+Condition@{set\+Path\+Condition}}
+\index{set\+Path\+Condition@{set\+Path\+Condition}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{set\+Path\+Condition}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Immutable\+Mono\+State} edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+set\+Path\+Condition (
+\begin{DoxyParamCaption}
+\item[{Boolean\+Expression}]{path\+Condition}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_ac10cd50dfa69d112dbeb68480fdd98be}
+
+
+Sets the path condition to the given value. 
+
+This will either modify this state (if the state is mutable) or return a new state (if not).
+
+
+\begin{DoxyParams}{Parameters}
+{\em path\+Condition} & a boolean-\/valued symbolic expression \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+state modified to have new path condition 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a548f4bc15460a2966c9e808c30e2895d}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_af198e587242e465f4c7eb6e529424112}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!set\+Seen@{set\+Seen}}
+\index{set\+Seen@{set\+Seen}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{set\+Seen}]{\setlength{\rightskip}{0pt plus 5cm}void edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+set\+Seen (
+\begin{DoxyParamCaption}
+\item[{boolean}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_af198e587242e465f4c7eb6e529424112}
+
+
+Sets the seen bit to the given value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & whether this state has been seen in the depth first search \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a558ebb4507ac303283fc58a99cea40fc}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a61d3656b588d2a57c6669f8e8bd3b7f0}{}\index{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}!value\+Of@{value\+Of}}
+\index{value\+Of@{value\+Of}!edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State@{edu\+::udel\+::cis\+::vsl\+::civl\+::state\+::common\+::immutable\+::\+Immutable\+Mono\+State}}
+\subsubsection[{value\+Of}]{\setlength{\rightskip}{0pt plus 5cm}Symbolic\+Expression edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+common.\+immutable.\+Immutable\+Mono\+State.\+value\+Of (
+\begin{DoxyParamCaption}
+\item[{int}]{pid, }
+\item[{{\bf Variable}}]{variable}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1common_1_1immutable_1_1ImmutableMonoState_a61d3656b588d2a57c6669f8e8bd3b7f0}
+
+
+Given a process I\+D and a variable, returns the value of the variable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pid} & The I\+D of the process whose current dynamic scope is the starting point of the searching. \\
+\hline
+{\em variable} & The variable whose value is to be searched for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interfaceedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1state_1_1IF_1_1State_a3c06a06f45da30805c784fd5c1b20985}{edu.\+udel.\+cis.\+vsl.\+civl.\+state.\+I\+F.\+State}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/state/common/immutable/Immutable\+Mono\+State.\+java\end{DoxyCompactItemize}

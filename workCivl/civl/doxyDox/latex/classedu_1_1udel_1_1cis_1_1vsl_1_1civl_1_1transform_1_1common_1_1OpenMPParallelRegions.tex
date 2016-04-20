@@ -1,0 +1,34 @@
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1OpenMPParallelRegions}{}\section{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Open\+M\+P\+Parallel\+Regions Class Reference}
+\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1OpenMPParallelRegions}\index{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Open\+M\+P\+Parallel\+Regions@{edu.\+udel.\+cis.\+vsl.\+civl.\+transform.\+common.\+Open\+M\+P\+Parallel\+Regions}}
+
+
+\hyperlink{structA}{A} parallel region is a program fragment defined by an A\+S\+T subtree rooted at a single starting statement and delimited by a set of possible successor statements.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1OpenMPParallelRegions_ad4fa87ba11612a5513793a3b6eff0c26}{}{\bfseries Open\+M\+P\+Parallel\+Regions} (A\+S\+T\+Node root\+Node)\label{classedu_1_1udel_1_1cis_1_1vsl_1_1civl_1_1transform_1_1common_1_1OpenMPParallelRegions_ad4fa87ba11612a5513793a3b6eff0c26}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{structA}{A} parallel region is a program fragment defined by an A\+S\+T subtree rooted at a single starting statement and delimited by a set of possible successor statements. 
+
+Thus a region is given by a pair, (s, Set$<$e$>$), with an interpretation that it includes all paths beginning at statement s and ending at a statement whose successor is some e.
+
+Empty regions for a given parallel statement are not computed explicitly. These can arise with initial, final or trivial use of barriers (e.\+g., barrier as first or last statement in the parallel statement).
+
+\hyperlink{structA}{A} region may include multiple execution paths.
+
+This class computes a set of regions for a given Open\+M\+P parallel statement and makes that relation available through getter methods.
+
+\begin{DoxyAuthor}{Author}
+dwyer 
+\end{DoxyAuthor}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/arnabd/workspace/civl/trunk/src/edu/udel/cis/vsl/civl/transform/common/Open\+M\+P\+Parallel\+Regions.\+java\end{DoxyCompactItemize}

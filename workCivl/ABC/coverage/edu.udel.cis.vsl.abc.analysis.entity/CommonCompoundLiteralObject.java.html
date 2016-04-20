@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonCompoundLiteralObject.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test Coverage Report for ABC ${revision}</a> &gt; <a href="index.source.html" class="el_package">edu.udel.cis.vsl.abc.analysis.entity</a> &gt; <span class="el_source">CommonCompoundLiteralObject.java</span></div><h1>CommonCompoundLiteralObject.java</h1><pre class="source lang-java linenums">package edu.udel.cis.vsl.abc.analysis.entity;
+
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
+import edu.udel.cis.vsl.abc.ast.node.IF.ASTNode;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.CompoundLiteralObject;
+import edu.udel.cis.vsl.abc.ast.node.IF.compound.LiteralObject;
+import edu.udel.cis.vsl.abc.err.IF.ABCRuntimeException;
+
+/**
+ * Implementation of CompoundLiteral that provides additional functionality for
+ * modifications.
+ * 
+ * While reads that go beyond the bounds of the inferred type will throw an
+ * exception (as specified in CompoundLiteral), write that go beyond the bounds
+ * of the inferred type will either throw an exception (if the write violates a
+ * bound in the declared type) or succeed and extend the bounds of the inffered
+ * type (otherwise).
+ * 
+ * In any case, the inferred type will be kept in sync with the writes.
+ * 
+ * This class maintains the following invariant: the inferred type will be
+ * consistent with the inferred types of the members. I.e., if the inferred type
+ * is an array type with element type T, all of the (non-null) members will have
+ * inferred type T. If the inferred type is a struct or union type with member
+ * types (T_i), the i-th member (if not null) will have inferred type T_i.
+ * Similar remarks hold for the declared type.
+ * 
+ * @author siegel
+ * 
+ */
+<span class="nc bnc" id="L33" title="All 2 branches missed.">public class CommonCompoundLiteralObject extends CommonLiteralObject implements</span>
+		CompoundLiteralObject {
+
+	/**
+	 * The members of this compound object. Entires may be null.
+	 */
+<span class="nc" id="L39">	private ArrayList&lt;LiteralObject&gt; elements = new ArrayList&lt;&gt;();</span>
+
+	public CommonCompoundLiteralObject(LiteralTypeNode ltNode,
+			ASTNode sourceNode) {
+<span class="nc" id="L43">		super(ltNode, sourceNode);</span>
+<span class="nc" id="L44">	}</span>
+
+	@Override
+	public int size() {
+<span class="nc" id="L48">		return elements.size();</span>
+	}
+
+	@Override
+	public LiteralObject get(int index) {
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		return index &gt;= elements.size() ? null : elements.get(index);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L58">		return elements.toString();</span>
+	}
+
+	/**
+	 * Assumes navigator respects all bounds.
+	 * 
+	 * @param navigator
+	 * @return
+	 */
+	public LiteralObject get(Designation designation) {
+<span class="nc" id="L68">		int length = designation.length();</span>
+<span class="nc" id="L69">		LiteralObject result = this;</span>
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (int i = 0; i &lt; length; i++) {</span>
+<span class="nc" id="L72">			Navigator navigator = designation.get(i);</span>
+<span class="nc" id="L73">			int index = navigator.getIndex();</span>
+
+<span class="nc bnc" id="L75" title="All 4 branches missed.">			assert result != null;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (result instanceof CommonCompoundLiteralObject) {</span>
+<span class="nc" id="L77">				result = ((CommonCompoundLiteralObject) result).get(index);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">				if (result == null)</span>
+<span class="nc" id="L79">					break;</span>
+			} else
+<span class="nc" id="L81">				throw new NoSuchElementException();</span>
+		}
+<span class="nc" id="L83">		return result;</span>
+	}
+
+	public void setElement(int index, LiteralObject value) {
+<span class="nc" id="L87">		LiteralTypeNode typeNode = getTypeNode();</span>
+<span class="nc" id="L88">		int length = typeNode.length();</span>
+
+<span class="nc bnc" id="L90" title="All 4 branches missed.">		if (typeNode.hasFixedLength() &amp;&amp; index &gt;= length)</span>
+<span class="nc" id="L91">			throw new ABCRuntimeException(&quot;Exceeded object bound: index=&quot;</span>
+<span class="nc" id="L92">					+ index + &quot;, length=&quot; + length);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		while (index &gt;= elements.size())</span>
+<span class="nc" id="L94">			elements.add(null);</span>
+<span class="nc" id="L95">		elements.set(index, value);</span>
+		// the literal value was created using the same type nodes
+		// as those in this literal, therefore those nodes are already
+		// up to date. so it is only this length that has to be updated
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (elements.size() &gt; length)</span>
+<span class="nc" id="L100">			((LiteralArrayTypeNode) typeNode).setLength(elements.size());</span>
+<span class="nc" id="L101">	}</span>
+
+	private void set(Designation designation, int desStart, LiteralObject value) {
+<span class="nc" id="L104">		int deslen = designation.length() - desStart;</span>
+<span class="nc" id="L105">		int index0 = designation.get(desStart).getIndex();</span>
+
+<span class="nc bnc" id="L107" title="All 4 branches missed.">		assert deslen &gt; 0;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (deslen == 1) {</span>
+<span class="nc" id="L109">			setElement(index0, value);</span>
+<span class="nc" id="L110">		} else {</span>
+<span class="nc" id="L111">			CommonCompoundLiteralObject r = (CommonCompoundLiteralObject) get(index0);</span>
+
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (r == null) {</span>
+<span class="nc" id="L114">				r = new CommonCompoundLiteralObject(getTypeNode().getChild(</span>
+<span class="nc" id="L115">						index0), getSourceNode());</span>
+<span class="nc" id="L116">				setElement(index0, r);</span>
+			}
+<span class="nc" id="L118">			r.set(designation, desStart + 1, value);</span>
+		}
+<span class="nc" id="L120">	}</span>
+
+	/**
+	 * Sets the sub-object at the designated position to value. Updates type
+	 * nodes as necessary.
+	 * 
+	 * @param designation
+	 * @param value
+	 */
+	public void set(Designation designation, LiteralObject value) {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (designation.length() == 0)</span>
+<span class="nc" id="L131">			throw new ABCRuntimeException(&quot;saw empty designation in set&quot;);</span>
+<span class="nc" id="L132">		set(designation, 0, value);</span>
+<span class="nc" id="L133">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

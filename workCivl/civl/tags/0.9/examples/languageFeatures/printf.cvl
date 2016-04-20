@@ -1,0 +1,22 @@
+#include<stdio.h>
+$input int x;
+$input double y;
+$input char * z;
+
+int main(int argc, char * argv[]){
+  int i = 58;
+  double d = 33.3333333;
+  float f = 33.333;
+  char * s = "test%dString";
+  double A[2];
+  
+  printf("test0 aabb\r\n");
+  printf("test1 aa\nbb aa\bbb aa\tbb \' \" \n");
+  printf("test2 %d, %o, %x \n", i,i,i);
+  printf("test3 %.16f,%e,%g,%a\n", d,d,d,d);
+  printf("test4 %.8f,%e,%g,%a\n", f,f,f,f);
+  printf("test5 %d,%s\n", i-20,s);
+  printf("test6 %d,%.16f,%s\n", x,y,z);
+  printf("test7 %d\n", &x);
+  printf("test8 %f\n", A[0]);
+}

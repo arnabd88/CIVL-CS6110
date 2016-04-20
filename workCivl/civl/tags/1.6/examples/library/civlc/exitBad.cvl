@@ -1,0 +1,15 @@
+#include <civlc.cvh>
+
+void Process(){
+  $exit();
+}
+
+void main(){
+  $proc procs[3];
+
+  for(int i=0; i<3; i++)
+    procs[i] = $spawn Process();
+
+  for(int i=0; i<3; i++)
+    $wait(procs[i]);
+}
