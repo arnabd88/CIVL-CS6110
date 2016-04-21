@@ -111,7 +111,7 @@ public class DfsSearcher<STATE, TRANSITION, TRANSITIONSEQUENCE> {
 	 */
 	 private int currBound = 0;
 
-	 private int contextBoundLimit = 50 ;
+	 private int contextBoundLimit = 10 ;
 
 	 private int currProcess = -1;// to track the context thread
 
@@ -391,15 +391,12 @@ public class DfsSearcher<STATE, TRANSITION, TRANSITIONSEQUENCE> {
 				manager.setOnStack(enabler.source(stack.pop()), false);
 			}
 		  System.out.println("1. Curr_Bound = " + currBound + "\n");
-		  System.out.println("1. Stack-Size = " + stack.size() + "\n");
-		  System.out.println("1. NextStack-Size = " + nextStack.size() + "\n");
 			currBound++ ;
 			//System.out.println("Before assigning the nextStack = " + stack.size());
 			stack.addAll(nextStack) ;
 			nextStack.clear();
 			//System.out.println("After assigning the nextStack = " + stack.size());
-		  System.out.println("2. Curr_Bound = " + currBound + "\n");
-		  System.out.println("2. Stack-Size = " + stack.size() + "\n");
+		  System.out.println("2. New_Bound = " + currBound + "\n");
 		  System.out.println("2. NextStack-Size = " + nextStack.size() + "\n");
 		}
 		return false ;
