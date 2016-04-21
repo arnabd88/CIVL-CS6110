@@ -176,9 +176,50 @@ public abstract class CommonEnabler implements Enabler {
 		if (transitions == null)
 			// return ample transitions.
 			transitions = enabledTransitionsPOR(state);
-		System.out.println("Transitions from POR : " + transitions);
+	//	System.out.println("Transitions from POR : " + transitions);
 		return transitions;
 	}
+
+//   /*  ******* Returns the enabled transitions from a given state for a specific process ***** */
+//    @Override
+//	public TransitionSequence enabledTransitionForThisProcess(State state, int processId) {
+//		List<Transition> validTransitions = new LinkedList<>();
+//		TransitionSequence transitions = enabledTransitions(state);
+//		TransitionSequence resultSeq = Semantics.newTransitionSequence(state, true);
+//		for(int i=0; i<transitions.size(); i++) {
+//		   if(transitions.get(i).pid() == processId)  validTransitions.add(transitions.get(i)) ;
+//		}
+//		resultSeq.addAll(validTransitions);
+//		return resultSeq ;
+//	}
+//
+//
+//
+//   /* ****** Returns the enabled transitions from a given state not belonging to a specific process **** */
+//   @Override
+//   public TransitionSequence enabledTransitionNotForThisProcess(State state, int processId) {
+//       List<Transition> validTransitions = new LinkedList<>();
+//	   TransitionSequence transitions = enabledTransitions(state);
+//	   TransitionSequence resultSeq = Semantics.newTransitionSequence(state, true);
+//	   for(int i=0; i<transitions.size(); i++) {
+//	      if(transitions.get(i).pid() != processId) validTransitions.add(transitions.get(i)) ;
+//	   }
+//	   //System.out.println("Number of contextSwitching transitions enabled = " + validTransitions.size() ) ;
+//	   resultSeq.addAll(validTransitions);
+//	   return resultSeq ;
+//   }
+//
+//
+//	/* ****** Returns true if there are enabled transitions in this process **** */
+//
+//     @Override
+//	 public boolean haveEnabledTransForThisProcess(State state, int processId) {
+//	    TransitionSequence transitions = enabledTransitions(state);
+//		for(int i=0; i<transitions.size(); i++) {
+//		   if( transitions.get(i).pid() == processId) return true ;
+//		}
+//		return false ;
+//	 }
 
 	@Override
 	public boolean debugging() {

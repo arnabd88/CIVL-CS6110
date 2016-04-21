@@ -89,6 +89,11 @@ public class CommonTransitionSequence implements TransitionSequence {
 		return this.transitions.peek();
 	}
 
+	@Override
+	public Transition get(int index) {
+	    return this.transitions.get(index);
+	}
+
 	/* ************************* Methods from Object *********************** */
 
 	@Override

@@ -71,6 +71,8 @@ public interface TransitionSequence {
 	 */
 	Transition peek();
 
+	Transition get(int index);
+
 	/**
 	 * does this set of transitions contain all enabled transitions of the given
 	 * state
