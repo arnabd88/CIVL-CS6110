@@ -115,8 +115,12 @@ public abstract class BaseLibraryExecutor extends LibraryComponent implements
 		ResultType resultType;
 
 		reasoner = universe.reasoner(state.getPathCondition());
+		//System.out.println("Boolean-Expr = " + arguments[0]);
 		valid = reasoner.valid(assertValue);
 		resultType = valid.getResultType();
+	//		Pair<State, String> messageResult1 = this.symbolicAnalyzer
+	//				.expressionEvaluation(state, pid, arguments[0], false);
+	//	System.out.println("ResultYpe = " + messageResult1.right);
 		if (resultType != ResultType.YES) {
 			StringBuilder message = new StringBuilder();
 			Pair<State, String> messageResult = this.symbolicAnalyzer

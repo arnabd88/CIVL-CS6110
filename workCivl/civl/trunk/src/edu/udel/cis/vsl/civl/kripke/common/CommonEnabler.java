@@ -180,7 +180,9 @@ public abstract class CommonEnabler implements Enabler {
 		return transitions;
 	}
 
-//   /*  ******* Returns the enabled transitions from a given state for a specific process ***** */
+
+   //---- For por based -----
+   /*  ******* Returns the enabled transitions from a given state for a specific process ***** */
 //    @Override
 //	public TransitionSequence enabledTransitionForThisProcess(State state, int processId) {
 //		List<Transition> validTransitions = new LinkedList<>();
@@ -317,6 +319,8 @@ public abstract class CommonEnabler implements Enabler {
 	 */
 	abstract TransitionSequence enabledTransitionsPOR(State state);
 
+
+    //----------- For all enabled -------
     @Override
 	public TransitionSequence enabledTransitionForThisProcess(State state, int processId) {
 	    TransitionSequence resultSeq = Semantics.newTransitionSequence(state, true);
@@ -342,7 +346,7 @@ public abstract class CommonEnabler implements Enabler {
 
     @Override
 	public boolean haveEnabledTransForThisProcess(State state, int processId) {
-	   if(this.enabledTransitionsOfProcess(state, processId) == null) return false ;
+	   if(this.enabledTransitionsOfProcess(state, processId).isEmpty()) return false ;
 	   else return true ;
 	}
 
