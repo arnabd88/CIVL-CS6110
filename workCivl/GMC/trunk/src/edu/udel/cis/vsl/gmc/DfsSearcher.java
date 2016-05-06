@@ -111,7 +111,7 @@ public class DfsSearcher<STATE, TRANSITION, TRANSITIONSEQUENCE> {
 	 */
 	 private int currBound = 0;
 
-	 private int contextBoundLimit = 10 ;
+	 private int contextBoundLimit = 2 ;
 
 	 private int currProcess = -1;// to track the context thread
 
@@ -349,8 +349,13 @@ public class DfsSearcher<STATE, TRANSITION, TRANSITIONSEQUENCE> {
 			{
 			    TRANSITIONSEQUENCE sequence = stack.peek();
 				STATE currentState = enabler.source(sequence);
+				//System.out.println("Debugging" + stack.peek());
+				//System.out.println("Debugging-2" + enabler.peek(stack.peek()));
+				//System.out.println("HAs-next = " + enabler.hasNext(sequence));
 				while(enabler.hasNext(sequence)) 
 				{
+		            currProcess = enabler.basePid(enabler.peek(stack.peek()));
+				   // System.out.println("Debugging-3" + enabler.basePid(enabler.peek(stack.peek())));
 				    TRANSITION transition = enabler.peek(sequence);
 					TraceStepIF<TRANSITION, STATE> traceStep = manager.nextState(currentState, transition);
 					STATE newState = traceStep.getFinalState();
@@ -368,15 +373,21 @@ public class DfsSearcher<STATE, TRANSITION, TRANSITIONSEQUENCE> {
 					   if(enabler.haveEnabledTransForThisProcess(newState, currProcess)) {
 					       stack.push(enabler.enabledTransitionForThisProcess(newState, currProcess)) ;
 						   nextStack.push(enabler.enabledTransitionNotForThisProcess(newState, currProcess)) ;
+						   // System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+						   // System.out.println("Current Process " + currProcess );
+						   // System.out.println("For this process = " + enabler.enabledTransitionForThisProcess(newState,currProcess)) ;
+						   // System.out.println("Context-Switch = " + enabler.enabledTransitionNotForThisProcess(newState, currProcess)) ;
+						   // System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 						   //System.out.println("NextStack Size = " + nextStack.size() + "\n");
 					   }
 					   else {
 					       stack.push(enabler.enabledTransitionNotForThisProcess(newState, currProcess));
+						   //System.out.println("Anytime here?");
 						   //System.out.println("Stack Size = " + stack.size() + "\n");
 						   //System.out.println(enabler.enabledTransitionNotForThisProcess(newState, currProcess)) ;
 					   }
 					   manager.setSeen(newState, true);
-					   manager.setOnStack(newState, true);
+					   //manager.setOnStack(newState, true);
 					   numStatesSeen++ ;
 					   return true ;
 					}
@@ -395,7 +406,7 @@ public class DfsSearcher<STATE, TRANSITION, TRANSITIONSEQUENCE> {
 			//System.out.println("Before assigning the nextStack = " + stack.size());
 			stack.addAll(nextStack) ;
 			nextStack.clear();
-			//System.out.println("After assigning the nextStack = " + stack.size());
+			System.out.println("After assigning the nextStack = " + stack.size());
 		  System.out.println("2. New_Bound = " + currBound + "\n");
 		  System.out.println("2. NextStack-Size = " + nextStack.size() + "\n");
 		}
