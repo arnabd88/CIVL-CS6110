@@ -111,7 +111,7 @@ public class DfsSearcher<STATE, TRANSITION, TRANSITIONSEQUENCE> {
 	 */
 	 private int currBound = 0;
 
-	 private int contextBoundLimit = 2 ;
+	 private int contextBoundLimit = 3 ;
 
 	 private int currProcess = -1;// to track the context thread
 
